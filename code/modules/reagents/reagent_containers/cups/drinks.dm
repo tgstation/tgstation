@@ -331,7 +331,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT * 1.5)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -430,7 +430,7 @@
 	desc = "A metal shaker to mix drinks in."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
-	custom_materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT * 1.5MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/iron= ROD_MATERIAL_AMOUNT * 1.5)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE

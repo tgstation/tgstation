@@ -505,7 +505,7 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/stack/conveyor
 	maxstack = 30
 	category = list(

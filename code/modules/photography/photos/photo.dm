@@ -42,7 +42,7 @@
 			continue
 		if(!isobserver(seen))
 			continue
-		set_custom_materials(list(/datum/material/hauntium =MINERAL_MATERIAL_AMOUNTAL_MATERIAL_AMOUNT))
+		set_custom_materials(list(/datum/material/hauntium =MINERAL_MATERIAL_AMOUNT))
 		break
 
 /obj/item/photo/update_icon_state()

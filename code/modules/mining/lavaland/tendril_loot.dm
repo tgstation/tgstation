@@ -38,28 +38,28 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(/datum/material/iron = 7000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 30, /datum/material/diamond = 4000)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*3.5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT*1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.5, /datum/material/gold =MINERAL_MATERIAL_AMOUNT*1.5, /datum/material/diamond = MINERAL_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum=ROD_MATERIAL_AMOUNT*5ial/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 8000, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = MINERAL_MATERIAL_AMOUNT*4, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum=ROD_MATERIAL_AMOUNT*5ial/glass =ROD_MATERIAL_A=ROD_MATERIAL_AMOUNT*55, /datum/material/silver =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT * 2.5)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT*5, /datum/material/glass =ROD_MATERIAL_AMOUNT*5, /datum/material/silver =ROD_MATERIAL_AMOUNT*5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*2, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*2, /datum/material/gold = MINERAL_MATERIAL_AMOUNT*2, /datum/material/bluespace = MINERAL_MATERIAL_AMOUNT*2)
 	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 

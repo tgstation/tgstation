@@ -252,7 +252,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
-	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=MINERAL_MATERIAL_AMOUNT * 1.5)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
@@ -262,7 +262,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/titanium=ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/titanium=ROD_MATERIAL_AMOUNT)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
@@ -273,7 +273,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 1.5)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -284,7 +284,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
-	custom_materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 30, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)

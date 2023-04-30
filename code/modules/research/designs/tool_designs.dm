@@ -19,7 +19,7 @@
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
 	id = "handdrill"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3500, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium = 2500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*1.75, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/screwdriver/power
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -32,7 +32,7 @@
 	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
 	build_path = /obj/item/crowbar/power
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*2.25, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT*1.75)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
@@ -67,7 +67,7 @@
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*37.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*18.75)
 	build_path = /obj/item/pipe_dispenser
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -79,7 +79,7 @@
 	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
 	id = "rcd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 60000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*30, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/construction/rcd/loaded
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -91,7 +91,7 @@
 	desc = "A tool that can lay & destory floor tiles on the fly."
 	id = "rtd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300, /datum/material/glass = 2500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 15, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/construction/rtd/loaded
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -102,7 +102,7 @@
 	name = "RCD Matter Cartridge"
 	id = "rcd_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 12000, /datum/material/glass = 8000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*6, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/rcd_ammo
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -114,7 +114,7 @@
 	desc = "Adds computer and machine frame designs to the RCD."
 	id = "rcd_upgrade_frames"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/rcd_upgrade/frames
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -126,7 +126,7 @@
 	desc = "Adds the ability to produce simple circuits using the RCD."
 	id = "rcd_upgrade_simple_circuits"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/rcd_upgrade/simple_circuits
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -138,7 +138,7 @@
 	desc = "Adds the ability to furnish areas using the RCD."
 	id = "rcd_upgrade_furnishing"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/rcd_upgrade/furnishing
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -150,7 +150,7 @@
 	desc = "Upgrades the RCD to be able to pull materials from the ore silo. The RCD must be linked to the silo using a multitool before it will function."
 	id = "rcd_upgrade_silo_link"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/titanium = 2500, /datum/material/bluespace = 2500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/rcd_upgrade/silo_link
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -162,7 +162,7 @@
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	id = "rpd_upgrade_unwrench"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/rpd_upgrade/unwrench
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -174,7 +174,7 @@
 	desc = "A tool that can portable and standing lighting orbs and glowsticks."
 	id = "rld_mini"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 8000, /datum/material/gold =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*10, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*5, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT*4, /datum/material/gold =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/construction/rld/mini
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -187,7 +187,7 @@
 	id = "gene_shears"
 	build_path = /obj/item/geneshears
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
 	)
@@ -197,7 +197,7 @@
 	name = "Research Plumbing Constructor"
 	id = "plumbing_rcd_sci"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*37.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*18.75, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/construction/plumbing/research
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
@@ -208,7 +208,7 @@
 	name = "Service Plumbing Constructor"
 	id = "plumbing_rcd_service"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*37.5, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*18.75, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/construction/plumbing/service
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
@@ -219,7 +219,7 @@
 	name = "Biopsy Tool"
 	id = "biopsy_tool"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*2, /datum/material/glass =MINERAL_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/biopsy_tool
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY
@@ -236,7 +236,7 @@
 	id = "alien_wrench"
 	build_path = /obj/item/wrench/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -248,7 +248,7 @@
 	id = "alien_wirecutters"
 	build_path = /obj/item/wirecutters/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -260,7 +260,7 @@
 	id = "alien_screwdriver"
 	build_path = /obj/item/screwdriver/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -272,7 +272,7 @@
 	id = "alien_crowbar"
 	build_path = /obj/item/crowbar/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -284,7 +284,7 @@
 	id = "alien_welder"
 	build_path = /obj/item/weldingtool/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -296,7 +296,7 @@
 	id = "alien_multitool"
 	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ALIEN
 	)
@@ -348,7 +348,7 @@
 	id = "alien_saw"
 	build_path = /obj/item/circular_saw/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)
@@ -360,7 +360,7 @@
 	id = "alien_drill"
 	build_path = /obj/item/surgicaldrill/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT*5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)

@@ -146,7 +146,7 @@
 	name = "Serving Tray"
 	id = "servingtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -170,7 +170,7 @@
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list(
 		RND_CATEGORY_INITIAL,
