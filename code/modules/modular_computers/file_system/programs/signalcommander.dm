@@ -32,9 +32,6 @@
 	return data
 
 /datum/computer_file/program/signal_commander/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("signal")
 			INVOKE_ASYNC(src, PROC_REF(signal))

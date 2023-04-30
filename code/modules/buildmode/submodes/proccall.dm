@@ -27,7 +27,7 @@
 	if(!proc_name || !proc_args)
 		tgui_alert(target_client, "Undefined ProcCall or arguments.")
 		return
-	
+
 	if(!hascall(object, proc_name))
 		to_chat(target_client, span_warning("Error: callproc_datum(): type [object.type] has no proc named [proc_name]."), confidential = TRUE)
 		return
@@ -36,12 +36,12 @@
 		to_chat(target_client, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
 
-	
+
 	var/msg = "[key_name(target_client)] called [object]'s [proc_name]() with [proc_args.len ? "the arguments [list2params(proc_args)]":"no arguments"]."
 	log_admin(msg)
 	message_admins(msg)
 	admin_ticket_log(object, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 	var/returnval = WrapAdminProcCall(object, proc_name, proc_args) // Pass the lst as an argument list to the proc
 	. = target_client.get_callproc_returnval(returnval, proc_name)
