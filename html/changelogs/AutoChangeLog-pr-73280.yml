@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "DNA injecting other people is no longer instant"
-  - bugfix: "Forcing people to drink is no longer instant"

@@ -10,3 +10,4 @@
 		CATEGORY_TOYS_DRONE,
 		CATEGORY_PKA,
 	)
+	blackbox_key = null

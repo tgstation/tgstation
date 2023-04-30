@@ -91,11 +91,12 @@
 		'sound/machines/tcomms/tcomms_mid7.ogg' = 1,
 	)
 	mid_length = 1.8 SECONDS
-	extra_range = -11
-	falloff_distance = 1
+	extra_range = -8
+	falloff_distance = 3
 	falloff_exponent = 5
-	volume = 50
+	volume = 35
 	ignore_walls = FALSE
+	pressure_affected = FALSE
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
@@ -121,7 +122,7 @@
 /datum/looping_sound/firealarm
 	mid_sounds = list('sound/machines/FireAlarm1.ogg' = 1,'sound/machines/FireAlarm2.ogg' = 1,'sound/machines/FireAlarm3.ogg' = 1,'sound/machines/FireAlarm4.ogg' = 1)
 	mid_length = 2.4 SECONDS
-	volume = 40
+	volume = 30
 
 /datum/looping_sound/gravgen/kinesis
 	volume = 20
@@ -132,3 +133,16 @@
 	mid_sounds = list('sound/effects/bubbles2.ogg' = 1)
 	mid_length = 7 SECONDS
 	volume = 25
+
+/datum/looping_sound/typing
+	mid_sounds = list(
+		'sound/machines/terminal_button01.ogg' = 1,
+		'sound/machines/terminal_button02.ogg' = 1,
+		'sound/machines/terminal_button03.ogg' = 1,
+		'sound/machines/terminal_button04.ogg' = 1,
+		'sound/machines/terminal_button05.ogg' = 1,
+		'sound/machines/terminal_button06.ogg' = 1,
+		'sound/machines/terminal_button07.ogg' = 1,
+		'sound/machines/terminal_button08.ogg' = 1,
+	)
+	mid_length = 0.3 SECONDS

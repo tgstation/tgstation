@@ -50,7 +50,7 @@
 				[span_notice("Removing [bite_size] nutritional units per operation.")]
 				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user)
+/obj/machinery/fat_sucker/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
@@ -65,7 +65,7 @@
 		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
-/obj/machinery/fat_sucker/open_machine(mob/user)
+/obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))
@@ -132,7 +132,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process(delta_time)
+/obj/machinery/fat_sucker/process(seconds_per_tick)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -144,8 +144,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size * delta_time)
-	nutrients += bite_size * delta_time
+	C.adjust_nutrition(-bite_size * seconds_per_tick)
+	nutrients += bite_size * seconds_per_tick
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)

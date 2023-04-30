@@ -57,6 +57,7 @@
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
+	resistance_flags = FLAMMABLE
 	bar_material = WOOD
 	var/drop_amount = 3
 
@@ -178,7 +179,7 @@
 	. += span_notice("Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	toggle_mode(user)
 

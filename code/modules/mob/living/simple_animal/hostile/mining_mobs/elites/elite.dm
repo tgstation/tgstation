@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list("boss")
+	faction = list(FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -257,13 +257,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	REMOVE_TRAIT(source, TRAIT_ELITE_CHALLENGER, REF(src))
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
-/obj/structure/elite_tumor/process(delta_time)
+/obj/structure/elite_tumor/process(seconds_per_tick)
 	if(!isturf(loc))
 		return
 
 	for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 		if(elitehere == mychild && activity == TUMOR_PASSIVE)
-			mychild.adjustHealth(-mychild.maxHealth * 0.025*delta_time)
+			mychild.adjustHealth(-mychild.maxHealth * 0.025*seconds_per_tick)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = "#FF0000"
 
@@ -416,3 +416,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef TUMOR_ACTIVE
+#undef TUMOR_INACTIVE
+#undef TUMOR_PASSIVE

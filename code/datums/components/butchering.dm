@@ -15,12 +15,12 @@
 	var/datum/callback/butcher_callback
 
 /datum/component/butchering/Initialize(
-	speed,
-	effectiveness,
-	bonus_modifier,
-	butcher_sound,
-	disabled,
-	can_be_blunt,
+	speed = 8 SECONDS,
+	effectiveness = 100,
+	bonus_modifier = 0,
+	butcher_sound = 'sound/effects/butcher.ogg',
+	disabled = FALSE,
+	can_be_blunt = FALSE,
 	butcher_callback,
 )
 	src.speed = speed
@@ -52,9 +52,8 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
-								span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
-				return COMPONENT_CANCEL_ATTACK_CHAIN
+				return
+
 			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 

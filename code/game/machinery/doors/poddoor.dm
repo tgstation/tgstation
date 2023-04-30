@@ -14,9 +14,14 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
+	/// The recipe for this door
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
-	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
+	/// The current deconstruction step
+	var/deconstruction = BLASTDOOR_FINISHED
+	/// The door's ID (used for buttons, etc to control the door)
 	var/id = 1
+	/// The sound that plays when the door opens/closes
+	var/animation_sound = 'sound/machines/blastdoor.ogg'
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -45,7 +50,7 @@
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
@@ -132,10 +137,10 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, animation_sound, 50, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()

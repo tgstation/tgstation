@@ -249,12 +249,12 @@
 				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
-						if (bodypart.dismemberable)
+						if (!(bodypart.bodypart_flags & BODYPART_UNREMOVABLE))
 							bodypart.dismember() //Using the power of flextape i've sawed this man's limb in half!
 							break
 			if (effectOrgans) //effectOrgans means remove every organ in our mob
 				var/mob/living/carbon/carbon_target_mob = target_living
-				for(var/obj/item/organ/organ_to_yeet as anything in carbon_target_mob.internal_organs)
+				for(var/obj/item/organ/organ_to_yeet as anything in carbon_target_mob.organs)
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 					organ_to_yeet.Remove(carbon_target_mob) //Note that this isn't the same proc as for lists
 					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
@@ -263,7 +263,7 @@
 				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs))
-					if (bodypart.dismemberable)
+					if (!(bodypart.bodypart_flags & BODYPART_UNREMOVABLE))
 						bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!
 						bodypart.throw_at(destination, 2, 3)
 						sleep(0.1 SECONDS)
@@ -424,6 +424,7 @@
 	addtimer(CALLBACK(src, PROC_REF(handleReturnAfterDeparting), holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/extractionpod/preReturn(atom/movable/holder)
+	// Double ensure we're loaded, this SHOULD be here by now but you never know
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)

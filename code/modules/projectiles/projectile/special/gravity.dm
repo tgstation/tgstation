@@ -5,7 +5,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
@@ -40,7 +39,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
@@ -74,7 +72,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#101010"
 	var/turf/T
 	var/power = 4

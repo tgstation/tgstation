@@ -56,6 +56,7 @@
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
+#define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_DRONE "Drone"
@@ -86,7 +87,6 @@
 #define ROLE_SPACE_SYNDICATE "Space Syndicate"
 #define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" //Ghost role syndi from Forgottenship ruin
 #define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" //Forgottenship captain syndie
-#define ROLE_HEADSLUG_CHANGELING "Headslug Changeling"
 #define ROLE_SPACE_PIRATE "Space Pirate"
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_SPACE_DOCTOR "Space Doctor"

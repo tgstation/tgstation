@@ -27,6 +27,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
 
+/obj/item/storage/box/tape_wizard
+	name = "Tape Wizard - Episode 23"
+	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
+
+/obj/item/storage/box/tape_wizard/PopulateContents()
+	new /obj/item/clothing/head/wizard/tape/fake(src)
+	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
+	new /obj/item/staff/tape(src)
+	new /obj/item/stack/sticky_tape(src)
+
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
@@ -176,3 +186,13 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+
+/obj/item/storage/box/holy/divine_archer
+	name = "Divine Archer Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer
+
+/obj/item/storage/box/holy/divine_archer/PopulateContents()
+	new /obj/item/clothing/under/rank/civilian/chaplain/divine_archer(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
+	new /obj/item/clothing/gloves/divine_archer(src)
+	new /obj/item/clothing/shoes/divine_archer(src)

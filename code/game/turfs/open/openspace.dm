@@ -1,12 +1,15 @@
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
-	icon_state = "invisible"
+	// We don't actually draw openspace, but it needs to have color
+	// In its icon state so we can count it as a "non black" tile
+	icon_state = MAP_SWITCH("pure_white", "invisible")
 	baseturfs = /turf/open/openspace
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
+	plane = TRANSPARENT_FLOOR_PLANE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -154,14 +157,23 @@
 		return TRUE
 	return FALSE
 
+/turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
+	if (!initial(new_floor_path.overfloor_placed))
+		ChangeTurf(new_floor_path, flags = flags)
+		return
+	// Create plating under tiled floor we try to create directly onto the air
+	PlaceOnTop(/turf/open/floor/plating, flags = flags)
+	PlaceOnTop(new_floor_path, flags = flags)
+
 /turf/open/openspace/icemoon
 	name = "ice chasm"
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon
-	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)
+	/// Replaces itself with replacement_turf if the turf has the no ruins allowed flag (usually ruins themselves)
 	var/protect_ruin = TRUE
+	/// The turf that will replace this one if the turf below has the no ruins allowed flag. we use this one so we don't get any potential double whammies
+	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
 	/// If true mineral turfs below this openspace turf will be mined automatically
 	var/drill_below = TRUE
 

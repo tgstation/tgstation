@@ -1,4 +1,10 @@
-/mob/living/silicon/proc/show_laws() //Redefined in ai/laws.dm and robot/laws.dm
+/mob/living/silicon/proc/show_laws()
+	laws_sanity_check()
+	var/list/law_box = list(span_bold("Obey these laws:"))
+	law_box += laws.get_law_list(include_zeroth = TRUE)
+	to_chat(src, examine_block(jointext(law_box, "\n")))
+
+/mob/living/silicon/proc/try_sync_laws()
 	return
 
 /mob/living/silicon/proc/laws_sanity_check()

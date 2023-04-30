@@ -158,7 +158,7 @@
 						new_computer.component_parts += movable_part
 
 					new_computer.RefreshParts()
-					new_computer.on_construction()
+					new_computer.on_construction(user)
 
 				qdel(src)
 				return

@@ -13,17 +13,13 @@
 		bringing you the best in electronics and software since 2467!"
 
 /datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("UpdateNote")
 			written_note = params["newnote"]
-			return UI_UPDATE
+			return TRUE
 
 /datum/computer_file/program/notepad/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["note"] = written_note
 

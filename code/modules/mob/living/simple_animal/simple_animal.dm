@@ -59,9 +59,9 @@
 	var/stamina_recovery = 5
 
 	///Minimal body temperature without receiving damage
-	var/minbodytemp = 250
+	var/minbodytemp = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
-	var/maxbodytemp = 350
+	var/maxbodytemp = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold.
 	var/unsuitable_cold_damage
 	///This damage is taken when the body temp is too hot.
@@ -79,10 +79,6 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
-	///Whether or not this mob is flammable
-	var/flammable = FALSE
-	///How quickly should fire stacks on this mob diminish?
-	var/fire_stack_removal_speed = -5
 	///How fast the mob's temperature normalizes. The greater the value, the slower their temperature normalizes. Should always be greater than 0.
 	var/temperature_normalization_speed = 5
 
@@ -126,8 +122,6 @@
 	var/obj/item/card/id/access_card = null
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
-
-	var/datum/component/spawner/nest
 
 	///Sentience type, for slime potions.
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -188,11 +182,10 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
-		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
+		add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
-	for(var/trait in weather_immunities)
-		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
 
@@ -215,19 +208,15 @@
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
-
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
 
 	var/turf/T = get_turf(src)
 	if (T && AIStatus == AI_Z_OFF)
@@ -368,7 +357,7 @@
 	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
@@ -376,23 +365,23 @@
 		if(abs(temp_delta) > 5)
 			if(temp_delta < 0)
 				if(!on_fire)
-					adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, temp_delta, 0))
+					adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
 			else
-				adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, 0, temp_delta))
+				adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
-		adjustHealth(unsuitable_atmos_damage * delta_time)
+		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
-	handle_temperature_damage(delta_time, times_fired)
+	handle_temperature_damage(seconds_per_tick, times_fired)
 
-/mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
+/mob/living/simple_animal/proc/handle_temperature_damage(seconds_per_tick, times_fired)
 	. = FALSE
 	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
-		adjustHealth(unsuitable_cold_damage * delta_time)
+		adjustHealth(unsuitable_cold_damage * seconds_per_tick)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
@@ -403,7 +392,7 @@
 		. = TRUE
 
 	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
-		adjustHealth(unsuitable_heat_damage * delta_time)
+		adjustHealth(unsuitable_heat_damage * seconds_per_tick)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
@@ -459,9 +448,6 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	if(nest)
-		nest.spawned_mobs -= src
-		nest = null
 	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
@@ -495,31 +481,6 @@
 		if(LAZYLEN(M.occupants))
 			return FALSE
 	return TRUE
-
-/mob/living/simple_animal/ignite_mob(silent)
-	if(!flammable)
-		return FALSE
-	return ..()
-
-/mob/living/simple_animal/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
-
-/mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
-	if(on_fire && isnull(last_icon_state))
-		add_overlay(fire_overlay)
-		return fire_overlay
-	else if(!on_fire && !isnull(last_icon_state))
-		cut_overlay(fire_overlay)
-		return null
-	else if(on_fire && !isnull(last_icon_state))
-		return last_icon_state
-	return null
-
-/mob/living/simple_animal/extinguish_mob()
-	if(!flammable)
-		return
-	return ..()
 
 /mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -577,12 +538,11 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_see_in_dark(NIGHTVISION_FOV_RANGE)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 	set_invis_see(initial(see_invisible))
-	set_see_in_dark(initial(see_in_dark))
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		set_sight(null)
 	else

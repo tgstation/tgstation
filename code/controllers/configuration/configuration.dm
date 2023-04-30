@@ -96,6 +96,8 @@
 	LoadChatFilter()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		validate_job_config()
+	if(CONFIG_GET(flag/usewhitelist))
+		load_whitelist()
 
 	loaded = TRUE
 
@@ -239,7 +241,7 @@
 			log_config(log_message)
 			stack_trace(log_message)
 		else
-			if(E.modified && !E.dupes_allowed)
+			if(E.modified && !E.dupes_allowed && E.resident_file == filename)
 				log_config_error("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename

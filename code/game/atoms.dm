@@ -346,13 +346,13 @@
 	attack_hand_interact = TRUE,
 	list/canhold,
 	list/canthold,
-	type = /datum/storage,
+	storage_type = /datum/storage,
 )
 
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
-	atom_storage = new type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
+	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
 
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)
@@ -409,42 +409,36 @@
 	return !density
 
 /**
- * Is this atom currently located on centcom
+ * Is this atom currently located on centcom (or riding off into the sunset on a shuttle)
  *
- * Specifically, is it on the z level and within the centcom areas
- *
- * You can also be in a shuttleshuttle during endgame transit
+ * Specifically, is it on the z level and within the centcom areas.
+ * You can also be in a shuttle during endgame transit.
  *
  * Used in gamemode to identify mobs who have escaped and for some other areas of the code
  * who don't want atoms where they shouldn't be
+ *
+ * Returns TRUE if this atom is on centcom or an escape shuttle, or FALSE if not
  */
 /atom/proc/onCentCom()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
+	// This doesn't necessarily check that we're at central command,
+	// but it checks for any shuttles which have finished are still in hyperspace
+	// (IE, stuff like the whiteship which fly off into the sunset and "escape")
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
-				continue
-			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-				if(current_turf in shuttle_area)
-					return TRUE
+		return on_escaped_shuttle(ENDGAME_TRANSIT)
 
-	if(!is_centcom_level(current_turf.z))//if not, don't bother
+	// From here on we only concern ourselves with people actually on the centcom Z
+	if(!is_centcom_level(current_turf.z))
 		return FALSE
 
-	//Check for centcom itself
 	if(istype(current_turf.loc, /area/centcom))
 		return TRUE
 
-	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
-		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
-			for(var/place as anything in mobile_docking_port.shuttle_areas)
-				var/area/shuttle/shuttle_area = place
-				if(current_turf in shuttle_area)
-					return TRUE
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
 
 /**
  * Is the atom in any of the syndicate areas
@@ -452,17 +446,48 @@
  * Either in the syndie base, or any of their shuttles
  *
  * Also used in gamemode code for win conditions
+ *
+ * Returns TRUE if this atom is on the syndicate recon base, any of its shuttles, or an escape shuttle, or FALSE if not
  */
 /atom/proc/onSyndieBase()
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return FALSE
 
-	if(!is_reserved_level(current_turf.z))//if not, don't bother
+	// Syndicate base is loaded in a reserved level. If not reserved, we don't care.
+	if(!is_reserved_level(current_turf.z))
 		return FALSE
 
-	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
+	var/static/list/syndie_typecache = typecacheof(list(
+		/area/centcom/syndicate_mothership, // syndicate base itself
+		/area/shuttle/assault_pod, // steel rain
+		/area/shuttle/syndicate, // infiltrator
+	))
+
+	if(is_type_in_typecache(current_turf.loc, syndie_typecache))
 		return TRUE
+
+	// Finally, check if we're on an escaped shuttle
+	return on_escaped_shuttle()
+
+/**
+ * Checks that we're on a shuttle that's escaped
+ *
+ * * check_for_launch_status - What launch status do we check for? Generally the two you want to check for are ENDGAME_LAUNCHED or ENDGAME_TRANSIT
+ *
+ * Returns TRUE if this atom is on a shuttle which is escaping or has escaped, or FALSE otherwise
+ */
+/atom/proc/on_escaped_shuttle(check_for_launch_status = ENDGAME_LAUNCHED)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return FALSE
+
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
+		if(mobile_docking_port.launch_status != check_for_launch_status)
+			continue
+		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
+			if(current_turf in shuttle_area.get_contained_turfs())
+				return TRUE
 
 	return FALSE
 
@@ -700,29 +725,29 @@
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
 
 	if(reagents)
-		if(reagents.flags & TRANSPARENT)
-			. += "It contains:"
-			if(length(reagents.reagent_list))
-				if(user.can_see_reagents()) //Show each individual reagent
-					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-						. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
-					if(reagents.is_reacting)
-						. += span_warning("It is currently reacting!")
-					. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
-				else //Otherwise, just show the total volume
-					var/total_volume = 0
-					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-						total_volume += current_reagent.volume
-					. += "[total_volume] units of various reagents"
-			else
-				. += "Nothing."
-		else if(reagents.flags & AMOUNT_VISIBLE)
-			if(reagents.total_volume)
-				. += span_notice("It has [reagents.total_volume] unit\s left.")
-			else
-				. += span_danger("It's empty.")
+		var/user_sees_reagents = user.can_see_reagents()
+		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_PARENT_REAGENT_EXAMINE, user, ., user_sees_reagents)
+		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
+			if(reagents.flags & TRANSPARENT)
+				if(reagents.total_volume > 0)
+					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
+					if(user_sees_reagents) //Show each individual reagent
+						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+						if(reagents.is_reacting)
+							. += span_warning("It is currently reacting!")
+						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
+
+				else
+					. += "It contains:<br>Nothing."
+			else if(reagents.flags & AMOUNT_VISIBLE)
+				if(reagents.total_volume)
+					. += span_notice("It has [reagents.total_volume] unit\s left.")
+				else
+					. += span_danger("It's empty.")
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)
  *
@@ -785,9 +810,13 @@
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 		var/list/new_overlays = update_overlays(updates)
-		if(managed_overlays)
-			cut_overlay(managed_overlays)
-			managed_overlays = null
+		if (managed_overlays)
+			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
+				overlays = null
+				POST_OVERLAY_CHANGE(src)
+			else
+				cut_overlay(managed_overlays)
+				managed_overlays = null
 		if(length(new_overlays))
 			if (length(new_overlays) == 1)
 				managed_overlays = new_overlays[1]
@@ -808,6 +837,24 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
+
+/**
+ * Checks the atom's loc and calls update_held_items on it if it is a mob.
+ *
+ * This should only be used in situations when you are unable to use /datum/element/update_icon_updates_onmob for whatever reason.
+ * Check code/datums/elements/update_icon_updates_onmob.dm before using this. Adding that to the atom and calling update_appearance will work for most cases.
+ *
+ * Arguments:
+ * * mob/target - The mob to update the icons of. Optional argument, use if the atom's loc is not the mob you want to update.
+ */
+/atom/proc/update_inhand_icon(mob/target = loc)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!istype(target))
+		return
+
+	target.update_held_items()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
 
 /// Handles updates to greyscale value updates.
 /// The colors argument can be either a list or the full color string.
@@ -883,9 +930,23 @@
 		return FALSE
 	return TRUE
 
+/**
+ * Respond to fire being used on our atom
+ *
+ * Default behaviour is to send [COMSIG_ATOM_FIRE_ACT] and return
+ */
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
-	return
+	return FALSE
+
+/**
+ * Sends [COMSIG_ATOM_EXTINGUISH] signal, which properly removes burning component if it is present.
+ *
+ * Default behaviour is to send [COMSIG_ATOM_ACID_ACT] and return
+ */
+/atom/proc/extinguish()
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)
 
 /**
  * React to being hit by a thrown object
@@ -1069,6 +1130,9 @@
  */
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_PRE_DIR_CHANGE, dir, newdir) & COMPONENT_ATOM_BLOCK_DIR_CHANGE)
+		newdir = dir
+		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -1228,6 +1292,8 @@
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_SPIN_ANIMATION, "SpinAnimation")
+	VV_DROPDOWN_OPTION(VV_HK_STOP_ALL_ANIMATIONS, "Stop All Animations")
 	VV_DROPDOWN_OPTION(VV_HK_SHOW_HIDDENPRINTS, "Show Hiddenprint log")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
@@ -1341,6 +1407,33 @@
 				transform = M.Turn(angle)
 
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
+
+	if(href_list[VV_HK_SPIN_ANIMATION] && check_rights(R_VAREDIT))
+		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
+		if(num_spins == "No")
+			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+		else
+			num_spins = -1
+		if(!num_spins)
+			return
+		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
+		if(!spin_speed)
+			return
+		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
+		switch(direction)
+			if("Clockwise")
+				direction = 1
+			if("Counter-clockwise")
+				direction = 0
+			else
+				return
+		SpinAnimation(spin_speed, num_spins, direction)
+
+	if(href_list[VV_HK_STOP_ALL_ANIMATIONS] && check_rights(R_VAREDIT))
+		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
+		if(result == "Yes")
+			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
+		return
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
@@ -1504,7 +1597,7 @@
 				created_atom.pixel_x += rand(-8,8)
 				created_atom.pixel_y += rand(-8,8)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)]\s"] from [src]."))
+			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 			created_atoms.Add(created_atom)
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 		UsedforProcessing(user, process_item, chosen_option)
@@ -1518,7 +1611,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
-	ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user))
+	if(user.mind)
+		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 //! Tool-specific behavior procs.
 ///
@@ -1756,6 +1850,11 @@
  *
  * micro-optimized to hell because this proc is very hot, being called several times per movement every movement.
  *
+ * HEY JACKASS, LISTEN
+ * IF YOU ADD SOMETHING TO THIS PROC, MAKE SURE /mob/living ACCOUNTS FOR IT
+ * Living mobs treat gravity in an event based manner. We've decomposed this proc into different checks
+ * for them to use. If you add more to it, make sure you do that, or things will behave strangely
+ *
  * Gravity situations:
  * * No gravity if you're not in a turf
  * * No gravity if this atom is in is a space turf
@@ -1769,7 +1868,7 @@
 		gravity_turf = get_turf(src)
 
 		if(!gravity_turf)//no gravity in nullspace
-			return 0
+			return FALSE
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
@@ -1786,7 +1885,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level["[gravity_turf.z]"] || turf_area.has_gravity)
+	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics
@@ -1794,6 +1893,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
+	return
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2013,3 +2113,39 @@
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density
+
+/// Makes this atom look like a "hologram"
+/// So transparent, blue, with a scanline and an emissive glow
+/// This is acomplished using a combination of filters and render steps/overlays
+/// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
+/atom/proc/makeHologram(opacity = 0.5)
+	// First, we'll make things blue (roughly) and sorta transparent
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	// Now we're gonna do a scanline effect
+	// Gonna take this atom and give it a render target, then use it as a source for a filter
+	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
+	var/static/atom/movable/scanline
+	if(!scanline)
+		scanline = new(null)
+		scanline.icon = 'icons/effects/effects.dmi'
+		scanline.icon_state = "scanline"
+		// * so it doesn't render
+		scanline.render_target = "*HoloScanline"
+	// Now we add it as a filter, and overlay the appearance so the render source is always around
+	add_filter("HOLO: Scanline", 2, alpha_mask_filter(render_source = scanline.render_target))
+	add_overlay(scanline)
+	// Annd let's make the sucker emissive, so it glows in the dark
+	if(!render_target)
+		var/static/uid = 0
+		render_target = "HOLOGRAM [uid]"
+		uid++
+	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
+	var/static/atom/movable/render_step/emissive/glow = new(null)
+	glow.render_source = render_target
+	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
+	// We're creating a render step that copies ourselves, and draws it to the emissive plane
+	// Then we overlay it, and release "ownership" back to this proc, since we get to keep the appearance it generates
+	// We can't just use an MA from the start cause render_source setting starts going fuckey REALLY quick
+	var/mutable_appearance/glow_appearance = new(glow)
+	add_overlay(glow_appearance)
+	LAZYADD(update_overlays_on_z, glow_appearance)

@@ -21,12 +21,15 @@
 #_maps/shuttles/emergency_cramped.dmm
 #_maps/shuttles/emergency_discoinferno.dmm
 #_maps/shuttles/emergency_goon.dmm
+#_maps/shuttles/emergency_hugcage.dmm
 #_maps/shuttles/emergency_imfedupwiththisworld.dmm
+#_maps/shuttles/emergency_lance.dmm
 #_maps/shuttles/emergency_luxury.dmm
 #_maps/shuttles/emergency_meteor.dmm
 #_maps/shuttles/emergency_raven.dmm
 #_maps/shuttles/emergency_russiafightpit.dmm
 #_maps/shuttles/emergency_scrapheap.dmm
 #_maps/shuttles/emergency_supermatter.dmm
+#_maps/shuttles/emergency_tranquility.dmm
 #_maps/shuttles/emergency_venture.dmm
 #_maps/shuttles/emergency_wabbajack.dmm

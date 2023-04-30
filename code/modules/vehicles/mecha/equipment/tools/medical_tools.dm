@@ -172,7 +172,7 @@
 				<font color="[patient.getToxLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
 				<font color="[patient.getFireLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
 				[span_danger("[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]")]<br />
-				[span_danger("[patient.getOrganLoss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
+				[span_danger("[patient.get_organ_loss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
 				[span_danger("[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]")]<br />
 				"}
 
@@ -207,7 +207,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
 	go_out()
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process(seconds_per_tick)
 	. = ..()
 	if(.)
 		return
@@ -225,12 +225,12 @@
 		STOP_PROCESSING(SSobj, src)
 		patient = null
 	if(ex_patient.health > 0)
-		ex_patient.adjustOxyLoss(-0.5 * delta_time)
-	ex_patient.AdjustStun(-40 * delta_time)
-	ex_patient.AdjustKnockdown(-40 * delta_time)
-	ex_patient.AdjustParalyzed(-40 * delta_time)
-	ex_patient.AdjustImmobilized(-40 * delta_time)
-	ex_patient.AdjustUnconscious(-40 * delta_time)
+		ex_patient.adjustOxyLoss(-0.5 * seconds_per_tick)
+	ex_patient.AdjustStun(-40 * seconds_per_tick)
+	ex_patient.AdjustKnockdown(-40 * seconds_per_tick)
+	ex_patient.AdjustParalyzed(-40 * seconds_per_tick)
+	ex_patient.AdjustImmobilized(-40 * seconds_per_tick)
+	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
 	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
 	chassis.use_power(energy_drain)
@@ -471,7 +471,7 @@
 	return NONE
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process(seconds_per_tick)
 	. = ..()
 	if(.)
 		return
@@ -479,7 +479,7 @@
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_alert("Reagent processing stopped.")]")
 		log_message("Reagent processing stopped.", LOG_MECHA)
 		return PROCESS_KILL
-	var/amount = delta_time * synth_speed / LAZYLEN(processed_reagents)
+	var/amount = seconds_per_tick * synth_speed / LAZYLEN(processed_reagents)
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
 		chassis.use_power(energy_drain)

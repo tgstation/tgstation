@@ -30,7 +30,7 @@
 	if(locked)
 		to_chat(user, span_notice("The crate is locked with a Deca-code lock."))
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
-		if(user.canUseTopic(src, be_close = TRUE) && locked)
+		if(user.can_perform_action(src) && locked)
 			var/list/sanitised = list()
 			var/sanitycheck = TRUE
 			var/char = ""
@@ -60,7 +60,7 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 

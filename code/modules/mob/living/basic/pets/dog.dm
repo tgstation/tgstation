@@ -14,7 +14,7 @@
 
 /datum/pet_command/point_targetting/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
-	parent.ai_controller.blackboard[BB_DOG_HARASS_HARM] = TRUE
+	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
 
 /mob/living/basic/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -26,7 +26,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	see_in_dark = 5
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
@@ -83,6 +82,11 @@
 	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 	/// Is this corgi physically slow due to age, etc?
 	var/is_slow = FALSE
+
+/mob/living/basic/pet/dog/corgi/examine(mob/user)
+	. = ..()
+	if(access_card)
+		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
 /mob/living/basic/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
@@ -155,7 +159,7 @@
 /mob/living/basic/pet/dog/corgi/proc/stop_deadchat_plays()
 	var/controller_type = initial(ai_controller)
 	ai_controller = new controller_type(src)
-	ai_controller?.blackboard[BB_DOG_IS_SLOW] = is_slow
+	ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, is_slow)
 
 /mob/living/basic/pet/dog/corgi/handle_atom_del(atom/A)
 	if(A == inventory_head)
@@ -552,11 +556,11 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		held_state = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
-		ai_controller?.blackboard[BB_DOG_IS_SLOW] = TRUE
+		ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, TRUE)
 		is_slow = TRUE
 		speed = 2
 
-/mob/living/basic/pet/dog/corgi/ian/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/corgi/ian/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -625,13 +629,13 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
-	faction = list(FACTION_NEUTRAL, "cult")
+	faction = list(FACTION_NEUTRAL, FACTION_CULT)
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE
 	held_state = "narsian"
 
-/mob/living/basic/pet/dog/corgi/narsie/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/corgi/narsie/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && !istype(P,/mob/living/basic/pet/dog/corgi/narsie))
@@ -664,6 +668,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/corgi/regenerate_icons()
 	..()
+	cut_overlays() //we are redrawing the mob after all
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -793,7 +798,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	maxHealth = 50
 	gender = NEUTER
 	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/breadslice = 3,  \
+	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
@@ -816,13 +821,13 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/basic/pet/dog/breaddog/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 
 	if(health < maxHealth)
-		adjustBruteLoss(-4 * delta_time) //Fast life regen
+		adjustBruteLoss(-4 * seconds_per_tick) //Fast life regen
 
 	for(var/mob/living/carbon/humanoid_entities in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
 		humanoid_entities.add_mood_event("kobun", /datum/mood_event/kobun)

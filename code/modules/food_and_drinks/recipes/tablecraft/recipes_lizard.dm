@@ -22,11 +22,16 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/carrot = 1,
-		/obj/item/food/grown/chili = 1
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/organ/internal/lungs = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
+	blacklist = list(
+		/obj/item/organ/internal/lungs/cybernetic,
+	)
+
 	result = /obj/item/food/shredded_lungs
 	category = CAT_LIZARD
 
@@ -65,7 +70,7 @@
 /datum/crafting_recipe/food/lizard_escargot
 	name = "Desert snail cocleas"
 	reqs = list(
-		/obj/item/food/desert_snails = 1,
+		/obj/item/food/canned/desert_snails = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
@@ -129,7 +134,7 @@
 /datum/crafting_recipe/food/nectar_larvae
 	name = "Nectar larvae"
 	reqs = list(
-		/obj/item/food/larvae = 1,
+		/obj/item/food/canned/larvae = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/korta_nectar = 5
@@ -185,7 +190,7 @@
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
 	reqs = list(
-		/obj/item/food/desert_snails = 1,
+		/obj/item/food/canned/desert_snails = 1,
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/ethanol/wine = 5
@@ -275,8 +280,8 @@
 	name = "Stinging flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-		/obj/item/food/larvae = 1,
-		/obj/item/food/canned_jellyfish = 1
+		/obj/item/food/canned/larvae = 1,
+		/obj/item/food/canned/jellyfish = 1
 	)
 	result = /obj/item/food/pizza/flatbread/stinging
 	category = CAT_LIZARD
@@ -343,70 +348,6 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honey_roll
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/atrakor_dumplings
-	name = "Atrakor dumpling soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/meat/rawcutlet = 2,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/lizard_dumplings = 1,
-		/datum/reagent/consumable/soysauce = 5
-	)
-	result = /obj/item/food/soup/atrakor_dumplings
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/meatball_noodles
-	name = "Meatball noodle soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/meat/rawcutlet = 2,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/spaghetti/nizaya = 1,
-		/obj/item/food/meatball = 2,
-		/obj/item/food/grown/peanut = 1
-	)
-	result = /obj/item/food/soup/meatball_noodles
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/black_broth
-	name = "Tiziran black broth"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/tiziran_sausage = 1,
-		/obj/item/food/grown/onion = 1,
-		/datum/reagent/consumable/vinegar = 5,
-		/datum/reagent/blood = 5,
-		/datum/reagent/consumable/ice = 2
-	)
-	result = /obj/item/food/soup/black_broth
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/jellyfish_stew
-	name = "Jellyfish stew"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/canned_jellyfish = 1,
-		/obj/item/food/grown/soybeans = 1,
-		/obj/item/food/grown/redbeet = 1,
-		/obj/item/food/grown/potato = 1
-	)
-	result = /obj/item/food/soup/jellyfish
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/rootbread_soup
-	name = "Rootbread soup"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/breadslice/root = 2,
-		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/egg = 1
-	)
-	result = /obj/item/food/soup/rootbread_soup
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/black_eggs
@@ -489,4 +430,26 @@
 		/datum/reagent/lye = 5
 	)
 	result = /obj/item/food/steeped_mushrooms
+	category = CAT_LIZARD
+
+// Soups
+
+/datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
+	reaction = /datum/chemical_reaction/food/soup/atrakor_dumplings
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/meatball_noodles
+	reaction = /datum/chemical_reaction/food/soup/meatball_noodles
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/black_broth
+	reaction = /datum/chemical_reaction/food/soup/black_broth
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/rootbread_soup
+	reaction = /datum/chemical_reaction/food/soup/rootbread_soup
 	category = CAT_LIZARD

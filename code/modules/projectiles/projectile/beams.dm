@@ -63,7 +63,6 @@
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	nodamage = TRUE
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
@@ -90,13 +89,16 @@
 	damage = 30
 	damage_type = STAMINA
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/weapons/sear_disabler.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+
+/obj/projectile/beam/disabler/weak
+	damage = 15
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -217,3 +219,6 @@
 	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/beam/shrink/is_hostile_projectile()
+	return TRUE

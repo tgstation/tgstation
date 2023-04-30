@@ -19,6 +19,8 @@
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
+	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
+	var/has_emissive = TRUE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -65,7 +67,7 @@
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
-	if(!machine_stat)
+	if(!machine_stat && has_emissive)
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
@@ -86,7 +88,7 @@
 		SStgui.update_uis(src)
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(O, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -219,7 +221,7 @@
 				if(!desired)
 					return FALSE
 
-			if(QDELETED(src) || QDELETED(usr) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+			if(QDELETED(src) || QDELETED(usr) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/dispensed_item in src)
@@ -265,10 +267,12 @@
 	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
+	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
+	has_emissive = FALSE
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
@@ -451,9 +455,9 @@
 		max_n_of_items = 20 * matter_bin.tier
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (matter_bin.tier - 1) * 0.5)
 
-/obj/machinery/smartfridge/organ/process(delta_time)
+/obj/machinery/smartfridge/organ/process(seconds_per_tick)
 	for(var/obj/item/organ/organ in contents)
-		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
+		organ.apply_organ_damage(-repair_rate * organ.maxHealth * seconds_per_tick)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()

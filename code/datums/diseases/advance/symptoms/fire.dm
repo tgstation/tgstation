@@ -10,6 +10,7 @@
 /datum/symptom/fire
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
+	illness = "Spontaneous Combustion"
 	stealth = -1
 	resistance = -4
 	stage_speed = -3
@@ -58,7 +59,7 @@
 			living_mob.ignite_mob(silent = TRUE)
 			if(living_mob.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
 				living_mob.visible_message(span_warning("[living_mob] catches fire!"), ignored_mobs = living_mob)
-				to_chat(living_mob, span_userdanger(advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!"))
+				to_chat(living_mob, span_userdanger((advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!")))
 				living_mob.emote("scream")
 			else if(!suppress_warning)
 				warn_mob(living_mob)
@@ -88,6 +89,7 @@ Bonus
 
 	name = "Alkali perspiration"
 	desc = "The virus attaches to sudoriparous glands, synthesizing a chemical that bursts into flames when reacting with water, leading to self-immolation."
+	illness = "Crispy Skin"
 	stealth = 2
 	resistance = -2
 	stage_speed = -2

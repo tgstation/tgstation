@@ -46,6 +46,15 @@
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/suit_storage_unit
+	name = "Suit Storage Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/suit_storage_unit
+	req_components = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/capacitor = 1)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -502,7 +511,7 @@
 /obj/item/circuitboard/machine/space_heater
 	name = "Space Heater"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/space_heater/constructed
+	build_path = /obj/machinery/space_heater
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/capacitor = 1,
@@ -773,7 +782,7 @@
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
 	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
-	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(loc != user)
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
@@ -1098,7 +1107,21 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/oven
 	req_components = list(/datum/stock_part/micro_laser = 1)
-	needs_anchored = FALSE
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/stove
+	name = "Stove"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/stove
+	req_components = list(/datum/stock_part/micro_laser = 1)
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/range
+	name = "Range (Oven & Stove)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/oven/range
+	req_components = list(/datum/stock_part/micro_laser = 2)
+	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive"
@@ -1410,3 +1433,9 @@
 		/datum/stock_part/capacitor/tier2 = 1,
 		/datum/stock_part/micro_laser/tier2 = 2,
 	)
+
+/obj/item/circuitboard/machine/navbeacon
+	name = "Bot Navigational Beacon"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/navbeacon
+	req_components = list()

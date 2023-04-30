@@ -19,6 +19,8 @@
 	max_occurrences = 0
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Nar'sie constructs pour out of portals."
+	min_wizard_trigger_potency = 5
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)

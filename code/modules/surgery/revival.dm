@@ -19,11 +19,9 @@
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
-	if(target.suiciding || HAS_TRAIT(target, TRAIT_HUSK))
+	if(HAS_TRAIT(target, TRAIT_SUICIDED) || HAS_TRAIT(target, TRAIT_HUSK) || HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
-		return FALSE
-	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE

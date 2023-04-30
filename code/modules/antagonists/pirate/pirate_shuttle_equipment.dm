@@ -33,7 +33,7 @@
 	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,span_notice("You toggle [src] [active ? "on":"off"]."))
-	to_chat(user,span_warning("The scrambling signal can be now tracked by GPS."))
+	to_chat(user,span_warning("The scrambling signal can now be tracked by GPS."))
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
@@ -43,7 +43,7 @@
 	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
 	if(scramble_response != "Yes")
 		return
-	if(active || !user.canUseTopic(src, be_close = TRUE))
+	if(active || !user.can_perform_action(src))
 		return
 	toggle_on(user)
 	update_appearance()
@@ -52,9 +52,9 @@
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
 	for(var/obj/machinery/rnd/server/S as anything in SSresearch.science_tech.techweb_servers)
-		if(S.machine_stat & (NOPOWER|BROKEN))
+		if(S.machine_stat & (NOPOWER|BROKEN|EMPED))
 			continue
-		S.emp_act()
+		S.emp_act(EMP_LIGHT)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
@@ -66,7 +66,7 @@
 		to_chat(user,span_notice("There's nothing to withdraw."))
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
-	priority_announce("Data theft signal detected, source registered on local gps units.")
+	priority_announce("Data theft signal detected; source registered on local GPS units.")
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
@@ -101,7 +101,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/psyker
 	name = "psyker navigation warper"
-	desc = "Used to designate a precise transit location for the psyker shuttle, using sent out brainwaves as detailed sight."
+	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
 	icon_screen = "recharge_comp_on"
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
 	x_offset = 0
@@ -371,7 +371,7 @@
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind) //mint condition only
 		return 0
-	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
+	else if(FACTION_PIRATE in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000

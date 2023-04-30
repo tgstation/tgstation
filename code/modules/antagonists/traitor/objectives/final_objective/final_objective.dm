@@ -5,12 +5,15 @@
 		/datum/traitor_objective/ultimate/battlecruiser = 1,
 		/datum/traitor_objective/ultimate/space_dragon = 1,
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
+		/datum/traitor_objective/ultimate/infect_ai = 1,
+		/datum/traitor_objective/ultimate/dark_matteor = 1,
 	)
 	weight = 100
 
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
 	progression_minimum = 140 MINUTES
+	needs_reward = FALSE
 
 	var/progression_points_in_objectives = 20 MINUTES
 
@@ -28,6 +31,8 @@
 	. = ..()
 	handler.maximum_potential_objectives = 0
 	for(var/datum/traitor_objective/objective as anything in handler.potential_objectives)
+		if(objective == src)
+			continue
 		objective.fail_objective()
 	user.playsound_local(get_turf(user), 'sound/traitor/final_objective.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	handler.final_objective = name

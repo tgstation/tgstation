@@ -268,7 +268,7 @@
 	if((gauss_real >= gauss_major)) //Major Success.
 		if(SSresearch.techweb_nodes_experimental.len > 0)
 			say("Experiment concluded with major success. New technology node discovered on technology disc.")
-			new /obj/item/disk/tech_disk/major(dropturf,1)
+			new /obj/item/disk/design_disk/bepis/remove_tech(dropturf,1)
 			return
 		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
@@ -278,10 +278,18 @@
 		return
 	if(gauss_real <= -1) //Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-		new /mob/living/simple_animal/deer(dropturf, 1)
+		new /mob/living/basic/deer(dropturf, 1)
 		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
 		return
 	//Minor Failure
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
 	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
+
+
+#undef MACHINE_OPERATION
+#undef MACHINE_OVERLOAD
+#undef MAJOR_THRESHOLD
+#undef MINOR_THRESHOLD
+#undef STANDARD_DEVIATION
+#undef PART_CASH_OFFSET_AMOUNT

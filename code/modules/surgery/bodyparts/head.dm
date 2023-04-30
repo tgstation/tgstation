@@ -77,10 +77,6 @@
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
 
-	var/is_blushing = FALSE
-	var/face_offset_x = 0
-	var/face_offset_y = 0
-
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -113,7 +109,7 @@
 	if(IS_ORGANIC_LIMB(src) && show_organs_on_examine)
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || brainmob?.suiciding)
+		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
 		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
@@ -155,7 +151,7 @@
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.setOrganDamage(brain.maxHealth)
+				brain.set_organ_damage(brain.maxHealth)
 			brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
@@ -174,8 +170,6 @@
 
 	return ..()
 
-#define OFFSET_X 1
-#define OFFSET_Y 2
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
@@ -188,28 +182,11 @@
 		stored_lipstick_trait = null
 	update_hair_and_lips()
 
-	if(OFFSET_FACE in owner.dna?.species.offset_features)
-		var/offset = owner.dna.species.offset_features[OFFSET_FACE]
-		face_offset_x = offset[OFFSET_X]
-		face_offset_y = offset[OFFSET_Y]
-
-	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
-
-#undef OFFSET_X
-#undef OFFSET_Y
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
 	. = ..()
-
-	// Blush emote overlay
-	if (is_blushing)
-		var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "blush", -BODY_ADJ_LAYER) // Should appear behind the eyes
-		blush_overlay.color = COLOR_BLUSH_PINK
-		blush_overlay.pixel_x += face_offset_x
-		blush_overlay.pixel_y += face_offset_y
-		. += blush_overlay
 
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
@@ -319,6 +296,9 @@
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -335,7 +315,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = FALSE
+	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
@@ -348,6 +328,6 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = FALSE
+	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

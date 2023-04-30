@@ -7,7 +7,7 @@
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
 
 
-/// called after a successful area creation by a mob: (area/created_area, area/old_area, mob/creator)
+/// called after a successful area creation by a mob: (area/created_area, list/area/old_areas, mob/creator)
 #define COMSIG_AREA_CREATED "!mob_created_area"
 ///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
@@ -39,7 +39,7 @@
 #define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
-/// Called by (/datum/round_event_control/RunEvent).
+/// Called by (/datum/round_event_control/run_event).
 #define COMSIG_GLOB_RANDOM_EVENT "!random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_RANDOM_EVENT (1<<0)
@@ -51,6 +51,8 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// an obj/machinery is created! (obj/machinery/created_machine)
+#define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
 /// a weather event of some kind occured
@@ -78,3 +80,6 @@
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
+
+/// global signal when a global nullrod type is picked
+#define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"

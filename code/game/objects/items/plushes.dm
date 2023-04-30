@@ -586,6 +586,53 @@
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
 
+/obj/item/toy/plush/whiny_plushie
+	name = "whiny plushie"
+	desc = "An ancient plushie that demands constant companionship, after being forgotten for too long."
+	icon_state = "plushie_whiny"
+	inhand_icon_state = null
+	/// static list of cry messages it picks from to speak when it is insecure from no movement
+	var/static/list/cry_still_messages
+	/// static list of cry messages it picks from to speak when it is insecure from no holder
+	var/static/list/cry_alone_messages
+	/// cooldown for it sending messages, it will every 10 seconds
+	COOLDOWN_DECLARE(cry_cooldown)
+
+/obj/item/toy/plush/whiny_plushie/Initialize(mapload)
+	. = ..()
+	if(!cry_still_messages)
+		cry_still_messages = list(
+			"WHY DID WE STOP MOVING?! ARE YOU GOING TO LEAVE ME?!!",
+			"WE COULD GET ATTACKED WE'RE SITTING DUCKS MOVE MOOOOOOOVE!!",
+			"YOU'RE PLANNING ON DROPPING ME AREN'T YOU I KNOW YOU AAAAAAAREE!!",
+			"THE SYNDICATE ARE TRIANGULATING OUR LOCAAAAAAAATIONNN!!",
+			"THIS PLACE IS SCARY I WANNA LEEEEEAAAAAVVVEEEEEE!!",
+			"CHELP, CHELP CCCCHHHHEEEEEEEEEEEEEEELLLLLLLPPPPPP!!",
+		)
+		cry_alone_messages = list(
+			"NOOOOOOOOOOOOOOOOOO DON'T LEAVE MEEEEE!!",
+			"WUH WHERE DID EVERYONE GOOOOOOHHHHHHH WAHHH!!",
+			"SOMEONE, ANYONEEEEEEEEE PICK ME UPP!!",
+			"I DIDN'T DESERVE ITTTTTTTTTT!!",
+			"I WILL DIE TO JUST ONE ATTTTTTAAAAACKKKKKK!!",
+			"I WILLLLLL NOT DROP GOOOD IITITTEEEEEMMMS!!",
+		)
+	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)))
+
+/obj/item/toy/plush/whiny_plushie/proc/secured_process(last_move)
+	icon_state = initial(icon_state)
+
+/obj/item/toy/plush/whiny_plushie/proc/unsecured_process(last_move)
+	if(!COOLDOWN_FINISHED(src, cry_cooldown))
+		return
+	COOLDOWN_START(src, cry_cooldown, 10 SECONDS)
+	icon_state = "plushie_whiny_crying"
+	if(isturf(loc))
+		say(pick(cry_alone_messages))
+	else
+		say(pick(cry_still_messages))
+	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
+
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."

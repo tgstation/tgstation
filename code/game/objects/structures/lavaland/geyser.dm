@@ -67,6 +67,7 @@
 		return
 
 	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
+	SEND_SIGNAL(user, COMSIG_LIVING_DISCOVERED_GEYSER, src)
 	if(discovery_message)
 		to_chat(user, discovery_message)
 
@@ -167,7 +168,7 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

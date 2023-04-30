@@ -7,12 +7,12 @@
 	name = "Godwoken Syndrome"
 	desc = "Patient occasionally and uncontrollably channels an eldritch god when speaking."
 	scan_desc = "god delusion"
-	gain_text = "<span class='notice'>You feel a higher power inside your mind...</span>"
-	lose_text = "<span class='warning'>The divine presence leaves your head, no longer interested.</span>"
+	gain_text = span_notice("You feel a higher power inside your mind...")
+	lose_text = span_warning("The divine presence leaves your head, no longer interested.")
 
-/datum/brain_trauma/special/godwoken/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick, times_fired)
 	..()
-	if(DT_PROB(2, delta_time))
+	if(SPT_PROB(2, seconds_per_tick))
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
@@ -51,12 +51,12 @@
 	name = "Bluespace Prophecy"
 	desc = "Patient can sense the bob and weave of bluespace around them, showing them passageways no one else can see."
 	scan_desc = "bluespace attunement"
-	gain_text = "<span class='notice'>You feel the bluespace pulsing around you...</span>"
-	lose_text = "<span class='warning'>The faint pulsing of bluespace fades into silence.</span>"
+	gain_text = span_notice("You feel the bluespace pulsing around you...")
+	lose_text = span_warning("The faint pulsing of bluespace fades into silence.")
 	/// Cooldown so we can't teleport literally everywhere on a whim
 	COOLDOWN_DECLARE(portal_cooldown)
 
-/datum/brain_trauma/special/bluespace_prophet/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick, times_fired)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
 		return
 
@@ -152,15 +152,15 @@
 	name = "Quantum Alignment"
 	desc = "Patient is prone to frequent spontaneous quantum entanglement, against all odds, causing spatial anomalies."
 	scan_desc = "quantum alignment"
-	gain_text = "<span class='notice'>You feel faintly connected to everything around you...</span>"
-	lose_text = "<span class='warning'>You no longer feel connected to your surroundings.</span>"
+	gain_text = span_notice("You feel faintly connected to everything around you...")
+	lose_text = span_warning("You no longer feel connected to your surroundings.")
 	var/atom/linked_target = null
 	var/linked = FALSE
 	var/returning = FALSE
 	/// Cooldown for snapbacks
 	COOLDOWN_DECLARE(snapback_cooldown)
 
-/datum/brain_trauma/special/quantum_alignment/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick, times_fired)
 	if(linked)
 		if(QDELETED(linked_target))
 			linked_target = null
@@ -169,7 +169,7 @@
 		if(!returning && COOLDOWN_FINISHED(src, snapback_cooldown))
 			start_snapback()
 		return
-	if(DT_PROB(2, delta_time))
+	if(SPT_PROB(2, seconds_per_tick))
 		try_entangle()
 
 /datum/brain_trauma/special/quantum_alignment/proc/try_entangle()
@@ -235,8 +235,8 @@
 	name = "Violent Psychosis"
 	desc = "Patient fights in unpredictable ways, ranging from helping his target to hitting them with brutal strength."
 	scan_desc = "violent psychosis"
-	gain_text = "<span class='warning'>You feel unhinged...</span>"
-	lose_text = "<span class='notice'>You feel more balanced.</span>"
+	gain_text = span_warning("You feel unhinged...")
+	lose_text = span_notice("You feel more balanced.")
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
@@ -258,25 +258,23 @@
 	name = "Tenacity"
 	desc = "Patient is psychologically unaffected by pain and injuries, and can remain standing far longer than a normal person."
 	scan_desc = "traumatic neuropathy"
-	gain_text = "<span class='warning'>You suddenly stop feeling pain.</span>"
-	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
+	gain_text = span_warning("You suddenly stop feeling pain.")
+	lose_text = span_warning("You realize you can feel pain again.")
 
 /datum/brain_trauma/special/tenacity/on_gain()
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/special/death_whispers
 	name = "Functional Cerebral Necrosis"
 	desc = "Patient's brain is stuck in a functional near-death state, causing occasional moments of lucid hallucinations, which are often interpreted as the voices of the dead."
 	scan_desc = "chronic functional necrosis"
-	gain_text = "<span class='warning'>You feel dead inside.</span>"
-	lose_text = "<span class='notice'>You feel alive again.</span>"
+	gain_text = span_warning("You feel dead inside.")
+	lose_text = span_notice("You feel alive again.")
 	var/active = FALSE
 
 /datum/brain_trauma/special/death_whispers/on_life()
@@ -302,15 +300,15 @@
 	name = "Existential Crisis"
 	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
 	scan_desc = "existential crisis"
-	gain_text = "<span class='notice'>You feel less real.</span>"
-	lose_text = "<span class='warning'>You feel more substantial again.</span>"
+	gain_text = span_warning("You feel less real.")
+	lose_text = span_notice("You feel more substantial again.")
 	var/obj/effect/abstract/sync_holder/veil/veil
 	/// A cooldown to prevent constantly erratic dolphining through the fabric of reality
 	COOLDOWN_DECLARE(crisis_cooldown)
 
-/datum/brain_trauma/special/existential_crisis/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick, times_fired)
 	..()
-	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && DT_PROB(1.5, delta_time))
+	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && SPT_PROB(1.5, seconds_per_tick))
 		if(isturf(owner.loc))
 			fade_out()
 
@@ -324,13 +322,14 @@
 		return
 	var/duration = rand(5 SECONDS, 45 SECONDS)
 	veil = new(owner.drop_location())
-	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
-												"To be or not to be...",\
-												"Why exist?",\
-												"You stop keeping it real.",\
-												"Your grip on existence slips.",\
-												"Do you even exist?",\
-												"You simply fade away.")]</span>")
+	to_chat(owner, span_warning("[pick(list(
+			"Do you even exist?",
+			"To be or not to be...",
+			"Why exist?",
+			"You simply fade away.",
+			"You stop keeping it real.",
+			"You stop thinking for a moment. Therefore you are not.",
+		))]"))
 	owner.forceMove(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
@@ -349,8 +348,8 @@
 	name = "Criminal"
 	desc = "Patient seems to be a criminal."
 	scan_desc = "criminal mind"
-	gain_text = "<span class='warning'>Justice is coming for you.</span>"
-	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
+	gain_text = span_warning("Justice is coming for you.")
+	lose_text = span_notice("You were absolved for your crimes.")
 	random_gain = FALSE
 	/// A ref to our fake beepsky image that we chase the owner with
 	var/obj/effect/client_image_holder/securitron/beepsky
@@ -419,6 +418,6 @@
 	forceMove(get_step_towards(src, victim))
 	if(prob(5))
 		var/beepskys_cry = "Level 10 infraction alert!"
-		to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>[beepskys_cry]</span>\"")
+		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list("robotic"))

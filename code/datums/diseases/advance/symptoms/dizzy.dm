@@ -11,6 +11,7 @@
 
 	name = "Dizziness"
 	desc = "The virus causes inflammation of the vestibular system, leading to bouts of dizziness."
+	illness = "Motion Sickness"
 	resistance = -2
 	stage_speed = -3
 	transmittable = -1

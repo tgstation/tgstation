@@ -12,15 +12,11 @@
 	detomatix_resistance = DETOMATIX_RESIST_MAJOR
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["manifest"] = GLOB.manifest.get_manifest()
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("PRG_print")
 			if(computer) //This option should never be called if there is no printer

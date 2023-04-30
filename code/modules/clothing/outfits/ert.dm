@@ -306,7 +306,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
-	l_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 
 /datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -330,7 +330,7 @@
 	name = "CentCom Head Intern"
 
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction
 	belt = /obj/item/melee/baton/security/loaded
 	head = /obj/item/clothing/head/hats/intern
 	l_hand = /obj/item/megaphone
@@ -454,23 +454,33 @@
 		/obj/item/skillchip/disk_verifier,
 	)
 
-/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = RADIO_FREQENCY_LOCKED
-	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-	..()
+	var/obj/item/radio/radio = squaddie.ears
+	radio.set_frequency(FREQ_CENTCOM)
+	radio.freqlock = RADIO_FREQENCY_LOCKED
+	var/obj/item/card/id/id = squaddie.wear_id
+	id.registered_name = squaddie.real_name
+	id.update_label()
+	id.update_icon()
+	return ..()
 
 /datum/outfit/centcom/death_commando/officer
 	name = "Death Commando Officer"
 
-	head = /obj/item/clothing/head/helmet/space/beret
+	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
+
+/datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
+	. = ..()
+	var/obj/item/mod/control/mod = squaddie.back
+	if(!istype(mod))
+		return
+	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
+	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
+	hat_holder.attached_hat = beret
+	squaddie.update_clothing(mod.slot_flags)
 
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"
