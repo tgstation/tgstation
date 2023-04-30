@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Changelogs entries for \"sound\" and \"image\" should now have icons associated with them, how neat."

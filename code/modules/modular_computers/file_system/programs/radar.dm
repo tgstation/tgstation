@@ -62,10 +62,7 @@
 		data["target"] = trackinfo
 	return data
 
-/datum/computer_file/program/radar/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/radar/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("selecttarget")
 			selected = params["ref"]

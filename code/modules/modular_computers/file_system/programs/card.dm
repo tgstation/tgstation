@@ -87,10 +87,7 @@
 
 	return ..()
 
-/datum/computer_file/program/card_mod/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/card_mod/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	var/mob/user = usr
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 
