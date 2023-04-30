@@ -109,7 +109,6 @@
 	force = 0
 	throwforce = 0
 	sharpness = SHARP_EDGED
-	usesound = 'sound/items/drill_use.ogg'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
