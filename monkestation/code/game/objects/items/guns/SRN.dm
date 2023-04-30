@@ -131,7 +131,6 @@
 	AddComponent(
 		/datum/component/singularity, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \
-		admin_investigate_callback = CALLBACK(src, PROC_REF(admin_investigate_setup)), \
 		consume_range = 1, \
 		grav_pull = 8, \
 		roaming = FALSE, \
