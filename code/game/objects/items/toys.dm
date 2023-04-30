@@ -1315,11 +1315,10 @@
 	if(.)
 		return
 
-	switch(book_open)
-		if(FALSE)
-			open_animation()
-		if(TRUE)
-			close_animation()
+	if(book_open)
+		close_animation()
+	else
+		open_animation()
 
 /// Plays a little animation that shows the book opening and closing.
 /obj/item/toy/eldritch_book/proc/open_animation()
