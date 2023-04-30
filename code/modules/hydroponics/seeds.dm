@@ -259,9 +259,9 @@
 		product_count = 10 + log(1.02) * (getYield() - 1)
 
 	while(t_amount < product_count)
-		if(prob(10))
+		if(prob(25))
 			var/obj/item/seeds/seed_prod
-			if(prob(30) && has_viable_mutations())
+			if(prob(50) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
 			else
 				seed_prod = src.Copy_drop(output_loc)
