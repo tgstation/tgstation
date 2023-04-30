@@ -368,9 +368,9 @@
 	eye = new /obj/item/flashlight/eyelight/glow
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
+	. = ..()
 	deactivate(close_ui = TRUE)
 	QDEL_NULL(eye)
-	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/emp_act()
 	. = ..()
@@ -451,12 +451,25 @@
 	else if(istype(action, /datum/action/item_action/organ_action/use))
 		ui_interact(user)
 
+/**
+ * Activates the light
+ *
+ * Turns on the attached flashlight object, updates the mob overlay to be added.
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/activate()
 	eye.on = TRUE
 	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
 		eye.set_light_on(TRUE)
 	update_mob_eyes_overlay()
 
+/**
+ * Deactivates the light
+ *
+ * Turns off the attached flashlight object, closes UIs, updates the mob overlay to be removed.
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob who the eyes belong to, for passing to update_mob_eyes_overlay
+ * * close_ui - whether or not to close the ui
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
 	if(close_ui)
 		SStgui.close_uis(src)
@@ -464,12 +477,25 @@
 	eye.set_light_on(FALSE)
 	update_mob_eyes_overlay(eye_owner)
 
+/**
+ * Randomizes the light color
+ *
+ * Picks a random color and sets the beam color to that
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/randomize_color()
 	var/new_color = "#"
 	for(var/i in 1 to 3)
 		new_color += num2hex(rand(0, 255), 2)
 	set_beam_color(new_color)
 
+/**
+ * Setter function for the light's range
+ *
+ * Sets the light range of the attached flashlight object
+ * Includes some 'unique' logic to accomodate for some quirks of the lighting system
+ * Arguments:
+ * * new_range - the new range to set
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_range(new_range)
 	var/old_light_range = eye.light_range
 	if(old_light_range == 0 && new_range > 0 && eye.on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
@@ -477,6 +503,14 @@
 		eye.set_light_on(TRUE)
 	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
 
+/**
+ * Setter function for the light's color
+ *
+ * Sets the light color of the attached flashlight object. Sets the eye color vars of this eye organ as well and then updates the mob's eye color.
+ * Arguments:
+ * * newcolor - the new color hex string to set
+ * * sanitize - whether the hex string should be sanitized
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_color(newcolor, sanitize = FALSE)
 	if(sanitize)
 		current_color_string = sanitize_hexcolor(newcolor)
@@ -488,19 +522,37 @@
 	eye_color_right = eye_color_left
 
 	update_mob_eye_color()
+	update_mob_eyes_overlay()
 
+/**
+ * Toggle the attached flashlight object on or off
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/toggle_active()
 	if(eye.on)
 		deactivate()
 	else
 		activate()
 
+/**
+ * Updates the mob eye color
+ *
+ * Updates the eye color to reflect on the mob's body if it's possible to do so
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob to update the eye color appearance of
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eye_color(mob/living/carbon/eye_owner = owner)
 	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
 
 	eye_owner.dna.species.handle_body(eye_owner)
 
+/**
+ * Updates the emissive mob eye overlay
+ *
+ * When the light is on, the overlay is added. When it is disabled, it is cut.
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob to add the overlay to
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eyes_overlay(mob/living/carbon/eye_owner = owner)
 	if(QDELETED(eye_owner))
 		return
