@@ -1835,7 +1835,10 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "gt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/material/glass,
+/obj/machinery/door/airlock/public/glass{
+	name = "Dining Area"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "gw" = (
@@ -7857,7 +7860,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "Ss" = (
-/obj/machinery/smartfridge/food,
+/obj/machinery/smartfridge{
+	machine_stat = 1
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Sv" = (

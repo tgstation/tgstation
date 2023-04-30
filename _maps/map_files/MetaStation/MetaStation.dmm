@@ -21399,10 +21399,9 @@
 /turf/closed/wall,
 /area/station/engineering/atmos)
 "ici" = (
-/obj/machinery/smartfridge/drinks{
-	icon_state = "boozeomat"
-	},
-/turf/closed/wall,
+/obj/machinery/smartfridge/drinks,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/service/bar)
 "icj" = (
 /obj/effect/turf_decal/stripes/line{
@@ -29343,6 +29342,17 @@
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"kIL" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "kIR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -31679,7 +31689,13 @@
 /area/station/security/prison)
 "lyE" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "chem_lockdown";
+	name = "Chemistry Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "lyF" = (
 /obj/structure/cable,
@@ -42744,6 +42760,7 @@
 	id = "main_surgery"
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "pDR" = (
@@ -45136,7 +45153,13 @@
 /area/station/engineering/atmos)
 "qxG" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "hydro_service";
+	name = "Service Shutter"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "qxR" = (
 /obj/structure/disposalpipe/segment,
@@ -51632,7 +51655,9 @@
 /area/station/science/cytology)
 "sKt" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "sKy" = (
 /obj/machinery/holopad,
@@ -64578,10 +64603,7 @@
 /area/space/nearstation)
 "xnd" = (
 /obj/machinery/smartfridge/organ,
-/obj/machinery/door/poddoor/preopen{
-	id = "surgeryc";
-	name = "Privacy Shutter"
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/aft)
 "xnk" = (
@@ -93481,7 +93503,7 @@ noD
 aNf
 aNa
 xiv
-sKt
+kIL
 cJv
 oHG
 slC

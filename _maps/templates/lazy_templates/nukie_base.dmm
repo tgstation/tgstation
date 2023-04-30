@@ -2046,7 +2046,7 @@
 /area/centcom/syndicate_mothership)
 "xc" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/closed/indestructible/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "xe" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -4569,9 +4569,9 @@ Ox
 sU
 sU
 sU
-sU
-sU
-sU
+Ox
+Ox
+Ox
 Ox
 Ox
 Ox
@@ -4672,9 +4672,9 @@ sU
 Ox
 Ox
 Ox
-Ox
-Ox
-Ox
+xu
+xu
+xu
 xu
 xu
 xu

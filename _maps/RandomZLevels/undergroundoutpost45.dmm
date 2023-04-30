@@ -2240,7 +2240,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fL" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fN" = (
 /turf/closed/wall/rust,

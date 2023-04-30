@@ -38,7 +38,7 @@
 	dir = 2;
 	shuttle_id = "whiteship";
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Salvage Ship";
 	port_direction = 8;
 	preferred_direction = 4
@@ -1381,7 +1381,8 @@
 /area/shuttle/abandoned/bar)
 "dS" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "dT" = (
 /obj/effect/decal/cleanable/dirt/dust,

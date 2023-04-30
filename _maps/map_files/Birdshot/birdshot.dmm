@@ -12745,10 +12745,6 @@
 /obj/machinery/door/airlock/public,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
-"fao" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/closed/wall/r_wall,
-/area/station/medical/virology)
 "fas" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -17667,7 +17663,13 @@
 /area/station/maintenance/port/lesser)
 "gLT" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutters"
+	},
+/turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "gLV" = (
 /obj/machinery/light/cold/directional/west,
@@ -21486,6 +21488,11 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
+"iaB" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/station/medical/pharmacy)
 "iaH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34724,6 +34731,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/smartfridge/petri/preloaded,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "mJO" = (
@@ -52998,7 +53006,8 @@
 /area/station/cargo/storage)
 "sSj" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sSp" = (
 /obj/effect/turf_decal/siding/green,
@@ -59010,7 +59019,12 @@
 /area/station/maintenance/department/medical/central)
 "uOF" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "xeno_blastdoor";
+	name = "Biohazard Containment Door"
+	},
+/turf/open/floor/iron,
 /area/station/science/xenobiology)
 "uOH" = (
 /obj/item/kirbyplants/random,
@@ -59469,14 +59483,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 11
-	},
-/obj/item/storage/box/syringes{
-	pixel_x = -8;
-	pixel_y = 2
-	},
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uVT" = (
@@ -64927,7 +64934,8 @@
 /area/station/hallway/secondary/entry)
 "wEi" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wEp" = (
 /obj/effect/turf_decal/tile/green/diagonal_centre,
@@ -67939,6 +67947,14 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/south,
+/obj/item/storage/box/syringes{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 11
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xtL" = (
@@ -69791,10 +69807,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xRv" = (
-/obj/machinery/smartfridge/petri/preloaded,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/r_wall,
-/area/station/science/cytology)
+/area/station/service/abandoned_gambling_den/gaming)
 "xRA" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
@@ -102413,7 +102428,7 @@ qWo
 qWo
 wfr
 wfr
-gLT
+iaB
 nXt
 rbs
 wfr
@@ -102438,7 +102453,7 @@ wYA
 xiE
 xiE
 xiE
-fao
+xiE
 uVK
 hPi
 bRg

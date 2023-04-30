@@ -13545,7 +13545,7 @@
 /area/station/security/execution/education)
 "dwc" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dwi" = (
 /obj/structure/cable,
@@ -58212,7 +58212,8 @@
 /area/station/cargo/storage)
 "prn" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
 /area/station/science/cytology)
 "pro" = (
 /obj/effect/turf_decal/stripes,
@@ -77211,6 +77212,7 @@
 /area/station/maintenance/floor3/starboard/fore)
 "uFV" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "uGe" = (
