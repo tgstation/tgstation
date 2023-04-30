@@ -233,7 +233,6 @@
 
 // SS runlevels
 
-#define RUNLEVEL_INIT 0
 #define RUNLEVEL_LOBBY 1
 #define RUNLEVEL_SETUP 2
 #define RUNLEVEL_GAME 4
