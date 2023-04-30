@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Machines (such as ORM and Techfabs) will no longer unsync from Ore silos when it moves Z-level, instead it will prevent materials from being used, as if it was on hold."

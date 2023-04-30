@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - refactor: "Russian mobs are now subtypes of Syndicate basic mobs."
