@@ -1043,3 +1043,42 @@
   - balance: Head EMPs break the optical transponder circuits for 7.5-15 seconds,
       effectively giving the user nightmare goggles vision with green instead of red
       as the only remaining color.
+2023-04-30:
+  Fikou, Zonespace, Arcane for voicing:
+  - rscadd: The mining vendor now has a style meter. This meter gauges your style
+      points and uses them to improve your ore yield.
+  JohnFulpWillard:
+  - qol: '[Mafia] Players get a popup when a player is voted to the stand.'
+  - qol: '[Mafia] Players now have the name of who they voted for displayed over their
+      heads during voting period.'
+  - balance: '[Mafia] Deadchat can no longer see Mafia chat.'
+  - balance: '[Mafia] HoP can now solo-win.'
+  Potato-Masher:
+  - bugfix: 'North Star: The disposal room machinery is slightly more resistant to
+      damage caused by ejected trash.'
+  ZephyrTFA:
+  - bugfix: Bookbinder no longer takes your pen's font and throws it out the nearest
+      window
+  Zytolg:
+  - rscadd: Birdshot station has been pulled out of Mothball.
+  - rscadd: New station areas and places to visit. A Mix of Kilo and Delta maints
+      with winding shortcutting paths.
+  - rscadd: A host of new shuttles to support this bold endeavor to reclaim something
+      that really shouldn't be reclaimed.
+  - rscadd: Two Trams, Two Trams.
+  - rscadd: For the last time Bob, the gaping hole is a **feature.** Use the breach
+      shutters or have the virologist make starlight.
+  - rscadd: A smiling salute to stations past...
+  - rscadd: Secrets.
+  mc-oofert:
+  - bugfix: Economy class airlock on the Luxury Shuttle now aligns with dock
+  tralezab:
+  - rscadd: Craftable Material sniffers
+  tralezab code, Drag for the commission and player project, cre#0484 for their spritework:
+  - rscadd: Divine Archer Armor and Weapon
+  - qol: Bows give more feedback when you're doing something wrong, like trying to
+      draw without a nocked arrow
+  - code_imp: Sorted files, cleaned bow code up to allow subtypes
+  vinylspiders:
+  - bugfix: the anomaly refinery will no longer let you insert cores of insufficient
+      quality to refine
