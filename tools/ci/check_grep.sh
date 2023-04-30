@@ -198,11 +198,20 @@ do
 done
 
 part "updatepaths validity"
-lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
-if [ $lines -gt 0 ]; then
+list_of_files=$(find "tools/UpdatePaths/Scripts" -type f)
+missing_txt_lines=$($list_of_files ! -name "*.txt" | wc -l)
+if [ $missing_txt_lines -gt 0 ]; then
     echo
     echo -e "${RED}ERROR: Found an UpdatePaths File that doesn't end in .txt! Please add the proper file extension!${NC}"
     st=1
+fi;
+
+number_prefix_lines=$($list_of_files | wc -l)
+valid_number_prefix_lines=$($list_of_files | $grep -P "\d+_(.+)" | wc -l)
+if [ $valid_number_prefix_lines -ne $number_prefix_lines ]; then
+	echo
+	echo -e "${RED}ERROR: Detected an UpdatePaths File that doesn't start with the PR number! Please add the proper number prefix!${NC}"
+	st=1
 fi;
 
 section "515 Proc Syntax"
