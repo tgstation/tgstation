@@ -19,7 +19,6 @@
 	desc = "Are you sure this is tomato juice?"
 	icon_state = "glass_red"
 
-
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(!check_tray(chems, mytray))
