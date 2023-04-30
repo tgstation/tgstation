@@ -408,7 +408,7 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /**
- * #recieve_damage
+ * #receive_damage
  *
  * called when a bodypart is taking damage
  * Damage will not exceed max_damage using this proc, and negative damage cannot be used to heal
