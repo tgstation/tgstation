@@ -472,9 +472,9 @@
 
 /datum/config_entry/flag/preference_map_voting
 
-/// Allows players to export their own preferences as a JSON file.
-/datum/config_entry/flag/allow_preferences_export
-	default = FALSE // if you're running this as a dev on local you already have full access to this file, just needs a tiny bit of navigating the file system
+/// Allows players to export their own preferences as a JSON file. Left as a config toggle in case it needs to be turned off due to server-specific needs.
+/datum/config_entry/flag/forbid_preferences_export
+	default = FALSE
 
 /// The number of seconds a player must wait between preference export attempts.
 /datum/config_entry/number/seconds_cooldown_for_preferences_export
