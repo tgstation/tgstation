@@ -15963,7 +15963,10 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/smartfridge/food,
+/obj/structure/table/reinforced,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "fXK" = (
@@ -19753,7 +19756,10 @@
 "hri" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/smartfridge/drinks,
+/obj/structure/table/reinforced,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hrG" = (
@@ -40843,10 +40849,7 @@
 /area/station/maintenance/aft/lesser)
 "oJC" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/machinery/smartfridge/drinks,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "oJD" = (
@@ -54239,16 +54242,13 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "tsX" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/machinery/smartfridge/food,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "tsZ" = (
