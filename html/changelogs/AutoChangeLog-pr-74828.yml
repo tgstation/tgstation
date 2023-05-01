@@ -1,5 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - rscadd: "filled up Northstar's Z1 maint with stuff. Reworked some ugly rooms."
-  - bugfix: "fixed Northstar's Z1 sec outpost having the wrong sec locker"
