@@ -54,6 +54,7 @@
 			items = new items(src)
 			if(items.slot_flags & slot_flag)
 				worn_items["[slot_flag]"] = items
+				continue
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
