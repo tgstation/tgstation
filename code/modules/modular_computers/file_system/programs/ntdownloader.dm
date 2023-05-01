@@ -98,10 +98,7 @@
 			download_netspeed = NTNETSPEED_ETHERNET
 	download_completion += download_netspeed
 
-/datum/computer_file/program/ntnetdownload/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_downloadfile")
 			if(!downloaded_file)
@@ -150,7 +147,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
+			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user, transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 

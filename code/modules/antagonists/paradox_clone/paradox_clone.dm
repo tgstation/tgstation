@@ -50,24 +50,17 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	var/mob/living/carbon/human/clone_human = owner.current
-	var/mob/living/carbon/human/original_human = original_mind.current
-
-	//equip them in the original's clothes
-	if(!isplasmaman(original_human))
-		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
-	else
-		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
-		clone_human.internal = clone_human.get_item_for_held_index(2)
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
-	var/obj/item/modular_computer/pda/messenger = locate() in clone_human
+	var/obj/item/modular_computer/pda/messenger = locate() in owner.current
 	if(messenger)
 		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
 		if(message_app)
 			message_app.invisible = TRUE
 
 	//dont want anyone noticing there's two now
+	var/mob/living/carbon/human/clone_human = owner.current
 	var/obj/item/clothing/under/sensor_clothes = clone_human.w_uniform
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF
