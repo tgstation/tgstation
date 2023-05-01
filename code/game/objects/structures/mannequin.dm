@@ -43,11 +43,16 @@
 	)
 	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
+	var/list/obj/item/clothing/starting_items = list()
 
 /obj/structure/mannequin/Initialize(mapload)
 	. = ..()
 	for(var/slot_flag in slot_flags)
 		worn_items["[slot_flag]"] = null
+		for(var/obj/item/clothing/items as anything in starting_items)
+			items = new items(src)
+			if(items.slot_flags & slot_flag)
+				worn_items["[slot_flag]"] = items
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
@@ -181,6 +186,10 @@
 	name = "skeleton model"
 	material = MANNEQUIN_SKELETON
 	anchored = TRUE
+	starting_items = list(
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/clothing/suit/costume/hawaiian,
+	)
 
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,

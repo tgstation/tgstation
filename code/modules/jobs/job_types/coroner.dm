@@ -51,7 +51,7 @@
 
 	belt = /obj/item/modular_computer/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	gloves = /obj/item/clothing/gloves/latex
+	gloves = /obj/item/clothing/gloves/latex/coroner
 	l_pocket = /obj/item/toy/crayon/white
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/black
