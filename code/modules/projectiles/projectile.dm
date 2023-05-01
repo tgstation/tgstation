@@ -1061,6 +1061,7 @@
 	if(!shrapnel_type || !LAZYLEN(embedding))
 		return
 
+	// fuck whoever did this btw
 	AddElement(/datum/element/embed,\
 		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
 		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\

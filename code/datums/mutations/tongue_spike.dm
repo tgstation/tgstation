@@ -46,10 +46,11 @@
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
 	force = 2
-	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
+	throwforce = 25
 	throw_speed = 4
 	embedding = list(
-		"embedded_pain_multiplier" = 4,
+		"impact_pain_mult" = 0,
+		"embedded_pain_multiplier" = 15,
 		"embed_chance" = 100,
 		"embedded_fall_chance" = 0,
 		"embedded_ignore_throwspeed_threshold" = TRUE,
@@ -107,8 +108,9 @@
 	name = "chem spike"
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
-	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
+	throwforce = 2
 	embedding = list(
+		"impact_pain_mult" = 0,
 		"embedded_pain_multiplier" = 0,
 		"embed_chance" = 100,
 		"embedded_fall_chance" = 0,
