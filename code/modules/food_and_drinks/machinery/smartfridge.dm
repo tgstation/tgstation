@@ -285,7 +285,7 @@
 	qdel(board)
 	component_parts.Cut()
 
-	..()
+	return ..()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
