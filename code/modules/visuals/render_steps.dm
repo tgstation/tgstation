@@ -15,10 +15,12 @@
 /atom/movable/render_step/Initialize(mapload, atom/source)
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
-	if(source)
-		render_source = source.render_target
-		SET_PLANE_EXPLICIT(src, initial(plane), source)
-		RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(source_deleting)) 
+	if(!source)
+		stack_trace("[src] initialized without a source arg. Make sure when you are creating a new render_step that you pass the source atom (e.g. new(null, src).")
+		return
+	render_source = source.render_target
+	SET_PLANE_EXPLICIT(src, initial(plane), source)
+	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(on_source_deleting)) 
 
 /atom/movable/render_step/ex_act(severity)
 	return FALSE
@@ -37,7 +39,7 @@
 	if(harderforce)
 		return ..()
 
-/atom/movable/render_step/proc/source_deleting(atom/source)
+/atom/movable/render_step/proc/on_source_deleting(atom/source)
 	SIGNAL_HANDLER
 
 	if(!QDELING(src))
