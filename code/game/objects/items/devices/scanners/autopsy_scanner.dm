@@ -23,6 +23,9 @@
 	autopsy_information += "Time of Autopsy - [station_time_timestamp()]"
 	autopsy_information += "Autopsy Coroner - [user.name]"
 
+	autopsy_information += "Toxin damage: [CEILING(scanned.getToxLoss(), 1)]"
+	autopsy_information += "Oxygen damage: [CEILING(scanned.getOxyLoss(), 1)]"
+
 	autopsy_information += "<center>Bodypart Data</center><br>"
 	for(var/obj/item/bodypart/bodyparts as anything in scanned.bodyparts)
 		autopsy_information += "<b>[bodyparts.name]</b><br>"
