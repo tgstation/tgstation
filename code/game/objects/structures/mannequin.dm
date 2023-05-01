@@ -54,7 +54,7 @@
 			if(initial(items.slot_flags) & slot_flag)
 				worn_items["[slot_flag]"] = new items(src)
 				starting_items -= items
-				continue
+				break
 	if(starting_items.len)
 		CRASH("[src] had [starting_items.len] starting items fail to equip.")
 	if(!body_type)
