@@ -51,9 +51,9 @@
 	autopsy_information += "<center>Disease Data</center>"
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"
-		autopsy_information += "<b>Symptoms:</b><br>"
 		if(!istype(diseases, /datum/disease/advance))
 			continue
+		autopsy_information += "<b>Symptoms:</b><br>"
 		var/datum/disease/advance/advanced_disease = diseases
 		for(var/datum/symptom/symptom as anything in advanced_disease.symptoms)
 			autopsy_information += "[symptom.name] - [symptom.desc]<br>"
