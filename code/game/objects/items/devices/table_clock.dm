@@ -60,7 +60,7 @@
 	user.balloon_alert(user, "fixing clock...")
 	if(!do_after(user, 10 SECONDS, src))
 		return
-	user.balloon_alert(user, "fixing repaired!")
+	user.balloon_alert(user, "clock repaired!")
 	broken = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_ICON)

@@ -57,4 +57,5 @@
 	autopsy_report.add_raw_text(autopsy_information.Join("\n"))
 	autopsy_report.update_appearance(UPDATE_ICON)
 	user.put_in_hands(autopsy_report)
+	user.balloon_alert(user, "report printed")
 	return TRUE

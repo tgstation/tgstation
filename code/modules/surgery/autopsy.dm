@@ -11,6 +11,7 @@
 	name = "Perform Autopsy (autopsy scanner)"
 	implements = list(/obj/item/autopsy_scanner = 100)
 	time = 10 SECONDS
+	success_sound = 'sound/machines/printer.ogg'
 
 /datum/surgery_step/autopsy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
