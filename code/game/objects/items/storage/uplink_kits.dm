@@ -698,7 +698,7 @@
 
 	if(IS_NUKE_OP(target)) // this wont proc due to ..() but i guess its good as a just-in-case?
 		if(target == user)
-			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick.."))
+			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
 			target.Stun(10 SECONDS)
 			target.reagents.add_reagent(/datum/reagent/toxin, 10)
 			return FALSE
