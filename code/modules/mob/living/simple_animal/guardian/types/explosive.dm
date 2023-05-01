@@ -32,7 +32,7 @@
 	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
 		. += "Bomb Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))]"
 
-/mob/living/simple_animal/hostile/guardian/explosive/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/guardian/explosive/UnarmedAttack(atom/attack_target, proximity_flag)
 	if((istate & ISTATE_SECONDARY) && proximity_flag && isobj(attack_target))
 		plant_bomb(attack_target)
 		return

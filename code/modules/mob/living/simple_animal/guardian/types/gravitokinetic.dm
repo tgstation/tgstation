@@ -45,7 +45,7 @@
 		add_gravity(target, punch_gravity)
 		to_chat(target, span_userdanger("Everything feels really heavy!"))
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/UnarmedAttack(atom/attack_target, proximity_flag)
 	if((istate & ISTATE_SECONDARY) && proximity_flag && !gravity_targets[target])
 		slam_turf(attack_target)
 		return
