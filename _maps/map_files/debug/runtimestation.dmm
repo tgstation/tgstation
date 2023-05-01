@@ -62,27 +62,23 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ar" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/structure/closet/secure_closet/engineering_welding{
 	locked = 0
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "as" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "at" = (
@@ -325,11 +321,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bs" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/science)
 "bt" = (
@@ -381,10 +374,6 @@
 /turf/open/floor/iron,
 /area/station/science)
 "bG" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/table,
 /obj/item/uplink/debug{
@@ -396,6 +385,8 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bH" = (
@@ -449,12 +440,10 @@
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
 "bP" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "bQ" = (
@@ -480,16 +469,14 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "bU" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /mob/living/carbon/human,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -778,13 +765,11 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "cW" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/construction)
 "cX" = (
@@ -820,13 +805,11 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dd" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "de" = (
@@ -835,6 +818,7 @@
 /area/station/security/brig)
 "dg" = (
 /obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "dh" = (
@@ -1219,10 +1203,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "eG" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eH" = (
@@ -1249,10 +1231,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "eM" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 4;
-	pixel_x = 23
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "eN" = (
@@ -1709,12 +1689,10 @@
 /area/station/commons/storage/primary)
 "gi" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/airalarm/unlocked{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/cable,
 /obj/machinery/computer/shuttle/mining,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "gk" = (
@@ -1964,6 +1942,7 @@
 /area/station/hallway/secondary/entry)
 "ou" = (
 /obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "oV" = (
@@ -2125,10 +2104,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wU" = (
@@ -2158,10 +2135,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "AE" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "AP" = (
@@ -2411,10 +2386,8 @@
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "Sp" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "Td" = (
