@@ -35,16 +35,17 @@ RSF
 	var/list/cost_by_item = list(\
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 20,\
 		/obj/item/reagent_containers/cup/glass/sillycup = 10,\
-		/obj/item/storage/dice = 200,\
-		/obj/item/toy/cards/deck = 200,\
-		/obj/item/paper = 10,\
-		/obj/item/pen = 50,\
-		/obj/item/clothing/mask/cigarette = 10,\
 		/obj/item/plate = 70,\
 		/obj/item/reagent_containers/cup/bowl = 70,\
 		/obj/item/kitchen/fork/plastic = 30,\
 		/obj/item/knife/plastic = 30,\
 		/obj/item/kitchen/spoon/plastic = 30,\
+		/obj/item/food/seaweedsheet = 30,\
+		/obj/item/storage/dice = 200,\
+		/obj/item/toy/cards/deck = 200,\
+		/obj/item/paper = 10,\
+		/obj/item/pen = 50,\
+		/obj/item/clothing/mask/cigarette = 10,\
 	)
 	///An associated list of fuel and it's value
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
