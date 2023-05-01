@@ -2124,6 +2124,7 @@
 		var/static/uid = 0
 		render_target = "HOLOGRAM [uid]"
 		uid++
+	// I'm using static here to reduce the overhead
 	var/static/atom/movable/render_step/emissive/glow = new(null, src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane
 	// Then we overlay it, and release "ownership" back to this proc, since we get to keep the appearance it generates
