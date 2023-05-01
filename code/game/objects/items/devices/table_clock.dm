@@ -5,7 +5,8 @@
 	name = "table clock"
 	desc = "An annoying clock that keeps you sane through tireless nights."
 	icon_state = "table_clock"
-	inhand_icon_state = null
+	inhand_icon_state = "table_clock"
+	base_icon_state = "table_clock"
 	w_class = WEIGHT_CLASS_TINY
 
 	///Soundloop we use of a clock ticking.
@@ -59,6 +60,14 @@
 	user.balloon_alert(user, "fixing repaired!")
 	broken = FALSE
 	soundloop.start()
+	update_appearance(UPDATE_ICON)
+
+/obj/item/table_clock/update_icon_state()
+	. = ..()
+	if(broken)
+		icon_state = "[base_icon_state]_broken"
+	else
+		icon_state = base_icon_state
 
 /**
  * Breaks the clock, turning off the soundloop.
@@ -72,6 +81,7 @@
 	soundloop.stop()
 	playsound(src, break_sound, 40, FALSE)
 	times_broken++
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 #undef MAX_CLOCK_REPAIRS
