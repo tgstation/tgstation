@@ -1423,7 +1423,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(damage_amount > 5)
-				H.AdjustAllImmobility(damage_amount * -0.5 SECONDS)
+				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
 				if(H.getStaminaLoss()>=100)
 					H.stam_regen_start_time += (damage_amount * -0.5 SECONDS)
 			if(BP)
@@ -1435,7 +1435,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(damage_amount > 5)
-				H.AdjustAllImmobility(damage_amount * -0.5 SECONDS)
+				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
 				if(H.getStaminaLoss()>=100)
 					H.stam_regen_start_time += (damage_amount * -0.5 SECONDS)
 			if(BP)
