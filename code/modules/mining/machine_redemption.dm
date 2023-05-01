@@ -16,7 +16,7 @@
 	processing_flags = START_PROCESSING_MANUALLY
 
 	///Boolean on whether the ORM can claim points without being connected to an ore silo.
-	var/can_claim_siloless = FALSE
+	var/requires_silo = TRUE
 	/// The current amount of unclaimed points in the machine
 	var/points = 0
 	/// Smelted ore's amount is multiplied by this
@@ -44,7 +44,7 @@
 	var/datum/component/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/offstation
-	can_claim_siloless = TRUE
+	requires_silo = FALSE
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -316,7 +316,7 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level() && (!can_claim_siloless || user_id_card.registered_account.account_job))
+			if(!materials.check_z_level() && (requires_silo || user_id_card.registered_account.account_job))
 				return TRUE
 			if(points)
 				if(user_id_card)
