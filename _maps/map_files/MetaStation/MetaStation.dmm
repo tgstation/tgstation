@@ -22392,6 +22392,11 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
+"iqb" = (
+/obj/machinery/griddle,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "iqc" = (
 /obj/structure/reflector/single/anchored{
 	dir = 9
@@ -26597,7 +26602,6 @@
 /area/station/command/heads_quarters/cmo)
 "jGA" = (
 /obj/item/kirbyplants/potty,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -104536,7 +104540,7 @@ fge
 mbf
 jGA
 reS
-klS
+iqb
 klS
 mcn
 mlu
