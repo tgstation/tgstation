@@ -44,6 +44,7 @@
 	var/datum/component/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/offstation
+	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
 	requires_silo = FALSE
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
