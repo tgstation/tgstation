@@ -8602,6 +8602,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
+"cGY" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/modular_computer/console/preset/id,
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "cGZ" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/light/small/directional/east,
@@ -14716,17 +14721,6 @@
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
-"eDX" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/red,
-/obj/machinery/airalarm/mixingchamber{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/burnchamber)
 "eEb" = (
 /obj/machinery/computer/security/telescreen{
 	name = "Test Chamber Monitor";
@@ -16022,6 +16016,15 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
+"eZd" = (
+/mob/living/simple_animal/hostile/retaliate/goat{
+	atmos_requirements = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
+	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
+	minbodytemp = 150;
+	name = "Snowy Pete"
+	},
+/turf/open/misc/asteroid/snow/coldroom,
+/area/station/service/kitchen/coldroom)
 "eZi" = (
 /obj/machinery/drone_dispenser,
 /turf/open/floor/plating,
@@ -19976,6 +19979,15 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
+"gpS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
+	dir = 4
+	},
+/obj/machinery/meter,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/freezerchamber)
 "gpT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
@@ -21597,14 +21609,6 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
-"gRl" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/security/prison/work)
 "gRm" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
@@ -25537,11 +25541,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
-"iiB" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/modular_computer/console/preset/id,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "iiH" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
@@ -31211,14 +31210,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/fore/lesser)
-"jZg" = (
-/obj/machinery/airalarm/kitchen_cold_room{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/asteroid/snow/coldroom,
-/area/station/service/kitchen/coldroom)
 "jZi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -38922,17 +38913,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"mwK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
-	dir = 4
-	},
-/obj/machinery/meter,
-/obj/machinery/airalarm/mixingchamber{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/freezerchamber)
 "mwQ" = (
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plating,
@@ -42705,6 +42685,14 @@
 "nDE" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/garden)
+"nDO" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/security/prison/work)
 "nDV" = (
 /obj/machinery/shower/directional/south,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
@@ -45239,6 +45227,12 @@
 	},
 /turf/open/openspace,
 /area/station/science/xenobiology)
+"ore" = (
+/obj/structure/flora/bush/snow/style_random,
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
+/obj/machinery/airalarm/directional/west,
+/turf/open/misc/asteroid/snow/coldroom,
+/area/station/service/kitchen/coldroom)
 "orf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45998,15 +45992,6 @@
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"oCD" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	atmos_requirements = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
-	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
-	minbodytemp = 150;
-	name = "Snowy Pete"
-	},
-/turf/open/misc/asteroid/snow/coldroom,
-/area/station/service/kitchen/coldroom)
 "oCF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47312,18 +47297,6 @@
 	dir = 4
 	},
 /area/station/security/prison)
-"oZA" = (
-/obj/machinery/airalarm/engine{
-	dir = 8;
-	pixel_x = -23
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Gas to Filter"
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "oZR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -56165,6 +56138,15 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"rSr" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/red,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/burnchamber)
 "rSu" = (
 /turf/open/floor/iron/white/side{
 	dir = 8
@@ -57788,6 +57770,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"ssQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Gas to Filter"
+	},
+/obj/effect/mapping_helpers/airalarm/engine_access,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "ssY" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/firealarm/directional/west,
@@ -66270,6 +66262,15 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"vhJ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "vhL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68037,17 +68038,6 @@
 /obj/effect/mapping_helpers/mail_sorting/medbay/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"vJE" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/maintenance/disposal/incinerator)
 "vJI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -163674,7 +163664,7 @@ hPs
 eSE
 mVI
 elU
-gRl
+nDO
 tWO
 jNf
 tXd
@@ -179407,7 +179397,7 @@ dEB
 dMS
 jBB
 pKe
-jZg
+ore
 qPE
 fwB
 fwB
@@ -179664,7 +179654,7 @@ dEB
 dMS
 jBB
 mQk
-oCD
+eZd
 wMP
 fwB
 fwB
@@ -191514,11 +191504,11 @@ nBV
 iao
 iPD
 iao
-eDX
+rSr
 qSk
 xtS
 rhY
-mwK
+gpS
 pjc
 gmb
 hac
@@ -236009,7 +235999,7 @@ glc
 fab
 ktw
 bny
-oZA
+ssQ
 xBp
 bYw
 bYw
@@ -236454,7 +236444,7 @@ fiE
 oBs
 utR
 tmQ
-iiB
+cGY
 kzD
 kJP
 lhv
@@ -246022,7 +246012,7 @@ oAD
 xKX
 vep
 pBI
-vJE
+vhJ
 gGo
 uqH
 qXk
