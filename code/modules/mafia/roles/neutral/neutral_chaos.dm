@@ -20,10 +20,9 @@
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
-	var/list/all_roles_shuffle = shuffle(game.all_roles)
-	for(var/role in all_roles_shuffle)
-		var/datum/mafia_role/possible = role
-		if(possible.team == MAFIA_TEAM_TOWN && possible.game_status != MAFIA_DEAD)
+	var/list/all_roles_shuffle = shuffle(game.living_roles)
+	for(var/datum/mafia_role/possible as anything in all_roles_shuffle)
+		if(possible.team == MAFIA_TEAM_TOWN)
 			obsession = possible
 			break
 	if(!obsession)
