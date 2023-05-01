@@ -62,6 +62,8 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
+	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
+	var/datum/ui_state/state
 
 /datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_value)
 	src.default = default
@@ -87,6 +89,7 @@
 
 /datum/tgui_input_number/Destroy(force, ...)
 	SStgui.close_uis(src)
+	state = null
 	return ..()
 
 /**
@@ -108,7 +111,7 @@
 	closed = TRUE
 
 /datum/tgui_input_number/ui_state(mob/user)
-	return GLOB.always_state
+	return state
 
 /datum/tgui_input_number/ui_static_data(mob/user)
 	var/list/data = list()
