@@ -120,7 +120,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when selecting a sect.")
 		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
+		to_chat(user, span_warning("You are not the high priest, and therefore cannot select a religious sect."))
 		return
 	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You cannot select a sect at this time."))
