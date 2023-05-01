@@ -45,7 +45,7 @@
 	var/harvest_time = 6 SECONDS
 	var/delete_on_harvest = FALSE
 	var/harvested = FALSE
-	
+
 	/// Variables for determining the low/high ends of how long it takes for the flora takes to grow.
 	var/regrowth_time_low = 8 MINUTES
 	/// Stops the flora from regrowing if this is set to 0
