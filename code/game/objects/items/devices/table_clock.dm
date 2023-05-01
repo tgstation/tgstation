@@ -52,7 +52,7 @@
 /obj/item/table_clock/interact(mob/user)
 	. = ..()
 	if(!broken)
-		to_chat(user, span_warning("Closing the clock? And risk losing the time? No way!"))
+		to_chat(user, span_warning("Touch the clock? And risk breaking it? Are you crazy??"))
 		return
 	if(times_broken > MAX_CLOCK_REPAIRS)
 		user.balloon_alert(user, "clock unrepairable!")
