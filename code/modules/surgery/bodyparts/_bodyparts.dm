@@ -404,9 +404,6 @@
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
 
-//Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
-//Damage will not exceed max_damage using this proc
-//Cannot apply negative damage
 /**
  * #receive_damage
  *
@@ -417,7 +414,7 @@
  * brute - The amount of brute damage dealt.
  * burn - The amount of burn damage dealt.
  * blocked - The amount of damage blocked by armor.
- * update_health - Whether to update the owner's health from recieving the hit.
+ * update_health - Whether to update the owner's health from receiving the hit.
  * required_bodytype - A bodytype flag requirement to get this damage (ex: BODYTYPE_ORGANIC)
  * wound_bonus - Additional bonus chance to get a wound.
  * bare_wound_bonus - Additional bonus chance to get a wound if the bodypart is naked.
