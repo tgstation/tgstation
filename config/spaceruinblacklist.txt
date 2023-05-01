@@ -85,4 +85,3 @@
 #_maps/RandomRuins/SpaceRuins/prison_shuttle.dmm
 #_maps/RandomRuins/SpaceRuins/phonebooth.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
-#_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
