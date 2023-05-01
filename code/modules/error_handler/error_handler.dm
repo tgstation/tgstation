@@ -26,12 +26,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		Reboot(reason = 1)
 		return
 
-	if (islist(stack_trace_storage))
-		for (var/line in splittext(E.desc, "\n"))
-			if (text2ascii(line) != 32)
-				stack_trace_storage += line
-		return
-
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/

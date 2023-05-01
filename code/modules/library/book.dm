@@ -44,11 +44,9 @@
 /datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
 	// Just the paper's raw data.
 	var/raw_content = ""
-
 	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
-		raw_content += text_input.raw_text
+		raw_content += text_input.to_raw_html()
 
-	// Content from paper is never trusted. It it raw, unsanitised, unparsed user input.
 	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
 
 /datum/book_info/proc/get_content(default="N/A")
@@ -112,19 +110,29 @@
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 
-/obj/item/book/proc/on_read(mob/living/user)
-	if(book_data?.content)
-		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+/obj/item/book/ui_static_data(mob/user)
+	var/list/data = list()
+	data["author"] = book_data.get_author()
+	data["title"] = book_data.get_title()
+	data["content"] = book_data.get_content()
+	return data
 
-		LAZYINITLIST(user.mind?.book_titles_read)
-		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
+/obj/item/book/ui_interact(mob/living/user, datum/tgui/ui)
+	if(!length(book_data.get_content()))
+		balloon_alert(user, "this book is blank!")
+		return
 
-		if(has_not_read_book) // any new books give bonus mood
+	if(istype(user) && !isnull(user.mind))
+		LAZYINITLIST(user.mind.book_titles_read)
+		var/has_not_read_book = !(starting_title in user.mind.book_titles_read)
+		if(has_not_read_book)
 			user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
-			user.mind?.book_titles_read[starting_title] = TRUE
-		onclose(user, "book")
-	else
-		to_chat(user, span_notice("This book is completely blank!"))
+			user.mind.book_titles_read[starting_title] = TRUE
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MarkdownViewer", name)
+		ui.open()
 
 /// Generates a random icon state for the book
 /obj/item/book/proc/gen_random_icon_state()
@@ -134,14 +142,19 @@
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return
+
 	if(!user.can_read(src))
 		return
-	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
-	on_read(user)
 
-/obj/item/book/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pen))
-		if(!user.can_perform_action(src) || !user.can_write(I))
+	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	ui_interact(user)
+
+/obj/item/book/attackby(obj/item/attacking_item, mob/user, params)
+	if(burn_paper_product_attackby_check(attacking_item, user))
+		return
+
+	if(istype(attacking_item, /obj/item/pen))
+		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
 		if(user.is_blind())
 			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
@@ -153,12 +166,12 @@
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
 		if(isnull(choice))
 			return
-		if(!user.can_perform_action(src) || !user.can_write(I))
+		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
-				if(!user.can_perform_action(src) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				if (length_char(newtitle) > 30)
 					to_chat(user, span_warning("That title won't fit on the cover!"))
@@ -170,7 +183,7 @@
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
 				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", multiline = TRUE)
-				if(!user.can_perform_action(src) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				if(!content)
 					to_chat(user, span_warning("The content is invalid."))
@@ -178,7 +191,7 @@
 				book_data.set_content(html_decode(content))
 			if("Author")
 				var/author = tgui_input_text(user, "Write the author's name", "Author Name")
-				if(!user.can_perform_action(src) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				if(!author)
 					to_chat(user, span_warning("The name is invalid."))
@@ -187,8 +200,8 @@
 			else
 				return
 
-	else if(istype(I, /obj/item/barcodescanner))
-		var/obj/item/barcodescanner/scanner = I
+	else if(istype(attacking_item, /obj/item/barcodescanner))
+		var/obj/item/barcodescanner/scanner = attacking_item
 		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
 		if(!computer)
 			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
@@ -219,7 +232,7 @@
 				computer.inventory_update()
 				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
-	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
+	else if(((attacking_item.sharpness & SHARP_EDGED) || (attacking_item.tool_behaviour == TOOL_KNIFE) || (attacking_item.tool_behaviour == TOOL_WIRECUTTER)) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))
 		if(do_after(user, 30, target = src))
 			to_chat(user, span_notice("You carve out the pages from [book_data.title]! You didn't want to read it anyway."))
@@ -237,4 +250,4 @@
 				return
 		return
 	else
-		..()
+		return ..()

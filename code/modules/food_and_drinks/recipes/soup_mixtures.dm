@@ -162,14 +162,14 @@
 	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
 
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Let's not mess with fireproof / indestructible items.
-		// It's not likely that soups use fireproof items as ingredients,
-		// and chef doesn't need more ways to delete things with cooking.
-		if(ingredient.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE))
+		// Let's not mess with  indestructible items.
+		// Chef doesn't need more ways to delete things with cooking.
+		if(ingredient.resistance_flags & INDESTRUCTIBLE)
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
-		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+		else if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+			LAZYREMOVE(pot.added_ingredients, ingredient)
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done
@@ -179,7 +179,8 @@
 		else
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
-	LAZYNULL(pot.added_ingredients)
+	// Anything left in the ingredient list will get dumped out
+	pot.dump_ingredients(get_turf(pot))
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
 	BLACKBOX_LOG_FOOD_MADE(type)
 
@@ -212,6 +213,16 @@
 	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		reagent.volume = round(reagent.volume * 0.9, 0.05)
 	holder.update_total()
+
+/// Adds text to the requirements list of the recipe
+/// Return a list of strings, each string will be a new line in the requirements list
+/datum/chemical_reaction/food/soup/proc/describe_recipe_details()
+	return
+
+/// Adds text to the results list of the recipe
+/// Return a list of strings, each string will be a new line in the results list
+/datum/chemical_reaction/food/soup/proc/describe_result()
+	return
 
 #ifdef TESTING
 
@@ -271,15 +282,24 @@
 	ingredient_reagent_multiplier = 1
 	percentage_of_nutriment_converted = 0
 
+	/// Custom recipes will not start mixing until at least this many solid ingredients are present
+	var/num_ingredients_needed = 3
+
 /datum/chemical_reaction/food/soup/custom/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
 		return FALSE // Not a pot
 	if(holder.is_reacting)
 		return FALSE // Another soup is being made
-	if(length(pot.added_ingredients) <= 3)
+	if(length(pot.added_ingredients) <= num_ingredients_needed)
 		return FALSE // Not a lot here to go off of
 	return TRUE
+
+/datum/chemical_reaction/food/soup/custom/describe_recipe_details()
+	return list("Created from burning soup with at least [num_ingredients_needed] ingredients present")
+
+/datum/chemical_reaction/food/soup/custom/describe_result()
+	return list("Whatever's in the pot")
 
 // Meatball Soup
 /datum/reagent/consumable/nutriment/soup/meatball_soup
@@ -724,6 +744,8 @@
 	)
 	percentage_of_nutriment_converted = 0.33 // Full of garbage
 
+	/// Number of units of bonus reagent added
+	var/num_bonus = 10
 	/// A list of reagent types we can randomly gain in the soup on creation
 	var/list/extra_reagent_types = list(
 		/datum/reagent/blood,
@@ -739,7 +761,14 @@
 
 /datum/chemical_reaction/food/soup/mysterysoup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
-	holder.add_reagent(pick(extra_reagent_types), 10)
+	holder.add_reagent(pick(extra_reagent_types), num_bonus)
+
+/datum/chemical_reaction/food/soup/mysterysoup/describe_result()
+	var/list/extra_sublist = list()
+	for(var/datum/reagent/extra_type as anything in extra_reagent_types)
+		extra_sublist += "[initial(extra_type.name)]"
+
+	return list("Will also contain [num_bonus] units of one randomly: [jointext(extra_sublist, ", ")]")
 
 // Monkey Soup
 /datum/reagent/consumable/nutriment/soup/monkey
@@ -774,6 +803,9 @@
 		/datum/reagent/consumable/salt = 4,
 		/datum/reagent/consumable/blackpepper = 4,
 	)
+
+/datum/chemical_reaction/food/soup/monkey/describe_result()
+	return list("May contain a monkey.")
 
 // Cream of mushroom soup
 /datum/reagent/consumable/nutriment/soup/mushroom
@@ -842,6 +874,9 @@
 		/datum/reagent/water = 10,
 	)
 	percentage_of_nutriment_converted = 0.1
+
+/datum/chemical_reaction/food/soup/beetsoup/describe_result()
+	return list("Changes name randomly to a common misspelling of \"Borscht\".")
 
 // Stew
 /datum/reagent/consumable/nutriment/soup/stew

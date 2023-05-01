@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/glass
+	sniffable = TRUE
 
 /datum/armor/sheet_glass
 	fire = 50
@@ -384,7 +385,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled)
-			playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+			playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 
 /obj/item/shard/plasma
 	name = "purple shard"
