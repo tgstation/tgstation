@@ -4897,6 +4897,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/autolathe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "bLN" = (
