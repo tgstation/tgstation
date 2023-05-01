@@ -16,7 +16,7 @@
 	var/botEmagChance = 1
 	var/ionMessage = null
 	announce_when = 1
-	announce_chance = 33
+	announce_chance = 0
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
 	replaceLawsetChance = 0

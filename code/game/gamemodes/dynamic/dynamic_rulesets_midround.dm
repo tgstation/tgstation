@@ -295,7 +295,7 @@
 	var/datum/antagonist/malf_ai/malf_antag_datum = new
 	new_malf_ai.mind.special_role = antag_flag
 	new_malf_ai.mind.add_antag_datum(malf_antag_datum)
-	if(prob(MALF_ION_PROB))
+	if(prob(MALF_ION_PROB) && prob(25))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
 		if(prob(REPLACE_LAW_WITH_ION_PROB))
 			new_malf_ai.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
