@@ -806,6 +806,7 @@
 	scan_ability = new(src)
 
 /obj/item/clothing/glasses/godeye/Destroy()
+	scan_ability?.Remove(user)
 	QDEL_NULL(scan_ability)
 	return ..()
 
@@ -846,13 +847,14 @@
 	return ..() && isliving(owner)
 
 /datum/action/cooldown/scan/Activate(atom/scanned)
-	StartCooldown(15 SECONDS)
 
 	if(owner.stat != CONSCIOUS)
 		return FALSE
 	if(!isliving(scanned) || scanned == owner)
 		owner.balloon_alert(owner, "invalid scanned!")
 		return FALSE
+
+	StartCooldown(15 SECONDS)
 
 	var/mob/living/living_owner = owner
 	var/mob/living/living_scanned = scanned
