@@ -578,13 +578,11 @@
 		activate()
 
 /**
- * Updates the mob eye color
+ * Toggles for the eye color mode
  *
- * Updates the eye color to reflect on the mob's body if it's possible to do so
- * Arguments:
- * * mob/living/carbon/eye_owner - the mob to update the eye color appearance of
+ * Toggles the eye color mode on or off and then calls an update on the mob's eye color
  */
-/obj/item/organ/internal/eyes/robotic/glow/proc/toggle_eye_color_mode(mob/living/carbon/eye_owner = owner)
+/obj/item/organ/internal/eyes/robotic/glow/proc/toggle_eye_color_mode()
 	eye_color_mode = !eye_color_mode
 	update_mob_eye_color()
 
@@ -613,7 +611,8 @@
 /**
  * Updates the emissive mob eye overlay
  *
- * When the light is on, the overlay is added. When it is disabled, it is cut.
+ * When the light is on, the overlay(s) are added. When it is disabled, they are cut.
+ * Adds one or two overlays depending on what the eye_color_mode toggle is set to.
  * Arguments:
  * * mob/living/carbon/eye_owner - the mob to add the overlay to
  */
