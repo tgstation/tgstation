@@ -103,6 +103,7 @@
 	bare_wound_bonus = 15
 	demolition_mod = 1.5
 	sharpness = SHARP_EDGED
+	attack_style = /datum/attack_style/overhead
 
 /obj/item/mutant_hand/shattered_risen/Initialize(mapload)
 	. = ..()

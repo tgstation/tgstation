@@ -15,6 +15,7 @@
 	armor_type = /datum/armor/item_singularityhammer
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
+	attack_style = /datum/attack_style/swing
 	///Is it able to pull shit right now?
 	var/charged = TRUE
 
@@ -89,6 +90,7 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
+	attack_style = /datum/attack_style/swing
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()

@@ -21,10 +21,13 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	var/bayonet = FALSE //Can this be attached to a gun?
+	attack_style = /datum/attack_style/stab_out
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
+
+	///Can this be attached to a gun?
+	var/bayonet = FALSE
 
 /datum/armor/item_knife
 	fire = 50

@@ -102,6 +102,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
 	custom_materials = list(/datum/material/iron = 10000)
+	attack_style = /datum/attack_style/swing
 	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
@@ -170,4 +171,3 @@
 	usr.visible_message(span_notice("[bell_attached] falls off!"))
 	bell_attached = null
 	update_appearance()
-

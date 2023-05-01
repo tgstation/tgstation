@@ -410,6 +410,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return TRUE
 	return FALSE
 
+/**
+ * Returns a list of turfs, from right to left, that are in the direction from the base atom
+ *
+ * For example, a the dir of north would give you the tile to the top right, top, and top left from the base
+ * And a dir of northwest would give you the tile directly left, top left, and directly top
+ */
 /proc/get_turfs_and_adjacent_in_direction(atom/base, general_dir)
 	var/right_dir
 	var/left_dir

@@ -30,7 +30,7 @@
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
-
+	attack_style = /datum/attack_style/swing
 
 /obj/item/tank/internals/oxygen/populate_gas()
 	air_contents.assert_gas(/datum/gas/oxygen)
@@ -64,6 +64,7 @@
 	inhand_icon_state = "an_tank"
 	tank_holder_icon_state = "holder_anesthetic"
 	force = 10
+	attack_style = /datum/attack_style/swing
 
 /obj/item/tank/internals/anesthetic/populate_gas()
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
@@ -212,6 +213,7 @@
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
+	attack_style = /datum/attack_style/swing
 
 /obj/item/tank/internals/generic/populate_gas()
 	return

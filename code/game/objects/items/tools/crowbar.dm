@@ -64,6 +64,7 @@
 	icon_state = "crowbar_large"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
+	attack_style = /datum/attack_style/swing
 
 /obj/item/crowbar/large/emergency
 	name = "emergency crowbar"

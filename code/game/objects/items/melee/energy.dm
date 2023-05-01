@@ -151,6 +151,8 @@
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
 
+	attack_style = /datum/attack_style/swing
+
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \

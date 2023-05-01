@@ -124,9 +124,10 @@
 		return
 
 	var/obj/item/W = get_active_held_item()
+	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
 	if(W == A)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(right_clicking)
 			W.attack_self_secondary(src, modifiers)
 			update_held_items()
 			return
@@ -167,12 +168,12 @@
 			UnarmedAttack(A,1,modifiers)
 
 	else if(isturf(loc) && istype(W.attack_style))
-		if(W.attack_style.process_attack(src, W, A))
+		if(W.attack_style.process_attack(src, W, A, right_clicking))
 			return
 
 	else
 		if(W)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			if(right_clicking)
 				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
 
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
@@ -180,7 +181,7 @@
 			else
 				W.afterattack(A,src,0,params)
 		else
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			if(right_clicking)
 				ranged_secondary_attack(A, modifiers)
 			else
 				RangedAttack(A,modifiers)

@@ -19,6 +19,8 @@
 	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_style = /datum/attack_style/swing
+
 	var/after_use_message = ""
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)

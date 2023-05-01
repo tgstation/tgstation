@@ -13,6 +13,7 @@
 	throwforce = 15
 	throw_range = 1
 	throw_speed = 1
+	attack_style = /datum/attack_style/swing/axe
 	COOLDOWN_DECLARE(engine_sound_cooldown)
 
 /obj/item/v8_engine/Initialize(mapload)
@@ -58,6 +59,7 @@
 	throw_range = 5
 	throw_speed = 1
 	hitsound = 'sound/items/car_engine_start.ogg'
+	attack_style = /datum/attack_style/swing/axe
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
 	var/fire_charges = 0
 	///Sound played when wielded.

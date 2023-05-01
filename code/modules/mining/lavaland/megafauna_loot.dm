@@ -767,6 +767,7 @@
 	attack_verb_continuous = list("sears", "clubs", "burn")
 	attack_verb_simple = list("sear", "club", "burn")
 	hitsound = 'sound/weapons/sear.ogg'
+	attack_style = /datum/attack_style/swing
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/misc/asteroid/basalt
@@ -843,6 +844,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
+	attack_style = /datum/attack_style/swing
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to

@@ -25,6 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
+	attack_style = /datum/attack_style/stab_out
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -112,6 +113,7 @@ Striking a noncultist, however, will tear their flesh."}
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
+	attack_style = /datum/attack_style/swing
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
@@ -675,6 +677,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_style = /datum/attack_style/swing/axe
 	var/datum/action/innate/cult/halberd/halberd_act
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)

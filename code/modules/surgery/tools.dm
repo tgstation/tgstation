@@ -129,6 +129,7 @@
 	sharpness = SHARP_POINTY
 	wound_bonus = 10
 	bare_wound_bonus = 10
+	attack_style = /datum/attack_style/stab_out
 
 /obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
@@ -215,6 +216,7 @@
 	toolspeed = 1
 	wound_bonus = 15
 	bare_wound_bonus = 10
+	attack_style = /datum/attack_style/swing
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
@@ -328,6 +330,7 @@
 	light_range = 1
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
+	attack_style = /datum/attack_style/stab_out // We start on stab mode
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
@@ -352,9 +355,11 @@
 	if(active)
 		tool_behaviour = TOOL_SAW
 		set_light_range(2)
+		attack_style = GLOB.attack_styles[/datum/attack_style/swing]
 	else
 		tool_behaviour = TOOL_SCALPEL
 		set_light_range(1)
+		attack_style = GLOB.attack_styles[/datum/attack_style/stab_out]
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
