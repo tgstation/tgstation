@@ -73,7 +73,7 @@
 		var/mob/living/carbon/human/human_spawn = new_spawn
 		human_spawn.set_cloned_appearance()
 
-///obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
+/obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
 //	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin)) + typecacheof(/area/misc/survivalpod)
 // this is dumb, im removing it.
 //	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
