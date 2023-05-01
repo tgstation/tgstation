@@ -84,8 +84,10 @@
 	/datum/reagent/consumable/vanilla,\
 )
 #define HACKED_SERVICE_REAGENTS list(\
+		/datum/reagent/blood,\
+		/datum/reagent/toxin/carpotoxin,\
 		/datum/reagent/toxin/fakebeer,\
-		/datum/reagent/consumable/ethanol/fernet\
+		/datum/reagent/consumable/ethanol/fernet,\
 	)
 
 ///Borg Hypospray
