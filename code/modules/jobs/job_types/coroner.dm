@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CMO
+	supervisors = "the Head of Personnel and the Chief Medical Officer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CORONER"
 
@@ -18,8 +18,10 @@
 
 	display_order = JOB_DISPLAY_ORDER_CORONER
 	bounty_types = CIV_JOB_MED
+	department_for_prefs = /datum/job_department/medical
 	departments_list = list(
 		/datum/job_department/medical,
+		/datum/job_department/service,
 		)
 
 	mail_goodies = list(
@@ -50,7 +52,7 @@
 	)
 
 	belt = /obj/item/modular_computer/pda/medical
-	ears = /obj/item/radio/headset/headset_med
+	ears = /obj/item/radio/headset/headset_srvmed
 	gloves = /obj/item/clothing/gloves/latex/coroner
 	l_pocket = /obj/item/toy/crayon/white
 	mask = /obj/item/clothing/mask/surgical
