@@ -364,7 +364,6 @@
 	eye_color_left = "000"
 	eye_color_right = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
-	var/current_color_string = "#ffffff"
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
 	/// The overlay that is used when both eyes are set to match the light color
@@ -375,6 +374,8 @@
 	var/mutable_appearance/eyes_overlay_right
 	/// Whether or not to match the eye color to the light or use a custom selection
 	var/eye_color_mode = MATCH_LIGHT_COLOR
+	/// The selected color for the light beam itself
+	var/current_color_string = "#ffffff"
 	/// The custom selected eye color for the left eye. Defaults to the mob's natural eye color
 	var/current_left_color_string
 	/// The custom selected eye color for the right eye. Defaults to the mob's natural eye color
