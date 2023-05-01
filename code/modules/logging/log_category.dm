@@ -16,9 +16,6 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
-	/// List of all entries for this category, in chronological order of when they were added
-	var/list/datum/log_entry/entries = list()
-
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Backup log category to catch attempts to log to a category that doesn't exist
@@ -36,7 +33,6 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 		semver_store = semver_store,
 	)
 
-	entries += list(entry)
 	write_entry(entry)
 
 /// Allows for category specific file splitting. Needs to accept a null entry for the default file.
