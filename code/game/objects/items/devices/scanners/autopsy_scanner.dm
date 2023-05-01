@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 200)
 	custom_price = PAYCHECK_COMMAND
 
