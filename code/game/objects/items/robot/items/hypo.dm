@@ -317,7 +317,7 @@
 	desc = "An advanced drink synthesizer and mixer."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
-	possible_transfer_amounts = list(5,10,20)
+	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	charge_cost = 20
 	recharge_time = 3
@@ -389,7 +389,7 @@
 	desc = "An advanced condiment synthesizer"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "flour"
-	possible_transfer_amounts = list(5,10,20)
+	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
