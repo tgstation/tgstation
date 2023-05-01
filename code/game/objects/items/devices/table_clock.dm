@@ -27,7 +27,7 @@
 /obj/item/table_clock/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += "It appears to be currently broken. You can use it in-hand to repair it."
+		. += span_info("It appears to be currently broken. You can use it in-hand to repair it.")
 	else
 		. += span_info("The current CST (local) time is: [station_time_timestamp()].")
 		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss")].")
