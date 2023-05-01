@@ -32,6 +32,7 @@
 	if(data_appended_list && data_appended_list.len)
 		appended_list = data_appended_list
 
+/// Retrieves the alert spoken/blared by the requests console that recieves this message
 /datum/request_message/proc/get_alert()
 	var/authenticated = ""
 	if(message_verified_by)
@@ -41,6 +42,7 @@
 
 	return "Message from [sender_department][authenticated]"
 
+/// Converts the message into a format for the tgui ui_data json
 /datum/request_message/proc/message_ui_data()
 	var/list/ui_data = list()
 	ui_data["sender_department"] = sender_department

@@ -1,25 +1,28 @@
 import { useBackend } from '../../backend';
 import { BlockQuote, Button, LabeledList, NoticeBox, Section, Stack } from '../../components';
 import { decodeHtmlEntities } from 'common/string';
-import { RequestPriority, RequestsData, RequestType } from './Types';
+import { RequestMessage, RequestPriority, RequestsData, RequestType } from './types';
 
 export const MessageViewTab = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { messages = [] } = data;
   return (
     <Section fill scrollable>
-      {!!messages.length && (
-        <Stack vertical>
-          {messages.map((message) => (
-            <MessageDisplay key={message.received_time} message={message} />
-          ))}
-        </Stack>
-      )}
+      <Stack vertical>
+        {messages.map((message) => (
+          <MessageDisplay key={message.received_time} message={message} />
+        ))}
+      </Stack>
     </Section>
   );
 };
 
-export const MessageDisplay = (props, context) => {
+const MessageDisplay = (
+  props: {
+    message: RequestMessage;
+  },
+  context
+) => {
   const { act } = useBackend(context);
   const { message } = props;
   const append_list_keys = message.appended_list

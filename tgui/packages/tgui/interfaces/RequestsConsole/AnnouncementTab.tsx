@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, NoticeBox, Section, TextArea } from '../../components';
-import { RequestsData } from './Types';
+import { RequestsData } from './types';
 
 export const AnnouncementTab = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
@@ -59,7 +59,7 @@ export const AnnouncementTab = (props, context) => {
   );
 };
 
-export const AuthenticationNoticeBox = (props, context) => {
+const AuthenticationNoticeBox = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { authentication_data, is_admin_ghost_ai } = data;
   return (

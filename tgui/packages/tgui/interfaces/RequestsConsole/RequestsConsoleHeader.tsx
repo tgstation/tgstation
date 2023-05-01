@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, NoticeBox, Stack } from '../../components';
-import { RequestsData, RequestPriority } from './Types';
+import { RequestsData, RequestPriority } from './types';
 
 export const RequestsConsoleHeader = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
@@ -14,7 +14,7 @@ export const RequestsConsoleHeader = (props, context) => {
   );
 };
 
-export const EmergencyBox = (props, context) => {
+const EmergencyBox = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { emergency } = data;
   return (
@@ -71,13 +71,13 @@ export const EmergencyBox = (props, context) => {
   );
 };
 
-export const ErrorNoticeBox = (props, context) => {
+const ErrorNoticeBox = (props, context) => {
   return (
     <NoticeBox danger>{'Error occured while sending a message!'}</NoticeBox>
   );
 };
 
-export const MessageNoticeBox = (props, context) => {
+const MessageNoticeBox = (props, context) => {
   const { data } = useBackend<RequestsData>(context);
   const { new_message_priority } = data;
   return (

@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../../backend';
 import { sortBy } from 'common/collections';
 import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
-import { RequestsData, RequestType, RequestPriority } from './Types';
+import { RequestsData, RequestType, RequestPriority } from './types';
 
 export const MessageWriteTab = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);

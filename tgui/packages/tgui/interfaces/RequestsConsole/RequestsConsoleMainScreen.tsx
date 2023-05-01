@@ -1,6 +1,6 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Icon, Stack, Tabs } from '../../components';
-import { RequestsData, RequestTabs } from './Types';
+import { RequestsData, RequestTabs } from './types';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
 import { AnnouncementTab } from './AnnouncementTab';

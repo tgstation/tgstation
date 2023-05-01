@@ -17,7 +17,7 @@ export const RequestsConsole = (props, context) => {
   );
 };
 
-export const RequestsConsoleContent = (props, context) => {
+const RequestsConsoleContent = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   return (
     <Stack vertical fill>
@@ -28,7 +28,7 @@ export const RequestsConsoleContent = (props, context) => {
   );
 };
 
-export const RequestsConsoleFooter = (props, context) => {
+const RequestsConsoleFooter = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { silent } = data;
   return (
