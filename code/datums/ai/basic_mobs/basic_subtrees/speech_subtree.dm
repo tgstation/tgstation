@@ -21,7 +21,7 @@
 	if(emote_see)
 		emote_see = string_list(emote_see)
 
-/datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/random_speech/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(SPT_PROB(speech_chance, seconds_per_tick))
 		var/audible_emotes_length = emote_hear?.len
 		var/non_audible_emotes_length = emote_see?.len
@@ -110,7 +110,7 @@
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
 
-/datum/ai_planning_subtree/random_speech/dog/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/random_speech/dog/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!isdog(controller.pawn))
 		return
 

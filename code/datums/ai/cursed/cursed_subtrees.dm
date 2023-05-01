@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/cursed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/cursed/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/obj/item/item_pawn = controller.pawn
 
 	//make sure we have a target

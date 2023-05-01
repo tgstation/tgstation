@@ -8,7 +8,7 @@
 	/// If true we finish planning after this
 	var/finish_planning = FALSE
 
-/datum/ai_planning_subtree/make_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/make_carp_rift/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!rift_behaviour)
 		CRASH("Forgot to specify rift behaviour for [src]")
 
@@ -29,7 +29,7 @@
 	rift_behaviour = /datum/ai_behavior/make_carp_rift/away
 	finish_planning = TRUE
 
-/datum/ai_planning_subtree/make_carp_rift/panic_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/make_carp_rift/panic_teleport/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
 		return
 	return ..()
@@ -173,7 +173,7 @@
 	/// Minimum distance we should be from the target before we bother performing this action
 	var/minimum_distance = 2
 
-/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if (QDELETED(target))
 		return

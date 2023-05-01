@@ -1,7 +1,7 @@
 /// Find someone we don't like and annoy them
 /datum/ai_planning_subtree/dog_harassment
 
-/datum/ai_planning_subtree/dog_harassment/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/dog_harassment/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!SPT_PROB(10, seconds_per_tick))
 		return
 	controller.queue_behavior(/datum/ai_behavior/find_hated_dog_target, BB_DOG_HARASS_TARGET, BB_PET_TARGETTING_DATUM)

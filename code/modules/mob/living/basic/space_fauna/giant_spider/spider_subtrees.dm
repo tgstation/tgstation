@@ -1,7 +1,7 @@
 /// Search for a nearby location to put webs on
 /datum/ai_planning_subtree/find_unwebbed_turf
 
-/datum/ai_planning_subtree/find_unwebbed_turf/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_unwebbed_turf/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	controller.queue_behavior(/datum/ai_behavior/find_unwebbed_turf)
 
 /// Find an unwebbed nearby turf and store it
@@ -52,7 +52,7 @@
 	/// Key where the target turf is stored
 	var/target_key = BB_SPIDER_WEB_TARGET
 
-/datum/ai_planning_subtree/spin_web/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/spin_web/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[action_key]
 	var/turf/target_turf = controller.blackboard[target_key]
 	if (QDELETED(using_action) || QDELETED(target_turf))

@@ -5,7 +5,7 @@
 	/// The action to execute, extend to add a different cooldown or something
 	var/attack_behaviour = /datum/ai_behavior/attack_obstructions
 
-/datum/ai_planning_subtree/attack_obstacle_in_path/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/attack_obstacle_in_path/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))

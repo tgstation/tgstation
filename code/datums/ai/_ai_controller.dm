@@ -100,7 +100,7 @@ multiple modular subtrees with behaviors
 	planning_subtrees = temp_subtree_list
 	for(var/subtree in planning_subtrees)
 		var/datum/ai_planning_subtree/casted_subtree = subtree
-		casted_subtree.Setup(src)
+		casted_subtree.setup(src)
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
@@ -235,7 +235,7 @@ multiple modular subtrees with behaviors
 			break
 
 ///This is where you decide what actions are taken by the AI.
-/datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
+/datum/ai_controller/proc/select_behaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
@@ -245,7 +245,7 @@ multiple modular subtrees with behaviors
 
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
+			if(subtree.select_behaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)

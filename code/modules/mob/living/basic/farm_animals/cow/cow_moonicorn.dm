@@ -49,7 +49,7 @@
 		BB_BASIC_MOB_TIPPER = null,
 		BB_VISION_RANGE_SLEEP = 9,
 		BB_VISION_RANGE_AGGRO = 9,
-		BB_AGGRO_SOUND_FILE = 'sound/creatures/cow_moo.ogg'
+		BB_AGGRO_SOUND_FILE = 'sound/creatures/cow_moo.ogg',
 	)
 
 	planning_subtrees = list(

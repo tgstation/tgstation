@@ -67,7 +67,7 @@ Okay, so we have blackboard variables, which are considered by subtrees to plan 
 
 ```dm
 /// this subtree checks if the mob has a target. if it doesn't, it plans looking for food. if it does, it tries to eat the food via attacking it.
-/datum/ai_planning_subtree/find_and_eat_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_and_eat_food/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	//get things out of blackboard
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/atom/target = weak_target?.resolve()

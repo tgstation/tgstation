@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/haunted/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/haunted/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/obj/item/item_pawn = controller.pawn
 
 	if(ismob(item_pawn.loc)) //We're being held, maybe escape?

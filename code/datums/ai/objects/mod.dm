@@ -22,7 +22,7 @@
 	QDEL_NULL(id_card)
 	return ..() //Run parent at end
 
-/datum/ai_controller/mod/SelectBehaviors(seconds_per_tick)
+/datum/ai_controller/mod/select_behaviors(seconds_per_tick)
 	current_behaviors = list()
 	if(blackboard[BB_MOD_TARGET] && blackboard[BB_MOD_IMPLANT])
 		queue_behavior(/datum/ai_behavior/mod_attach)

@@ -4,7 +4,7 @@
 /datum/ai_planning_subtree/make_babies
 	var/chance = 5
 
-/datum/ai_planning_subtree/make_babies/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/make_babies/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
 	if(controller.pawn.gender != FEMALE || !SPT_PROB(chance, seconds_per_tick))

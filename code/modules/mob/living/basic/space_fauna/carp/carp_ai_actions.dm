@@ -41,7 +41,7 @@
  */
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target
 
-/datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_nearest_magicarp_spell_target/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return

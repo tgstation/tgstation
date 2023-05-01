@@ -5,7 +5,7 @@
 	/// Target key to interrogate
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 
-/datum/ai_planning_subtree/sleep_with_no_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/sleep_with_no_target/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	controller.queue_behavior(sleep_behaviour, BB_BASIC_MOB_CURRENT_TARGET)
 

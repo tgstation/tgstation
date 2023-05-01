@@ -9,7 +9,7 @@
  */
 /datum/ai_planning_subtree/carp_migration
 
-/datum/ai_planning_subtree/carp_migration/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/carp_migration/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
 	// If there's a rift nearby take a ride, then cancel everything else because it's not valid any more
