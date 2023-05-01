@@ -175,7 +175,7 @@
 				var/mob/living/carbon/human/flashed_human = flashed
 				if(ismoth(flashed_human))
 					paralyze_duration = 6 SECONDS
-			flashed.Disorient(7 SECONDS, 100, paralyze = paralyze_duration)
+			flashed.Disorient(7 SECONDS, 110, paralyze = paralyze_duration)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
