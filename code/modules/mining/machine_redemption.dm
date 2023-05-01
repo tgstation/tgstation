@@ -238,12 +238,15 @@
 				"amount" = can_smelt_alloy(alloy),
 			))
 
+	data["disconnected"] = null
 	if (!mat_container)
-		data["disconnected"] = "local mineral storage is unavailable"
+		data["disconnected"] = "Local mineral storage is unavailable"
 	else if (!materials.silo)
-		data["disconnected"] = "no ore silo connection is available; storing locally"
+		data["disconnected"] = "No ore silo connection is available; storing locally"
+	else if (!materials.check_z_level())
+		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
-		data["disconnected"] = "mineral withdrawal is on hold"
+		data["disconnected"] = "Mineral withdrawal is on hold"
 
 	var/obj/item/card/id/card
 	if(isliving(user))
@@ -297,6 +300,8 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
+			if(!materials.check_z_level())
+				return TRUE
 			if(points)
 				if(user_id_card)
 					user_id_card.registered_account.mining_points += points
