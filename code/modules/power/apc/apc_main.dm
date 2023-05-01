@@ -207,7 +207,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()
 	QDEL_NULL(alarm_manager)
 	if(occupier)
@@ -218,6 +218,7 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+
 	return ..()
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
