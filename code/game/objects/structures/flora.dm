@@ -270,6 +270,9 @@
 
 /obj/structure/flora/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
+		if(harvested)
+			return ..()
+
 		destroyed = TRUE
 		harvest()
 	. = ..()
