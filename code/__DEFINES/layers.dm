@@ -40,6 +40,8 @@
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
 #define POINT_PLANE 5
+///Plane for the particle holders, not necessarily all particles
+#define PARTICLE_PLANE 6
 
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays

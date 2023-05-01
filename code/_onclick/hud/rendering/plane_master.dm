@@ -484,6 +484,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = POINT_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/atom/movable/screen/plane_master/particles
+	name = "Particles"
+	documentation = "Plane that the particle_holder objects use, so they can be toggled on and off by players."
+	plane = PARTICLE_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
 ///Contains all turf lighting
 /atom/movable/screen/plane_master/turf_lighting
 	name = "Turf Lighting"
