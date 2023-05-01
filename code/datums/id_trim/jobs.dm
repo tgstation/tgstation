@@ -410,7 +410,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		)
 	extra_access = list(
-		ACCESS_MAINT_TUNNELS,
+		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
 		)
 	template_access = list(
@@ -779,7 +779,9 @@
 		ACCESS_PSYCHOLOGY,
 		ACCESS_SERVICE,
 		)
-	extra_access = list()
+	extra_access = list(
+		ACCESS_MORGUE_SECURE,
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
