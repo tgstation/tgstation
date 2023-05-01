@@ -15,7 +15,7 @@
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spike"
 
-	cooldown_time = 10 SECONDS
+	cooldown_time = 1 SECONDS
 	spell_requirements = SPELL_REQUIRES_HUMAN
 
 	/// The type-path to what projectile we spawn to throw at someone.
