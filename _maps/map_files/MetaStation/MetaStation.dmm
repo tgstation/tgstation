@@ -5825,6 +5825,7 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "ciU" = (
@@ -15955,17 +15956,14 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "fXq" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/smartfridge/food,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "fXK" = (
@@ -19753,12 +19751,9 @@
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "hri" = (
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/smartfridge/drinks,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hrG" = (
@@ -40847,8 +40842,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "oJC" = (
-/obj/machinery/smartfridge/drinks,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "oJD" = (
@@ -54248,7 +54246,9 @@
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/item/holosign_creator/robot_seat/restaurant,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "tsZ" = (
