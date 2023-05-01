@@ -1614,7 +1614,6 @@
 /obj/structure/bed/roller,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/bodycontainer/morgue,
@@ -2435,20 +2434,15 @@
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "aSQ" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/window{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -7604,7 +7598,6 @@
 /obj/item/borg/upgrade/rename,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/bodycontainer/morgue{
@@ -33473,6 +33466,9 @@
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "meu" = (
@@ -38210,18 +38206,6 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposaloutlet{
-	desc = "An outlet for the pneumatic disposal system. This one seems designed for rapid corpse disposal.";
-	dir = 8;
-	name = "rapid corpse mover 9000"
-	},
-/obj/structure/disposalpipe/trunk,
-/obj/structure/window,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nMY" = (
@@ -49334,15 +49318,6 @@
 	dir = 4
 	},
 /obj/structure/mannequin/skeleton,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/structure/window{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "rLm" = (
@@ -56701,19 +56676,11 @@
 	pixel_y = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
 /obj/machinery/door/window/right/directional/south{
 	name = "Corpse Arrivals"
-	},
-/obj/structure/window{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -63625,15 +63592,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
