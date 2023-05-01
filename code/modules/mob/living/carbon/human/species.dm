@@ -1423,9 +1423,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(damage_amount > 5)
-				H.AdjustAllImmobility(damage_amount * -1/2 SECONDS)
+				H.AdjustAllImmobility(damage_amount * -0.5 SECONDS)
 				if(H.getStaminaLoss()>=100)
-					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, adjustStaminaLoss), -INFINITY), 2 SECONDS, TIMER_UNIQUE)
+					H.stam_regen_start_time += (damage_amount * -0.5 SECONDS)
 			if(BP)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
@@ -1435,9 +1435,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(damage_amount > 5)
-				H.AdjustAllImmobility(damage_amount * -1/2 SECONDS)
+				H.AdjustAllImmobility(damage_amount * -0.5 SECONDS)
 				if(H.getStaminaLoss()>=100)
-					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, adjustStaminaLoss), -INFINITY), 2 SECONDS, TIMER_UNIQUE)
+					H.stam_regen_start_time += (damage_amount * -0.5 SECONDS)
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
