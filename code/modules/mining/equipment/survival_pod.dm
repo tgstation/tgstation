@@ -121,6 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 //Windoor
 /obj/machinery/door/window/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	use_hitbox_render = FALSE
 	icon_state = "windoor"
 	base_state = "windoor"
 

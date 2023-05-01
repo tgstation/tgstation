@@ -24,6 +24,8 @@
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
+	// Render targeting big icons shifts em down, lets counteract
+	pixel_z = 16
 	AddElement(/datum/element/render_over_keep_hitbox)
 	air_update_turf(TRUE, TRUE) // wallening todo: why is this atmos logic here? should it be upstreamed?
 	if(mapload)

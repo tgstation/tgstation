@@ -234,8 +234,10 @@
 		return fast_emissive_blocker(src)
 	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 		if(!em_block && !QDELETED(src))
-			render_target = ref(src)
+			if(!render_target)
+				render_target = ref(src)
 			em_block = new(src, render_target)
+		em_block.render_source = render_target
 		return em_block
 
 /// Generates a space underlay for a turf

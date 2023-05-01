@@ -271,9 +271,21 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
+	icon = 'icons/turf/walls/hotel_door.dmi'
 	icon_state = "hoteldoor"
 	explosive_resistance = INFINITY
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
+	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
 	var/obj/item/hilbertshotel/parentSphere
+
+/turf/closed/indestructible/hoteldoor/Initialize(mapload)
+	. = ..()
+	// Build the glow animation
+	var/mutable_appearance/glow_animation = mutable_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow")
+	// Add emissive as a suboverlay, to make working with it easier
+	glow_animation.add_overlay(emissive_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow", src))
+	AddComponent(/datum/component/split_overlay, glow_animation, list(SOUTH_JUNCTION))
 
 /turf/closed/indestructible/hoteldoor/proc/promptExit(mob/living/user)
 	if(!isliving(user))

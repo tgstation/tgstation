@@ -65,6 +65,7 @@
 		AddElement(/datum/element/can_barricade)
 		AddComponent(/datum/component/window_smoothing)
 	else
+		setDir(dir)
 		AddElement(/datum/element/render_over_keep_hitbox, TRUE)
 
 	//windows only block while reinforced and fulltile
@@ -82,6 +83,19 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/window/setDir(newdir)
+	. = ..()
+	if(fulltile)
+		return
+	// Needed because render targets seem to shift larger then 32x32 icons down constantly. No idea why
+	pixel_z = 16
+	pixel_y = 0
+	// North windows are visually shifted upwards 26 pixels
+	// Lets match that physically
+	if(newdir & NORTH)
+		pixel_y = 26
+		pixel_z -= 26
 
 /obj/structure/window/examine(mob/user)
 	. = ..()

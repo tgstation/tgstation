@@ -3,6 +3,7 @@
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	req_access = list("tcomms")
+	use_hitbox_render = FALSE
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
 	/// Are the doors in a malfunctioning state (dangerous)

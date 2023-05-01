@@ -991,6 +991,7 @@
 #include "code\datums\components\spinny.dm"
 #include "code\datums\components\spirit_holding.dm"
 #include "code\datums\components\splattercasting.dm"
+#include "code\datums\components\split_overlay.dm"
 #include "code\datums\components\squashable.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"

@@ -69,9 +69,6 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_turf_junction_change))
 		add_split_vis_objects(target_atom, target_atom.smoothing_junction)
 
-#define DIR_TO_PIXEL_Y(dir) ((dir & NORTH) ? 32 : (dir & SOUTH) ? -32 : 0)
-#define DIR_TO_PIXEL_X(dir) ((dir & EAST) ? 32 : (dir & WEST) ? -32 : 0)
-
 
 /datum/element/split_visibility/proc/add_split_vis_objects(turf/target_turf, junction)
 	apply_splitvis_objs(target_turf, junction)
@@ -168,9 +165,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	remove_split_vis_objects(target, target.smoothing_junction)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	if(ismovable(target))
+		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		var/ref = REF(target)
 		var/turf/our_turf = get_turf(target)
-		REMOVE_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref) // We use src here because this code is hot, and we assert that bespoke elements cannot self delete. Not a good pattern but fast
+		REMOVE_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref)
 	else
 		REMOVE_TRAIT(target, TRAIT_CONTAINS_SPLITVIS, src) // We use src here because this code is hot, and we assert that bespoke elements cannot self delete. Not a good pattern but fast
 	return ..()
