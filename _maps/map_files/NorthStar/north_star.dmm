@@ -24040,10 +24040,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"grc" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/closed/wall,
-/area/station/medical/morgue)
 "grg" = (
 /turf/open/floor/iron,
 /area/station/hallway/floor1/fore)
@@ -193551,9 +193547,9 @@ wyd
 jIs
 uwU
 hBe
-grc
-grc
-grc
+vrA
+vrA
+vrA
 vrA
 vrA
 vrA
