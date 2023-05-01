@@ -5,10 +5,13 @@
 		/datum/crafting_recipe/food/death_sandwich
 	)
 	icon_state = "cooking_learning_sandwich"
-	uses = 1
 	remarks = list(
 		"A meatball sub, but what makes it so special?",
 		"I just need to grease back my hair...?",
 		"What kind of ancient civilization wore jorts?",
 		"So it DOES matter what angle you fold the salami in..."
 	)
+
+/obj/item/book/granter/crafting_recipe/death_sandwich/recoil(mob/living/user)
+	to_chat(user, span_warning("The book comically explodes in your hands, leaving no trace."))
+	qdel(src)
