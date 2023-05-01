@@ -140,7 +140,7 @@
 	var/list/product_list = list()
 
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
-	if(!destroyed)
+	if(destroyed)
 		harvest_amount = rand(harvest_amount_low, harvest_amount_high)*0.6
 	for(var/iteration in 1 to harvest_amount)
 		var/chosen_product = pick_weight(product_types)
@@ -270,9 +270,9 @@
 
 /obj/structure/flora/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		harvest()
 		destroyed = TRUE
-	qdel(src)
+		harvest()
+	. = ..()
 
 /*********
  * Trees *
