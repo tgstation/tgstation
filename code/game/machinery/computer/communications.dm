@@ -840,15 +840,16 @@
 	hacker.log_message("hacked a communications console, resulting in: [picked_option].", LOG_GAME, log_globally = TRUE)
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
+			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/list/pirate_rulesets = list(
+				/datum/dynamic_ruleset/midround/pirates,
+				/datum/dynamic_ruleset/midround/dangerous_pirates,
+			)
 			priority_announce(
 				"Attention crew: sector monitoring reports a massive jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",
 				"[command_name()] High-Priority Update",
 			)
-
-			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
-			if(!pirate_event)
-				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
-			addtimer(CALLBACK(pirate_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
+			dynamic.picking_specific_rule(pick(pirate_rulesets), forced = TRUE, ignore_cost = TRUE)
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
@@ -856,10 +857,7 @@
 				"[command_name()] High-Priority Update",
 			)
 
-			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
-			if(!fugitive_event)
-				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
-			addtimer(CALLBACK(fugitive_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
+			force_event_after(/datum/round_event_control/fugitives, "[hacker] hacking a communications console", rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(

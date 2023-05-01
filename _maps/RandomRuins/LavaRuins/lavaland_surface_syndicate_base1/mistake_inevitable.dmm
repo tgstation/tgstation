@@ -85,9 +85,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
-/obj/machinery/airalarm/directional/north{
-	req_access = list("syndicate")
-	},
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
@@ -107,6 +104,8 @@
 /obj/item/stock_parts/manipulator/femto,
 /obj/item/stock_parts/manipulator/femto,
 /obj/structure/rack,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "hJ" = (
@@ -282,9 +281,8 @@
 /area/ruin/syndicate_lava_base/testlab)
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/directional/south{
-	req_access = list("syndicate")
-	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "It" = (

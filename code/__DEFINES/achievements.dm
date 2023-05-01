@@ -122,6 +122,9 @@
 // DB ID for intento score
 #define INTENTO_SCORE "Intento Score"
 
+// DB ID for style point count
+#define STYLE_SCORE "Style Score"
+
 // Tourist related achievements and scores
 
 //centcom grades (achievement)
