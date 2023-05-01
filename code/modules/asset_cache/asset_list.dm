@@ -177,6 +177,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/list/cached_spritesheets_needed
 	var/generating_cache = FALSE
 	var/fully_generated = FALSE
+	var/should_refresh // null = need to check file
 
 /datum/asset/spritesheet/should_generate()
 	return TRUE
@@ -184,9 +185,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/should_refresh()
 	if (..())
 		return TRUE
-
-	// Static so that the result is the same, even when the files are created, for this run
-	var/static/should_refresh = null
 
 	if (isnull(should_refresh))
 		// `fexists` seems to always fail on static-time
