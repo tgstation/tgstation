@@ -43,6 +43,7 @@
 	)
 	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
+	///List of all clothing items the mannequin should be spawning in with on Initialize.
 	var/list/obj/item/clothing/starting_items = list()
 
 /obj/structure/mannequin/Initialize(mapload)
