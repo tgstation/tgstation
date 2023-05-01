@@ -15,6 +15,7 @@
 /atom/movable/render_step/Initialize(mapload, atom/source)
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
+
 	if(!source)
 		return
 
