@@ -306,6 +306,7 @@
 
 /obj/effect/world_progressbar/Destroy()
 	owner = null
+	bar_loc = null
 	bar_loc?:vis_contents -= src
 	bar_loc?:vis_contents -= bar
 	bar_loc?:vis_contents -= border_accessory
