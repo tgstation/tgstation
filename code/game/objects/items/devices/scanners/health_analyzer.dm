@@ -251,6 +251,8 @@
 						dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.plaintext_zone)]:</font></td>"
 					dmgreport += "<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>"
 					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
+					for(var/obj/item/embed as anything in limb.embedded_objects)
+						dmgreport += "<td><font color='#f3e746'>Embedded object: [embed]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
 
