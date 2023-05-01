@@ -1217,18 +1217,6 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
-"axU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "axW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -19774,16 +19762,6 @@
 "huG" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
-"huX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "huZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -42072,11 +42050,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"plZ" = (
-/obj/machinery/light/directional/north,
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/wood,
-/area/station/commons/lounge)
 "pma" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/fore)
@@ -43466,12 +43439,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"pKi" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "pKs" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin/carbon{
@@ -56843,11 +56810,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"usY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "uta" = (
 /obj/structure/rack,
 /obj/item/book/manual/wiki/security_space_law{
@@ -64132,6 +64094,7 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/pipe,
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "wUc" = (
@@ -104080,8 +104043,8 @@ xww
 xww
 xww
 vFB
-pKi
-axU
+fRS
+tUv
 rac
 iin
 rPg
@@ -104339,8 +104302,8 @@ xww
 wyb
 fRS
 tUv
-rac
-plZ
+bvJ
+hkG
 hkG
 nGK
 nGK
@@ -105365,8 +105328,8 @@ vzX
 vQv
 cdX
 vFB
-usY
-huX
+fRS
+tUv
 obG
 iMH
 xMY
