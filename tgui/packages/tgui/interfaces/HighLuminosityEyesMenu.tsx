@@ -160,7 +160,7 @@ export const HighLuminosityEyesMenu = (props, context) => {
     <Window
       title="High Luminosity Eyes"
       width={262}
-      height={eyeColor.hasOwner ? (eyeColor.mode ? 257 : 335) : 188}>
+      height={eyeColor.hasOwner ? (eyeColor.mode ? 259 : 324) : 188}>
       <Window.Content scrollable>
         <LightColorDisplay />
         <RangeDisplay />
