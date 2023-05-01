@@ -31,6 +31,7 @@ RSF
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
+	///The RSF item list below shows in the player facing ui in this order, this is why it isn't in alphabetical order, but rather sorted by category
 	var/list/cost_by_item = list(\
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 20,\
 		/obj/item/reagent_containers/cup/glass/sillycup = 10,\
