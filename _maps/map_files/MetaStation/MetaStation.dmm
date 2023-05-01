@@ -22174,7 +22174,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "inI" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -22182,6 +22181,7 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "inL" = (
@@ -26390,7 +26390,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "jDh" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "jDk" = (
@@ -47003,8 +47005,8 @@
 /area/station/medical/chemistry)
 "qXR" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "qXU" = (
@@ -56995,8 +56997,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uvZ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "uwa" = (
@@ -60411,7 +60418,6 @@
 /area/station/engineering/atmos/storage/gas)
 "vEO" = (
 /obj/machinery/button/door/directional/east,
-/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_y = 12
