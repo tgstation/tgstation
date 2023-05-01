@@ -31,7 +31,7 @@
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
 	var/list/linked_seats = list()
 
-/datum/venue/process(delta_time)
+/datum/venue/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
@@ -153,7 +153,7 @@
 	restaurant_portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
-		robot_customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
+		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
 
 /obj/machinery/restaurant_portal
 	name = "restaurant portal"

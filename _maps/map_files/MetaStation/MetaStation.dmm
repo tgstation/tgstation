@@ -7201,6 +7201,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"cLi" = (
+/obj/item/kirbyplants/potty,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "cLj" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -22392,11 +22400,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
-"iqb" = (
-/obj/machinery/griddle,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "iqc" = (
 /obj/structure/reflector/single/anchored{
 	dir = 9
@@ -26396,6 +26399,11 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"jDh" = (
+/obj/machinery/griddle,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "jDk" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -26600,14 +26608,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
-"jGA" = (
-/obj/item/kirbyplants/potty,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "jGG" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -28997,11 +28997,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"kxw" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/sm_apc/directional/east,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "kxz" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
@@ -35863,6 +35858,12 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"mXq" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "mXz" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/stripes/line,
@@ -104538,9 +104539,9 @@ unL
 xPg
 fge
 mbf
-jGA
+cLi
 reS
-iqb
+jDh
 klS
 mcn
 mlu
@@ -113505,7 +113506,7 @@ kYG
 aib
 aib
 bNE
-kxw
+mXq
 aib
 iqc
 kYG

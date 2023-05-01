@@ -40,14 +40,14 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
-/obj/item/organ/internal/stomach/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	//Manage species digestion
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			handle_hunger(humi, delta_time, times_fired)
+			handle_hunger(humi, seconds_per_tick, times_fired)
 
 	var/mob/living/carbon/body = owner
 
@@ -71,7 +71,7 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * delta_time, amount_max)
+		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max)
 
 		if(amount <= 0)
 			continue
@@ -83,7 +83,7 @@
 
 	//Handle disgust
 	if(body)
-		handle_disgust(body, delta_time, times_fired)
+		handle_disgust(body, seconds_per_tick, times_fired)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -106,17 +106,17 @@
 		return
 
 	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
-	if(DT_PROB(0.0125 * damage * nutri_vol * nutri_vol, delta_time))
+	if(SPT_PROB(0.0125 * damage * nutri_vol * nutri_vol, seconds_per_tick))
 		body.vomit(damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 		return
 
 	// the change of vomit is now high
-	if(damage > high_threshold && DT_PROB(0.05 * damage * nutri_vol * nutri_vol, delta_time))
+	if(damage > high_threshold && SPT_PROB(0.05 * damage * nutri_vol * nutri_vol, seconds_per_tick))
 		body.vomit(damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
-/obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+/obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
@@ -151,19 +151,19 @@
 			human.satiety = -MAX_SATIETY
 		else if(human.satiety < 0)
 			human.satiety++
-			if(DT_PROB(round(-human.satiety/77), delta_time))
+			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= human.physiology.hunger_mod
-		human.adjust_nutrition(-hunger_rate * delta_time)
+		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition
 	if(nutrition > NUTRITION_LEVEL_FULL)
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
-			human.overeatduration = min(human.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
+			human.overeatduration = min(human.overeatduration + (1 SECONDS * seconds_per_tick), 20 MINUTES)
 	else
 		if(human.overeatduration > 0)
-			human.overeatduration = max(human.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
+			human.overeatduration = max(human.overeatduration - (2 SECONDS * seconds_per_tick), 0) //doubled the unfat rate
 
 	//metabolism change
 	if(nutrition > NUTRITION_LEVEL_FAT)
@@ -212,30 +212,30 @@
 /obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
 	return
 
-/obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
+/obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick, times_fired)
 	var/old_disgust = disgusted.old_disgust
 	var/disgust = disgusted.disgust
 
 	if(disgust)
 		var/pukeprob = 2.5 + (0.025 * disgust)
 		if(disgust >= DISGUST_LEVEL_GROSS)
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.adjust_confusion(2 SECONDS)
-			if(DT_PROB(5, delta_time) && !disgusted.stat)
+			if(SPT_PROB(5, seconds_per_tick) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
 			disgusted.adjust_jitter(-6 SECONDS)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
+			if(SPT_PROB(pukeprob, seconds_per_tick)) //iT hAndLeS mOrE ThaN PukInG
 				disgusted.adjust_confusion(2.5 SECONDS)
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.vomit(10, distance = 0, vomit_type = NONE)
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(DT_PROB(13, delta_time))
+			if(SPT_PROB(13, seconds_per_tick))
 				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
 
-		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
+		disgusted.adjust_disgust(-0.25 * disgust_metabolism * seconds_per_tick)
 
 	// I would consider breaking this up into steps matching the disgust levels
 	// But disgust is used so rarely it wouldn't save a significant amount of time, and it makes the code just way worse
@@ -271,24 +271,6 @@
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
-	/// How much [BRUTE] damage milk heals every second
-	var/milk_brute_healing = 2.5
-	/// How much [BURN] damage milk heals every second
-	var/milk_burn_healing = 2.5
-
-/obj/item/organ/internal/stomach/bone/on_life(delta_time, times_fired)
-	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
-	if(milk)
-		var/mob/living/carbon/body = owner
-		if(milk.volume > 50)
-			reagents.remove_reagent(milk.type, milk.volume - 5)
-			to_chat(owner, span_warning("The excess milk is dripping off your bones!"))
-		body.heal_bodypart_damage(milk_brute_healing * REM * delta_time, milk_burn_healing * REM * delta_time)
-
-		for(var/datum/wound/iter_wound as anything in body.all_wounds)
-			iter_wound.on_xadone(1 * REM * delta_time)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
-	return ..()
 
 /obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
@@ -296,7 +278,6 @@
 	organ_traits = list()
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.06
-	milk_burn_healing = 0
 
 /obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"

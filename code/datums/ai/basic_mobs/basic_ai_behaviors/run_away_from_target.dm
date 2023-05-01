@@ -7,19 +7,17 @@
 	var/run_distance = 9
 
 /datum/ai_behavior/run_away_from_target/setup(datum/ai_controller/controller, target_key, hiding_location_key)
-	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(!target)
+	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
+	if(QDELETED(target))
 		return FALSE
 	if(!plot_path_away_from(controller, target))
 		return FALSE
 	return ..()
 
-/datum/ai_behavior/run_away_from_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	var/escaped =  !target || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
+	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
+	var/escaped =  QDELETED(target) || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
 	if (escaped)
 		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
 		return
@@ -43,4 +41,4 @@
 
 /datum/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	. = ..()
-	controller.blackboard[target_key] = null
+	controller.clear_blackboard_key(target_key)

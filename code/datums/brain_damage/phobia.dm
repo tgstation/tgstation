@@ -34,7 +34,7 @@
 	trigger_species = GLOB.phobia_species[phobia_type]
 	..()
 
-/datum/brain_trauma/mild/phobia/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/phobia/on_life(seconds_per_tick, times_fired)
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
