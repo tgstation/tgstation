@@ -1,9 +1,9 @@
-import { useBackend } from '../backend';
-import { Button, Stack } from '../components';
-import { Window } from '../layouts';
-import { RequestsData } from './RequestsConsole/types';
-import { RequestsConsoleHeader } from './RequestsConsole/RequestsConsoleHeader';
-import { RequestMainScreen } from './RequestsConsole/RequestsConsoleMainScreen';
+import { useBackend } from '../../backend';
+import { Button, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { RequestsData } from './types';
+import { RequestsConsoleHeader } from './RequestsConsoleHeader';
+import { RequestMainScreen } from './RequestsConsoleMainScreen';
 
 export const RequestsConsole = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
