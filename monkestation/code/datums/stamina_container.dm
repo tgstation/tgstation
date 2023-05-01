@@ -15,6 +15,8 @@
 	///Are we regenerating right now?
 	var/is_regenerating = TRUE
 
+	COOLDOWN_DECLARE(paused_stamina)
+
 /datum/stamina_container/New(parent, maximum = STAMINA_MAX, regen_rate = STAMINA_REGEN)
 	src.parent = parent
 	src.maximum = maximum
@@ -29,7 +31,9 @@
 
 /datum/stamina_container/proc/update(seconds_per_tick)
 	if(seconds_per_tick && is_regenerating)
-		return
+		if(!COOLDOWN_FINISHED(src, paused_stamina))
+			return
+		is_regenerating = FALSE
 
 	if(seconds_per_tick)
 		current = min(current + (regen_rate*seconds_per_tick), maximum)
@@ -47,9 +51,9 @@
 	parent.on_stamina_update()
 
 ///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
- /datum/stamina_container/proc/pause(time)
+/datum/stamina_container/proc/pause(time)
 	is_regenerating = FALSE
-	addtimer(CALLBACK(src, PROC_REF(resume)), time)
+	COOLDOWN_START(src, paused_stamina, time)
 
 ///Stops stamina regeneration entirely until manually resumed.
 /datum/stamina_container/proc/stop()
