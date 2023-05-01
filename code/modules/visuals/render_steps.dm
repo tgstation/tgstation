@@ -16,10 +16,9 @@
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
 	if(!source)
-		stack_trace("[src] initialized without a source arg. Make sure when you are creating a new render_step that you pass the source atom (e.g. new(null, src).")
 		return
 	render_source = source.render_target
-	SET_PLANE_EXPLICIT(src, initial(plane), source)
+	SET_PLANE_EXPLICIT(src, EMISSIVE_PLANE, source)
 	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(on_source_deleting)) 
 
 /atom/movable/render_step/ex_act(severity)
