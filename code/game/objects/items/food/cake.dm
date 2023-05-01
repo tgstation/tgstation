@@ -617,7 +617,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 40,
 		/datum/reagent/consumable/sugar = 30,
-		/datum/reagent/consumable/nutriment/vitamin = 10
+		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("cake" = 3, "frosting" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
