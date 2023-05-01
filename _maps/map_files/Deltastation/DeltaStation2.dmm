@@ -4544,8 +4544,8 @@
 /area/station/engineering/main)
 "bdt" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bdx" = (
@@ -74434,8 +74434,8 @@
 /area/station/hallway/primary/fore)
 "slY" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "slZ" = (
