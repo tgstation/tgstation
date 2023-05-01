@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Button, Stack } from '../components';
 import { Window } from '../layouts';
-import { RequestsData } from './RequestsConsole/Types';
+import { RequestsData } from './RequestsConsole/types';
 import { RequestsConsoleHeader } from './RequestsConsole/RequestsConsoleHeader';
 import { RequestMainScreen } from './RequestsConsole/RequestsConsoleMainScreen';
 
