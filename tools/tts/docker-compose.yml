@@ -25,3 +25,5 @@ services:
       timeout: 1s
       retries: 3
       start_period: 30s
+    volumes:
+      - ./tts/persistent_data/tts_models:/root/tts_data

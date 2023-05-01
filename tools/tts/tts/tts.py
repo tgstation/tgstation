@@ -6,13 +6,13 @@ import json
 import gc
 from flask import Flask, request, send_file
 
-tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
+tts = TTS(model_path="./tts_data/model.pth", config_path="./tts_data/config.json", progress_bar=False, gpu=False)
 
 app = Flask(__name__)
 
 voice_name_mapping = {}
 use_voice_name_mapping = True
-with open("./tts_voices_mapping.json", "r") as file:
+with open("./tts_data/tts_voices_mapping.json", "r") as file:
 	voice_name_mapping = json.load(file)
 	if len(voice_name_mapping) == 0:
 		use_voice_name_mapping = False

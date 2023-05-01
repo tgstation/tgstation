@@ -30,7 +30,7 @@ RUN pip install Flask &&\
 	pip cache purge
 
 COPY . /root
-RUN mkdir /tts_files
+RUN mkdir /tts_data
 WORKDIR /root
 
 
