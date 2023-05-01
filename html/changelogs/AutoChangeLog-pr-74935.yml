@@ -1,0 +1,4 @@
+author: "trevorpillow"
+delete-after: True
+changes:
+  - rscadd: "Added hostile spawn tag to rats"

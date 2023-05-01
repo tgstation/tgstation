@@ -14,7 +14,8 @@
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	if(flags_inv & HIDEFACE)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /datum/armor/head_bio_hood
 	bio = 100
