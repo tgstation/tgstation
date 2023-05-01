@@ -1248,7 +1248,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/ore_redemption/offstation
-	build_path = /obj/machinery/mineral/ore_redemption/offstatiom
+	build_path = /obj/machinery/mineral/ore_redemption/offstation
 
 /obj/item/circuitboard/machine/ore_silo
 	name = "Ore Silo"
