@@ -68,11 +68,11 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// we check to the south east and west too because action hates me
 	// OF NOTE:
 	// what we are checking here is if there's a wall below, OR if there's a wall to the south(east|west) and
-	// a SMOOTHING TARGET to the south, east or west.
+	// a SMOOTHING TARGET to the south.
 	// This ensures we only use the alt display if there's a wall there, AND we're smoothing into it
 	var/wall_below = isclosedturf(get_step(our_turf, SOUTH)) || \
-		(junction & (SOUTH|EAST) && isclosedturf(get_step(our_turf, SOUTHEAST))) || \
-		(junction & (SOUTH|WEST) && isclosedturf(get_step(our_turf, SOUTHWEST)))
+		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHEAST))) || \
+		(junction & (SOUTH) && isclosedturf(get_step(our_turf, SOUTHWEST)))
 	// If there's a wall below us, we render different
 	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below, FALSE)
 
