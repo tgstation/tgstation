@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Dirt pile is crafted from sand instead of sandstone and drops it on deconstruction"
-  - bugfix: "You can't have free water and nutriments by rebuilding hydrotray"
