@@ -30,10 +30,10 @@
 	return ..()
 
 /datum/stamina_container/proc/update(seconds_per_tick)
-	if(seconds_per_tick && is_regenerating)
+	if(seconds_per_tick && !is_regenerating)
 		if(!COOLDOWN_FINISHED(src, paused_stamina))
 			return
-		is_regenerating = FALSE
+		is_regenerating = TRUE
 
 	if(seconds_per_tick)
 		current = min(current + (regen_rate*seconds_per_tick), maximum)
