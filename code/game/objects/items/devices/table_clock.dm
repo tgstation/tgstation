@@ -55,7 +55,7 @@
 		to_chat(user, span_warning("Closing the clock? And risk losing the time? No way!"))
 		return
 	if(times_broken > MAX_CLOCK_REPAIRS)
-		user.balloon_alert(user, "clock unrepairable...")
+		user.balloon_alert(user, "clock unrepairable!")
 		return
 	user.balloon_alert(user, "fixing clock...")
 	if(!do_after(user, 10 SECONDS, src))
