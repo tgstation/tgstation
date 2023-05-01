@@ -12,8 +12,8 @@
 	var/loss_as_percent = 0
 	///Every tick, remove this much stamina
 	var/decrement = 0
-	///when we restart our stamina regen
-	var/start_stamina_regen = 0
+	///Are we regenerating right now?
+	var/is_regenerating = TRUE
 
 /datum/stamina_container/New(parent, maximum = STAMINA_MAX, regen_rate = STAMINA_REGEN)
 	src.parent = parent
@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/stamina_container/proc/update(seconds_per_tick)
-	if(start_stamina_regen < world.time)
+	if(seconds_per_tick && is_regenerating)
 		return
 
 	if(seconds_per_tick)
@@ -47,8 +47,17 @@
 	parent.on_stamina_update()
 
 ///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
-/datum/stamina_container/proc/pause(time)
-	start_stamina_regen = world.time + time
+ /datum/stamina_container/proc/pause(time)
+	is_regenerating = FALSE
+	addtimer(CALLBACK(src, PROC_REF(resume)), time)
+
+///Stops stamina regeneration entirely until manually resumed.
+/datum/stamina_container/proc/stop()
+	is_regenerating = FALSE
+
+///Resume stamina processing
+/datum/stamina_container/proc/resume()
+	is_regenerating = TRUE
 
 ///Adjust stamina by an amount.
 /datum/stamina_container/proc/adjust(amt as num, forced)
@@ -58,5 +67,5 @@
 	var/modify = parent.pre_stamina_change(amt, forced)
 	current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
 	update()
-	if((amt < 0))
+	if((amt < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)

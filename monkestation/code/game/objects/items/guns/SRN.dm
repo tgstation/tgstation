@@ -27,7 +27,7 @@
 /obj/item/gun/ballistic/SRN_rocketlauncher/attack_self(mob/user)
 	return //too difficult to remove the rocket with TK
 
-/obj/item/gun/ballistic/SRN_rocketlauncher/chamber_round()
+/obj/item/gun/ballistic/SRN_rocketlauncher/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
 	chambered = magazine.get_round(FALSE)
 
 
