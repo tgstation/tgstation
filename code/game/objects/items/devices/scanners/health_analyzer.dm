@@ -106,7 +106,17 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-// Used by the PDA medical scanner too
+/**
+ * healthscan
+ * returns a list of everything a health scan should give to a player.
+ * Examples of where this is used is Health Analyzer and the Physical Scanner tablet app.
+ * Args:
+ * user - The person with the scanner
+ * target - The person being scanned
+ * mode - Uses SCANNER_CONDENSED or SCANNER_VERBOSE to decide whether to give a list of all individual limb damage
+ * advanced - Whether it will give more advanced details, such as husk source.
+ * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
+ */
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
 	if(user.incapacitated())
 		return
@@ -127,14 +137,14 @@
 
 	render_list += "[span_info("Analyzing results for [target]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
 
-	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
-
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
 		if(humantarget.undergoing_cardiac_arrest() && humantarget.stat != DEAD)
 			render_list += "<span class='alert ml-1'><b>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</b></span>\n"
 		if(humantarget.has_reagent(/datum/reagent/inverse/technetium))
 			advanced = TRUE
+
+	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
 
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
@@ -196,11 +206,11 @@
 		var/obj/item/organ/internal/ears/ears = carbontarget.get_organ_slot(ORGAN_SLOT_EARS)
 		if(istype(ears))
 			if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, GENETIC_MUTATION))
-				render_list = "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
 			else if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, EAR_DAMAGE))
-				render_list = "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
 			else if(HAS_TRAIT(carbontarget, TRAIT_DEAF))
-				render_list = "<span class='alert ml-2'>Subject is deaf.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is deaf.\n</span>"
 			else
 				if(ears.damage)
 					render_list += "<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.\n</span>"
@@ -312,8 +322,21 @@
 			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
-		render_list += "<span class='info ml-1'>Core temperature: [round(humantarget.coretemperature-T0C,0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
-	render_list += "<span class='info ml-1'>Body temperature: [round(target.bodytemperature-T0C,0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
+		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
+		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
+			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span>\n"
+		else if(humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
+			render_list += "<span class='alert ml-1'>❄ [core_temperature_message] ❄</span>\n"
+		else
+			render_list += "<span class='info ml-1'>[core_temperature_message]</span>\n"
+
+	var/body_temperature_message = "Body temperature: [round(target.bodytemperature-T0C, 0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)"
+	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit())
+		render_list += "<span class='alert ml-1'>☼ [body_temperature_message] ☼</span>\n"
+	else if(target.bodytemperature <= target.get_body_temp_cold_damage_limit())
+		render_list += "<span class='alert ml-1'>❄ [body_temperature_message] ❄</span>\n"
+	else
+		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"
 
 	// Time of death
 	if(target.tod && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !advanced)))
@@ -346,11 +369,9 @@
 		var/mob/living/carbon/carbontarget = target
 		var/blood_id = carbontarget.get_blood_id()
 		if(blood_id)
-			if(ishuman(carbontarget))
-				var/mob/living/carbon/human/humantarget = carbontarget
-				if(humantarget.is_bleeding())
-					render_list += "<span class='alert ml-1'><b>Subject is bleeding!</b></span>\n"
-			var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			if(carbontarget.is_bleeding())
+				render_list += "<span class='alert ml-1'><b>Subject is bleeding!</b></span>\n"
+			var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 			var/blood_type = carbontarget.dna.blood_type
 			if(blood_id != /datum/reagent/blood) // special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
@@ -367,7 +388,7 @@
 		var/mob/living/carbon/carbontarget = target
 		var/cyberimp_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in carbontarget.organs)
-			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
+			if(CI.status == ORGAN_ROBOTIC && !(CI.organ_flags & ORGAN_HIDDEN))
 				cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 		if(cyberimp_detect)
 			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"

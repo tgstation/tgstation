@@ -103,14 +103,14 @@ const GasList = (props: GasListProps, context) => {
         }>
         <Button
           disabled={start_power === 0 || start_cooling === 0}
-          icon={input_switch ? 'power-off' : 'times'}
-          content={input_switch ? 'On' : 'Off'}
-          selected={input_switch}
+          icon={data[input_switch] ? 'power-off' : 'times'}
+          content={data[input_switch] ? 'On' : 'Off'}
+          selected={data[input_switch]}
           onClick={() => act(input_switch)}
         />
         <NumberInput
           animated
-          value={input_rate}
+          value={parseFloat(data[input_rate])}
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}

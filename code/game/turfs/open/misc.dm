@@ -143,7 +143,7 @@
 			return TRUE
 		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
-				if(!valid_window_location(src, user.dir, is_fulltile = FALSE))
+				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
 					balloon_alert(user, "there's already a windoor!")
 					return FALSE
 				for(var/obj/machinery/door/door in src)

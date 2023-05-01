@@ -417,9 +417,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
@@ -1040,9 +1039,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
@@ -1069,9 +1067,8 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
@@ -1115,9 +1112,8 @@
 "ec" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "ed" = (
@@ -1292,10 +1288,8 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "eC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "eD" = (
@@ -1683,10 +1677,8 @@
 "fP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -1748,9 +1740,8 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "gf" = (
@@ -1783,10 +1774,8 @@
 /area/ruin/space/ancientstation/beta/hall)
 "gj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
@@ -1831,10 +1820,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 8
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -1865,10 +1852,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -1906,9 +1891,8 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "gF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
@@ -2453,10 +2437,8 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -2696,10 +2678,8 @@
 /area/ruin/space/ancientstation/delta/hall)
 "jy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -2853,9 +2833,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -2909,10 +2888,8 @@
 /area/ruin/space/ancientstation/delta/proto)
 "kj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
 "kk" = (
@@ -3293,9 +3270,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -3372,10 +3348,8 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "lL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/yellow,
@@ -3425,10 +3399,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -3559,10 +3531,8 @@
 /obj/item/mining_scanner,
 /obj/item/mining_scanner,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -3718,9 +3688,8 @@
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3802,9 +3771,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -4294,10 +4262,8 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "oz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old,
@@ -4434,18 +4400,14 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "oX" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old,
@@ -4488,9 +4450,8 @@
 /obj/structure/mirror/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -4951,10 +4912,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /obj/machinery/meter,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/charlie/hall)
 "tz" = (
@@ -5087,9 +5046,8 @@
 "uG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -5516,10 +5474,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
 "yq" = (
@@ -6103,10 +6059,8 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "DO" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/table_frame,
 /obj/item/shard{
 	icon_state = "medium"
@@ -6145,10 +6099,8 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Eu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "EB" = (
@@ -6263,9 +6215,8 @@
 	default_raw_text = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay for your use."
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -6670,10 +6621,8 @@
 /area/ruin/space/ancientstation/delta/proto)
 "Iw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/cable,
@@ -6888,10 +6837,8 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "JM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "JT" = (
@@ -7157,10 +7104,8 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "LO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2{
 	dir = 5
@@ -7205,9 +7150,8 @@
 "Mh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Ms" = (
@@ -7386,9 +7330,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/crumpled,
 /obj/item/ph_booklet,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white/textured_edge{
@@ -7570,9 +7513,8 @@
 "PA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
@@ -7644,10 +7586,8 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "Qb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Qh" = (
@@ -7798,9 +7738,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
@@ -7816,9 +7755,8 @@
 /area/ruin/space/ancientstation/delta/hall)
 "RO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -7829,9 +7767,8 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "RV" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -8134,18 +8071,15 @@
 "UB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
 "UE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "UI" = (
@@ -8209,13 +8143,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
 /obj/item/wirecutters,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/storage)

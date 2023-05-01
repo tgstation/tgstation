@@ -1133,11 +1133,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "UK" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "UX" = (
@@ -1409,8 +1407,8 @@ bY
 CQ
 "}
 (8,1,1) = {"
-jy
-jH
+JV
+UK
 XU
 Nm
 ly
@@ -1431,8 +1429,8 @@ oX
 CQ
 "}
 (9,1,1) = {"
-JV
-UK
+jy
+jH
 Br
 wP
 ji

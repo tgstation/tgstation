@@ -28,6 +28,9 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 
+	if(isanimal(owner))
+		qdel(src)
+		return
 	if(isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
 		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))

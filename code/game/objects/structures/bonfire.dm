@@ -146,13 +146,13 @@
 			var/mob/living/burn_victim = burn_target
 			burn_victim.adjust_fire_stacks(BONFIRE_FIRE_STACK_STRENGTH * 0.5 * seconds_per_tick)
 			burn_victim.ignite_mob()
-		else if(isobj(burn_target))
-			var/obj/burned_object = burn_target
-			if(grill && isitem(burned_object))
-				var/obj/item/grilled_item = burned_object
+		else
+			var/atom/movable/burned_movable = burn_target
+			if(grill && isitem(burned_movable))
+				var/obj/item/grilled_item = burned_movable
 				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) //Not a big fan, maybe make this use fire_act() in the future.
 				continue
-			burned_object.fire_act(1000, 250 * seconds_per_tick)
+			burned_movable.fire_act(1000, 250 * seconds_per_tick)
 
 /obj/structure/bonfire/process(seconds_per_tick)
 	if(!check_oxygen())
@@ -177,23 +177,5 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
-
-/particles/bonfire
-	icon = 'icons/effects/particles/bonfire.dmi'
-	icon_state = "bonfire"
-	width = 100
-	height = 100
-	count = 1000
-	spawning = 4
-	lifespan = 0.7 SECONDS
-	fade = 1 SECONDS
-	grow = -0.01
-	velocity = list(0, 0)
-	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
-	gravity = list(0, 0.95)
-	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
-	rotation = 30
-	spin = generator(GEN_NUM, -20, 20)
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

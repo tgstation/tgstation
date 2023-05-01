@@ -7,7 +7,7 @@
 	base_icon_state = "classic"
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the unit is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
 	max_integrity = 250
 	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 

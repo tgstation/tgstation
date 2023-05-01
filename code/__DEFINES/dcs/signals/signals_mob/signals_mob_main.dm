@@ -173,6 +173,8 @@
 #define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
 	/// Prevents the automute system checking this client for repeated messages.
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
+///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
+#define COMSIG_MOB_MINED "mob_mined"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
@@ -191,6 +193,11 @@
 
 /// from mob/get_status_tab_items(): (list/items)
 #define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"
+
+/// from /mob/living/carbon/human/can_equip(): (mob/living/carbon/human/source_human, obj/item/equip_target, slot)
+#define COMSIG_HUMAN_EQUIPPING_ITEM "mob_equipping_item"
+	/// cancels the equip.
+	#define COMPONENT_BLOCK_EQUIP (1<<0)
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"

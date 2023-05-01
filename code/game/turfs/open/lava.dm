@@ -134,11 +134,11 @@
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone))
-		var/mob/living/L = gone
-		if(!islava(get_step(src, direction)))
-			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!L.on_fire)
-			L.update_fire()
+		var/mob/living/leaving_mob = gone
+		if(!islava(leaving_mob.loc))
+			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		if(!leaving_mob.on_fire)
+			leaving_mob.update_fire()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
