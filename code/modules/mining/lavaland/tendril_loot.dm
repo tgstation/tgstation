@@ -806,7 +806,7 @@
 	scan_ability = new(src)
 
 /obj/item/clothing/glasses/godeye/Destroy()
-	scan_ability?.Remove(user)
+	scan_ability?.Remove(scan_ability.owner)
 	QDEL_NULL(scan_ability)
 	return ..()
 
