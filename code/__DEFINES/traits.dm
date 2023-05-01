@@ -465,6 +465,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
 #define TRAIT_HATED_BY_DOGS "hated_by_dogs"
+/// Mobs with this trait will not be immobilized when held up
+#define TRAIT_NOFEAR_HOLDUPS "no_fear_holdup"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions

@@ -7,11 +7,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "ad" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
 /obj/structure/closet/crate/secure/freezer/commsagent,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ae" = (
@@ -70,10 +68,8 @@
 /obj/structure/table/wood,
 /obj/item/paper/fluff/ruins/listeningstation/reports/november,
 /obj/item/crowbar/red,
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "ca" = (
@@ -355,23 +351,19 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "tm" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/machinery/computer/message_monitor{
 	dir = 8
 	},
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "uI" = (
-/obj/machinery/airalarm/away{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "vC" = (

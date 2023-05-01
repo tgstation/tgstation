@@ -841,10 +841,8 @@
 /area/shuttle/pirate)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/robot_debris/up,
 /turf/open/floor/plating,
