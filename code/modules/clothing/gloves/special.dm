@@ -118,10 +118,13 @@
 
 /obj/item/clothing/gloves/latex/coroner
 	name = "coroner's gloves"
-	desc = "Cheap black gloves made from latex. Useful for picking bodies up instead of dragging blood behind."
+	desc = "Black gloves made from latex with a superhydrophobic coating. Useful for picking bodies up instead of dragging blood behind."
 	icon_state = "latex_black"
 	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#15191a"
+
+/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
+	return FALSE
 
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
