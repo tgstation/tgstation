@@ -51,10 +51,12 @@
 	for(var/slot_flag in slot_flags)
 		worn_items["[slot_flag]"] = null
 		for(var/obj/item/clothing/items as anything in starting_items)
-			items = new items(src)
-			if(items.slot_flags & slot_flag)
-				worn_items["[slot_flag]"] = items
+			if(initial(items.slot_flags) & slot_flag)
+				worn_items["[slot_flag]"] = new items(src)
+				starting_items -= items
 				continue
+	if(starting_items.len)
+		CRASH("[src] had [starting_items.len] starting items fail to equip.")
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
@@ -186,6 +188,7 @@
 
 /obj/structure/mannequin/skeleton
 	name = "skeleton model"
+	desc = "Not to knock over."
 	material = MANNEQUIN_SKELETON
 	anchored = TRUE
 	starting_items = list(

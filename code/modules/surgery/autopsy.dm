@@ -7,6 +7,12 @@
 		/datum/surgery_step/autopsy,
 	)
 
+/datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
+	. = ..()
+	if(patient.stat != DEAD)
+		return FALSE
+	return TRUE
+
 /datum/surgery_step/autopsy
 	name = "Perform Autopsy (autopsy scanner)"
 	implements = list(/obj/item/autopsy_scanner = 100)

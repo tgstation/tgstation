@@ -14,6 +14,9 @@
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/autopsy_scanner/proc/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)
+	if(scanned.stat != DEAD)
+		return
+
 	var/list/autopsy_information = list()
 	autopsy_information += "[scanned.name] - Species: [scanned.dna.species.name]"
 	autopsy_information += "Time of Death - [scanned.tod]"
