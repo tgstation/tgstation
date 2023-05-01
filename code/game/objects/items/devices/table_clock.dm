@@ -63,11 +63,8 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/table_clock/update_icon_state()
-	. = ..()
-	if(broken)
-		icon_state = "[base_icon_state]_broken"
-	else
-		icon_state = base_icon_state
+	icon_state = "[base_icon_state][broken ? "_broken" : null]"
+	return ..()
 
 /**
  * Breaks the clock, turning off the soundloop.
