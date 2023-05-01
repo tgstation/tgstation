@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "You can't spam open codex cicatrix now."
-  - qol: "You can close codex cicatrix in your hand now! Also toy codex cicatrix has proper animation now."

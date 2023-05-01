@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Spiderlings are now basic mobs, report any complete weirdness/deviation from known behavior. They should be a lot more intelligent now though."
-  - rscadd: "AI Spiderlings are super fragile, but they're also super fast, especially when they get into a vent. Once they're in circulation, they could end up everywhere! Maybe in the armory, maybe in a locked closet in maintenance. Be sure to be vigilant and splat them whenever you can to save the station from a whole lotta heartache!"

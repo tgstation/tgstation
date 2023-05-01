@@ -2814,7 +2814,6 @@
 #include "code\modules\atmospherics\machinery\air_alarm\air_alarm_interact.dm"
 #include "code\modules\atmospherics\machinery\air_alarm\air_alarm_modes.dm"
 #include "code\modules\atmospherics\machinery\air_alarm\air_alarm_thresholds.dm"
-#include "code\modules\atmospherics\machinery\air_alarm\air_alarm_variants.dm"
 #include "code\modules\atmospherics\machinery\components\components_base.dm"
 #include "code\modules\atmospherics\machinery\components\tank.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\binary_devices.dm"

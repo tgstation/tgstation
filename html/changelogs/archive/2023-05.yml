@@ -1,0 +1,53 @@
+2023-05-01:
+  BlueMemesauce:
+  - spellcheck: Deleted the extra line in combat information
+  - spellcheck: Fixed Nanotrasen being miscapitalized in traitor posters, a drink,
+      the ethereal lore, and some photocopier paperwork
+  EOBGames:
+  - rscdel: Kilostation has went back to its home planet. It served us faithfully
+      for nearly 3 and a half years. May it rest in peace.
+  Helg2:
+  - bugfix: You can't spam open codex cicatrix now.
+  - qol: You can close codex cicatrix in your hand now! Also toy codex cicatrix has
+      proper animation now.
+  Iajret:
+  - bugfix: papers should count cyrillic and other non-ascii characters correctly
+      both server and client-side
+  JohnFulpWillard:
+  - balance: Mimes can no longer write on paper without breaking their vow.
+  - admin: Enslaving mobs is now logged in game.log
+  - refactor: Russian mobs are now subtypes of Syndicate basic mobs.
+  - bugfix: Birdshot's observers now spawn on-station.
+  - bugfix: Birdshot's EVA door now properly works.
+  - bugfix: Birdshot now has a few extra rooms connected to the station's distro (atmos
+      canister storage, medical coldroom)
+  - balance: Machines (such as ORM and Techfabs) will no longer unsync from Ore silos
+      when it moves Z-level, instead it will prevent materials from being used, as
+      if it was on hold.
+  MTandi:
+  - qol: Dirt pile is crafted from sand instead of sandstone and drops it on deconstruction
+  - bugfix: You can't have free water and nutriments by rebuilding hydrotray
+  Melbert:
+  - bugfix: North Star's shields now regenerate integrity over time
+  NoselessCanine:
+  - bugfix: Bloody Mary flavor is now accurate to its description.
+  Rhials:
+  - bugfix: Replaces the purely decorative mining shuttle console on the Icebox bridge
+      with an ID console.
+  Zergspower:
+  - bugfix: Deep Storage Space Ruin - Fixes atmos alarms never shutting off
+  - bugfix: Deep Storage Space Ruin - made the atmos pipenet sane
+  - bugfix: Crashedship Ruin - You can now use the teleport
+  mc-oofert:
+  - bugfix: The airlocks on the hug relaxation shuttle now align up properly
+  norsvenska:
+  - bugfix: Shuttle Loan event's resupply and hijacking have been separated into two
+      different datums
+  san7890:
+  - refactor: Spiderlings are now basic mobs, report any complete weirdness/deviation
+      from known behavior. They should be a lot more intelligent now though.
+  - rscadd: AI Spiderlings are super fragile, but they're also super fast, especially
+      when they get into a vent. Once they're in circulation, they could end up everywhere!
+      Maybe in the armory, maybe in a locked closet in maintenance. Be sure to be
+      vigilant and splat them whenever you can to save the station from a whole lotta
+      heartache!
