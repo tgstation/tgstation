@@ -114,10 +114,6 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "z" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
@@ -202,6 +198,11 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"O" = (
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
 "P" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -306,7 +307,7 @@ G
 (7,1,1) = {"
 a
 G
-p
+O
 s
 p
 j
