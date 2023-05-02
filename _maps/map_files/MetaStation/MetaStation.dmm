@@ -6979,9 +6979,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -26216,6 +26213,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
+"jyo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "jyq" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -102754,7 +102757,7 @@ jMo
 uUl
 jtb
 qXB
-fGp
+wzK
 qXB
 pzQ
 pRe
@@ -103272,11 +103275,11 @@ wzK
 bEU
 khA
 bEU
-bEU
+jyo
 rAg
 cjP
 fRS
-tUv
+cGw
 rac
 riL
 pkj
