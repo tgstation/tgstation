@@ -497,7 +497,6 @@
 /obj/item/mod/module/minigun
 	name = "MOD laser gatling gun module"
 	icon_state = "minigun_module"
-	inhand_icon_state = "minigun"
 	desc = "A laser gatling gun with a cable that connects to a mod suit"
 	w_class = WEIGHT_CLASS_HUGE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
