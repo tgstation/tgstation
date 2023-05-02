@@ -76,7 +76,8 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
-    `${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`,
+    `${DME_NAME}.dme`,
+    `${DME_NAME}.flat.dme`,
     NamedVersionFile,
   ],
   outputs: ({ get }) => {
@@ -336,7 +337,7 @@ export const CleanAllTarget = new Juke.Target({
  * Does not clean them up, as this is intended for TGS which
  * clones new copies anyway.
  */
-const prependDefines = (...defines) => {
+const prependDefines = (get, ...defines) => {
   const dmeContents = fs.readFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`);
   const textToWrite = defines.map(define => `#define ${define}\n`);
   fs.writeFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, `${textToWrite}\n${dmeContents}`);
@@ -344,9 +345,9 @@ const prependDefines = (...defines) => {
 
 export const TgsTarget = new Juke.Target({
   dependsOn: [TguiTarget],
-  executes: async () => {
+  executes: async ({ get })  => {
     Juke.logger.info('Prepending TGS define');
-    prependDefines('TGS');
+    prependDefines(get, 'TGS');
   },
 });
 
