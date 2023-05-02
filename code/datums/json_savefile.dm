@@ -115,10 +115,6 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 /// Proc that just handles all of the checks for exporting a preferences file, returns TRUE if all checks are passed, FALSE otherwise.
 /// Just done like this to make the code in the export_json_to_client() proc a bit cleaner.
 /datum/json_savefile/proc/json_export_checks(mob/requester)
-	if(!SSticker.HasRoundStarted()) // we want to be absolutely certain the cooldown system will work and that all the data has been loaded.
-		tgui_alert(requester, "You must wait until the round has started before exporting your preferences!", "Export Preferences JSON")
-		return FALSE
-
 	if(!COOLDOWN_FINISHED(src, download_cooldown))
 		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
 		return FALSE
