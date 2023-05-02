@@ -62522,7 +62522,6 @@
 /area/station/hallway/primary/aft)
 "wrk" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
