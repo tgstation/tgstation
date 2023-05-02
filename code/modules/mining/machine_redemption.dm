@@ -317,7 +317,7 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level() && (requires_silo || user_id_card.registered_account.replaceable))
+			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
 				return TRUE
 			if(points)
 				if(user_id_card)
