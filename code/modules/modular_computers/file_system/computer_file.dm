@@ -23,7 +23,10 @@
 
 /datum/computer_file/Destroy(force)
 	if(computer)
-		computer.remove_file(src)
+		if(src == computer.active_program)
+			active_program.active_program = null
+		if(src in computer.idle_threads)
+			computer.idle_threads.Remove(src)
 		computer = null
 	if(disk_host)
 		disk_host.remove_file(src)
