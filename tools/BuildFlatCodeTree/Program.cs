@@ -32,7 +32,7 @@ async Task CreateFlatFile(string path, bool dme)
 
 	foreach (var match in matches)
 	{
-		var fullIncludePath = Path.Combine(originalPathDirectory, match.Groups[2].Value)[(currentDirectoryA.Length - 1)..];
+		var fullIncludePath = Path.Combine(originalPathDirectory, match.Groups[2].Value)[(currentDirectoryA.Length - 1)..].Replace('/', '\\');
 		if (File.Exists(fullIncludePath))
 			lock (tasks)
 				tasks.Add(CreateFlatFile(fullIncludePath, false));
