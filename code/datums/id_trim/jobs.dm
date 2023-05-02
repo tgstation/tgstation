@@ -338,17 +338,17 @@
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_CMO,
-		)
+	)
 	extra_access = list(
 		ACCESS_TELEPORTER,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		)
+	)
 	job = /datum/job/chief_medical_officer
 
 /datum/id_trim/job/clown
@@ -409,17 +409,17 @@
 		ACCESS_SERVICE,
 		ACCESS_SURGERY,
 		ACCESS_MINERAL_STOREROOM,
-		)
+	)
 	extra_access = list(
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_CMO,
 		ACCESS_HOP,
-		)
+	)
 	job = /datum/job/coroner
 
 /datum/id_trim/job/curator
@@ -459,15 +459,15 @@
 		ACCESS_MORGUE_SECURE,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
-		)
+	)
 	extra_access = list(
 		ACCESS_BRIG,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOS,
-		)
+	)
 	job = /datum/job/detective
 
 /datum/id_trim/job/detective/refresh_trim_access()
@@ -547,10 +547,10 @@
 		ACCESS_TELEPORTER,
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_HOP,
-		)
+	)
 	extra_access = list()
 	extra_wildcard_access = list()
 	template_access = list(
@@ -597,14 +597,14 @@
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		)
+	)
 	job = /datum/job/head_of_security
 
 /datum/id_trim/job/head_of_security/refresh_trim_access()
@@ -782,16 +782,16 @@
 		ACCESS_MEDICAL,
 		ACCESS_PSYCHOLOGY,
 		ACCESS_SERVICE,
-		)
+	)
 	extra_access = list(
 		ACCESS_MORGUE_SECURE,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_CMO,
 		ACCESS_HOP,
-		)
+	)
 	job = /datum/job/psychologist
 
 /datum/id_trim/job/quartermaster

@@ -22,7 +22,7 @@
 	departments_list = list(
 		/datum/job_department/medical,
 		/datum/job_department/service,
-		)
+	)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 30,
