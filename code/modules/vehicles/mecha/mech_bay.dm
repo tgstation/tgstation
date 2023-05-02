@@ -113,16 +113,13 @@
 /obj/machinery/mech_bay_recharge_port/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || !recharge_console)
 		end_processing()
-		to_chat(world, "DEBUG -- End Processing; No power or console")
 		return
 
 	var/obj/recharging_machine = recharging_machine_ref?.resolve()
 	var/obj/item/stock_parts/cell/electron_cache = recharging_powercell_ref?.resolve()
-	to_chat(world, "DEBUG -- machine is [recharging_machine], and cell is [electron_cache]")
 
 	if(!recharging_machine)
 		end_processing()
-		to_chat(world, "DEBUG -- End Processing; no target machine")
 		return
 
 	if(recharging_machine.loc !=  recharging_turf)
@@ -131,13 +128,11 @@
 		electron_cache = null
 		recharging_powercell_ref = null
 		end_processing()
-		to_chat(world, "DEBUG -- End Processing; machine not on charge turf")
 		return
 
 	if(!electron_cache || (electron_cache.loc != recharging_machine))
 		electron_cache = null
 		recharging_powercell_ref = null
-		to_chat(world, "DEBUG -- End Processing; cell not located inside machine")
 		return
 
 	if(electron_cache.charge < electron_cache.maxcharge)
