@@ -31,8 +31,6 @@
 	var/harvest_amount_low = 1
 	/// The high end of how many product_type items you get
 	var/harvest_amount_high = 3
-	/// Multiplier for how many product you will get after harvest. Used for something like deconstruct so it gives you less products.
-	var/product_amount_multiplier = 1
 
 	//Messages to show to the user depending on how many items they get when harvesting the flora
 	var/harvest_message_low
@@ -138,7 +136,7 @@
 		return list()
 	var/list/product_list = list()
 
-	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)*product_amount_multiplier
+	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
 	for(var/iteration in 1 to harvest_amount)
 		var/chosen_product = pick_weight(product_types)
 		if(!product_list[chosen_product])
@@ -179,7 +177,7 @@
  * Also renames the flora if harvested_name or harvested_desc is set in the variables
  * Returns: FALSE if nothing was made, otherwise a list of created products
  */
-/obj/structure/flora/proc/harvest(user)
+/obj/structure/flora/proc/harvest(user, product_amount_multiplier = 1)
 	. = FALSE
 	if(harvested && !LAZYLEN(product_types))
 		return FALSE
@@ -195,7 +193,7 @@
 	//If it *is* an item stack, we don't want to go through 50 different iterations of a new object where it just gets qdeleted after the first
 	. = list()
 	for(var/product in products_to_create)
-		var/amount_to_create = products_to_create[product]
+		var/amount_to_create = products_to_create[product]*product_amount_multiplier
 		products_created += amount_to_create
 		if(ispath(product, /obj/item/stack))
 			var/product_left = amount_to_create
@@ -270,8 +268,7 @@
 		if(harvested)
 			return ..()
 
-		product_amount_multiplier = 0.6
-		harvest()
+		harvest(product_amount_multiplier = 0.6)
 	. = ..()
 
 /*********
@@ -306,7 +303,7 @@
 /obj/structure/flora/tree/proc/get_seethrough_map()
 	return SEE_THROUGH_MAP_DEFAULT
 
-/obj/structure/flora/tree/harvest(mob/living/user)
+/obj/structure/flora/tree/harvest(mob/living/user, product_amount_multiplier)
 	. = ..()
 	var/turf/my_turf = get_turf(src)
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
@@ -325,7 +322,7 @@
 	density = FALSE
 	delete_on_harvest = TRUE
 
-/obj/structure/flora/tree/stump/harvest(mob/living/user)
+/obj/structure/flora/tree/stump/harvest(mob/living/user, product_amount_multiplier)
 	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
 
