@@ -445,9 +445,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 			right_dir = NORTH
 			left_dir = EAST
 
+	var/list/result_list = list()
 	var/turf/middle_turf = get_step(base, general_dir)
-	return list(
-		get_step(middle_turf, right_dir),
-		middle_turf,
-		get_step(middle_turf, left_dir),
-	)
+	var/turf/right_turf = get_step(middle_turf, right_dir)
+	var/turf/left_turf = get_step(middle_turf, left_dir)
+	if(istype(right_turf))
+		result_list += right_turf
+	if(istype(middle_turf))
+		result_list += middle_turf
+	if(istype(left_turf))
+		result_list += left_turf
+	return result_list

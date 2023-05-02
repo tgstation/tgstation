@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			reverse_range(affecting)
 
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
-	if(!execute_attack(attacker, weapon, affecting, right_clicking, priority_target = aimed_towards))
+	if(!execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking))
 		return FALSE
 
 	if(slowdown > 0)
@@ -44,22 +44,30 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.changeNext_move(cd)
 	return TRUE
 
-/datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, right_clicking, atom/priority_target)
+/datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	SHOULD_CALL_PARENT(TRUE)
 
 	attack_effect_animation(attacker, weapon, affecting)
 
 	for(var/turf/hitting as anything in affecting)
-		if(isliving(priority_target) && (priority_target in hitting))
-			weapon.attack(priority_target, attacker)
-			break
-		for(var/mob/living/smacked in hitting)
-			weapon.attack(smacked, attacker)
-			break
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting.Find(hitting))
 #endif
+
+		var/mob/living/smack_who
+		if(isliving(priority_target) && (priority_target in hitting))
+			smack_who = priority_target
+		else
+			smack_who = locate() in hitting
+		if(!isliving(smack_who))
+			continue
+/*
+		var/attack_results = weapon.attack(smack_who, attacker)
+		if(attack_results & ATTACK_BLOCKED)
+			return
+*/
+		weapon.attack(smack_who, attacker)
 
 	if(execute_sound)
 		playsound(attacker, execute_sound, 50, TRUE)
@@ -81,8 +89,24 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	RETURN_TYPE(/list)
 	return list(get_step(attacker, attack_direction))
 
-/datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/affecting)
-	return
+/datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+	var/num_turfs_to_move = length(affecting)
+	var/time_per_turf = 0.4 SECONDS
+	var/final_animation_length = time_per_turf * num_turfs_to_move
+	var/initial_angle = get_angle(attacker, affecting[1])
+	var/final_angle = get_angle(attacker, affecting[num_turfs_to_move])
+
+	var/image/attack_image = image(icon = weapon, loc = attacker, layer = attacker.layer + 0.1)
+	var/matrix/base_transform = matrix(attack_image.transform)
+	attack_image.alpha = 180
+	attack_image.color = "#c4c4c4"
+	attack_image.transform.Turn(initial_angle)
+	var/matrix/final_transform = base_transform.Turn(final_angle)
+
+	message_admins("[final_animation_length]")
+	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf)
+	animate(attack_image, time = final_animation_length, alpha = 120, transform = final_transform)
+	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
 
 /**
  * Not necessarily an attack style, but essentialy this allows you to have item specific interations
@@ -110,7 +134,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/swing/requires_wield
 
-/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, atom/priority_target)
+/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return FALSE
 	return ..()
@@ -119,7 +143,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
 	reverse_for_lefthand = FALSE
 
-/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/affecting, right_clicking, atom/priority_target)
+/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!weapon.blade_active)
 		return FALSE
 
@@ -134,8 +158,16 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	reverse_for_lefthand = FALSE
 
 /datum/attack_style/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	// todo: make this do an aoe around.
-	return ..()
+	var/behind_us = REVERSE_DIR(attack_direction)
+	var/list/cone_turfs = list()
+	for(var/around_dir in list(NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST))
+		if(around_dir & behind_us)
+			continue
+		var/turf/found_turf = get_step(attacker, around_dir)
+		if(istype(found_turf))
+			cone_turfs += found_turf
+
+	return cone_turfs
 
 // Direct stabs out to turfs in front
 /datum/attack_style/stab_out
@@ -160,7 +192,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	cd = CLICK_CD_MELEE * 2
 	stab_range = 2
 
-/datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, atom/priority_target)
+/datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return FALSE
 	return ..()
