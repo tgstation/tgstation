@@ -1,0 +1,237 @@
+2011-09-04:
+  Doohl:
+  - unknown: New escape shuttle!
+  - unknown: Metroids get hungry slower, but gain more nutrients from eating.
+  Erro:
+  - unknown: R'n'D and Gas Storage locations have been swapped in order for R&amp;D
+      to be given a hallway-facing table, just like Chemistry.
+  - unknown: Buckling someone to a chair now causes them to face in the same direction
+      as the chair.
+  - unknown: Conveyor will now move only 10 items per game cycle. This is to prevent
+      miners from overloading the belts with 2000 pieces of ore and slowing down time
+      by turning it on. Does not apply to mobs on belt.
+  Kor:
+  - unknown: Added Necronomicon bible (credit Joseph Curwen)
+  - unknown: Removed Doc Scratch clothing from chaplain? locker and added as a random
+      spawn in the theatre.
+  - unknown: Shaft Miners now start with regular oxygen tanks.
+  - unknown: Mutate now gives the wizard hulk and OPTIC BLAST instead of hulk and
+      TK.
+  - unknown: Spiderman suit is no longer armoured or space worthy.
+  - unknown: Crayons
+  Lasty:
+  - unknown: Switched xenomorph weeds to run in the background, hopefully causing
+      them to destroy the server slightly less.
+  Microwave:
+  - unknown: Added sink to hydroponics
+  - unknown: Cleaned up autolathe menu
+  - unknown: Glasses and cups can now be filled with water from sinks.
+  Superxpdude:
+  - unknown: New, more appropriate arrivals message.
+  - unknown: Shuttle escape doors fixed.
+  - unknown: New RIG sprite.
+  Urist McDorf:
+  - unknown: People who have been infected by facehuggers can no longer suicide.
+  - unknown: Stammering has been reworked.
+  - unknown: The chaplain can now no longer discern what ghosts are saying, instead
+      receiving flavour text indicating that ghosts are speaking to him.
+  - unknown: Walking Mushroom yield decreased from 4 to 1.
+  - unknown: Glowshrooms now only spread on asteroid tiles.
+  - unknown: Fixed rev round end message reporting everyone as dead.
+  - unknown: Gave the changeling an unfat sting.
+2011-09-05:
+  Rageroro:
+  - unknown: Updates made to the HoP's ID computer. New interface and removing a card
+      will now put it directly in your hand, if it's empty. Using your card on the
+      computer will place it in the appropriate spot. If it has access to edit cards
+      it will put it as the authentication card, otherwise as the card to be modified.
+      If you have two cards with ID computer access first insert the authentication
+      card, then the one you wish to midify, or do it manually like before.
+  - unknown: <a id="easteregg1_link" onclick="changeText('easteregg1_tag','&lt;font
+      color=\'red\'&gt;Has Hell frozen over yet?&lt;/font&gt;','easteregg1_link')">Placed
+      extra fire suits in maintenance (Near eva and mining) and an extra fire closet
+      to atmos.</a> <span id="easteregg1_tag"></span>
+2011-09-06:
+  Cheridan:
+  - unknown: New sprites for beds and air, plasma and nitrogen tanks (The ones found
+      in maintenance shafts).
+  Greek Rioter:
+  - unknown: 'Removed dumb/badly sprited drinks for barman. This is for you, people
+      that love to play barman. Your job is now non-stupid again. <font color="red"><b>EDIT:
+      FIXED DRINK MIXING</b></font>'
+  - unknown: 'More info here: <a href="http://code.google.com/p/tgstation13/source/detail?r=2136/"
+      target="_blank">rev2136</a>'
+  Lasty:
+  - unknown: Fixed the karma exploit! Uhangi can rest in peace knowing his -87 karma
+      ways were not his own.
+  - unknown: Added new ambient sound for space and the mines.
+  - unknown: Examining an oxygen tank will now tell you if it is about to run out
+      of air. If it is, you will recieve a beep and a message, and if not, then you'll
+      just get the default "this is an oxygentank!" message.
+  Microwave:
+  - unknown: 'Nuka Cola re-added. '
+  Rageroro:
+  - unknown: Sleeper update! Sleepers can now only inject soporific, dermaline, bicaridine,
+      and dexaline into people with 1% or more health. They can also inject inaprovaline
+      into people with -100% or more health. Nothing can be injected into people who
+      are dead.
+  Superxpdude:
+  - unknown: Virology is now part of medbay, and as such the RD no longer has Virology
+      access and the CMO and Virologist no longer have Research access.
+  Uhangi:
+  - unknown: 'Electropacks, screwdrivers, headsets, radio signalers, and station bounced
+      radios can now be constructed from the autolathe. '
+  - unknown: Added a courtroom to Centcom.
+  - unknown: Fixed electropack bug regarding using screwdrivers on electropacks.
+  Urist McDorf:
+  - unknown: 'Added XCom aliens, by Xerif (Donated by the <a href="http://www.ss13.org/"
+      target="_blank">Foundation project</a> )  '
+2011-09-08:
+  Lasty:
+  - unknown: Suicide has been changed to biting your tongue off instead of holding
+      your breath, and examining someone who has comitted suicide will give you a
+      message stating that their tongue is missing.
+  - unknown: Chemsprayers are now large items instead of small, meaning they can no
+      longer fit in your pocket.
+2011-09-10:
+  Errorage:
+  - unknown: A new pet on the bridge.
+  - unknown: The pet can now be buckled and will no longer escape from closed containers,
+      such as closets or the cloning pods.
+  - unknown: Vending machines and request consoles are the first to use the new in-built
+      browser in the upper-right of the user interface. If feedback is positive on
+      these, more machines will be added to this. Hoping that this will eventually
+      reduce the number of popup micromanagement.
+  Lasty:
+  - unknown: The collectible hats have been removed from the theatre, doomed to rot
+      forever in the hat crates they spawned from. No longer shall you see racks full
+      of "collectible hard hat"!
+  Mport:
+  - unknown: Synaptizine now once again helps you recover from being stunned, however
+      it is now also slightly toxic and may cause a small amount of toxins damage
+      for every tick that it is in your system.
+  - unknown: Assembly updating!
+  - unknown: Original blob is back, though it still has lava sprites.
+  - unknown: The bug where you would spawn on the wizard shuttle for a second at the
+      start of the round should no longer occur.
+  TLE:
+  - unknown: You can now toggle the message for becoming a pAI on and off in your
+      prefs.
+2011-09-11:
+  toolboxed:
+  - unknown: Ian can now be <a href="#" id="ian_link" onclick="changeText('ian_tag','hurt
+      when attacked by items which cause brute damage.', 'ian_link')"><span id="ian_tag">toolboxed</span></a>.
+  - unknown: Ian can now be healed with bruisepacks, unless he's already dead.
+  - unknown: You can now walk over Ian when he's killed.
+  - unknown: Ian will chase food, if you leave it on the floor. If he notices it and
+      you pick it up, he'll chase you around, if you stay close enough.
+2011-09-13:
+  Errorage:
+  - unknown: Healing, attacking or 'gently tapping' Ian will now properly display
+      the name of the attacker to all people.
+  Miss Phaeron:
+  - unknown: E-Swords now have a chance to deflect projectiles when active
+  - unknown: Taser/Laser shots now drain 40 battery per use from a borg, as opposed
+      to 20
+  - unknown: EMPs do 60 damage to borgs now, up from 25. They also stun them momentarily
+      and drain 1k charge
+  - unknown: As part of a joint effort between Mport, Falazameer, and myself an Ion
+      Rifle has been added to the armoury
+  - unknown: The Mutate spell now gives Laser Vision and Hulk
+  Vinyl Scratch:
+  - unknown: Runtime!
+  - unknown: Mine ambience now fades out at the end so that not only is it less jarring
+      when it ends, but it also loops properly.
+  - unknown: 'Malfunctioning AI''s runtime message now has a voice clip to go with
+      it (courtesy of Rosen Ritter) '
+  - unknown: Every headset will now display the commands for their respective channels
+      upon examine.
+2011-09-14:
+  Lasty:
+  - unknown: Runtime now actually spawns in medbay because nobody cared whether it
+      is a tiny smugfaced espeon that explodes violently on death or a spacecat that
+      presumably doesn't.
+  - unknown: You can no longer put someone into a sleeper and erase them from existence
+      by climbing into the same sleeper.
+  - unknown: Players who haven't entered the game will no longer be able to hear administrators
+      in deadchat.
+  Mport, SECOND REMOVER OF SUNS:
+  - unknown: Singularity absorbtion explosion range lowered and is now dependent on
+      singularity size.
+  - unknown: Bag of Holding no longer instakills singularity, and the chance for bombs
+      to destroy a singularity has been changed from 10% to 25%.
+  - unknown: Removed THE SUN.
+  - unknown: Damage and stun duration from shocked doors has been lowered to account
+      for a larger amount of energy in the powernet.
+  Pete:
+  - unknown: Added new sprites for the light tube and glasses boxes.
+  - unknown: Fixed the bug where syndicate bundles would have an emergency O2 tank
+      and breath mask.
+2011-09-17:
+  /tg/station team:
+  - unknown: ' Operation Market Garden remembrance day:'
+  Errorage:
+  - unknown: You can now insert a coin into vending machines. Some machines (currently
+      only the cigarette vending machine) have special items that you can only get
+      to with a coin. No, hacking will not let you get the items, coin only.
+2011-09-18:
+  /tg/station team:
+  - unknown: ' World Water Monitoring Day:'
+  Errorage:
+  - unknown: Added the most fun activity in your every-day life. Laundry. Check the
+      dormitory. (Sprites by Hempuli)
+  - unknown: You can now change the color of jumpsuits, shoes, gloves and bedsheets
+      using the washing machine.
+  - unknown: Some religions (currently Islam, Scientology and Atheism) set your chapel's
+      symbols to the symbols of that religion.
+  - unknown: A new old-style cabinet's been added to the detective's office. (Sprite
+      by Hempuli)
+  - unknown: Runtime the cat ran away!! And it gets even worse! <a href="#" id="deempisi_link"
+      onclick="changeText('deempisi_tag','(Yes, I had to look up the spelling...)',
+      'deempisi_link')">Mr. Deempisi</a> met a premature end during an excursion to
+      the kitchen's freezer! <span id="deempisi_tag"></span> -- I was ORDERED to do
+      this... don't kill me! :(
+  - unknown: Kudzu can now be spawned (Currently admin-only. Will test a bit, balance
+      it properly and add it as a random event) (Original code and sprites donated
+      by I Said No)
+  Kor:
+  - unknown: Added purple goggles to chemistry (you're welcome Lasty)
+  - unknown: Added a third MMI to robotics and monkey cubes to xenobio (dont fucking
+      spam them in the halls)
+  Mport:
+  - unknown: Turns out tasers and a few other weapons were slightly bugged when it
+      came to checking the internal powercell. Tasers and such gained an extra shot.
+  - unknown: Ion Rifle shots lowered to 5 per charge.
+2011-09-20:
+  /tg/station team:
+  - unknown: ' 10 year anniversary of the declaration of the "war on terror":'
+  Errorage:
+  - unknown: <font color="red">You can no longer clone people who suicided. I REPEAT!
+      You can no longer clone people who have suicided!</font> So use suiciding more
+      carefully and only if you ACTUALLY want to get out of a round. You can normally
+      clone people who succumbed tho, so don't worry about that.
+  - unknown: Washing your hands in the sink will now only wash your hands and gloves.
+      You can wash items if you have them in your hands. Both of these actions are
+      no longer instant tho.
+2011-09-22:
+  /tg/station team:
+  - unknown: ' OneWebDay:'
+  Errorage:
+  - unknown: Added an additional 9 colors, into which you can color bedsheets, jumpsuits,
+      gloves and shoes at the washing machine.
+  - unknown: <font color="red">A new click proc will need to be live-tested</font>.
+      The testing will be announced via OOC and you will get a message when it happens.
+      When testing is going on, the new click proc will be used. If testing is going
+      on and you notice a bug, please report it via adminhelp. If you find yourself
+      unable to perform an action, you can double click (By that I mean spam the shit
+      out of clicking) to use the old proc, which is unchanged and will behave like
+      you're used to. <font color="red">Standard roleplay rules apply during tests,
+      they're not an excuse to murder eachother.</font>
+2011-09-28:
+  Doohl:
+  - unknown: Putting someone inside a cloning machine's DNA scanner will notify the
+      person that they are about to be cloned. This completely removes the necessity
+      to announce over OOC for someone to get back in their body.
+  Rolan7:
+  - unknown: New method for job assignment. Remember to review your preferences. Send
+      all your hate and bug reports to me.

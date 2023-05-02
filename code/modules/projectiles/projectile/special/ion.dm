@@ -3,8 +3,7 @@
 	icon_state = "ion"
 	damage = 0
 	damage_type = BURN
-	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 	var/emp_radius = 1
 

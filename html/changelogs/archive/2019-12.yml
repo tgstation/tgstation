@@ -1,0 +1,501 @@
+2019-12-03:
+  Bumtickley00:
+  - balance: Buffed granibitaluri to be a better top-off healer
+  - tweak: Changed granibitaluri's recipe to be easier to make
+  Couls:
+  - rscadd: Birdboat can eat anything with plastic, but he'll choke on it! Keep him
+      away from plastic.
+  - bugfix: (admin-spawned) mysterious water bottles now correctly have random reagent
+      contents and show markings without runtiming
+  Firecage:
+  - rscadd: Mining Cyborgs are now able to choose which icon they want upon picking
+      their module. Either the Lavaland Mining Cyborg icon, the Asteroid Mining Cyborg
+      icon, or the Spider Mining Cyborg icon.
+  - tweak: Mining Cyborg Lavaproof Tracks upgrade is renamed to Mining Cyborg Lavaproof
+      Chassis.
+  - bugfix: Dead Goliath Broodmother no longer constantly spawns tentacles around
+      them.
+  - bugfix: Mobs which can metabolize reagents can now properly metabolize crayon
+      powder.
+  GuillaumePrata:
+  - rscadd: The pimpin ride hook now holds the trashbag open for easier trash disposal.
+  Indie-ana Jones:
+  - tweak: Xenobiologists have noted a change in results from the gold slime core's
+      reaction.  Creatures previously thought to be useless are also notably more
+      unique than before.
+  Ryll/Shaps:
+  - rscadd: You can now beat on vending machines to try and knock loose free stuff!
+      You can also almost kill yourself doing it, so it's your call if your life is
+      worth ten bucks.
+  Skoglol:
+  - tweak: Bureaucratic error event has new effects!
+  - admin: Admins can now pick solo abductor in traitor panel.
+  - bugfix: Ian has found a comfier spawnpoint on metastation.
+  TheVekter:
+  - tweak: Reworked the entrance to Engineering on PubbyStation to give Atmos techs
+      access to the techfab on non-skeleton shift rounds.
+  actioninja:
+  - rscadd: All nanite interfaces have been completely reworked for tgui-next
+  - rscadd: Plumbing Reaction Chamber uses tgui-next
+  - tweak: A couple of the other plumbing uis now use the Input component of tgui-next
+      instead of having popup windows
+  - bugfix: fixes some drinks such as lizard wine being uncraftable
+  bobbahbrown:
+  - refactor: References to IRC now better describe TGS' and Discord's existence.
+  - admin: Players will now be better informed that messages are sent through TGS
+      to IRC/Discord/etc when attempting to adminhelp with no available admins/use
+      adminwho verb.
+  fludd12:
+  - tweak: The pestle for the mortar and pestle now needs metal to craft, not plasteel.
+  - bugfix: The mortar and pestle can now grind food and such.
+  nemvar:
+  - bugfix: Wormhole jaunters work again.
+  nightred:
+  - rscadd: Scanner Gate uses TGUI-NEXT now
+  oranges:
+  - rscdel: Budget payouts are gone
+  - rscdel: Felinids no longer react to cocoa
+  plapatin:
+  - rscadd: adds glockroaches, try getting them from gold slime reactions. if that
+      guy from event hall i was talking with is reading this, i made this for you.
+  spookydonut:
+  - bugfix: jungle fever monkeys now speak monkey
+  - bugfix: TRAIT_NOMETABOLISM species are now immune to clone damage
+  zxaber:
+  - rscadd: Heads of staff can now connect to holopads without the other side answering
+      the call.
+  - rscadd: Secure holopads, which do not allow auto-connect, have replaced holopads
+      in a very small number of places.
+  - tweak: Placements of holopads in various areas on various stations have been slightly
+      adjusted.
+  - tweak: Holopads now ping when a connection from another pad is established.
+2019-12-07:
+  Arkatos:
+  - rscadd: Gravity Generator now uses tgui-next UI.
+  Denton:
+  - rscadd: Added an (admin only) amputation arcade subtype that dispenses wrapped
+      gifts instead of arcade prizes.
+  EdgeLordExe:
+  - rscadd: 'New room: Medbay Clinic , found in between lobby and mebday ''proper''
+      on metastation'
+  - rscdel: Removed the office near medbay entrance
+  - tweak: Increased the size of security office in medbay del:public chem fridge
+      removed, as the old 'private' one is in now public area
+  Firecage:
+  - balance: Updates the energy resistance armour values on several armours and helmets.
+  - refactor: Absolute pathing inserted into timsorts.
+  Krysonism:
+  - rscadd: Several new burgers.
+  - rscadd: Fiesta skewer, corn chips & chicken meat.
+  - rscdel: some old burger sprites have been replaced.
+  - tweak: The ghost burger is much spookier.
+  - balance: some burger recipes have been tweaked.
+  PepperPrepper:
+  - bugfix: Nightmares/Shadowpeople can be flashed
+  Ryll/Shaps:
+  - rscadd: Adds a new admin punishment, full immersion! Full immersion means having
+      to manually *blink, *inhale, and *exhale, or else! Are you having fun yet?
+  Skoglol:
+  - admin: The "Start Now" verb can now be cancelled by using it again or setting
+      a custom pre-game delay.
+  - rscadd: 'tgui-next: Meteor shield controller'
+  - bugfix: Mindswap no longer force ghosts the target.
+  TheVekter:
+  - rscadd: Converted the smoke machine over to tgui-next.
+  Tlaltecuhtli:
+  - rscadd: plumbing machine to grind/juice objects and put it on duct net
+  actioninja:
+  - tweak: Glide size now scales with movespeed. 60 fps won't jitter your camera around
+      and slower moving mobs will appear to actually be slower.
+  - tweak: 60 fps is now the client default
+  - bugfix: research director id properly gets overlays
+  - tweak: Nanite extra settings display a bit better on the cloud controller
+  - bugfix: Boolean extra settings on nanites function properly
+  - bugfix: Extra settings on nanites copy properly instead of copying a literal ref
+  stylemistake:
+  - bugfix: Fixed recipe button layout in Chem Dispenser.
+  - bugfix: Fixed the icon on the "Save" button in Chem Dispenser.
+  - bugfix: ChemMaster no longer rounds volume of chemicals, allowing to package 0.1
+      unit pills.
+  - bugfix: Air Alarm layout will no longer jump around when microscopic amounts of
+      gases are present (less than 0.01%).
+2019-12-20:
+  4dplanner:
+  - bugfix: herald cloak now works
+  Angustmeta:
+  - bugfix: fixed the sugar sack to stop looking like the rice sack
+  ArcaneMusic:
+  - bugfix: Stacks of plumbing duct can now be recycled in the autolathe.
+  Buggy123:
+  - tweak: Moved the "Observe" verb to ghost tab
+  Bumtickley00:
+  - tweak: Pills found in medkits now have their own unique colors
+  Coconutwarrior97:
+  - rscadd: Added several new donk pocket types, and boxes, including sprites for
+      each of course. Spicy-Pocket,Teriyaki-Pocket, Pizza-Pocket,Honk-Pocket,Gondola-Pocket
+      and Berry-Pocket. This includes re-organizing them from the OTHER section in
+      snacks_pastry.dm to a donk pocket section. Thanks to Farquaar for the box icons
+      and some of the code! As well as latots for the donk pocket icons.
+  - rscadd: Added a Donk Pocket Variety crate, for 2000 credits, which includes 3
+      randomly selected donk pocket box types, excluding Gondola-Pocket.
+  - rscadd: Added a recipe for each new Donk Pocket type.
+  - rscadd: Added the new Donk Pocket types to the maint loot table.
+  - rscadd: Donk Pocket loot spawner object, credit to TheVekter for that, which was
+      then added into the kitchens of all the main maps.
+  - tweak: All Donk Pockets now follow the same naming scheme of X-Pocket.
+  - rscadd: Added craftable Donk Pocket boxes.
+  Ecobbomy:
+  - tweak: Paystands have a few new functions. Examine your paystand with the registered
+      card in hand to view these options!
+  - admin: there is a bling necklace subtype that allows you to sell items for credits,
+      hassle-free (search "merchant" in the spawn menu)! Useful for merchant-based
+      events.
+  Fury McFlurry:
+  - imageadd: Adds three new moth wings and markings!
+  - imageadd: 'They are named: Oakworm, Witchwing, Jungle.'
+  JDHoffmann3:
+  - bugfix: Vampires maintain blood volume when shapeshifting.
+  Jdawg1290:
+  - bugfix: field generator floor shields should stay still now
+  Kerbin-Fiber:
+  - tweak: Plumbing pipes aren't as clunky anymore.
+  LemonInTheDark:
+  - code_imp: Documented all of the supermatters's function process_atmos(). Check
+      it out, it's dope
+  - code_imp: Fixed my 12am comments and a few spelling errors.
+  Mickyan:
+  - balance: Payouts and vending machine prices have been completely rebalanced
+  MrPerson:
+  - rscadd: Solar panels will visually rotate a lot more smoothly instead of being
+      locked to only 8 directions.
+  - rscadd: Timed solar tracking is in degrees per minute. You're still not gonna
+      use it though.
+  OnlineGirlfriend:
+  - bugfix: hot coco glass name and description
+  - bugfix: hot coco, tea, and coffee are now drink recipes (not food)
+  - tweak: hot coco now has 20% chance of healing brute damage
+  PKPenguin321:
+  - rscadd: Surgical drills have a fun new suicide.
+  - rscadd: Having waaay too much blood now makes you explode. Realistic!
+  - code_imp: Cleaned some very confusing code in subsystem/job.dm
+  RaveRadbury:
+  - rscadd: Space Mountain Wind Snowcones
+  - tweak: snow cones do not require water to make
+  - tweak: honey snow cones have more of an amber color
+  - tweak: the mime snow cone has a grey straw so you can actually see it.
+  - tweak: apple snow cones are also amber now
+  - tweak: sodawater snow cones are actually Space Cola snow cones.
+  - tweak: fruit salad snowcone tastes changed
+  - tweak: mixed berry is now just berry
+  - tweak: all snow cones can now taste of ice and water
+  - tweak: clown snow cones recipe changed to require laughter, output 5u of their
+      reagent like almost all other snow cones.
+  - tweak: berry snow cones require and output 5u of berry juice
+  - bugfix: clown and pwrgame snowcones now contain the appropriate reagents
+  - bugfix: removed stray pixel on mime snowcone
+  - spellcheck: Misspellings in snowcone titles and descriptions
+  - tweak: Baguettes now have an attack verb. Try hitting somebody with one!
+  - balance: Meat donut recipe uses raw meat cutlets instead of raw meat slabs
+  Robotby:
+  - rscadd: borgs can now unbuckle users safely by clicking on themselves with help
+      intent and no selected module OR by using the resist verb in the command bar/IC
+      tab.
+  Ryll/Shaps:
+  - rscadd: A bunch of new achievements have been added! To name a few, there are
+      achievements for holding up the captain with a rocket launcher as a nuclear
+      operative, dying to inanimate objects, dying in a toilet, and getting watchlisted!
+      Go do some dumb stuff!
+  - bugfix: AI's are no longer able to right tipped vending machines
+  - bugfix: 'Borgies can now attack and be attacked by vending machines! spelling:
+      Untipping vending machines no longer shoes an errant /the'
+  Skoglol:
+  - bugfix: All human intent suicides now work properly
+  - rscadd: New disarm intent suicide
+  - refactor: Refactored language holders. Fixes a bunch of language related bugs
+      and inconsistencies.
+  - bugfix: Transforms now apply new languages properly. Monkeys can no longer speak
+      common.
+  - rscadd: Species changes will now give you the relevant languages.
+  - bugfix: PDA sorting mode is no longer inverted.
+  - bugfix: Some dynamic mode threat spending/refunding and threat logging fixes.
+  - bugfix: Fixed a bug causing some midround antag ghost rolls to fail. Dynamic midround
+      nightmare should now spawn again.
+  - bugfix: Soul stones can once again be used on catatonics.
+  - bugfix: AI will now only be notified of new shells once.
+  - bugfix: Abandoned crates will no longer explode roundstart. Some loot has been
+      fixed.
+  TheChosenEvilOne:
+  - bugfix: Arrival deadchat message will no longer colour other text in the deadchat
+      colour.
+  TheVekter:
+  - bugfix: The Cult should now actually be able to draw runes in the Library.
+  - tweak: Added brass sheets to the Sheet Snatcher's whitelist.
+  - rscadd: Added Chili con Carnival, a new chili dish that requires the clown's shoes
+      to make! (Sprite by ArcaneMusic)
+  - tweak: Apothecary access should now work correctly on all maps.
+  - bugfix: Fixed the crafting menu.
+  - rscadd: Due to its age, the E.X.P.E.R.I-Mentor might be prone to exploding in
+      very, very rare scenarios. Please take care in its use.
+  - tweak: Increased the amount of research gained for discovering a strange object's
+      true nature.
+  - tweak: The E.X.P.E.R.I-Mentor will now produce research notes instead of feeding
+      points directly into the server.
+  - tweak: Strange objects have a more informational examine string.
+  - balance: Reduced the overall amount of passive research generation by a small
+      amount.
+  - tweak: Adds a cooldown to the Deathgasp emote
+  Yenwodyah:
+  - bugfix: Bear traps and bolas apply slowdown correctly again
+  - bugfix: Blood-red hardsuits now properly update their slowdown when you toggle
+      helmet modes
+  actioninja:
+  - rscadd: pandemic now uses tgui-next
+  - rscadd: tgui-next portable atmos
+  - bugfix: Nanite damage sensor have extra settings again
+  bobbahbrown:
+  - refactor: Removed some stinky smells from hailer mask code.
+  carshalash:
+  - bugfix: Makes Hot Coco actually consumable
+  fludd12:
+  - rscadd: You can now craft something vaguely like a pen out of some wood and ash.
+  nightred:
+  - tweak: Moved the Biogenerator to be shared with the kitchen
+  - rscadd: Hallway counter to the kitchen
+  - tweak: Changed the layout of the kitchen
+  stylemistake:
+  - rscadd: Fancy tgui mode now works on IE8 (not perfect. but certainly usable).
+  swindly:
+  - bugfix: Assemblies in chemical grenades are removed when wrenched while there
+      are no beakers inside instead of only when there is a beaker inside
+  - tweak: Makes encryption keys be put in the hands of the user when able instead
+      of being dropped on the floor when removed from headsets
+  tralezab:
+  - rscadd: The Plasma Fist now builds energy up for a new explosive move!
+  - admin: drones are no longer allowed to leave their station, they will die upon
+      doing so
+  - tweak: renamed boring ice peppers to chilly peppers
+  zxaber:
+  - admin: Added logging for when an Exosuit Console is used to EMP a mech.
+2019-12-21:
+  Ty the Smonk:
+  - bugfix: '#48245 Wizards can no longer input just spaces and have that as their
+      name'
+  Ty-the-Smonk:
+  - bugfix: '#48281 Bees can now vent crawl'
+2019-12-22:
+  Arkatos:
+  - rscadd: Bank Machine now uses tgui-next UI.
+  - tweak: Small UI tweaks for Gravity Generator and Equipment Reclaimer Console.
+  Buggy123:
+  - tweak: An intern at Nanotrasen noticed that their shift timer was running about
+      3 minutes fast, misleading employees about how long they had been clocked in.
+      The timer has been fixed, and anyone who clocked out early has had their pay
+      docked.
+  Miningby:
+  - balance: Mining skill only affects tools like pickaxe/drill, and the skill can
+      only be gained by using such tools
+  - balance: Mining tools have been returned to their previous speed, and mining skill
+      boosts this speed further. Previously mining skill lowered the speed and brought
+      it back to normal after reaching certain levels.
+  Skoglol:
+  - bugfix: Santas bag should once again regen gifts. A bit faster than before, too.
+  TetraK1:
+  - bugfix: SM radiation no longer kills you in 12 seconds without rad protection.
+  Thebleh:
+  - rscadd: Freezers and Heaters can now connect on multiple layers. Use a multitool
+      on their boards to change layers.
+  - bugfix: Clown and Mime traitors don't get a pen unless it's their uplink choice
+  actioninja:
+  - bugfix: You can rename diseases in the pandemic
+  nightred:
+  - bugfix: kitchen counter on meta
+  - bugfix: replaced donk-pocket boxes in kitchen with new donk-pocket spawner
+  swindly:
+  - bugfix: Fixed crafting items using blacklisted subtypes of required items.
+  - bugfix: Fixed bonfires not returning the logs used to build them when deconstructed
+  - tweak: Steel-cap logs can not be used to build bonfires
+  wesoda25:
+  - tweak: Cargo Item Requisition forms now display what time they were ordered
+2019-12-24:
+  Arkatos:
+  - tweak: Sentient Lavaland Elites will now give a ghost orbit notification. ARE
+      YOU NOT ENTERTAINED?!
+  Bawhoppen:
+  - tweak: Filing cabinets can now hold any small or below object, rather than just
+      papers/folders/photos.
+  CRITAWAKETS:
+  - imageadd: The action button sprites for implants look better and less placeholder-y
+      now.
+  Coconutwarrior97:
+  - bugfix: Fixed door access requirements on meta, for northern club maint door,
+      and northern maint door between toxins/toxins launch.
+  - bugfix: Fixed typo changing jellly_homer to jelly_homer under donuts.dmi .
+  Denton:
+  - bugfix: Fixed the command report that pops up when an admin sets the game mode
+      to monkey/jungle fever - the jungle fever infection hasn't been curable for
+      the last two years.
+  - admin: Added deadmin/readmin keybindings
+  - tweak: Christmas trees can no longer be cut down like regular trees. They can
+      however still be destroyed with enough effort.
+  EOBGames:
+  - rscadd: Following a recent incident involving the Rosetta Stone and an assistant,
+      a flood of new languages have hit the station! Most roundstart races, as well
+      as several special races, have been given their own languages to secretly chat
+      with one another. Beware though, since the AI can understand the roundstart
+      languages!
+  - rscadd: Voltaic, a new language for ethereals.
+  - rscadd: Moffic, a new language for moths.
+  - rscadd: Calcic, a chattery new language for plasmamen and skeletons. Bone golems
+      get this one too.
+  - rscadd: Terrum, a new language for golems.
+  - rscadd: Shadowtongue, a new language for shadowlings and nightmares. (You n'wah!)
+  - rscadd: Sylvan, a new language for podpeople.
+  - rscadd: Buzzwords, a new "language" for flypeople.
+  - rscadd: the electric discharger, a new tongue for ethereals.
+  - tweak: made a few changes to tongues for flies and skeletons.
+  - tweak: Runic golems now get to speak Nar'sien.
+  - imageadd: added icons for the new languages, and the electric discharger.
+  Iatots:
+  - bugfix: cult revive rune now displays how much sacrifice "credit" the cult has
+      with nar-sie. Remember, each revive costs 3 sacrifices, and the cult starts
+      with 1 free revive (that is, drawing the revive rune with no sacrifices made
+      the entire round displays 3 unredeemed sacrifices).
+  JJRcop:
+  - admin: SDQL2 now supports all subsystems.
+  - rscdel: Errant APC in Derelict ruin was removed.
+  RaveRadbury:
+  - bugfix: mime fan pins work now, also updated the clown and mime fan description.
+  Skoglol:
+  - bugfix: The mind reader mutation should now always tell you the correct true name.
+  - admin: Stealth mode should reset ghost name correctly.
+  - admin: Cutting down (xmas) trees is now logged.
+  That REALLY Good Soda Flavor:
+  - rscadd: Hanukkah and Passover are now celebrated on the station.
+  genessee596:
+  - bugfix: Generic Gas Tanks (the grey ones) can now be built in the Engineering
+      and Cargo Protolathes like they're supposed to.
+  nightred:
+  - bugfix: Fixes an issue with spiders losing exit vent
+  - tweak: Your breath out now interacts with your body temperature.
+  wesoda25:
+  - bugfix: RCD animations are now anchored
+2019-12-26:
+  ArcaneMusic:
+  - rscadd: The RnD department has been gifted a state-of-the-art new research tool,
+      the B.E.P.I.S. by Nanotrasen's Venture Capital Labs, after repeatedly wasting
+      all of their funds. Hopefully you'll find a... wiser use for it.
+  - rscadd: A new Tech Node can be unlocked through proper investment with the B.E.P.I.S.
+  - rscadd: In an unrelated piece of news, a deer was recently found to be the culprit
+      of Nanotrasen Venture Capital Labs's onboard nuclear failsafe device detonating.
+      Yes, we're sure it wasn't the Syndicate this time. Yes, we wish we were joking
+      too.
+  - bugfix: Fixes a small bug with tech disks containing hidden nodes not researching.
+  CAPTTLasky:
+  - rscadd: Major renovations to the MetaStation Brig
+  - rscadd: Donut Station Grenade Launcher added to Armory Equipment
+  - rscadd: A public-facing desk for the Warden
+  - tweak: The Secway Key has been moved to the Warden's Office
+  Cyberboss:
+  - bugfix: If multiple holidays are active, the station name may be derived from
+      any of them instead of a single one.
+2019-12-31:
+  AnturK:
+  - bugfix: Fixed byond build detection issues with adjacent major versions
+  Arkatos:
+  - rscadd: Point Claim Console now uses tgui-next UI.
+  - bugfix: Spread Infestation changeling ability now correctly requires you to have
+      3 absorptions before using it. No more freebie spiders!
+  BadSS13Player:
+  - rscadd: Silicon law changes are now reported in deadchat.
+  - rscadd: The creation of new AIs is now reported in deadchat.
+  CAPTTLasky:
+  - rscadd: Loom, soap, restocking parts, water tanks to the seed vault
+  - rscadd: An entirely re-designed seed vault
+  - rscdel: Removed the old seed vault
+  - tweak: gave the seed vault more seeds to play around with
+  - bugfix: Fixed some problems with the warden's office and shutters where they weren't
+      supposed to be
+  - bugfix: Disposal chutes to virology and xenobiology now actually go to space as
+      intended.
+  - balance: Abductors were given a recharger for their ship
+  - bugfix: fixed poor area work on clown planet lavaland ruin.
+  Chessus:
+  - tweak: tweaked Sandbox Panel
+  Coconutwarrior97:
+  - bugfix: Fixes magspears not embedding when fired from speargun.
+  Cyberboss:
+  - bugfix: Fixed being able to instantly delete carded AIs by crafting an intelliTater.
+  - bugfix: You are no longer prevented from selecting more neutral/negative quirks
+      once you have reached the limit of 6 positive ones.
+  Denton:
+  - rscadd: Added directional subtypes for stairs (like /obj/structure/stairs/north)
+  - bugfix: Added missing directional sprites for stairs
+  - rscadd: Added a new chemical called Baldium. Mix radium, sulphuric acid and lye
+      at 395 degrees, and you'll receive a chemical that removes hair when sprayed
+      or splashed on.
+  - admin: Moved shuttle related logs into a new log file called shuttle.log.
+  - admin: Added logging for shuttle consoles, aux bases/beacons and shuttle gibbing
+      (last one is in the attack log).
+  - tweak: Deleted the empty/unused extra Z level from Kilostation.
+  Denton, sprites by Twaticus and JJRcop:
+  - rscadd: 'Added a new job: The Paramedic! Paramedics stabilize patients and haul
+      them to medbay for further treatment by medical doctors. They have access to
+      maintenance, EVA and department lobbies like engineering and R&D, but not to
+      surgery and chemistry.'
+  EdgeLordExe:
+  - rscadd: CMC back on meta!
+  - bugfix: first aid kits found in medbay clinic actually contain stuff now
+  Fikou:
+  - tweak: the char overdose threshhold is now lower, also the lines have been changed
+  JJRcop:
+  - bugfix: Fixed vending machines showing premium products as free to workers of
+      their department.
+  Paxilmaniac:
+  - rscadd: overdose effect to monkey energy
+  Skoglol:
+  - admin: New sound verb, Play Direct Mob Sound. Can also be found in the player
+      panel.
+  - admin: 'New mob VV option: Give direct control. Lets you pick a player to put
+      in control of the mob.'
+  - admin: Soft resets on live servers will now ask for additional confirmation.
+  - bugfix: A few suits without adjusted sprites are no longer adjustable, the two
+      piece black suit returns.
+  - bugfix: Lavaland mining base security wing should now recharge power again.
+  - tweak: Map vote now only allows one map vote/rotation per round. Maps that have
+      been played twice in the last three rounds including current are not available
+      for voting.
+  Tharcoonvagh:
+  - spellcheck: insuls description
+  TheChosenEvilOne:
+  - bugfix: Dynamic revolution ruleset no longer makes multiple revolution teams when
+      first assigned revhead is invalid.
+  Time-Green:
+  - bugfix: The plumbing demander duct sprite has been corrected
+  V2LenKagamine:
+  - rscadd: Instructive line to transit tube pod.
+  cacogen:
+  - rscadd: Adds Kong and candy corn whiskey. Craftable with whiskey, a bottle and
+      either a piece of candy corn or a monkey cube
+  - rscadd: Ctrl+shift+click PDA to eject cartridge
+  - rscadd: Clicking PDA with cartridge swaps out current cartridge
+  - rscadd: Remove Cartridge verb for people using the right-click menu or the Object
+      tab
+  - rscadd: PDA toggle light action button
+  - bugfix: PDA UI now updates when ejecting or inserting cartridge or ejecting ID
+  - tweak: Luxury shuttle is a little more sophisticated
+  - spellcheck: Changed $1 to 1 cr
+  - spellcheck: Payday messages use the blue 'notice' span instead of asterisks
+  carshalash:
+  - tweak: Removes the gross attribute of 'milo' soup
+  iain0:
+  - bugfix: Alarm Monitoring program changed to avoid always-on unclearable fire alarms
+  nightred:
+  - rscadd: Engineering security checkpoint has better view of who is running around.
+  - rscadd: Engineering service desk
+  - tweak: Engineering shared storage has been revamped
+  spookydonut:
+  - code_imp: adds selective duplicate component mode
+  steamport/actioninja:
+  - rscadd: Vending machine tgui-next
+  wesoda25:
+  - tweak: condensed capsaicin is spicier now

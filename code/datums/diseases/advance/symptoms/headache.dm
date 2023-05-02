@@ -1,25 +1,15 @@
-/*
-//////////////////////////////////////
-
-Headache
-
-	Noticable.
-	Highly resistant.
-	Increases stage speed.
-	Not transmittable.
-	Low Level.
-
-BONUS
-	Displays an annoying message!
-	Should be used for buffing your disease.
-
-//////////////////////////////////////
+/*Headache
+ * Slightly reduces stealth
+ * Increases resistance tremendously
+ * Increases stage speed
+ * No change to transmissibility
+ * Low level
+ * Bonus: Displays an annoying message! Should be used for buffing your disease.
 */
-
 /datum/symptom/headache
-
 	name = "Headache"
 	desc = "The virus causes inflammation inside the brain, causing constant headaches."
+	illness = "Brain Freeze"
 	stealth = -1
 	resistance = 4
 	stage_speed = 2
@@ -36,27 +26,29 @@ BONUS
 	)
 
 /datum/symptom/headache/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		base_message_chance = 50
-	if(A.properties["stage_rate"] >= 6) //severe pain
+	if(A.totalStageSpeed() >= 6) //severe pain
 		power = 2
-	if(A.properties["stage_rate"] >= 9) //cluster headaches
+	if(A.totalStageSpeed() >= 9) //cluster headaches
 		symptom_delay_min = 30
 		symptom_delay_max = 60
 		power = 3
 
 /datum/symptom/headache/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	if(power < 2)
-		if(prob(base_message_chance) || A.stage >=4)
-			to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>")
+		if(prob(base_message_chance) || A.stage >= 4)
+			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 	if(power >= 2 && A.stage >= 4)
-		to_chat(M, "<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.")]</span>")
+		to_chat(M, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
 		M.adjustStaminaLoss(25)
 	if(power >= 3 && A.stage >= 5)
-		to_chat(M, "<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
+		to_chat(M, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))
 		M.Stun(35)

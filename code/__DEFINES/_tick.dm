@@ -1,7 +1,7 @@
 /// Percentage of tick to leave for master controller to run
 #define MAPTICK_MC_MIN_RESERVE 70
-/// internal_tick_usage is updated every tick by extools
-#define MAPTICK_LAST_INTERNAL_TICK_USAGE ((GLOB.internal_tick_usage / world.tick_lag) * 100)
+#define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
+
 /// Tick limit while running normally
 #define TICK_BYOND_RESERVE 2
 #define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
@@ -9,8 +9,6 @@
 #define TICK_LIMIT_TO_RUN 70
 /// Tick limit for MC while running
 #define TICK_LIMIT_MC 70
-/// Tick limit while initializing
-#define TICK_LIMIT_MC_INIT_DEFAULT (100 - TICK_BYOND_RESERVE)
 
 /// for general usage of tick_usage
 #define TICK_USAGE world.tick_usage
@@ -21,6 +19,11 @@
 #define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit )
 /// runs stoplag if tick_usage is above the limit
 #define CHECK_TICK ( TICK_CHECK ? stoplag() : 0 )
+
+/// Checks if a sleeping proc is running before or after the master controller
+#define RUNNING_BEFORE_MASTER ( Master.last_run != null && Master.last_run != world.time )
+/// Returns true if a verb ought to yield to the MC (IE: queue up to be processed by a subsystem)
+#define VERB_SHOULD_YIELD ( TICK_CHECK || RUNNING_BEFORE_MASTER )
 
 /// Returns true if tick usage is above 95, for high priority usage
 #define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )

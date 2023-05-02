@@ -23,6 +23,7 @@
 			keysend_tripped = TRUE
 			next_keysend_trip_reset = world.time + (2 SECONDS)
 		else
+			to_chat(src, span_userdanger("Flooding keysends! This could have been caused by lag, or due to a plugged-in game controller. You have been disconnected from the server automatically."))
 			log_admin("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
 			message_admins("Client [ckey] was just autokicked for flooding keysends; likely abuse but potentially lagspike.")
 			qdel(src)
@@ -30,14 +31,14 @@
 
 	///Check if the key is short enough to even be a real key
 	if(LAZYLEN(_key) > MAX_KEYPRESS_COMMANDLENGTH)
-		to_chat(src, "<span class='userdanger'>Invalid KeyDown detected! You have been disconnected from the server automatically.</span>")
+		to_chat(src, span_userdanger("Invalid KeyDown detected! You have been disconnected from the server automatically."))
 		log_admin("Client [ckey] just attempted to send an invalid keypress. Keymessage was over [MAX_KEYPRESS_COMMANDLENGTH] characters, autokicking due to likely abuse.")
 		message_admins("Client [ckey] just attempted to send an invalid keypress. Keymessage was over [MAX_KEYPRESS_COMMANDLENGTH] characters, autokicking due to likely abuse.")
 		qdel(src)
 		return
 
 	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
-	if(!prefs.hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
+	if(!hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
@@ -67,7 +68,7 @@
 			else
 				full_key = _key
 	var/keycount = 0
-	for(var/kb_name in prefs.key_bindings[full_key])
+	for(var/kb_name in prefs.key_bindings_by_key[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
@@ -99,7 +100,7 @@
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
-	for (var/kb_name in prefs.key_bindings[_key])
+	for (var/kb_name in prefs.key_bindings_by_key[_key])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
 		if(kb.can_use(src) && kb.up(src))
 			break
@@ -107,8 +108,3 @@
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
 
-
-// Called every game tick
-/client/keyLoop()
-	holder?.keyLoop(src)
-	mob.focus?.keyLoop(src)

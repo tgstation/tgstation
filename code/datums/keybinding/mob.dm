@@ -15,43 +15,13 @@
 		return
 	var/mob/M = user.mob
 	if(!M.pulling)
-		to_chat(user, "<span class='notice'>You are not pulling anything.</span>")
+		to_chat(user, span_notice("You are not pulling anything."))
 	else
 		M.stop_pulling()
 	return TRUE
 
-/datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("Northwest") // HOME
-	name = "cycle_intent_right"
-	full_name = "cycle intent right"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN
-
-/datum/keybinding/mob/cycle_intent_right/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_RIGHT)
-	return TRUE
-
-/datum/keybinding/mob/cycle_intent_left
-	hotkey_keys = list("Insert")
-	name = "cycle_intent_left"
-	full_name = "cycle intent left"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN
-
-/datum/keybinding/mob/cycle_intent_left/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_LEFT)
-	return TRUE
-
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("X", "Northeast") // PAGEUP
+	hotkey_keys = list("X")
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -66,7 +36,7 @@
 	return TRUE
 
 /datum/keybinding/mob/activate_inhand
-	hotkey_keys = list("Z", "Southeast") // Southeast = PAGEDOWN
+	hotkey_keys = list("Z")
 	name = "activate_inhand"
 	full_name = "Activate in-hand"
 	description = "Uses whatever item you have inhand"
@@ -96,7 +66,7 @@
 	var/mob/M = user.mob
 	var/obj/item/I = M.get_active_held_item()
 	if(!I)
-		to_chat(user, "<span class='warning'>You have nothing to drop in your hand!</span>")
+		to_chat(user, span_warning("You have nothing to drop in your hand!"))
 	else
 		user.mob.dropItemToGround(I)
 	return TRUE
@@ -136,103 +106,98 @@
 	M.toggle_move_intent()
 	return TRUE
 
-/datum/keybinding/mob/target_head_cycle
-	hotkey_keys = list("Numpad8")
-	name = "target_head_cycle"
-	full_name = "Target: Cycle head"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
-
-/datum/keybinding/mob/target_head_cycle/down(client/user)
+/datum/keybinding/mob/target/down(client/user)
 	. = ..()
 	if(.)
-		return
-	user.body_toggle_head()
-	return TRUE
+		return .
 
-/datum/keybinding/mob/target_r_arm
+	var/original = user.mob.zone_selected
+	switch(keybind_signal)
+		if(COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN)
+			user.body_toggle_head()
+		if(COMSIG_KB_MOB_TARGETEYES_DOWN)
+			user.body_eyes()
+		if(COMSIG_KB_MOB_TARGETMOUTH_DOWN)
+			user.body_mouth()
+		if(COMSIG_KB_MOB_TARGETRIGHTARM_DOWN)
+			user.body_r_arm()
+		if(COMSIG_KB_MOB_TARGETBODYCHEST_DOWN)
+			user.body_chest()
+		if(COMSIG_KB_MOB_TARGETLEFTARM_DOWN)
+			user.body_l_arm()
+		if(COMSIG_KB_MOB_TARGETRIGHTLEG_DOWN)
+			user.body_r_leg()
+		if(COMSIG_KB_MOB_TARGETBODYGROIN_DOWN)
+			user.body_groin()
+		if(COMSIG_KB_MOB_TARGETLEFTLEG_DOWN)
+			user.body_l_leg()
+		else
+			stack_trace("Target keybind pressed but not implemented! '[keybind_signal]'")
+			return FALSE
+	user.mob.log_manual_zone_selected_update("keybind", old_target = original)
+
+/datum/keybinding/mob/target/head_cycle
+	hotkey_keys = list("Numpad8")
+	name = "target_head_cycle"
+	full_name = "Target: Cycle Head"
+	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
+
+/datum/keybinding/mob/target/eyes
+	hotkey_keys = list("Numpad7")
+	name = "target_eyes"
+	full_name = "Target: Eyes"
+	description = "Pressing this key targets the eyes. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETEYES_DOWN
+
+/datum/keybinding/mob/target/mouth
+	hotkey_keys = list("Numpad9")
+	name = "target_mouths"
+	full_name = "Target: Mouth"
+	description = "Pressing this key targets the mouth. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETMOUTH_DOWN
+
+/datum/keybinding/mob/target/r_arm
 	hotkey_keys = list("Numpad4")
 	name = "target_r_arm"
 	full_name = "Target: right arm"
-	description = ""
+	description = "Pressing this key targets the right arm. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTARM_DOWN
 
-/datum/keybinding/mob/target_r_arm/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_r_arm()
-	return TRUE
-
-/datum/keybinding/mob/target_body_chest
+/datum/keybinding/mob/target/body_chest
 	hotkey_keys = list("Numpad5")
 	name = "target_body_chest"
 	full_name = "Target: Body"
-	description = ""
+	description = "Pressing this key targets the body. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETBODYCHEST_DOWN
 
-/datum/keybinding/mob/target_body_chest/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_chest()
-	return TRUE
-
-/datum/keybinding/mob/target_left_arm
+/datum/keybinding/mob/target/left_arm
 	hotkey_keys = list("Numpad6")
 	name = "target_left_arm"
 	full_name = "Target: left arm"
-	description = ""
+	description = "Pressing this key targets the body. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTARM_DOWN
 
-/datum/keybinding/mob/target_left_arm/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_l_arm()
-	return TRUE
-
-/datum/keybinding/mob/target_right_leg
+/datum/keybinding/mob/target/right_leg
 	hotkey_keys = list("Numpad1")
 	name = "target_right_leg"
 	full_name = "Target: Right leg"
-	description = ""
+	description = "Pressing this key targets the right leg. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTLEG_DOWN
 
-/datum/keybinding/mob/target_right_leg/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_r_leg()
-	return TRUE
-
-/datum/keybinding/mob/target_body_groin
+/datum/keybinding/mob/target/body_groin
 	hotkey_keys = list("Numpad2")
 	name = "target_body_groin"
 	full_name = "Target: Groin"
-	description = ""
+	description = "Pressing this key targets the groin. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETBODYGROIN_DOWN
 
-/datum/keybinding/mob/target_body_groin/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_groin()
-	return TRUE
-
-/datum/keybinding/mob/target_left_leg
+/datum/keybinding/mob/target/left_leg
 	hotkey_keys = list("Numpad3")
 	name = "target_left_leg"
 	full_name = "Target: left leg"
-	description = ""
+	description = "Pressing this key targets the left leg. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
-
-/datum/keybinding/mob/target_left_leg/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_l_leg()
-	return TRUE
 
 /datum/keybinding/mob/prevent_movement
 	hotkey_keys = list("Alt")

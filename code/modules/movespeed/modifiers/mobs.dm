@@ -16,12 +16,15 @@
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
+/datum/movespeed_modifier/resonance
+	multiplicative_slowdown = 0.75
+
 /datum/movespeed_modifier/damage_slowdown
 	blacklisted_movetypes = FLOATING|FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLOATING
+	movetypes = FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
@@ -69,6 +72,7 @@
 
 /datum/movespeed_modifier/bulky_drag
 	variable = TRUE
+	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/cold
 	blacklisted_movetypes = FLOATING
@@ -79,6 +83,7 @@
 
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
+	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/limbless
 	variable = TRUE
@@ -90,7 +95,10 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/duct_spider_web
+	multiplicative_slowdown = 1
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
@@ -114,3 +122,21 @@
 
 /datum/movespeed_modifier/metabolicboost
 	multiplicative_slowdown = -1.5
+
+/datum/movespeed_modifier/dragon_rage
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/dragon_depression
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/morph_disguised
+	multiplicative_slowdown = -1
+
+/datum/movespeed_modifier/auto_wash
+	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/player_spider_modifier
+	variable = TRUE
+
+/datum/movespeed_modifier/health_scaling_speed_buff
+	variable = TRUE

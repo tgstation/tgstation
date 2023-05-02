@@ -6,11 +6,9 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	anchored = TRUE
 
-/obj/effect/oneway/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/effect/oneway/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	var/turf/T = get_turf(src)
-	var/turf/MT = get_turf(mover)
-	return . && (T == MT || get_dir(MT,T) == dir)
+	return . && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
 
 
 /obj/effect/wind
@@ -21,7 +19,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	var/strength = 30
 
-/obj/effect/wind/Initialize()
+/obj/effect/wind/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -40,15 +38,15 @@
 	var/list/blocked_types = list()
 	var/reverse = FALSE //Block if path not present
 
-/obj/effect/path_blocker/Initialize()
+/obj/effect/path_blocker/Initialize(mapload)
 	. = ..()
 	if(blocked_types.len)
 		blocked_types = typecacheof(blocked_types)
 
-/obj/effect/path_blocker/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/effect/path_blocker/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(blocked_types.len)
-		var/list/mover_contents = mover.GetAllContents()
+		var/list/mover_contents = mover.get_all_contents()
 		for(var/atom/movable/thing in mover_contents)
 			if(blocked_types[thing.type])
 				return reverse
@@ -65,9 +63,9 @@
 	var/open = FALSE
 	var/hidden = FALSE
 
-/obj/structure/pitgrate/Initialize()
+/obj/structure/pitgrate/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
+	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, PROC_REF(OnButtonPressed))
 	if(hidden)
 		update_openspace()
 
@@ -78,7 +76,7 @@
 		toggle()
 
 /obj/structure/pitgrate/proc/update_openspace()
-	var/turf/open/transparent/openspace/T = get_turf(src)
+	var/turf/open/openspace/T = get_turf(src)
 	if(!istype(T))
 		return
 	//Simple way to keep plane conflicts away, could probably be upgraded to something less nuclear with 513
@@ -93,18 +91,18 @@
 	else
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
-	plane = BYOND_LIGHTING_LAYER //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
-	addtimer(CALLBACK(src,.proc/reset_plane),10)
+	addtimer(CALLBACK(src, PROC_REF(reset_plane)),10)
 	if(hidden)
 		update_openspace()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in T)
-		if(!AM.zfalling)
+		if(!AM.currently_z_moving)
 			T.zFall(AM)
 
 /obj/structure/pitgrate/proc/reset_plane()
-	plane = FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)

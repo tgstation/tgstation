@@ -1,0 +1,529 @@
+2018-11-01:
+  ShizCalev:
+  - bugfix: Buckled mobs will no longer go prone when killed/stunned/ect.
+  Skoglol:
+  - tweak: Revenants now only use stolen essence to unlock new spells. No more counting
+      corpses or waiting for regen before draining.
+  - tweak: Spell unlock costs adjusted accordingly, defile upped from 0 to a cost
+      of 10.
+  - balance: Reduced blight cost to 75, more in line with its underwhelming nature.
+  - tweak: Drain targets in soft-crit will be stunned, to prevent them crawling away.
+  - bugfix: Ghosts can no longer examine the inner workings of modular computers.
+  The Dreamweaver:
+  - rscadd: Nanotrasen has received word of a high-tech research facility that may
+      contain advancements in bluespace-based research. Any crew members who become
+      aware of its whereabouts are to report it to CentCom immediately and are restricted
+      from sharing said info.
+  - refactor: The turf reservation system now dynamically creates new z levels if
+      the current reserved levels are full.
+2018-11-02:
+  ShizCalev:
+  - bugfix: You can no longer try to tactically reload rocket launchers, making it
+      become invisible and breaking it's rocket.
+  - bugfix: You can no longer unload a rocket with TK
+  - tweak: Suiciding while holding a rocket launcher will now cause you to blow yourself
+      up with it.
+  - bugfix: Crowbarring an airlock to remove it's electronics will no longer bypass
+      it's electronics security shielding.
+  karma:
+  - bugfix: being able to pick up blood crawl items if they are dropped and being
+      unable to drop them for the rest of the round is now fixed
+  nicbn:
+  - bugfix: The close radial icon is now clickable in the middle and more visible.
+  - bugfix: Dropping or throwing RCD will make radial close.
+  - tweak: The change AI display verb will change your camera to the core so that
+      you can choose it.
+2018-11-03:
+  ShizCalev:
+  - bugfix: Hydroponics trays now work again.
+2018-11-04:
+  Denton:
+  - tweak: Most upgradeable machines now show their upgrade status when examined while
+      standing right next to them.
+  - tweak: Added examine messages to teleporter stations that hint at their multitool/wirecutter
+      interactions.
+  - tweak: Renamed teleporter stations from `station` to `teleporter station`.
+  - code_imp: Changed the teleporter hub `accurate` var to `accuracy`; the old name
+      misled people into thinking that it was a boolean.
+  Iamgoofball:
+  - bugfix: Thirty year old boomers can now sip their monster safely as God intended.
+  - bugfix: Even if it's 9 in the morning on a Saturday.
+  - bugfix: Even if your kid's trying to sleep because they were up all night shitposting.
+  - bugfix: Yep. Times were good back then.
+  Mickyan:
+  - rscadd: Added various new moodlets
+  - rscadd: Most notably, the Laughter chemical and breathing small quantities of
+      N2O can improve mood
+  - rscadd: 'Psicodine: a new chemical that can restore sanity levels to normal and
+      temporarily suppress phobias'
+  - rscadd: 'Happiness: a homemade drug that supposedly gives a feeling of total bliss
+      and.. emptiness? That can''t be healthy... watch out for side effects.'
+  - bugfix: The suffocation moodlet now triggers correctly
+  - bugfix: The drunk moodlet now clears as soon as the drunkenness wears off
+  MrDoomBringer:
+  - soundadd: Supplypods sound a bit nicer as the land now.
+  - admin: admins can now adjust the animation duration for centcom-launched supplypods
+  - admin: admins can adjust any sounds that are played as the supplypod lands
+  ShizCalev:
+  - bugfix: Fixed x-ray cameras going invisible when in use by a camera monitor.
+  - bugfix: Fixed cameras having the incorrect icon when an xray module is installed
+      after construction.
+  - bugfix: Fixed cameras not having the correct name when proximity sensors are installed
+      after construction.
+  - bugfix: Fixed camera assemblies not passing their upgrades to a camera during
+      construction.
+  - bugfix: Fixed camera assemblies consuming your entire stack of plasma sheets when
+      upgrading it with EMP shielding instead of just 1 sheet.
+  - bugfix: Fixed upgrades within a camera assembly disappearing into bluespace when
+      wrenched.
+  - bugfix: Fixed upgraded cameras having their internal upgrades deleted while still
+      functioning not updating the camera's attributes (mostly for admins.)
+  - tweak: Welding/unwelding a camera assembly to/from a wall now consumes 3 fuel.
+  - tweak: Deconstructing a camera assembly with upgrades within it will now give
+      you a prompt on what you'd like to remove.
+  - tweak: Added examination text to cameras and camera assemblies to detail their
+      current construction status and upgrades.
+  - bugfix: Covering your mouth when you cough/sneeze can now help stop the spread
+      of germs.
+  - bugfix: Using your SecHUD just adjust wanted status of a mob while not adjacent
+      to them will no longer give you a useless out of range warning.
+  - bugfix: Trying to strip or equip a mob while while not in range will now close
+      the inventory menu.
+  - bugfix: Trying to strip a non-human carbon mob while handcuffed/not in range will
+      no longer give you duplicate warnings.
+  Skoglol:
+  - bugfix: Borg ion thrusters now stop draining charge when you can move without
+      them.
+2018-11-08:
+  CRTXBacon:
+  - tweak: Moves the clown mask south-facing sprite down one pixel, putting it on
+      level with its other directional sprites. Henk.
+  MrDoomBringer:
+  - bugfix: You will no longer attempt to use an explosive lance to craft an explosive
+      lance
+  MrDoombringer:
+  - tweak: you can now rocket jump with rocketlaunchers! Just aim at the ground and
+      fire!
+  ShizCalev:
+  - imageadd: Updated the robotics control console interface a bit. Borgs are now
+      grouped by their slaved AI.
+  - bugfix: Fixed the robotics control console showing the cultist conversion button
+      on borgs which are already converted.
+  - bugfix: Flying / floating humans will no longer get stuck laying down if they
+      have no legs.
+  - bugfix: Alien larva will no longer get stuck laying down after ventcrawling.
+  - bugfix: Turrets will now correctly target silicon mobs when check anomalies is
+      disabled.
+  - bugfix: Fixed prying open a door with a jaws of life not checking if you're still
+      holding them.
+  - bugfix: Fixed Xenos being able to force a door open even if they picked up another
+      object during the action.
+  - bugfix: Posibrains will no longer become unusable if a mob suicides in them.
+  - bugfix: Suiciding is now even MORE permanent... again.
+  Skoglol:
+  - code_imp: New helper proc for alt-click turf listing, bypasses any interaction
+      overrides.
+  - code_imp: Ghosts and revenants now use the new proc.
+  - bugfix: Ghosts can no longer toggleopen sleepers, adjust skateboard speed or close
+      laptops
+  - bugfix: Revenant can now alt-click turf to list contents.
+  - tweak: Revenant now slightly less nosy, use shift click to examine.
+  - tweak: Alt-clicking the same turf again no longer closes the turf listing tab.
+  XDTM:
+  - rscadd: You can now pay for cargo orders from your account with the cargo requests
+      console. Credits will be detracted from the requester's account instead of the
+      cargo budget. A 10% handling fee on top of the order will be paid to the cargo
+      department budget.
+  - rscadd: Cargo employees must still accept the order for it to be delivered.
+  - rscadd: The delivery will arrive in a locked crate that can only be opened by
+      an id with the paying bank account.
+  bobbahbrown:
+  - rscadd: RCDs are now more environmentally friendly and can now recycle rods and
+      floor tiles without having to reduce them to sheets first.
+  nicbn:
+  - tweak: On BoxStation, there's a vacant commissary where detective office used
+      to be. Detective office is now located where Law Office was, and Law Office
+      has been moved to the adjacent Vacant Office B.
+  subject217:
+  - tweak: Disabler beams now deal 40 stamina damage, so they should be a bit more
+      consistent in knocking people down in 3 hits.
+2018-11-10:
+  Denton:
+  - spellcheck: Added separate MMI/cyborg shell messages for when players try to insert
+      damaged brains or MMIs that contain damaged brains.
+  - spellcheck: Added an MMI examine message that mentions their radio toggle.
+  ShizCalev:
+  - bugfix: Sleeping mobs will no longer scream when their limbs become disabled.
+  - bugfix: Fixed players getting duplicate messages if their already disabled limbs
+      were attacked after they died / when no change happened.
+  XDTM:
+  - bugfix: Cargo can now order cargo again
+2018-11-11:
+  Basilman:
+  - rscadd: Slimes can now pass through grilles
+  Crawl Gang:
+  - tweak: Plastic flaps that weren't protected by windoors now had them added to
+      prevent players from just crawling through them.
+  Denton:
+  - bugfix: Silver slime extracts no longer spawn unintended items related to moths
+      eating clothes.
+  Garen:
+  - tweak: The shift E & B keybindings now take the item in the slot if it is not
+      a storage item. The hotkey help has been updated accordingly.
+  - bugfix: Fixed shift E & B not updating hands when it was used to put an item directly
+      into the slot(not into a storage item but the actual equip slot)
+  ShizCalev:
+  - bugfix: Gibs will now be passed the correct DNA.
+  - bugfix: Delta's cargo shuttle's conveyor belts will no longer move the wrong direction
+      if turned on while the shuttle is at CentCom.
+  - bugfix: Humans with no legs will no longer run around unimpeded.
+  no homo:
+  - spellcheck: changed "gay" in cloning code to "expected amounts"
+2018-11-14:
+  CRTXBacon & Nepeta33Leijon:
+  - rscadd: New clown mask skin that CRTXBacon totally wasn't forced to help with.
+  Dennok:
+  - bugfix: Now areas_in_z get areas spawned by templates and blueprints.
+  Denton:
+  - rscadd: Added three new .38 ammo types. TRAC bullets, which embed a tracking implant
+      inside the target's body. The implant only lasts for five minutes and doesn't
+      work as a teleport beacon. Hot Shot bullets set targets on fire; Iceblox bullets
+      drastically lower the target's body temperature. They are available after researching
+      the Subdermal Implants node (TRAC) or Exotic Ammunition node (Hot Shot/Iceblox).
+  - tweak: Renamed the Technological Shells research node to Exotic Ammunition.
+  - code_imp: The "lifespan_postmortem" var now determines how long tracking implants
+      work after death.
+  - rscadd: Added a negative deafness quirk worth two points.
+  - bugfix: Pubbystation's engineering conveyor belts no longer stop working when
+      the nearby maintenance APC runs out of power.
+  - bugfix: 'Pubbystation: The Gateway shutter control button now correctly checks
+      for Gateway access.'
+  - tweak: 'Deltastation: Added an additional single conveyor belt to the mailroom.
+      Cargo technicians now also have access to the ORM room.'
+  - tweak: 'Deltastation: Removed a duplicate airlock/firelock near the mining office.'
+  - tweak: Added some plating and caution decals to Pubbystation's mail room.
+  - tweak: 'Adjusted cargo access requirements across all maps: Cargo bay airlocks
+      no longer check for mailroom access, but instead cargo bay access.'
+  - tweak: Added cargo bay access requirements to mining shuttle blast doors.
+  MMMiracles:
+  - rscadd: Blobs can now upgrade their strong blobs to reflect projectiles at the
+      cost of their normal health and extra brute resistance.
+  Mickyan:
+  - tweak: lowered the concentration of miasma required to display a warning message
+  - bugfix: Security webbing is now priced as intended
+  MrDoomBringer:
+  - bugfix: Events now announce follow-able atoms to ghosts much more reliably
+  ShizCalev:
+  - balance: Lethal turrets can now target blobs.
+  - bugfix: Fixed exosuit console showing some code by accident.
+  - bugfix: Restored the ability to send EMP pulses via the exosuit console
+  - bugfix: Fixed tracking beacons being added to mechas located at ruins allowing
+      you to metagame their spawning.
+  - bugfix: Fixed exosuit consoles presenting some values via scientific notation
+      (ie pressure being 3.258e-5)
+  - bugfix: The hotel ruin now has a maximum room number to select from.
+  - balance: Putting an item back into your inventory as a cyborg will now automatically
+      turn said item off (ie welders, lighters, ect.)
+  - bugfix: Cyborgs can now longer conceal unconcealable energy saws (ie ones that
+      are activated) inside themselves. They will now turn off automatically.
+  - admin: Fixed AI fingersprints not getting logged
+  - admin: Fixed some door interactions not being logged at all.
+  - admin: Turret control interactions are now in mob combat logs
+  - tweak: Paper airplanes can now have their hit probability adjusted by badmins.
+  - rscadd: Added syndicate paper airplanes. They are rather robust and are guaranteed
+      to hit someone in the eye.
+  - rscadd: Added The Art of Origami to the syndicate uplink. This allows you to fold
+      weapons grade paper airplanes. It will also allow you to catch paper airplanes
+      when you have the ability enabled.
+  - bugfix: You can no longer move / reconstruct a vending machine on lavaland to
+      access all it's contents for free.
+  - bugfix: Rebuilding a vending machine which originated from lavaland on station
+      will now carry over it's original pricing setup.
+  - bugfix: Pricing of premium vending machine items can now be altered.
+  - bugfix: Fixed inconsistency where illiterate and blind mobs were able to read
+      some books/manuals, but not others.
+  - bugfix: Fixed mobs being granted mime speak even if they failed to finish reading
+      the Guide to Advanced Mimery Volumes 1/2.
+  - bugfix: Badmins can no longer turn you into Neo without the Matrix knowing about
+      it as well.
+  - bugfix: Supermatter shards going critical and shitting out arcing beams of extremely
+      high voltage electricity that burn the hell out of you and everyone around you
+      (and can potentially stop your heart) will once again stun you.
+  - bugfix: Swinging the singularity hammer around as if you were a damn tornado will
+      now stun the people you hit once again.
+  - bugfix: Fixed building a new camera with EMP upgrades in it's assembly giving
+      it the X-Ray upgrade, and vice versa.
+  - bugfix: The AI Camera network firmware upgrade will no longer change the icon
+      of the upgraded cameras, with made it very obvious the AI was rogue when the
+      entire station suddenly had X-Ray cameras.
+  - bugfix: You will no longer be able to detect the usage of the AI Camera network
+      firmware upgrade by examining a camera to see if it has xray / emp upgrades.
+  - bugfix: You will no longer be able to detect the usage of the AI Camera network
+      firmware upgrade by trying to upgrade the camera (it's a software thing, not
+      a hardware thing.)
+  - bugfix: Cameras rebuilt after being upgraded by the AI Camera network firmware
+      upgrade will now retain their upgrades.
+  - rscadd: Cutting the shut up wire on a vending machine will now make the vending
+      machine shut up.
+  - bugfix: Combat knives can now get embedded in their victims again.
+  - bugfix: The Swedish language now works again.
+  Skoglol:
+  - bugfix: Sleepy-pens now cause reactions, just like syringes.
+  Steelpoint:
+  - rscadd: Nanotrasen Security has unveiled a newly designed Security Webbing, a
+      minor upgrade over the standard issue security belt that is comfortable, tactical
+      and able to hold an extra security item.
+  - rscadd: However, the webbing is not considered standard issue, so any interested
+      officers will need to buy the item from a SecVendor out of their own pay.
+  - imageadd: New sprites for the Security, Medical and Diagnostic Night Vision Goggles.
+  Trilbyspaceclone:
+  - tweak: cargo toy crate now has more toys
+  Youbar:
+  - bugfix: clipboards now display held papers properly
+  - bugfix: mice can be butchered
+  anconfuzedrock:
+  - tweak: nicotine now metabolizes far slower, but is actually dangerous at high
+      doses. Try actually smoking!
+  - tweak: cigarettes don't last as long, but more slowly inject reagents to hopefully
+      last its entire lifetime. if you need it to burn fast, try a pipe or vape.
+  - bugfix: overdosing on nicotine now causes oxygen and toxin damage, as the description
+      said it did.
+  memager/actioninja:
+  - imageadd: New sprite for the Energy Gun
+  subject217:
+  - balance: The Summon Guns and Summon Magic rituals will now only turn 10% of the
+      crew each into antagonists, down from 25%.
+2018-11-15:
+  4dplanner:
+  - bugfix: now checks throwforce of objects, so you can't push tendrils around
+  Mickyan:
+  - bugfix: Fixed being unable to smother people using the damp rag
+  MrDoomBringer:
+  - bugfix: Ghost Announcements work a little bit better now. Space dust won't be
+      announced, and general wording has been improved.
+  Tlaltecuhtli and Subject217:
+  - rscadd: You can now make Diagnostic HUD sunglasses.
+  - bugfix: Fixed the MedHUD sunglasses having the wrong color when worn.
+  XDTM:
+  - tweak: The Paralysis trauma now randomly chooses a selection of limbs to paralyze
+      instead of always being complete paralysis. It can be a single limb, both arms,
+      both legs, either side of your body or the classic full paralysis.
+2018-11-18:
+  Denton:
+  - bugfix: Multitools can now be properly examined again.
+  - balance: You can no longer reveal the 'illegal tech' research node by deconstructing
+      .357 speedloaders, riot dart boxes, syndicate cigarettes or syndicate balloons.
+  - tweak: Holodeck computers now announce warning messages via speech.
+  - bugfix: The Snowdin waste loop air injector is now on the correct piping layer.
+  - tweak: Tweaked the Snowdin VR atmos area so it looks properly broken.
+  - bugfix: Space pirates can now afford their own vending machine again.
+  - bugfix: Removed unconnected vents/scrubbers from the derelict space ruin.
+  - bugfix: The Boxstation bomb test site telescreen now faces the correct way.
+  - spellcheck: Improved Uplink item descriptions and formatting.
+  JoeyJo0:
+  - bugfix: Changed BoxStation Engineering door to Engineering Foyer door, to reflect
+      the other stations.
+  MrDoomBringer:
+  - bugfix: Explosive lances now explode again
+  ShizCalev:
+  - bugfix: Corrected some doors still being called Circuitry Lab.
+  - bugfix: Replaced the circuitry lab telescreen in the sci security checkpoint in
+      science with a standard science telescreen.
+  - bugfix: Corrected the Nanite lab's camera tags on Box.
+  - bugfix: Changelings with a team objective will no longer get an objective to absorb
+      their teammates.
+  - bugfix: Solo changelings will no longer get an objective to absorb themselves.
+  - bugfix: Fixed latejoin/admin created changelings being given an objective to absorb
+      the only other changeling if that ling was already absorbed and the ling that
+      absorbed them was gibbed, leaving the objective in an uncompletable state.
+  - bugfix: Droppers will now work if the target's wearing eyeglasses which don't
+      cover the mob's eyes.
+  - bugfix: Fixed eye protection checks checking if your mask covers your mouth instead
+      of your eyes.
+  - balance: Cloaks now obscure suit storage items.
+  - bugfix: Fixed toxins mixing chamber not having an APC every map but Box
+  - bugfix: Fixed Box's vacant commissary's APC not being wired.
+  - bugfix: Fixed a couple areas that didn't have APC's on Meta, Delta, and Pubby.
+  - bugfix: Split up a couple noncontiguous maintenance areas on Meta and Delta.
+  - bugfix: Corrected some department maintenance access doors having the incorrect
+      area on Meta and Delta.
+  - bugfix: Cleaned up some stacked pipes on Delta's white ship.
+  - bugfix: Added some missing cameras on Pubby
+  - bugfix: Fixed cameras in medbay on Pubby not having the medbay network assigned.
+  - bugfix: Fixed the bomb testing area on Meta and Delta being set to the mixing
+      lab area instead.
+  Steelpoint:
+  - tweak: The Tactical Medkit that Nuke Ops can purchase now has extra medical supplies.
+  Swindly:
+  - rscadd: Added concealed weapon bays. They allow a non-combat mecha to equip a
+      mecha weapon. They can be purchased by traitor roboticists and research directors
+      from the traitor uplink.
+  - bugfix: Fixed glowsticks not running out of fuel or turning off when they have
+      no fuel
+  XDTM:
+  - balance: Mannitol no longer cures mild traumas.
+  - balance: Added a new reagent, Neurine, made with Mannitol, Acetone and Oxygen.
+      Neurine can cure mild traumas in the same way Mannitol did, but does not heal
+      brain damage.
+  YPOQ:
+  - bugfix: Simple mobs will no longer be stuck resting after being killed and then
+      revived
+  morrowwolf:
+  - tweak: Changes how fire spread works between mobs
+  ninjanomnom:
+  - rscadd: Spaghetti fits in your pocket but it falls out if you get knocked down
+  subject217:
+  - balance: You can no longer choose the zombie race in the Wizard's Magic Mirror.
+      This is the future you chose.
+  - tweak: Blood crawl will hurt your ears less now.
+  - tweak: Gorillas and migos will hurt your ears less now.
+  variableundefined:
+  - rscadd: Cancel button to assault pod destination selector.
+  - bugfix: You can zoom your zoomable guns again.
+2018-11-21:
+  4dplanner:
+  - bugfix: throws no longer default to INFINITE FORCE
+  Adds an AI Core Sprite:
+  - imageadd: Added an AI Core Sprite
+  CRTXBacon:
+  - refactor: Added the Race-Restricted category to syndicate uplinks, which can be
+      used for species restricted traitor items.
+  - rscadd: Adds an extra-bright syndicate brand lamp as an uplink item exclusive
+      to mothpeople.
+  - bugfix: Fixes an error caused by the species restricted category in uplinks
+  Denton:
+  - balance: 'Malfunctioning or emagged borgs now only give away their antag status
+      if their interface is locked/unlocked successfully. The new message is: "The
+      cover interface glitches out for a split second."'
+  Mickyan:
+  - tweak: The voracious quirk now allows you to eat junk food without limits and
+      overeating will no longer make you sad! Isn't that convenient?
+  ShizCalev:
+  - tweak: Updated the corgi & parrot inventory panels to use the same formatting
+      as other mobs
+  - bugfix: Fixed corgi inventory panels not closing properly.
+  - bugfix: Fixed the parrot inventory panel not closing properly if you're not able
+      to interact with it.
+  Zxaber:
+  - rscadd: The teleporter computers's selection window now shows the name of renamed
+      beacons, as well as their location
+  - tweak: For consistency's sake, tracking implants now show the carrier's location
+      as well as name.
+  actioninja:
+  - rscadd: Guns now have their shot volume and variation of shot pitch controlled
+      by variables instead of hardcode
+  - tweak: Racking a shotgun is no longer louder than the actual shot
+  - soundadd: Shotguns now have a unique sound effect. Blat blat.
+  subject217:
+  - code_imp: Damage deflection is handled at the machine level instead of the door
+      level now, so it can be applied to any machine.
+  - balance: The stacking machine now has damage deflection, so it can't be destroyed
+      by things like pickaxes.
+  tralezab:
+  - admin: select equipment no longer pesters you with alerts if it doesn't have to!
+2018-11-22:
+  Denton:
+  - tweak: Clowns that are consumed by singularities now either add or remove a much
+      larger amount of energy.
+  Nervere and subject217:
+  - balance: The cook's CQC now only works when in the kitchen or the kitchen backroom.
+  Thunder12345:
+  - bugfix: Boxstation's detective no longer starts the round undercover in a random
+      job's spawn point
+2018-11-23:
+  Barhandar:
+  - bugfix: Magboots will yet again prevent singularity from pulling you in.
+  - tweak: Magboots will now also prevent being pulled in by gravitational anomaly.
+  - tweak: Magboots will also prevent effects of supermatter pull, gravitational catapult
+      and RnD gravity gun.
+  - balance: Being prone will now prevent knockdown-stun of supermatter pull, removing
+      accumulating chainstunning that rendered CO2 delams impossible to escape by
+      humans. You still can get chainstunned, but now you have a few moments between
+      stuns to try and get out.
+  - tweak: Said supermatter pull stun now has player feedback.
+  - bugfix: Ghosts (and all other things that have no business being pulled) no longer
+      get pulled by supermatter pull.
+  - bugfix: RnD gravity gun and gravity catapult had their proton packs removed too
+      and should no longer throw ghosts around.
+2018-11-24:
+  Denton:
+  - rscadd: Added more cargo bounties! Three for Lavaland mushrooms, one for serious
+      Corgi farming, one for dead mice and another for oats.
+  coiax:
+  - rscadd: Pets will be selected first to gain self awareness before other simple
+      mobs during a sentience event.
+2018-11-27:
+  Denton:
+  - bugfix: Atmos gas tank computers can now be properly rebuilt with their own circuit
+      boards.
+  MMMiracles:
+  - tweak: Wizard shapeshift now converts damage taken while transformed
+  Mark9013100:
+  - rscadd: French beret added to standard costume crate(clown and mime outfits).
+  Mickyan:
+  - bugfix: Certain incompatible quirks can no longer be taken together
+  Nichlas0010:
+  - bugfix: You are now also blocked from teleporting IN to no-teleport areas, not
+      just out of them.
+  Skoglol:
+  - bugfix: Smuggler satchels should now properly be removed from the pool upon spawn.
+  - bugfix: Marker beacons are now disintegrated by nightmares light eater
+  imsxz:
+  - balance: AI can now only interact with things on its z level
+  xmikey555:
+  - rscadd: Added pirate language, equip a pirate hat to speak it.
+2018-11-29:
+  4dplanner:
+  - bugfix: You can no longer walk through ash walker tendrils
+  Denton:
+  - balance: Double capacity emergency tanks are no longer available on stations,
+      regular shuttles and free escape shuttles. They have been replaced with standard
+      emergency oxygen tanks.
+  - balance: The Curator's NASA set contains a full-sized oxygen tank instead of a
+      compact double emergency oxygen tank.
+  - balance: Death Squads now start with double capacity oxygen tanks instead of regular
+      oxygen tanks.
+  - tweak: AIs that get upgraded with a combat software upgrade now see a reminder
+      that this doesn't change their laws or antagonist status.
+  - admin: Added logging and an admin follow message to AI combat/surveillance software
+      upgrades.
+  - spellcheck: Added an examine message to clone pods which shows that you can link
+      them via multitool.
+  Floyd / Qustinnus:
+  - rscadd: New medals for being the best clown car driver
+  - rscadd: You can now thank the clown car driver
+  - code_imp: changes usr to user somewhere because seeing usr triggers my bones
+  Mickyan:
+  - spellcheck: the quirk menu went through some minor formatting changes
+  MrDroppodBringer:
+  - spellcheck: Fixed a typo in the origami manual's description
+  Qustinnus / Floyd / Ethereal sprites by Space, is that it? / Alerts and food sprites by MrDroppodBringer:
+  - rscadd: Adds Ethereal; a race which lives off of electricity and shines bright.
+      If they are healthy they shine a bright green light, and the more damaged they
+      are, the less they shine and the greyer they become. Their punches do burn damage
+      and they are weak to blunt attacks! They dont need to eat normal food and dont
+      have nutrition, Instead they gain charge by going into borg rechargers, eating
+      ethereal food or doign specific interactions.
+  - refactor: all nutrition changes now go through a proc so we can override behavior
+  Skoglol:
+  - bugfix: Reduced ventcrawl lag greatly.
+  - tweak: The space pirates will no longer ask for pocket change.
+  - spellcheck: Changed techfab text Mining Rewards Vender to Vendor.
+  Swindly:
+  - bugfix: Fixed being unable to interact with broken microwaves
+  TheDracheX:
+  - bugfix: Fixes grenades not changing their detonation timer when attacked by a
+      screwdriver.
+  XDTM:
+  - rscadd: Spraying holy water on tiles will now prevent cult-based teleportation
+      from using them as a destination point.
+  - tweak: Quantum, wormhole and magic teleportation is no longer disrupted by bags
+      of holding.
+  YPOQ:
+  - bugfix: Fixed an issue that could cause a tesla ball submitted for the tesla ball
+      bounty to not be deleted
+  YoYoBatty:
+  - code_imp: turn_off proc for jetpack wasn't having user being sent in argument.
+  coiax:
+  - rscadd: Sometimes a low level cloning pod will make errors in replicating your
+      brain, leaving you with a mild brain trauma.

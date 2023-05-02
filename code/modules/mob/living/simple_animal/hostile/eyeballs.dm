@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/eyeball
 	name = "eyeball"
 	desc = "An odd looking creature, it won't stop staring..."
-	icon = 'icons/mob/carp.dmi'
+	icon = 'icons/mob/simple/carp.dmi'
 	icon_state = "eyeball"
 	icon_living = "eyeball"
 	icon_gib = ""
@@ -25,16 +25,19 @@
 	attack_verb_continuous = "blinks at"
 	attack_verb_simple = "blink at"
 	attack_sound = 'sound/weapons/pierce.ogg'
-	movement_type = FLYING
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("spooky")
+	faction = list(FACTION_SPOOKY)
 	del_on_death = 1
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Redish ethereal glow. These lads live on the cult ship
+	lighting_cutoff_red = 40
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 30
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
-/mob/living/simple_animal/hostile/eyeball/Initialize()
+/mob/living/simple_animal/hostile/eyeball/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)

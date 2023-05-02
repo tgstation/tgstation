@@ -2,13 +2,13 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard
 	name = "Mjor the Creative"
 	desc = "A wizard with a taste for the arts."
-	mob_biotypes = MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
-	faction = list("hostile","stickman")
+	faction = list(FACTION_HOSTILE,FACTION_STICKMAN)
 	del_on_death = TRUE
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
-	ranged = 1
+	ranged = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
@@ -21,36 +21,65 @@
 	projectiletype = /obj/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	footstep_type = FOOTSTEP_MOB_SHOE
 	var/list/copies = list()
 
-	footstep_type = FOOTSTEP_MOB_SHOE
+/mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
+	QDEL_LIST(copies)
+	return ..()
 
 //Summon Ability
 //Lets the wizard summon his art to fight for him
 /datum/action/boss/wizard_summon_minions
 	name = "Summon Minions"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	usage_probability = 40
 	boss_cost = 30
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
-	var/static/summoned_minions = 0
+	///How many minions we summoned
+	var/summoned_minions = 0
+	///How many minions we can have at once
+	var/max_minions = 6
+	///How many minions we should spawn
+	var/minions_to_summon = 3
 
-/datum/action/boss/wizard_summon_minions/Trigger()
-	if(summoned_minions <= 6 && ..())
-		var/list/minions = list(
-		/mob/living/simple_animal/hostile/stickman,
-		/mob/living/simple_animal/hostile/stickman/ranged,
-		/mob/living/simple_animal/hostile/stickman/dog)
-		var/list/directions = GLOB.cardinals.Copy()
-		for(var/i in 1 to 3)
-			var/minions_chosen = pick_n_take(minions)
-			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
-		summoned_minions += 3;
+/datum/action/boss/wizard_summon_minions/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(summoned_minions >= max_minions)
+		return FALSE
+	return TRUE
 
+/datum/action/boss/wizard_summon_minions/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/list/minions = list(
+		/mob/living/basic/stickman,
+		/mob/living/basic/stickman/ranged,
+		/mob/living/basic/stickman/dog)
+	var/list/directions = GLOB.cardinals.Copy()
+	var/summon_amount = min(minions_to_summon, max_minions - summoned_minions)
+	for(var/i in 1 to summon_amount)
+		var/atom/chosen_minion = pick_n_take(minions)
+		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
+		RegisterSignals(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+		summoned_minions++
+
+/// Called when a minion is qdeleted or dies, removes it from our minion list
+/datum/action/boss/wizard_summon_minions/proc/lost_minion(mob/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	summoned_minions--
 
 //Mimic Ability
 //Summons mimics of himself with magical papercraft
@@ -58,14 +87,14 @@
 //Hitting the wizard himself destroys all decoys
 /datum/action/boss/wizard_mimic
 	name = "Craft Mimicry"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
 	usage_probability = 30
 	boss_cost = 40
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	say_when_triggered = ""
 
-/datum/action/boss/wizard_mimic/Trigger()
+/datum/action/boss/wizard_mimic/Trigger(trigger_flags)
 	if(..())
 		var/mob/living/target
 		if(!boss.client) //AI's target
@@ -103,13 +132,18 @@
 	loot = list()
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/copy/Destroy()
+	if(original)
+		original.copies -= src
+		original = null
+	return ..()
+
 //Hit a fake? eat pain!
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage
 		if(original)
 			original.minimum_distance = 3
 			original.retreat_distance = 3
-			original.copies -= src
 			for(var/c in original.copies)
 				qdel(c)
 		for(var/mob/living/L in range(5,src))
@@ -131,13 +165,17 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	. = ..()
-	qdel(src) //I see through your ruse!
+	if(isobserver(user))
+		. += span_notice("It's an illusion - what is it hiding?")
+	else
+		qdel(src) //I see through your ruse!
 
 //fancy effects
 /obj/effect/temp_visual/paper_scatter
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
 	anchored = TRUE
@@ -147,16 +185,17 @@
 /obj/effect/temp_visual/paperwiz_dying
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
 	anchored = TRUE
 	duration = 18
 	randomdir = FALSE
 
-/obj/effect/temp_visual/paperwiz_dying/Initialize()
+/obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
-	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
+	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
 	playsound(get_turf(src),'sound/magic/mandswap.ogg', 50, TRUE, TRUE)
 	playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 

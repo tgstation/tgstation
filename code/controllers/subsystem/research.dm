@@ -5,36 +5,45 @@ SUBSYSTEM_DEF(research)
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH
 	//TECHWEB STATIC
-	var/list/techweb_nodes = list()				//associative id = node datum
-	var/list/techweb_designs = list()			//associative id = node datum
+	var/list/techweb_nodes = list() //associative id = node datum
+	var/list/techweb_designs = list() //associative id = node datum
+
+	///List of all techwebs.
 	var/list/datum/techweb/techwebs = list()
+	///The default Science Techweb.
 	var/datum/techweb/science/science_tech
+	///The default Admin Techweb.
 	var/datum/techweb/admin/admin_tech
-	var/datum/techweb_node/error_node/error_node	//These two are what you get if a node/design is deleted and somehow still stored in a console.
+
+	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
 
 	//ERROR LOGGING
-	var/list/invalid_design_ids = list()		//associative id = number of times
-	var/list/invalid_node_ids = list()			//associative id = number of times
-	var/list/invalid_node_boost = list()		//associative id = error message
+	///associative id = number of times
+	var/list/invalid_design_ids = list()
+	///associative id = number of times
+	var/list/invalid_node_ids = list()
+	///associative id = error message
+	var/list/invalid_node_boost = list()
 
-	var/list/obj/machinery/rnd/server/servers = list()
-
-	var/list/techweb_nodes_starting = list()	//associative id = TRUE
-	var/list/techweb_categories = list()		//category name = list(node.id = TRUE)
-	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
-	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
-	var/list/techweb_point_items = list(		//path = list(point type = value)
+	///associative id = TRUE
+	var/list/techweb_nodes_starting = list()
+	///category name = list(node.id = TRUE)
+	var/list/techweb_categories = list()
+	///associative double-layer path = list(id = list(point_type = point_discount))
+	var/list/techweb_boost_items = list()
+	///Node ids that should be hidden by default.
+	var/list/techweb_nodes_hidden = list()
+	///Node ids that are exclusive to the BEPIS.
+	var/list/techweb_nodes_experimental = list()
+	///path = list(point type = value)
+	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list()				//typecache style type = TRUE list
-	var/list/slime_already_researched = list() 	//Slime cores that have already been researched
+	var/list/point_types = list() //typecache style type = TRUE list
 	//----------------------------------------------
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
-	var/multiserver_calculation = FALSE
-	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -45,53 +54,51 @@ SUBSYSTEM_DEF(research)
 	var/list/created_anomaly_types = list()
 	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
 	var/list/anomaly_hard_limit_by_type = list(
-	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
-	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
-	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
-	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
-	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+		/obj/item/assembly/signaler/anomaly/bluespace = MAX_CORES_BLUESPACE,
+		/obj/item/assembly/signaler/anomaly/pyro = MAX_CORES_PYRO,
+		/obj/item/assembly/signaler/anomaly/grav = MAX_CORES_GRAVITATIONAL,
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
+		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
+		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
+		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
 	)
+
+	/// Lookup list for ordnance briefers.
+	var/list/ordnance_experiments = list()
+	/// Lookup list for scipaper partners.
+	var/list/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
+	populate_ordnance_experiments()
 	science_tech = new /datum/techweb/science
 	admin_tech = new /datum/techweb/admin
 	autosort_categories()
 	error_design = new
 	error_node = new
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
-	var/list/bitcoins = list()
-	if(multiserver_calculation)
-		var/eff = calculate_server_coefficient()
-		for(var/obj/machinery/rnd/server/miner in servers)
-			var/list/result = (miner.mine())	//SLAVE AWAY, SLAVE.
-			for(var/i in result)
-				result[i] *= eff
-				bitcoins[i] = bitcoins[i]? bitcoins[i] + result[i] : result[i]
-	else
-		for(var/obj/machinery/rnd/server/miner in servers)
+	for(var/datum/techweb/techweb_list as anything in techwebs)
+		if(!techweb_list.should_generate_points)
+			continue
+		var/list/bitcoins = list()
+		for(var/obj/machinery/rnd/server/miner as anything in techweb_list.techweb_servers)
 			if(miner.working)
 				bitcoins = single_server_income.Copy()
-				break			//Just need one to work.
-	if (!isnull(last_income))
-		var/income_time_difference = world.time - last_income
-		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
-		for(var/i in bitcoins)
-			bitcoins[i] *= income_time_difference / 10
-		science_tech.add_point_list(bitcoins)
-	last_income = world.time
+				break //Just need one to work.
 
-/datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
-	var/amt = servers.len
-	if(!amt)
-		return 0
-	var/coeff = 100
-	coeff = sqrt(coeff / amt)
-	return coeff
+		if(!isnull(techweb_list.last_income))
+			var/income_time_difference = world.time - techweb_list.last_income
+			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
+			for(var/i in bitcoins)
+				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier
+			techweb_list.add_point_list(bitcoins)
+
+		techweb_list.last_income = world.time
 
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)
@@ -145,11 +152,11 @@ SUBSYSTEM_DEF(research)
 		var/datum/techweb_node/TN = techweb_nodes[id]
 		TN.Initialize()
 	techweb_nodes = returned
-	if (!verify_techweb_nodes())	//Verify all nodes have ids and such.
+	if (!verify_techweb_nodes()) //Verify all nodes have ids and such.
 		stack_trace("Invalid techweb nodes detected")
 	calculate_techweb_nodes()
 	calculate_techweb_boost_list()
-	if (!verify_techweb_nodes())		//Verify nodes and designs have been crosslinked properly.
+	if (!verify_techweb_nodes()) //Verify nodes and designs have been crosslinked properly.
 		CRASH("Invalid techweb nodes detected")
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
@@ -267,7 +274,7 @@ SUBSYSTEM_DEF(research)
 	generate_techweb_unlock_linking()
 
 /datum/controller/subsystem/research/proc/generate_techweb_unlock_linking()
-	for(var/node_id in techweb_nodes)						//Clear all unlock links to avoid duplication.
+	for(var/node_id in techweb_nodes) //Clear all unlock links to avoid duplication.
 		var/datum/techweb_node/node = techweb_nodes[node_id]
 		node.unlock_ids = list()
 	for(var/node_id in techweb_nodes)
@@ -289,3 +296,15 @@ SUBSYSTEM_DEF(research)
 			else
 				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
 		CHECK_TICK
+
+/datum/controller/subsystem/research/proc/populate_ordnance_experiments()
+	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
+		if (initial(experiment_path.experiment_proper))
+			ordnance_experiments += new experiment_path()
+
+	for(var/partner_path in subtypesof(/datum/scientific_partner))
+		var/datum/scientific_partner/partner = new partner_path
+		if(!partner.accepted_experiments.len)
+			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
+				partner.accepted_experiments += ordnance_experiment.type
+		scientific_partners += partner

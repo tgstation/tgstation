@@ -50,21 +50,6 @@
 	R.toggle_module(3)
 	return TRUE
 
-/datum/keybinding/robot/intent_cycle
-	hotkey_keys = list("4")
-	name = "cycle_intent"
-	full_name = "Cycle intent left"
-	description = "Cycles the intent left"
-	keybind_signal = COMSIG_KB_SILICON_CYCLEINTENT_DOWN
-
-/datum/keybinding/robot/intent_cycle/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/silicon/robot/R = user.mob
-	R.a_intent_change(INTENT_HOTKEY_LEFT)
-	return TRUE
-
 /datum/keybinding/robot/unequip_module
 	hotkey_keys = list("Q")
 	name = "unequip_module"
@@ -78,4 +63,23 @@
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.uneq_active()
+	return TRUE
+
+/datum/keybinding/robot/undeploy
+	category = CATEGORY_AI
+	hotkey_keys = list("=")
+	name = "undeploy"
+	full_name = "Disconnect from shell"
+	description = "Returns you to your AI core"
+	keybind_signal = COMSIG_KB_SILION_UNDEPLOY_DOWN
+
+/datum/keybinding/robot/undeploy/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/robot/shell/our_shell = user.mob
+	//We make sure our shell is actually a shell
+	if(our_shell.shell == FALSE)
+		return
+	our_shell.undeploy()
 	return TRUE

@@ -5,14 +5,14 @@ This element is used in vat growing to allow for the object to be
 */
 /datum/element/swabable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///The define of the cell_line list to use
 	var/cell_line_define
 	///The define of the cell_virus list to use
 	var/virus_define
 	///Amount of cell lines on a single sample
 	var/cell_line_amount
-	///Amount of viruses on a single sample
+	///The chance the sample will be infected with a virus.
 	var/virus_chance
 
 ///Listens for the swab signal and then generate a sample based on pre-determined lists that are saved as GLOBs. this allows us to have very few swabbable element instances.
@@ -21,7 +21,7 @@ This element is used in vat growing to allow for the object to be
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_SWAB_FOR_SAMPLES, .proc/GetSwabbed)
+	RegisterSignal(target, COMSIG_SWAB_FOR_SAMPLES, PROC_REF(GetSwabbed))
 
 	src.cell_line_define = cell_line_define
 	src.virus_define = virus_define
@@ -29,7 +29,7 @@ This element is used in vat growing to allow for the object to be
 	src.virus_chance = virus_chance
 
 ///Stops listening to the swab signal; you can no longer be swabbed.
-/datum/element/swabable/Detach(datum/source, force)
+/datum/element/swabable/Detach(datum/source)
 	. = ..()
 	if(!isatom(source) || isarea(source))
 		return ELEMENT_INCOMPATIBLE

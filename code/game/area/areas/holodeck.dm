@@ -1,19 +1,21 @@
-/area/holodeck
+/area/station/holodeck
 	name = "Holodeck"
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "Holodeck"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
+	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = FALSE // if true, program goes on emag list
-
 /*
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/powered(chan)
+/area/station/holodeck/powered(chan)
 	if(!requires_power)
 		return TRUE
 	if(always_unpowered)
@@ -21,21 +23,21 @@
 	if(!linked)
 		return FALSE
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return A.powered(chan)
 
-/area/holodeck/addStaticPower(value, powerchannel)
+/area/station/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return ..()
 
-/area/holodeck/use_power(amount, chan)
+/area/station/holodeck/use_power(amount, chan)
 	if(!linked)
 		return FALSE
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
+	ASSERT(!istype(A, /area/station/holodeck))
 	return ..()
 
 
@@ -44,86 +46,9 @@
 	blow off steam by doing stupid things like laying down, throwing
 	spheres at holes, or bludgeoning people.
 */
-/area/holodeck/rec_center
+/area/station/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
 
-/area/holodeck/rec_center/offline
-	name = "Holodeck - Offline"
-
-/area/holodeck/rec_center/court
-	name = "Holodeck - Empty Court"
-
-/area/holodeck/rec_center/dodgeball
-	name = "Holodeck - Dodgeball Court"
-
-/area/holodeck/rec_center/basketball
-	name = "Holodeck - Basketball Court"
-
-/area/holodeck/rec_center/thunderdome
-	name = "Holodeck - Thunderdome Arena"
-
-/area/holodeck/rec_center/beach
-	name = "Holodeck - Beach"
-
-/area/holodeck/rec_center/lounge
-	name = "Holodeck - Lounge"
-
-/area/holodeck/rec_center/pet_lounge
-	name = "Holodeck - Pet Park"
-
-/area/holodeck/rec_center/firingrange
-	name = "Holodeck - Firing Range"
-
-/area/holodeck/rec_center/school
-	name = "Holodeck - Anime School"
-
-/area/holodeck/rec_center/chapelcourt
-	name = "Holodeck - Chapel Courtroom"
-
-/area/holodeck/rec_center/spacechess
-	name = "Holodeck - Space Chess"
-
-/area/holodeck/rec_center/spacecheckers
-	name = "Holodeck - Space Checkers"
-
-/area/holodeck/rec_center/kobayashi
-	name = "Holodeck - Kobayashi Maru"
-
-/area/holodeck/rec_center/winterwonderland
-	name = "Holodeck - Winter Wonderland"
-
-/area/holodeck/rec_center/photobooth
-	name = "Holodeck - Photobooth"
-
-/area/holodeck/rec_center/skatepark
-	name = "Holodeck - Skate Park"
-
-// Bad programs
-
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
-	restricted = TRUE
-
-/area/holodeck/rec_center/thunderdome1218
-	name = "Holodeck - 1218 AD"
-	restricted = TRUE
-
-/area/holodeck/rec_center/burn
-	name = "Holodeck - Atmospheric Burn Test"
-	restricted = TRUE
-
-/area/holodeck/rec_center/wildlife
-	name = "Holodeck - Wildlife Simulation"
-	restricted = TRUE
-
-/area/holodeck/rec_center/bunker
-	name = "Holodeck - Holdout Bunker"
-	restricted = TRUE
-
-/area/holodeck/rec_center/anthophila
-	name = "Holodeck - Anthophila"
-	restricted = TRUE
-
-/area/holodeck/rec_center/refuel
-	name = "Holodeck - Refueling Station"
-	restricted = TRUE
+// Don't move this to be organized like with most areas, theres too much touching holodeck code as is
+/area/station/holodeck/rec_center/offstation_one
+	name = "\improper Recreational Holodeck"

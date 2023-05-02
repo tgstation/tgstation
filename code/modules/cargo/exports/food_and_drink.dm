@@ -1,18 +1,24 @@
-//How I'm laying this out is in a much more painless way than giving every single food and drink it's own export datum.
-//At the time of writing, we have some 200-300 food items overall, not counting custom foods. Let's not think about custom foods.
-//6 Tiers to start with, working from cheapest (Available roundstart) to most expensive (Has to be made with considerable luck and preperation.)
-
+/**
+ * Original Food export file got eaten somewhere along the line and I have no idea when or where it got completely deleted.
+ * Foods given a venue value are exportable to cargo as a backup to selling from venues, however at the expense of elasticity.
+ */
 /datum/export/food
-	cost = 10 // Default cost, Because something WILL get missed somewhere. Perhaps out of active ignorance or not.
+	cost = 10
 	unit_name = "serving"
 	message = "of food"
-	export_types = list(/obj/item/reagent_containers/food/snacks)
+	export_types = list(/obj/item/food)
 	include_subtypes = TRUE
-	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown)
+	exclude_types = list(/obj/item/food/grown)
+	/// Have we already set the cost of this export? Necessary to avoid the cost being constantly reset.
+	var/cost_obtained_from_venue_value = FALSE
 
-/datum/export/food/get_cost(obj/O, allowed_categories, apply_elastic)
-	. = ..()
-	var/obj/item/reagent_containers/food/snacks/sold_food = O
-	if(sold_food.silver_spawned)
-		return FOOD_WORTHLESS
-	return sold_food.value
+/datum/export/food/get_cost(obj/object, allowed_categories, apply_elastic)
+	if(HAS_TRAIT(object, TRAIT_FOOD_SILVER))
+		return FOOD_PRICE_WORTHLESS
+
+	var/obj/item/food/sold_food = object
+	if(!cost_obtained_from_venue_value)
+		cost = sold_food.venue_value
+		cost_obtained_from_venue_value = TRUE
+
+	return ..()

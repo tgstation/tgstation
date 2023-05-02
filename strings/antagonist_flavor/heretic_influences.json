@@ -1,0 +1,67 @@
+{
+	"prefix": [
+		"aggressive",
+		"arrogant",
+		"atomized",
+		"blissful",
+		"enlightening",
+		"fleeting",
+		"intrusive",
+		"lowering",
+		"omniscient",
+		"peaceful",
+		"resentful",
+		"rising",
+		"subtle",
+		"threatening",
+		"thundering",
+		"towering"
+	],
+	"postfix": [
+		"blemish",
+		"blush",
+		"breeze",
+		"cold",
+		"crack",
+		"flaw",
+		"flow",
+		"grasp",
+		"heat",
+		"imperfection",
+		"memory",
+		"presence",
+		"reminder",
+		"sight",
+		"thought",
+		"touch",
+		"veil",
+		"whisper"
+	],
+	"drained": [
+		"analyzed",
+		"drained",
+		"emptied",
+		"opened",
+		"researched",
+		"siphoned"
+	],
+	"drain_message": [
+		"A SHIMMER... POTENTIAL... POWER.",
+		"A WHISPER.",
+		"COVERED AND FORGOTTEN.",
+		"CURSED LAND, CURSED MAN, CURSED MIND.",
+		"GREATER HEIGHTS.",
+		"I AM BEING WATCHED... FROM WHERE? FROM WHAT?",
+		"I AM LATE FOR MY DESTINY.",
+		"LIFE IS FLEETING, BUT WHAT YET STAYS?",
+		"RAIN OF BLOOD. REIGN OF BLOOD.",
+		"STRENGTH... UNPARALLELED. UNNATURAL.",
+		"THE GATES OF THE MANSUS IS HERE, IS OPEN.",
+		"THE HIGHER I RISE, THE MORE I SEE.",
+		"THE VEIL IS SHATTERED.",
+		"THEIR HAND IS AT MY SIDE.",
+		"THEY WALK THE WORLD. UNNOTICED.",
+		"TO WALK BETWEEN PLANES."
+	]
+
+}

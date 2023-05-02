@@ -1,0 +1,41 @@
+{
+	"thermo_base": [
+		{
+			"type": "icon_state",
+			"icon_state": "temp_meter",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "thermo_base",
+			"blend_mode": "overlay"
+		}
+	],
+	"thermo_1": [
+		{
+			"type": "icon_state",
+			"icon_state": "temp_meter_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "thermo_base_1",
+			"blend_mode": "overlay"
+		}
+	],
+	"thermo-open": [
+		{
+			"type": "icon_state",
+			"icon_state": "temp_meter-o",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "thermo_base-o",
+			"blend_mode": "overlay"
+		}
+	]
+}

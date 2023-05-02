@@ -18,31 +18,44 @@
 	var/initial_flow
 	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
 	var/minimum_flow
-	/// How fast our blood flow will naturally decrease per tick, not only do larger cuts bleed more faster, they clot slower
+	/// How much our blood_flow will naturally decrease per second, not only do larger cuts bleed more blood faster, they clot slower (higher number = clot quicker, negative = opening up)
 	var/clot_rate
 
 	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
 	var/demotes_to
 
-	/// How much staunching per type (cautery, suturing, bandaging) you can have before that type is no longer effective for this cut NOT IMPLEMENTED
-	var/max_per_type
 	/// The maximum flow we've had so far
 	var/highest_flow
 
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null)
-	blood_flow = initial_flow
+/datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null, attack_direction = null)
 	if(old_wound)
-		blood_flow = max(old_wound.blood_flow, initial_flow)
+		set_blood_flow(max(old_wound.blood_flow, initial_flow))
 		if(old_wound.severity > severity && old_wound.highest_scar)
-			highest_scar = old_wound.highest_scar
-			old_wound.highest_scar = null
+			set_highest_scar(old_wound.highest_scar)
+			old_wound.clear_highest_scar()
+	else
+		set_blood_flow(initial_flow)
+		if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+			victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)
-		highest_scar = new
-		highest_scar.generate(limb, src, add_to_scars=FALSE)
+		var/datum/scar/new_scar = new
+		set_highest_scar(new_scar)
+		new_scar.generate(limb, src, add_to_scars=FALSE)
+
+/datum/wound/slash/proc/set_highest_scar(datum/scar/new_scar)
+	if(highest_scar)
+		UnregisterSignal(highest_scar, COMSIG_PARENT_QDELETING)
+	if(new_scar)
+		RegisterSignal(new_scar, COMSIG_PARENT_QDELETING, PROC_REF(clear_highest_scar))
+	highest_scar = new_scar
+
+/datum/wound/slash/proc/clear_highest_scar(datum/source)
+	SIGNAL_HANDLER
+	set_highest_scar(null)
 
 /datum/wound/slash/remove_wound(ignore_limb, replaced)
 	if(!replaced && highest_scar)
@@ -54,24 +67,24 @@
 	if(!limb.current_gauze)
 		return ..()
 
-	var/list/msg = list("The cuts on [victim.p_their()] [limb.name] are wrapped with")
+	var/list/msg = list("The cuts on [victim.p_their()] [limb.plaintext_zone] are wrapped with ")
 	// how much life we have left in these bandages
 	switch(limb.current_gauze.absorption_capacity)
 		if(0 to 1.25)
-			msg += "nearly ruined "
+			msg += "nearly ruined"
 		if(1.25 to 2.75)
-			msg += "badly worn "
+			msg += "badly worn"
 		if(2.75 to 4)
-			msg += "slightly bloodied "
+			msg += "slightly bloodied"
 		if(4 to INFINITY)
-			msg += "clean "
-	msg += "[limb.current_gauze.name]!"
+			msg += "clean"
+	msg += " [limb.current_gauze.name]!"
 
 	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
-		blood_flow += 0.05 * wounding_dmg
+		adjust_blood_flow(WOUND_SLASH_DAMAGE_FLOW_COEFF * wounding_dmg)
 
 /datum/wound/slash/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
@@ -84,28 +97,34 @@
 
 	return bleed_amt
 
-/datum/wound/slash/handle_process()
-	if(victim.stat == DEAD)
-		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN)
-		if(blood_flow < minimum_flow)
-			if(demotes_to)
-				replace_wound(demotes_to)
-				return
-			qdel(src)
-			return
+/datum/wound/slash/get_bleed_rate_of_change()
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	if(no_bleeding)
+		return BLOOD_FLOW_STEADY
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		return BLOOD_FLOW_INCREASING
+	if(limb.current_gauze || clot_rate > 0)
+		return BLOOD_FLOW_DECREASING
+	if(clot_rate < 0)
+		return BLOOD_FLOW_INCREASING
 
-	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
+/datum/wound/slash/handle_process(seconds_per_tick, times_fired)
+	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
+	if(!no_bleeding)
+		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
-	if(victim.has_reagent(/datum/reagent/toxin/heparin))
-		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
+	//gauze always reduces blood flow, even for non bleeders
 	if(limb.current_gauze)
 		if(clot_rate > 0)
-			blood_flow -= clot_rate
-		blood_flow -= limb.current_gauze.absorption_rate
-		limb.seep_gauze(limb.current_gauze.absorption_rate)
-	else
-		blood_flow -= clot_rate
+			adjust_blood_flow(-clot_rate * seconds_per_tick)
+		adjust_blood_flow(-limb.current_gauze.absorption_rate * seconds_per_tick)
+		limb.seep_gauze(limb.current_gauze.absorption_rate * seconds_per_tick)
+	//otherwise, only clot if it's a bleeder
+	else if(!no_bleeding)
+		adjust_blood_flow(-clot_rate * seconds_per_tick)
 
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
@@ -114,11 +133,10 @@
 		if(demotes_to)
 			replace_wound(demotes_to)
 		else
-			to_chat(victim, "<span class='green'>The cut on your [limb.name] has stopped bleeding!</span>")
+			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [no_bleeding ? "healed up" : "stopped bleeding"]!"))
 			qdel(src)
 
-
-/datum/wound/slash/on_stasis()
+/datum/wound/slash/on_stasis(seconds_per_tick, times_fired)
 	if(blood_flow >= minimum_flow)
 		return
 	if(demotes_to)
@@ -143,16 +161,16 @@
 		suture(I, user)
 
 /datum/wound/slash/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB || !isfelinid(user) || !victim.can_inject(user, TRUE))
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
-	if(INTERACTING_WITH(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+	if(DOING_INTERACTION_WITH_TARGET(user, victim))
+		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return
 	if(user.is_mouth_covered())
-		to_chat(user, "<span class='warning'>Your mouth is covered, you can't lick [victim]'s wounds!</span>")
+		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
 		return
-	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
-		to_chat(user, "<span class='warning'>You can't lick wounds without a tongue!</span>") // f in chat
+	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
+		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
 		return
 
 	lick_wounds(user)
@@ -161,85 +179,88 @@
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/proc/lick_wounds(mob/living/carbon/human/user)
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
-	for(var/datum/disease/D in victim.diseases)
-		user.ForceContractDisease(D)
+	for(var/i in victim.diseases)
+		var/datum/disease/iter_disease = i
+		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue
+		user.ForceContractDisease(iter_disease)
 
-	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
-	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
+	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
+	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	user.visible_message("<span class='notice'>[user] licks the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You lick some of the wounds on [victim]'s [limb.name]</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='green'>[user] licks the wounds on your [limb.name]!</span")
-	blood_flow -= 0.5
+	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
+	to_chat(victim, span_green("[user] licks the wounds on your [limb.plaintext_zone]!"))
+	adjust_blood_flow(-0.5)
 
 	if(blood_flow > minimum_flow)
 		try_handling(user)
 	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
+		to_chat(user, span_green("You successfully lower the severity of [victim]'s cuts."))
 
 /datum/wound/slash/on_xadone(power)
 	. = ..()
-	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/slash/on_synthflesh(power)
 	. = ..()
-	blood_flow -= 0.075 * power // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
+	adjust_blood_flow(-0.075 * power) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
-	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
-	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
+	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-	var/damage = lasgun.chambered.BB.damage
-	lasgun.chambered.BB.wound_bonus -= 30
-	lasgun.chambered.BB.damage *= self_penalty_mult
+	var/damage = lasgun.chambered.loaded_projectile.damage
+	lasgun.chambered.loaded_projectile.wound_bonus -= 30
+	lasgun.chambered.loaded_projectile.damage *= self_penalty_mult
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
-	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
+	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
+	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
 /datum/wound/slash/proc/tool_cauterize(obj/item/I, mob/user)
 	var/improv_penalty_mult = (I.tool_behaviour == TOOL_CAUTERY ? 1 : 1.25) // 25% longer and less effective if you don't use a real cautery
 	var/self_penalty_mult = (user == victim ? 1.5 : 1) // 50% longer and less effective if you do it to yourself
 
-	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-
-	user.visible_message("<span class='green'>[user] cauterizes some of the bleeding on [victim].</span>", "<span class='green'>You cauterize some of the bleeding on [victim].</span>")
+	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))
 		victim.emote("scream")
 	var/blood_cauterized = (0.6 / (self_penalty_mult * improv_penalty_mult))
-	blood_flow -= blood_cauterized
+	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > minimum_flow)
 		try_treating(I, user)
 	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
+		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
 
 /// If someone is using a suture to close this cut
 /datum/wound/slash/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
-	user.visible_message("<span class='notice'>[user] begins stitching [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
+	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
-	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-	user.visible_message("<span class='green'>[user] stitches up some of the bleeding on [victim].</span>", "<span class='green'>You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
+	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
-	blood_flow -= blood_sutured
+	adjust_blood_flow(-blood_sutured)
 	limb.heal_damage(I.heal_brute, I.heal_burn)
 	I.use(1)
 
 	if(blood_flow > minimum_flow)
 		try_treating(I, user)
 	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
-
+		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
 
 /datum/wound/slash/moderate
 	name = "Rough Abrasion"
@@ -251,12 +272,15 @@
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
 	minimum_flow = 0.5
-	max_per_type = 3
-	clot_rate = 0.12
+	clot_rate = 0.05
 	threshold_minimum = 20
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/moderate
 	scar_keyword = "slashmoderate"
+
+/datum/wound/slash/moderate/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is cut open"
 
 /datum/wound/slash/severe
 	name = "Open Laceration"
@@ -268,29 +292,49 @@
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
 	minimum_flow = 2.75
-	clot_rate = 0.06
-	max_per_type = 4
+	clot_rate = 0.03
 	threshold_minimum = 50
 	threshold_penalty = 25
 	demotes_to = /datum/wound/slash/moderate
 	status_effect_type = /datum/status_effect/wound/slash/severe
 	scar_keyword = "slashsevere"
 
+/datum/wound/slash/severe/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is ripped open"
+
 /datum/wound/slash/critical
 	name = "Weeping Avulsion"
 	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
 	examine_desc = "is carved down to the bone, spraying blood wildly"
+	examine_desc = "is carved down to the bone"
 	occur_text = "is torn open, spraying blood wildly"
+	occur_text = "is torn open"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 4.25
-	minimum_flow = 4
-	clot_rate = -0.05 // critical cuts actively get worse instead of better
-	max_per_type = 5
+	initial_flow = 4
+	minimum_flow = 3.85
+	clot_rate = -0.015 // critical cuts actively get worse instead of better
 	threshold_minimum = 80
 	threshold_penalty = 40
 	demotes_to = /datum/wound/slash/severe
 	status_effect_type = /datum/status_effect/wound/slash/critical
 	scar_keyword = "slashcritical"
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH)
+
+/datum/wound/slash/moderate/many_cuts
+	name = "Numerous Small Slashes"
+	desc = "Patient's skin has numerous small slashes and cuts, generating moderate blood loss."
+	examine_desc = "has a ton of small cuts"
+	occur_text = "is cut numerous times, leaving many small slashes."
+
+// Subtype for cleave (heretic spell)
+/datum/wound/slash/critical/cleave
+	name = "Burning Avulsion"
+	examine_desc = "is ruptured, spraying blood wildly"
+	clot_rate = 0.01
+
+/datum/wound/slash/critical/cleave/update_descriptions()
+	if(no_bleeding)
+		occur_text = "is ruptured"

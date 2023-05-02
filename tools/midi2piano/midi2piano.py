@@ -3,9 +3,12 @@ This module allows user to convert MIDI melodies to SS13 sheet music ready
 for copy-and-paste
 """
 from functools import reduce
-import midi as mi
-import easygui as egui
-import pyperclip as pclip
+import MidiDependencies as mi
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
+root = tk.Tk()
+root.withdraw()
 
 LINE_LENGTH_LIM = 50
 LINES_LIMIT = 200
@@ -54,6 +57,7 @@ def notenum2string(num, accidentals, octaves):
     names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     convert_table = {1:0, 3:1, 6:2, 8:3, 10:4}
     inclusion_table = {0:0, 2:1, 5:2, 7:3, 9:4}
+    correspondence_table = {0:1, 1:0, 2:3, 3:2, 5:6, 6:5, 7:8, 8:7, 9:10, 10:9}
 
     num += OCTAVE_KEYS * OCTAVE_TRANSPOSE
     octave = int(num / OCTAVE_KEYS)
@@ -68,6 +72,8 @@ def notenum2string(num, accidentals, octaves):
 
     accidental = (len(names[name_indx]) == 2)
     output_octaves[name_indx] = octave
+    if name_indx in correspondence_table:
+        output_octaves[correspondence_table[name_indx]] = octave
     add_n = False
 
     if accidental:
@@ -102,9 +108,8 @@ def obtain_midi_file():
     """
     Asks user to select MIDI and returns this file opened in binary mode for reading
     """
-    file = egui.fileopenbox(msg='Choose MIDI file to convert',
-                            title='MIDI file selection',
-                            filetypes=[['*.mid', 'MID files']])
+    messagebox.showinfo("Midi2Piano Information", "Choose a MIDI file to convert")
+    file = filedialog.askopenfilename(title='MIDI file selection',filetypes=[['*.mid', 'MID files']])
     if not file:
         return None
     file = open(file, mode='rb').read()
@@ -303,6 +308,6 @@ def main_cycle():
         split_music = explode_sheet_music(sheet_music)
         sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
 
-        pclip.copy(sheet_music)
+        root.clipboard_append(sheet_music)
 
 main_cycle()

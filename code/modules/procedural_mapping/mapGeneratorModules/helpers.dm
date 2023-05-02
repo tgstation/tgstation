@@ -14,13 +14,13 @@
 		SSair.remove_from_active(T)
 	for(var/turf/open/T in map)
 		if(T.air)
-			T.air.copy_from_turf(T)
-		SSair.add_to_active(T)
+			T.air = T.create_gas_mixture()
+		SSair.add_to_active(T, TRUE)
 
 /datum/map_generator_module/bottom_layer/massdelete
 	spawnableAtoms = list()
 	spawnableTurfs = list()
-	var/deleteturfs = TRUE	//separate var for the empty type.
+	var/deleteturfs = TRUE //separate var for the empty type.
 	var/list/ignore_typecache
 
 /datum/map_generator_module/bottom_layer/massdelete/generate()

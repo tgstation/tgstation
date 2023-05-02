@@ -3,8 +3,10 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
-$include antag_rep.txt
 $include resources.txt
+$include interviews.txt
+$include lua.txt
+$include auxtools.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -73,6 +75,10 @@ ENABLE_LOCALHOST_RANK
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+## Unhash this to have intern tags automatically added to ID cards for station roles depending on the living hours of the player holding them.
+#USE_LOW_LIVING_HOUR_INTERN
+## If USE_LOW_LIVING_HOUR_INTERN is unhashed, players under this number of living hours have [Intern] added to their ID card. If this isn't set, uses USE_EXP_RESTRICTIONS_HEADS_HOURS instead. If that isn't set, it finally defaults to a hardcoded fallback of 15 hours.
+#USE_LOW_LIVING_HOUR_INTERN_HOURS 50
 
 ## log OOC channel
 LOG_OOC
@@ -86,14 +92,23 @@ LOG_ADMIN
 ## log admin chat
 LOG_ADMINCHAT
 
+## log asset debug logs
+#LOG_ASSET
+
 ## log client access (logon/logoff)
 LOG_ACCESS
+
+## Enables log entries for logins that failed due to suspicious circumstances (banned player, CID randomiser, spoofed BYOND version, etc.) to a dedicated file.
+LOG_SUSPICIOUS_LOGIN
 
 ## log game actions (start of round, results, etc.)
 LOG_GAME
 
 ## log player votes
 LOG_VOTE
+
+## log manual target zone switching
+LOG_ZONE_SWITCH
 
 ## log client Whisper
 LOG_WHISPER
@@ -107,19 +122,28 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log uplink purchases
+LOG_UPLINK
+
 ## log telecomms messages
 LOG_TELECOMMS
 
 ## log prayers
 LOG_PRAYER
 
-## log lawchanges
-LOG_LAW
+## Log Music requests
+LOG_INTERNET_REQUEST
+
+## log silicons
+LOG_SILICON
 
 ## log economy actions
 LOG_ECON
 
-## log crew manifest to seperate file
+## log traitor objectives
+LOG_TRAITOR
+
+## log crew manifest to separate file
 LOG_MANIFEST
 
 ## log job divide debugging information
@@ -133,7 +157,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-# LOG_PICTURES
+LOG_PICTURES
 
 ## log mecha actions
 # LOG_MECHA
@@ -141,11 +165,17 @@ LOG_MANIFEST
 ## log virus and actions
 LOG_VIRUS
 
-## log cloning actions
-LOG_CLONING
-
 ## log shuttle actions
 LOG_SHUTTLE
+
+## log tool interactions [/atom/proc/tool_act]
+LOG_TOOLS
+
+## Log all timers on timer auto reset
+# LOG_TIMERS_ON_BUCKET_RESET
+
+## log speech indicators
+LOG_SPEECH_INDICATORS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -171,11 +201,14 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
-## allow players to initiate a mode-change vote
-#ALLOW_VOTE_MODE
-
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
+
+## allow players to rock the vote, or to vote on the map again if they didn't like the last results
+#ALLOW_ROCK_THE_VOTE
+
+## the number of times you wish to allow players to rock the vote in a given shift
+MAX_ROCKING_VOTES 1
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -241,6 +274,9 @@ CHECK_RANDOMIZER
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
+## Discord bot command prefix, if the discord bot is used
+# DISCORDBOTCOMMANDPREFIX ?
+
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
 ## This will take priority over the game logs address during reboot.
@@ -263,16 +299,30 @@ CHECK_RANDOMIZER
 ## The default value assumes youtube-dl is in your system PATH
 # INVOKE_YOUTUBEDL youtube-dl
 
+## Comment this out to disable users ability to use the request internet sounds to be played.
+REQUEST_INTERNET_SOUND
+
+## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
+## The Defaults here are all supported by youtube-dl
+## Ensure . and / are escaped with \
+REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
+
 ## In-game features
-##Toggle for having jobs load up from the .txt
-# LOAD_JOBS_FROM_TXT
+
+## Toggle for having jobs load up from the jobconfig.toml (or jobs.txt) file. Will use codebase defaults if commented out.
+## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
+## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
+## Playtime Requirements is in minutes, Required Account Age is in days.
+#LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
+## It is intentional that Admins can edit this config, as its meant to serve as a deterrent/warning for admin abuse.
+## Add a `@` in front to lock admins from editing this.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
-## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-#POPUP_ADMIN_PM
+## Uncomment to give admins the ability to send a maptext popup to players.
+## Only fires when an admin requests it, not every ahelp.
+POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
@@ -280,9 +330,8 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
-##This is currently a testing optimized setting. A good value for production would be 98.
-TICK_LIMIT_MC_INIT 500
+## Uncomment to prevent machines syncing to the Science techweb by default.
+#NO_DEFAULT_TECHWEB_LINK
 
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps
@@ -302,6 +351,9 @@ TICKLAG 0.5
 NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
+
+## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+#AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
 
@@ -342,8 +394,16 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##	Requires database
 #PANIC_BUNKER
 
+## Uncomment to enable the interview system for players who are below the living hour requirement instead of explicitly blocking them from the server
+## Note this requires the PANIC_BUNKER to be enabled to do anything.
+#PANIC_BUNKER_INTERVIEW
+
+## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
+#PANIC_BUNKER_LIVING 90
+
 ## The message the Panic Bunker gives when someone is rejected by it
-#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
+## %minutes% is replaced with PANIC_BUNKER_LIVING on runtime, remove it if you don't want this
+#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from players with less than %minutes% minutes of living time.
 
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS
@@ -399,6 +459,7 @@ AUTOADMIN_RANK Game Master
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
 #CLIENT_WARN_VERSION 511
+#CLIENT_WARN_BUILD 1421
 #CLIENT_WARN_POPUP
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
@@ -441,13 +502,19 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
 ## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game.
-#CHAT_ANNOUNCE_NEW_GAME
+## Which channel will have a message about a new game starting, message includes the station name.
+#CHANNEL_ANNOUNCE_NEW_GAME
+
+## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+#CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
+
+## Uncomment this to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
+# SECURE_CHAT_COMMANDS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS
@@ -502,18 +569,92 @@ DEFAULT_VIEW_SQUARE 15x15
 ## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
 #CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
 
-#### DISCORD STUFFS ####
-## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
-## Discord IDs can be obtained by following this guide: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
+## If uncommented, this will enable admin 2FA (two-factor authentication).
+## The URL admins will be asked to go to will be here, with %ID% being the ID
+## of their connection attempt.
+#ADMIN_2FA_URL https://example.com/id/%ID%
 
-## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
-#ENABLE_DISCORD_AUTOROLE
+## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
+#HARD_DELETES_OVERRUN_THRESHOLD 0.5
 
-## Add your discord bot token here. Make sure it has the ability to manage roles
-#DISCORD_TOKEN someDiscordToken
+## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
+#HARD_DELETES_OVERRUN_LIMIT 0
 
-## Add the ID of your guild (server) here
-#DISCORD_GUILDID 000000000000000000
+## The URL to the webhook for adminhelps to relay the urgent ahelp message to
+## If not set, will disable urgent ahelps.
+#URGENT_ADMINHELP_WEBHOOK_URL
 
-## Add the ID of the role you want assigning here
-#DISCORD_ROLEID 000000000000000000
+## See above, but for non-urgent ahelps
+#REGULAR_ADMINHELP_WEBHOOK_URL
+
+## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
+URGENT_AHELP_COOLDOWN 300
+
+## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
+#URGENT_AHELP_MESSAGE
+
+## See above, but for non-urgent ahelps.
+#AHELP_MESSAGE
+
+## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
+#URGENT_AHELP_USER_PROMPT This'll ping the admins!
+
+## The link that the title of a ticket can link to.
+## If not set, it will link nowhere
+## use $RID for the round ID and $TID for the ticket ID
+#ADMINHELP_AHELP_LINK
+
+## The URL for the pfp of the webhook
+#ADMINHELP_WEBHOOK_PFP
+
+## The name of the webhook
+#ADMINHELP_WEBHOOK_NAME
+
+## Sets an MOTD of the server.
+## You can use this multiple times, and the MOTDs will be appended in order.
+## Based on config directory, so "motd.txt" points to "config/motd.txt"
+MOTD motd.txt
+#MOTD motd_extra.txt
+
+## Assets can opt-in to caching their results into `tmp`.
+## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## This should be disabled (through `CACHE_ASSETS 0`) on development,
+## but enabled on production (the default).
+CACHE_ASSETS 0
+
+## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
+## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
+## Will only seek to waste disk space if ran on production.
+#SAVE_SPRITESHEETS
+
+## If this remains commented out, we will allow players to download their own preferences as a JSON file to do whatever they wish.
+## This does require the game code to read (and only read) the /data folder where these files are stored, and then use the BYOND FTP Function to send the file to the client.
+## In case you get overloaded with requests such as these, simply uncomment to disable this feature to clients.
+#FORBID_PREFERENCES_EXPORT
+
+## The time (in seconds) that a player must wait between download requests of their JSON preferences.
+## Minimum number settable for this is 1.
+SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT 10
+
+## Uncomment to allow the station name to be in the hub entry.
+## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
+## BYOND staff have gotten upset at us in the past for inappropriate station names.
+#STATION_NAME_IN_HUB_ENTRY
+
+## The number of PR announcements allowed for the same pull request per round
+## This makes sure that somebody can only spam a few reopens and closes before being ignored
+PR_ANNOUNCEMENTS_PER_ROUND 5
+
+## Uncomment to block all attempts to profile, for performance reasons
+#FORBID_ALL_PROFILING
+
+## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
+#FORBID_ADMIN_PROFILING
+
+## Comment to disable sending a toast notification on the host server when initializations complete.
+## Even if this is enabled, a notification will only be sent if there are no clients connected.
+TOAST_NOTIFICATION_ON_INIT
+
+## Causes configuration errors to spit out runtimes
+CONFIG_ERRORS_RUNTIME

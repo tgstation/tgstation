@@ -1,0 +1,75 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+
+$separator-color: base.$color-bg-section;
+$background-color: base.$color-bg !default;
+$dropdown-z-index: 5;
+
+.MenuBar {
+  display: flex;
+}
+
+.MenuBar__font {
+  font-family: Verdana, sans-serif;
+  font-size: base.em(12px);
+  line-height: base.em(17px);
+}
+
+.MenuBar__hover {
+  &:hover {
+    background-color: lighten($background-color, 30%);
+    transition: background-color 0ms;
+  }
+}
+
+.MenuBar__MenuBarButton {
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+}
+
+.MenuBar__menu {
+  position: absolute;
+  z-index: $dropdown-z-index;
+  background-color: $background-color;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+  box-shadow: 4px 6px 5px -2px rgba(0, 0, 0, 0.55);
+}
+
+.MenuBar__MenuItem {
+  z-index: $dropdown-z-index;
+  transition: background-color 100ms ease-out;
+  background-color: $background-color;
+  white-space: nowrap;
+  padding: 0.3rem 2rem 0.3rem 3rem;
+}
+
+.MenuBar__MenuItemToggle {
+  padding: 0.3rem 2rem 0.3rem 0;
+}
+
+.MenuBar__MenuItemToggle__check {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 3rem;
+  margin-left: 0.3rem;
+}
+
+.MenuBar__over {
+  top: auto;
+  bottom: 100%;
+}
+
+.MenuBar__MenuBarButton-text {
+  text-overflow: clip;
+  white-space: nowrap;
+  height: base.em(17px);
+}
+
+.MenuBar__Separator {
+  display: block;
+  margin: 0.3rem 0.3rem 0.3rem 2.3rem;
+  border-top: 1px solid $separator-color;
+}

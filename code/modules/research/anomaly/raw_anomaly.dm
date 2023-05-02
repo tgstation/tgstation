@@ -1,11 +1,11 @@
 /**
-  * # Raw Anomaly Cores
-  *
-  * The current precursor to anomaly cores, these are manufactured into 'finished' anomaly cores for use in research, items, and more.
-  *
-  * The current amounts created is stored in `SSresearch.created_anomaly_types[ANOMALY_CORE_TYPE_DEFINE] = amount`.
-  * The hard limits are in `code/__DEFINES/anomalies.dm`.
-  */
+ * # Raw Anomaly Cores
+ *
+ * The current precursor to anomaly cores, these are manufactured into 'finished' anomaly cores for use in research, items, and more.
+ *
+ * The current amounts created is stored in `SSresearch.created_anomaly_types[ANOMALY_CORE_TYPE_DEFINE] = amount`.
+ * The hard limits are in `code/__DEFINES/anomalies.dm`.
+ */
 /obj/item/raw_anomaly_core
 	name = "raw anomaly core"
 	desc = "You shouldn't be seeing this. Someone screwed up."
@@ -45,10 +45,34 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/flux
 	icon_state = "rawcore_flux"
 
+/obj/item/raw_anomaly_core/hallucination
+	name = "raw hallucination core"
+	desc = "The raw core of a hallucination anomaly, makes your head spin."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/hallucination
+	icon_state = "rawcore_hallucination"
+
 /obj/item/raw_anomaly_core/random
 	name = "random raw core"
 	desc = "You should not see this!"
 	icon_state = "rawcore_bluespace"
+
+/obj/item/raw_anomaly_core/bioscrambler
+	name = "raw bioscrambler core"
+	desc = "The raw core of a bioscrambler anomaly, it squirms."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/bioscrambler
+	icon_state = "rawcore_bioscrambler"
+
+/obj/item/raw_anomaly_core/dimensional
+	name = "raw dimensional core"
+	desc = "The raw core of a dimensional anomaly, vibrating with infinite potential."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
+	icon_state = "rawcore_dimensional"
+
+/obj/item/raw_anomaly_core/ectoplasm //Has no cargo order option, but can sometimes be a roundstart pick
+	name = "\improper ectoplasm anomaly core"
+	desc = "The raw core of an ectoplasmic anomaly. It wants to share its secrets with you."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
+	icon_state = "dimensional_core"
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
@@ -57,13 +81,13 @@
 	return INITIALIZE_HINT_QDEL
 
 /**
-  * Created the resulting core after being "made" into it.
-  *
-  * Arguments:
-  * * newloc - Where the new core will be created
-  * * del_self - should we qdel(src)
-  * * count_towards_limit - should we increment the amount of created cores on SSresearch
-  */
+ * Created the resulting core after being "made" into it.
+ *
+ * Arguments:
+ * * newloc - Where the new core will be created
+ * * del_self - should we qdel(src)
+ * * count_towards_limit - should we increment the amount of created cores on SSresearch
+ */
 /obj/item/raw_anomaly_core/proc/create_core(newloc, del_self = FALSE, count_towards_limit = FALSE)
 	. = new anomaly_type(newloc)
 	if(count_towards_limit)

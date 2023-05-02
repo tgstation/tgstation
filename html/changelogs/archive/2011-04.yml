@@ -1,0 +1,140 @@
+2011-04-02:
+  /tg/station team:
+  - unknown: ' International Children''s Book Day'
+  ConstantA:
+  - unknown: You can now put Mind-machine-interface (MMI)'d brains into mecha.
+  Errorage:
+  - unknown: Added smooth lattice.
+  Microwave:
+  - unknown: New look for the mining cyborg, jackhammer, kitchen sink.
+  - unknown: Singularity is now enclosed again (still airless tho).
+  - unknown: Wizard has a new starting area.
+  - unknown: Chemists and CMOs now have their own jumpsuits.
+2011-04-17:
+  /tg/station team:
+  - unknown: ' World Hemophilia Day'
+  Agouri:
+  - unknown: 2001 space suits added to AI Satellite!
+  - unknown: New look for the 2001 space suit.
+  - unknown: 2001 space suit jetpack added.
+  - unknown: Improved TRAYS!
+  ConstantA:
+  - unknown: Added mecha DNA-locking. Only the person with matching UE can operate
+      such mechs.
+  - unknown: Added two mecha armor booster modules and a repair droid module.
+  - unknown: Mech fabricator is now buildable.
+  - unknown: Gygax construction is now reversible.
+  Deeaych:
+  - unknown: Updated satchel, bananimum, shovel, jackhammer and pick-in-hand sprites.
+  - unknown: Many unneeded r-walls removed, detective's office reinforced.
+  - unknown: Captain armor now acts as a space suit, added a unique captain's space
+      helmet to captain's quarters.
+  - unknown: Golems cannot speak, but should be perfectly spawnable. Also added golem
+      fat sprite.
+  - unknown: Security borgs have side sprites.
+  Errorage:
+  - unknown: Shuttle diagonal sprites now work for any kind of floor.
+  - unknown: You can now make plaques from gold. Place them on a wall and engrave
+      an epitaph.
+  - unknown: Placed a single wall tile in the AI satellite so you don't have a clear
+      LOS of the AI from the door.
+  - unknown: Added arrivals lobby. (Map by Superxpdude, updated by Microwave)
+  - unknown: Lattice now connects to the solar shields.
+  - unknown: Law office maintenance is now connected with Tech storage maintenance.
+      (Some rewiring dont in the area)
+  - unknown: Xenobiology now has it's own access level. (Also fixed xeno pen access
+      and blast doors)
+  - unknown: You might soon start to see different airlocks and airlock assemblies
+      around the station. (Sprites donated by Baystation 12)
+  - unknown: Chemical storage added, discussion on which chemicals it should store
+      is on the forums. You're welcome to contribute.
+  - unknown: Hot fires will now melt floors.
+  - unknown: Added a pair of market stalls south of the teleporter. LET THERE BE CLOWNMART!
+  - unknown: Screwdrivers and wirecutters can now spawn in different colors.
+  - unknown: Electrical toolboxes have a 5% chance of spawning a pair of insulated
+      gloves. A set spawns in tech storage.
+  - unknown: Oxygen canisters now spawn in emergency storage, near disposal, in the
+      incinerator and the CE's office.
+  - unknown: A plasma canister now spawns in toxins, near the maintenance door.
+  - unknown: Wooden tables now look nicer.
+  HAL:
+  - unknown: Added air alarm to security checkpoint, added cameras to aux. arrival
+      docks so the AI can see everything.
+  - unknown: Added fire alarm, fire locks and air alarm to delivery office.
+  Matty406:
+  - unknown: AIs can now feel a little more dorfy.
+  - unknown: Many ores, both raw and smelted, look much better.
+  Microwave:
+  - unknown: Rabbit ears have a small tail, night vision goggle sprites updated.
+  - unknown: Space tea has a nice, calming effect.
+  - unknown: Space drugs? Liberty cap... something like that. Microwave, make your
+      changelog entries more understandable!
+  - unknown: Brobot merged with Service Borg with a Rapid Service Fabricator.
+  - unknown: Arcade machine prizes look and sound realistic once again.
+  - unknown: 'New arcade toy: Syndicate space suit costume, can hold arcade toys in
+      suit storage.'
+  - unknown: Empty cap gun loaders can be recycled in an autolathe.
+  - unknown: Seizure man has laying down sprites now. Update to wizard den.
+  - unknown: Mech bay has two more borg chargers.
+  - unknown: Beepsky is back!
+  - unknown: Detective's office grille has been electrified.
+  - unknown: You can now see if someone is wearing an emergency oxygen tank on their
+      belt on the mob itself.
+  - unknown: Lexorin - Now deals 3 oxygen damage per tick. Countered with Dexalin
+      or Dexalin Pkus, which remove 2 units of it from your body per tick.
+  - unknown: Bilk - Shares the effects of beer and milk. Disgusting!
+  - unknown: Sugar - Gives nutrition!
+  - unknown: Arithrazine - Now extremely good against radiation damage.
+  - unknown: Hyronalin - Stronger radiation removal
+  - unknown: Space cleaner spray bottles now contain enough cleaner for 50 uses. Making
+      space cleaner now yields more cleaner.
+  Muskets:
+  - unknown: Kabobs now return the bar used to make them.
+  Neo:
+  - unknown: You can now aim guns at body parts, armor and helmets properly protect
+      you from projectiles.
+  - unknown: Cat ears now match the hair color of the wearer.
+  - unknown: Robots can no longer stick their items onto/into things.
+  - unknown: Meson, thermal and x-ray vision are now modules for borgs.
+  - unknown: Welding now uses less fuel when on and idle but more when welding.
+  - unknown: Hopefully fixed the bug when running into airlocks didn't open them and
+      running into objects didn't push them.
+  Noise:
+  - unknown: Thermals and mesons no longer give slightly better night vision.
+  - unknown: NINJAS! (Too many things to list)
+  - unknown: Wizards are no longer trackable by the AI when in their den.
+  - unknown: Removed all old notes, except for the last one.
+  - unknown: Nuke team now cannot return with their shuttle until the bomb is armed
+      and counting down.
+  - unknown: Energy blades can no longer cut through r-walls, walls take 7 seconds
+      to cut through.
+  - unknown: Turrets are now destructible. Bash them with stuff when they pop out
+      or (more likely) die trying.
+  - unknown: Updated Ripley Mech sprite.
+  Rastaf0 and Farart:
+  - unknown: Ghosts should now always properly hear people.
+  - unknown: Monkeyized people (genetics or jungle fever disease) no longer lose their
+      genetic mutations and diseases.
+  - unknown: People who get bitten by monkeys get jungle fever.
+  - unknown: Most chemicals should now heal and harm humans properly.
+  - unknown: Many new (and updated) recipes for the microwave including Pizza, Meatball
+      Soup, Hot Chili and many more.
+  - unknown: Items should no longer spawn under vendomats and microwaves.
+  - unknown: Runes are now drawn under doors and tables.
+  - unknown: Penlights fit in medical belts.
+  - unknown: People will scream if they get cremated while still alive.
+  - unknown: Diseases should now properly make you loose health.
+  - unknown: Monkeys wearing masks now get acid protection too.
+  - unknown: You should probably turn off your stun baton before washing it.
+  - unknown: latex loves + short piece of wire + some air from tank = balloon!
+  - unknown: Kitchen was expanded, also a new look for the kitchen sink.
+  - unknown: New dishware vending machine - dispenses knives, forks, trays and drinking
+      glasses.
+  - unknown: Water cooler was added to kitchen.
+  - unknown: New uniform - Waiter Outfit. Chef can give it to his assistant.
+  Urist_McDorf:
+  - unknown: You can now light other people's cigarettes by targeting their mouth
+      with a lighter.
+  Veyveyr:
+  - unknown: New tool sprites.
+  - unknown: New sprites for smooth-lattice.

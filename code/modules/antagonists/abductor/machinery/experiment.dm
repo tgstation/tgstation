@@ -15,19 +15,24 @@
 	var/message_cooldown = 0
 	var/breakout_time = 450
 
+/obj/machinery/abductor/experiment/Destroy()
+	if(console)
+		console.experiment = null
+		console = null
+	return ..()
+
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	var/mob/living/L = user
-	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(isabductor(target))
 		return
 	close_machine(target)
 
-/obj/machinery/abductor/experiment/open_machine()
+/obj/machinery/abductor/experiment/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/abductor/experiment/close_machine(mob/target)
+/obj/machinery/abductor/experiment/close_machine(mob/target, density_to_set = TRUE)
 	for(var/A in loc)
 		if(isabductor(A))
 			return
@@ -39,19 +44,19 @@
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 /obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a metallic creaking from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
+		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
 /obj/machinery/abductor/experiment/ui_status(mob/user)
@@ -100,17 +105,17 @@
 			var/mob/living/mob_occupant = occupant
 			if(mob_occupant.stat == DEAD)
 				return
-			flash = experiment(occupant, params["experiment_type"], usr)
+			flash = experiment(mob_occupant, params["experiment_type"], usr)
 			return TRUE
 
 /**
-  * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
-  *
-  * Arguments:
-  * * occupant The mob inside the machine
-  * * type The type of experiment to be performed
-  * * user The mob starting the experiment
-  */
+ * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
+ *
+ * Arguments:
+ * * occupant The mob inside the machine
+ * * type The type of experiment to be performed
+ * * user The mob starting the experiment
+ */
 /obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
@@ -127,7 +132,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/heart/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in H.organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
@@ -136,19 +141,19 @@
 		LAZYADD(history, H)
 		LAZYADD(abductee_minds, H.mind)
 		say("Processing specimen...")
-		sleep(5)
+		sleep(0.5 SECONDS)
 		switch(text2num(type))
 			if(1)
-				to_chat(H, "<span class='warning'>You feel violated.</span>")
+				to_chat(H, span_warning("You feel violated."))
 			if(2)
-				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
+				to_chat(H, span_warning("You feel yourself being sliced apart and put back together."))
 			if(3)
-				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
-		sleep(5)
+				to_chat(H, span_warning("You feel intensely watched."))
+		sleep(0.5 SECONDS)
 		user_abductor.team.abductees += H.mind
 		H.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
+		for(var/obj/item/organ/internal/heart/gland/G in H.organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -168,11 +173,11 @@
 		return "Specimen braindead - disposed."
 
 /**
-  * send_back: Sends a mob back to a selected teleport location if safe
-  *
-  * Arguments:
-  * * H The human mob to be sent back
-  */
+ * send_back: Sends a mob back to a selected teleport location if safe
+ *
+ * Arguments:
+ * * H The human mob to be sent back
+ */
 /obj/machinery/abductor/experiment/proc/send_back(mob/living/carbon/human/H)
 	H.Sleeping(160)
 	H.uncuff()
@@ -184,7 +189,5 @@
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()
-	if(state_open)
-		icon_state = "experiment-open"
-	else
-		icon_state = "experiment"
+	icon_state = "experiment[state_open ? "-open" : null]"
+	return ..()

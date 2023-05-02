@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -11,6 +11,11 @@ SUBSYSTEM_DEF(chat)
 	init_order = INIT_ORDER_CHAT
 
 	var/list/payload_by_client = list()
+
+/datum/controller/subsystem/chat/Initialize()
+	// Just used by chat system to know that initialization is nearly finished.
+	// The to_chat checks could probably check the runlevel instead, but would require testing.
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/chat/fire()
 	for(var/key in payload_by_client)

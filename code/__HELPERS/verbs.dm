@@ -1,11 +1,11 @@
 /**
-  * handles adding verbs and updating the stat panel browser
-  *
-  * pass the verb type path to this instead of adding it directly to verbs so the statpanel can update
-  * Arguments:
-  * * target - Who the verb is being added to, client or mob typepath
-  * * verb - typepath to a verb, or a list of verbs, supports lists of lists
-  */
+ * handles adding verbs and updating the stat panel browser
+ *
+ * pass the verb type path to this instead of adding it directly to verbs so the statpanel can update
+ * Arguments:
+ * * target - Who the verb is being added to, client or mob typepath
+ * * verb - typepath to a verb, or a list of verbs, supports lists of lists
+ */
 /proc/add_verb(client/target, verb_or_list_to_add)
 	if(!target)
 		CRASH("add_verb called without a target")
@@ -43,18 +43,19 @@
 	for(var/thing in verbs_list)
 		var/procpath/verb_to_add = thing
 		output_list[++output_list.len] = list(verb_to_add.category, verb_to_add.name)
-	output_list = url_encode(json_encode(output_list))
 
-	target << output("[output_list];", "statbrowser:add_verb_list")
+	target.stat_panel.send_message("add_verb_list", output_list)
+
+	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_ADDED, verbs_list)
 
 /**
-  * handles removing verb and sending it to browser to update, use this for removing verbs
-  *
-  * pass the verb type path to this instead of removing it from verbs so the statpanel can update
-  * Arguments:
-  * * target - Who the verb is being removed from, client or mob typepath
-  * * verb - typepath to a verb, or a list of verbs, supports lists of lists
-  */
+ * handles removing verb and sending it to browser to update, use this for removing verbs
+ *
+ * pass the verb type path to this instead of removing it from verbs so the statpanel can update
+ * Arguments:
+ * * target - Who the verb is being removed from, client or mob typepath
+ * * verb - typepath to a verb, or a list of verbs, supports lists of lists
+ */
 /proc/remove_verb(client/target, verb_or_list_to_remove)
 	if(IsAdminAdvancedProcCall())
 		return
@@ -91,6 +92,7 @@
 	for(var/thing in verbs_list)
 		var/procpath/verb_to_remove = thing
 		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
-	output_list = url_encode(json_encode(output_list))
 
-	target << output("[output_list];", "statbrowser:remove_verb_list")
+	target.stat_panel.send_message("remove_verb_list", output_list)
+
+	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_REMOVED, verbs_list)

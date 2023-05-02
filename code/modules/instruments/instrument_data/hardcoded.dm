@@ -5,7 +5,7 @@
 	abstract_type = /datum/instrument/hardcoded
 	category = "Non-Synthesized"
 	instrument_flags = INSTRUMENT_LEGACY
-	volume_multiplier = 1		//not as loud as synth'd
+	volume_multiplier = 1 //not as loud as synth'd
 
 /datum/instrument/hardcoded/accordion
 	name = "Accordion"
@@ -23,7 +23,7 @@
 	name = "Electric Guitar"
 	id = "eguitar"
 	legacy_instrument_ext = "ogg"
-	legacy_instrument_path = "eguitar"
+	legacy_instrument_path = "electric_guitar"
 
 /datum/instrument/hardcoded/glockenspiel
 	name = "Glockenspiel"

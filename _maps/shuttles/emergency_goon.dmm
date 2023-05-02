@@ -3,18 +3,16 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -36,17 +34,30 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	name = "NES Port";
-	width = 19
+	name = "NES Port"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"l" = (
-/obj/machinery/vending/wallmed,
-/turf/closed/wall/mineral/titanium,
+"i" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/south{
+	use_power = 0
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "m" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
@@ -56,16 +67,16 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "p" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "r" = (
@@ -84,14 +95,12 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "v" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "w" = (
@@ -103,9 +112,7 @@
 "y" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "A" = (
@@ -115,12 +122,8 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "B" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/radio,
 /turf/open/floor/mineral/titanium/yellow,
@@ -129,14 +132,14 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "E" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Cockpit";
-	req_access_txt = "19"
+	name = "Emergency Shuttle Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "F" = (
@@ -146,96 +149,90 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "H" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "I" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "J" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "K" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Brig";
-	req_access_txt = "2"
+	name = "Emergency Shuttle Brig"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "L" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/structure/window/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Q" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "S" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "T" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "V" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "W" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "X" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Y" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Z" = (
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -279,15 +276,15 @@ Y
 "}
 (4,1,1) = {"
 d
-l
-n
+d
+Z
 n
 R
 d
 T
 J
-H
-l
+j
+d
 d
 "}
 (5,1,1) = {"
@@ -296,7 +293,7 @@ d
 d
 w
 f
-l
+d
 f
 K
 d
@@ -309,7 +306,7 @@ d
 s
 r
 s
-s
+i
 s
 r
 s

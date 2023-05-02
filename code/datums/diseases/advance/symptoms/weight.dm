@@ -1,25 +1,14 @@
-/*
-//////////////////////////////////////
-
-Weight Loss
-
-	Very Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Reduced Transmittable.
-	High level.
-
-Bonus
-	Decreases the weight of the mob,
-	forcing it to be skinny.
-
-//////////////////////////////////////
+/*Weight Loss
+ * Reduces stealth
+ * Increases resistance
+ * Reduces stage speed
+ * Reduces transmissibility
+ * Bonus: Drains nutrition from the host
 */
-
 /datum/symptom/weight_loss
-
 	name = "Weight Loss"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
+	illness = "Placid Reflux"
 	stealth = -2
 	resistance = 2
 	stage_speed = -2
@@ -34,20 +23,22 @@ Bonus
 	)
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4) //warn less often
+	if(A.totalStealth() >= 4) //warn less often
 		base_message_chance = 25
 
 /datum/symptom/weight_loss/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
+				to_chat(M, span_warning("[pick("You feel hungry.", "You crave for food.")]"))
 		else
-			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
-			M.overeatduration = max(M.overeatduration - 100, 0)
+			to_chat(M, span_warning("<i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i>"))
+			M.overeatduration = max(M.overeatduration - 200 SECONDS, 0)
 			M.adjust_nutrition(-100)

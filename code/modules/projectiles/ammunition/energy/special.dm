@@ -58,24 +58,19 @@
 	select_name = "snare"
 	harmful = FALSE
 
-/obj/item/ammo_casing/energy/instakill
-	projectile_type = /obj/projectile/beam/instakill
-	e_cost = 0
-	select_name = "DESTROY"
-
-/obj/item/ammo_casing/energy/instakill/blue
-	projectile_type = /obj/projectile/beam/instakill/blue
-
-/obj/item/ammo_casing/energy/instakill/red
-	projectile_type = /obj/projectile/beam/instakill/red
-
-/obj/item/ammo_casing/energy/tesla_revolver
-	fire_sound = 'sound/magic/lightningbolt.ogg'
-	e_cost = 200
-	select_name = "stun"
-	projectile_type = /obj/projectile/energy/tesla/revolver
+/obj/item/ammo_casing/energy/tesla_cannon
+	fire_sound = 'sound/magic/lightningshock.ogg'
+	e_cost = 30
+	select_name = "shock"
+	projectile_type = /obj/projectile/energy/tesla_cannon
 
 /obj/item/ammo_casing/energy/shrink
 	projectile_type = /obj/projectile/beam/shrink
 	select_name = "shrink ray"
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/marksman
+	projectile_type = /obj/projectile/bullet/marksman
+	select_name = "marksman nanoshot"
+	e_cost = 0
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'

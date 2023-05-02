@@ -7,20 +7,20 @@
 import { Table } from './Table';
 import { pureComponentHooks } from 'common/react';
 
-export const Grid = props => {
+/** @deprecated */
+export const Grid = (props) => {
   const { children, ...rest } = props;
   return (
     <Table {...rest}>
-      <Table.Row>
-        {children}
-      </Table.Row>
+      <Table.Row>{children}</Table.Row>
     </Table>
   );
 };
 
 Grid.defaultHooks = pureComponentHooks;
 
-export const GridColumn = props => {
+/** @deprecated */
+export const GridColumn = (props) => {
   const { size = 1, style, ...rest } = props;
   return (
     <Table.Cell
@@ -28,7 +28,8 @@ export const GridColumn = props => {
         width: size + '%',
         ...style,
       }}
-      {...rest} />
+      {...rest}
+    />
   );
 };
 

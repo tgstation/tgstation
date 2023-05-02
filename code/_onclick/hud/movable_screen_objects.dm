@@ -1,65 +1,58 @@
 
 //////////////////////////
 //Movable Screen Objects//
-//   By RemieRichards	//
+//   By RemieRichards //
 //////////////////////////
 
 
 //Movable Screen Object
 //Not tied to the grid, places it's center where the cursor is
 
-/obj/screen/movable
+/atom/movable/screen/movable
+	mouse_drag_pointer = 'icons/effects/mouse_pointers/screen_drag.dmi'
 	var/snap2grid = FALSE
-	var/moved = FALSE
-	var/locked = FALSE
 	var/x_off = -16
 	var/y_off = -16
 
 //Snap Screen Object
 //Tied to the grid, snaps to the nearest turf
 
-/obj/screen/movable/snap
+/atom/movable/screen/movable/snap
 	snap2grid = TRUE
 
-
-/obj/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
-	if(locked) //no! I am locked! begone!
+/atom/movable/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
+	var/position = mouse_params_to_position(params)
+	if(!position)
 		return
-	var/list/PM = params2list(params)
+
+	screen_loc = position
+
+/// Takes mouse parmas as input, returns a string representing the appropriate mouse position
+/atom/movable/screen/movable/proc/mouse_params_to_position(params)
+	var/list/modifiers = params2list(params)
 
 	//No screen-loc information? abort.
-	if(!PM || !PM["screen-loc"])
+	if(!LAZYACCESS(modifiers, SCREEN_LOC))
 		return
-
-	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
-
-	//Split X+Pixel_X up into list(X, Pixel_X)
-	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-
-	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
-	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-
+	var/client/our_client = usr.client
+	var/list/offset	= screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC))
 	if(snap2grid) //Discard Pixel Values
-		screen_loc = "[screen_loc_X[1]],[screen_loc_Y[1]]"
-
+		offset[1] = FLOOR(offset[1], world.icon_size) // drops any pixel offset
+		offset[2] = FLOOR(offset[2], world.icon_size) // drops any pixel offset
 	else //Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
-		var/pix_X = text2num(screen_loc_X[2]) + x_off
-		var/pix_Y = text2num(screen_loc_Y[2]) + y_off
-		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
-
-	moved = screen_loc
-
+		offset[1] += x_off
+		offset[2] += y_off
+	return offset_to_screen_loc(offset[1], offset[2], our_client?.view)
 
 //Debug procs
 /client/proc/test_movable_UI()
 	set category = "Debug"
 	set name = "Spawn Movable UI Object"
 
-	var/obj/screen/movable/M = new()
+	var/atom/movable/screen/movable/M = new()
 	M.name = "Movable UI Object"
 	M.icon_state = "block"
-	M.maptext = "Movable"
+	M.maptext = MAPTEXT("Movable")
 	M.maptext_width = 64
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Movable UI Object") as text|null
@@ -75,10 +68,10 @@
 	set category = "Debug"
 	set name = "Spawn Snap UI Object"
 
-	var/obj/screen/movable/snap/S = new()
+	var/atom/movable/screen/movable/snap/S = new()
 	S.name = "Snap UI Object"
 	S.icon_state = "block"
-	S.maptext = "Snap"
+	S.maptext = MAPTEXT("Snap")
 	S.maptext_width = 64
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null

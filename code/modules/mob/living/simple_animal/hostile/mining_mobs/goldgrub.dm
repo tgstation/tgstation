@@ -2,12 +2,14 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "Goldgrub"
-	icon_living = "Goldgrub"
-	icon_aggro = "Goldgrub_alert"
-	icon_dead = "Goldgrub_dead"
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "goldgrub"
+	icon_living = "goldgrub"
+	icon_aggro = "goldgrub_alert"
+	icon_dead = "goldgrub_dead"
 	icon_gib = "syndicate_gib"
+	pixel_x = -12
+	base_pixel_x = -12
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	vision_range = 2
 	aggro_vision_range = 9
@@ -22,10 +24,10 @@
 	attack_verb_continuous = "barrels into"
 	attack_verb_simple = "barrel into"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = INTENT_HELP
+	combat_mode = FALSE
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
-	deathmessage = "stops moving as green liquid oozes from the carcass!"
+	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1
@@ -38,7 +40,7 @@
 	var/datum/action/innate/goldgrub/burrow/burrow
 	var/is_burrowed = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize(mapload)
 	. = ..()
 	var/i = rand(1,3)
 	while(i)
@@ -51,6 +53,7 @@
 
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"
@@ -66,66 +69,43 @@
 	name = "Burrow"
 	desc = "Burrow under soft ground, evading predators and increasing your speed."
 
-/obj/effect/dummy/phased_mob/goldgrub
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/canmove = TRUE
-
-/obj/effect/dummy/phased_mob/goldgrub/relaymove(mob/living/user, direction)
-	forceMove(get_step(src,direction))
-
-/obj/effect/dummy/phased_mob/goldgrub/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/goldgrub/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/goldgrub/singularity_act()
-	return
-
 /datum/action/innate/goldgrub/burrow/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/goldgrub/G = owner
-	var/obj/effect/dummy/phased_mob/goldgrub/holder = null
+	var/obj/effect/dummy/phased_mob/holder = null
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/floor/plating/asteroid) || !do_after(G, 30, target = T))
-		to_chat(G, "<span class='warning'>You can only burrow in and out of mining turfs and must stay still!</span>")
+	if (!isasteroidturf(T) || !do_after(G, 30, target = T))
+		to_chat(G, span_warning("You can only burrow in and out of mining turfs and must stay still!"))
 		return
 	if (get_dist(G, T) != 0)
-		to_chat(G, "<span class='warning'>Action cancelled, as you moved while reappearing.</span>")
+		to_chat(G, span_warning("Action cancelled, as you moved while reappearing."))
 		return
 	if(G.is_burrowed)
 		holder = G.loc
-		G.forceMove(T)
-		QDEL_NULL(holder)
+		holder.eject_jaunter()
+		holder = null
 		G.is_burrowed = FALSE
-		G.visible_message("<span class='danger'>[G] emerges from the ground!</span>")
+		G.visible_message(span_danger("[G] emerges from the ground!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	else
-		G.visible_message("<span class='danger'>[G] buries into the ground, vanishing from sight!</span>")
+		G.visible_message(span_danger("[G] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob/goldgrub(T)
-		G.forceMove(holder)
+		holder = new /obj/effect/dummy/phased_mob(T, G)
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
-	target = new_target
+	add_target(new_target)
 	if(target != null)
 		if(istype(target, /obj/item/stack/ore))
-			visible_message("<span class='notice'>The [name] looks at [target.name] with hungry eyes.</span>")
+			visible_message(span_notice("The [name] looks at [target.name] with hungry eyes."))
 		else if(isliving(target))
 			Aggro()
-			visible_message("<span class='danger'>The [name] tries to flee from [target.name]!</span>")
+			visible_message(span_danger("The [name] tries to flee from [target.name]!"))
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
+				addtimer(CALLBACK(src, PROC_REF(Burrow)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/stack/ore))
@@ -144,19 +124,22 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/barf_contents()
-	visible_message("<span class='danger'>[src] spits out its consumed ores!</span>")
+	visible_message(span_danger("[src] spits out its consumed ores!"))
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(loc)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [name] buries into the ground, vanishing from sight!</span>")
+		visible_message(span_danger("The [name] buries into the ground, vanishing from sight!"))
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message("<span class='danger'>The [P.name] is repelled by [name]'s girth!</span>")
-	return BULLET_ACT_BLOCK
+	if(stat == DEAD)
+		return BULLET_ACT_FORCE_PIERCE
+	else
+		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
+		return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

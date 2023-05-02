@@ -1,0 +1,563 @@
+2019-01-01:
+  4dplanner:
+  - bugfix: squashed plants react on the turf they are squashed
+  coiax:
+  - rscdel: Removes bomb notification sound for observers.
+2019-01-02:
+  4dplanner:
+  - bugfix: separated chemicals now works
+  Denton:
+  - tweak: Updated Runtimestation to make chemistry and revival testing quicker.
+  FloranOtten:
+  - imageadd: added broken prototype canister icon
+  Floyd / Qustinnus:
+  - tweak: You now have to be naked to get the nice shower moodlet, if you shower
+      with clothes you get a bad moodie
+  - rscadd: Hygiene, you slowly become dirty over time, the more covered in blood
+      you are the faster you will lose hygiene. When you are too dirty you will have
+      a stink overlay. (Hygiene doesn't affect mood currently) It also spawns miasma
+      slowly if you smell like shit.
+  - rscadd: adds NEET and neat traits. NEET's get 20 bucks social welfare extra and
+      like being unhygienic, while neat people dislike being unhygienic and like being
+      hygienic
+  Floyd / Qustinnus for code, MrDoomBringer for Sprites:
+  - rscadd: Durathread jumpsuit, beret, beanie and bandana
+  - imageadd: new sprites for all durathread objects
+  - tweak: it now takes 4 strands to make one piece of durathread cloth
+  Robustin, Subject217:
+  - balance: The NukeOp Shuttle hull has been dramatically hardened. The walls are
+      now "R-Walls" with far greater explosion resistance.
+  - balance: The NukeOp Shuttle guns have been significantly buffed. They now rapidly
+      fire a new type of penetrator round, at a greater range, and have far greater
+      explosion resistance.
+  - balance: The nuclear device on the NukeOp Shuttle is now in an anchored state
+      by default, the Nuke can only be unanchored by inserting the disk and entering
+      the proper code.
+  - balance: Non-Syndicate cyborgs are now unable to access the NukeOp Shuttle Console.
+  - bugfix: You can now unanchor Nukes even when the floor under them has been destroyed
+  Steelpoint:
+  - rscadd: The Nanotrasen Corps of Engineers has begun a series of alterations to
+      NTSS Boxstation, the first stage of changes were aimed at altering the Brig
+      design, with minor improvements and alterations.
+  coiax:
+  - rscadd: Uplink pens now require two separate rotations to unlock. This also applies
+      to failsafe codes.
+  - bugfix: Heroine bugs no longer make people appear partially bald when wearing
+      them.
+  - rscadd: Ghosts can now see where an abductor camera console is looking.
+  - admin: Admins are only notified about the Lone Operative event weight every five
+      increments or decrements to the weight.
+  - tweak: After a Curse of Madness has ravaged the mind of the station, the lingering
+      magics also affect anyone arriving to the station late.
+2019-01-04:
+  0d0be32, PKPenguin321, Armhulen, epochayur:
+  - refactor: Changeling powers are now action buttons rather than verbs.
+  - imageadd: Thanks to epochayur for creating and compiling sprites for every single
+      changeling action button!
+  - imageadd: Thanks to Armhulen for the changeling button background sprite!
+  4dplanner:
+  - bugfix: Some items cover equipment while still letting you see it
+  - bugfix: in particular, this stops clothes burning off underneath drake armor
+  Dax Dupont:
+  - bugfix: Silicons and drones can use vending machines once again, but only if they
+      are not on station.
+  Denton:
+  - bugfix: The rift in reality area and Hilbert's hotel no longer throw "HEY LISTEN!"
+      AT warnings on server start.
+  SpaceManiac:
+  - bugfix: Corpses in space no longer add miasma to the gas readout of space.
+  asdfsdagasdghbdsagsdffgd:
+  - rscadd: chance to get either the soulless black and red space suit or the soul
+      red spacesuit
+  coiax:
+  - admin: New 'Podspawn' verb, which functions like 'Spawn', except any atoms movable
+      spawned will be dropped in via a no-damage, no-explosion Centcom supply pod.
+  - tweak: All the butcher cleavers that spawn during a blood contract will only last
+      two minutes, and then vanish.
+  - tweak: The level of mental trauma that a new clone goes through directly depends
+      on how much brain damage they have when they leave the cloning pod. An earlier
+      ejection will result in more trauma, a perfectly upgraded cloner with no brain
+      damage will still cause no trauma.
+  - bugfix: Humans with the Void mutation will no longer be able to enter the void
+      while inside something else (eg. cloning pod, cryotube) willingly or unwillingly.
+  - bugfix: The Spontaneous Brain Trauma event now has a range of possible severities,
+      and no longer runtimes.
+  duckay:
+  - rscadd: Added better names and descriptions for blueshirt
+  - rscadd: Added Blueshirt helmet and armor to the sectech for $600 each
+  hazamaitsuru:
+  - tweak: Various computers on BoxStation and Lavaland now face more logical directions.
+  - tweak: BoxStation's gravity generator SMES had its terminal moved out of the wall.
+  nicbn:
+  - rscadd: Microwave UI uses a radial menu now. You can see the contents by examining.
+  subject217:
+  - rscdel: Smuggler's satchels have been removed from the game.
+  - rscdel: The Miracle ruin has also been removed from the game, because it was disabled
+      and it used Smuggler's satchels.
+2019-01-06:
+  4dplanner:
+  - bugfix: Mixers now work on 0% and 100% settings as pumps
+  - bugfix: Mixers display rounded percentages, not floored. As such numbers should
+      always add up to 100%
+  Denton:
+  - tweak: Reduced the volume for some ghost notification sounds.
+  Noch:
+  - bugfix: the 2 hygiene quirks are now designated as mood_quirks, since they center
+      around mood
+  SpaceManiac:
+  - rscadd: Entertainment telescreens in the bar indicate when they will show something
+      interesting.
+  - tweak: Entertainment telescreens can be viewed from a distance.
+  WJohnston:
+  - rscadd: The Raven Cruiser escape shuttle has been completely redesigned. It now
+      comes with shields, turrets that shoot nuke ops instead of your dog, and a very
+      secure cockpit for important personnel. Its price has increased to 30,000, though!
+  coiax:
+  - code_imp: The Squeak subsystem has been renamed to Minor Mapping.
+2019-01-07:
+  4dplanner:
+  - bugfix: experimental cloner is compatible with ordinary cloning computer, but
+      deletes records after cloning.
+  Basilman:
+  - spellcheck: corrected Hippocrates bust description
+  Cyberboss:
+  - soundadd: Added a new sound for curse of madness
+  Denton:
+  - tweak: Wearing a carp costume or hardsuit with its hood equipped now prevents
+      users from being attacked by wild space carp.
+  - tweak: 'Reworked the kinetic speargun: Its projectiles now embed and cause more
+      damage.'
+  - rscadd: Added a Syndicate bundle that contains a speargun, a quiver with magspears,
+      a carp hardsuit as well as other carp accessories.
+  - tweak: Increased air alarm miasma thresholds to prevent warning spam.
+  - tweak: Air scrubbers do not filter miasma by default anymore ("Filtering" and
+      "Refill" modes).
+  - tweak: The Hyperfractal Gigashuttle's reflectors can no longer be deconstructed
+      or adjusted.
+  GranpaWalton:
+  - rscadd: Xenos now have a liver that processes toxins really well but will reject
+      a human host when it takes too much damage
+  - bugfix: Xenos will now process regents because of their new liver, they will still
+      not take toxin damage, stamina damage, or have liver failure
+  Tlaltecuhtli:
+  - rscadd: alt click to eject beakers from chem masters + chem dispensers + grinders
+      + chem heaters
+  - rscadd: hit chem master + chem dispenser + chem heaters with a beaker and if its
+      loaded with another it swaps em
+  YoYoBatty:
+  - rscadd: Added a ghost verb that lets you t-ray view underfloor objects
+  - admin: Checking plumbing verb checks every atmospheric component instead of just
+      pipes
+  - code_imp: Check plumbing verb is less snowflakey
+  coiax:
+  - bugfix: Monkey cubes now expand in a running shower!
+  - bugfix: Slimes now die in running showers.
+  - bugfix: Rolling a 6 with a die of fate now reduces your speed as intended.
+  - bugfix: Rolling an 8 with a die of fate will cause the explosion to be around
+      the roller, not the die.
+  - tweak: Die of fate effects now make loud visible messages so it's obvious what
+      has happened.
+  - admin: Dice can now be "totally rigged" with admin edits to unconditionally always
+      roll a certain value, rather than just some of the time. A new "cursed die of
+      fate" has been added to demonstrate this effect.
+  - admin: Added the "stealth" die of fate, both one use and unlimited. You know,
+      for badminry.
+  - rscadd: Curse of Madness can now be triggered by a wizard's Summon Events, at
+      the same chance as Summon Guns or Summon Magic.
+  - admin: When an admin triggers Curse of Madness manually, they can specify their
+      own dark truth to horrify the station with.
+  - rscadd: Smuggler's satchels have been re-added to the game. They no longer keep
+      their contents and transport it into future rounds, but instead contain some
+      random contraband when purchased. Observers will be able to see where smuggler's
+      satchels have been hidden. A handful of satchels will spawn on the station (under
+      the floor, of course) in random locations each round.
+  - bugfix: Science areas now have small patches of glowing green goo occasionally,
+      as intended.
+  - tweak: Glowing goo now glows a lot more noticeably in the dark, will always contain
+      either radium or uranium.
+  - code_imp: Improved the code for ensuring that security members enjoy donuts and
+      security-themed alcoholic drinks.
+  - tweak: Metastation Robotics now has a cautery.
+  kevinz000:
+  - rscadd: A new SDQL2 panel has been added to admin tabs, for tracking, VVing, and
+      halting SDQL2 queries.
+  - rscadd: SDQL2 documentation is now available in SDQL_2.dm
+  - rscadd: SDQL2 now has MAP added. MAP will cause the query to execute on whatever
+      is specified in MAP, whether it's a variable or a procedure call (which will
+      grab the return results), etc etc.
+  - rscadd: SDQL2 now has a superuser mode, for uses outside of admin button pressing.
+      This causes it to operate without admin protection wrapping.
+  - rscadd: SDQL2 now supports options, including ignoring nulls in select or forcing
+      it to operate in high priority mode, which lets it use 95% of the tick instead
+      of obeying the Master Controller's tick limit. USE WITH CAUTION. Also includes
+      a mode for blocking proccalls
+  - rscadd: SDQL2 now supports TRUE/FALSE.
+  - rscadd: To use options, append OPTIONS to the query. Available are "PRIORITY"
+      = HIGH/NORMAL, "SELECT" = FORCE_NULLS/DISABLE or 0/FALSE, "PROCCALL" = ASYNC/BLOCKING.
+  mrhugo13:
+  - rscadd: The Syndicate has decided to equip their Syndicate leaders operative (Aswell
+      as their clown counterparts) with the new Combat Glove Plus! The new Combat
+      Glove Plus does everything the old boring Combat Gloves does but with the added
+      extra of learning Krav Maga upon wearing them, any other Syndicate operative
+      who wants to get in on the action will have to pay 5tc.
+  subject217:
+  - tweak: Plastitanium walls are no longer evil.
+  - balance: Plasmamen now run at the same speed as normal humans.
+  tralezab:
+  - rscadd: Added a new antagonist, the Creep!
+  - rscadd: Chosen from a random event, the Creep will become obsessed with one person,
+      feeling amazing around them and terrible when they aren't. They will have objectives
+      to steal heirlooms, take pictures, hug, and kill coworkers. They also have to
+      kill the obsession but some objectives can only be completed while the obsession
+      is alive, requiring you to protect the obsession!
+2019-01-09:
+  Arachnidnexus/actioninja:
+  - imageadd: New shoe object sprites
+  Denton:
+  - bugfix: 'Donutstation: Fixed emergency maintenance access not applying to some
+      airlocks. Fixed broken access requirements in the outer medical/science maintenance
+      airlock.'
+  - tweak: 'Donutstation: The kitchen coldroom is now actually cold. Or a big walk-in
+      oven, if you mess with the freezer settings.'
+  - tweak: 'Donutstation: Added more department and escape pod signs.'
+  - tweak: 'Donutstation: Added a departmental exofab to Atmospherics.'
+  - bugfix: 'Deltastation: Engineers can now open and close the supermatter engine
+      radiation shutters.'
+  Frosty Fridge:
+  - rscadd: Augmented employees are now licensed to perform advanced maintenance on
+      their own augmented body parts.
+  - code_imp: Added a flag to Surgery subclasses to allow or disallow self surgery
+  - code_imp: Made the lying_required var of surgeries apply to all surgery steps,
+      not just initiation
+  Ghom:
+  - code_imp: minor clean up on hydroponics reagent containers.
+  Recurracy:
+  - tweak: Hypodermic prickles is triggered when someone slips over a plant with the
+      Slippery Skin trait
+  - tweak: Liquid contents is triggered when someone slips over a plant with the Slippery
+      Skin trait
+  coiax:
+  - rscadd: Podpeople have the species trait of always being clean, so do not need
+      to worry about regular showering. Because they're plants.
+  hazamaitsuru:
+  - tweak: Light fixture power cells can now be removed instead of swapped
+2019-01-11:
+  Denton:
+  - tweak: Restricted the throw range of magspears to 0 tiles.
+  Floyd / Qustinnus:
+  - soundadd: involuntary screaming for when you get hurt.
+  - code_imp: reworks emote sound handling to not use fucking s u b t y p i n g
+  GranpaWalton:
+  - bugfix: The cargo techfab has been moved to the cargo office on box station so
+      miners can access it
+  Joe Berry:
+  - rscadd: Mass fire attack, sends fire out from the ash drake in all directions
+  - rscadd: Adds an enraged attack for ash drake, heals him as well as making him
+      glow and go faster, spawning massive amounts of fire in all directions
+  - rscdel: Removes the old triple swoop with lava pools attack
+  - tweak: Lava pools can now spawn with the normal fire breath attack sometimes
+  - tweak: Lava pools now have changed delays for lesser amounts so they don't all
+      just place around one area
+  - tweak: 'Increases default swoop delay for #41178'
+  - balance: Teleporting out of the lava arena now has some actual consequences by
+      enraging the ash drake
+  - bugfix: Makes lava arena a bit less laggy by not recalculating range_turfs every
+      time
+  - bugfix: 'Fixes #41887 though this will not change the turfs to basalt temporarily
+      to prevent moving through indestructible walls'
+  - bugfix: Fire lines would not spawn if their range would place their final turf
+      location outside of the map
+  - bugfix: The arena attack will no longer destroy indestructible open turfs
+  Kierany9:
+  - imageadd: Added a new sprite for Telekinetic Field
+  MMMiracles:
+  - tweak: Donutstation's dorm showers has received an upgrade to be more in line
+      with updated hygiene standards.
+  - tweak: The experimentor room has been slightly compressed to deal with this upgrade.
+  MrDoomBringer:
+  - bugfix: People in supplypods in closets/mechs/etc will no longer get yeeted into
+      nullspace
+  WJohnston:
+  - bugfix: Fixes warning line corners being all wonky when shuttles rotate.
+  coiax:
+  - rscadd: Wearing a jumpsuit that's been washed in a washing machine will give you
+      a positive moodlet.
+  - tweak: Robust Gold cigarettes now taste faintly of expensive metal.
+  - tweak: Uplift Smooth's menthol effect now actually prevents you from coughing.
+      Uplift Smooth now taste of "smoke and mint", rather than "mint and a hint of
+      smoke".
+  - bugfix: Fixed slaughter demons not getting a speed boost when exiting a pool of
+      blood. Fixed slaughter demon giblets not being visible.
+  - tweak: Dead bodies do not slowly have their hygiene decrease, as dead bodies just
+      smell generally because of the decomposition.
+  - bugfix: Ghosts and camera mobs no longer feel if the shower is cold or too hot.
+  - tweak: The creep trauma/antagonist is no longer gained via brain damage.
+2019-01-13:
+  SuicidalPickles:
+  - bugfix: A few vehicles; secway, scooters/skateboards, and ATVs have been changed
+      to the new movement delay speed.
+  Time-Green:
+  - bugfix: lizards will no longer always have firebreath
+  coiax:
+  - code_imp: Randomly coloured gloves and randomly coloured glowsticks now have slightly
+      different typepaths, but otherwise function the same.
+  - tweak: Bartenders now gain their ability to "booze slide" from their beer googles,
+      rather than from a granter book in their backpacks.
+  - rscadd: Players with the Spiritual quirk now spawn with a pack of candles and
+      a box of matches, for better communion with their chosen power, and get a mood
+      boost while near a holy person (generally the chaplain).
+  floyd / qustinnus:
+  - tweak: Hygiene now lowers slower when you are clean, and dirtiness rates for some
+      clothing items have been nerfed.
+  - tweak: some more clothes are okay to shower with now.
+  - tweak: only 20% as much miasma is produced by low hygiene
+  nicbn:
+  - bugfix: Vacant comissary disposals in BoxStation are no longer directly linked
+      to the recycler room outlet.
+2019-01-17:
+  BebeYoshi & Hexmaniacosanna:
+  - rscadd: A new drink called Blank Paper was added to the bar menu, it was made
+      by a mime and it represents a new start.
+  Dax Dupont:
+  - bugfix: The supermatter scalpel now isn't infinite usage.
+  - rscadd: Chaplains can now purify other bibles and turn them to their religion.
+      There's no place for other people's religion on this station.
+  Denton:
+  - tweak: 'Rearranged Uplink items: Bundles, random item and TC have been moved into
+      a new category called "Bundles and Telecrystals". Gloves of the North Star and
+      Box of Throwing Weapons have been moved to Conspicuous and Dangerous Weapons.
+      Combat Gloves Plus have been moved to Stealthy and Inconspicuous Weapons. Moved
+      all implants into the Implants category.'
+  - tweak: Scanner gates can now check for hygiene levels (dirty or clean) and nutrition
+      levels (starving or obese).
+  - bugfix: 'Pubbystation: Fixed various minor map bugs (two unconnected Medbay disposals
+      bins, engineering cameras without EMP protection, unpowered air injector outside
+      the tcommsat, unconnected AI sat vent).'
+  - bugfix: The cameras right outside of Donutstation's singularity containment have
+      been EMP-proofed and will no longer alert silicons 24/7.
+  Floyd / Qustinnus:
+  - rscadd: Bronze Golem echos his enemies away.
+  - rscadd: Bone golem has a bone to pick
+  - rscadd: Cardboard golem storms into the fray
+  - rscadd: Leather Golem gets a grip
+  - rscadd: Durathread golem weaves his magic
+  - tweak: buffs calcium healing for bone creatures a bit
+  - bugfix: Removes dupe component
+  GranpaWalton:
+  - balance: CO2 fusion power has been lowered from 3 to 1.25
+  - balance: nitryl fusion power has been raised from 15 to 16
+  - tweak: department belts can now hold their department holosigns, utility and jani
+      belts no longer hold every holosign
+  Menshin:
+  - tweak: tgui'ed P.A.C.M.A.N generators interface
+  - bugfix: fixed some bugs related to these generators
+  Mickyan:
+  - rscadd: Most objects can now be colored using a spray can
+  - spellcheck: Added visible message to spraying objects and windows
+  PKPenguin321:
+  - spellcheck: Made some grammar better with genetics consoles when they import and
+      export disks.
+  Tortellini Tony:
+  - rscadd: Cigarettes and lighters can now be extinguished.
+  - bugfix: E-cigs will continue to display their setting after being emagged.
+  Vile Beggar:
+  - rscadd: You can now create circuit floor tiles with the autolathe.
+  Zxaber:
+  - bugfix: Malfunctioning AIs can no longer abuse the confirmation popup to create
+      extra (unstoppable) doomsdays.
+  - tweak: Fixed vent placement in Delta's Robo
+  - tweak: Added a second welding helmet in Robo of Meta and the Mech Bay of Delta,
+      to match the two that Robotics gets on Box, Pubby, and Donut.
+  bandit:
+  - tweak: Clicking the health doll lets you examine yourself for injuries.
+  bgobandit:
+  - balance: Resisting out of bucklecuffs takes more/less time depending on the handcuffs
+      you used, i.e., fake handcuffs will not bucklecuff someone for ages.
+  - tweak: Some holidays have received new drone hats and station name prefixes.
+  carshalash:
+  - tweak: Reduced booze power of Mead, Red Mead, and Irish Cream.
+  - tweak: Increased booze power of Grappa.
+  coiax:
+  - bugfix: Anti-drop implants can no longer be used to drop objects that they were
+      not responsible for sticking to a person's hand.
+  - bugfix: Backfiring with a Barnyard spellbook will now play a spooky horse sound.
+  - refactor: Refactors the way that "NODROP" items work to a new system, there should
+      be no change in functionality.
+  - bugfix: Applying an item fortification scroll to a non-enchanted item no longer
+      has a chance of immediately deleting that item.
+  - tweak: Also, item fortification scrolls have more colourful messages.
+  - tweak: Contraband pills have been given a unified pill icon as well as new names
+      and descriptions. An admin spawn only bottle of floorpills has been added.
+  - bugfix: Smuggler's satchels can now be found with t-ray scanners, as intended.
+  - balance: Smuggler's satchels now cost 1 TC, down from 2 TC.
+  - admin: Admins have a button to remove the runed metal and cult dagger from cultists.
+  coiax, loser:
+  - bugfix: Taking mutadone while having the communication disorder brain trauma will
+      no longer spam your chat with messages.
+2019-01-18:
+  4dplanner:
+  - bugfix: hierophant gives its medal before exploding
+  - rscdel: removed the separated chemicals trait
+  Denton:
+  - bugfix: Thrown supermatter tongs now properly show a message.
+  - tweak: Improved various messages related to supermatter dusting.
+  coiax:
+  - tweak: Observers are able to see family heirloom messages when examining objects.
+  - bugfix: Objects and items can now be inserted into closets, like before.
+  - bugfix: Fixes a bug which prevented carbons from throwing items.
+  floyd / qustinnus:
+  - bugfix: fixes some hygiene runtimes
+  - tweak: hygiene sprite is a bit more transparent
+2019-01-24:
+  4dplanner:
+  - balance: legion cores no longer adminheal
+  - balance: legion cores now heal 25 brute, 25 burn
+  - balance: legion cores remove CC like stuns and body temperature changes on application
+  - balance: legion cores make you immune to damage slowdown for one minute
+  - balance: implanted legion cores are unaffected.
+  Dax Dupont:
+  - tweak: Vent clog events are more likely to happen.
+  Denton:
+  - bugfix: The Syndicate Bundle uplink item is now purchasable again.
+  Gousaid67:
+  - bugfix: The genetic sequence analyzer now will no longer be able to scan husked
+      corpses or species with TRAIT_RADIMMUNE, similar to its bigger brother the DNA
+      scanner.
+  - tweak: Cloning will no longer apply mutations to species with TRAIT_RADIMMUNE
+      like golems and plasmamens, positive or negative.
+  GranpaWalton:
+  - bugfix: Oxyloss icon no-longer shows up when someone has the self respiration
+      symptom
+  - tweak: The self respiration now makes you not contract diseases through the air
+      and not breathe in smoke
+  Jujumatic, port by Denton:
+  - rscadd: Ported wheelchairs from Hippiestation. They're craftable with 4 sheets
+      of metal and 6 rods. The less arms you have, the slower you move!
+  Kierany9:
+  - rscadd: Assimilation has received an update!
+  - rscdel: Mindshield Implants and other hivemind host identifying methods no longer
+      reveal their name.
+  - rscadd: Now, both parties will be able to sense the other's location for a short
+      period of time, similar to a pinpointer.
+  - balance: In the case of Network Invasion, the probing host still only gets information
+      on the vessel they just lost and not the opposing host.
+  - balance: As a hivemind host becomes stronger and starts going on the offensive,
+      they become easier to sense, and their own sensing ability is diminished.
+  - balance: In addition, using Mind Control renders you unable to sense others at
+      all.
+  Menshin:
+  - rscadd: Xeno queens now transfer overlays on size change (meaning it will now
+      display on fire, etc)
+  - bugfix: restored a missing Xeno queen icon
+  Nervere:
+  - rscadd: Added the scrungulartiy brain damage line.
+  PKPenguin321:
+  - rscadd: 'New genetics power: Insulated - You become shock immune, basically having
+      innate insulated gloves.'
+  - rscadd: 'New genetics power: Shock Touch - Electric punch! You get a wizard-like
+      touch spell that does burn damage, confuses, disarms, and jitters. Has a 10
+      second cooldown and can only be created by combining Insulated with Radioactive.'
+  - bugfix: Lings should be able to see some of their victim's last words when they
+      absorb them.
+  - rscadd: 'Hunt down your enemies by scent with a new power that has been added
+      to genetics: Transcendent Olfaction.'
+  - bugfix: Lings will copy the notes of people they absorb (including PDA codes,
+      antag objectives, and objective conspirators) properly.
+  SpaceManiac:
+  - bugfix: Mousetrap boxes now have their illustration again.
+  - bugfix: It is no longer possible for folding paper into an airplane to appear
+      to duplicate it.
+  Time-Green:
+  - rscadd: Adds glorious soviet Russia golem
+  - rscadd: Adds the cryokinesis and geladikinesis mutations
+  - bugfix: Snow walls no longer runtime everything
+  - rscadd: Nanotrassen has removed the reagent filter from gibbers due to budget
+      cuts. Make sure you are serving healthy human flesh
+  Tlaltecuhtli:
+  - rscadd: rcd disk that gives rcd computer frame and machine frame designs
+  Trilbyspaceclone:
+  - bugfix: Fixed power tool drill fitting in boots and wallets
+  Vile Beggar:
+  - tweak: Plasmamen have no need for regular showering anymore.
+  anconfuzedrock:
+  - tweak: compressed matter cartridges are now tiny.
+  - tweak: Aurora Caelus is 4x rarer
+  mrhugo13:
+  - bugfix: Skeleton golems now rattles and speaks in the same way that normal skeletons
+      do.
+  - rscadd: Adds a new bounty that has to do with trash.
+  'no':
+  - bugfix: Chilling Sepia extracts cannot be used infinitely and will be consumed
+      upon use.
+2019-01-26:
+  4dplanner:
+  - balance: Megafauna cannot teleport
+  - balance: perfluorodecalin no longer mutes
+  - balance: it also heals brute and burn 3x faster (a new rate of 0.25 of each a
+      second)
+  - balance: it also causes toxin buildup over time
+  Razharas:
+  - rscadd: Animation to cryo and sleepers opening/closing
+  - tweak: Changed a bit of internal handling of visuals of cryo, no more updating
+      icon each time anything is clicked in the ui
+  - imageadd: Sprite for the cryo and sleeper animations
+  YoYoBatty:
+  - tweak: Body part damage is now run through armor check in certain situations.
+  as334:
+  - rscadd: Tritium now needs to be an environment with a sizable thermal mass for
+      full efficiency combustion.
+  - rscadd: Advanced Gas reactions now produce research points.
+  - rscadd: A gas canister with Pluoxium, Noblium, Stimulum, Miasma or BZ inside now
+      produces points when sold via cargo.
+2019-01-28:
+  Gousaid67:
+  - bugfix: Spraycans are now able to spray walls again!
+2019-01-30:
+  4dplanner:
+  - bugfix: adamantine armour no longer screws up clothing protection
+  Kierany9:
+  - bugfix: The Psychic Link pinpointer now works. Oops!
+  ShizCalev:
+  - tweak: Cleanbots now clean up spilled table-salt and plant smudges.
+  Time-Green:
+  - bugfix: geladkinesis snow tiles no longer freeze the station
+  Zxaber:
+  - rscadd: Mechas now ignore strafe mode and turn if the user is holding Alt.
+  actioninja:
+  - rscadd: Added Smoker and Junkie quirks.
+2019-01-31:
+  4dplanner:
+  - bugfix: antimagic works again
+  - bugfix: fixes cloning
+  BuffEngineering:
+  - imageadd: Pneumatic cannons will now have a tank visible all of the time
+  BuffEngineering/MrDoomBringer:
+  - rscadd: Engineers may now weld with engineering pride using the new welding hardhats!
+  Gousaid67:
+  - bugfix: Alt-Clicking open the Escape Pods safes will no longer ignore the alert
+      level.
+  Hathkar:
+  - balance: Nicotine gives a small bonus to stun resistance instead of being equal
+      to adrenals or ephedrine.
+  Nervere & kevinz000:
+  - rscadd: You can now hold hands with another player by targeting their left or
+      right arm and pulling them.
+  Nichlas0010:
+  - bugfix: the Middle Mouse Button aimbot exploit should no longer be usable
+  Pubby:
+  - tweak: Drop "universal" from suppressors name
+  ShizCalev:
+  - bugfix: Fixed suit storage units not correctly clearing out the radiation of built-in
+      hardsuit helmets and jetpacks.
+  coiax:
+  - rscadd: When a person is cloned, any mental traumas are cloned as well.
+  - rscadd: Adds the Paraplegic quirk for -3 points. You start with unhealable leg
+      paralysis (persists through cloning), and have a wheelchair to move around the
+      station.
+  py01:
+  - bugfix: Twisted Construction no longer damages the caster if canceled or failed
+      to cast
+  - bugfix: Twisted Construction's tool-tip now correctly specifies the amount of
+      metal needed for a construct shell
+  - refactor: Blood rite and Twisted Construction code now uses defines instead of
+      magic numbers

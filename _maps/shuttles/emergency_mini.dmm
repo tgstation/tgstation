@@ -6,24 +6,24 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "c" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "d" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -41,27 +41,24 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "i" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "j" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "k" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "l" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = 28
+/obj/machinery/vending/wallmed/directional/east{
+	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -69,22 +66,20 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "n" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Cell";
-	req_access_txt = "2"
+	name = "Escape Shuttle Cell"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "p" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
@@ -102,15 +97,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "t" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "x" = (
@@ -123,24 +120,15 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"z" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed"
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "A" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "B" = (
@@ -149,17 +137,14 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	dwidth = 8;
-	height = 9;
-	name = "Mini emergency shuttle";
-	width = 21
+	name = "Mini emergency shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "D" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -168,22 +153,18 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "G" = (
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"H" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "I" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Escape Shuttle Cockpit";
-	req_access_txt = "19"
+	name = "Escape Shuttle Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "J" = (
@@ -199,10 +180,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "L" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 24
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "M" = (
@@ -231,7 +209,7 @@
 /area/shuttle/escape)
 "Q" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/item/extinguisher,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -247,7 +225,7 @@
 /area/shuttle/escape)
 "T" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -349,8 +327,8 @@ K
 K
 K
 f
-r
-H
+w
+b
 t
 f
 R
@@ -367,7 +345,7 @@ t
 x
 n
 n
-z
+b
 n
 n
 R

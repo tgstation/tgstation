@@ -1,0 +1,9 @@
+{
+	"pda": [
+		{
+			"type": "icon_state",
+			"icon_state": "pda-clown",
+			"blend_mode": "overlay"
+		}
+	]
+}

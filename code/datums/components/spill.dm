@@ -3,14 +3,15 @@
 
 /datum/component/spill
 	can_transfer = TRUE
-	var/preexisting_item_flags
+	var/preexisting_slot_flags
 
 	var/list/droptext
 	var/list/dropsound
+	var/drop_memory
 
 // droptext is an arglist for visible_message
 // dropsound is a list of potential sounds that gets picked from
-/datum/component/spill/Initialize(list/_droptext, list/_dropsound)
+/datum/component/spill/Initialize(list/_droptext, list/_dropsound, _drop_memory)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -20,30 +21,32 @@
 
 	if(_dropsound && !islist(_dropsound))
 		_dropsound = list(_dropsound)
+
 	dropsound = _dropsound
+	drop_memory = _drop_memory
 
 /datum/component/spill/PostTransfer()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/spill/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_react))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(drop_react))
 	var/obj/item/master = parent
-	preexisting_item_flags = master.item_flags
-	master.item_flags |= ITEM_SLOT_POCKETS
+	preexisting_slot_flags = master.slot_flags
+	master.slot_flags |= ITEM_SLOT_POCKETS
 
 /datum/component/spill/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	var/obj/item/master = parent
-	if(!(preexisting_item_flags & ITEM_SLOT_POCKETS))
-		master.item_flags &= ~ITEM_SLOT_POCKETS
+	if(!(preexisting_slot_flags & ITEM_SLOT_POCKETS))
+		master.slot_flags &= ~ITEM_SLOT_POCKETS
 
 /datum/component/spill/proc/equip_react(obj/item/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(slot == ITEM_SLOT_LPOCKET || slot == ITEM_SLOT_RPOCKET)
-		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/knockdown_react, TRUE)
+	if(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
+		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(knockdown_react), TRUE)
 	else
 		UnregisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
@@ -52,8 +55,11 @@
 
 	UnregisterSignal(dropper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
-/datum/component/spill/proc/knockdown_react(mob/living/fool)
+/datum/component/spill/proc/knockdown_react(mob/living/fool, amount)
 	SIGNAL_HANDLER
+
+	if(amount <= 0)
+		return
 
 	var/obj/item/master = parent
 	fool.dropItemToGround(master)
@@ -61,3 +67,5 @@
 		fool.visible_message(arglist(droptext))
 	if(dropsound)
 		playsound(master, pick(dropsound), 30)
+	if(drop_memory)
+		fool.add_mob_memory(drop_memory)

@@ -17,13 +17,9 @@
 /obj/structure/tank_dispenser/plasma
 	oxygentanks = 0
 
-/obj/structure/tank_dispenser/Initialize()
+/obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
-	for(var/i in 1 to oxygentanks)
-		new /obj/item/tank/internals/oxygen(src)
-	for(var/i in 1 to plasmatanks)
-		new /obj/item/tank/internals/plasma(src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/tank_dispenser/update_overlays()
 	. = ..()
@@ -38,7 +34,12 @@
 		if(5 to TANK_DISPENSER_CAPACITY)
 			. += "plasma-5"
 
-/obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
+/obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
 	var/full
 	if(istype(I, /obj/item/tank/internals/plasma))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
@@ -50,22 +51,19 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(I.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, I, time = 20)
-		return
-	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
+	else if(!user.combat_mode)
+		to_chat(user, span_notice("[I] does not fit into [src]."))
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
+		to_chat(user, span_notice("[src] can't hold any more of [I]."))
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	update_icon()
+	to_chat(user, span_notice("You put [I] in [src]."))
+	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)
 	return GLOB.physical_state
@@ -89,18 +87,20 @@
 		return
 	switch(action)
 		if("plasma")
-			var/obj/item/tank/internals/plasma/tank = locate() in src
-			if(tank && Adjacent(usr))
-				usr.put_in_hands(tank)
-				plasmatanks--
-			. = TRUE
+			if (plasmatanks == 0)
+				return TRUE
+
+			dispense(/obj/item/tank/internals/plasma, usr)
+			plasmatanks--
 		if("oxygen")
-			var/obj/item/tank/internals/oxygen/tank = locate() in src
-			if(tank && Adjacent(usr))
-				usr.put_in_hands(tank)
-				oxygentanks--
-			. = TRUE
-	update_icon()
+			if (oxygentanks == 0)
+				return TRUE
+
+			dispense(/obj/item/tank/internals/oxygen, usr)
+			oxygentanks--
+
+	update_appearance()
+	return TRUE
 
 
 /obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
@@ -108,7 +108,13 @@
 		for(var/X in src)
 			var/obj/item/I = X
 			I.forceMove(loc)
-		new /obj/item/stack/sheet/metal (loc, 2)
+		new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
+
+/obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
+	var/existing_tank = locate(tank_type) in src
+	if (isnull(existing_tank))
+		existing_tank = new tank_type
+	receiver.put_in_hands(existing_tank)
 
 #undef TANK_DISPENSER_CAPACITY

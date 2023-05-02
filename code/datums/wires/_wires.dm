@@ -6,7 +6,7 @@
 
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(istype(I, /obj/item/assembly))
+	if(isassembly(I))
 		var/obj/item/assembly/A = I
 		if(A.attachable)
 			return TRUE
@@ -51,7 +51,7 @@
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdel))
 	if(randomize)
 		randomize()
 	else
@@ -87,8 +87,9 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"grey",
 	"green",
+	"grey",
+	"lime",
 	"magenta",
 	"orange",
 	"pink",
@@ -97,7 +98,7 @@
 	"silver",
 	"violet",
 	"white",
-	"yellow"
+	"yellow",
 	)
 
 	var/list/my_possible_colors = possible_colors.Copy()
@@ -110,7 +111,7 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()
+	cut_wires.Cut()//a negative times a negative equals a positive
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -164,18 +165,18 @@
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire, user)
-	if(is_cut(wire))
+/datum/wires/proc/pulse(wire, user, force=FALSE)
+	if(!force && is_cut(wire))
 		return
 	on_pulse(wire, user)
 
-/datum/wires/proc/pulse_color(color, mob/living/user)
-	pulse(get_wire(color), user)
+/datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
+	pulse(get_wire(color), user, force)
 
 /datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
 		if(S == assemblies[color])
-			pulse_color(color)
+			pulse_color(color, force=TRUE)
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
@@ -183,13 +184,14 @@
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
+		S.on_attach() // Notify assembly that it is attached
 		return S
 
 /datum/wires/proc/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)
 	if(S && istype(S))
 		assemblies -= color
-		S.connected = null
+		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
 		S.forceMove(holder.drop_location())
 		return S
 
@@ -207,6 +209,9 @@
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	if((SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, holder) & COMPONENT_CANT_INTERACT_WIRES))
+		return FALSE
 	return TRUE
 
 /datum/wires/proc/get_status()
@@ -229,13 +234,13 @@
 			return
 
 /**
-  * Checks whether wire assignments should be revealed.
-  *
-  * Returns TRUE if the wires should be revealed, FALSE otherwise.
-  * Currently checks for admin ghost AI, abductor multitool and blueprints.
-  * Arguments:
-  * * user - The mob to check when deciding whether to reveal wires.
-  */
+ * Checks whether wire assignments should be revealed.
+ *
+ * Returns TRUE if the wires should be revealed, FALSE otherwise.
+ * Currently checks for admin ghost AI, abductor multitool and blueprints.
+ * Arguments:
+ * * user - The mob to check when deciding whether to reveal wires.
+ */
 /datum/wires/proc/can_reveal_wires(mob/user)
 	// Admin ghost can see a purpose of each wire.
 	if(isAdminGhostAI(user))
@@ -252,13 +257,13 @@
 	return FALSE
 
 /**
-  * Whether the given wire should always be revealed.
-  *
-  * Intended to be overridden. Allows for forcing a wire's assignmenmt to always be revealed
-  * in the hacking interface.
-  * Arguments:
-  * * color - Color string of the wire to check.
-  */
+ * Whether the given wire should always be revealed.
+ *
+ * Intended to be overridden. Allows for forcing a wire's assignmenmt to always be revealed
+ * in the hacking interface.
+ * Arguments:
+ * * color - Color string of the wire to check.
+ */
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
 
@@ -312,7 +317,7 @@
 				cut_color(target_wire)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
+				to_chat(L, span_warning("You need wirecutters!"))
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || isAdminGhostAI(usr))
@@ -321,7 +326,7 @@
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+				to_chat(L, span_warning("You need a multitool!"))
 		if("attach")
 			if(is_attached(target_wire))
 				I = detach_assembly(target_wire)
@@ -330,7 +335,7 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
-				if(istype(I, /obj/item/assembly))
+				if(isassembly(I))
 					var/obj/item/assembly/A = I
 					if(A.attachable)
 						if(!L.temporarilyRemoveItemFromInventory(A))
@@ -339,6 +344,6 @@
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
+						to_chat(L, span_warning("You need an attachable assembly!"))
 
 #undef MAXIMUM_EMP_WIRES

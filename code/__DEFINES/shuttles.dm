@@ -1,15 +1,15 @@
 //shuttle mode defines
-#define SHUTTLE_IDLE		"idle"
-#define SHUTTLE_IGNITING	"igniting"
-#define SHUTTLE_RECALL		"recalled"
-#define SHUTTLE_CALL		"called"
-#define SHUTTLE_DOCKED		"docked"
-#define SHUTTLE_STRANDED	"stranded"
-#define SHUTTLE_DISABLED	"disabled"
-#define SHUTTLE_ESCAPE		"escape"
-#define SHUTTLE_ENDGAME		"endgame: game over"
-#define SHUTTLE_RECHARGING		"recharging"
-#define SHUTTLE_PREARRIVAL		"landing"
+#define SHUTTLE_IDLE "idle"
+#define SHUTTLE_IGNITING "igniting"
+#define SHUTTLE_RECALL "recalled"
+#define SHUTTLE_CALL "called"
+#define SHUTTLE_DOCKED "docked"
+#define SHUTTLE_STRANDED "stranded"
+#define SHUTTLE_DISABLED "disabled"
+#define SHUTTLE_ESCAPE "escape"
+#define SHUTTLE_ENDGAME "endgame: game over"
+#define SHUTTLE_RECHARGING "recharging"
+#define SHUTTLE_PREARRIVAL "landing"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
@@ -29,8 +29,11 @@
 //Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
+/// This shuttle launched to head to end game (or has arrived there), it will not update further
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
+/// "Endgame transit" denotes shuttles which "fly into the sunset" when the round ends, such as the whiteship.
+/// These shuttles leave when the main emergency shuttle does but don't dock anywhere (to save space), so this counts as "escaped".
 #define ENDGAME_TRANSIT 3
 
 //positive value = cannot puchase
@@ -44,7 +47,7 @@
 #define TRANSIT_REQUEST 1
 #define TRANSIT_READY 2
 
-#define SHUTTLE_TRANSIT_BORDER 8
+#define SHUTTLE_TRANSIT_BORDER 16
 
 #define PARALLAX_LOOP_TIME 25
 #define HYPERSPACE_END_TIME 5
@@ -61,12 +64,12 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS				0
-#define DOCKING_BLOCKED				(1<<0)
-#define DOCKING_IMMOBILIZED			(1<<1)
-#define DOCKING_AREA_EMPTY			(1<<2)
-#define DOCKING_NULL_DESTINATION	(1<<3)
-#define DOCKING_NULL_SOURCE			(1<<4)
+#define DOCKING_SUCCESS 0
+#define DOCKING_BLOCKED (1<<0)
+#define DOCKING_IMMOBILIZED (1<<1)
+#define DOCKING_AREA_EMPTY (1<<2)
+#define DOCKING_NULL_DESTINATION (1<<3)
+#define DOCKING_NULL_SOURCE (1<<4)
 
 //Docking turf movements
 #define MOVE_TURF 1
@@ -74,9 +77,9 @@
 #define MOVE_CONTENTS 4
 
 //Rotation params
-#define ROTATE_DIR 		1
-#define ROTATE_SMOOTH 	2
-#define ROTATE_OFFSET	4
+#define ROTATE_DIR 1
+#define ROTATE_SMOOTH 2
+#define ROTATE_OFFSET 4
 
 #define SHUTTLE_DOCKER_LANDING_CLEAR 1
 #define SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT 2
@@ -89,4 +92,5 @@
 //Shuttle unlocks
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_MEDISIM "holodeck"
 #define SHUTTLE_UNLOCK_NARNAR "narnar"

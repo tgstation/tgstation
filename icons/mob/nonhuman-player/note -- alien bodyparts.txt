@@ -1,0 +1,1 @@
+To match the existing pattern of bodypart organization and allow for simpler code, alien bodyparts are stored in mob/species/alien/bodyparts, rather than this folder.

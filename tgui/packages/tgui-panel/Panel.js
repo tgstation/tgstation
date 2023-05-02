@@ -4,21 +4,20 @@
  * @license MIT
  */
 
-import { Button, Flex, Section } from 'tgui/components';
+import { Button, Section, Stack } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
+import { ReconnectButton } from './reconnect';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props, context) => {
   // IE8-10: Needs special treatment due to missing Flex support
   if (Byond.IS_LTE_IE10) {
-    return (
-      <HoboPanel />
-    );
+    return <HoboPanel />;
   }
   const audio = useAudio(context);
   const settings = useSettings(context);
@@ -27,76 +26,67 @@ export const Panel = (props, context) => {
     const { useDebug, KitchenSink } = require('tgui/debug');
     const debug = useDebug(context);
     if (debug.kitchenSink) {
-      return (
-        <KitchenSink panel />
-      );
+      return <KitchenSink panel />;
     }
   }
   return (
     <Pane theme={settings.theme}>
-      <Flex
-        direction="column"
-        height="100%">
-        <Flex.Item>
+      <Stack fill vertical>
+        <Stack.Item>
           <Section fitted>
-            <Flex mx={0.5} align="center">
-              <Flex.Item mx={0.5} grow={1} overflowX="auto">
+            <Stack mr={1} align="center">
+              <Stack.Item grow overflowX="auto">
                 <ChatTabs />
-              </Flex.Item>
-              <Flex.Item mx={0.5}>
+              </Stack.Item>
+              <Stack.Item>
                 <PingIndicator />
-              </Flex.Item>
-              <Flex.Item mx={0.5}>
+              </Stack.Item>
+              <Stack.Item>
                 <Button
                   color="grey"
                   selected={audio.visible}
                   icon="music"
                   tooltip="Music player"
-                  tooltipPosition="bottom-left"
-                  onClick={() => audio.toggle()} />
-              </Flex.Item>
-              <Flex.Item mx={0.5}>
+                  tooltipPosition="bottom-start"
+                  onClick={() => audio.toggle()}
+                />
+              </Stack.Item>
+              <Stack.Item>
                 <Button
                   icon={settings.visible ? 'times' : 'cog'}
                   selected={settings.visible}
-                  tooltip={settings.visible
-                    ? 'Close settings'
-                    : 'Open settings'}
-                  tooltipPosition="bottom-left"
-                  onClick={() => settings.toggle()} />
-              </Flex.Item>
-            </Flex>
+                  tooltip={
+                    settings.visible ? 'Close settings' : 'Open settings'
+                  }
+                  tooltipPosition="bottom-start"
+                  onClick={() => settings.toggle()}
+                />
+              </Stack.Item>
+            </Stack>
           </Section>
-        </Flex.Item>
+        </Stack.Item>
         {audio.visible && (
-          <Flex.Item mt={1}>
+          <Stack.Item>
             <Section>
               <NowPlayingWidget />
             </Section>
-          </Flex.Item>
+          </Stack.Item>
         )}
         {settings.visible && (
-          <Flex.Item mt={1}>
+          <Stack.Item>
             <SettingsPanel />
-          </Flex.Item>
+          </Stack.Item>
         )}
-        <Flex.Item mt={1} grow={1}>
+        <Stack.Item grow>
           <Section fill fitted position="relative">
             <Pane.Content scrollable>
               <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>
               {game.connectionLostAt && (
-                <Notifications.Item
-                  rightSlot={(
-                    <Button
-                      color="white"
-                      onClick={() => Byond.command('.reconnect')}>
-                      Reconnect
-                    </Button>
-                  )}>
-                  You are either AFK, experiencing lag or the connection
-                  has closed.
+                <Notifications.Item rightSlot={<ReconnectButton />}>
+                  You are either AFK, experiencing lag or the connection has
+                  closed.
                 </Notifications.Item>
               )}
               {game.roundRestartedAt && (
@@ -107,8 +97,8 @@ export const Panel = (props, context) => {
               )}
             </Notifications>
           </Section>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Pane>
   );
 };
@@ -129,11 +119,7 @@ const HoboPanel = (props, context) => {
           onClick={() => settings.toggle()}>
           Settings
         </Button>
-        {settings.visible && (
-          <Flex.Item mt={1}>
-            <SettingsPanel />
-          </Flex.Item>
-        ) || (
+        {(settings.visible && <SettingsPanel />) || (
           <ChatPanel lineHeight={settings.lineHeight} />
         )}
       </Pane.Content>

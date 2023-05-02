@@ -1,0 +1,16 @@
+#comment This replaces animal mask paths to the new simplified paths see (https://github.com/tgstation/tgstation/pull/66860)
+
+/obj/item/clothing/mask/animal/rat/cursed : /obj/item/clothing/mask/animal/small/rat/cursed
+/obj/item/clothing/mask/animal/rat/fox/cursed : /obj/item/clothing/mask/animal/small/fox/cursed
+/obj/item/clothing/mask/animal/rat/bee/cursed : /obj/item/clothing/mask/animal/small/bee/cursed
+/obj/item/clothing/mask/animal/rat/bear/cursed : /obj/item/clothing/mask/animal/small/bear/cursed
+/obj/item/clothing/mask/animal/rat/bat/cursed : /obj/item/clothing/mask/animal/small/bat/cursed
+/obj/item/clothing/mask/animal/rat/raven/cursed : /obj/item/clothing/mask/animal/small/raven/cursed
+/obj/item/clothing/mask/animal/rat/jackal/cursed : /obj/item/clothing/mask/animal/small/jackal/cursed
+/obj/item/clothing/mask/animal/rat : /obj/item/clothing/mask/animal/small/rat
+/obj/item/clothing/mask/animal/rat/fox : /obj/item/clothing/mask/animal/small/fox
+/obj/item/clothing/mask/animal/rat/bee : /obj/item/clothing/mask/animal/small/bee
+/obj/item/clothing/mask/animal/rat/bear : /obj/item/clothing/mask/animal/small/bear
+/obj/item/clothing/mask/animal/rat/bat : /obj/item/clothing/mask/animal/small/bat
+/obj/item/clothing/mask/animal/rat/raven : /obj/item/clothing/mask/animal/small/raven
+/obj/item/clothing/mask/animal/rat/jackal : /obj/item/clothing/mask/animal/small/jackal

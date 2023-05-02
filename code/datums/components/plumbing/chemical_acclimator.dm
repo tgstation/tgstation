@@ -3,7 +3,7 @@
 	supply_connects = EAST
 	var/obj/machinery/plumbing/acclimator/myacclimator
 
-/datum/component/plumbing/acclimator/Initialize(start=TRUE, _turn_connects=TRUE)
+/datum/component/plumbing/acclimator/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
 	. = ..()
 	if(!istype(parent, /obj/machinery/plumbing/acclimator))
 		return COMPONENT_INCOMPATIBLE

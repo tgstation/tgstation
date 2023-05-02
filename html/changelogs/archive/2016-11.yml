@@ -1,0 +1,471 @@
+2016-11-02:
+  Iamgoofball:
+  - rscadd: Added a new lobby menu sound.
+  Joan:
+  - rscdel: Brass windows and windoors no longer drop full sheets of brass when destroyed.
+  - rscadd: Instead, they'll drop gear bits, which can be proselytized for a small
+      amount of liquified alloy; 80% of the materials used to construct the window.
+  - tweak: Mending Motors have an increased range and heal for more.
+  - experiment: Mending Motors will no longer waste massive amounts of power on slightly
+      damaged objects; instead, they will heal a small amount, use a small amount
+      of power, and stop if the object is fully healed.
+  - wip: Mending Motors can now heal all clockwork objects, including pinion airlocks,
+      brass windows, and anything else you can think of.
+  - rscadd: Ocular Wardens will no longer attack targets that are handcuffed, buckled
+      to something AND lying, or in the process of being converted by Guvax.
+  - tweak: Also, they do very slightly more damage.
+  - rscdel: Hulks no longer one-shot most clockwork structures and will no longer
+      four-shot the Gateway to the Celestial Derelict.
+  - bugfix: Hulks are no longer a blob counter.
+  XDTM:
+  - tweak: Ninjas are now slightly visible when stealthing.
+  phil235:
+  - rscadd: Spray cleaner and soap can now wash off paint color.
+2016-11-03:
+  Cobby:
+  - rscadd: Adds a geisha outfit to the clothesmate on hacking. QT space ninja BF
+      not included
+  Joan:
+  - rscadd: 'Proselytizing a window will automatically proselytize any grilles under
+      it. This is free, so don''t worry about wasting alloy. rcsadd: Trying to proselytize
+      something that can''t be proselytized will try to proselytize the turf under
+      it, instead.'
+  - experiment: Clockcult's "Convert All Silicons" objective now also requires that
+      Application scripture is unlocked.
+  - wip: The "Convert All Silicons" objective will also only be given if there is
+      an AI, instead of only if there is a silicon.
+2016-11-05:
+  Joan:
+  - rscadd: Proselytizer conversion now accounts for existing materials, and deconstructing
+      a wall, a girder, or a window for its materials is no longer more efficient
+      than just converting it.
+  - imageadd: Heal glows now appear when mending motors repair clockwork mobs and
+      objects.
+  Lzimann:
+  - rscdel: You can no longer walk holding shift.
+2016-11-06:
+  Joan:
+  - bugfix: Dragging people over a Vitality Matrix will actually cause the Matrix
+      to start working on them instead of failing to start draining because it's "active"
+      from when the dragging person crossed it.
+  phil235:
+  - rscadd: You can now climb on transit tube, like tables.
+  - rscadd: You can now use tabs when writing on paper by writing "[tab]"
+2016-11-07:
+  Basilman:
+  - rscadd: CQC users can now block attacks by having their throw mode on.
+  - tweak: The CQC kick and Disorient-disarm combos are now much easier to use, CQC
+      harm intent attacks are stronger aswell.
+  - bugfix: Fixed being able to CQC restrain someone, let him go, then 10 minutes
+      later disarm someone else to instantly chokehold them.
+  - tweak: CQC costs more TC (13)
+  Cyberboss:
+  - bugfix: Tesla zaps that don't come from an energy ball can no longer destroy nukes
+      and gravity generators
+  El Tacolizard:
+  - rscadd: A space monastery and chaplain job have been added to PubbyStation.
+  - rscadd: Improved pubby's maint detailing
+  Joan:
+  - tweak: Ratvarian Spears now do 18 damage and ignore a small amount of armor on
+      normal attacks, but have a slightly lower chance to knowdown/knockout. Impaling
+      also ignores a larger amount of armor.
+  - rscadd: Throwing a Ratvarian Spear at a Servant will not damage them and may cause
+      them to catch the spear.
+  - rscadd: Standard drones will be converted to Cogscarabs by Ratvar and the Celestial
+      Gateway proselytization.
+  - rscdel: Cogscarabs no longer receive station alerts.
+  - bugfix: Anima Fragments, Clockwork Marauders, and cult constructs are now properly
+      immune to heat and electricity.
+  - tweak: Clockwork armor is much stronger against bullets and bombs but much weaker
+      against lasers.
+  - wip: Specific numbers; Bullet armor from 50% to 70%, bomb armor from 35% to 60%,
+      laser armor from -15% to -25%. This means lasers are a 4-hit crit.
+  - rscadd: You can now Quickbind scripture other than Guvax and Vanguard to the Clockwork
+      Slab's action buttons, via Recollection.
+  - rscadd: You can also recite scripture directly from Recollection, if doing so
+      suits your taste. Of course it suits your taste, it's way easier than menus.
+  - tweak: You can also toggle compact scripture in Recollection, so that you don't
+      see description, invocation time, component cost, or tips.
+  - tweak: Dropping items into Spatial Gateways no longer consumes a use from the
+      gateway.
+  - rscadd: If your Spatial Gateway target is unconscious, you can pick a new target
+      instead.
+  Kor:
+  - rscadd: Multiverse teams now have HUD icons.
+  - rscadd: Multiverse war is back in the spellbook.
+  phil235:
+  - rscadd: Altclicking a PDA without id now removes its pen.
+  - rscadd: The PDA's sprite now shows whether it has an id, a pAI, a pen, or if its
+      light is on.
+2016-11-09:
+  Changes:
+  - tweak: Old mining asteroid is more interesting (mining world can be picked in
+      ministation.dm)
+  - tweak: Space around ministation is now half(?) the size of normal space
+  - rscadd: Loot spawners to maintenance
+  - bugfix: Rad storms frying maintenance
+  - bugfix: Bad conveyor belts in mining/cargo area of station
+  - bugfix: Bombs completely destroying toxins test site
+  - rscadd: Cyborg job available again
+  - tweak: Mining cyborgs can use steel rods when asteroid mining is enabled
+  Joan:
+  - tweak: Repairing clockwork structures with a Clockwork Proselytizer now only costs
+      1 alloy per point of damage.
+  - experiment: Vitality Matrices will no longer heal dead Servants that they cannot
+      outright revive.
+  - rscadd: The Celestial Gateway will now prevent the emergency shuttle from leaving.
+  - tweak: However, Centcom will alert, in general terms, the location of the Celestial
+      Gateway two minutes after it is summoned.
+  - rscadd: Reciting scripture while not on the station, centcom, or mining/lavaland
+      will double recital time and component costs.
+  Kor:
+  - rscadd: You can now examine an r-wall to find out which tool is needed to continue
+      deconstructing it.
+  - rscadd: The game will now recognize a successful detonation of the nuclear bomb
+      in the syndicate base.
+  - rscadd: Cloaks are now cosmetic items that can be worn in the neck slot, allowing
+      you to wear them over armour.
+  Shadowlight213:
+  - rscdel: Removed the restriction on attacking people with a fire extinguisher on
+      help intent if the safety is on.
+  uraniummeltdown:
+  - rscadd: Added Cortical Borers, a brainslug parasite.
+  - rscadd: Added Cortical Borer Event
+2016-11-10:
+  Kor:
+  - rscadd: The wizard has a new spell, Rod Form, which allows him to transform into
+      an immovable rod.
+  uraniummeltdown:
+  - bugfix: fixed brains not having ckeys when removed
+  - bugfix: hopefully fixed multiple ghosts entering a borer ghosting all but one
+  - tweak: tweaked the formula for hosts needed for borer event to 1+humans/6
+  - tweak: borer endround report is a lot nicer
+2016-11-11:
+  Cyberboss:
+  - bugfix: Promotion of revheads won't occur if they are restrained/incapacitated
+  - bugfix: Facehuggers can no longer latch onto mobs without a head... How the fuck
+      did you get a living mob without a head?
+  - bugfix: Hulks and monkeys can no longer bypass armor
+  - rscadd: Metastation now has a waste to space line
+  - bugfix: Objects will no longer get stuck behind the recycler on Boxstation
+  Joan:
+  - rscadd: You can now repair reinforced walls by using the tool you'd use to get
+      to the state they're currently in. Examining will give you a hint as to which
+      tool to use.
+  - spellcheck: Renamed Guvax to Geis. This also applies to the component, which has
+      been similarly renamed.
+  Kor:
+  - rscadd: The Captain can now purchase alternate escape shuttles from the communications
+      console. This drains from the station supply of cargo points, and you can only
+      do so once per round, so spend wisely.
+  - rscadd: Some shuttles are less desirable than the default, and will instead grant
+      the station a credit bonus when purchased.
+  - rscadd: Explosions are no longer capped on the mining z level.
+  - rscadd: The forcewall spell now creates a 3x1 wall which the caster can pass through.
+  - rscadd: Bedsheets are now worn in the neck slot, rather than the back slot.
+2016-11-13:
+  Cyberboss:
+  - rscadd: Using a screwdriver on a conveyor belt will reverse it's direction
+  - bugfix: Medibots, by default, can no longer OD you on tricord
+  - tweak: They will now use charcoal instead of anti-toxin to heal tox damage
+  - bugfix: Silicons no longer get warm skin when irradiated
+  Gun Hog:
+  - tweak: Wizard (and Devil) fireballs now automatically toggle off once fired.
+  Joan:
+  - tweak: Judicial Visors now protect from flashes.
+  - rscadd: Reciting Scripture is now done through an actual interface, and can thus
+      be done much faster.
+  - rscdel: The recital and quickbind functions that Recollection had have been moved
+      to this interface instead.
+  - rscadd: Servants of Ratvar can now unsecure and move most Clockwork Structures
+      with a wrench, though doing so will damage the structure by 25% of its maximum
+      integrity.
+  - rscadd: Clockwork Structures become less effective as their integrity lowers,
+      reducing their effect by up to 50% at 25% integrity.
+  - tweak: You can now deconstruct unsecured wall gears with a screwdriver.
+  - tweak: Wall gears now have much more health and can be repaired with a proselytizer.
+  Mysak0CZ:
+  - rscadd: You can now use wrech to anchor (as long as it is not in space) / unanchor
+      lockers
+  - bugfix: Cyborgs can now simply use "hand" to open / close lockers (instead of
+      using toggle open verb)
+  - bugfix: You can now properly put unlit welder inside lockers
+  - bugfix: Lockers using different decostruction tools (like cardboard boxes wirecutters)
+      can now be deconstructed too
+  Xhuis:
+  - rscadd: All computers now have sounds. Try them out!
+  coiax:
+  - rscadd: Swarmers can now use :b to talk on Swarm Communication.
+  - rscadd: Lich phylacteries are now in the "points of interest" for ghosts.
+  uraniummeltdown:
+  - bugfix: Cancel Assume Control works as borer now
+  - rscadd: Added the cueball helmet, scratch suit, joy mask to Autodrobe
+2016-11-14:
+  Joan:
+  - rscdel: You can no longer pick up cogscarabs.
+  - rscadd: Servants of Ratvar can now reactivate Cogscarabs with a screwdriver.
+  - tweak: Cogscarab proselytizers proselytize things twice as fast.
+  - tweak: Cogscarabs now have 1.6 seconds of delay when firing guns, as much as an
+      unmodded kinetic accelerator.
+  - bugfix: Fixed Vitality Matrices and Raise Dead runes not reviving if the target
+      happened to be in their body already.
+  Kor:
+  - rscadd: Extended mode now has a special command report that tells you the round
+      type. This is to let people know they have time to start on large scale projects
+      rather than milling about waiting for antagonists to attack.
+  - rscadd: All station goals are now unlocked during extended.
+  Mysak0CZ:
+  - bugfix: MetaStation's xenobiology disposals now work properly
+  uraniummeltdown:
+  - tweak: Changed the Command and Security radio colors
+  - rscadd: Added raw telecrystals to the uplink, can be used with uplinks and uplink
+      implants.
+  - rscadd: Added 10mm ammo variants to uplink
+2016-11-15:
+  Cyberboss:
+  - bugfix: Brains and heads with brains trigger the emergency stop on the recycler
+  Kor:
+  - rscadd: The vault is now home to a new machine which can accept cash deposits,
+      adding to the cargo point total.
+  - rscadd: You can also use this machine to steal credits from the cargo point total.
+      Doing so takes time, and will set off an alarm.
+  - rscadd: You can now buy an asteroid with engines strapped to it to replace the
+      emergency escape shuttle.
+  - rscadd: You can now buy a luxury shuttle to replace the emergency escape shuttle.
+      Each crewmember must bring 500 credits worth of cash or coins to board though.
+  Lexorion & Lzimann:
+  - tweak: Wizards have developed a new spell. It's called Arcane Barrage and it has
+      been reported that it has a similar function to Lesser Summon Guns!
+  Supermichael777:
+  - rscdel: The atmos grenades have been removed. if you want to burn down the shuttle
+      use canisters or something but at least work at it.
+  coiax:
+  - rscadd: Mice (the rodent, not the peripheral) now start in random locations.
+2016-11-16:
+  Mysak0CZ:
+  - rscadd: Door can now have higher security, making them stronger and wires harder
+      to access
+  - rscadd: More info can be found on github or wiki (if this passes)
+  - imageadd: Protected wires now have sprites
+  Pubby:
+  - bugfix: cyclelinked airlock pairs now close behind you even when running through
+      at full speed.
+  Swindly:
+  - rscadd: Dice can now be rigged by microwaving them.
+2016-11-18:
+  Cyberboss:
+  - bugfix: The amount of metal used to construct High Security airlocks with the
+      RCD is now consistent with the actual cost
+  Incoming5643:
+  - bugfix: The charge spell should once again work correctly with guns/wands
+  Joan:
+  - rscadd: Clockcult AIs have power as long as they are on a Clockwork Floor or next
+      to a Sigil of Transmission. This is in addition to having power under normal
+      conditions.
+  - rscadd: Clockcult silicons can now activate Clockwork Structures from a distance.
+  - rscdel: Interdiction Lenses will not disable cameras if there are no living unconverted
+      AIs.
+  - rscadd: Clockcult Cyborgs can charge from Sigils of Transmission by crossing them;
+      after a 5 second delay, the cyborg regains either their missing charge or the
+      amount of power in the sigil(whichever is lower) over 10 seconds.
+  - rscadd: You can now cancel out of selecting a robot module!
+  - imagedel: Robot modules now only have a generic transform animation when selected;
+      the borg is locked in place for 5 seconds in a small cloud of smoke while the
+      base borg sprite fades out and the new module fades in.
+  - tweak: Resetting a borg will do that animation.
+  - rscadd: Adds Networked Fibers, which gains points instead of automatic expansion
+      and causes manual expansion near its core to move its core.
+  - rscadd: Added a new UI style, Clockwork.
+  NikNak:
+  - rscadd: Added tator tots, made my putting a potato in the food processor
+  - tweak: French fries are now made by cutting up a potato into wedges and putting
+      the wedges (plate and all) into the food processor
+  coiax:
+  - bugfix: The observer visible countdown timer for the malfunctioning AI doomsday
+      device is now formatted and rounded appropriately.
+  erwgd:
+  - rscadd: You can now make emergency welding tools in the autolathe.
+2016-11-19:
+  Crushtoe:
+  - imageadd: Added a shiny new icon for the reaper's scythe in-hand and normal sprite.
+      It's 25% less gardener.
+  RandomMarine:
+  - rscadd: An instruction paper has been added to the morgue on most maps, because
+      somehow it's needed.
+  Shadowlight213:
+  - rscadd: Added the AI integrity restorer as a modular computer program
+  - rscadd: Added an AI intelliCard slot. Insert an Intellicard into it to be able
+      to use the restoration program.
+  - bugfix: Fixes Alarm program detecting ruins
+  - bugfix: Fixes being unable to toggle the card reader module power
+  - tweak: The downloader will now tell you if a program is incompatible with your
+      hardware
+2016-11-20:
+  Basilman:
+  - rscadd: Added a new beard style, Broken Man.
+  Cobby:
+  - tweak: Airlock security is only given to vault doors, centcomm, and Secure Tech
+      [Secure Tech just requires a welder]
+  Incoming5643:
+  - rscadd: The warp whistle has been added to the wizard's repertoire of spells and
+      artifacts.
+  - rscadd: The drop table for summon magic has been expanded.
+  Joan:
+  - rscdel: Servant cyborgs no longer have emagged modules.
+  - rscadd: Servant cyborgs now have a limited selection of scripture and tools, which
+      varies by cyborg type.
+  Kor:
+  - bugfix: Station goals will once again function in extended.
+  Swindly:
+  - rscadd: Added a nitrous oxide reagent. It can be created by heating 3 parts ammonia,
+      1 part nitrogen, and 2 parts oxygen to 525K. The process produces water as a
+      by-product and will cause an explosion if too much heat is applied.
+2016-11-21:
+  Cobby:
+  - tweak: mining/labor shuttles are now radiation proof.
+2016-11-23:
+  Crushtoe:
+  - rscadd: Added more tips.
+  - bugfix: Fixes some sprites and spelling issues, namely bedsheet capes.
+  Cyberboss:
+  - bugfix: Changing an airlock's security level no longer heals it
+  Gun Hog:
+  - bugfix: Medibots now heal toxin damage again.
+  Joan:
+  - rscadd: Clockcult AIs can now listen to conversations through cameras.
+  - rscadd: Due to complaints that the new slab interface was too difficult to navigate,
+      it now starts off in compressed format. The button to toggle this is now also
+      larger.
+  Kor:
+  - rscadd: Rounds ending on one server will send a news report to the other server.
+  Shadowlight213:
+  - tweak: Borers now have a 10 second delay before waking up after sugar leaves the
+      host system
+  - tweak: There is a chance for borers to lose control, based on brain damage levels
+  Swindly:
+  - rscadd: Most small items can now be placed in the microwave. Remember not to microwave
+      metallic objects.
+  XDTM:
+  - rscadd: 'Golems now have special properties based on the mineral they''re made
+      of:'
+  - rscadd: Silver golems have a higher chance of stun when punching
+  - rscadd: Gold golems are faster but less armoured
+  - rscadd: Diamond golems are more armoured
+  - rscadd: Uranium golems are radioactive
+  - rscadd: Plasma golems explode on death
+  - rscadd: Iron and adamantine golems are unchanged.
+  jakeramsay007:
+  - tweak: Borers can no longer take control of people who have a mindshield implant
+      or are a member of either cult. This however does not stop them from infesting
+      and controlling them through other means, such as chemicals.
+2016-11-24:
+  Kor:
+  - rscadd: Shaft miners now have access to the science channel.
+  Lzimann:
+  - rscdel: Multiverse sword is no longer buyable by wizards
+  erwgd:
+  - rscadd: Plasmamen get their own random names.
+2016-11-25:
+  Joan:
+  - rscadd: Clockcult AIs with borgs 'slaved' to them will convert them when hacking
+      via the robotics console.
+  - experiment: Replaced the "No Cache" alert with an alert that will show what you
+      need for the next tier of scripture.
+  Kor:
+  - rscadd: The captain may now purchase an unfinished shuttle chassis, which will
+      dock immediately when bought, but will not launch until the end of the regular
+      shuttle call procedure. The shuttle is empty and devoid of atmosphere however,
+      so you'll need to do some work on it if you want a safe trip home.
+  Shadowlight213:
+  - bugfix: The activation button for the AI integrity restorer modular program actually
+      works now!
+  - rscdel: The cortical borer event is now admin only
+2016-11-27:
+  Cyberboss:
+  - bugfix: False armblades are now removed after one minute. Start feeling the P
+      A R A N O I A when you see em
+  Gun Hog:
+  - rscadd: AIs piloting a mech may now be recovered with an Intellicard from the
+      wreckage if the mech is destroyed. They will be require repair once recovered.
+  - tweak: Instructions for piloting mechs as an AI are now more obvious.
+  - tweak: Traitor and Ratvar AIs may now be carded from mechs, at their discretion.
+  Joan:
+  - tweak: Clockwork walls are now about as hard for hulks to break as rwalls.
+  - rscadd: You can now quickbind up to 5 scriptures from the recital menu, and the
+      recital menu has less empty space.
+  - tweak: Clockwork slabs now only start with only Geis pre-bound.
+  Kor:
+  - rscadd: Shaft miners can now redeem their starting voucher for a conscription
+      kit, which contains everything they need to rope their friend into joining them
+      on lavaland.
+  - rscadd: You can now see which emergency shuttle is coming in the status panel.
+  Lzimann:
+  - rscadd: The robots stole Santa's Elfs jobs.
+  MMMiracles:
+  - tweak: Jump boots now have a pocket
+  - imageadd: Jump boots from mining now have on-character icons.
+  Mervill:
+  - imageadd: Disposal units now use a tgui instead of plain html
+  - rscadd: 'As the AI: Click an AI status display to bring up the prompt for changing
+      the image'
+  Swindly:
+  - rscadd: Wet leather can be dried by putting it on a drying rack.
+  Xhuis:
+  - bugfix: Plastic explosives now actually explode when you commit suicide with them.
+  - bugfix: Resisting out of straight jackets now works properly.
+  - rscdel: Highlander will no longer announce the last man standing.
+  - rscadd: Cyborgs can now open morgue trays. This does not include crematoriums!
+  uraniummeltdown:
+  - rscdel: Borers no longer randomly lose control based on host brain damage
+  - tweak: Borer Dominate Victim stun time reduced from 4 -> 2.
+  - tweak: Borers no longer force unhidden when infesting someone.
+  - tweak: Borer event is rarer (weight 20->15).
+  - tweak: Borer reproduction chemicals required increased from 100 to 200.
+2016-11-29:
+  Joan:
+  - tweak: Interdiction Lenses are more likely to turn off if damaged.
+  - tweak: Reduced Interdiction Lens and Tinkerer's Daemon CV from 25 to 20.
+  RemieRichards:
+  - rscadd: Devils may now spawn with an obligation to accept dance off challanges,
+      if they have this obligation they also gain a spell to summon/unsummon a 3x3
+      dance floor at will.
+  Swindly:
+  - rscadd: Microwaves now heat open reagent containers to 1000K.
+  XDTM:
+  - rscadd: 'Added new types of golem: glass, sand, wood, plasteel, titanium, plastitanium,
+      alien alloy, bananium, bluespace, each with their own traits. Experiment!'
+  - tweak: Golems will be told what their traits are when spawning.
+  - rscadd: Putting a golem in a gibber will give ores of its mineral type, instead
+      of meat.
+  - rscadd: Using Iron on an adamantine slime extract will spawn an incomplete golem
+      shell, that will be slaved to whoever completes it, much like a normal adamantine
+      golem.
+  jughu:
+  - tweak: Proselytizing airlocks into pinion airlocks takes longer.
+2016-11-30:
+  ANGRY CODER:
+  - tweak: NT news reports the clandestine criminal organization known as the syndicate
+      may have upgraded one of their illegally stolen cyborg modules with additional
+      healing technology.
+  Cobby [Idea stolen from Shaps]:
+  - rscadd: For objects that you could previously rename with a pen, you can now edit
+      their description as well.
+  Cyberboss:
+  - rscdel: Due to budget cuts. Firelocks no longer have safety features
+  - bugfix: Roundstart airlock electronics now properly generate the correct accesses
+  - bugfix: tgui windows will now close on round end
+  Gun Hog:
+  - bugfix: Syndicate Medical Cyborg hyposprays now properly work through Operative
+      hardsuits and other thick clothing.
+  Joan:
+  - tweak: Cogscarabs will once again convert metal, rods, and plasteel directly to
+      alloy.
+  - tweak: Tinkerer's caches now increase in cost every 4 caches, from 5.
+  - rscadd: The Ark of the Clockwork Justicar now converts all silicons once it finishes
+      proselytizing the station.
+  Mervill:
+  - rscadd: AI hologram can move seamlessly between holopads
+  Thunder12345:
+  - rscadd: Added anti-armour launcher. A single-use rocket launcher capable of penetrating
+      all but the heaviest of armour. Deals massively increased damage to cyborgs
+      and mechs.

@@ -1,8 +1,8 @@
-GLOBAL_LIST(uplink_purchase_logs_by_key)	//assoc key = /datum/uplink_purchase_log
+GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_log
 
 /datum/uplink_purchase_log
 	var/owner
-	var/list/purchase_log				//assoc path-of-item = /datum/uplink_purchase_entry
+	var/list/purchase_log //assoc path-of-item = /datum/uplink_purchase_entry
 	var/total_spent = 0
 
 /datum/uplink_purchase_log/New(_owner, datum/component/uplink/_parent)

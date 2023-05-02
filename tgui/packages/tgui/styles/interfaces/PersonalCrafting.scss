@@ -1,0 +1,98 @@
+/**
+ * Copyright (c) 2022 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss';
+
+.PersonalCraftingGridItem {
+  position: relative;
+  display: inline-block;
+  width: 33%;
+  vertical-align: top;
+  height: 10em;
+  overflow: hidden;
+  margin-bottom: 0.25em;
+
+  @media only screen and (min-width: 50em) {
+    width: 25%;
+  }
+
+  @media only screen and (min-width: 75em) {
+    width: 20%;
+  }
+
+  &:hover {
+    overflow: visible;
+  }
+}
+
+.PersonalCraftingGridItem--craftable {
+  cursor: pointer;
+}
+
+.PersonalCraftingGridItem__content {
+  position: relative;
+  color: #888;
+  padding: 0.5em 0.5em 2.5em 0.5em;
+  min-height: 100%;
+  pointer-events: none;
+}
+
+.PersonalCraftingGridItem:hover .PersonalCraftingGridItem__content {
+  // This color is already lighter than Section which works well
+  // for the hover style.
+  background-color: base.$color-bg;
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+  overflow: visible;
+  z-index: 1;
+}
+
+.PersonalCraftingGridItem__craftability {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0.5em;
+  color: #fff;
+  background-color: rgba(255, 0, 0, 0.1);
+  text-align: center;
+  visibility: hidden;
+}
+
+.PersonalCraftingGridItem--craftable .PersonalCraftingGridItem__craftability {
+  background-color: rgba(64, 255, 0, 0.1);
+}
+
+.PersonalCraftingGridItem:hover .PersonalCraftingGridItem__craftability {
+  visibility: visible;
+}
+
+.PersonalCraftingGridItem__name {
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #aaa;
+}
+
+.PersonalCraftingGridItem--craftable .PersonalCraftingGridItem__name {
+  color: #fff;
+}
+
+.PersonalCraftingGridItem__prereq {
+  color: #777;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.PersonalCraftingGridItem--craftable .PersonalCraftingGridItem__prereq {
+  color: #bbb;
+}
+
+.PersonalCraftingGridItem__extra {
+  margin-top: 0.5em;
+}

@@ -2,11 +2,11 @@
 	id = "frozen"
 	duration = 100
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /obj/screen/alert/status_effect/freon
+	alert_type = /atom/movable/screen/alert/status_effect/freon
 	var/icon/cube
 	var/can_melt = TRUE
 
-/obj/screen/alert/status_effect/freon
+/atom/movable/screen/alert/status_effect/freon
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	icon_state = "frozen"
@@ -16,34 +16,34 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(owner_resist))
 	if(!owner.stat)
-		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
+		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
-	owner.update_mobility()
+
 
 /datum/status_effect/freon/tick()
-	owner.update_mobility()
 	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(do_resist))
 
-	to_chat(owner, "<span class='notice'>You start breaking out of the ice cube...</span>")
-	if(do_mob(owner, owner, 40))
+/datum/status_effect/freon/proc/do_resist()
+	to_chat(owner, span_notice("You start breaking out of the ice cube..."))
+	if(do_after(owner, owner, 4 SECONDS))
 		if(!QDELETED(src))
-			to_chat(owner, "<span class='notice'>You break out of the ice cube!</span>")
+			to_chat(owner, span_notice("You break out of the ice cube!"))
 			owner.remove_status_effect(/datum/status_effect/freon)
-			owner.update_mobility()
+
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
-		to_chat(owner, "<span class='notice'>The cube melts!</span>")
+		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
 	owner.adjust_bodytemperature(100)
-	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
@@ -51,3 +51,36 @@
 /datum/status_effect/freon/watcher
 	duration = 8
 	can_melt = FALSE
+
+/datum/status_effect/freon/lasting
+	id = "lasting_frozen"
+	duration = -1
+
+/datum/status_effect/hypernob_protection
+	id = "hypernob_protection"
+	duration = 10 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/hypernob_protection
+
+/datum/status_effect/hypernob_protection/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
+/atom/movable/screen/alert/status_effect/hypernob_protection
+	name = "Hyper-Noblium Protection"
+	desc = "The Hyper-Noblium around your body is protecting it from self-combustion and fires, but you feel sluggish..."
+	icon_state = "hypernob_protection"
+
+/datum/status_effect/hypernob_protection/on_apply()
+	if(!ishuman(owner))
+		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium) //small slowdown as a tradeoff
+	ADD_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	return TRUE
+
+/datum/status_effect/hypernob_protection/on_remove()
+	if(!ishuman(owner))
+		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
+	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)

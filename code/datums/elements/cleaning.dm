@@ -2,7 +2,7 @@
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(Clean))
 
 /datum/element/cleaning/Detach(datum/target)
 	. = ..()
@@ -26,7 +26,7 @@
 		// Clean humans that are lying down
 		else if(ishuman(A))
 			var/mob/living/carbon/human/cleaned_human = A
-			if(!(cleaned_human.mobility_flags & MOBILITY_STAND))
+			if(cleaned_human.body_position == LYING_DOWN)
 				cleaned_human.wash(CLEAN_SCRUB)
 				cleaned_human.regenerate_icons()
-				to_chat(cleaned_human, "<span class='danger'>[AM] cleans your face!</span>")
+				to_chat(cleaned_human, span_danger("[AM] cleans your face!"))

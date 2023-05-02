@@ -11,38 +11,44 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/machinery_blackbox_recorder
 	var/obj/item/stored
 
-/obj/machinery/blackbox_recorder/Initialize()
+/datum/armor/machinery_blackbox_recorder
+	melee = 25
+	bullet = 10
+	laser = 10
+	fire = 50
+	acid = 70
+
+/obj/machinery/blackbox_recorder/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
-/obj/machinery/blackbox_recorder/attack_hand(mob/living/user)
+/obj/machinery/blackbox_recorder/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(stored)
-		user.put_in_hands(stored)
+		stored.forceMove(drop_location())
+		if(Adjacent(user))
+			user.put_in_hands(stored)
 		stored = null
-		to_chat(user, "<span class='notice'>You remove the blackbox from [src]. The tapes stop spinning.</span>")
-		update_icon()
+		to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning."))
+		update_appearance()
 		return
 	else
-		to_chat(user, "<span class='warning'>It seems that the blackbox is missing...</span>")
+		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
 /obj/machinery/blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/blackbox))
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+			to_chat(user, span_warning("[I] is stuck to your hand!"))
 			return
-		user.visible_message("<span class='notice'>[user] clicks [I] into [src]!</span>", \
-		"<span class='notice'>You press the device into [src], and it clicks into place. The tapes begin spinning again.</span>")
+		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		stored = I
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 
@@ -52,18 +58,16 @@
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..()
 
-/obj/machinery/blackbox_recorder/update_icon()
-	. = ..()
-	if(!stored)
-		icon_state = "blackbox_b"
-	else
-		icon_state = "blackbox"
+/obj/machinery/blackbox_recorder/update_icon_state()
+	icon_state = "blackbox[stored ? null : "_b"]"
+	return ..()
 
 /obj/item/blackbox
 	name = "\proper the blackbox"
 	desc = "A strange relic, capable of recording data on extradimensional vertices. It lives inside the blackbox recorder for safe keeping."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackcube"
+	inhand_icon_state = "blackcube"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -76,13 +80,11 @@
 	icon_state = "message_server"
 	name = "Messaging Server"
 	desc = "A machine that processes and routes PDA and request console messages."
+	telecomms_type = /obj/machinery/telecomms/message_server
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
-	var/list/datum/data_pda_msg/pda_msgs = list()
+	var/list/datum/data_tablet_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
@@ -95,9 +97,9 @@
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()].")
 	else
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
 	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
@@ -108,7 +110,7 @@
 /obj/machinery/telecomms/message_server/examine(mob/user)
 	. = ..()
 	if(calibrating)
-		. += "<span class='warning'>It's still calibrating.</span>"
+		. += span_warning("It's still calibrating.")
 
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
@@ -121,7 +123,7 @@
 	. = ..()
 	if(calibrating && calibrating <= world.time)
 		calibrating = 0
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
@@ -129,16 +131,16 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/pda))
-		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
-		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
-		pda_msgs += M
-		signal.logged = M
+	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
+		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
+		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
+		pda_msgs += msg
+		signal.logged = msg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
-		var/datum/data_rc_msg/M = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		signal.logged = M
+		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		signal.logged = msg
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
-			rc_msgs += M
+			rc_msgs += msg
 	signal.data["reject"] = FALSE
 
 	// pass it along to either the hub or the broadcaster
@@ -172,23 +174,24 @@
 	copy.levels = levels
 	return copy
 
-// PDA signal datum
-/datum/signal/subspace/messaging/pda/proc/format_target()
+// Tablet message signal datum
+/datum/signal/subspace/messaging/tablet_msg/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
-	return data["targets"][1]
+	var/obj/item/modular_computer/target = data["targets"][1]
+	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspace/messaging/pda/proc/format_message()
-	if (logged && data["photo"])
-		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
+/datum/signal/subspace/messaging/tablet_msg/proc/format_message()
 	return "\"[data["message"]]\""
 
-/datum/signal/subspace/messaging/pda/broadcast()
+/datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/pda/P in GLOB.PDAs)
-		if ("[P.owner] ([P.ownjob])" in data["targets"])
-			P.receive_message(src)
+	for (var/obj/item/modular_computer/comp in data["targets"])
+		if(!QDELETED(comp))
+			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
+				if(!QDELETED(app))
+					app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()
@@ -200,14 +203,14 @@
 			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
 // Log datums stored by the message server.
-/datum/data_pda_msg
+/datum/data_tablet_msg
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
 	var/automated = 0 //automated message
 
-/datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
+/datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -217,7 +220,7 @@
 	if(param_photo)
 		picture = param_photo
 
-/datum/data_pda_msg/Topic(href,href_list)
+/datum/data_tablet_msg/Topic(href,href_list)
 	..()
 	if(href_list["photo"])
 		var/mob/M = usr

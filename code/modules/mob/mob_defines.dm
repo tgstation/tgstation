@@ -1,46 +1,67 @@
 /**
-  * The mob, usually meant to be a creature of some type
-  *
-  * Has a client attached that is a living person (most of the time), although I have to admit
-  * sometimes it's hard to tell they're sentient
-  *
-  * Has a lot of the creature game world logic, such as health etc
-  */
+ * The mob, usually meant to be a creature of some type
+ *
+ * Has a client attached that is a living person (most of the time), although I have to admit
+ * sometimes it's hard to tell they're sentient
+ *
+ * Has a lot of the creature game world logic, such as health etc
+ */
 /mob
-	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	animate_movement = SLIDE_STEPS
-	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSMOB
+	// we never want to hide a turf because it's not lit
+	// We can rely on the lighting plane to handle that for us
+	see_in_dark = 1e6
+	/// The current client inhabiting this mob. Managed by login/logout
+	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
+	/// We need to do this because the mob on logout never actually has a reference to client
+	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
+	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+	var/client/canon_client
 
- 	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
-	vis_flags = VIS_INHERIT_PLANE
+	var/shift_to_open_context_menu = TRUE
 
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	/// Percentage of how much rgb to max the lighting plane at
+	/// This lets us brighten it without washing out color
+	/// Scale from 0-100, reset off update_sight()
+	var/lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	// Individual color max for red, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_red = 0
+	// Individual color max for green, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_green = 0
+	// Individual color max for blue, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_blue = 0
+	/// A list of red, green and blue cutoffs
+	/// This is what actually gets applied to the mob, it's modified by things like glasses
+	var/list/lighting_color_cutoffs = null
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
 	/// List of movement speed modifiers applying to this mob
-	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	var/list/movespeed_modification //Lazy list, see mob_movespeed.dm
 	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
-	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	var/list/movespeed_mod_immunities //Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
 	/// List of action speed modifiers applying to this mob
-	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	var/list/actionspeed_modification //Lazy list, see mob_movespeed.dm
 	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
-	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	var/list/actionspeed_mod_immunities //Lazy list, see mob_movespeed.dm
 	/// The calculated mob action speed slowdown based on the modifiers list
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
-	/// A special action? No idea why this lives here
-	var/list/datum/action/chameleon_item_actions
+	/// A list of chameleon actions we have specifically
+	/// This can be unified with the actions list
+	var/list/datum/action/item_action/chameleon/chameleon_item_actions
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
@@ -72,12 +93,8 @@
 	  * Set when you're being turned into something else and also used in a bunch of places
 	  * it probably shouldn't really be
 	  */
-	var/notransform = null	//Carbon
+	var/notransform = null //Carbon
 
-	/// Is the mob blind
-	var/eye_blind = 0		//Carbon
-	/// Does the mob have blurry sight
-	var/eye_blurry = 0		//Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -91,25 +108,18 @@
 	var/name_archive //For admin things like possession
 
 	/// Default body temperature
-	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
-	/// Drowsyness level of the mob
-	var/drowsyness = 0//Carbon
-	/// Dizziness level of the mob
-	var/dizziness = 0//Carbon
-	/// Jitteryness level of the mob
-	var/jitteriness = 0//Carbon
+	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
+	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
+	var/old_bodytemperature = 0
+
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
 	var/satiety = 0//Carbon
 
 	/// How many ticks this mob has been over reating
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
+	var/overeatduration = 0 // How long this guy is overeating //Carbon
 
-	/// The current intent of the mob
-	var/a_intent = INTENT_HELP//Living
-	/// List of possible intents a mob can have
-	var/list/possible_a_intents = null//Living
 	/// The movement intent of the mob (run/wal)
 	var/m_intent = MOVE_INTENT_RUN//Living
 
@@ -118,8 +128,6 @@
 
 	/// movable atom we are buckled to
 	var/atom/movable/buckled = null//Living
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckling
 
 	//Hands
 	///What hand is the active hand
@@ -140,54 +148,36 @@
 	//HUD things
 
 	/// Storage component (for mob inventory)
-	var/datum/component/storage/active_storage
+	var/datum/storage/active_storage
 	/// Active hud
 	var/datum/hud/hud_used = null
-	/// I have no idea tbh
-	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = FALSE
+	var/throw_mode = THROW_MODE_DISABLED
 
 	/// What job does this mob have
 	var/job = null//Living
 
 	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction = list("neutral")
+	var/list/faction = list(FACTION_NEUTRAL)
 
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
 
-	///The last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
-
-	/**
-	  * construct spells and mime spells.
-	  *
-	  * Spells that do not transfer from one mob to another and can not be lost in mindswap.
-	  * obviously do not live in the mind
-	  */
-	var/list/mob_spell_list
-
+	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
+	var/datum/weakref/LAssailant = null
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
 	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = 0
+	var/has_unlimited_silicon_privilege = FALSE
 
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
-
-	/**
-	  * The sound made on death
-	  *
-	  * leave null for no sound. used for *deathgasp
-	  */
-	var/deathsound
 
 	///the current turf being examined in the stat panel
 	var/turf/listed_turf = null
@@ -196,9 +186,9 @@
 	var/list/observers = null
 
 	///List of progress bars this mob is currently seeing for actions
-	var/list/progressbars = null	//for stacking do_after bars
+	var/list/progressbars = null //for stacking do_after bars
 
-	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	///For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.
 	var/list/do_afters
 
 	///Allows a datum to intercept all click calls this mob is the source of
@@ -209,15 +199,13 @@
 
 	var/memory_throttle_time = 0
 
-	/// Contains [/obj/screen/alert] only.
+	/// Contains [/atom/movable/screen/alert] only.
 	///
 	/// On [/mob] so clientless mobs will throw alerts properly.
 	var/list/alerts = list()
 	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
-
-	var/datum/h_sandbox/sandbox = null
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 
@@ -226,3 +214,18 @@
 
 	///Whether the mob is updating glide size when movespeed updates or not
 	var/updating_glide_size = TRUE
+
+	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
+	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+	/// A mock client, provided by tests and friends
+	var/datum/client_interface/mock_client
+
+	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
+
+	///the icon currently used for the typing indicator's bubble
+	var/active_typing_indicator
+	///the icon currently used for the thinking indicator's bubble
+	var/active_thinking_indicator
+	/// User is thinking in character. Used to revert to thinking state after stop_typing
+	var/thinking_IC = FALSE

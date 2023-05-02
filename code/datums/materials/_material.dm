@@ -6,12 +6,25 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 
 /datum/material
+	/// What the material is referred to as IC.
 	var/name = "material"
+	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
+	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
+	var/id
+
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
+	///Deprecated, use greyscale_color instead.
 	var/color
+	///Determines the color palette of the material. Formatted the same as atom/var/greyscale_colors
+	var/greyscale_colors
 	///Base alpha of the material, is used for greyscale icons.
-	var/alpha
+	var/alpha = 255
+	///Starlight color of the material
+	///This is the color of light it'll emit if its turf is transparent and over space
+	var/starlight_color = COLOR_STARLIGHT
+	///Bitflags that influence how SSmaterials handles this material.
+	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
@@ -23,8 +36,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
+	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
 	var/item_sound_override
@@ -32,18 +45,28 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/turf_sound_override
 	///what texture icon state to overlay
 	var/texture_layer_icon_state
-	///a cached filter for the texture icon
-	var/cached_texture_filter
+	///a cached icon for the texture filter
+	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
+	///What type of debris the tile will leave behind when shattered.
+	var/obj/effect/decal/debris_type
 
-/datum/material/New()
-	. = ..()
+/** Handles initializing the material.
+ *
+ * Arugments:
+ * - _id: The ID the material should use. Overrides the existing ID.
+ */
+/datum/material/proc/Initialize(_id, ...)
+	if(_id)
+		id = _id
+	else if(isnull(id))
+		id = type
+
 	if(texture_layer_icon_state)
-		var/texture_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
-		cached_texture_filter = filter(type="layer", icon=texture_icon, blend_mode = BLEND_INSET_OVERLAY)
+		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
 
-
+	return TRUE
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -54,24 +77,30 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.alpha = alpha
 		if(texture_layer_icon_state)
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-			source.filters += cached_texture_filter
+			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
 
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/config_path = get_greyscale_config_for(source.greyscale_config)
+		source.set_greyscale(greyscale_colors, config_path)
+
+	if(alpha < 255)
+		source.opacity = FALSE
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
+		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 
-	if(istype(source, /obj)) //objs
+	if(isobj(source)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-	if(istype(source, /turf)) //turfs
+	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description
-/atom/proc/mat_update_desc(/datum/material/mat)
+/atom/proc/mat_update_desc(datum/material/mat)
 	return
 
 ///This proc is called when the material is added to an object specifically.
@@ -81,74 +110,121 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.modify_max_integrity(new_max_integrity)
 		o.force *= strength_modifier
 		o.throwforce *= strength_modifier
+		o.set_armor(o.get_armor().generate_new_with_multipliers(armor_modifiers))
 
-		var/list/temp_armor_list = list() //Time to add armor modifiers!
-
-		if(!istype(o.armor))
-			return
-		var/list/current_armor = o.armor?.getList()
-
-		for(var/i in current_armor)
-			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
-		o.armor = getArmor(arglist(temp_armor_list))
 	if(!isitem(o))
 		return
-	var/obj/item/I = o
+	var/obj/item/item = o
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/worn_path = get_greyscale_config_for(item.greyscale_config_worn)
+		var/lefthand_path = get_greyscale_config_for(item.greyscale_config_inhand_left)
+		var/righthand_path = get_greyscale_config_for(item.greyscale_config_inhand_right)
+		item.set_greyscale(
+			new_worn_config = worn_path,
+			new_inhand_left = lefthand_path,
+			new_inhand_right = righthand_path
+		)
+
 	if(!item_sound_override)
 		return
-	I.hitsound = item_sound_override
-	I.usesound = item_sound_override
-	I.mob_throw_hit_sound = item_sound_override
-	I.equip_sound = item_sound_override
-	I.pickup_sound = item_sound_override
-	I.drop_sound = item_sound_override
+	item.hitsound = item_sound_override
+	item.usesound = item_sound_override
+	item.mob_throw_hit_sound = item_sound_override
+	item.equip_sound = item_sound_override
+	item.pickup_sound = item_sound_override
+	item.drop_sound = item_sound_override
 
 /datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
-		if(!turf_sound_override)
-			return
-		var/turf/open/O = T
-		O.footstep = turf_sound_override
-		O.barefootstep = turf_sound_override
-		O.clawfootstep = turf_sound_override
-		O.heavyfootstep = turf_sound_override
+		if(turf_sound_override)
+			var/turf/open/O = T
+			O.footstep = turf_sound_override
+			O.barefootstep = turf_sound_override + "barefoot"
+			O.clawfootstep = turf_sound_override + "claw"
+			O.heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	if(alpha < 255)
+		T.AddElement(/datum/element/turf_z_transparency)
+		setup_glow(T)
 	return
 
+/datum/material/proc/setup_glow(turf/on)
+	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
+		return
+	// We assume no parallax means no space means no light
+	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
+		return
+	on.set_light(2, 0.75, starlight_color)
+
+/datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
+	if(!config_path)
+		return
+	for(var/datum/greyscale_config/path as anything in subtypesof(config_path))
+		if(type != initial(path.material_skin))
+			continue
+		return path
+
 ///This proc is called when the material is removed from an object.
-/datum/material/proc/on_removed(atom/source, material_flags)
+/datum/material/proc/on_removed(atom/source, amount, material_flags)
 	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		if(texture_layer_icon_state)
-			source.filters -= cached_texture_filter
+			source.remove_filter("material_texture_[name]")
 			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		source.set_greyscale(initial(source.greyscale_colors), initial(source.greyscale_config))
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
 
-	if(istype(source, /obj)) //objs
-		on_removed_obj(source, material_flags)
+	if(beauty_modifier)
+		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
+
+	if(isobj(source)) //objs
+		on_removed_obj(source, amount, material_flags)
 
 	if(istype(source, /turf)) //turfs
-		on_removed_turf(source, material_flags)
+		on_removed_turf(source, amount, material_flags)
 
 ///This proc is called when the material is removed from an object specifically.
-/datum/material/proc/on_removed_obj(obj/o, material_flags)
+/datum/material/proc/on_removed_obj(obj/o, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/new_max_integrity = initial(o.max_integrity)
 		o.modify_max_integrity(new_max_integrity)
 		o.force = initial(o.force)
 		o.throwforce = initial(o.throwforce)
 
-/datum/material/proc/on_removed_turf(turf/T, material_flags)
-	return
+	if(isitem(o) && (material_flags & MATERIAL_GREYSCALE))
+		var/obj/item/item = o
+		item.set_greyscale(
+			new_worn_config = initial(item.greyscale_config_worn),
+			new_inhand_left = initial(item.greyscale_config_inhand_left),
+			new_inhand_right = initial(item.greyscale_config_inhand_right)
+		)
+
+/datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
+	if(alpha < 255)
+		T.RemoveElement(/datum/element/turf_z_transparency)
 
 /**
-  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
-  * Arguments
-  * * M - person consuming the mat
-  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
-  */
+ * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+ * Arguments
+ * * M - person consuming the mat
+ * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+ */
 /datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
 	return FALSE
+
+/** Returns the composition of this material.
+ *
+ * Mostly used for alloys when breaking down materials.
+ *
+ * Arguments:
+ * - amount: The amount of the material to break down.
+ * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
+ */
+/datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
+	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.

@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(discord)
 	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = FALSE
 
-/datum/controller/subsystem/discord/Initialize(start_timeofday)
+/datum/controller/subsystem/discord/Initialize()
 	common_words = world.file2list("strings/1000_most_common.txt")
 	reverify_cache = list()
 	// Check for if we are using TGS, otherwise return and disables firing
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(discord)
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = FALSE // We dont want excess firing
-		return ..() // Cancel
+		return SS_INIT_NO_NEED
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
@@ -69,9 +69,9 @@ SUBSYSTEM_DEF(discord)
 	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
 		notifymsg += ", a new round is starting!"
-		send2chat(trim(notifymsg), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
+		send2chat(new /datum/tgs_message_content(trim(notifymsg)), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)
@@ -92,28 +92,28 @@ SUBSYSTEM_DEF(discord)
 	notify_members_cache = notify_members // Updates the cache list
 
 /**
-  * Given a ckey, look up the discord user id attached to the user, if any
-  *
-  * This gets the most recent entry from the discord link table that is associated with the given ckey
-  *
-  * Arguments:
-  * * lookup_ckey A string representing the ckey to search on
-  */
+ * Given a ckey, look up the discord user id attached to the user, if any
+ *
+ * This gets the most recent entry from the discord link table that is associated with the given ckey
+ *
+ * Arguments:
+ * * lookup_ckey A string representing the ckey to search on
+ */
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
-	var/datum/discord_link_record/link = find_discord_link_by_ckey(lookup_ckey)
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(lookup_ckey, only_valid = TRUE)
 	if(link)
 		return link.discord_id
 
 /**
-  * Given a discord id as a string, look up the ckey attached to that account, if any
-  *
-  * This gets the most recent entry from the discord_link table that is associated with this discord id snowflake
-  *
-  * Arguments:
-  * * lookup_id The discord id as a string
-  */
+ * Given a discord id as a string, look up the ckey attached to that account, if any
+ *
+ * This gets the most recent entry from the discord_link table that is associated with this discord id snowflake
+ *
+ * Arguments:
+ * * lookup_id The discord id as a string
+ */
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/discord_link_record/link  = find_discord_link_by_discord_id(lookup_id)
+	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id, only_valid = TRUE)
 	if(link)
 		return link.ckey
 
@@ -127,28 +127,28 @@ SUBSYSTEM_DEF(discord)
 	return generate_one_time_token(ckey)
 
 /**
-  * Generate a timebound token for discord verification
-  *
-  * This uses the common word list to generate a six word random token, this token can then be fed to a discord bot that has access
-  * to the same database, and it can use it to link a ckey to a discord id, with minimal user effort
-  *
-  * It returns the token to the calling proc, after inserting an entry into the discord_link table of the following form
-  *
-  * ```
-  * (unique_id, ckey, null, the current time, the one time token generated)
-  * the null value will be filled out with the discord id by the integrated discord bot when a user verifies
-  * ```
-  *
-  * Notes:
-  * * The token is guaranteed to unique during it's validity period
-  * * The validity period is currently set at 4 hours
-  * * a token may not be unique outside it's validity window (to reduce conflicts)
-  *
-  * Arguments:
-  * * ckey_for a string representing the ckey this token is for
-  *
-  * Returns a string representing the one time token
-  */
+ * Generate a timebound token for discord verification
+ *
+ * This uses the common word list to generate a six word random token, this token can then be fed to a discord bot that has access
+ * to the same database, and it can use it to link a ckey to a discord id, with minimal user effort
+ *
+ * It returns the token to the calling proc, after inserting an entry into the discord_link table of the following form
+ *
+ * ```
+ * (unique_id, ckey, null, the current time, the one time token generated)
+ * the null value will be filled out with the discord id by the integrated discord bot when a user verifies
+ * ```
+ *
+ * Notes:
+ * * The token is guaranteed to unique during it's validity period
+ * * The validity period is currently set at 4 hours
+ * * a token may not be unique outside it's validity window (to reduce conflicts)
+ *
+ * Arguments:
+ * * ckey_for a string representing the ckey this token is for
+ *
+ * Returns a string representing the one time token
+ */
 /datum/controller/subsystem/discord/proc/generate_one_time_token(ckey_for)
 
 	var/not_unique = TRUE
@@ -175,18 +175,18 @@ SUBSYSTEM_DEF(discord)
 	return one_time_token
 
 /**
-  * Find discord link entry by the passed in user token
-  *
-  * This will look into the discord link table and return the *first* entry that matches the given one time token
-  *
-  * Remember, multiple entries can exist, as they are only guaranteed to be unique for their validity period
-  *
-  * Arguments:
-  * * one_time_token the string of words representing the one time token
-  * * timebound A boolean flag, that specifies if it should only look for entries within the last 4 hours, off by default
-  *
-  * Returns a [/datum/discord_link_record]
-  */
+ * Find discord link entry by the passed in user token
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given one time token
+ *
+ * Remember, multiple entries can exist, as they are only guaranteed to be unique for their validity period
+ *
+ * Arguments:
+ * * one_time_token the string of words representing the one time token
+ * * timebound A boolean flag, that specifies if it should only look for entries within the last 4 hours, off by default
+ *
+ * Returns a [/datum/discord_link_record]
+ */
 /datum/controller/subsystem/discord/proc/find_discord_link_by_token(one_time_token, timebound = FALSE)
 	var/timeboundsql = ""
 	if(timebound)
@@ -207,24 +207,27 @@ SUBSYSTEM_DEF(discord)
 	qdel(query_get_discord_link_record)
 
 /**
-  * Find discord link entry by the passed in user ckey
-  *
-  * This will look into the discord link table and return the *first* entry that matches the given ckey
-  *
-  * Remember, multiple entries can exist
-  *
-  * Arguments:
-  * * ckey the users ckey as a string
-  * * timebound should we search only in the last 4 hours
-  *
-  * Returns a [/datum/discord_link_record]
-  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, timebound = FALSE)
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * ckey the users ckey as a string
+ * * timebound should we search only in the last 4 hours
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, timebound = FALSE, only_valid = FALSE)
 	var/timeboundsql = ""
 	if(timebound)
 		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [timeboundsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [timeboundsql]  [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("ckey" = ckey)
@@ -242,24 +245,27 @@ SUBSYSTEM_DEF(discord)
 
 
 /**
-  * Find discord link entry by the passed in user ckey
-  *
-  * This will look into the discord link table and return the *first* entry that matches the given ckey
-  *
-  * Remember, multiple entries can exist
-  *
-  * Arguments:
-  * * discord_id The users discord id (string)
-  * * timebound should we search only in the last 4 hours
-  *
-  * Returns a [/datum/discord_link_record]
-  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, timebound = FALSE)
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * discord_id The users discord id (string)
+ * * timebound should we search only in the last 4 hours
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, timebound = FALSE, only_valid = FALSE)
 	var/timeboundsql = ""
 	if(timebound)
 		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [timeboundsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [timeboundsql] [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("discord_id" = discord_id)
@@ -274,3 +280,22 @@ SUBSYSTEM_DEF(discord)
 
 	//Make sure we clean up the query
 	qdel(query_get_discord_link_record)
+
+
+/**
+ * Extract a discord id from a mention string
+ *
+ * This will regex out the mention <@num> block to extract the discord id
+ *
+ * Arguments:
+ * * discord_id The users discord mention string (string)
+ *
+ * Returns a text string with the discord id or null
+ */
+/datum/controller/subsystem/discord/proc/get_discord_id_from_mention(mention)
+	var/static/regex/discord_mention_extraction_regex = regex(@"<@([0-9]+)>")
+	discord_mention_extraction_regex.Find(mention)
+	if (length(discord_mention_extraction_regex.group) == 1)
+		return discord_mention_extraction_regex.group[1]
+	return null
+

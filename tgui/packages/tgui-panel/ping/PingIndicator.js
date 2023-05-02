@@ -17,14 +17,10 @@ export const PingIndicator = (props, context) => {
     new Color(220, 200, 40),
     new Color(60, 220, 40),
   ]);
-  const roundtrip = ping.roundtrip
-    ? toFixed(ping.roundtrip)
-    : '--';
+  const roundtrip = ping.roundtrip ? toFixed(ping.roundtrip) : '--';
   return (
     <div className="Ping">
-      <Box
-        className="Ping__indicator"
-        backgroundColor={color} />
+      <Box className="Ping__indicator" backgroundColor={color} />
       {roundtrip}
     </div>
   );

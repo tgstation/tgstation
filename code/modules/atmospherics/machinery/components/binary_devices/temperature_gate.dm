@@ -1,13 +1,11 @@
 /obj/machinery/atmospherics/components/binary/temperature_gate
 	icon_state = "tgate_map-3"
 	name = "temperature gate"
-	desc = "An activable gate that compares the input temperature with the interface set temperature to check if the gas can flow or not."
-
+	desc = "An activable gate that compares the input temperature with the interface set temperature to check if the gas can flow from the input side to the output side or not."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tgate"
-
 	///If the temperature of the mix before the gate is lower than this, the gas will flow (if inverted, if the temperature of the mix before the gate is higher than this)
 	var/target_temperature = T0C
 	///Minimum allowed temperature
@@ -19,19 +17,30 @@
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
 
+/obj/machinery/atmospherics/components/binary/temperature_gate/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target temperature"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/atmospherics/components/binary/temperature_gate/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
 	if(can_interact(user))
 		target_temperature = max_temperature
 		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You set the target temperature on [src] to [target_temperature] K.</span>")
-		update_icon()
+		balloon_alert(user, "target temperature set to [target_temperature] K")
+		update_appearance()
 	return ..()
 
 
@@ -53,7 +62,6 @@
 
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/process_atmos()
-
 	if(!on || !is_operational)
 		return
 
@@ -75,6 +83,11 @@
 		else
 			is_gas_flowing = FALSE
 	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/relaymove(mob/living/user, direction)
+	if(!on || direction != dir)
+		return
+	. = ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -110,12 +123,12 @@
 			if(.)
 				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -123,7 +136,7 @@
 	if (istype(I))
 		inverted = !inverted
 		if(inverted)
-			to_chat(user, "<span class='notice'>You set the [src]'s sensors to release gases when the temperature is higher than the setted one.</span>")
+			to_chat(user, span_notice("You set the [src]'s sensors to release gases when the temperature is higher than the setted one."))
 		else
-			to_chat(user, "<span class='notice'>You set the [src]'s sensors to the default settings.</span>")
+			to_chat(user, span_notice("You set the [src]'s sensors to the default settings."))
 	return TRUE

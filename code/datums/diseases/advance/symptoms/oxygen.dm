@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Self-Respiration
-
-	Slightly hidden.
-	Lowers resistance significantly.
-	Decreases stage speed significantly.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	The body generates salbutamol.
-
-//////////////////////////////////////
+/*Self-Respiration
+ * Slight increase to stealth
+ * Greatly reduces resistance
+ * Greatly reduces stage speed
+ * Reduces transmission tremendously
+ * Lethal level
+ * Bonus: Gives the carrier TRAIT_NOBREATH, preventing suffocation and CPR
 */
-
 /datum/symptom/oxygen
-
 	name = "Self-Respiration"
 	desc = "The virus rapidly synthesizes oxygen, effectively removing the need for breathing."
 	stealth = 1
@@ -33,13 +23,15 @@ Bonus
 	)
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 8) //blood regeneration
+	if(A.totalResistance() >= 8) //blood regeneration
 		regenerate_blood = TRUE
 
 /datum/symptom/oxygen/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
@@ -50,11 +42,12 @@ Bonus
 				M.blood_volume += 1
 		else
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
+				to_chat(M, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	var/mob/living/carbon/M = A.affected_mob
 	if(A.stage >= 4)
@@ -64,6 +57,7 @@ Bonus
 	return TRUE
 
 /datum/symptom/oxygen/End(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)

@@ -9,7 +9,7 @@
  * * items are objects. Fruits, tools, circuit boards.
  * * result is type to create as new object
  * * time is optional parameter, you shall use in in your machine,
-     default /datum/recipe/ procs does not rely on this parameter.
+ *  default /datum/recipe/ procs does not rely on this parameter.
  *
  *  Functions you need:
  *  /datum/recipe/proc/make(obj/container as obj)
@@ -18,7 +18,7 @@
  *    transfers reagents from prerequisite objects,
  *    deletes all prerequisite objects (even not needed for recipe at the moment).
  *
- *  /proc/select_recipe(list/datum/recipe/avaiable_recipes, obj/obj as obj, exact = 1)
+ *  /proc/select_recipe(list/datum/recipe/avaiable_recipes), obj/obj as obj, exact = 1)
  *    Wonderful function that select suitable recipe for you.
  *    obj is a machine (or magik hat) with prerequisites,
  *    exact = 0 forces algorithm to ignore superfluous stuff.
@@ -36,7 +36,7 @@
 /datum/recipe
 	var/list/reagents_list // example:  = list(/datum/reagent/consumable/berryjuice = 5) // do not list same reagent twice
 	var/list/items // example: =list(/obj/item/crowbar, /obj/item/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/reagent_containers/food/snacks/donut
+	var/result //example: = /obj/item/food/donut/plain
 	var/time = 100 // 1/10 part of second
 
 
@@ -100,11 +100,11 @@
 		exact = -1
 	var/list/datum/recipe/possible_recipes = new
 	for (var/datum/recipe/recipe in avaiable_recipes)
-		if (recipe.check_reagents(obj.reagents)==exact && recipe.check_items(obj)==exact)
+		if (recipe.check_reagents(obj.reagents) == exact && recipe.check_items(obj) == exact)
 			possible_recipes+=recipe
-	if (possible_recipes.len==0)
+	if (possible_recipes.len == 0)
 		return null
-	else if (possible_recipes.len==1)
+	else if (possible_recipes.len == 1)
 		return possible_recipes[1]
 	else //okay, let's select the most complicated recipe
 		var/r_count = 0
@@ -113,7 +113,7 @@
 		for (var/datum/recipe/recipe in possible_recipes)
 			var/N_i = (recipe.items)?(recipe.items.len):0
 			var/N_r = (recipe.reagents_list)?(recipe.reagents_list.len):0
-			if (N_i > i_count || (N_i== i_count && N_r > r_count ))
+			if (N_i > i_count || (N_i == i_count && N_r > r_count ))
 				r_count = N_r
 				i_count = N_i
 				. = recipe

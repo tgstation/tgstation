@@ -2,7 +2,7 @@
 	name = "magic eightball"
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "eightball"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -51,20 +51,20 @@
 		return
 
 	if(on_cooldown)
-		to_chat(user, "<span class='warning'>[src] was shaken recently, it needs time to settle.</span>")
+		to_chat(user, span_warning("[src] was shaken recently, it needs time to settle."))
 		return
 
-	user.visible_message("<span class='notice'>[user] starts shaking [src].</span>", "<span class='notice'>You start shaking [src].</span>", "<span class='hear'>You hear shaking and sloshing.</span>")
+	user.visible_message(span_notice("[user] starts shaking [src]."), span_notice("You start shaking [src]."), span_hear("You hear shaking and sloshing."))
 
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time, needhand=TRUE, target=user, progress=TRUE))
+	if(do_after(user, shake_time))
 		var/answer = get_answer()
 		say(answer)
 
 		on_cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/clear_cooldown), cooldown_time)
+		addtimer(CALLBACK(src, PROC_REF(clear_cooldown)), cooldown_time)
 
 	shaking = FALSE
 
@@ -97,7 +97,6 @@
 /obj/item/toy/eightball/haunted
 	shake_time = 30 SECONDS
 	cooldown_time = 3 MINUTES
-	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message
 	//these kind of store the same thing but one is easier to work with.
@@ -136,11 +135,8 @@
 	. = ..()
 	for (var/answer in haunted_answers)
 		votes[answer] = 0
-	GLOB.poi_list |= src
-
-/obj/item/toy/eightball/haunted/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
+	SSpoints_of_interest.make_point_of_interest(src)
+	become_hearing_sensitive()
 
 /obj/item/toy/eightball/haunted/MakeHaunted()
 	return FALSE
@@ -148,12 +144,12 @@
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
-		to_chat(user, "<span class='warning'>[src] is not currently being shaken.</span>")
+		to_chat(user, span_warning("[src] is not currently being shaken."))
 		return
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
 	last_message = raw_message
 

@@ -1,9 +1,9 @@
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/blobstrain/reagent/pressurized_slime
 	name = "Pressurized Slime"
-	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
-	effectdesc = "will also wet tiles near blobs that are attacked or killed."
-	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them.  Is resistant to brute attacks."
+	description = "will do low brute and oxygen damage, high stamina damage, and makes tiles under targets very slippery."
+	effectdesc = "will also make tiles slippery near attacked blobs."
+	analyzerdescdamage = "Does low brute and oxygen damage, high stamina damage, and makes tiles under targets very slippery, extinguishing them. Is resistant to brute attacks."
 	analyzerdesceffect = "When attacked or killed, lubricates nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
@@ -21,7 +21,7 @@
 
 /datum/blobstrain/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
 	if(damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER)
-		B.visible_message("<span class='boldwarning'>The blob ruptures, spraying the area with liquid!</span>")
+		B.visible_message(span_boldwarning("The blob ruptures, spraying the area with liquid!"))
 		extinguisharea(B, 50)
 
 /datum/blobstrain/reagent/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
@@ -31,7 +31,7 @@
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)
-				L.adjust_fire_stacks(-2.5)
+				L.adjust_wet_stacks(2.5)
 				L.extinguish_mob()
 
 /datum/reagent/blob/pressurized_slime
@@ -45,7 +45,7 @@
 	var/turf/open/location_turf = get_turf(exposed_mob)
 	if(istype(location_turf) && prob(reac_volume))
 		location_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		exposed_mob.adjust_fire_stacks(-(reac_volume / 10))
+		exposed_mob.adjust_wet_stacks(reac_volume / 10)
 	exposed_mob.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 	if(exposed_mob)
 		exposed_mob.adjustStaminaLoss(reac_volume, FALSE)

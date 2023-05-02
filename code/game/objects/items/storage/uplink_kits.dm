@@ -1,22 +1,56 @@
+#define KIT_RECON "recon"
+#define KIT_BLOODY_SPAI "bloodyspai"
+#define KIT_STEALTHY "stealth"
+#define KIT_SCREWED "screwed"
+#define KIT_SABOTAGE "sabotage"
+#define KIT_GUN "guns"
+#define KIT_MURDER "murder"
+#define KIT_IMPLANTS "implant"
+#define KIT_HACKER "hacker"
+#define KIT_SNIPER "sniper"
+#define KIT_NUKEOPS_METAGAME "metaops"
+#define KIT_LORD_SINGULOTH "lordsingulo"
 
+#define KIT_JAMES_BOND "bond"
+#define KIT_NINJA "ninja"
+#define KIT_DARK_LORD "darklord"
+#define KIT_WHITE_WHALE_HOLY_GRAIL "white_whale_holy_grail"
+#define KIT_MAD_SCIENTIST "mad_scientist"
+#define KIT_BEES "bee"
+#define KIT_MR_FREEZE "mr_freeze"
+#define KIT_TRAITOR_2006 "ancient"
+
+/// last audited december 2022
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
-	switch (pickweight(list("recon" = 2, "bloodyspai" = 3, "stealth" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "sniper" = 1, "metaops" = 1)))
-		if("recon")
+	switch (pick_weight(list(
+		KIT_RECON = 2,
+		KIT_BLOODY_SPAI = 3,
+		KIT_STEALTHY = 2,
+		KIT_SCREWED = 2,
+		KIT_SABOTAGE = 3,
+		KIT_GUN = 2,
+		KIT_MURDER = 2,
+		KIT_IMPLANTS = 1,
+		KIT_HACKER = 3,
+		KIT_SNIPER = 1,
+		KIT_NUKEOPS_METAGAME = 1
+		)))
+		if(KIT_RECON)
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
 			new /obj/item/storage/briefcase/launchpad(src) //6 tc
-			new	/obj/item/binoculars(src) // 2 tc?
+			new /obj/item/binoculars(src) // 2 tc?
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
 			new /obj/item/grenade/frag(src) // ~2 tc each?
 			new /obj/item/grenade/frag(src)
-			new /obj/item/flashlight/emp(src)
+			new /obj/item/flashlight/emp(src) // 4 tc
 
-		if("bloodyspai")
+		if(KIT_BLOODY_SPAI)
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
-			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/camera_bug(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
@@ -27,90 +61,96 @@
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 
-		if("stealth")
-			new /obj/item/gun/energy/kinetic_accelerator/crossbow(src)
-			new /obj/item/pen/sleepy(src)
-			new /obj/item/healthanalyzer/rad_laser(src)
-			new /obj/item/chameleon(src)
-			new /obj/item/soap/syndie(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/flashlight/emp(src)
-			new /obj/item/jammer(src)
+		if(KIT_STEALTHY)
+			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
+			new /obj/item/pen/sleepy(src) // 4 tc
+			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
+			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/soap/syndie(src) // 1 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/jammer(src) // 5 tc
 
-		if("guns")
-			new /obj/item/gun/ballistic/revolver(src)
+		if(KIT_GUN)
+			new /obj/item/gun/ballistic/revolver/syndicate(src) // 13 tc
+			new /obj/item/ammo_box/a357(src) // 4tc
 			new /obj/item/ammo_box/a357(src)
-			new /obj/item/ammo_box/a357(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/grenade/c4(src)
-			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc replaced the emag with the doorjack
+			new /obj/item/grenade/c4(src) // 1 tc
+			new /obj/item/clothing/gloves/latex/nitrile(src) // ~1 tc for whole outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
+			new /obj/item/clothing/neck/tie/red/hitman(src)
 
-		if("screwed")
-			new /obj/item/sbeacondrop/bomb(src)
-			new /obj/item/grenade/syndieminibomb(src)
-			new /obj/item/sbeacondrop/powersink(src)
+		if(KIT_SCREWED)
+			new /obj/item/sbeacondrop/bomb(src) // 11 tc
+			new /obj/item/grenade/syndieminibomb(src) // 6 tc
+			new /obj/item/sbeacondrop/powersink(src) // 11 tc
+			new /obj/item/clothing/suit/space/syndicate/black/red(src) // outfit 1 tc
+			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
+
+		if(KIT_MURDER)
+			new /obj/item/melee/energy/sword/saber(src) // 8 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
+			new /obj/item/grenade/syndieminibomb(src) // 6 tc
+
+		if(KIT_IMPLANTS)
+			new /obj/item/implanter/freedom(src) // 5 tc
+			new /obj/item/implanter/uplink/precharged(src) // 10 tc is inside this thing
+			new /obj/item/implanter/emp(src) // 1 tc
+			new /obj/item/implanter/explosive(src) // 2 tc
+			new /obj/item/implanter/storage(src) // 8 tc
+
+		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
+			new /obj/item/ai_module/syndicate(src) // 4 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/encryptionkey/binary(src) // 5 tc
+			new /obj/item/ai_module/toy_ai(src) // ~6 tc
+			new /obj/item/multitool/ai_detect(src) // 1 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+
+		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
+			new /obj/item/sbeacondrop(src) // 10 tc
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/encryptionkey/syndicate(src)
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/card/id/advanced/mining(src)
+			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
+			if(prob(70))
+				new /obj/item/toy/spinningtoy(src) //lol
+			else
+				new /obj/item/toy/spinningtoy/dark_matter(src) //edgy lol
 
-		if("murder")
-			new /obj/item/melee/transforming/energy/sword/saber(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src)
-			new /obj/item/encryptionkey/syndicate(src)
-			new /obj/item/grenade/syndieminibomb(src)
+		if(KIT_SABOTAGE)
+			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
+			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/sbeacondrop/powersink(src) // 11 tc
+			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/pizzabox/bomb(src) // 6 tc
+			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
 
-		if("implant")
-			new /obj/item/implanter/freedom(src)
-			new /obj/item/implanter/uplink/precharged(src)
-			new /obj/item/implanter/emp(src)
-			new /obj/item/implanter/adrenalin(src)
-			new /obj/item/implanter/explosive(src)
-			new /obj/item/implanter/storage(src)
-
-		if("hacker")
-			new /obj/item/ai_module/syndicate(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/ai_module/toy_ai(src)
-			new /obj/item/multitool/ai_detect(src)
-			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/camera_bug(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/card/id/syndicate(src)
-
-		if("lordsingulo")
-			new /obj/item/sbeacondrop(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/card/mining_access_card(src)
-			new /obj/item/stack/spacecash/c10000(src)
-			new /obj/item/toy/spinningtoy(src) //lol
-
-		if("sabotage")
-			/obj/item/storage/backpack/duffelbag/syndie/sabotage
-			new /obj/item/camera_bug(src)
-			new /obj/item/sbeacondrop/powersink(src)
-			new /obj/item/cartridge/virus/syndicate(src)
-			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/pizzabox/bomb(src)
-			new /obj/item/storage/box/syndie_kit/emp(src)
-
-		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
-			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
+			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
+			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
+			new /obj/item/clothing/neck/tie/red/hitman(src)
 
-		if("metaops")
-			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
+		if(KIT_NUKEOPS_METAGAME)
+			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -121,42 +161,61 @@
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
-	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
-		if("bond")
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/suppressor(src)
+	switch (pick_weight(list(
+		KIT_JAMES_BOND = 2,
+		KIT_NINJA = 1,
+		KIT_DARK_LORD = 1,
+		KIT_WHITE_WHALE_HOLY_GRAIL = 2,
+		KIT_MAD_SCIENTIST = 2,
+		KIT_BEES = 1,
+		KIT_MR_FREEZE = 2,
+		KIT_TRAITOR_2006 = 1
+		)))
+		if(KIT_JAMES_BOND)
+			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 tc
+			new /obj/item/suppressor(src) // 3 tc
+			new /obj/item/ammo_box/magazine/m9mm(src) // 1 tc
 			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/card/id/syndicate(src)
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
-			new /obj/item/reagent_containers/glass/rag(src)
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/clothing/under/chameleon(src) // 1 tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/cup/rag(src)
+			new /obj/item/implanter/freedom(src) // 5 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/grenade/c4/x4(src) // 1ish tc
+			new /obj/item/reagent_containers/pill/cyanide(src)
+			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
-		if("ninja")
+		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
-			new /obj/item/implanter/adrenalin(src) // 8 tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
-				new /obj/item/throwing_star(src) // ~5 tc for all 6
-			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
-			new /obj/item/card/id/syndicate(src) // 2 tc
+				new /obj/item/throwing_star(src) // 1 tc
+			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
 			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb. 1 tc
+			new /obj/item/clothing/shoes/bhop(src) // mining item, lets you jump at people, at least 2 tc
 
-		if("darklord")
-			new /obj/item/dualsaber(src)
-			new /obj/item/dnainjector/telemut/darkbundle(src)
+		if(KIT_DARK_LORD)
+			new /obj/item/dualsaber/red(src) // 16 tc
+			new /obj/item/dnainjector/telemut/darkbundle(src) // ~ 4 tc for tk
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-			new /obj/item/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
-			new /obj/item/book/granter/spell/summonitem(src)
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //2 tc ,because slipping while being a dark lord sucks
+			new /obj/item/book/granter/action/spell/summonitem(src) // ~2 tc
+			new /obj/item/book/granter/action/spell/lightningbolt(src) // 4 tc
 
-		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
-			new /obj/item/pneumatic_cannon/speargun(src)
-			new /obj/item/storage/backpack/magspear_quiver(src)
-			new /obj/item/clothing/suit/space/hardsuit/carp(src)
+		if(KIT_WHITE_WHALE_HOLY_GRAIL) //Unique items that don't appear anywhere else
+			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
+			new /obj/item/storage/bag/harpoon_quiver(src)
+			new /obj/item/clothing/suit/hooded/carp_costume/spaceproof(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+			new /obj/item/toy/plush/carpplushie/dehy_carp(src) // 1 tc, for use as a personal mount
 
-		if("mad_scientist")
+		if(KIT_MAD_SCIENTIST)
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
 			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
 			new /obj/item/megaphone(src) // 0 tc
@@ -168,34 +227,50 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
-			new /obj/item/pen/edagger(src)
-			new /obj/item/gun/energy/wormhole_projector/core_inserted(src)
-			new /obj/item/gun/energy/decloner/unrestricted(src)
+			new /obj/item/pen/edagger(src) // 2 tc
+			new /obj/item/gun/energy/wormhole_projector/core_inserted(src) // 5 tc easily
+			new /obj/item/gun/energy/decloner/unrestricted(src) // 5 tc at least also
 
-		if("bee")
+		if(KIT_BEES)
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
-			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
+			new /obj/item/clothing/mask/animal/small/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
-			new /obj/item/grenade/spawnergrenade/buzzkill(src)
-			new /obj/item/grenade/spawnergrenade/buzzkill(src)
-			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // these are the random super bees this is definitely all of the tc budget for this one
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // 10 tc per grenade
+			new /obj/item/reagent_containers/cup/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
-		if("mr_freeze")
+		if(KIT_MR_FREEZE)
 			new /obj/item/clothing/glasses/cold(src)
 			new /obj/item/clothing/gloves/color/black(src)
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/grenade/gluon(src) // whole belt is 22 and gluon is weight 4 so lets just go with like 7 total
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
-			new /obj/item/grenade/gluon(src)
-			new /obj/item/dnainjector/geladikinesis(src)
+			new /obj/item/dnainjector/geladikinesis(src) // both abilities are probably 3 tc total
 			new /obj/item/dnainjector/cryokinesis(src)
-			new /obj/item/gun/energy/temperature/security(src)
-			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
+			new /obj/item/gun/energy/temperature/freeze(src) // ~6 tc
+			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
+			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
+
+		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
+			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
+
+/obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
+
+/obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
+	new /obj/item/card/emag(src) // 4 tc
+	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
+	new /obj/item/pen/sleepy(src) // 4 tc
+	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
+	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
+	new /obj/item/implanter/freedom(src) // 5 tc
+	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
@@ -212,8 +287,8 @@
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
 
-/obj/item/paper/contractor_guide/Initialize()
-	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
+/obj/item/paper/contractor_guide/Initialize(mapload)
+	default_raw_text = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
 
 			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
@@ -252,57 +327,7 @@
 			ID card you have equipped, on top of the TC payment we give.</p>
 
 			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
-
 	return ..()
-
-/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
-	new /obj/item/clothing/suit/space/syndicate/contract(src)
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/card/id/syndicate(src)
-	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
-	new /obj/item/lighter(src)
-
-/obj/item/storage/box/syndicate/contract_kit/PopulateContents()
-	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
-	new /obj/item/storage/box/syndicate/contractor_loadout(src)
-	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
-
-	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
-	var/list/item_list = list(
-		/obj/item/storage/backpack/duffelbag/syndie/x4,
-		/obj/item/storage/box/syndie_kit/throwing_weapons,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/pen/edagger,
-		/obj/item/pen/sleepy,
-		/obj/item/flashlight/emp,
-		/obj/item/reagent_containers/syringe/mulligan,
-		/obj/item/clothing/shoes/chameleon/noslip,
-		/obj/item/storage/firstaid/tactical,
-		/obj/item/encryptionkey/syndicate,
-		/obj/item/clothing/glasses/thermal/syndi,
-		/obj/item/slimepotion/slime/sentience/nuclear,
-		/obj/item/storage/box/syndie_kit/imp_radio,
-		/obj/item/storage/box/syndie_kit/imp_uplink,
-		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
-		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
-		/obj/item/reagent_containers/hypospray/medipen/stimulants,
-		/obj/item/storage/box/syndie_kit/imp_freedom,
-		/obj/item/toy/eightball/haunted
-	)
-
-	var/obj/item1 = pick_n_take(item_list)
-	var/obj/item2 = pick_n_take(item_list)
-	var/obj/item3 = pick_n_take(item_list)
-
-	// Create two, non repeat items from the list.
-	new item1(src)
-	new item2(src)
-	new item3(src)
-
-	// Paper guide
-	new /obj/item/paper/contractor_guide(src)
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
@@ -357,12 +382,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/firing_pin/clown/ultra(src)
 
-/obj/item/storage/box/syndie_kit/imp_adrenal
-	name = "adrenal implant box"
-
-/obj/item/storage/box/syndie_kit/imp_adrenal/PopulateContents()
-	new /obj/item/implanter/adrenalin(src)
-
 /obj/item/storage/box/syndie_kit/imp_storage
 	name = "storage implant box"
 
@@ -384,11 +403,10 @@
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 
-/obj/item/storage/box/syndie_kit/space/ComponentInitialize()
+/obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
 	if(prob(50))
@@ -410,29 +428,29 @@
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 
-/obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
+/obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 14
+	atom_storage.max_slots = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/polonium(src)
-	new /obj/item/reagent_containers/glass/bottle/venom(src)
-	new /obj/item/reagent_containers/glass/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
-	new /obj/item/reagent_containers/glass/bottle/spewium(src)
-	new /obj/item/reagent_containers/glass/bottle/cyanide(src)
-	new /obj/item/reagent_containers/glass/bottle/histamine(src)
-	new /obj/item/reagent_containers/glass/bottle/initropidril(src)
-	new /obj/item/reagent_containers/glass/bottle/pancuronium(src)
-	new /obj/item/reagent_containers/glass/bottle/sodium_thiopental(src)
-	new /obj/item/reagent_containers/glass/bottle/coniine(src)
-	new /obj/item/reagent_containers/glass/bottle/curare(src)
-	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
+	new /obj/item/reagent_containers/cup/bottle/polonium(src)
+	new /obj/item/reagent_containers/cup/bottle/venom(src)
+	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
+	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/bottle/spewium(src)
+	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
+	new /obj/item/reagent_containers/cup/bottle/histamine(src)
+	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
+	new /obj/item/reagent_containers/cup/bottle/pancuronium(src)
+	new /obj/item/reagent_containers/cup/bottle/sodium_thiopental(src)
+	new /obj/item/reagent_containers/cup/bottle/coniine(src)
+	new /obj/item/reagent_containers/cup/bottle/curare(src)
+	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
-	name = "box"
+	name = "nuke core extraction kit"
+	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."
 
 /obj/item/storage/box/syndie_kit/nuke/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -440,7 +458,8 @@
 	new /obj/item/paper/guides/antag/nuke_instructions(src)
 
 /obj/item/storage/box/syndie_kit/supermatter
-	name = "box"
+	name = "supermatter sliver extraction kit"
+	desc = "A box containing the equipment and instructions for extracting a sliver of supermatter."
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/scalpel/supermatter(src)
@@ -456,7 +475,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/reagent_containers/glass/bottle/tuberculosiscure(src)
+	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
@@ -474,7 +493,8 @@
 	new /obj/item/storage/belt/chameleon(src)
 	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
-	new /obj/item/pda/chameleon(src)
+	new /obj/item/modular_computer/pda/chameleon(src)
+	new /obj/item/gun/energy/laser/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -492,7 +512,7 @@
 	new/obj/item/toy/crayon/rainbow(src)
 
 /obj/item/storage/box/syndie_kit/romerol/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/romerol(src)
+	new /obj/item/reagent_containers/cup/bottle/romerol(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/dropper(src)
 
@@ -504,8 +524,14 @@
 	new /obj/item/gun/ballistic/revolver/reverse(src)
 
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
-	new /obj/item/book/granter/spell/mimery_blockade(src)
-	new /obj/item/book/granter/spell/mimery_guns(src)
+	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
+	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
+	new /obj/item/food/baguette/combat(src)
+	for(var/i in 1 to 2)
+		new /obj/item/food/croissant/throwing(src)
+	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
@@ -514,7 +540,7 @@
 	new /obj/item/radio/headset/headset_cent/empty(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/pda/heads(src)
+	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
@@ -530,7 +556,7 @@
 	new /obj/item/storage/belt/chameleon/broken(src)
 	new /obj/item/radio/headset/chameleon/broken(src)
 	new /obj/item/stamp/chameleon/broken(src)
-	new /obj/item/pda/chameleon/broken(src)
+	new /obj/item/modular_computer/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
 
 /obj/item/storage/box/syndie_kit/bee_grenades
@@ -543,9 +569,19 @@
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
-	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
+	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
+
+/// Surplus Ammo Box
+
+/obj/item/storage/box/syndie_kit/surplus
+	name = "surplus .50 BMG magazine box"
+	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
+
+/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
@@ -565,3 +601,65 @@
 /obj/item/storage/box/syndie_kit/signaler/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/assembly/signaler(src)
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle
+	name = "deathrattle implant box"
+	desc = "Contains eight linked deathrattle implants."
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
+	new /obj/item/implanter(src)
+
+	var/datum/deathrattle_group/group = new
+
+	var/implants = list()
+	for(var/j in 1 to 8)
+		var/obj/item/implantcase/deathrattle/case = new (src)
+		implants += case.imp
+
+	for(var/i in implants)
+		group.register(i)
+	desc += " The implants are registered to the \"[group.name]\" group."
+
+/obj/item/storage/box/syndie_kit/stickers
+	name = "sticker kit"
+
+/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+
+/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+	var/list/types = subtypesof(/obj/item/sticker/syndicate)
+	for(var/i in 1 to atom_storage.max_slots)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/pinata
+	name = "weapons grade pinata kit"
+	desc = "Contains a weapons grade pinata and 2 belts for carrying its contents."
+
+/obj/item/storage/box/syndie_kit/pinata/PopulateContents()
+	new /obj/item/pinata/syndie(src)
+	new /obj/item/storage/belt/grenade(src)
+	new /obj/item/storage/belt/military/snack(src)
+
+#undef KIT_RECON
+#undef KIT_BLOODY_SPAI
+#undef KIT_STEALTHY
+#undef KIT_SCREWED
+#undef KIT_SABOTAGE
+#undef KIT_GUN
+#undef KIT_MURDER
+#undef KIT_IMPLANTS
+#undef KIT_HACKER
+#undef KIT_SNIPER
+#undef KIT_NUKEOPS_METAGAME
+#undef KIT_LORD_SINGULOTH
+
+#undef KIT_JAMES_BOND
+#undef KIT_NINJA
+#undef KIT_DARK_LORD
+#undef KIT_WHITE_WHALE_HOLY_GRAIL
+#undef KIT_MAD_SCIENTIST
+#undef KIT_BEES
+#undef KIT_MR_FREEZE
+#undef KIT_TRAITOR_2006

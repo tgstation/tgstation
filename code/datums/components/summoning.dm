@@ -11,7 +11,7 @@
 	var/list/spawned_mobs = list()
 
 /datum/component/summoning/Initialize(mob_types, spawn_chance=100, max_mobs=3, spawn_delay=100, spawn_text="appears out of nowhere", spawn_sound='sound/magic/summon_magic.ogg', faction)
-	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent))
+	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent) && !isprojectilespell(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.mob_types = mob_types
@@ -23,15 +23,15 @@
 	src.faction = faction
 
 /datum/component/summoning/RegisterWithParent()
-	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
-		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+	if(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent)) // turrets, etc
+		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(ishostile(parent))
-		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 
 /datum/component/summoning/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
@@ -39,13 +39,16 @@
 	if(!proximity_flag)
 		return
 	do_spawn_mob(get_turf(target), user)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
-/datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
+	if(!success)
+		return
 	do_spawn_mob(get_turf(target), attacker)
 
-/datum/component/summoning/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+/datum/component/summoning/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	do_spawn_mob(get_turf(target), firer)
@@ -66,9 +69,9 @@
 	spawned_mobs += L
 	if(faction != null)
 		L.faction = faction
-	RegisterSignal(L, COMSIG_MOB_DEATH, .proc/on_spawned_death) // so we can remove them from the list, etc (for mobs with corpses)
+	RegisterSignal(L, COMSIG_LIVING_DEATH, PROC_REF(on_spawned_death)) // so we can remove them from the list, etc (for mobs with corpses)
 	playsound(spawn_location,spawn_sound, 50, TRUE)
-	spawn_location.visible_message("<span class='danger'>[L] [spawn_text].</span>")
+	spawn_location.visible_message(span_danger("[L] [spawn_text]."))
 
 /datum/component/summoning/proc/on_spawned_death(mob/killed, gibbed)
 	SIGNAL_HANDLER

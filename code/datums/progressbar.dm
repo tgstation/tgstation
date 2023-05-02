@@ -32,12 +32,12 @@
 		return
 	goal = goal_number
 	bar_loc = target
-	bar = image('icons/effects/progessbar.dmi', bar_loc, "prog_bar_0", HUD_LAYER)
-	bar.plane = ABOVE_HUD_PLANE
+	bar = image('icons/effects/progessbar.dmi', bar_loc, "prog_bar_0")
+	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, User)
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
 
-	LAZYADDASSOC(user.progressbars, bar_loc, src)
+	LAZYADDASSOCLIST(user.progressbars, bar_loc, src)
 	var/list/bars = user.progressbars[bar_loc]
 	listindex = bars.len
 
@@ -45,9 +45,9 @@
 		user_client = user.client
 		add_prog_bar_image_to_client()
 
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/on_user_delete)
-	RegisterSignal(user, COMSIG_MOB_LOGOUT, .proc/clean_user_client)
-	RegisterSignal(user, COMSIG_MOB_LOGIN, .proc/on_user_login)
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_delete))
+	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
+	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 
 
 /datum/progressbar/Destroy()

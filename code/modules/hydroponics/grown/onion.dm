@@ -4,7 +4,7 @@
 	icon_state = "seed-onion"
 	species = "onion"
 	plantname = "Onion Sprouts"
-	product = /obj/item/reagent_containers/food/snacks/grown/onion
+	product = /obj/item/food/grown/onion
 	lifespan = 20
 	maturation = 3
 	production = 4
@@ -14,20 +14,19 @@
 	growthstages = 3
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.25)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
-/obj/item/reagent_containers/food/snacks/grown/onion
+/obj/item/food/grown/onion
 	seed = /obj/item/seeds/onion
 	name = "onion"
 	desc = "Nothing to cry over."
 	icon_state = "onion"
-	filling_color = "#C0C9A0"
-	bitesize_mod = 2
 	tastes = list("onions" = 1)
-	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice
-	slices_num = 2
 	wine_power = 30
+
+/obj/item/food/grown/onion/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15, screentip_verb = "Cut")
 
 /obj/item/seeds/onion/red
 	name = "pack of red onion seeds"
@@ -36,40 +35,43 @@
 	species = "onion_red"
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
-	product = /obj/item/reagent_containers/food/snacks/grown/onion/red
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
+	product = /obj/item/food/grown/onion/red
+	mutatelist = null
 
-/obj/item/reagent_containers/food/snacks/grown/onion/red
+/obj/item/food/grown/onion/red
 	seed = /obj/item/seeds/onion/red
 	name = "red onion"
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
-	filling_color = "#C29ACF"
-	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice/red
 	wine_power = 60
 
-/obj/item/reagent_containers/food/snacks/grown/onion/slice(accuracy, obj/item/W, mob/user)
-	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
-	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
-	S.attach(splat_location)
-	S.set_up(reagents, 0, splat_location, 0)
-	if(..())
-		S.start()
-		return TRUE
-	qdel(S)
+/obj/item/food/grown/onion/red/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15, screentip_verb = "Cut")
 
-/obj/item/reagent_containers/food/snacks/onion_slice
-	name = "onion slices"
-	desc = "Rings, not for wearing."
+/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
+	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
+	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
+	cry_about_it.attach(splat_location)
+	cry_about_it.set_up(0, holder = src, location = splat_location, carry = reagents, silent = FALSE)
+	cry_about_it.start()
+	qdel(cry_about_it)
+	return ..()
+
+/obj/item/food/onion_slice
+	name = "onion slice"
+	desc = "Ring, not for wearing."
 	icon_state = "onionslice"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	filling_color = "#C0C9A0"
-	gender = PLURAL
-	cooked_type = /obj/item/reagent_containers/food/snacks/onionrings
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/reagent_containers/food/snacks/onion_slice/red
-	name = "red onion slices"
-	desc = "They shine like exceptionally low quality amethyst."
+/obj/item/food/onion_slice/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/onionrings, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
+/obj/item/food/onion_slice/make_microwaveable()
+	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
+
+/obj/item/food/onion_slice/red
+	name = "red onion slice"
+	desc = "It shines like an exceptionally low quality amethyst."
 	icon_state = "onionslice_red"
-	filling_color = "#C29ACF"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)

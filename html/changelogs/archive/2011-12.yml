@@ -1,0 +1,179 @@
+2011-12-03:
+  Errorage:
+  - unknown: Grass plants in hydro now make grass floor tiles instead of the awkward
+      patches.
+  Numbers:
+  - unknown: Potency variations tipped in favour of bigger changes over smaller periods
+      of time.
+  'Pete & Erro Christmas update:':
+  - unknown: Reinforced metal renamed to steel and steel floor tile renamed to metal
+      floor tile to avoid confusion before it even happens.
+  - unknown: It is no longer possible to make steel from metal or vice versa or from
+      the autolathe. You can however make metal from the autolathe and still insert
+      steel to increase the metal resource.
+  - unknown: To make steel you can now use the mining smelting unit and smelt iron
+      and plasma ore.
+  - unknown: The RCD can no longer take down reinforced walls.
+  Petethegoat:
+  - unknown: Fixed all known vending machine issues.
+  - unknown: Fixed a minor visual bug with emagged lockers.
+  - unknown: Clarified some of the APC construction/deconstruction messages.
+  PolymorphBlue:
+  - unknown: Traitors in the escape shuttle's prison cell will now fail their objective.
+  - unknown: Lockers are no longer soundproof! (or flashproof, for that matter)
+  - unknown: "Headrevs can no longer be borged, revs are dereved when borged.\n  "
+2011-12-08:
+  Errorage:
+  - unknown: Fixed the comms console locking up when you tried to change the alert
+      level.
+  - unknown: Added a keycard authentication device, which is used for high-security
+      events. The idea behind it is the same as the two-key thing from submarine movies.
+      You select the event you wish to trigger on one of the devices and then swipe
+      your ID, if someone swipes their ID on one of the other devices within 2 seconds,
+      the event is enacted. These devices are in each of the head's offices and all
+      heads have the access level to confirm an event, it can also be added to cards
+      at the HoP's ID computer. The only event that can currently be enacted is Red
+      alert.
+  Kor:
+  - unknown: The chef now has a fancy dinner mint in his kitchen. It is only wafer
+      thin!
+2011-12-10:
+  Doohl:
+  - unknown: Title music now plays in the pregame lobby. You can toggle this with
+      a verb in "Special Verbs" if you really want to.
+  - unknown: User Interface preferences now properly get transferred when you get
+      cloned.
+  Erro:
+  - unknown: Escape pods have been added to test the concept.
+  - unknown: Escaping alone in a pod does not count towards the escape alone objective,
+      it counts towards the escape alive objective tho. Escape alone only requires
+      you to escape alone on the emergency shuttle, it doesn't require you to ensure
+      all pods are empty. Cult members that escape on the pods do not ocunt towards
+      the cult escaping acolyte number objective. Escaping on a pod is a valid way
+      to survive meteor.
+  Polymorph:
+  - unknown: ' Fire is now actually dangerous.  Do not touch fire. '
+2011-12-11:
+  NEO:
+  - unknown: AIs actually consume power from APCs now
+  - unknown: Bigass malf overhaul. tl;dr no more AI sat, instead you have to play
+      whackamole with APCs.
+2011-12-14:
+  Erro:
+  - unknown: Meteor mode is hopefully deadly again!
+  Kor:
+  - unknown: 'Research director has a new toy: Reactive Teleport Armour. Click it
+      in your hand to activate it and try it out!'
+2011-12-17:
+  Erro:
+  - unknown: Your direct supervisors are now displayed when you are assigned a job
+      at round start or late join.
+2011-12-18:
+  Carnwennan:
+  - unknown: Thanks to the wonders of modern technology and the Nanotrasen steel press
+      Ian's head has been shaped to fit even more silly hats. The taxpayers will be
+      pleased.
+  Doohl:
+  - unknown: Vending machines got yet another overhaul! <i>Good lord</i>, when will
+      they stop assfucking those damned vendors??
+2011-12-19:
+  Kor:
+  - unknown: "General/Misc Changes\n\t<ul>\n\t<li>Escape pods no longer go to the\
+      \ horrific gibbing chambers. Rather, they will be picked up by a salvage ship\
+      \ in deep space. (This basically changes nothing mechanics wise, just fluff)</li>\n\
+      \t<li>An ion rifle now spawns on the nuclear operative shuttle. Maybe this will\
+      \ help with them getting destroyed by sec borgs every round?</li>\n\t</ul>\n\
+      \t"
+  - unknown: "Wizard Changes\n\t<ul>\n\t<li>The wizard can now purchase magic artefacts\
+      \ in addition to spells in a subsection of the spellbook.</li>\n\t<li>The first\
+      \ (and currently only) new artefact is the Staff of Change, which functions\
+      \ as a self recharging energy weapon with some special effects.</li>\n\t<li>The\
+      \ wizard has a new alternative set of robes on his shuttle.</li>\n\t\n\t</ul>\n\
+      \t"
+  - unknown: "Cult Changes<ul>\n\t<li>Cultists now each start with three words (join,\
+      \ blood, self). No more will you suffer at the hands of cultists who refuse\
+      \ to share words.</li>\n\t<li>The starting supply talisman can now be used five\
+      \ times and can now be used to spawn armor and a blade.</li>\n\t<li>Replaced\
+      \ the sprites on the cultist robes/hood.</li>\n\t</ul>"
+2011-12-21:
+  RavingManiac:
+  - unknown: Kitchen cold room is now cooled by a freezing unit. Temperature is about
+      240K by default, but can be raised to room temperature or lowered to lethal
+      coldness.
+2011-12-23:
+  ConstantA:
+  - unknown: Mech Fabricators now require robotics ID to operate. Emag removes this
+      restriction.
+  - unknown: Added Odysseus Medical Exosuit. Has integrated Medical Hud and ability
+      to mount medical modules.
+  - unknown: Added Sleeper Medical module for exosuits. Similar to common sleepers,
+      but no ability to inject reagents.
+  - unknown: Added Cable Layer module for exosuits. Load with cable (attack cable
+      with it), activate, walk over dismantled floor.
+  - unknown: Added another exosuit internal damage type - short circuit. Short-circuited
+      exosuits will drain powercell charge and power relay won't work.
+  - unknown: You should be able to send messages to exosuit operators using Exosuit
+      Control Console
+  - unknown: Gygax armour and module capacity nerfed.
+  - unknown: Exosuit weapon recharge time raised.
+  - unknown: 'Bugfix: EMP actually drains exosuit cell and damages it'
+  RavingManiac:
+  - unknown: Meat will now spoil within three minutes at temperatures between 0C and
+      100C.
+  - unknown: 'Rotten meat has the same nutritional value as normal meat, and can be
+      used in
+
+      the same recipes. However, it is toxic, and ingesting a badly-prepared big bite
+
+      burger can kill you.'
+  - unknown: 'Because refrigeration serves a purpose now, the kitchen cold room freezing
+      unit
+
+      is turned off by default. Chefs should remember to turn the freezer on at the
+
+      start of their shift.'
+2011-12-24:
+  Rockdtben:
+  - unknown: 'Added sprites for soda can in left and right hands on mob: sodawater,
+      tonic, purple_can, ice_tea_can, energy_drink, thirteen_loko, space_mountain_wind,
+      dr_gibb, starkist, space-up, and lemon-lime.'
+2011-12-25:
+  /tg/station team:
+  - unknown: ' working on christmas??'
+  ConstantA:
+  - unknown: Circuit boards for Odysseus mech can be ordered by QM
+  - unknown: Designs for them were added to R&amp;amp;D
+  Kor:
+  - unknown: 'Soul Stones Added: Like intellicards for dead or dying humans! Full
+      details are too long for the changelog'
+  - unknown: A belt full of six soul stones is available as an artefact for the wizard
+  - unknown: Cultists can buy soulstones with their supply talisman
+  - unknown: The chaplain has a single soulstone on his desk
+  - unknown: The reactive teleport armour's test run is over. It no longer spawns
+      in the RD's office.
+2011-12-27:
+  Errorage:
+  - unknown: Engineering's been remapped
+  RavingManiac:
+  - unknown: Refrigerators and freezer crates will now preserve meat
+2011-12-28:
+  RavingManiac:
+  - unknown: Wrapped objects can now be labelled with a pen
+  - unknown: Wrapped small packages can be picked up, and are now opened by being
+      used on themselves
+  - unknown: Mail office remapped such that packages flushed down disposals end up
+      on a special table
+  - unknown: Package wrappers placed in most of the station departments
+  - unknown: In short, you can now mail things to other departments by wrapping the
+      object, labelling it with the desired destination using a pen, and flushing
+      it down disposals. At the mail room, the cargo tech will then tag and send the
+      package to the department.
+2011-12-29:
+  ConstantA:
+  - unknown: Added some new Odysseus parts and tweaked old ones.
+  - unknown: Added Exosuit Syringe Gun Module
+  - unknown: New Odysseus sprites - courtesy of Veyveyr
+  Polymorph:
+  - unknown: Air Alarms can now be hacked.
+  - unknown: Too much of a good thing is just as bad as too little.  Pressures over
+      3000 kPa will do brute damage.

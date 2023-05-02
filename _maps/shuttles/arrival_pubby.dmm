@@ -12,12 +12,12 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "e" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
@@ -27,9 +27,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/sign/poster/official/enlist{
 	pixel_y = 32
 	},
@@ -44,38 +42,31 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "j" = (
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
-	},
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/light/directional/north,
+/obj/machinery/requests_console/directional/north{
+	department = "Arrivals shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "k" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "l" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "m" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "arrivy";
-	name = "ship shutters"
+	name = "Ship Shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "n" = (
@@ -91,50 +82,43 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /obj/docking_port/mobile/arrivals{
-	height = 13;
-	name = "pubby arrivals shuttle";
-	width = 6
+	name = "pubby arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "q" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "s" = (
 /obj/structure/closet/emcloset,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "t" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -29
-	},
-/obj/machinery/light,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "u" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/light,
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

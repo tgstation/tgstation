@@ -1,0 +1,204 @@
+2016-01-01:
+  Iamgoofball:
+  - experiment: Redid how objectives are assigned, they're now a lot more random in
+      terms of what you can get.
+  Incoming5643:
+  - tweak: Removed gender restrictions from socks.
+  Joan:
+  - rscdel: Storage Blobs are gone; they were effectively a waste of resources, as
+      there are more or less no points at which you should need them, unless you were
+      winning excessively hard.
+  - rscdel: Blobs can no longer burst early; instead, the button gives some early
+      help and serves to indicate you're a blob.
+  - wip: Blobbernauts now poll candidates instead of grabbing a candidate immediately.
+      The poll is 5 seconds, so that there's no significant pause between making a
+      blobbernaut and it doing stuff.
+  - rscadd: Blobbernaut creation replaces Storage Blob creation on the blob HUD.
+  - tweak: Overmind communication is now much larger and easier to see, and blob mobs,
+      such as blobbernauts, will hear it.
+  Kor:
+  - rscadd: The wizard has a new spell, Lesser Summon Guns. This summons an unending
+      stream of single shot bolt action rifles into his hands, automatically replacing
+      themselves as you fire.
+  - bugfix: Fixes successive generations of grey tide clones not despawning.
+  - tweak: Using challenge ops now delays shuttle refuel.
+  - rscadd: Added a new wizard event, Advanced Darkness.
+  MrStonedOne:
+  - experiment: GHOST POPUP RE-WORK
+  - bugfix: Ghost popups will no longer steal focus
+  - bugfix: Ghost popups will no longer submit on key press (regardless of focus)
+      unless you tab to a button first
+  - tweak: Ghost popups will close themselves after the time out has ended
+  - rscadd: Ghost popups are now themed.
+  - tweak: Long actions (like resisting out of handcuffs) will no longer count space/nograv
+      drifting as the user moving.
+  - tweak: This does not apply to the target of a long action if that target isn't
+      you. Pulling something while space drifting and working on it intentionally
+      won't work.
+2016-01-02:
+  Kor:
+  - rscadd: Guardians/Parasites are now named after constellations, and have new sprites
+      from Ausops.
+  Kor and GunHog:
+  - rscadd: Malfunctioning AIs can now purchase Enhanced Surveillance for 30 points,
+      which allows them to "hear" with their camera eye.
+  MMMiracles:
+  - rscadd: A distress signal was recently discovered with gateway coordinates attached
+      to a far-off research facility owned by Nanotrasen. The signal was sent out
+      in hopes of someone competent receiving it, unfortunately, your station was
+      the only one to respond. Local security forces may not be welcoming your arrival
+      group with open arms.
+2016-01-07:
+  KorPhaeron:
+  - tweak: Doubled cost of Lesser Summon Guns to 4 and increased charge time to 75
+      seconds.
+  TrustyGun:
+  - rscadd: 'Added two new UI styles: black and green Operative and pale green Slimecore.'
+2016-01-09:
+  Wjohnston:
+  - wip: AI Satellite has been remapped to make it more secure.
+2016-01-11:
+  Joan:
+  - rscdel: Blob cores and nodes no longer cause normal pulsed blobs to animate. Factories
+      and resource nodes will still animate.
+  - imageadd: Holoparasite sprites have been updated again, are now named after silvery
+      metals and flowers and can also be colored purple, blue or yellow.
+  xxalpha:
+  - tweak: Pipes and cables under walls, intact floors, grilles and reinforced windows
+      will now be shielded from explosions until exposed.
+2016-01-13:
+  Joan:
+  - imageadd: Alien whisper ability has a new icon
+  MrStonedOne:
+  - tweak: Control clicking on the thing you are pulling will no longer unpull, instead
+      control clicking on anything too far away to be pulled will unpull. (reminder
+      that the delete key also unpulls)
+  OneArmedYeti:
+  - imageadd: To help with colorblindness, gang HUDs have been changed so leaders
+      have a border and normal gangster icons are smaller.
+2016-01-15:
+  Joan:
+  - bugfix: Holoparasites can no longer beat their owner to death while inside of
+      them.
+  - spellcheck: Updates traitor holoparasite descriptions for accuracy.
+  - spellcheck: Adds 8 additional silvery metals to the holoparasite name pool.
+  - imageadd: Adds two new holoparasite colors, light purple and red.
+  - imageadd: Holoparasite HUD buttons now have new sprites.
+  - imageadd: Adds glow effects when guardians teleport or recall, including fire
+      guardian teleporting and support guardian teleporting.
+  Kor:
+  - rscadd: Washing machines are activated via alt+click rather than a right click
+      verb.
+2016-01-16:
+  Joan:
+  - imageadd: Alien queens and praetorians have suitably large speechbubbles.
+  - imageadd: Syndicate cyborgs and syndrones have suitably evil robotic speechbubbles.
+  - imageadd: Blob mobs have suitably uncomfortable-looking speechbubbles.
+  - imageadd: Holoparasites and guardians have suitably robotic and magical speechbubbles.
+  - imageadd: Swarmers have suitably holographic speechbubbles.
+  - imageadd: Slimes have suitably slimy speechbubbles.
+2016-01-17:
+  Joan:
+  - bugfix: You can once again repair a hacked APC by using an APC frame on it instead
+      of welding it off the wall, at the same stage as you'd weld it off the wall.
+  MrStonedOne:
+  - bugfix: Control clicking on a turf now un-pulls
+2016-01-19:
+  neersighted:
+  - rscadd: Many many interfaces have been ported to tgui; uplinks and MULEbots being
+      the most important
+  - rscadd: You can now tune radios by entering a frequency
+  - bugfix: Air Alarms now support any gas
+2016-01-23:
+  neersighted:
+  - experiment: Refactor wires; port wire interface to tgui.
+  - rscadd: Wire colors are now fully randomized.
+  - rscdel: Remove pizza bombs, as the code and sprites were terrible.
+  - rscadd: Add pizza bomb cores, which can be combined with a pizza box to make a
+      pizza bomb.
+  octareenroon91:
+  - bugfix: Chemistry machinery should now all equally accept beakers, drinking glasses,
+      etc.
+2016-01-27:
+  Joan:
+  - tweak: Golems have about a 40% chance to stun with punches, from about 60%.
+  - tweak: Millitary Synths have about a 50% chance to stun with punches, from literally
+      100%.
+  - wip: Blobbernaut creation costs 30 points, and does much more damage to the factory.
+  - rscdel: Blob factories regenerate at half normal rate.
+  - tweak: Blob reagents tweaked;
+  - rscadd: Ripping Tendrils does slightly more brute damage, but less stamina damage.
+  - rscdel: Lexorin Jelly does less brute damage.
+  - rscadd: Energized Fibers does slightly more burn damage.
+  - rscadd: Sporing Pods does slightly more toxin damage.
+  - rscadd: Replicating Foam will try to replicate when hit more often.
+  - rscadd: Hallucinogenic Nectar does slightly more toxin damage and causes hallucinations
+      for longer.
+  - rscadd: Cryogenic Liquid does more burn damage.
+  - experiment: Synchronous Mesh does slightly less damage with one blob but massive
+      damage with more than one nearby blob.
+  - rscdel: Dark Matter does less brute damage.
+  - rscdel: Sorium does slightly less brute damage.
+  - rscdel: Pressurized Slime has a lower chance to emit water when killed and when
+      attacking targets.
+  - tweak: Supermatter explosion is no longer capped, and under normal conditions
+      will produce a 8/16/24 explosion when delaminating.
+  - imageadd: Blob tiles now do an attack animation when failing to expand into a
+      turf.
+  - imageadd: Overmind-directed expansion is more visible than automatic expansion.
+  Kor:
+  - rscadd: Capture the flag has been added in space near central command. The spawners
+      are disabled by default, so be sure to harass admins when you die until they
+      let you play. The arena was mapped by Ausops.
+  - rscadd: Nuke ops can purchase mosin nagants for 2 telecrystals.
+  MrStonedOne:
+  - bugfix: Fixes the powersink drawing less power than the smeses put out.
+  - tweak: Made the powersink hold significantly more power before overloading and
+      going boom.
+  - tweak: Buffed the explosion of the power sink when it overloads. You are suggested
+      to think twice about wiring the engine to the grid.
+  PKPenguin321:
+  - rscadd: The Autoimplanter, a device that can insert cyberimplants into humans
+      instantly and without the need of surgery, has been added to the game. It is
+      currently only obtainable by nuke ops, by way of being included in the Box of
+      Implants.
+2016-01-28:
+  Joan:
+  - rscadd: Blobs can communicate before bursting to allow for more coordination.
+  Kor:
+  - rscadd: Butchering mobs by attacking them with sharp objects will only happen
+      on harm intent. This means it is possible to do surgery on aliens again.
+2016-01-29:
+  Joan:
+  - rscadd: Holoparasites can now see their summoner's health at all times. The health
+      displayed is a percentage, with 0 being dead.
+  - imageadd: Holoparasites now have visual flashes on the summoner's location when
+      recalled due to range limits and when manifesting.
+  Kor:
+  - rscadd: Red xenobio potions now work on vehicles (janitor cart, ATV, secway, etc),
+      causing them to go faster.
+  - rscadd: Stuffing people in bins uses clickdrag instead of grab.
+2016-01-30:
+  Boredone:
+  - tweak: Due to an experiment gone wrong, the Research Director's Teleport Armor
+      now causes some mild radiation poisoning on teleportation to the wearer.
+  Francinum:
+  - rscadd: Added two new female underwear styles.
+  Kor:
+  - rscadd: You can now use the abandoned white ship as an escape route at round end.
+      This is possible on Box, Meta, and Dream.
+  - rscadd: Added support so that mappers can make any shuttle function as an escape
+      shuttle.
+  MMMiracles:
+  - rscadd: Three new bra sets have been added for the ladies out there who want to
+      show their patriotism.
+  xxalpha:
+  - rscadd: Blueprints will now allow the expansion of an existing area by giving
+      its name to a new adjacent area.
+  - rscadd: Added a no power warning cyborg verb to Robot Commands.
+2016-01-31:
+  Kor:
+  - rscadd: Added a special AI upgrade disk that allows normal AIs to use malf modules
+      and hack APCs. It is admin only.
+  - rscadd: Added an AI upgrade disk that grants AIs the lipreading power. It is admin
+      only.

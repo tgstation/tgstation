@@ -1,0 +1,469 @@
+2016-12-02:
+  Cobby:
+  - bugfix: Removes the exploit that allowed you to bypass grabcooldowns with Ctrl+Click
+  PeopleAreStrange:
+  - tweak: Changed F7 to buildmode, F8 to Invismin (again). Removed stealthmin toggle
+  RemieRichards:
+  - rscadd: Added a new lavaland "boss"
+  - tweak: Hostile mobs will now find a new target if they failed to attack their
+      current one for 30 seconds, this reduces cheese by simply making the mob find
+      something else to do/someone to kill
+  - bugfix: Hostile mobs with search_objects will now regain that value after a certain
+      amount of time (per-mob, base 3 seconds), this is because being attacked causes
+      mobs with this var to turn it off, so they can run away, however it was literally
+      never turned on which caused swarmers to get depression and never do anything.
+2016-12-03:
+  Joan:
+  - rscadd: Trying to move while bound by Geis will cause you to start resisting,
+      but the time required to resist is up by half a second.
+  - experiment: Resisting out of Geis now does damage to the binding, and as such
+      being stunned while bound will no longer totally reset your resist progress.
+  - rscadd: Using Geis on someone already bound by Geis will interrupt them resisting
+      out of it and will fully repair the binding.
+  - tweak: Geis's pre-binding channel now takes longer for each servant above 5. Geis's
+      conversion channel also takes slightly longer for each servant above 5.
+  - rscadd: Converted engineering and miner cyborgs can now create Sigils of Transgression.
+  RandomMarine:
+  - tweak: Airlocks will keep their original name when their electronics are removed
+      and replaced. You may still use a pen to rename the assembly if desired.
+2016-12-04:
+  Durkel:
+  - tweak: Recent enemy reports indicate that changelings have grown bored with attacking
+      near desolate stations and have shifted focus to more fertile hunting grounds.
+2016-12-06:
+  BASILMAN YOUR MAIN MAN:
+  - bugfix: fixes people "walking over the glass shard!" when they're on the ground,
+      changes message when incapacitated
+  Chnkr:
+  - rscadd: Nuclear Operatives can now customize the message broadcast to the station
+      when declaring war.
+  Cyberboss:
+  - bugfix: The atmos waste lines for the Metastation Kitchen and Botany departments
+      is now actually connected
+  Gun Hog:
+  - rscadd: Nanotrasen Janitorial Sciences Division is proud to announce a new concept
+      for the Advanced Mop prototype; It now includes a built-in condenser for self
+      re-hydration! See your local Scientist today! In the event that janitorial staff
+      wish to use more expensive solutions, the condenser may be shut off with a handy
+      handle switch!
+  Incoming5643:
+  - bugfix: The timer for shuttle calls/recalls now scales with the security level
+      of the station (Code Red/Green, etc.). You no longer have to feel dumb if you
+      forget to call Code Red before you call the shuttle!
+  - rscadd: Shuttles called in Code Green (the lowest level) now take 20 minutes to
+      arrive, but may be recalled for up to 10 minutes. They also don't require a
+      reason to be called.
+  - experiment: That doesn't mean you should call a code green shuttle every round
+      the moment it finishes refueling.
+  - rscadd: Server owners may now customize the population levels required to play
+      various modes. Keep in mind that this does not preserve the balance of the mode
+      if you change it drastically. See game_modes.txt for details.
+  Joan:
+  - rscadd: You can now proselytize floor tiles at a rate of 20 tiles to 1 brass sheet
+      or 2 tiles to 1 liquified alloy for cogscarabs.
+  - rscadd: Proselytizers will automatically pry up floor tiles if those tiles can
+      be proselytized.
+  - tweak: Brass floor tiles no longer exist. Instead, you can just apply brass sheets
+      to a tile. Crowbarring up a clockwork floor will yield that brass sheet.
+  - rscadd: You can now cancel AI intellicard wiping.
+  - tweak: Geis now takes 5 seconds to resist.
+  Mervill:
+  - bugfix: Examining now lists the neck slot
+  MisterTikva:
+  - rscadd: Nanotrasen informs that certain berry and root plants have been infused
+      with additional genetic traits.
+  - rscadd: Watermelons now have water in them!
+  - rscadd: Blumpkin's chlorine production has been reduced for better workplace efficiency.
+  - rscadd: Squishy plants now obey the laws of physics and will squash all over you
+      if fall on them.
+  Shadowlight213:
+  - bugfix: The lavaland syndicate agents, as well as the ID for all simple_animal
+      syndicate corpses should have their ID actually have syndicate access on it
+      now!
+  Swindly:
+  - rscadd: 'Adds a new toxin: Anacea. It metabolizes very slowly and quickly purges
+      medicines in the victim while dealing light toxin damage. Its recipe is 1 part
+      Haloperidol, 1 part Impedrezene, 1 part Radium.'
+  WJohn:
+  - bugfix: AI core turrets can once again hit you if you are standing in front of
+      the glass panes, or in the viewing area's doorway.
+  XDTM:
+  - rscadd: Quantum Pads are now buildable in R&D!
+  - rscadd: Quantum Pads, once built, can be linked to other Quantum Pads using a
+      multitool. Using a Pad who has been linked will teleport everything on the sending
+      pad to the linked pad!
+  - rscadd: 'Pads do not need to be linked in pairs: Pad A can lead to Pad B which
+      can lead to pad C.'
+  - rscadd: Upgrading a Quantum Pad will reduce the cooldown, charge-up time, and
+      power consumption.
+  - rscadd: Quantum Pads require a bluespace crystal, a micro manipulator, a capacitor
+      and a cable piece.
+  kilkun:
+  - rscadd: New lore surrounding the various SWAT suits.
+  - tweak: Captain's hardsuit/SWAT suit got a few buffs. It's now much more robust.
+  - bugfix: Captain's space suit is now heat proof as well as fireproof. Long overlooked
+      no longer.
+2016-12-07:
+  Cyberboss:
+  - bugfix: Atmos canisters now stay connected after relabeling them
+  Incoming5643:
+  - rscadd: Server owners that use the panic bunker feature can now optionally redirect
+      new players to a different server. See config.txt for details.
+  LOOT DUDE:
+  - tweak: Swarmers will drop bluespace crystals on death, non-artificial crystals.
+  MisterTikva:
+  - rscadd: Nanotrasen Mushroom Studies Division proudly announces that growth serum
+      producing plants were genetically reassembled. You no longer alternate between
+      sizes with doses 20u+ and more effects were added to higher doses.
+  Thunder12345:
+  - bugfix: You can now only order a replacement shuttle once
+2016-12-08:
+  Fox McCloud:
+  - rscadd: The ability to harvest a plant, repeatedly, is now a gene-extractable
+      trait that can be spliced into other plants
+  - rscadd: can extract the battery capabilities of potatoes and splice them into
+      other plants
+  - rscadd: Plants types are now gene traits that can be added/removed from plants
+  - rscadd: Adds new stinging plant trait that will inject a bit of a plant's reagents
+      when thrown at someone
+  Joan:
+  - rscadd: The clockwork slab's interface is now TGUI.
+  - imageadd: You can now see what an ocular warden is attacking.
+  Mervill:
+  - rscadd: The light replacer can now create bulbs from glass shards
+  - rscadd: Click a light replacer while holding a glass shard to add the shard to
+      the replacer
+  - rscadd: Click a glass shard while holding a light replacer to consume the shard
+  MrStonedOne:
+  - tweak: world initialization is now faster.
+  - bugfix: fixed the modify bodypart admin tool not working
+  PKPenguin321:
+  - tweak: Swarmer beacons now have 750 health, down from 3000.
+  TehZombehz:
+  - rscadd: Nanotrasen Culinary Division has authorized the production of tacos, both
+      plain and classic.
+  XDTM:
+  - bugfix: Replica Pod cloning now works on people who have been decapitated.
+  coiax:
+  - rscadd: Additional mice sometimes appear in the maintenance tunnels. Engineers
+      beware!
+2016-12-10:
+  Cyberboss:
+  - bugfix: The slips bug (which made freon laggy) is fixed
+  Kor:
+  - imagedel: Deleted all (3000+) left handed inhand icons. They are now automatically
+      mirrored from the right hand, saving spriters a lot of tedious busywork.
+  - rscadd: By crafting a wall mounted flasher frame (can be ordered via cargo), a
+      flash, and a riot shield, you can now construct a strobe shield. The strobe
+      shield combines the functionality of a riot shield and a flash, and can be reloaded
+      with flash bulbs.
+  Supermichael777:
+  - tweak: Conveyors have been more firmly anchored. No fun allowed
+  Thunder12345:
+  - rscadd: Added the Standby Emergency Vessel "Scrapheap Challenge" as a new emergency
+      shuttle option. You'll even be paid 1000 credits to use it!
+  coiax:
+  - rscadd: Due to a combination of radiation and water supply contamination, stations
+      have been reporting animals gaining self awareness.
+  optional name here:
+  - bugfix: fixed ashdrake's flame wall.
+  - bugfix: fixed walls decon spawning metal in a random location in the same room.
+2016-12-11:
+  Cobby:
+  - bugfix: Fixes literally everything regarding renaming so far. When adding unique_rename
+      to objects, make sure the attackby checks for inheritance.
+  - bugfix: You can pull as other mobs now. Sorry, clickcode is stupid.
+  Cyberboss:
+  - bugfix: Frozen things will now unfreeze above 0C
+  Joan:
+  - tweak: Invoking Nezbere now increases ocular warden damage slightly more, but
+      increases ocular warden range slightly less.
+  Swindly:
+  - tweak: The recipe for moonshine now calls for 5 units of nutriment and 5 units
+      of sugar instead of 10 units of nutriment.
+  Thunder12345:
+  - bugfix: Scrapheap Challenge shuttle now actually works
+  coiax:
+  - rscadd: Cyborgs now have a reset module wire, that when pulsed, triggers the cyborg's
+      reset module hardware.
+  - rscadd: Cyborgs now eject all upgrades when reset, rather than the upgrades being
+      destroyed.
+  - rscdel: Removed redundant reset module.
+2016-12-12:
+  Dannno:
+  - rscadd: more chaplain outfits
+  - rscadd: animal and tribal masks to the theater vendor
+2016-12-13:
+  Fox McCloud:
+  - rscadd: Adds in random botany seeds; never the same twice.
+  - rscadd: Adds in new trait that makes a grown release smoke when squashed
+  - rscadd: Weed rates and chances are now core seed genes
+  Joan:
+  - experiment: Clockwork proselytizers suffer doubled cost and proselytization time
+      when not on the station, mining, or centcom.
+  - soundadd: Trying to recite scripture offstation is more clearly disapproved of.
+  XDTM:
+  - bugfix: The internal rage of the crew has been suppressed, and they will no longer
+      attack their own backpacks when opening them.
+2016-12-14:
+  Incoming5643:
+  - rscadd: Recently we've been receiving reports of cheap knock off nuclear authentication
+      disks circulating among the syndicate network. Don't be fooled by these decoys,
+      only the real deal can be used to destroy the station!
+  - experiment: Please don't destroy the station in an attempt to make sure the disk
+      is real.
+  Joan:
+  - rscdel: The Ark of the Clockwork Justicar can no longer be repaired.
+  - tweak: The Ark now has 20% more health.
+  - rscadd: The Ark of the Clockwork Justicar will now force objects away from it.
+  - tweak: Faster-than-normal tools are somewhat slower than before.
+  - tweak: Mania Motors now require a much larger amount of power to convert people
+      adjacent, and people converted by it are knocked out.
+  Mindustry:
+  - bugfix: Goliath meat can be cooked in lava again
+  Okand37:
+  - rscadd: DeltaStation's emergency shuttle
+  XDTM:
+  - rscadd: Abductor Agents have now been equipped with extremely advanced construction
+      and hacking tools.
+2016-12-18:
+  Dannno:
+  - rscadd: Sec hailers can now be emagged for a more rational, calm message.
+  Erwgd:
+  - rscadd: Limb Grower circuit boards can now be made in Research and Development,
+      requiring level 3 in data theory and level 2 in biological technology.
+  Firecage:
+  - rscadd: The NanoTrasen Airlock Builder Federation(NTABF) has recently released
+      the blueprints involving building and deconstructing Titanium Airlocks! These
+      airlocks are now being used on all of our shuttles.
+  Fox McCloud:
+  - bugfix: Fixes the personal crafting cost of ED-209's being too expensive
+  Hyena:
+  - tweak: adds 2 geiger counters to radition protection crates and a gift from the
+      russians
+  Joan:
+  - rscadd: Adds Replicant and Tinkerer's Cache to the default slab quickbind.
+  - rscadd: Revenants will be revealed by ocular wardens when targeted.
+  Joan, Dagdammit:
+  - rscadd: You can now push Wraith Spectacles up to avoid vision damage, but lose
+      xray vision.
+  - wip: Do note that flicking them on and off very quickly may cause you to lose
+      vision rather quickly.
+  Kor:
+  - rscadd: Added the treasure hunter's hat, coat, uniform, and whip. These aren't
+      available on the map yet, but will be available to the librarian soon.
+  Mervill:
+  - rscadd: Notice boards can now have photographs pined to them
+  - tweak: Items removed from the notice board are placed in your hands
+  - bugfix: Intents can be cycled forward and backwards with hotkeys again
+  - bugfix: Russian revolver ammo display works correctly
+  - rscadd: Added a credit deposit to pubbystation's vault
+  - rscdel: Removed a rather garish golden statue of the HoP from pubbystation's vault
+  Okand37 & Lexorion:
+  - rscadd: Added a new hair style, the Sidecut!
+  Supermichael777:
+  - rscadd: Clockwork components the chaplain picks up are now destroyed.
+  Swindly:
+  - rscadd: Adds eggnog. It can be made by mixing 5 parts rum, 5 parts cream, and
+      5 parts egg yolk.
+  XDTM:
+  - rscadd: Changelings can now buy Tentacles on the Cellular emporium for 2 evolution
+      points.
+  - rscadd: Tentacles, once used, can be fired once against an item or mob to pull
+      it towards yourself. Items will be automatically grabbed. Costs 10 chemicals
+      per tentacle.
+  - rscadd: 'On humanoid mobs tentacles have a varying effect depending on intent:
+      - Help intent simply pulls the target closer without harming him; - Disarm intent
+      does not pull the target but instead pulls whatever item he''s holding in his
+      hands to yours; - Grab intent puts the target into an aggressive grab after
+      it is pulled, allowing you to throw it or try to consume it; - Harm intent will
+      briefly stun the target on landing; if you''re holding a sharp weapon you''ll
+      also impale the target, dealing increased damage and a longer stun.'
+  - bugfix: Random golems now properly acquire the properties of the golem they pick.
+  - rscadd: When becoming a random golem the user is informed of the properties of
+      the picked golem.
+  coiax:
+  - rscadd: Chameleon clothing produced by the syndicate has been found to react negatively
+      to EMPs, randomly switching forms for a time.
+  - rscadd: Anomalies now have observer-visible countdowns to their detonation.
+  - rscadd: Adds upgrades for the medical cyborg!
+  - rscadd: The Hypospray Expanded Synthesiser that adds chemicals to treat blindness,
+      deafness, brain damage, genetic corruption and drug abuse.
+  - rscadd: The Hypospray High-Strength Synthesiser, containing stronger versions
+      of drugs to treat brute, burn, oxyloss and toxic damage.
+  - rscadd: The Piercing Hypospray (also applicable to the Standard and Peacekeeper
+      borgs) that allows a hypospray to pierce thick clothing and hardsuits.
+  - rscadd: The Defibrillator, giving the medical cyborg an onboard defibrillator.
+  - rscadd: Loose atmospherics pipes are now dangerous to be hit by.
+  - rscadd: Whenever you automatically pick up ore with an ore satchel, if you are
+      dragging a wooden ore box, the satchel automatically empties into the box.
+  dannno:
+  - rscadd: Adds a villain costume to the autodrobe.
+  - bugfix: Fixes autodrobe failing to stock items.
+  jughu:
+  - tweak: 'sandals are not fireproof or acidproof anymore :add: Magical sandals for
+      the wizard that are still fireproof/acid proof :tweak: makes the marisa boots
+      acid and fire proof too'
+  karlnp:
+  - bugfix: made facehuggers work again
+  - bugfix: vendors, airlocks, etc now cannot shock at a distance
+  uraniummeltdown:
+  - tweak: Side entrance to Box Medbay, a few layout changes.
+2016-12-19:
+  spudboy:
+  - bugfix: Fixed items not appearing in the detective's fedora.
+2016-12-20:
+  Kor:
+  - rscadd: You can put a variety of hats on cyborgs using help intent (the engiborg
+      can't wear hats though, as it is shaped too oddly. Sorry!)
+  - rscadd: 'The complete list of currently equippable hats is as follows: Cakehat,
+      Captains Hat, Centcomm Hat, Witch Hunter Hat, HoS Cap, HoP Cap, Sombrero, Wizard
+      Hat, Nurse Hat.'
+  Lzimann:
+  - bugfix: Mjor the Creative will drop his loot correctly now.
+  Mekhi Anderson:
+  - rscdel: Fixes various PAI bugs, various tweaks and bullshit.
+  MrPerson:
+  - rscadd: Starlight will have more of a gradient and generally shine a more constant
+      amount of light regardless of how many tiles are touching space. In dark places
+      with long borders to space, starlight will be much darker.
+2016-12-21:
+  FTL13, yogstation, Iamgoofball, and MrStonedOne:
+  - rscadd: Space is pretty.
+  - tweak: You can configure how pretty space is in preferences, those of you on toasters
+      should go to low to remove the need to do client side animations. (standard
+      fanfare as job selection, left click to increase, right click to decrease) (Changes
+      are applied immediately in most cases, on reconnect otherwise)
+  Joan:
+  - rscadd: EMPs will generally fuck up clockwork structures.
+  - rscdel: Cogscarabs can no longer hold slabs to produce components.
+  - rscadd: Slabs will now produce components even if in a box in your backpack inside
+      of a bag of holding on your back; any depth you can hide the slab in will still
+      produce components.
+  - bugfix: Non-Servants in possession of clockwork slabs will also no longer produce
+      components.
+  Mekhi Anderson:
+  - bugfix: PAI notifications no longer flood those who do not wish to be flooded.
+  Shadowlight213:
+  - imageadd: 2 new performer's outfits have been added to the autodrobe
+2016-12-24:
+  AnturK:
+  - rscadd: Implants now work on animals.
+  Cyberboss:
+  - bugfix: Dead things can no longer be used to open doors
+  F-OS:
+  - bugfix: swarmers can no longer destroy airlocks.
+  MrStonedOne:
+  - tweak: AI's call bot command has been throttled to prevent edge cases causing
+      lag. You will not be able to call another bot until the first bot has finished
+      mapping out it's route.
+  TehZombehz:
+  - tweak: Observers can now orbit derelict station drone shells, much like current
+      lavaland ghost role spawners, to make finding them easier. Regular drone shells
+      are not affected by this.
+  XDTM:
+  - rscadd: Autolathes are now true to their name and can queue 5 or 10 copies of
+      the same item.
+  coiax:
+  - rscadd: Cyborg renaming boards cannot be used if no name has been entered.
+  - rscdel: Cyborg rename and emergency reboot modules are destroyed upon use, and
+      not stored inside the cyborg to be ejected if modules are reset.
+  - rscadd: Emagging the book management console and printing forbidden lore now has
+      a chance of producing a clockwork slab rather than an arcane tome.
+  kevinz000:
+  - experiment: Flightsuits now have their own subsystem!
+  - bugfix: Flightsuits properly account for power before calculating drifting
+  - experiment: Flightpack users will automatically fly over anyone buckled without
+      crashing.
+  - experiment: Flightpack users automatically slip through mineral doors
+  - experiment: Flightpack users will crash straight through grills at appropriate
+      times
+  - experiment: Flightpack users automatically slip through unbolted airlocks
+  - experiment: Flightpacks are faster in space, but their space momentum decay has
+      been upped significantly to compensate
+  - experiment: Flighthelmets now have a function to allow the wearer to zoom out
+      to see further. Helps you not crash eh?
+  spudboy:
+  - bugfix: Gave cyborgs some hotkeys they should have had.
+2016-12-27:
+  Firecage:
+  - bugfix: The Nanotrasen Sewing Club has finally fixed the problem which rendered
+      NT, Ian, and Grey bedsheets invisible when worn!
+  Hyena:
+  - tweak: Detective coats can now hold police batons
+  - bugfix: Fixes disabler in hand sprites
+  Joan:
+  - rscadd: You can now put syndicate MMIs and soul vessels into AI cores.
+  - rscadd: The Hierophant boss will now create an arena if you try to leave its arena.
+  - imageadd: The Hierophant boss, its arena, and the weapon it drops all have new
+      sprites.
+  - soundadd: And new sounds.
+  - wip: And new text.
+  - rscadd: Wizards can now buy magic guardians for 2 points. They are not limited
+      to one guardian, meaning they can have up to 5. If that's wise is an entirely
+      different question.
+  - experiment: Wizards cannot buy support guardians, but can buy dexterous guardians,
+      which can hold items.
+  Shadowlight213:
+  - tweak: Shuttle are now safe from radstorms
+  XDTM:
+  - bugfix: HUD implants now properly allow you to modify the records of those you
+      examine, like HUD glasses do.
+  - bugfix: Organ Manipulation surgery now properly heals on the cautery step.
+  - bugfix: The maintenance door adjacent to R&D in metastation is now accessible
+      to scientists, instead of requiring both science and robotics access.
+2016-12-28:
+  Erwgd:
+  - rscadd: A new access level is available, named "Cloning Room". Medical Doctors,
+      Geneticists and CMOs start with it.
+  - tweak: On Box Station and on Meta Station, the cloning lab doors require Cloning
+      Room access in addition to each door's previous requirements.
+  - tweak: Cloning pods are now unlocked with Cloning Room access only.
+  Incoming5643:
+  - rscadd: There's a new category in uplinks for discounted gear. These special discounts
+      however can only be taken once, so even if you are lucky enough to see syndibombs
+      for 75% off you won't be able to nuke the entire station with them.
+  - bugfix: The charge spell will no longer bilk you on wand charges, and wands that
+      are dead won't show up as charged.
+  Joan:
+  - rscdel: Clockwork Marauders no longer have Fatigue. It was difficult to balance
+      and made them too easy to force into recalling. This means they just have health;
+      they aren't forced to recall by anything, but can accordingly die much more
+      easily.
+  - rscadd: Accordingly Clockwork Marauders now have more health, do slightly more
+      damage, block slightly more often, and have to go slightly further from their
+      host to take damage.
+  - rscadd: Marauders that are not recovering(from recalling while the host's health
+      is too high to emerge) and are inside their host, or are within a tile of their
+      host, will gradually heal their host until their host is above the health threshold
+      to emerge.
+  - tweak: Chaos guardians transfer slightly less damage to their summoner.
+  XDTM:
+  - tweak: Armblades now go slash slash instead of thwack thwack
+  - imageadd: Tentacles have some fancier sprites
+2016-12-29:
+  Mervill:
+  - bugfix: Patched an exploit related to pulling a vehicle as its driver while in
+      space
+  - bugfix: Fixed evidence bags not displaying their contents when held
+  - bugfix: Clothing without a casual variant will no longer say it can be worn differently
+      when examined
+  - bugfix: Only standard handcuffs can be used to make chained shoes
+  - bugfix: Fixed cards against space
+  - bugfix: Drying rack sprite updates properly when things are removed without drying
+  XDTM:
+  - rscadd: Colossi now drop the Voice of God, a mouth organ that, if implanted, allows
+      you to speak in a HEAVY TONE. This voice can compel hearers to briefly obey
+      certain codewords, such as "STOP". Using these codewords will severely increase
+      this ability's cooldown, and only one will be used per sentence.
+  - rscadd: 'Use .x, :x, or #x as a prefix to use Voice of God or any future vocal
+      cord organs.'
+  - rscadd: Chaplains, being closer to the gods, and command staff, being used to
+      giving orders, gain an increased effect when using the Voice of God. The mime,
+      not being used to speaking, has a reduced effect.
+2016-12-31:
+  hyena:
+  - bugfix: fixes caps suit fire immunity
+  kevinz000:
+  - bugfix: Machine overloads/overrides aren't as bullshit as you'll actually be able
+      to dodge it now.

@@ -1,65 +1,55 @@
-/atom/movable/lighting_object
-	name          = ""
+/datum/lighting_object
+	///the underlay we are currently applying to our turf to apply light
+	var/mutable_appearance/current_underlay
 
-	anchored      = TRUE
-
-	icon             = LIGHTING_ICON
-	icon_state       = "transparent"
-	color            = null //we manually set color in init instead
-	plane            = LIGHTING_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	layer            = LIGHTING_LAYER
-	invisibility     = INVISIBILITY_LIGHTING
-
+	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
-	var/turf/myturf
 
-/atom/movable/lighting_object/Initialize(mapload)
+	///the turf that our light is applied to
+	var/turf/affected_turf
+
+// Global list of lighting underlays, indexed by z level
+GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
+
+/datum/lighting_object/New(turf/source)
+	if(!isturf(source))
+		qdel(src, force=TRUE)
+		stack_trace("a lighting object was assigned to [source], a non turf! ")
+		return
+
 	. = ..()
-	verbs.Cut()
-	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
-	//is totally unsuitable for this object, as we are always changing it's colour manually
-	color = LIGHTING_BASE_MATRIX
 
-	myturf = loc
-	if (myturf.lighting_object)
-		qdel(myturf.lighting_object, force = TRUE)
-	myturf.lighting_object = src
-	myturf.luminosity = 0
+	current_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
 
-	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		S.update_starlight()
+	affected_turf = source
+	if (affected_turf.lighting_object)
+		qdel(affected_turf.lighting_object, force = TRUE)
+		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
+
+	affected_turf.lighting_object = src
+	// Default to fullbright, so things can "see" if they use view() before we update
+	affected_turf.luminosity = 1
+
+	// This path is really hot. this is faster
+	// Really this should be a global var or something, but lets not think about that yes?
+	for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
+		space_tile.enable_starlight()
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(force)
-	if (force)
-		SSlighting.objects_queue -= src
-		if (loc != myturf)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
-		if (isturf(myturf))
-			myturf.lighting_object = null
-			myturf.luminosity = 1
-		myturf = null
-
-		return ..()
-
-	else
+/datum/lighting_object/Destroy(force)
+	if (!force)
 		return QDEL_HINT_LETMELIVE
+	SSlighting.objects_queue -= src
+	if (isturf(affected_turf))
+		affected_turf.lighting_object = null
+		affected_turf.luminosity = 1
+		affected_turf.underlays -= current_underlay
+	affected_turf = null
+	return ..()
 
-/atom/movable/lighting_object/proc/update()
-	if (loc != myturf)
-		if (loc)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
-
-		qdel(src, TRUE)
-		return
-
+/datum/lighting_object/proc/update()
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
@@ -68,37 +58,23 @@
 	// Oh it's also shorter line wise.
 	// Including with these comments.
 
-	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = myturf.corners
-	var/datum/lighting_corner/cr = dummy_lighting_corner
-	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
-	var/datum/lighting_corner/ca = dummy_lighting_corner
-	if (corners) //done this way for speed
-		cr = corners[3] || dummy_lighting_corner
-		cg = corners[2] || dummy_lighting_corner
-		cb = corners[4] || dummy_lighting_corner
-		ca = corners[1] || dummy_lighting_corner
+	var/turf/affected_turf = src.affected_turf
 
-	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
+#ifdef VISUALIZE_LIGHT_UPDATES
+	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
+	animate(affected_turf, 10, color = null)
+	addtimer(CALLBACK(affected_turf, TYPE_PROC_REF(/atom, remove_atom_colour), ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
+#endif
 
-	var/rr = cr.cache_r
-	var/rg = cr.cache_g
-	var/rb = cr.cache_b
+	var/datum/lighting_corner/red_corner = affected_turf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/green_corner = affected_turf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/alpha_corner = affected_turf.lighting_corner_NE || dummy_lighting_corner
 
-	var/gr = cg.cache_r
-	var/gg = cg.cache_g
-	var/gb = cg.cache_b
+	var/max = max(red_corner.largest_color_luminosity, green_corner.largest_color_luminosity, blue_corner.largest_color_luminosity, alpha_corner.largest_color_luminosity)
 
-	var/br = cb.cache_r
-	var/bg = cb.cache_g
-	var/bb = cb.cache_b
-
-	var/ar = ca.cache_r
-	var/ag = ca.cache_g
-	var/ab = ca.cache_b
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
@@ -108,46 +84,28 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
-	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		icon_state = "transparent"
-		color = null
+	var/mutable_appearance/current_underlay = src.current_underlay
+	affected_turf.underlays -= current_underlay
+	if(red_corner.cache_r & green_corner.cache_r & blue_corner.cache_r & alpha_corner.cache_r && \
+		(red_corner.cache_g + green_corner.cache_g + blue_corner.cache_g + alpha_corner.cache_g + \
+		red_corner.cache_b + green_corner.cache_b + blue_corner.cache_b + alpha_corner.cache_b == 8))
+		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
+		current_underlay.icon_state = "lighting_transparent"
+		current_underlay.color = null
 	else if(!set_luminosity)
-		icon_state = "dark"
-		color = null
+		current_underlay.icon_state = "lighting_dark"
+		current_underlay.color = null
 	else
-		icon_state = null
-		color = list(
-			rr, rg, rb, 00,
-			gr, gg, gb, 00,
-			br, bg, bb, 00,
-			ar, ag, ab, 00,
+		current_underlay.icon_state = null
+		current_underlay.color = list(
+			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
+			green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
+			blue_corner.cache_r, blue_corner.cache_g, blue_corner.cache_b, 00,
+			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
 			00, 00, 00, 01
 		)
 
-	luminosity = set_luminosity
-
-// Variety of overrides so the overlays don't get affected by weird things.
-
-/atom/movable/lighting_object/ex_act(severity)
-	return
-
-/atom/movable/lighting_object/singularity_act()
-	return
-
-/atom/movable/lighting_object/singularity_pull()
-	return
-
-/atom/movable/lighting_object/blob_act()
-	return
-
-/atom/movable/lighting_object/onTransitZ()
-	return
-
-/atom/movable/lighting_object/wash(clean_types)
-	return
-
-// Override here to prevent things accidentally moving around overlays.
-/atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
-	if(harderforce)
-		. = ..()
+	// Of note. Most of the cost in this proc is here, I think because color matrix'd underlays DO NOT cache well, which is what adding to underlays does
+	// We use underlays because objects on each tile would fuck with maptick. if that ever changes, use an object for this instead
+	affected_turf.underlays += current_underlay
+	affected_turf.luminosity = set_luminosity

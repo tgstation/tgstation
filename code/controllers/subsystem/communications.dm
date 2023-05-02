@@ -1,35 +1,48 @@
-#define COMMUNICATION_COOLDOWN 300
-#define COMMUNICATION_COOLDOWN_AI 300
+#define COMMUNICATION_COOLDOWN (30 SECONDS)
+#define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
+#define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
 
 SUBSYSTEM_DEF(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 
-	var/silicon_message_cooldown
-	var/nonsilicon_message_cooldown
+	COOLDOWN_DECLARE(silicon_message_cooldown)
+	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
+
+	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
+	var/soft_filtering = FALSE
+
+	/// A list of footnote datums, to be added to the bottom of the roundstart command report.
+	var/list/command_report_footnotes = list()
+	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
+	var/block_command_report = 0
+	/// Has a special xenomorph egg been delivered?
+	var/xenomorph_egg_delivered = FALSE
+	/// The location where the special xenomorph egg was planted
+	var/area/captivity_area
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
-	if(is_silicon && silicon_message_cooldown > world.time)
-		. = FALSE
-	else if(!is_silicon && nonsilicon_message_cooldown > world.time)
-		. = FALSE
+	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
+		return TRUE
+	else if(!is_silicon && COOLDOWN_FINISHED(src, nonsilicon_message_cooldown))
+		return TRUE
 	else
-		. = TRUE
+		return FALSE
 
-/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
+/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input, syndicate, list/players)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] Announces:")
-		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
+		minor_announce(html_decode(input),"[user.name] Announces:", players = players)
+		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
-		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain")
-		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
+		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE, players = players)
+		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
-	for(var/obj/machinery/computer/communications/C in GLOB.machines)
+	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
 				C.add_message(sending)
@@ -37,10 +50,11 @@ SUBSYSTEM_DEF(communications)
 				var/datum/comm_message/M = new(sending.title,sending.content,sending.possible_answers.Copy())
 				C.add_message(M)
 			if(print)
-				var/obj/item/paper/P = new /obj/item/paper(C.loc)
-				P.name = "paper - '[sending.title]'"
-				P.info = sending.content
-				P.update_icon()
+				var/obj/item/paper/printed_paper = new /obj/item/paper(C.loc)
+				printed_paper.name = "paper - '[sending.title]'"
+				printed_paper.add_raw_text(sending.content)
+				printed_paper.update_appearance()
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI
+#undef COMMUNICATION_COOLDOWN_MEETING

@@ -13,9 +13,18 @@
 	attack_verb_continuous = list("stamps")
 	attack_verb_simple = list("stamp")
 
-/obj/item/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
-	return (OXYLOSS)
+/obj/item/stamp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+	return OXYLOSS
+
+/obj/item/stamp/get_writing_implement_details()
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+	return list(
+		interaction_mode = MODE_STAMPING,
+		stamp_icon_state = icon_state,
+		stamp_class = sheet.icon_class_name(icon_state)
+	)
 
 /obj/item/stamp/qm
 	name = "quartermaster's rubber stamp"
@@ -62,6 +71,10 @@
 	icon_state = "stamp-deny"
 	dye_color = DYE_REDCOAT
 
+/obj/item/stamp/void
+	name = "VOID rubber stamp"
+	icon_state = "stamp-void"
+
 /obj/item/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
@@ -87,5 +100,5 @@
 	icon_state = "stamp-syndicate"
 	dye_color = DYE_SYNDICATE
 
-/obj/item/stamp/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/stamp/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)

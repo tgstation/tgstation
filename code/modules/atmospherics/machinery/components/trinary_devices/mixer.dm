@@ -6,47 +6,50 @@
 	desc = "Very useful for mixing gasses."
 
 	can_unwrench = TRUE
-
-	var/target_pressure = ONE_ATMOSPHERE
-	var/node1_concentration = 0.5
-	var/node2_concentration = 0.5
-
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "mixer"
 
+	///Output pressure target
+	var/target_pressure = ONE_ATMOSPHERE
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node1_concentration = 0.5
+	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	var/node2_concentration = 0.5
 	//node 3 is the outlet, nodes 1 & 2 are intakes
+
+/obj/machinery/atmospherics/components/trinary/mixer/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/machinery/atmospherics/components/trinary/mixer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the pressure output on [src] to [target_pressure] kPa.</span>")
-		update_icon()
+		balloon_alert(user, "pressure output on set to [target_pressure] kPa")
+		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/mixer/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
 
-		var/image/cap
-		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer, trinary = TRUE)
-		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer, trinary = TRUE)
-
-		add_overlay(cap)
-
-	return ..()
+		. += get_pipe_image(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -163,14 +166,14 @@
 		if("node1")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(value)
-			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(100 - value)
-			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to [100 * node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(newValue)
 	node1_concentration = newValue / 100
@@ -179,7 +182,7 @@
 /obj/machinery/atmospherics/components/trinary/mixer/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 // mapping

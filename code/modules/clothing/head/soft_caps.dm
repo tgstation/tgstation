@@ -1,8 +1,10 @@
 /obj/item/clothing/head/soft
 	name = "cargo cap"
-	desc = "It's a baseball hat in a tasteless yellow colour."
+	desc = "It's a baseball hat in a tasteful brown colour."
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
-	inhand_icon_state = "helmet"
+	inhand_icon_state = "greyscale_softcap" //todo wip
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
@@ -23,9 +25,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	else
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		flip(user)
 
 
@@ -34,15 +34,15 @@
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type]soft_flipped"
-			to_chat(user, "<span class='notice'>You flip the hat backwards.</span>")
+			to_chat(user, span_notice("You flip the hat backwards."))
 		else
 			icon_state = "[soft_type]soft"
-			to_chat(user, "<span class='notice'>You flip the hat back in normal position.</span>")
-		usr.update_inv_head()	//so our mob-overlays update
+			to_chat(user, span_notice("You flip the hat back in normal position."))
+		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
+	. += span_notice("Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].")
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
@@ -79,6 +79,15 @@
 	soft_type = "grey"
 	dog_fashion = null
 
+/* A grey baseball cap that grants TRAIT_JOLLY when it's on your head.
+ * Used for testing that gaining and losing the JOLLY trait behaves properly.
+ * Also a perfectly valid weird admin reward.
+ */
+/obj/item/clothing/head/soft/grey/jolly
+	name = "jolly grey cap"
+	desc = "It's a baseball hat in a sublime grey colour. Why, wearing this alone would boost a person's spirits!"
+	clothing_traits = list(TRAIT_JOLLY)
+
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange colour."
@@ -111,6 +120,7 @@
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
+	inhand_icon_state = "rainbow_softcap"
 	soft_type = "rainbow"
 	dog_fashion = null
 
@@ -119,9 +129,18 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor = list(MELEE = 30, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 20, ACID = 50)
+	armor_type = /datum/armor/soft_sec
 	strip_delay = 60
 	dog_fashion = null
+
+/datum/armor/soft_sec
+	melee = 30
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 25
+	fire = 20
+	acid = 50
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"

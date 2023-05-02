@@ -8,19 +8,19 @@
 	//When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
 #define MIN_GALLOP 7
 
-	//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
+//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
 GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 /datum/sort_instance
 	//The array being sorted.
 	var/list/L
 
 	//The comparator proc-reference
-	var/cmp = /proc/cmp_numeric_asc
+	var/cmp = GLOBAL_PROC_REF(cmp_numeric_asc)
 
 	//whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
 
-	//This controls when we get *into* galloping mode.  It is initialized	to MIN_GALLOP.
+	//This controls when we get *into* galloping mode.  It is initialized to MIN_GALLOP.
 	//The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structured data.
 	var/minGallop = MIN_GALLOP
 
@@ -92,16 +92,17 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	this method can take advantage of it: the method assumes that the
 	elements in range [lo,start) are already sorted
 
-	lo		the index of the first element in the range to be sorted
-	hi		the index after the last element in the range to be sorted
-	start	the index of the first element in the range that is	not already known to be sorted
+	lo the index of the first element in the range to be sorted
+	hi the index after the last element in the range to be sorted
+	start the index of the first element in the range that is not already known to be sorted
 	*/
 /datum/sort_instance/proc/binarySort(lo, hi, start)
 	//ASSERT(lo <= start && start <= hi)
 	if(start <= lo)
 		start = lo + 1
 
-	for(,start < hi, ++start)
+	var/list/L = src.L
+	for(start in start to hi - 1)
 		var/pivot = fetchElement(L,start)
 
 		//set left and right to the index where pivot belongs
@@ -112,14 +113,14 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		//[lo, left) elements <= pivot < [right, start) elements
 		//in other words, find where the pivot element should go using bisection search
 		while(left < right)
-			var/mid = (left + right) >> 1	//round((left+right)/2)
+			var/mid = (left + right) >> 1 //round((left+right)/2)
 			if(call(cmp)(fetchElement(L,mid), pivot) > 0)
 				right = mid
 			else
 				left = mid+1
 
 		//ASSERT(left == right)
-		moveElement(L, start, left)	//move pivot element to correct location in the sorted range
+		move_element(L, start, left) //move pivot element to correct location in the sorted range
 
 	/*
 	Returns the length of the run beginning at the specified position and reverses the run if it is back-to-front
@@ -140,6 +141,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	if(runHi >= hi)
 		return 1
 
+	var/list/L = src.L
 	var/last = fetchElement(L,lo)
 	var/current = fetchElement(L,runHi++)
 
@@ -150,7 +152,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			if(call(cmp)(current, last) >= 0)
 				break
 			++runHi
-		reverseRange(L, lo, runHi)
+		reverse_range(L, lo, runHi)
 	else
 		while(runHi < hi)
 			last = current
@@ -165,15 +167,15 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	//Natural runs shorter than this will be extended with binarySort
 /datum/sort_instance/proc/minRunLength(n)
 	//ASSERT(n >= 0)
-	var/r = 0	//becomes 1 if any bits are shifted off
+	var/r = 0 //becomes 1 if any bits are shifted off
 	while(n >= MIN_MERGE)
 		r |= (n & 1)
 		n >>= 1
 	return n + r
 
 	//Examines the stack of runs waiting to be merged and merges adjacent runs until the stack invariants are reestablished:
-	//	runLen[i-3] > runLen[i-2] + runLen[i-1]
-	//	runLen[i-2] > runLen[i-1]
+	// runLen[i-3] > runLen[i-2] + runLen[i-1]
+	// runLen[i-2] > runLen[i-1]
 	//This method is called each time a new run is pushed onto the stack.
 	//So the invariants are guaranteed to hold for i<stackSize upon entry to the method
 /datum/sort_instance/proc/mergeCollapse()
@@ -186,7 +188,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		else if(runLens[n] <= runLens[n+1])
 			mergeAt(n)
 		else
-			break	//Invariant is established
+			break //Invariant is established
 
 
 	//Merges all runs on the stack until only one remains.
@@ -221,7 +223,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	runLens.Cut(i+1, i+2)
 	runBases.Cut(i+1, i+2)
 
-
 	//Find where the first element of run2 goes in run1.
 	//Prior elements in run1 can be ignored (because they're already in place)
 	var/k = gallopRight(fetchElement(L,base2), base1, len1, 0)
@@ -249,16 +250,17 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		Locates the position to insert key within the specified sorted range
 		If the range contains elements equal to key, this will return the index of the LEFTMOST of those elements
 
-		key		the element to be inserted into the sorted range
-		base	the index of the first element of the sorted range
-		len		the length of the sorted range, must be greater than 0
-		hint	the offset from base at which to begin the search, such that 0 <= hint < len; i.e. base <= hint < base+hint
+		key the element to be inserted into the sorted range
+		base the index of the first element of the sorted range
+		len the length of the sorted range, must be greater than 0
+		hint the offset from base at which to begin the search, such that 0 <= hint < len; i.e. base <= hint < base+hint
 
 		Returns the index at which to insert element 'key'
 	*/
 /datum/sort_instance/proc/gallopLeft(key, base, len, hint)
 	//ASSERT(len > 0 && hint >= 0 && hint < len)
 
+	var/list/L = src.L
 	var/lastOffset = 0
 	var/offset = 1
 	if(call(cmp)(key, fetchElement(L,base+hint)) > 0)
@@ -311,20 +313,21 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	 * @param base the index of the first element in the range
 	 * @param len the length of the range; must be > 0
 	 * @param hint the index at which to begin the search, 0 <= hint < n.
-	 *	 The closer hint is to the result, the faster this method will run.
+	 *  The closer hint is to the result, the faster this method will run.
 	 * @param c the comparator used to order the range, and to search
 	 * @return the int k,  0 <= k <= n such that `a[b + k - 1] <= key < a[b + k]`
 	 */
 /datum/sort_instance/proc/gallopRight(key, base, len, hint)
 	//ASSERT(len > 0 && hint >= 0 && hint < len)
 
+	var/list/L = src.L
 	var/offset = 1
 	var/lastOffset = 0
-	if(call(cmp)(key, fetchElement(L,base+hint)) < 0)	//key <= L[base+hint]
-		var/maxOffset = hint + 1	//therefore we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
-		while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0)	//we are iterating backwards
+	if(call(cmp)(key, fetchElement(L,base+hint)) < 0) //key <= L[base+hint]
+		var/maxOffset = hint + 1 //therefore we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
+		while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0) //we are iterating backwards
 			lastOffset = offset
-			offset = (offset << 1) + 1	//1 3 7 15
+			offset = (offset << 1) + 1 //1 3 7 15
 
 		if(offset > maxOffset)
 			offset = maxOffset
@@ -333,8 +336,8 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		lastOffset = hint - offset
 		offset = hint - temp
 
-	else	//key > L[base+hint]
-		var/maxOffset = len - hint	//therefore we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
+	else //key > L[base+hint]
+		var/maxOffset = len - hint //therefore we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
 		while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
 			lastOffset = offset
 			offset = (offset << 1) + 1
@@ -351,9 +354,9 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	while(lastOffset < offset)
 		var/m = lastOffset + ((offset - lastOffset) >> 1)
 
-		if(call(cmp)(key, fetchElement(L,base+m)) < 0)	//key <= L[base+m]
+		if(call(cmp)(key, fetchElement(L,base+m)) < 0) //key <= L[base+m]
 			offset = m
-		else							//key > L[base+m]
+		else //key > L[base+m]
 			lastOffset = m + 1
 
 	//ASSERT(lastOffset == offset)
@@ -366,34 +369,35 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 /datum/sort_instance/proc/mergeLo(base1, len1, base2, len2)
 	//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
+	var/list/L = src.L
 	var/cursor1 = base1
 	var/cursor2 = base2
 
 	//degenerate cases
 	if(len2 == 1)
-		moveElement(L, cursor2, cursor1)
+		move_element(L, cursor2, cursor1)
 		return
 
 	if(len1 == 1)
-		moveElement(L, cursor1, cursor2+len2)
+		move_element(L, cursor1, cursor2+len2)
 		return
 
 
 	//Move first element of second run
-	moveElement(L, cursor2++, cursor1++)
+	move_element(L, cursor2++, cursor1++)
 	--len2
 
 	outer:
 		while(1)
-			var/count1 = 0	//# of times in a row that first run won
-			var/count2 = 0	//	"	"	"	"	"	"  second run won
+			var/count1 = 0 //# of times in a row that first run won
+			var/count2 = 0 // " " " " " "  second run won
 
 			//do the straightfoward thin until one run starts winning consistently
 
 			do
 				//ASSERT(len1 > 1 && len2 > 0)
 				if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-					moveElement(L, cursor2++, cursor1++)
+					move_element(L, cursor2++, cursor1++)
 					--len2
 
 					++count2
@@ -426,7 +430,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 					if(len1 <= 1)
 						break outer
 
-				moveElement(L, cursor2, cursor1)
+				move_element(L, cursor2, cursor1)
 				++cursor2
 				++cursor1
 				if(--len2 == 0)
@@ -434,7 +438,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 				count2 = gallopLeft(fetchElement(L,cursor1), cursor2, len2, 0)
 				if(count2)
-					moveRange(L, cursor2, cursor1, count2)
+					move_range(L, cursor2, cursor1, count2)
 
 					cursor2 += count2
 					cursor1 += count2
@@ -458,7 +462,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 	if(len1 == 1)
 		//ASSERT(len2 > 0)
-		moveElement(L, cursor1, cursor2+len2)
+		move_element(L, cursor1, cursor2+len2)
 
 	//else
 		//ASSERT(len2 == 0)
@@ -468,31 +472,32 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 /datum/sort_instance/proc/mergeHi(base1, len1, base2, len2)
 	//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
-	var/cursor1 = base1 + len1 - 1	//start at end of sublists
+	var/list/L = src.L
+	var/cursor1 = base1 + len1 - 1 //start at end of sublists
 	var/cursor2 = base2 + len2 - 1
 
 	//degenerate cases
 	if(len2 == 1)
-		moveElement(L, base2, base1)
+		move_element(L, base2, base1)
 		return
 
 	if(len1 == 1)
-		moveElement(L, base1, cursor2+1)
+		move_element(L, base1, cursor2+1)
 		return
 
-	moveElement(L, cursor1--, cursor2-- + 1)
+	move_element(L, cursor1--, cursor2-- + 1)
 	--len1
 
 	outer:
 		while(1)
-			var/count1 = 0	//# of times in a row that first run won
-			var/count2 = 0	//	"	"	"	"	"	"  second run won
+			var/count1 = 0 //# of times in a row that first run won
+			var/count2 = 0 // " " " " " "  second run won
 
 			//do the straightfoward thing until one run starts winning consistently
 			do
 				//ASSERT(len1 > 0 && len2 > 1)
 				if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-					moveElement(L, cursor1--, cursor2-- + 1)
+					move_element(L, cursor1--, cursor2-- + 1)
 					--len1
 
 					++count1
@@ -516,11 +521,11 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			do
 				//ASSERT(len1 > 0 && len2 > 1)
 
-				count1 = len1 - gallopRight(fetchElement(L,cursor2), base1, len1, len1-1)	//should cursor1 be base1?
+				count1 = len1 - gallopRight(fetchElement(L,cursor2), base1, len1, len1-1) //should cursor1 be base1?
 				if(count1)
 					cursor1 -= count1
 
-					moveRange(L, cursor1+1, cursor2+1, count1)	//cursor1+1 == cursor2 by definition
+					move_range(L, cursor1+1, cursor2+1, count1) //cursor1+1 == cursor2 by definition
 
 					cursor2 -= count1
 					len1 -= count1
@@ -541,7 +546,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 					if(len2 <= 1)
 						break outer
 
-				moveElement(L, cursor1--, cursor2-- + 1)
+				move_element(L, cursor1--, cursor2-- + 1)
 				--len1
 
 				if(len1 == 0)
@@ -552,13 +557,13 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 			if(minGallop < 0)
 				minGallop = 0
-			minGallop += 2	// Penalize for leaving gallop mode
+			minGallop += 2 // Penalize for leaving gallop mode
 
 	if(len2 == 1)
 		//ASSERT(len1 > 0)
 
 		cursor1 -= len1
-		moveRange(L, cursor1+1, cursor2+1, len1)
+		move_range(L, cursor1+1, cursor2+1, len1)
 
 	//else
 		//ASSERT(len1 == 0)
@@ -599,7 +604,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		else if(runLens[n] <= runLens[n+1])
 			mergeAt2(n)
 		else
-			break	//Invariant is established
+			break //Invariant is established
 
 	while(runBases.len >= 2)
 		var/n = runBases.len - 1
@@ -610,6 +615,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 	return L
 
 /datum/sort_instance/proc/mergeAt2(i)
+	var/list/L = src.L
 	var/cursor1 = runBases[i]
 	var/cursor2 = runBases[i+1]
 
@@ -625,7 +631,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 				break
 			val1 = fetchElement(L,cursor1)
 		else
-			moveElement(L,cursor2,cursor1)
+			move_element(L,cursor2,cursor1)
 
 			if(++cursor2 >= end2)
 				break

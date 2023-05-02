@@ -1,0 +1,52 @@
+2014-09-01:
+  ChuckTheSheep:
+  - rscadd: "Adds preference toggle for intent selection mode.\n\t\t"
+  - rscadd: "Direct selection mode switches intent to the one you click on instead\
+      \ of cycling them.\n\t"
+  Ikarrus:
+  - rscadd: "New more detailed End-Round report.\n\t\t"
+  - rscdel: "Removes count of readied players from the lobby.\n\t"
+  Jordie0608:
+  - rscadd: Virology has been made the right color.
+  Miauw:
+  - wip: "A major rework of saycode has been completed which fixes numerous issues\
+      \ and improves functionality.\n\t\t"
+  - bugfix: "Please report any issues you notice with any form of messaging to Github.\n\
+      \t"
+2014-09-03:
+  Ikarrus:
+  - tweak: Cost of Syndicate bombs increased to 6 telecrystals.
+  JStheguy:
+  - rscadd: Many new posters have been added.
+2014-09-04:
+  KyrahAbattoir:
+  - rscadd: All the objects found in BoxStation maintenance are now randomized at
+      round start.
+2014-09-06:
+  Ikarrus:
+  - rscadd: "Tampered supply ordering consoles can now order dangerous devices directly\
+      \ from the Syndicate for 140 points.\n\t\t"
+  - tweak: "Securitrons line units will no longer arrest individuals without IDs if\
+      \ their faces can still be read. \n\t\t"
+  - tweak: "Enemy Agent ID cards have been reported to be able to interfere with the\
+      \ new securitron threat assessment protocols.\n\t\t"
+  - tweak: "The Syndicate base has been modified to only allow the leading operative\
+      \ to launch the mission.\n\t"
+2014-09-07:
+  Gun Hog:
+  - rscadd: Nanotrasen scientists have released a Heads-Up-Display (HUD) upgrade for
+      all AI and Cyborg units! Cyborgs have had Medical sensors and a Security datacore
+      integrated into their core hardware, replacing the need for a specific module.
+  - rscadd: AI units are now able to have suit sensor or crew manifest data displayed
+      to them as a visual overlay. When viewing a crewmember with suit sensors set
+      to health monitoring, the health status will be available on the AI's medical
+      HUD. In Security mode, the role as printed on the crewmember's ID card will
+      be displayed to the AI.
+  - rscadd: Any entity with a Security or Medical HUD active will recieve appropriate
+      messages on that HUD.
+  Ikarrus:
+  - rscadd: "Server Operators: A new config option added to restrict command and security\
+      \ roles to humans only. Simply add/uncomment the line ENFORCE_HUMAN_AUTHORITY\
+      \ in game_options.txt.\n\t\t"
+  - rscadd: "Players: To check if this config option is enabled on your server, type\
+      \ show-server-revision into the game's command line.\n\t"

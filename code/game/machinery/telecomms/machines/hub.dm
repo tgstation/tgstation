@@ -12,9 +12,9 @@
 	name = "telecommunication hub"
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
+	telecomms_type = /obj/machinery/telecomms/hub
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 80
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	long_range_link = TRUE
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
@@ -31,6 +31,27 @@
 		relay_information(signal, /obj/machinery/telecomms/relay)
 		// Then broadcast that signal to
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
+
+	use_power(idle_power_usage)
+
+/obj/machinery/telecomms/hub/update_power()
+	var/old_on = on
+	if (toggled && (machine_stat & (BROKEN|NOPOWER|EMPED)))
+		on = FALSE
+		soundloop.stop()
+	else
+		on = TRUE
+		soundloop.start()
+	if(old_on != on)
+		update_appearance()
+
+/obj/machinery/telecomms/hub/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, on)
+
+/obj/machinery/telecomms/hub/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 //Preset HUB
 

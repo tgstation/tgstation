@@ -1,0 +1,42 @@
+name: GBP
+on:
+  pull_request_target:
+    types: [closed, opened]
+jobs:
+  gbp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
+      id: value_holder
+      env:
+        ENABLER_SECRET: ${{ secrets.ACTION_ENABLER }}
+      run: |
+        unset SECRET_EXISTS
+        if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+        echo "ACTIONS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+    - name: Checkout
+      if: steps.value_holder.outputs.ACTIONS_ENABLED
+      uses: actions/checkout@v3
+    - name: Setup git
+      if: steps.value_holder.outputs.ACTIONS_ENABLED
+      run: |
+        git config --global user.name "gbp-action"
+        git config --global user.email "<>"
+    - name: Checkout alternate branch
+      if: steps.value_holder.outputs.ACTIONS_ENABLED
+      uses: actions/checkout@v3
+      with:
+        ref: "gbp-balances" # The branch name
+        path: gbp-balances
+    # This is to ensure we keep the gbp.toml from master
+    # without having to update our separate branch.
+    - name: Copy configuration
+      if: steps.value_holder.outputs.ACTIONS_ENABLED
+      run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
+    - name: GBP action
+      if: steps.value_holder.outputs.ACTIONS_ENABLED
+      uses: tgstation/gbp-action@master
+      with:
+        branch: "gbp-balances"
+        directory: ./gbp-balances
+        token: ${{ secrets.GITHUB_TOKEN }}

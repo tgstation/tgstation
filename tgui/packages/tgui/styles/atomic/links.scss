@@ -1,0 +1,12 @@
+@use '../colors.scss';
+
+a {
+  &:link,
+  &:visited {
+    color: colors.$blue;
+  }
+  &:hover,
+  &:active {
+    color: colors.$primary;
+  }
+}

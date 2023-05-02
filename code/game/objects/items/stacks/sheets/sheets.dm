@@ -1,7 +1,8 @@
 /obj/item/stack/sheet
 	name = "sheet"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	icon_state = "sheet-metal_3"
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5
@@ -11,15 +12,32 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
+	material_flags = MATERIAL_EFFECTS
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
 	var/walltype
+	/// whether this sheet can be sniffed by the material sniffer
+	var/sniffable = FALSE
 
-/obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
+/obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
+	if(sniffable && is_station_level(z) && amount < 10)
+		GLOB.sniffable_sheets += src
+
+/obj/item/stack/sheet/Destroy(force)
+	if(sniffable)
+		GLOB.sniffable_sheets -= src
+	return ..()
+
+/obj/item/stack/sheet/add(_amount)
+	. = ..()
+	if(sniffable && is_station_level(z) && amount > 10)
+		GLOB.sniffable_sheets += src
+
+/// removing from sniffable handled by the sniffer itself when it checks for targets
 
 /**
  * Facilitates sheets being smacked on the floor
@@ -36,12 +54,12 @@
 		if(mat.shard_type)
 			var/obj/item/new_shard = new mat.shard_type(user.loc)
 			new_shard.add_fingerprint(user)
-			shards += "[new_shard.name]"
+			shards += "\a [new_shard.name]"
 	if(!shards.len)
 		return FALSE
 	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
-	playsound(src, "shatter", 70, TRUE)
+	playsound(src, SFX_SHATTER, 70, TRUE)
 	use(1)
-	user.visible_message("<span class='notice'>[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)].</span>", \
-		"<span class='notice'>You shatter the sheet of [name] on the floor, leaving [english_list(shards)].</span>")
+	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)]."), \
+		span_notice("You shatter the sheet of [name] on the floor, leaving [english_list(shards)]."))
 	return TRUE

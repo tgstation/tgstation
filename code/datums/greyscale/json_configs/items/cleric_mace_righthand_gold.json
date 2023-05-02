@@ -1,0 +1,24 @@
+{
+	"default": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/cleric_mace_righthand",
+			"icon_state": "default",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		[
+			{
+				"type": "reference",
+				"reference_type": "/datum/greyscale_config/shimmer",
+				"blend_mode": "overlay",
+				"color_ids": [ "#ffffff" ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "shimmer_mask_righthand",
+				"blend_mode": "multiply"
+			}
+		]
+	]
+}

@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
@@ -6,9 +5,7 @@ import { Window } from '../layouts';
 export const KeycardAuth = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      width={375}
-      height={125}>
+    <Window width={375} height={145}>
       <Window.Content>
         <Section>
           <Box>
@@ -18,7 +15,7 @@ export const KeycardAuth = (props, context) => {
           </Box>
           <Box>
             {data.waiting === 0 && (
-              <Fragment>
+              <>
                 {!!data.auth_required && (
                   <Button
                     icon="check-square"
@@ -27,30 +24,40 @@ export const KeycardAuth = (props, context) => {
                     lineHeight="60px"
                     fluid
                     onClick={() => act('auth_swipe')}
-                    content="Authorize" />
+                    content="Authorize"
+                  />
                 )}
                 {data.auth_required === 0 && (
-                  <Fragment>
+                  <>
                     <Button
                       icon="exclamation-triangle"
                       fluid
                       onClick={() => {
                         return act('red_alert');
                       }}
-                      content="Red Alert" />
+                      content="Red Alert"
+                    />
                     <Button
                       icon="wrench"
                       fluid
                       onClick={() => act('emergency_maint')}
-                      content="Emergency Maintenance Access" />
+                      content="Emergency Maintenance Access"
+                    />
                     <Button
                       icon="meteor"
                       fluid
                       onClick={() => act('bsa_unlock')}
-                      content="Bluespace Artillery Unlock" />
-                  </Fragment>
+                      content="Bluespace Artillery Unlock"
+                    />
+                    <Button
+                      icon="key"
+                      fluid
+                      onClick={() => act('give_janitor_access')}
+                      content="Grant Janitor Access"
+                    />
+                  </>
                 )}
-              </Fragment>
+              </>
             )}
           </Box>
         </Section>

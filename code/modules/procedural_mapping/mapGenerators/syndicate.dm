@@ -1,15 +1,12 @@
 
 // Modules
 
-/turf/open/floor/plasteel/shuttle/red/syndicate
-	name = "floor" //Not Brig Floor
-
 /datum/map_generator_module/bottom_layer/syndie_floor
-	spawnableTurfs = list(/turf/open/floor/plasteel/shuttle/red/syndicate = 100)
+	spawnableTurfs = list(/turf/open/floor/mineral/plastitanium/red = 100)
 
 /datum/map_generator_module/border/syndie_walls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/closed/wall/r_wall = 100)
+	spawnableTurfs = list(/turf/closed/wall/r_wall/syndicate = 100)
 
 
 /datum/map_generator_module/syndie_furniture
@@ -20,10 +17,10 @@
 		/obj/structure/closet/syndicate = 25, /obj/machinery/suit_storage_unit/syndicate = 15)
 
 /datum/map_generator_module/splatter_layer/syndie_mobs
-	spawnableAtoms = list(/mob/living/simple_animal/hostile/syndicate = 30, \
-		/mob/living/simple_animal/hostile/syndicate/melee = 20, \
-		/mob/living/simple_animal/hostile/syndicate/ranged = 20, \
-		/mob/living/simple_animal/hostile/viscerator = 30)
+	spawnableAtoms = list(/mob/living/basic/syndicate = 30, \
+		/mob/living/basic/syndicate/melee = 20, \
+		/mob/living/basic/syndicate/ranged = 20, \
+		/mob/living/basic/viscerator = 30)
 	spawnableTurfs = list()
 
 // Generators

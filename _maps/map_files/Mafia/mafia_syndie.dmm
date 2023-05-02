@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
@@ -10,38 +10,30 @@
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/mafia)
+/area/centcom/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/mafia)
-"e" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
+/area/centcom/mafia)
 "f" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
+"h" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "i" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	max_integrity = 99999;
@@ -49,30 +41,11 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
-"l" = (
-/obj/structure/closet/syndicate{
-	desc = "A storage closet for syndicate conflict resolution operatives.";
-	name = "red closet"
-	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
@@ -80,35 +53,17 @@
 	},
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -117,179 +72,103 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/opsglass,
-/area/mafia)
+/area/centcom/mafia)
 "q" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/chair/office{
 	dir = 1;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "s" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/floor/circuit/red,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/structure/chair,
 /turf/open/floor/circuit/red,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "w" = (
 /turf/closed/indestructible/syndicate,
-/area/mafia)
+/area/centcom/mafia)
 "x" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/chair/office{
 	dir = 4;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "y" = (
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "z" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "A" = (
 /obj/structure/chair/office{
 	dir = 8;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "B" = (
 /obj/structure/chair/office{
 	dir = 4;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
+/area/centcom/mafia)
 "C" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/structure/chair/office{
 	dir = 8;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "E" = (
 /obj/structure/chair/office{
 	dir = 1;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/mafia)
-"F" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/structure/closet/syndicate{
-	desc = "A storage closet for syndicate conflict resolution operatives.";
-	name = "red closet"
-	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/area/centcom/mafia)
 "G" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 "H" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/dark,
-/area/mafia)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
 
 (1,1,1) = {"
 a
@@ -378,7 +257,7 @@ d
 d
 d
 d
-e
+i
 d
 d
 d
@@ -399,7 +278,7 @@ c
 h
 d
 d
-e
+i
 w
 w
 j
@@ -430,7 +309,7 @@ b
 r
 w
 o
-F
+m
 w
 j
 w
@@ -448,7 +327,7 @@ c
 c
 d
 w
-l
+m
 o
 p
 n
@@ -561,7 +440,7 @@ o
 o
 H
 j
-e
+i
 c
 w
 a
@@ -570,7 +449,7 @@ a
 a
 w
 c
-e
+i
 w
 w
 p
@@ -622,7 +501,7 @@ w
 c
 d
 w
-l
+m
 p
 w
 p
@@ -726,7 +605,7 @@ w
 w
 j
 w
-F
+m
 o
 w
 r
@@ -758,7 +637,7 @@ j
 w
 w
 d
-e
+i
 d
 h
 c
@@ -775,7 +654,7 @@ k
 h
 d
 d
-e
+i
 d
 d
 d

@@ -1,0 +1,15 @@
+{
+	"map_flower": [
+		{
+			"type": "icon_state",
+			"icon_state": "flower_petals_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "flower_stem_worn",
+			"blend_mode": "overlay"
+		}
+	]
+}

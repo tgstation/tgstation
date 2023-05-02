@@ -7,60 +7,74 @@
 	desc = "Controls a stacking machine... in theory."
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/stacking_unit_console
+	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/machine
-	var/machinedir = SOUTHEAST
 
-/obj/machinery/mineral/stacking_unit_console/Initialize()
+/obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
-	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	machine = locate(/obj/machinery/mineral/stacking_machine) in view(2, src)
 	if (machine)
-		machine.CONSOLE = src
+		machine.console = src
 
-/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
-	. = ..()
-
-	if(!machine)
-		to_chat(user, "<span class='notice'>[src] is not linked to a machine!</span>")
-		return
-
-	var/obj/item/stack/sheet/s
-	var/dat
-
-	dat += text("<b>Stacking unit console</b><br><br>")
-
-	for(var/O in machine.stack_list)
-		s = machine.stack_list[O]
-		if(s.amount > 0)
-			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=[REF(src)];release=[s.type]'>Release</A><br>")
-
-	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
-
-	user << browse(dat, "window=console_stacking_machine")
+/obj/machinery/mineral/stacking_unit_console/Destroy()
+	if(machine)
+		machine.console = null
+		machine = null
+	return ..()
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))
 		return
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
-/obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
-	if(..())
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "StackingConsole", name)
+		ui.open()
+
+/obj/machinery/mineral/stacking_unit_console/ui_data(mob/user)
+	var/list/data = list()
+	data["machine"] = machine ? TRUE : FALSE
+	data["stacking_amount"] = null
+	data["contents"] = list()
+	if(machine)
+		data["stacking_amount"] = machine.stack_amt
+		data["input_direction"] = dir2text(machine.input_dir)
+		data["output_direction"] = dir2text(machine.output_dir)
+		for(var/stack_type in machine.stack_list)
+			var/obj/item/stack/sheet/stored_sheet = machine.stack_list[stack_type]
+			if(stored_sheet.amount <= 0)
+				continue
+			data["contents"] += list(list(
+				"type" = stored_sheet.type,
+				"name" = capitalize(stored_sheet.name),
+				"amount" = stored_sheet.amount,
+			))
+	return data
+
+/obj/machinery/mineral/stacking_unit_console/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(href_list["release"])
-		if(!(text2path(href_list["release"]) in machine.stack_list))
-			return //someone tried to spawn materials by spoofing hrefs
-		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
-		var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
-		inp.amount = 0
-		machine.unload_mineral(out)
 
-	src.updateUsrDialog()
-	return
-
+	switch(action)
+		if("release")
+			var/obj/item/stack/sheet/released_type = text2path(params["type"])
+			if(!released_type || !(initial(released_type.merge_type) in machine.stack_list))
+				return //someone tried to spawn materials by spoofing hrefs
+			var/obj/item/stack/sheet/inp = machine.stack_list[initial(released_type.merge_type)]
+			var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
+			inp.amount = 0
+			machine.unload_mineral(out)
+			return TRUE
+		if("rotate")
+			var/input = text2num(params["input"])
+			machine.rotate(input)
+			return TRUE
 
 /**********************Mineral stacking unit**************************/
 
@@ -74,21 +88,25 @@
 	circuit = /obj/item/circuitboard/machine/stacking_machine
 	input_dir = EAST
 	output_dir = WEST
-	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
+	var/obj/machinery/mineral/stacking_unit_console/console
 	var/stk_types = list()
-	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stk_amt = list()
+	var/stack_list[0] //Key: Type. Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
 	var/datum/component/remote_materials/materials
 	var/force_connect = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
+	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
 
 /obj/machinery/mineral/stacking_machine/Destroy()
-	CONSOLE = null
+	if(console)
+		console.machine = null
+		console = null
 	materials = null
 	return ..()
 
@@ -101,10 +119,18 @@
 /obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(istype(M))
 		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			CONSOLE = M.buffer
-			CONSOLE.machine = src
-			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
+			console = M.buffer
+			console.machine = src
+			to_chat(user, span_notice("You link [src] to the console in [M]'s buffer."))
 			return TRUE
+
+/obj/machinery/mineral/stacking_machine/proc/rotate(input)
+	if (input)
+		input_dir = turn(input_dir, 90)
+	else
+		output_dir = turn(output_dir, 90)
+	if (input_dir == output_dir)
+		rotate(input)
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(QDELETED(inp))
