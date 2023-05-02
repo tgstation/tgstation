@@ -280,7 +280,7 @@
 /obj/machinery/vending/wardrobe/coroner_wardrobe
 	name = "MortiDrobe"
 	desc = "A favorite among nihilists."
-	icon_state = "chapdrobe"
+	icon_state = "coroner_drobe"
 	product_ads = "Any day above ground is a good one!;My day starts when yours ends!;And they call this a dying business!;See you when you're dead!"
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
