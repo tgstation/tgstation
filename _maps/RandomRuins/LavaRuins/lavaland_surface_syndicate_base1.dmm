@@ -21,7 +21,9 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
-/obj/machinery/barsign/all_access/directional/south,
+/obj/machinery/barsign/all_access/directional/south{
+	chosen_sign = "/datum/barsign/hiddensigns/syndibarsign"
+	},
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "ai" = (
@@ -422,11 +424,12 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "dP" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndicate_lavaland_warehouse"
-	},
-/turf/open/floor/iron,
+/obj/structure/rack,
+/obj/item/storage/belt/utility,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "dQ" = (
 /obj/structure/sign/warning/secure_area,
@@ -556,13 +559,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "eF" = (
-/obj/structure/rack,
-/obj/item/storage/belt/utility,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/part_replacer/bluespace/tier4,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/cargo)
+/turf/closed/wall/mineral/plastitanium/explosive,
+/area/ruin/syndicate_lava_base/chemistry)
 "eG" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/effect/decal/cleanable/dirt,
@@ -3676,6 +3674,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
+"KZ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "syndicate_lavaland_warehouse"
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/cargo)
 "Ln" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3931,9 +3936,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
-"QJ" = (
-/turf/closed/wall/mineral/plastitanium/explosive,
-/area/ruin/syndicate_lava_base/chemistry)
 "QS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -6014,9 +6016,9 @@ as
 as
 as
 as
-QJ
+eF
 ZH
-dP
+KZ
 Bb
 he
 hz
@@ -6212,7 +6214,7 @@ ab
 ab
 dy
 dy
-eF
+dP
 Pb
 vU
 dy
