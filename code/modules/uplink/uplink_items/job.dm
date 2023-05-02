@@ -16,14 +16,19 @@
 	limited_stock = 1 //please don't spam deadchat
 	surplus = 5
 
-/datum/uplink_item/role_restricted/bureaucratic_error_remote
+/datum/uplink_item/role_restricted/bureaucratic_error
 	name = "Organic Resources Disturbance Inducer"
 	desc = "A device that raises hell in organic resources indirectly. Single use."
-	cost = 2
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
 	limited_stock = 1
-	item = /obj/item/devices/bureaucratic_error_remote
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
-	surplus = 5
+	cost = 5
+	restricted = TRUE
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER)
+
+/datum/uplink_item/stealthy_tools/bureaucratic_error/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	force_event(/datum/round_event_control/bureaucratic_error, "a syndicate virus")
+	return source
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
