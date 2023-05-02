@@ -11084,9 +11084,8 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "eft" = (
@@ -19616,6 +19615,7 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hrG" = (
@@ -39140,6 +39140,8 @@
 "ogs" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ogL" = (
@@ -46615,7 +46617,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
@@ -47539,11 +47540,12 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/port/fore)
 "riL" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/machinery/restaurant_portal/restaurant,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "riW" = (
@@ -49829,8 +49831,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "rXF" = (
-/obj/machinery/light/directional/north,
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/trunk{
@@ -50194,14 +50194,6 @@
 "sdb" = (
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
-"sdf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Bar"
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "sdn" = (
 /obj/item/target,
 /obj/structure/training_machine,
@@ -58190,7 +58182,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "uOO" = (
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -66327,7 +66318,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "xIC" = (
-/obj/machinery/light/directional/west,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
@@ -101488,7 +101478,7 @@ rEr
 vFB
 fRS
 twN
-bvJ
+rac
 ogs
 wCL
 gPh
@@ -102002,7 +101992,7 @@ dZm
 wAA
 fRS
 tLx
-sdf
+bvJ
 dYK
 hkG
 gae
@@ -102516,7 +102506,7 @@ dZm
 cNd
 fRS
 twN
-bvJ
+qFo
 lWm
 gvm
 vLM
@@ -103030,7 +103020,7 @@ qXB
 vFB
 fRS
 cGw
-rac
+bvJ
 rXF
 uey
 fSd
