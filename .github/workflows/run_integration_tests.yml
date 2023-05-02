@@ -64,7 +64,7 @@ jobs:
         id: compile_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci --flat dm -DCIBUILDING -DANSICOLORS -Werror
+          tools/build/build --flat --ci dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
