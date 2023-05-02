@@ -51,6 +51,6 @@
 	. = ..(user)
 	GLOB.alarmdisplay += src
 
-/datum/computer_file/program/alarm_monitor/kill_program()
+/datum/computer_file/program/alarm_monitor/kill_program(reload_ui = TRUE)
 	GLOB.alarmdisplay -= src
 	return ..()
