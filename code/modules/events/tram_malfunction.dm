@@ -50,6 +50,7 @@
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
 		tram.collision_lethality = original_lethality * 1.25
+		announce_to_ghosts(tram)
 
 /datum/round_event/tram_malfunction/end()
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
