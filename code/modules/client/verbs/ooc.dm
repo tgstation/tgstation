@@ -455,8 +455,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set desc = "Export your current preferences to a file."
 	set category = "OOC"
 
-	if(isnull(prefs))
-		tgui_alert(usr, "You do not have any preferences to export!")
-		return
+	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
