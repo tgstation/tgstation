@@ -469,7 +469,7 @@ GLOBAL_VAR(restart_counter)
 		enable_debugging()
 
 /world/proc/init_coverage()
-	AUXTOOLS_CHECK(AUXCOV)
+	AUXTOOLS_CHECK_NO_CONFIG(AUXCOV)
 
 	enable_code_coverage()
 

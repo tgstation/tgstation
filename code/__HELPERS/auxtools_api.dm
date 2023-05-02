@@ -4,10 +4,7 @@
 GLOBAL_LIST(auxtools_initialized)
 GLOBAL_PROTECT(auxtools_initialized)
 
-#define AUXTOOLS_CHECK(LIB)\
-	if (!CONFIG_GET(flag/auxtools_enabled)) {\
-		CRASH("Auxtools is not enabled in config!");\
-	}\
+#define AUXTOOLS_CHECK_NO_CONFIG(LIB)\
 	LAZYINITLIST(GLOB.auxtools_initialized);\
 	if (GLOB.auxtools_initialized[LIB] != AUXTOOLS_FULL_INIT) {\
 		if (fexists(LIB)) {\
@@ -21,6 +18,12 @@ GLOBAL_PROTECT(auxtools_initialized)
 			CRASH("No file named [LIB] found!")\
 		}\
 	}
+
+#define AUXTOOLS_CHECK(LIB)\
+	if (!CONFIG_GET(flag/auxtools_enabled)) {\
+		CRASH("Auxtools is not enabled in config!");\
+	}\
+	AUXTOOLS_CHECK_NO_CONFIG(LIB)
 
 #define AUXTOOLS_SHUTDOWN(LIB)\
 	LAZYINITLIST(GLOB.auxtools_initialized);\
