@@ -1183,8 +1183,54 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
 	target.set_machine_stat(target.machine_stat | BROKEN)
 
+//windows helpers
+/obj/effect/mapping_helpers/window
+	desc = "You shouldn't see this. Report it please."
+	layer = ABOVE_OBJ_LAYER
+	late = TRUE
 
+/obj/effect/mapping_helpers/window/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
 
+	var/obj/structure/window/target = locate(/obj/structure/window) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(target)
+		log_mapping("[src] failed to find a window at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/window/LateInitialize()
+	. = ..()
+	var/obj/structure/window/target = locate(/obj/structure/window) in loc
+
+	if(isnull(target))
+		qdel(src)
+		return
+
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/window/proc/payload(obj/structure/window/target)
+	return
+
+/obj/effect/mapping_helpers/window/damaged
+	name = "damaged window helper"
+	icon_state = "damaged_window"
+
+/obj/effect/mapping_helpers/window/damaged/payload(obj/structure/window/target)
+	if(target.atom_integrity < target.max_integrity)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
+	// Minimum roll of integrity percentage
+	var/integrity_min_factor = 0.2
+	// Maximum roll of integrity percentage
+	var/integrity_max_factor = 0.8
+	target.atom_integrity = rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor)
 
 
 
