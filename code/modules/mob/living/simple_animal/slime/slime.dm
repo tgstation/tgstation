@@ -106,6 +106,13 @@
 		"yellow",
 	)
 
+	var/static/list/tier_one_colours = list(
+		"blue",
+		"metal",
+		"orange",
+		"purple",
+	)
+
 	///////////CORE-CROSSING CODE
 
 	var/effectmod //What core modification is being used.
@@ -532,6 +539,9 @@
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))
+
+/mob/living/simple_animal/slime/random_tier_one/Initialize(mapload, new_colour, new_is_adult=FALSE)
+	. = ..(mapload, pick(tier_one_colours), prob(50))
 
 /mob/living/simple_animal/slime/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

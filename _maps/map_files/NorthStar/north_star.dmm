@@ -67557,8 +67557,8 @@
 "rQe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/south{
-	name = "shutters control";
-	id = "z1-maint-crates"
+	id = "z1-maint-crates";
+	name = "shutters control"
 	},
 /obj/effect/turf_decal/caution{
 	dir = 4
@@ -81188,7 +81188,7 @@
 /area/station/science/xenobiology/hallway)
 "vHn" = (
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/mob/living/simple_animal/slime,
+/mob/living/simple_animal/slime/random_tier_one,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "vHq" = (
