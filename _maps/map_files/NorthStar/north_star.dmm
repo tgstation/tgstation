@@ -51171,6 +51171,7 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nun" = (
@@ -78386,6 +78387,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "uSN" = (
@@ -83068,7 +83070,6 @@
 /obj/effect/turf_decal/trimline/blue,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "wdZ" = (
@@ -333612,7 +333613,7 @@ aFj
 vug
 onI
 wdW
-wHv
+xaC
 hux
 vyR
 pgZ
@@ -333867,7 +333868,7 @@ knH
 rKN
 aFj
 wXy
-oiP
+onI
 mIX
 iOR
 vew
