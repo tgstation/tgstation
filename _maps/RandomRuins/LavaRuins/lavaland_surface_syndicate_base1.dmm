@@ -560,21 +560,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "eF" = (
-/obj/effect/turf_decal/box/white/corners{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "syndicate_lavaland_warehouse"
 	},
-/obj/structure/closet/crate/radiation,
-/obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/head/utility/radiation,
-/obj/item/clothing/head/utility/radiation,
-/obj/item/clothing/head/utility/radiation,
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
-/obj/item/reagent_containers/cup/glass/bottle/vodka,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "eG" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -1501,6 +1495,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
 "jc" = (
@@ -2465,6 +2460,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
+"pW" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/structure/closet/crate/radiation,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/cargo)
 "qa" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava{
 	dir = 8
@@ -2551,6 +2563,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/side,
 /area/ruin/syndicate_lava_base/main)
 "rg" = (
@@ -2695,6 +2708,15 @@
 /area/ruin/syndicate_lava_base/bar)
 "ur" = (
 /obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/bar)
+"uK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "va" = (
@@ -2945,6 +2967,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
 "yl" = (
@@ -3073,17 +3096,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
-"AU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndicate_lavaland_warehouse"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/ruin/syndicate_lava_base/cargo)
 "AX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3203,6 +3215,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -3929,15 +3942,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
-"Qp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/bar)
 "Qv" = (
 /obj/structure/closet/firecloset/full{
 	anchored = 1
@@ -4187,6 +4191,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/medbay)
 "Ut" = (
@@ -5812,7 +5817,7 @@ RO
 kq
 Cc
 kp
-Qp
+uK
 jy
 lH
 Kz
@@ -6044,7 +6049,7 @@ as
 as
 AD
 ZH
-AU
+eF
 Bb
 he
 hz
@@ -6239,7 +6244,7 @@ ab
 ab
 ab
 dy
-eF
+pW
 dP
 Pb
 vU
