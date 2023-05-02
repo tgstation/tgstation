@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "air alarms correctly spew out cable & electronics depending on their build stage when their integrity reaches 0  i.e. destroyed"
-  - bugfix: "fire alarms correctly spew out cable & electronics depending on their build stage when their integrity reaches 0  i.e. destroyed"
-  - bugfix: "balloon alerts runtiming when cutting terminals"

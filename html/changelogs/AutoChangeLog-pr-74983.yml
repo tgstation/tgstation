@@ -1,4 +1,0 @@
-author: "SgtHunk"
-delete-after: True
-changes:
-  - bugfix: "Pirates summoned through hacking a comms console should actually spawn now."

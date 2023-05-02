@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Mapping: Air alarm variants replaced with corresponding helpers"
