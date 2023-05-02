@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: " Drying rack spawning a matter bin and circuit board on deconstruction"
