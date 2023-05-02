@@ -129,6 +129,7 @@
 				user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), \
 				"[span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!")]\n\
 				[span_notice("You can remove the beacon to place it again by striking it with the club.")]")
+				update_icon_state()
 		else
 			to_chat(user, span_warning("You need to be on solid ground to detach the beacon!"))
 		return
@@ -219,7 +220,7 @@
 	if(user != teleporting && success)
 		log_combat(user, teleporting, "teleported", null, "from [AREACOORD(source)]")
 
-/obj/item/hierophant_club/pickup(mob/living/user)
+/obj/item/hierophant_club/equipped(mob/user)
 	. = ..()
 	blink.Grant(user, src)
 	user.update_icons()
