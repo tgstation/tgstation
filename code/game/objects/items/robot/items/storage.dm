@@ -306,13 +306,13 @@
 	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(
-				/obj/item/reagent_containers/cup/bowl,\
-				/obj/item/food,\
-				/obj/item/plate/oven_tray,\
-				/obj/item/paper,\
-				/obj/item/plate,\
-				/obj/item/reagent_containers/cup/soup_pot,\
-)
+		/obj/item/food,
+		/obj/item/paper,
+		/obj/item/plate,
+		/obj/item/plate/oven_tray,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/soup_pot,
+	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)
 	update_appearance()

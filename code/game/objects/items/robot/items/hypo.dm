@@ -88,7 +88,7 @@
 		/datum/reagent/toxin/carpotoxin,\
 		/datum/reagent/toxin/fakebeer,\
 		/datum/reagent/consumable/ethanol/fernet,\
-	)
+)
 
 ///Borg Hypospray
 /obj/item/reagent_containers/borghypo
