@@ -400,7 +400,7 @@
 	assignment = "Coroner"
 	trim_state = "trim_coroner"
 	department_color = COLOR_MEDICAL_BLUE
-	subdepartment_color = COLOR_MEDICAL_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_CORONER
 	minimal_access = list(
 		ACCESS_MEDICAL,
