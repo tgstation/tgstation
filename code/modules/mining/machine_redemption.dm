@@ -258,9 +258,9 @@
 	data["disconnected"] = null
 	if (!mat_container)
 		data["disconnected"] = "Local mineral storage is unavailable"
-	else if (!materials.silo)
+	else if (!materials.silo && requires_silo)
 		data["disconnected"] = "No ore silo connection is available; storing locally"
-	else if (!materials.check_z_level())
+	else if (!materials.check_z_level() && requires_silo)
 		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
 		data["disconnected"] = "Mineral withdrawal is on hold"
@@ -317,7 +317,7 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level() && (requires_silo || user_id_card.registered_account.account_job))
+			if(!materials.check_z_level() && (requires_silo || user_id_card.registered_account.replaceable))
 				return TRUE
 			if(points)
 				if(user_id_card)
