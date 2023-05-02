@@ -22,7 +22,7 @@
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
 	limited_stock = 1
-	cost = 5
+	cost = 4
 	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
