@@ -8,7 +8,7 @@
 		return
 	if (fexists("./lib[library].so"))
 		return "./lib[library].so"
-	else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/lib[library].so"))
+	if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/lib[library].so"))
 		return "[world.GetConfig("env", "HOME")]/.byond/bin/lib[library].so"
-	else
-		CRASH("Could not find lib[library].so")
+
+	log_world("Could not find lib[library].so!")
