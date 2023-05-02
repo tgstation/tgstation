@@ -98,16 +98,16 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	var/exportable_json
 
 #if DM_VERSION >= 515
-	if(text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
-		exportable_json = file(temporary_file_storage)
-#else
-	if(text2file(json_encode(tree), temporary_file_storage))
-		exportable_json = file(temporary_file_storage)
-#endif
-
-	if(!isfile(exportable_json))
+	if(!text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
 		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
 		return
+#else
+	if(!text2file(json_encode(tree), temporary_file_storage))
+		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
+		return
+#endif
+
+	exportable_json = file(temporary_file_storage)
 
 	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
 	fdel(temporary_file_storage)
