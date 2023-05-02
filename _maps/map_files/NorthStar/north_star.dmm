@@ -15172,10 +15172,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "dSW" = (
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dTe" = (
