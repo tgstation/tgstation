@@ -189,9 +189,8 @@
 /area/shuttle/abandoned/crew)
 "kE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light/broken/directional/east,
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/money_medium,
@@ -360,10 +359,8 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/spawner/random/trash/garbage,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -498,10 +495,8 @@
 /area/shuttle/abandoned/medbay)
 "EB" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -581,10 +576,8 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
 "Iu" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/bookcase/random,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned)
@@ -800,10 +793,8 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
 "SW" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/suit_storage_unit/spaceruin{
 	desc = "An industrial suit storage device carrying retro space suits. Neat!"
 	},
@@ -898,9 +889,8 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},

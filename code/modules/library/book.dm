@@ -44,12 +44,9 @@
 /datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
 	// Just the paper's raw data.
 	var/raw_content = ""
-
 	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
-		if(!isnull(text_input.colour))
-			raw_content += text_input.raw_text
-		else
-			raw_content += "<font color='[text_input.colour]'>[text_input.raw_text]</font>"
+		raw_content += text_input.to_raw_html()
+
 	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
 
 /datum/book_info/proc/get_content(default="N/A")
