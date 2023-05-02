@@ -84,6 +84,7 @@
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
 	return ..()
+
 /obj/item/minigunpack/proc/drain_power()
 	return //This is here for the mod suit just so the normal one doesn't error out
 
@@ -119,21 +120,19 @@
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
-	if(istype(loc, /obj/item/minigunpack)) 
+	if(istype(loc, /obj/item/minigunpack)||istype(loc, /obj/item/mod/module/minigun)) 
 		ammo_pack = loc
 		AddElement(/datum/element/update_icon_blocker)
 		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 		return ..()
-	else if(istype(loc, /obj/item/mod/module/minigun))
-		ammo_pack = loc
-		AddElement(/datum/element/update_icon_blocker)
-		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
-		return ..()
-	return INITIALIZE_HINT_QDEL
+	else
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/minigun/mod
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires power from the MODsuit to use."
+	icon_state = "minigun_spin"
+	inhand_icon_state = "minigun"
 
 
 
@@ -167,7 +166,7 @@
 
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
-	if(!istype(ammo_pack, /obj/item/minigunpack)&&!istype(ammo_pack, /obj/item/mod/module/minigun/))
+	if(!istype(ammo_pack, /obj/item/minigunpack)&& !istype(ammo_pack, /obj/item/mod/module/minigun))
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 

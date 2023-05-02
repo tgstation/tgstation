@@ -498,20 +498,19 @@
 	name = "MOD laser gatling gun module"
 	icon_state = "minigun_module"
 	inhand_icon_state = "minigun"
-	desc = "A laser gatling gun with a that connects to a MOD suit"
+	desc = "A laser gatling gun with a cable that connects to a mod suit"
 	w_class = WEIGHT_CLASS_HUGE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
-	var/overheat = 0
-	var/overheat_max = 30
-	var/heat_diffusion = 0.5
 	module_type = MODULE_ACTIVE
 	complexity = 5
-	var/obj/item/stock_parts/cell/minigun/battery
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/gun/energy/minigun/mod
 	cooldown_time = 0.5 SECONDS
-
+	var/overheat = 0
+	var/overheat_max = 30
+	var/heat_diffusion = 0.5
+	var/obj/item/stock_parts/cell/minigun/battery
 /obj/item/mod/module/minigun/on_activation()
 	playsound(src, 'sound/weapons/gun/l6/l6_rack.ogg', 25)
 	..()
@@ -528,5 +527,5 @@
 /obj/item/mod/module/minigun/process(delta_time)
 	overheat = max(0, overheat - heat_diffusion * delta_time)
 	if(!overheat == 0)
-		drain_power(overheat*0.5)//It drains power if it overheats
+		drain_power(overheat * 0.5)//It drains power if it overheats
 
