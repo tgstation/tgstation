@@ -87,8 +87,10 @@
 			new /obj/item/sbeacondrop/bomb(src) // 11 tc
 			new /obj/item/grenade/syndieminibomb(src) // 6 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
-			new /obj/item/clothing/suit/space/syndicate/black/red(src) // outfit 1 tc
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 
 		if(KIT_MURDER)
@@ -120,8 +122,10 @@
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
 			new /obj/item/sbeacondrop(src) // 10 tc
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
@@ -409,13 +413,10 @@
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	if(prob(50))
-		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
-	else
-		new /obj/item/clothing/head/helmet/space/syndicate(src)
-		new /obj/item/clothing/suit/space/syndicate(src)
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -708,7 +709,13 @@
 			target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	if(!(living_target.mind?.has_antag_datum(/datum/antagonist))) // GTFO. Technically not foolproof but making an ERT member or a paradox clone a nuke op sounds hilarious
+	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
+	var/allowed = FALSE
+	for(var/datum/antagonist/antag_datum as anything in living_target.mind.antag_datums)
+		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
+			allowed = TRUE
+
+	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(living_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
