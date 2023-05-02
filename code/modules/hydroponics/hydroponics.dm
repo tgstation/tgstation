@@ -1283,3 +1283,8 @@
 	sustaining_precent += amount
 	if(sustaining_precent >= 100)
 		become_self_sufficient()
+
+/obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
