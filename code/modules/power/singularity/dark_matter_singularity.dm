@@ -8,7 +8,7 @@
 		a cosmic paradox that defies all logic. I can't \
 		take my eyes off it, even though I know it could \
 		devour us all in an instant.\
-		\"</i><br>- Chief Engineer Ship Chafer"
+		\"</i><br>- Chief Engineer Miles O'Brien"
 	ghost_notification_message = "IT'S HERE"
 	icon_state = "dark_matter_s1"
 	singularity_icon_variant = "dark_matter"
