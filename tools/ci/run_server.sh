@@ -31,3 +31,5 @@ fi
 
 #unflatten
 sed -i 's/!/\//g' ci_test/auxtools_coverage.xml
+#fix the !DOCTYPE
+sed -i 's/<\/DOCTYPE/<!DOCTYPE/g' ci_test/auxtools_coverage.xml
