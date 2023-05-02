@@ -74,6 +74,8 @@
 /datum/storage/pockets/shoes/New()
 	. = ..()
 	set_holdable(list(
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner/lesser,
 		/obj/item/knife,
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
