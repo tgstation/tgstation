@@ -5737,7 +5737,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/mother_tree,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "bqo" = (
@@ -21308,6 +21307,7 @@
 	supplies_requestable = 1
 	},
 /obj/structure/table/glass,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "feV" = (

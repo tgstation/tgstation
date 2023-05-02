@@ -44983,7 +44983,7 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/machinery/mother_tree,
+/obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ptU" = (
@@ -46418,6 +46418,7 @@
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "pQY" = (

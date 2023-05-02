@@ -15546,7 +15546,7 @@
 "fWk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
-/obj/machinery/mother_tree,
+/obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fWm" = (
@@ -15672,6 +15672,7 @@
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fYJ" = (

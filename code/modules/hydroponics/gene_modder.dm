@@ -444,3 +444,10 @@
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
 		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
 	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+
+/obj/item/storage/box/plant_gene
+	name = "disk storage box"
+
+/obj/item/storage/box/plant_gene/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/disk/plantgene(src)

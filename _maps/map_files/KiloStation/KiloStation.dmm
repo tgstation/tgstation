@@ -28782,6 +28782,7 @@
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
 /obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jrs" = (
@@ -63142,10 +63143,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
-"uTF" = (
-/obj/machinery/mother_tree,
-/turf/open/floor/glass,
-/area/station/service/hydroponics)
 "uTG" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -108754,7 +108751,7 @@ rLs
 lFt
 rJS
 xHP
-uTF
+fLv
 dfU
 lJJ
 cAu

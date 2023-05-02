@@ -54,13 +54,14 @@
 	var/nutriment_drain_precent = 5
 
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
-	var/obj/machinery/mother_tree/connected_tree
 	///how much lifespan is lost to repeated harvest
 	var/repeated_harvest = 0
 	//growth after converted to age
 	var/growth = 0
 	///are we currently bio boosted?
 	var/bio_boosted = FALSE
+	///precent of the way to self sustaining
+	var/sustaining_precent = 0
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -85,12 +86,6 @@
 	register_context()
 
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/hydroponics/LateInitialize()
-	. = ..()
-	connected_tree = locate() in range(5)
-	if(connected_tree)
-		connected_tree.attached_component.connected_trays |= src
 
 /obj/machinery/hydroponics/add_context(
 	atom/source,
@@ -361,8 +356,6 @@
 			//if(myseed.harvest_age < age * max(myseed.production * 0.044, 0.5) && (myseed.harvest_age) < (age - lastproduce) * max(myseed.production * 0.044, 0.5) && (!harvest && !dead))
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-					if(connected_tree)
-						SEND_SIGNAL(connected_tree, COMSIG_BOTANY_FINAL_GROWTH, src)
 					set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 				else
 					lastproduce = age
@@ -612,8 +605,6 @@
 		. += span_warning("It's filled with weeds!")
 	if(pestlevel >= 5)
 		. += span_warning("It's filled with tiny worms!")
-	if(connected_tree)
-		. += span_notice("Its connected to a Mother Tree it will recieve its blessings.")
 	if(bio_boosted)
 		. += span_notice("It's currently being bio boosted, plants will grow incredibly quickly.")
 /**
@@ -761,17 +752,6 @@
 		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
-
-/obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_unfasten_wrench(user, tool))
-		if(!anchored)
-			connected_tree = null
-		else
-			connected_tree = locate() in range(5)
-			if(connected_tree)
-				connected_tree.attached_component.connected_trays |= src
-	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/hydroponics/proc/end_boost()
 	bio_boosted = FALSE
@@ -1027,8 +1007,6 @@
 		//if(myseed.harvest_age < age * max(myseed.production * 0.044, 0.5) && (myseed.harvest_age) < (age - lastproduce) * max(myseed.production * 0.044, 0.5) && (!harvest && !dead))
 		nutrimentMutation()
 		if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-			if(connected_tree)
-				SEND_SIGNAL(connected_tree, COMSIG_BOTANY_FINAL_GROWTH, src)
 			set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -1300,3 +1278,8 @@
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjust_plant_nutriments(adjustamt)
 	reagents.remove_any(adjustamt)
+
+/obj/machinery/hydroponics/proc/increase_sustaining(amount)
+	sustaining_precent += amount
+	if(sustaining_precent >= 100)
+		self_sustaining = TRUE

@@ -73,7 +73,10 @@
 		return
 	if(chems.has_reagent(type, 1))
 		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
-
+		plant_mutation_reagent_apply(chems, mytray, user, mr = 10, hm = 5)
+	if(prob(10))
+		chems.remove_all_type(type, chems.get_reagent_amount(type))
+		mytray.mutatespecie_new()
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)

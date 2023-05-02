@@ -1220,6 +1220,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 14)
 
+/datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		if(!mytray.self_sustaining)
+			mytray.increase_sustaining(round(chems.get_reagent_amount(type)))
+		else
+			mytray.lastcycle += 2.5 SECONDS /// makes trays roughly 25% faster
+
 /// Returns a hippie-esque string for the person affected by the reagent to say.
 /datum/reagent/medicine/earthsblood/proc/return_hippie_line()
 	var/static/list/earthsblood_lines = list(
