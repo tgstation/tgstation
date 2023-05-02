@@ -27,7 +27,7 @@ if [ -d ".git" ]; then
   cp -r .git/logs/* $1/.git/logs/
 fi
 
-cp tgstation.dmb tgstation.rsc $1/
+cp *.dmb *.rsc $1/
 cp -r _maps/* $1/_maps/
 cp -r icons/effects/* $1/icons/effects/
 cp -r icons/mob/clothing/* $1/icons/mob/clothing/
