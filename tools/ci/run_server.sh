@@ -30,4 +30,4 @@ if [[ ! -f ci_test/auxtools_coverage.xml ]] ; then
 fi
 
 #unflatten
-sed -i 's/!/new-text/g' input.txt
+sed -i 's/!/\//g' ci_test/auxtools_coverage.xml
