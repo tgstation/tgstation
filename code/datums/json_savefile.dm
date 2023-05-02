@@ -8,6 +8,8 @@
 	VAR_PRIVATE/list/tree
 	/// If this is set to true, calling set_entry or remove_entry will automatically call save(), this does not catch modifying a sub-tree, nor do I know how to do that
 	var/auto_save = FALSE
+	/// Cooldown that tracks the time between attempts to download the savefile.
+	COOLDOWN_DECLARE(download_cooldown)
 
 GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
@@ -79,3 +81,44 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 				continue
 			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
+
+/// Proc that handles generating a JSON file (prettified if 515 and over!) of a user's preferences and showing it to them.
+/// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
+/// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
+/datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
+	if(!istype(requester) || !path)
+		return
+
+	if(!json_export_checks(requester))
+		return
+
+	COOLDOWN_START(src, download_cooldown, (CONFIG_GET(number/seconds_cooldown_for_preferences_export) * (1 SECONDS)))
+	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
+	var/temporary_file_storage = "data/preferences_export_working_directory/[file_name]"
+
+#if DM_VERSION >= 515
+	if(!text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
+		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
+		return
+#else
+	if(!text2file(json_encode(tree), temporary_file_storage))
+		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
+		return
+#endif
+
+	var/exportable_json = file(temporary_file_storage)
+
+	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
+	fdel(temporary_file_storage)
+
+/// Proc that just handles all of the checks for exporting a preferences file, returns TRUE if all checks are passed, FALSE otherwise.
+/// Just done like this to make the code in the export_json_to_client() proc a bit cleaner.
+/datum/json_savefile/proc/json_export_checks(mob/requester)
+	if(!COOLDOWN_FINISHED(src, download_cooldown))
+		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
+		return FALSE
+
+	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "Yes")) == "Yes")
+		return TRUE
+
+	return FALSE
