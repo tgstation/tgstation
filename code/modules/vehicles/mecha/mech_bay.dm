@@ -1,3 +1,10 @@
+/**
+ * # Mech Bay Power Port
+ *
+ * Machinery that charges Exosuits primarily. The associated computer will display basic information as well.
+ * Also charges machines with a cell (except those under the machery/power tree), but prioritizes exosuits.
+ */
+
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
@@ -6,8 +13,10 @@
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/mech_recharger
-	///Weakref to currently recharging mech on our recharging_turf
-	var/datum/weakref/recharging_mech_ref
+	///Weakref to currently recharging machine on our recharging_turf
+	var/datum/weakref/recharging_machine_ref
+	///Weakref to the above's cell
+	var/datum/weakref/recharging_powercell_ref
 	///Ref to charge console for seeing charge for this port, cyclical reference
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
@@ -52,27 +61,90 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Recharge power <b>[siunit(recharge_power, "W", 1)]</b>.")
 
-/obj/machinery/mech_bay_recharge_port/process(seconds_per_tick)
+/obj/machinery/mech_bay_recharge_port/power_change()
+	if(!machine_stat & NOPOWER)
+		begin_processing()
+
+
+/**
+ * Attempts to "connect" to a machine at the recharge location, prioritizing mechs.
+ *
+ * Does not connect to objects in the /obj/machinery/power tree. Starts processing if
+ * connection is valid.
+ */
+/obj/machinery/mech_bay_recharge_port/proc/try_connect()
 	if(machine_stat & NOPOWER || !recharge_console)
 		return
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharging_mech_ref?.resolve()
-	if(!recharging_mech)
-		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
-		if(recharging_mech)
-			recharging_mech_ref = WEAKREF(recharging_mech)
-			recharge_console.update_appearance()
-	if(!recharging_mech?.cell)
-		return
-	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		var/delta = min(recharge_power * seconds_per_tick, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
-		recharging_mech.give_power(delta)
-		use_power(delta + active_power_usage)
-	else
-		recharge_console.update_appearance()
-	if(recharging_mech.loc != recharging_turf)
-		recharging_mech_ref = null
-		recharge_console.update_appearance()
+	var/obj/recharging_machine = recharging_machine_ref?.resolve()
+	var/obj/item/stock_parts/cell/electron_cache = recharging_powercell_ref?.resolve()
 
+	if(recharging_machine?.loc != recharging_turf)
+		recharging_machine = null
+		recharging_machine_ref = null
+
+	if(electron_cache?.loc != recharging_machine?.loc)
+		electron_cache = null
+		recharging_powercell_ref = null
+
+	if(!recharging_machine)
+		electron_cache = null
+		var/obj/vehicle/sealed/mecha/exosuit = locate(/obj/vehicle/sealed/mecha) in recharging_turf
+		if(exosuit)
+			recharging_machine = exosuit
+			recharging_machine_ref = WEAKREF(recharging_machine)
+			electron_cache = exosuit.cell
+			recharging_powercell_ref = WEAKREF(electron_cache)
+			recharge_console.update_appearance()
+		else
+			for(var/obj/machinery/machine in recharging_turf)
+				if(istype(machine, /obj/machinery/power))
+					continue //nice try
+				electron_cache = locate(/obj/item/stock_parts/cell) in machine.contents
+				if(electron_cache)
+					recharging_machine = machine
+					recharging_machine_ref = WEAKREF(recharging_machine)
+					recharging_powercell_ref = WEAKREF(electron_cache)
+					recharge_console.update_appearance()
+					break
+
+	if(recharging_machine && electron_cache)
+		begin_processing()
+
+/obj/machinery/mech_bay_recharge_port/process(seconds_per_tick)
+	if(machine_stat & NOPOWER || !recharge_console)
+		end_processing()
+		to_chat(world, "DEBUG -- End Processing; No power or console")
+		return
+
+	var/obj/recharging_machine = recharging_machine_ref?.resolve()
+	var/obj/item/stock_parts/cell/electron_cache = recharging_powercell_ref?.resolve()
+	to_chat(world, "DEBUG -- machine is [recharging_machine], and cell is [electron_cache]")
+
+	if(!recharging_machine)
+		end_processing()
+		to_chat(world, "DEBUG -- End Processing; no target machine")
+		return
+
+	if(recharging_machine.loc !=  recharging_turf)
+		recharging_machine = null
+		recharging_machine_ref = null
+		electron_cache = null
+		recharging_powercell_ref = null
+		end_processing()
+		to_chat(world, "DEBUG -- End Processing; machine not on charge turf")
+		return
+
+	if(!electron_cache || (electron_cache.loc != recharging_machine))
+		electron_cache = null
+		recharging_powercell_ref = null
+		to_chat(world, "DEBUG -- End Processing; cell not located inside machine")
+		return
+
+	if(electron_cache.charge < electron_cache.maxcharge)
+		var/delta = min(recharge_power * seconds_per_tick, electron_cache.maxcharge - electron_cache.charge)
+		electron_cache.give(delta)
+		use_power(delta + active_power_usage)
+	recharge_console.update_appearance()
 
 /obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
@@ -128,25 +200,39 @@
 		return data
 
 	data["recharge_port"] = list("mech" = null)
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port.recharging_mech_ref?.resolve()
 
-	if(!recharging_mech)
+	var/obj/recharging_machine = recharge_port?.recharging_machine_ref?.resolve()
+	if(!recharging_machine)
 		return data
-	data["recharge_port"]["mech"] = list("health" = recharging_mech.get_integrity(), "maxhealth" = recharging_mech.max_integrity, "cell" = null, "name" = recharging_mech.name,)
 
-	if(QDELETED(recharging_mech.cell))
+	var/obj/item/stock_parts/cell/electron_cache = recharge_port?.recharging_powercell_ref?.resolve()
+	var/obj/vehicle/sealed/mecha/mech = recharging_machine
+	var/list/mechdata = list()
+	if(istype(mech))
+		mechdata["health"] = mech.get_integrity()
+		mechdata["maxhealth"] = mech.max_integrity
+		mechdata["name"] = mech.name
+	else
+		mechdata["health"] = 1
+		mechdata["maxhealth"] = 1
+		mechdata["name"] = "Generic Powered Device"
+
+	data["recharge_port"]["mech"] = list("health" = mechdata["health"], "maxhealth" = mechdata["maxhealth"], "cell" = null, "name" = mechdata["name"],)
+
+	if(QDELETED(electron_cache))
 		return data
 	data["recharge_port"]["mech"]["cell"] = list(
-	"charge" = recharging_mech.cell.charge,
-	"maxcharge" = recharging_mech.cell.maxcharge
+	"charge" = electron_cache.charge,
+	"maxcharge" = electron_cache.maxcharge
 	)
 	return data
 
 ///Checks for nearby recharge ports to link to
 /obj/machinery/computer/mech_bay_power_console/proc/reconnect()
 	if(recharge_port)
+		recharge_port.try_connect()
 		return
-	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
+	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1,src)
 	if(!recharge_port)
 		for(var/direction in GLOB.cardinals)
 			var/turf/target = get_step(src, direction)
@@ -158,6 +244,7 @@
 		return
 	if(!recharge_port.recharge_console)
 		recharge_port.recharge_console = src
+		recharge_port.try_connect()
 	else
 		recharge_port = null
 
@@ -165,10 +252,10 @@
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port?.recharging_mech_ref?.resolve()
+	var/obj/vehicle/sealed/mecha/recharging_machine = recharge_port?.recharging_machine_ref?.resolve()
 
-	if(!recharging_mech?.cell)
+	if(!recharging_machine?.cell)
 		return
-	if(recharging_mech.cell.charge >= recharging_mech.cell.maxcharge)
+	if(recharging_machine.cell.charge >= recharging_machine.cell.maxcharge)
 		return
 	. += "recharge_comp_on"
