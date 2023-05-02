@@ -239,6 +239,7 @@
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
+// Melbert todo: needs special handling
 /obj/item/grenade/afterattack(atom/target, mob/user)
 	. = ..()
 	if(active)

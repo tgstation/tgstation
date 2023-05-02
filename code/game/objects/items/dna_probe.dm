@@ -17,6 +17,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "sampler"
 	item_flags = NOBLUDGEON
+	attack_style = /datum/attack_style/item_iteraction
+
 	///Whether we have Carp DNA
 	var/carp_dna_loaded = FALSE
 	///What sources of DNA this sampler can extract from.
@@ -30,18 +32,15 @@
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
 
-/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !target)
-		return .
-
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
+/obj/item/dna_probe/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
+	if(istype(clicked_on, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
 		try_linking_vault(target, user)
-	else
+	else if(!isitem(clicked_on))
 		scan_dna(target, user)
+	return TRUE
+
+/obj/item/dna_probe/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
+	return
 
 /obj/item/dna_probe/proc/try_linking_vault(atom/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()

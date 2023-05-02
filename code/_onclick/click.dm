@@ -64,101 +64,114 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn(atom/clicked_on, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || notransform)
+	// -- At the very start, divert into click intercepts first --
+	// Notably, you can use click intercepts while you are notransform'd
+	if(check_click_intercept(params, clicked_on) || notransform)
 		return
 
 	var/list/modifiers = params2list(params)
+	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/middle_clicking = LAZYACCESS(modifiers, MIDDLE_CLICK)
+	var/ctrl_clicking = LAZYACCESS(modifiers, CTRL_CLICK)
+	var/shift_clicking = LAZYACCESS(modifiers, SHIFT_CLICK)
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+	// -- Early signal handling --
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, clicked_on, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
-		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			ShiftMiddleClickOn(A)
+	// -- Shift click handling --
+	if(shift_clicking)
+		if(middle_clicking)
+			ShiftMiddleClickOn(clicked_on)
 			return
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlShiftClickOn(A)
+		if(ctrl_clicking)
+			CtrlShiftClickOn(clicked_on)
 			return
-		ShiftClickOn(A)
-		return
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlMiddleClickOn(A)
-		else
-			MiddleClickOn(A, params)
-		return
-	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			alt_click_on_secondary(A)
-		else
-			AltClickOn(A)
-		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
-		CtrlClickOn(A)
+		ShiftClickOn(clicked_on)
 		return
 
+	// -- Middle click handling --
+	if(middle_clicking)
+		if(ctrl_clicking)
+			CtrlMiddleClickOn(clicked_on)
+		else
+			MiddleClickOn(clicked_on, params)
+		return
+
+	// -- Alt and alt-right-click handling
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		if(right_clicking)
+			alt_click_on_secondary(clicked_on)
+		else
+			AltClickOn(clicked_on)
+		return
+
+	// -- Basic control click handling --
+	if(ctrl_clicking)
+		CtrlClickOn(clicked_on)
+		return
+
+	// -- From here on, you can't click anything else if your're otherwise indesposed --
 	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
-	face_atom(A)
+	face_atom(clicked_on)
 
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
+	if(!LAZYACCESS(modifiers, "catcher") && clicked_on.IsObscured())
 		return
 
+	// -- Hands blocked (handcuffed) can't do much. --
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE, modifiers)
+		changeNext_move(CLICK_CD_HANDCUFFED) //Doing shit in cuffs shall be vey slow
+		UnarmedAttack(clicked_on, FALSE, modifiers)
 		return
 
 	if(throw_mode)
-		if(throw_item(A))
+		if(throw_item(clicked_on))
 			changeNext_move(CLICK_CD_THROW)
 		return
 
-	var/obj/item/W = get_active_held_item()
-	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/obj/item/clicked_with_what = get_active_held_item()
 
-	if(W == A)
+	// -- Attack-self via click handling --
+	if(clicked_with_what == clicked_on)
 		if(right_clicking)
-			W.attack_self_secondary(src, modifiers)
-			update_held_items()
-			return
+			clicked_with_what.attack_self_secondary(src, modifiers)
 		else
-			W.attack_self(src, modifiers)
-			update_held_items()
-			return
-
-	//These are always reachable.
-	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
-		if(W)
-			W.melee_attack_chain(src, A, params)
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-
-			UnarmedAttack(A, FALSE, modifiers)
+			clicked_with_what.attack_self(src, modifiers)
+		update_held_items()
 		return
 
-	//Can't reach anything else in lockers or other weirdness
+	// -- Handle stuff that's always clickable --
+	// (User itself, current loc, and user inventory)
+	if(clicked_on in DirectAccess())
+		if(clicked_with_what)
+			clicked_with_what.melee_attack_chain(src, clicked_on, params)
+		else
+			if(ismob(clicked_on))
+				changeNext_move(CLICK_CD_MELEE)
+			UnarmedAttack(clicked_on, FALSE, modifiers)
+		return
+
+	// Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
 
 	// In a storage item with a disassociated storage parent
-	var/obj/item/item_atom = A
-	if(istype(item_atom))
+	if(istem(clicked_on))
+		var/obj/item/item_atom = clicked_on
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			UnarmedAttack(item_atom, TRUE, modifiers)
 
-	//Standard reach turf to turf or reaching inside storage
+
 	if(CanReach(A,W))
 		if(W)
 			W.melee_attack_chain(src, A, params)
@@ -167,24 +180,44 @@
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A,1,modifiers)
 
-	else if(isturf(loc) && istype(W.attack_style))
-		if(W.attack_style.process_attack(src, W, A, right_clicking))
+	// -- Attacking with an item --
+	if(istype(clicked_with_what))
+		var/close_enough = CanReach(clicked_on, clicked_with_what)
+		// Handle non-combat uses of attacking, IE using a screwdriver on a wall
+		if(close_enough && !ismob(clicked_on))
+			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 
-	else
-		if(W)
-			if(right_clicking)
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
+		// Handles using item as a weapon (special attacks)
+		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
+		if(isnull(using_what_style))
+			stack_trace("Item ([clicked_with_what], [clicked_with_what.type]) without an attack style!")
 
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A,src,0,params)
+		else if(using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking))
+			return
+
+		/*
+		if(right_clicking)
+			var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
+			if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
+				clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+
 		else
-			if(right_clicking)
-				ranged_secondary_attack(A, modifiers)
-			else
-				RangedAttack(A,modifiers)
+			clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+		*/
+
+	// -- Unarmed combat (punching) --
+	else if(CanReach(clicked_on))
+		if(ismob(clicked_on))
+			changeNext_move(CLICK_CD_MELEE)
+		UnarmedAttack(clicked_on, TRUE, modifiers)
+
+	// -- Ranged combat without a weapon --
+	else
+		if(right_clicking)
+			ranged_secondary_attack(clicked_on, modifiers)
+		else
+			RangedAttack(clicked_on, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

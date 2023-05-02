@@ -467,14 +467,16 @@
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
+	attack_style = /datum/attack_style/item_iteraction
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hand_item/kisser/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
+	return special_click_on_range(attacker, clicked_on)
+
+/obj/item/hand_item/kisser/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -492,6 +494,7 @@
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+	return TRUE
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))

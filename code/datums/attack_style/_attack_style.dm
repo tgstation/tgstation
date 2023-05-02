@@ -10,15 +10,18 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/movespeed_modifier/attack_style_executed
 	variable = TRUE
 
+/**
+ * # Attack style singleton
+ *
+ * Handles sticking behavior onto a weapon to make it attack a certain way
+ */
 /datum/attack_style
 	var/execute_sound = 'sound/weapons/fwoosh.ogg'
-	var/cd = 1 SECONDS
+	var/cd = CLICK_CD_MELEE
 	var/slowdown = 1
 	var/reverse_for_lefthand = TRUE
 
 /datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
 	var/attack_direction = get_dir(attacker, get_turf(aimed_towards))
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
 	if(reverse_for_lefthand)
@@ -41,6 +44,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return TRUE
 
 /datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, right_clicking)
+	SHOULD_CALL_PARENT(TRUE)
+
+	attack_effect_animation(attacker, weapon, affecting)
+
 	for(var/turf/hitting as anything in affecting)
 		for(var/mob/living/smacked in hitting)
 			weapon.attack(smacked, attacker)
@@ -70,17 +77,51 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	RETURN_TYPE(/list)
 	return list(get_step(attacker, attack_direction))
 
+/datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/affecting)
+	return
+
+/**
+ * Not necessarily an attack style, but essentialy this allows you to have item specific interations
+ * for clicking on atoms.
+ *
+ * Set your item to use this rather than any other attack style and it will execute an item level proc instead.
+ */
+/datum/attack_style/item_iteraction
+
+/datum/attack_style/item_iteraction/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking)
+	var/close_enough = attacker.CanReach(aimed_towards, weapon)
+	if(close_enough)
+		. = weapon.special_click_on_melee(attacker, aimed_towards, right_clicking)
+	else
+		. = weapon.special_click_on_range(attacker, aimed_towards, right_clicking)
+
+	return .
+
 // swings at 3 targets in a direction
 /datum/attack_style/swing
+	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
 
 /datum/attack_style/swing/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	return get_turfs_and_adjacent_in_direction(attacker, attack_direction)
 
-/datum/attack_style/swing/axe
+/datum/attack_style/swing/requires_wield
 
-/datum/attack_style/swing/axe/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting)
+/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return FALSE
+	return ..()
+
+/datum/attack_style/swing/esword
+	reverse_for_lefthand = FALSE
+
+/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/affecting, right_clicking)
+	if(!weapon.blade_active)
+		return FALSE
+
+	// Right clicking attacks the opposite direction
+	if(right_clicking)
+		reverse_range(affecting)
+
 	return ..()
 
 // Direct stabs out to turfs in front
@@ -103,6 +144,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return select_turfs
 
 /datum/attack_style/stab_out/spear
+	cd = CLICK_CD_MELEE * 2
 	stab_range = 2
 
 /datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting)

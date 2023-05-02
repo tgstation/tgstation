@@ -11,6 +11,8 @@
 	name = "control wand"
 	desc = "Remotely controls airlocks."
 	w_class = WEIGHT_CLASS_TINY
+	attack_style = /datum/attack_style/item_iteraction
+
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
 	var/list/access_list
@@ -30,10 +32,15 @@
 			mode = WAND_OPEN
 	balloon_alert(user, "mode: [desc[mode]]")
 
-// Airlock remote works by sending NTNet packets to whatever it's pointed at.
-/obj/item/door_remote/afterattack(atom/target, mob/user)
-	. = ..()
+/obj/item/door_remote/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
+	mess_with_door(attacker, clicked_on)
+	return TRUE
 
+/obj/item/door_remote/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
+	mess_with_door(attacker, clicked_on)
+	return TRUE
+
+/obj/item/door_remote/proc/mess_with_door(mob/living/user, atom/target)
 	var/obj/machinery/door/door
 
 	if (istype(target, /obj/machinery/door))

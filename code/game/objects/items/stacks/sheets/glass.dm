@@ -353,20 +353,18 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
-/obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+/obj/item/shard/afterattack(atom/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity || !(src in user))
+	if(!proximity || loc != user)
 		return
-	if(isturf(A))
+	if(isturf(target) || target.atom_storage)
 		return
-	if(istype(A, /obj/item/storage))
+	if(!ishuman(user) || !isnul(user.gloves) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 		return
-	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
-			to_chat(H, span_warning("[src] cuts into your hand!"))
-			H.apply_damage(force*0.5, BRUTE, hit_hand)
+
+	var/obj/item/bodypart/affecting = user.get_active_hand()
+	affecting?.receive_damage(force * 0.5)
+	to_chat(user, span_warning("[src] cuts into your hand!"))
 
 /obj/item/shard/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/lightreplacer))

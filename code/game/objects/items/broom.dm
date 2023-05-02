@@ -17,6 +17,7 @@
 	attack_verb_continuous = list("sweeps", "brushes off", "bludgeons", "whacks")
 	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
+	attack_style = /datum/attack_style/swing/requires_wield
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
@@ -47,6 +48,7 @@
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
+// Melbert todo: Needs special handling
 /obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity)

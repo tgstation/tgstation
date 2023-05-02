@@ -1323,6 +1323,7 @@
 	theft_target = null
 	. = ..()
 
+// Melbert todo: Needs special handling
 /obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
