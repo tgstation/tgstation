@@ -28,6 +28,7 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
+      - uses: actions/setup-dotnet@v2
       - uses: actions/checkout@v3
       - name: Restore BYOND cache
         uses: actions/cache@v3
@@ -47,24 +48,31 @@ jobs:
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
-      - name: Install auxlua
+      - name: Install aux
         run: |
-          bash tools/ci/install_auxlua.sh
+          bash tools/ci/install_aux.sh
       - name: Configure version
         run: |
           echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
           echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
         if: ${{ inputs.major }}
+      - name: Build /flat code tree
+        run: dotnet run -c Release --project tools/BuildFlatCodeTree
+      - name: Install BYOND
+        run: bash tools/ci/install_byond.sh
       - name: Compile Tests
         id: compile_tests
         run: |
-          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror
+          tools/build/build --ci --flat dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ci_test/auxtools_coverage.xml
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3

@@ -67,14 +67,20 @@ GLOBAL_VAR(restart_counter)
 		return
 #endif
 
+#ifdef CODE_COVERAGE
+	init_coverage()
+#endif
+
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
 
 	// Write everything to this log file until we get to SetupLogs() later
 	_initialize_log_files("data/logs/config_error.[GUID()].log")
 
+#ifndef CODE_COVERAGE
 	// Init the debugger first so we can debug Master
 	init_debugger()
+#endif
 
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
@@ -327,6 +333,11 @@ GLOBAL_VAR(restart_counter)
 	if (debug_server)
 		LIBCALL(debug_server, "auxtools_shutdown")()
 
+	// TODO
+#ifdef CODE_COVERAGE
+	AUXTOOLS_FULL_SHUTDOWN(AUXCOV)
+#endif
+
 /world/Del()
 	auxcleanup()
 	. = ..()
@@ -456,6 +467,11 @@ GLOBAL_VAR(restart_counter)
 	if (dll)
 		LIBCALL(dll, "auxtools_init")()
 		enable_debugging()
+
+/world/proc/init_coverage()
+	AUXTOOLS_CHECK(AUXCOV)
+
+	enable_code_coverage()
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))

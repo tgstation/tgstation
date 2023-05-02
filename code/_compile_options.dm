@@ -69,6 +69,10 @@
 // We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
 // #define USE_BYOND_TRACY
 
+// If this is uncommented, we will use auxtools to generate a cobertura XML file (auxtools_coverage.xml) that can be shunted to a CI service like https://codecov.io
+// Note,this requires using CBT to build in flat file mode
+// #define CODE_COVERAGE
+
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS
 
@@ -110,13 +114,14 @@
 
 #ifdef CIBUILDING
 #define UNIT_TESTS
+#define CODE_COVERAGE
 #endif
 
 #ifdef CITESTING
 #define TESTING
 #endif
 
-#if defined(UNIT_TESTS)
+#ifdef UNIT_TESTS
 //Hard del testing defines
 #define REFERENCE_TRACKING
 #define REFERENCE_TRACKING_DEBUG
@@ -124,6 +129,12 @@
 #define GC_FAILURE_HARD_LOOKUP
 //Ensures all early assets can actually load early
 #define DO_NOT_DEFER_ASSETS
+#endif
+
+#ifdef CODE_COVERAGE
+#define __TG_FILE__ replacetext(__FILE__, "!", "/")
+#else
+#define __TG_FILE__ __FILE__
 #endif
 
 #ifdef TGS

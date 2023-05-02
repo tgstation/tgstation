@@ -24,3 +24,10 @@ mkdir -p data/screenshots_new
 cp -r ci_test/data/screenshots_new data/screenshots_new
 
 cat ci_test/data/logs/ci/clean_run.lk
+if [[ ! -f ci_test/auxtools_coverage.xml ]] ; then
+    echo 'File "auxtools_coverage.xml" is not there, aborting.'
+    exit 1
+fi
+
+#unflatten
+sed -i 's/!/new-text/g' input.txt

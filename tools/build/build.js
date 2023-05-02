@@ -41,6 +41,7 @@ export const DmVersionParameter = new Juke.Parameter({
 })
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
+export const FlatParameter = new Juke.Parameter({ type: 'boolean' });
 
 export const WarningParameter = new Juke.Parameter({
   type: 'string[]',
@@ -75,7 +76,7 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
-    `${DME_NAME}.dme`,
+    `${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`,
     NamedVersionFile,
   ],
   outputs: ({ get }) => {
@@ -88,7 +89,7 @@ export const DmTarget = new Juke.Target({
     ]
   },
   executes: async ({ get }) => {
-    await DreamMaker(`${DME_NAME}.dme`, {
+    await DreamMaker(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, {
       defines: ['CBT', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
       namedDmVersion: get(DmVersionParameter),
@@ -102,7 +103,7 @@ export const DmTestTarget = new Juke.Target({
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
   executes: async ({ get }) => {
-    fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
+    fs.copyFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
       defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
@@ -336,9 +337,9 @@ export const CleanAllTarget = new Juke.Target({
  * clones new copies anyway.
  */
 const prependDefines = (...defines) => {
-  const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
+  const dmeContents = fs.readFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`);
   const textToWrite = defines.map(define => `#define ${define}\n`);
-  fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
+  fs.writeFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, `${textToWrite}\n${dmeContents}`);
 };
 
 export const TgsTarget = new Juke.Target({

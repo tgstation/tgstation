@@ -179,6 +179,9 @@ Temporary Items
 /tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /tools/CreditsTool/bin/*
 /tools/CreditsTool/obj/*
+/tools/BuildFlatCodeTree/.vs/*
+/tools/BuildFlatCodeTree/bin/*
+/tools/BuildFlatCodeTree/obj/*
 
 #GitHub Atom
 .atom-build.json
@@ -233,3 +236,12 @@ Tracy.exe
 
 # From /tools/define_sanity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
 define_sanity_output.txt
+
+# Flat file mode
+/flat/**/*
+*.flat.dme
+*.flat.m.dme
+
+# From auxtools code coverage
+auxtools_coverage.dll
+auxtools_coverage.xml

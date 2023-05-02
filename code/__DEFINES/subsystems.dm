@@ -260,7 +260,7 @@
 	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
 	* * timer_subsystem the subsystem to insert this timer into
 */
-#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
+#define addtimer(args...) _addtimer(args, file = __TG_FILE__, line = __LINE__)
 
 // Air subsystem subtasks
 #define SSAIR_PIPENETS 1
