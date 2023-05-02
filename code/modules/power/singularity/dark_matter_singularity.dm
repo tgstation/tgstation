@@ -35,7 +35,7 @@
 		we have collected from this sector. The singularity does not seem \
 		to care for other inanimate objects or machines, but will consume \
 		them all the same. We have tried to communicate with it using various \
-		methods, but received no response.\"</i><br>- Research Director Raia Moentgen")
+		methods, but received no response.\"</i><br>- Research Director Jadzia Dax")
 
 /obj/singularity/dark_matter/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
