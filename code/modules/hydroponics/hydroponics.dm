@@ -1282,4 +1282,4 @@
 /obj/machinery/hydroponics/proc/increase_sustaining(amount)
 	sustaining_precent += amount
 	if(sustaining_precent >= 100)
-		self_sustaining = TRUE
+		become_self_sufficient()
