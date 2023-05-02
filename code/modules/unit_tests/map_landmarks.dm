@@ -9,4 +9,4 @@
 		if(job.get_default_roundstart_spawn_point())
 			continue
 
-		TEST_FAIL("Job [job] ([job.type]) has no default roundstart spawn landmark.")
+		TEST_FAIL("Job [job.title] ([job.type]) has no default roundstart spawn landmark.")
