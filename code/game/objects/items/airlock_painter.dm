@@ -213,8 +213,8 @@
 	stored_custom_color = stored_color
 
 /obj/item/airlock_painter/decal/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(isfloorturf(clicked_on) && use_paint(user))
-		paint_floor(target)
+	if(isfloorturf(clicked_on) && use_paint(attacker))
+		paint_floor(clicked_on)
 		return TRUE
 
 /obj/item/airlock_painter/decal/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)

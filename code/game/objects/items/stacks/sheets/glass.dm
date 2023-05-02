@@ -355,11 +355,11 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/afterattack(atom/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity || loc != user)
+	if(!proximity_flag || loc != user)
 		return
 	if(isturf(target) || target.atom_storage)
 		return
-	if(!ishuman(user) || !isnul(user.gloves) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
+	if(!ishuman(user) || !isnull(user.gloves) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 		return
 
 	var/obj/item/bodypart/affecting = user.get_active_hand()

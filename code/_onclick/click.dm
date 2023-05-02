@@ -166,12 +166,12 @@
 		return
 
 	// In a storage item with a disassociated storage parent
-	if(istem(clicked_on))
+	if(isitem(clicked_on))
 		var/obj/item/item_atom = clicked_on
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			UnarmedAttack(item_atom, TRUE, modifiers)
 
-
+	/*
 	if(CanReach(A,W))
 		if(W)
 			W.melee_attack_chain(src, A, params)
@@ -179,6 +179,7 @@
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A,1,modifiers)
+	*/
 
 	// -- Attacking with an item --
 	if(istype(clicked_with_what))

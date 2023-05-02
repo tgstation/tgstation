@@ -34,9 +34,9 @@
 
 /obj/item/dna_probe/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
 	if(istype(clicked_on, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
-		try_linking_vault(target, user)
+		try_linking_vault(clicked_on, attacker)
 	else if(!isitem(clicked_on))
-		scan_dna(target, user)
+		scan_dna(clicked_on, attacker)
 	return TRUE
 
 /obj/item/dna_probe/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)

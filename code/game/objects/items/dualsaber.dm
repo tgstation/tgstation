@@ -31,6 +31,8 @@
 	bare_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
+	attack_style = /datum/attack_style/swing/requires_wield/desword
+
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34

@@ -17,7 +17,8 @@
 
 /obj/item/bodybag/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
 	if(isopenturf(clicked_on))
-		return deploy_bodybag(user, target)
+		deploy_bodybag(attacker, clicked_on)
+		return TRUE
 
 /obj/item/bodybag/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
 	return FALSE

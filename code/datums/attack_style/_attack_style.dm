@@ -33,7 +33,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(which_hand % 2 == 1)
 			reverse_range(affecting)
 
-	if(!execute_attack(attacker, weapon, affecting, right_clicking))
+	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
+	if(!execute_attack(attacker, weapon, affecting, right_clicking, priority_target = aimed_towards))
 		return FALSE
 
 	if(slowdown > 0)
@@ -43,12 +44,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.changeNext_move(cd)
 	return TRUE
 
-/datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, right_clicking)
+/datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, right_clicking, atom/priority_target)
 	SHOULD_CALL_PARENT(TRUE)
 
 	attack_effect_animation(attacker, weapon, affecting)
 
 	for(var/turf/hitting as anything in affecting)
+		if(isliving(priority_target) && (priority_target in hitting))
+			weapon.attack(priority_target, attacker)
+			break
 		for(var/mob/living/smacked in hitting)
 			weapon.attack(smacked, attacker)
 			break
@@ -106,15 +110,16 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/swing/requires_wield
 
-/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting)
+/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, atom/priority_target)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return FALSE
 	return ..()
 
 /datum/attack_style/swing/esword
+	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
 	reverse_for_lefthand = FALSE
 
-/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/affecting, right_clicking)
+/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/affecting, right_clicking, atom/priority_target)
 	if(!weapon.blade_active)
 		return FALSE
 
@@ -122,6 +127,14 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(right_clicking)
 		reverse_range(affecting)
 
+	return ..()
+
+/datum/attack_style/swing/requires_wield/desword
+	cd = CLICK_CD_MELEE * 1.25
+	reverse_for_lefthand = FALSE
+
+/datum/attack_style/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+	// todo: make this do an aoe around.
 	return ..()
 
 // Direct stabs out to turfs in front
@@ -147,7 +160,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	cd = CLICK_CD_MELEE * 2
 	stab_range = 2
 
-/datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting)
+/datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/affecting, atom/priority_target)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return FALSE
 	return ..()
