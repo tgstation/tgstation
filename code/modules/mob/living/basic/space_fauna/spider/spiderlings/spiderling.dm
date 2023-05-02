@@ -62,7 +62,7 @@
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 2 MINUTES,\
+		growth_time = 1 MINUTES,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\

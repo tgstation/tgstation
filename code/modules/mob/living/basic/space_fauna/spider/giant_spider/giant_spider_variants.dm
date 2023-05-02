@@ -251,6 +251,12 @@
 
 /mob/living/basic/giant_spider/midwife/Initialize(mapload)
 	. = ..()
+	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
 	var/datum/action/cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
@@ -265,12 +271,6 @@
 
 	var/datum/action/command_spiders/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
-
-	var/datum/action/cooldown/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
-
-	var/datum/action/cooldown/web_passage/passage_web = new(src)
-	passage_web.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/midwife_web)
 
