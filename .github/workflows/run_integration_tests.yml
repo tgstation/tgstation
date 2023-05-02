@@ -84,5 +84,5 @@ jobs:
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
         with:
-          dmb-location: tgstation.dmb
+          dmb-location: tgstation.flat.dmb
           max-required-client-version: ${{inputs.max_required_byond_client}}
