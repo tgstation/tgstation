@@ -1139,12 +1139,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	qdel(src)
 
 //machinery helpers
-/obj/effect/mapping_helpers/machinery
-	desc = "You shouldn't see this. Report it please."
+/obj/effect/mapping_helpers/broken_machine
+	name = "broken machine helper"
+	icon_state = "broken_machine"
 	layer = ABOVE_OBJ_LAYER
 	late = TRUE
 
-/obj/effect/mapping_helpers/machinery/Initialize(mapload)
+/obj/effect/mapping_helpers/broken_machine/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
@@ -1159,7 +1160,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/machinery/LateInitialize()
+/obj/effect/mapping_helpers/broken_machine/LateInitialize()
 	. = ..()
 	var/obj/machinery/target = locate(/obj/machinery) in loc
 
@@ -1170,26 +1171,20 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	target.update_appearance()
 	qdel(src)
 
-/obj/effect/mapping_helpers/machinery/proc/payload(obj/machinery/airalarm/target)
-	return
-
-/obj/effect/mapping_helpers/machinery/broken
-	name = "broken machine helper"
-	icon_state = "broken_machine"
-
-/obj/effect/mapping_helpers/machinery/broken/payload(obj/machinery/target)
+/obj/effect/mapping_helpers/broken_machine/proc/payload(obj/machinery/airalarm/target)
 	if(target.machine_stat & BROKEN)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
 	target.set_machine_stat(target.machine_stat | BROKEN)
 
 //windows helpers
-/obj/effect/mapping_helpers/window
-	desc = "You shouldn't see this. Report it please."
+/obj/effect/mapping_helpers/damaged_window
+	name = "damaged window helper"
+	icon_state = "damaged_window"
 	layer = ABOVE_OBJ_LAYER
 	late = TRUE
 
-/obj/effect/mapping_helpers/window/Initialize(mapload)
+/obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
@@ -1204,7 +1199,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/window/LateInitialize()
+/obj/effect/mapping_helpers/damaged_window/LateInitialize()
 	. = ..()
 	var/obj/structure/window/target = locate(/obj/structure/window) in loc
 
@@ -1215,14 +1210,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	target.update_appearance()
 	qdel(src)
 
-/obj/effect/mapping_helpers/window/proc/payload(obj/structure/window/target)
-	return
-
-/obj/effect/mapping_helpers/window/damaged
-	name = "damaged window helper"
-	icon_state = "damaged_window"
-
-/obj/effect/mapping_helpers/window/damaged/payload(obj/structure/window/target)
+/obj/effect/mapping_helpers/damaged_window/proc/payload(obj/structure/window/target)
 	if(target.atom_integrity < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
@@ -1231,6 +1219,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	// Maximum roll of integrity percentage
 	var/integrity_max_factor = 0.8
 	target.atom_integrity = rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor)
-
-
-
