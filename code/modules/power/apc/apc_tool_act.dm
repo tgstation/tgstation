@@ -6,12 +6,12 @@
 	if(opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
 		user.visible_message(span_notice("[user.name] begins prying off the broken [name] cover!"))
-		balloon_alert(user, "You begin prying")
+		balloon_alert(user, "you begin prying")
 		if(!crowbar.use_tool(src, user, 50))
 			return
 		opened = APC_COVER_REMOVED
 		user.visible_message(span_notice("[user.name] prys off the broken [name] cover!"))
-		balloon_alert(user, "The cover falls apart")
+		balloon_alert(user, "the cover falls apart")
 		update_appearance()
 		return
 
@@ -121,10 +121,10 @@
 	//repairing the cover
 	if((atom_integrity < max_integrity && APC_ELECTRONICS_SECURED))
 		if(opened == APC_COVER_REMOVED)
-			balloon_alert(user,"No cover to repair!")
+			balloon_alert(user,"no cover to repair!")
 			return
 		if (machine_stat & BROKEN)
-			balloon_alert(user, "The cover is too damaged to repair!")
+			balloon_alert(user, "the cover is too damaged to repair!")
 			return
 		if(!welder.tool_start_check(user, amount=0))
 			return
