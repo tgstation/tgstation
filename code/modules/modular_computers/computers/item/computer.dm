@@ -634,7 +634,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/proc/close_all_programs()
 	active_program = null
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		computer.idle_threads.Remove(idle)
+		idle_threads.Remove(idle)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = TRUE)
 	close_all_programs()
