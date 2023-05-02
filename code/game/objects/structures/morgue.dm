@@ -181,9 +181,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!istype(arrived, /obj/structure/closet/body_bag))
 		return
 	var/obj/structure/closet/body_bag/arrived_bag = arrived
-	if(!arrived_bag.tagged)
+	if(!arrived_bag.tag_name)
 		return
-	name = "[initial(name)] - ([arrived_bag.name])"
+	name = "[initial(name)] - ([arrived_bag.tag_name])"
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
