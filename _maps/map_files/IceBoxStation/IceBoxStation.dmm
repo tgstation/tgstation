@@ -48790,7 +48790,7 @@
 "pxV" = (
 /obj/machinery/chem_master,
 /obj/machinery/button/door/directional/north{
-	id = "pharmacy_shutters"s;
+	id = "pharmacy_shutters";
 	name = "Pharmacy Shutter Controls";
 	req_access = list("pharmacy")
 	},
