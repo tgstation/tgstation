@@ -232,7 +232,7 @@
 	if(recharge_port)
 		recharge_port.try_connect()
 		return
-	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1,src)
+	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
 	if(!recharge_port)
 		for(var/direction in GLOB.cardinals)
 			var/turf/target = get_step(src, direction)
