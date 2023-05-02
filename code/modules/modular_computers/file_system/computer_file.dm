@@ -87,8 +87,8 @@
  * Arguments:
  * * background - Whether the app is running in the background.
  */
-/datum/computer_file/program/proc/event_powerfailure(background)
-	kill_program(forced = TRUE)
+/datum/computer_file/program/proc/event_powerfailure()
+	kill_program()
 
 /**
  * Called when a computer program is crashing due to any required connection being shut off.
@@ -96,7 +96,7 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_networkfailure(background)
-	kill_program(forced = TRUE)
+	kill_program()
 	if(background)
 		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
 	else
