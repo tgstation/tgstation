@@ -20277,6 +20277,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"hDq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "hDX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -21885,7 +21891,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/commons/lounge)
 "iio" = (
 /obj/machinery/door/airlock/command{
@@ -25195,6 +25202,13 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
+"jhu" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "jhv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -35452,6 +35466,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"mRx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "mRy" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -42014,6 +42034,12 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
+"pkj" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "pkH" = (
 /obj/structure/rack,
 /obj/item/restraints/handcuffs,
@@ -47456,7 +47482,8 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/commons/lounge)
 "rhn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47514,6 +47541,9 @@
 "riL" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/machinery/restaurant_portal/restaurant,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "riW" = (
@@ -63729,7 +63759,8 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/commons/lounge)
 "wPi" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
@@ -103258,7 +103289,7 @@ fRS
 tUv
 rac
 riL
-hkG
+pkj
 hkG
 qpM
 qVt
@@ -103515,7 +103546,7 @@ tqU
 kyg
 rac
 rhh
-hkG
+hDq
 yec
 jsn
 fNX
@@ -103772,7 +103803,7 @@ fRS
 tUv
 rac
 wOV
-hkG
+hDq
 tte
 jsn
 btI
@@ -104029,7 +104060,7 @@ fRS
 tUv
 rac
 iin
-rPg
+jhu
 rPg
 rPg
 mwS
@@ -104285,8 +104316,8 @@ vFB
 fRS
 tUv
 bvJ
-hkG
-hkG
+mRx
+kSw
 nGK
 nGK
 vDX
