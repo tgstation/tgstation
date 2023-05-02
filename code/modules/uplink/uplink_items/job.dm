@@ -17,8 +17,8 @@
 	surplus = 5
 
 /datum/uplink_item/role_restricted/bureaucratic_error
-	name = "Organic Resources Disturbance Inducer"
-	desc = "A device that raises hell in organic resources indirectly. Single use."
+	name = "Organic Capital Disturbance virus"
+	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
 	limited_stock = 1
