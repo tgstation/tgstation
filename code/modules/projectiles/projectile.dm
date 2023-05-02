@@ -402,13 +402,14 @@
 	return FALSE
 
 
-/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 17 degrees and increasing the bullet's stats.
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
 /obj/projectile/proc/on_parry(mob/user, list/modifiers)
 	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
 		return
 
 	parried = TRUE
 	set_angle(dir2angle(user.dir) + rand(-3, 3))
+	firer = user
 	speed *= 0.8 // Go 20% faster when parried
 	damage *= 1.15 // And do 15% more damage
 	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
