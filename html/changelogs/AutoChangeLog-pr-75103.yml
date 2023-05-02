@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "Number inputs work now"
