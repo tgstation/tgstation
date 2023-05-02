@@ -119,12 +119,12 @@
 	. = ..()
 
 	//repairing the cover
-	if((atom_integrity < max_integrity))
-		if (machine_stat & BROKEN)
-			balloon_alert(user, "The cover is too damaged to repair!")
-			return
+	if((atom_integrity < max_integrity && APC_ELECTRONICS_SECURED))
 		if(opened == APC_COVER_REMOVED)
 			balloon_alert(user,"No cover to repair!")
+			return
+		if (machine_stat & BROKEN)
+			balloon_alert(user, "The cover is too damaged to repair!")
 			return
 		if(!welder.tool_start_check(user, amount=0))
 			return

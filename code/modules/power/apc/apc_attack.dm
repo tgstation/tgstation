@@ -139,7 +139,7 @@
 		if(!(machine_stat & BROKEN || opened == APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
 			balloon_alert(user, "no reason for repairs!")
 			return
-		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && APC_ELECTRONICS_SECURED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && APC_ELECTRONICS_SECURED && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
