@@ -1962,7 +1962,7 @@
 /area/station/security/prison/work)
 "ayd" = (
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/mob/living/simple_animal/slime/random,
+/mob/living/simple_animal/slime,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "ayi" = (
@@ -57208,8 +57208,8 @@
 "pak" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/south{
-	name = "shutters control";
-	id = "z1-maint-crates"
+	id = "z1-maint-crates";
+	name = "shutters control"
 	},
 /obj/effect/turf_decal/caution{
 	dir = 4
