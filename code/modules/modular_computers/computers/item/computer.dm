@@ -563,7 +563,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
-/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
+/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program, open_ui = FALSE)
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
@@ -576,7 +576,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		active_program = program
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
-		update_tablet_open_uis(user)
+		if(open_ui)
+			update_tablet_open_uis(user)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -596,7 +597,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	active_program = program
 	program.alert_pending = FALSE
-	update_tablet_open_uis(user)
+	if(open_ui)
+		update_tablet_open_uis(user)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
@@ -631,9 +633,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/proc/kill_all_programs()
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		idle.kill_program()
+		idle.kill_program(reload_ui = FALSE)
 	if(active_program)
-		active_program.kill_program()
+		active_program.kill_program(reload_ui = FALSE)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = TRUE)
 	kill_all_programs()

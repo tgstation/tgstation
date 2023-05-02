@@ -413,7 +413,7 @@
 		if(!computer.turn_on(usr, open_ui = FALSE))
 			return
 	if(computer.active_program != src)
-		if(!computer.open_program(usr, src))
+		if(!computer.open_program(usr, src, open_ui = FALSE))
 			return
 	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
