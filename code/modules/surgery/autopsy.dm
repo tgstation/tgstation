@@ -4,12 +4,16 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/autopsy,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
 	. = ..()
 	if(patient.stat != DEAD)
+		return FALSE
+	if(HAS_TRAIT(patient, TRAIT_DISSECTED))
 		return FALSE
 	return TRUE
 
@@ -30,6 +34,7 @@
 	display_pain(target, "You feel a burning sensation in your chest!")
 
 /datum/surgery_step/autopsy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
+	ADD_TRAIT(target, TRAIT_DISSECTED, REF(src))
 	tool.scan_cadaver(user, target)
 	return ..()
 

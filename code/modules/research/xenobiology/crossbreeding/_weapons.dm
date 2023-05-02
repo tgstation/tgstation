@@ -53,6 +53,10 @@ Slimecrossing Weapons
 			attack_verb_simple = string_list(list("irradiate", "mutate", "malign"))
 	return ..()
 
+/obj/item/knife/rainbowknife/weak
+	force = 5
+	throwforce = 5
+
 //Adamantine shield - Chilling Adamantine
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"

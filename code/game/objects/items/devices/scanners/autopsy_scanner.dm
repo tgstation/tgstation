@@ -25,6 +25,7 @@
 
 	autopsy_information += "Toxin damage: [CEILING(scanned.getToxLoss(), 1)]"
 	autopsy_information += "Oxygen damage: [CEILING(scanned.getOxyLoss(), 1)]"
+	autopsy_information += "Cloning damage: [CEILING(scanned.getCloneLoss(), 1)]"
 
 	autopsy_information += "<center>Bodypart Data</center><br>"
 	for(var/obj/item/bodypart/bodyparts as anything in scanned.bodyparts)
@@ -48,7 +49,26 @@
 		autopsy_information += "<b>[round(scanned_reagents.volume, 0.1)] unit\s of [scanned_reagents.name]</b><br>"
 		autopsy_information += "Chemical Information: <i>[scanned_reagents.description]</i><br>"
 
-	autopsy_information += "<center>Disease Data</center>"
+	autopsy_information += "<center>Blood Data</center>"
+	if(HAS_TRAIT(scanned, TRAIT_HUSK))
+		autopsy_information += "Blood can't be found, victim is husked by: "
+		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN))
+			autopsy_information += "Severe burns.</br>"
+		else if (HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
+			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
+		else
+			autopsy_information += "Unknown causes.</br>"
+	else
+		var/blood_id = scanned.get_blood_id()
+		if(blood_id)
+			var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+			var/blood_type = carbontarget.dna.blood_type
+			if(blood_id != /datum/reagent/blood)
+				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
+				blood_type = reagents ? reagents.name : blood_id
+				autopsy_information += "Blood Type: [blood_type]<br>"
+				autopsy_information += "Blood Volume: [carbontarget.blood_volume] cl ([round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)]) %<br>"
+
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"
 		if(!istype(diseases, /datum/disease/advance))
