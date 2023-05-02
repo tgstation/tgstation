@@ -196,25 +196,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "cc" = (
 /obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate,
-/obj/item/reagent_containers/cup/glass/waterbottle/large{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/glass/waterbottle/large{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/cup/glass/waterbottle/large{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/machinery/vending/assist,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -440,7 +422,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "dP" = (
-/turf/closed/wall/mineral/plastitanium/explosive,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "syndicate_lavaland_warehouse"
+	},
+/turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "dQ" = (
 /obj/structure/sign/warning/secure_area,
@@ -570,12 +556,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "eF" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	id = "lavalandsyndi_cargo"
-	},
-/turf/open/floor/plating,
+/obj/structure/rack,
+/obj/item/storage/belt/utility,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "eG" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -693,6 +679,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "fe" = (
@@ -702,6 +689,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "ff" = (
@@ -1193,13 +1181,10 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "hD" = (
+/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/item/storage/belt/utility,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "hE" = (
@@ -1312,9 +1297,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "hV" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/autolathe/hacked,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "hW" = (
@@ -2521,6 +2506,11 @@
 	dir = 1
 	},
 /obj/machinery/duct,
+/obj/machinery/button/door/directional/north{
+	id = "syndicate_lavaland_warehouse";
+	req_access = list("syndicate");
+	name = "Warehouse Shutters"
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "qI" = (
@@ -2538,6 +2528,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "qW" = (
@@ -2794,6 +2788,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "wv" = (
@@ -3056,12 +3051,14 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "AD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/assist,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/cargo)
+/area/ruin/syndicate_lava_base/bar)
 "AQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -3078,14 +3075,13 @@
 	},
 /area/ruin/syndicate_lava_base/arrivals)
 "Bb" = (
-/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
 /obj/machinery/duct,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "Bj" = (
@@ -3227,6 +3223,11 @@
 /obj/item/circuitboard/machine/smoke_machine,
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/south{
+	req_access = list("syndicate");
+	id = "syndicate_lavaland_warehouse";
+	name = "Warehouse Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "CY" = (
@@ -3756,15 +3757,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
-"Nq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/bar)
 "Ny" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3939,6 +3931,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
+"QJ" = (
+/turf/closed/wall/mineral/plastitanium/explosive,
+/area/ruin/syndicate_lava_base/chemistry)
 "QS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -4353,13 +4348,12 @@
 /area/ruin/syndicate_lava_base/cargo)
 "XW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Warehouse"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters{
+	id = "syndicate_lavaland_warehouse"
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "Yb" = (
@@ -5790,7 +5784,7 @@ RO
 kq
 Cc
 kp
-Nq
+AD
 jy
 lH
 Kz
@@ -6020,9 +6014,9 @@ as
 as
 as
 as
-as
-AD
-dy
+QJ
+ZH
+dP
 Bb
 he
 hz
@@ -6122,7 +6116,7 @@ Ub
 yl
 Ci
 CR
-fa
+dy
 qy
 Eo
 hB
@@ -6172,7 +6166,7 @@ DP
 Ck
 eY
 cc
-dP
+dy
 wp
 dU
 dU
@@ -6218,7 +6212,7 @@ ab
 ab
 dy
 dy
-ZH
+eF
 Pb
 vU
 dy
@@ -6519,8 +6513,8 @@ ab
 ab
 ab
 dy
-eF
-eF
+qq
+qq
 dy
 gf
 dy
