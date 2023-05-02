@@ -33,7 +33,15 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
+	if(obstructed_by_other_solid_web())
+		if (feedback)
+			owner.balloon_alert(owner, "already webbed!")
+		return FALSE
 	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/solid_web/proc/obstructed_by_other_solid_web()
+	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
 
 /datum/action/cooldown/solid_web/Activate()
 	. = ..()
