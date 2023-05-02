@@ -563,7 +563,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
-/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program, open_ui = FALSE)
+/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
