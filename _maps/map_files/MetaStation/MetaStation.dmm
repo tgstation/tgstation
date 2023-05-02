@@ -4296,6 +4296,8 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/poster/random/directional/east,
+/obj/structure/table/wood,
+/obj/item/food/pie/cream,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "bzV" = (
@@ -8118,8 +8120,6 @@
 	},
 /obj/machinery/light_switch/directional/south,
 /obj/machinery/light/small/directional/south,
-/obj/structure/table/wood,
-/obj/item/food/pie/cream,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "dcF" = (
