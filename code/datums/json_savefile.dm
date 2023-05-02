@@ -119,7 +119,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
 		return FALSE
 
-	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) == "Yes")
+	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "Yes")) == "Yes")
 		return TRUE
 
 	return FALSE
