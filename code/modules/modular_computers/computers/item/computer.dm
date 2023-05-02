@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	kill_all_programs()
+	close_all_programs()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
@@ -631,14 +631,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	return SSmodular_computers.add_log("[src]: [text]")
 
-/obj/item/modular_computer/proc/kill_all_programs()
+/obj/item/modular_computer/proc/close_all_programs()
+	active_program = null
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		idle.kill_program(reload_ui = FALSE)
-	if(active_program)
-		active_program.kill_program(reload_ui = FALSE)
+		computer.idle_threads.Remove(idle)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = TRUE)
-	kill_all_programs()
+	close_all_programs()
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)

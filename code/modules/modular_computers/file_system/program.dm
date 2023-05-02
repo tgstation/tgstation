@@ -167,12 +167,12 @@
  * Args:
  * - reload_ui - Whether we reload the UI on computer's shutdown.
  **/
-/datum/computer_file/program/proc/kill_program(reload_ui = TRUE)
+/datum/computer_file/program/proc/kill_program()
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(src == computer.active_program)
 		computer.active_program = null
-		if(reload_ui && computer.enabled)
+		if(computer.enabled)
 			computer.update_tablet_open_uis(usr)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
