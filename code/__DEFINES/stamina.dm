@@ -1,6 +1,6 @@
 #define FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
 ///Time before regen starts when in stam crit
-#define STAMINA_CRIT_TIME (7 SECONDS)
+#define STAMINA_CRIT_TIME (5 SECONDS)
 ///Time before regen starts when hit with stam damage
 #define STAMINA_REGEN_TIME (2.5 SECONDS)
 ///The amount of stamina a carbon recovers every 2 seconds
