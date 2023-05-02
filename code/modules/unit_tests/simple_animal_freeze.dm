@@ -302,6 +302,7 @@
 		/mob/living/simple_animal/slime,
 		/mob/living/simple_animal/slime/pet,
 		/mob/living/simple_animal/slime/random,
+		/mob/living/simple_animal/slime/random_tier_one,
 		/mob/living/simple_animal/slime/transformed_slime,
 		/mob/living/simple_animal/sloth,
 		/mob/living/simple_animal/sloth/citrus,
