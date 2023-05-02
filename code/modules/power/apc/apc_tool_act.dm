@@ -1,6 +1,21 @@
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
+
+		//Prying off broken cover
+	if(opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED && (machine_stat & BROKEN))
+		crowbar.play_tool_sound(src)
+		user.visible_message(span_notice("[user.name] begins prying off the broken [name] cover!"))
+		balloon_alert(user, "You begin prying")
+		if(!crowbar.use_tool(src, user, 50))
+			return
+		opened = APC_COVER_REMOVED
+		user.visible_message(span_notice("[user.name] prys off the broken [name] cover!"))
+		balloon_alert(user, "The cover falls apart")
+		update_appearance()
+		return
+
+		//Opening and closing cover
 	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
 		if(coverlocked && !(machine_stat & MAINT)) // locked...
 			balloon_alert(user, "cover is locked!")
@@ -20,6 +35,7 @@
 		update_appearance()
 		return
 
+		//Taking out the electronics
 	if(!opened || has_electronics != APC_ELECTRONICS_INSTALLED)
 		return
 	if(terminal)
@@ -103,9 +119,9 @@
 	. = ..()
 
 	//repairing the cover
-	if(!(machine_stat & BROKEN) && (atom_integrity < max_integrity))
-		if(opened == APC_COVER_OPENED)
-			balloon_alert(user, "Close the cover first!")
+	if((atom_integrity < max_integrity))
+		if (machine_stat & BROKEN)
+			balloon_alert(user, "The cover is too damaged to repair!")
 			return
 		if(opened == APC_COVER_REMOVED)
 			balloon_alert(user,"No cover to repair!")
@@ -118,6 +134,7 @@
 			to_chat(user, span_notice("You repair [src]."))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
+	//disassembling the frame
 	if(!opened || has_electronics || terminal)
 		return
 	if(!welder.tool_start_check(user, amount=3))
