@@ -101,6 +101,23 @@
 
 /obj/machinery/power/apc/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
+
+	//repairing the cover
+	if(!(machine_stat & BROKEN) && (atom_integrity < max_integrity))
+		if(opened == APC_COVER_OPENED)
+			balloon_alert(user, "Close the cover first!")
+			return
+		if(opened == APC_COVER_REMOVED)
+			balloon_alert(user,"No cover to repair!")
+			return
+		if(!welder.tool_start_check(user, amount=0))
+			return
+		to_chat(user, span_notice("You begin repairing [src]..."))
+		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
+			atom_integrity = min(atom_integrity + 50, max_integrity)
+			to_chat(user, span_notice("You repair [src]."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 	if(!opened || has_electronics || terminal)
 		return
 	if(!welder.tool_start_check(user, amount=3))
