@@ -553,3 +553,34 @@
 
 #undef ACTIVE_SETUPFIELDS
 #undef ACTIVE_HASFIELDS
+
+//Modular Shield Generator Start
+/obj/machinery/power/ModularShieldGen
+	name = "Modular Shield Generator"
+	desc = "A forcefield generator, it seems more stationary than its cousins."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "shield_wall_gen"
+	density = TRUE
+	opacity = FALSE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
+	circuit = /obj/item/circuitboard/machine/ModularShieldGen
+
+	var/overclocked = FALSE
+	var/active = FALSE
+	var/recovering = FALSE
+
+	///Determins max health of the shield
+	var/max_power_cap = 100
+
+	///Shield Regeneration
+	var/regeneration = 5
+
+	var/max_radius = 5
+
+	var/radius = 5
+
+/obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
+	if(!is_operational)
+		return
+
+
