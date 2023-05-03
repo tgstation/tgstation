@@ -216,7 +216,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "mC" = (
-/obj/machinery/mineral/ore_redemption{
+/obj/machinery/mineral/ore_redemption/offstation{
 	input_dir = 4
 	},
 /obj/structure/lattice/catwalk,
