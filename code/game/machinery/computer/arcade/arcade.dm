@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
 
-		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
+		if(finishing_move) //time to bonk that fucker, Spicy Steve will sometime survive a finishing move.
 			attackamt *= 100
 
 		//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(player_stance == "defend")
 		attack_amount -= 5
 
-	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
+	//if emagged, spicy steve will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
 	if(obj_flags & EMAGGED)
 		switch(bomb_cooldown--)
 			if(18)
@@ -558,8 +558,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 				new /obj/item/clothing/head/collectable/petehat(loc)
-				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Spicy Steve and been awarded a bomb.")
+				usr.log_message("outbombed Spicy Steve and has been awarded a bomb.", LOG_GAME)
 				Reset()
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
@@ -632,7 +632,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(usr?.mind)
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
-	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
+	enemy_hp += 100 //extra HP just to make Spicy Steve even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
 
 	screen_setup(user)
@@ -640,8 +640,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	obj_flags |= EMAGGED
 
-	enemy_name = "Cuban Pete"
-	name = "Outbomb Cuban Pete"
+	enemy_name = "Spicy Steve"
+	name = "Outbomb Spicy Steve"
 
 	updateUsrDialog()
 

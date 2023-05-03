@@ -8,7 +8,7 @@ export const NtosArcade = (props, context) => {
   return (
     <NtosWindow width={450} height={350}>
       <NtosWindow.Content>
-        <Section title="Outbomb Cuban Pete Ultra" textAlign="center">
+        <Section title="Outbomb Spicy Steve Ultra" textAlign="center">
           <Box>
             <Grid>
               <Grid.Column size={2}>

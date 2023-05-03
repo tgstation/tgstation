@@ -38,7 +38,7 @@
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
 	sleep(0.5 SECONDS)
 	H.say(pick(
-		"Now, Outbomb Cuban Pete, THAT was a game.",
+		"Now, Outbomb Spicy Steve, THAT was a game.",
 		"All these new fangled arcade games are too slow. I prefer the classics.",
 		"They don't make 'em like Orion Trail anymore.",
 		"You know what they say. Worst day of spess carp fishing is better than the best day at work.",

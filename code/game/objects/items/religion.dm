@@ -140,7 +140,7 @@
 	inhand_icon_state = "banner_science"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	warcry = "For Cuban Pete!"
+	warcry = "For Spicy Steve!"
 
 /obj/item/banner/science/Initialize(mapload)
 	. = ..()

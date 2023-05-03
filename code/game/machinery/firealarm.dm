@@ -491,7 +491,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 /obj/machinery/firealarm/partyalarm
 	name = "\improper PARTY BUTTON"
-	desc = "Cuban Pete is in the house!"
+	desc = "Spicy Steve is in the house!"
 	var/static/party_overlay
 
 /obj/machinery/firealarm/partyalarm/reset()

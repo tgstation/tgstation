@@ -126,7 +126,7 @@
 /area/ruin/space/tcommsat_oldaisat)
 "aE" = (
 /obj/item/food/meat/slab/synthmeat{
-	name = "Cuban Pete-Meat"
+	name = "Spicy Steve-Meat"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/tcommsat_oldaisat)
@@ -218,7 +218,7 @@
 /area/ruin/space/tcommsat_oldaisat)
 "aX" = (
 /obj/item/food/meat/slab/synthmeat{
-	name = "Cuban Pete-Meat"
+	name = "Spicy Steve-Meat"
 	},
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/engine,

@@ -2,7 +2,7 @@
 	filename = "dsarcade"
 	filedesc = "Donksoft Micro Arcade"
 	program_icon_state = "arcade"
-	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
+	extended_desc = "This port of the classic game 'Outbomb Spicy Steve', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
 	requires_ntnet = FALSE
 	size = 6
 	tgui_id = "NtosArcade"
@@ -19,7 +19,7 @@
 	var/ticket_count = 0
 	///Shows what text is shown on the app, usually showing the log of combat actions taken by the player.
 	var/heads_up = "Nanotrasen says, winners make us money."
-	var/boss_name = "Cuban Pete's Minion"
+	var/boss_name = "Spicy Steve's Minion"
 	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
