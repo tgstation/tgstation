@@ -255,7 +255,7 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
 
-	set_access(null)
+	set_access()
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
