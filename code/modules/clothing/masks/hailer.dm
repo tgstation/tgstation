@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
 
 /datum/action/item_action/halt
 	name = "HALT!"
@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	COOLDOWN_DECLARE(horn_cooldown)
 
 /obj/item/clothing/mask/party_horn/ui_action_click(mob/user, action)
-	if(!COOLDOWN_FINISHED(src, horn_cooldown))	
+	if(!COOLDOWN_FINISHED(src, horn_cooldown))
 		return
 	COOLDOWN_START(src, horn_cooldown, 10 SECONDS)
 	playsound(src, 'sound/items/party_horn.ogg', 75, FALSE)

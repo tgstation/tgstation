@@ -277,7 +277,14 @@
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-	..()
+
+	//remove all component parts inherited from smartfridge cause they were not required in crafting
+	var/obj/item/circuitboard/machine/smartfridge/board = locate() in component_parts
+	component_parts -= board
+	qdel(board)
+	component_parts.Cut()
+
+	return ..()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
