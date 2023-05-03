@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/created_reagent_list = list()
 	for(var/datum/reagent/reagent in otherg.reagents.reagent_list)
 		created_reagent_list |= reagent.type
-		created_reagent_list[reagent.type] = reagent
+		created_reagent_list[reagent.type] = reagent.volume
 
 	add_reagents(reagent_list = created_reagent_list, chem_temp = otherg.group_temperature)
 	cached_edge_turfs |= otherg.cached_edge_turfs
