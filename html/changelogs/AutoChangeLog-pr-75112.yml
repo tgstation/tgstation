@@ -1,0 +1,4 @@
+author: "SethLafuente"
+delete-after: True
+changes:
+  - bugfix: "fixed spiderlings speaking human instead of spider"

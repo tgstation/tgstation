@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "prosthetic limb quirk will no longer display a prosthetic on your character preview because it is buggy and hardly ever matches what you end up getting upon spawning"
-  - code_imp: "removing the prosthetic limb quirk will restore your original limb"
