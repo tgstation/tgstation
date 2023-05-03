@@ -19,9 +19,9 @@
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
-	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	uniform = /obj/item/clothing/under/plasmaman/security/detective
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
-	head = /obj/item/clothing/head/helmet/space/plasmaman/white
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security/detective
 
 /datum/outfit/plasmaman/warden
 	name = "Warden Plasmaman"

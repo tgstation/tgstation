@@ -24,9 +24,16 @@
 	desc = "A plasmaman containment suit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "hos_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/security_head_of_security
+	armor_type = /datum/armor/plasmaman_head_of_security
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/datum/armor/plasmaman_head_of_security
+	melee = 10
+	bio = 100
+	fire = 95
+	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit"

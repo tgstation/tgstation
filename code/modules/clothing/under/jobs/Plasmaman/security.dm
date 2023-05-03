@@ -12,6 +12,13 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
+
+/obj/item/clothing/under/plasmaman/security/detective
+	name = "detective plasma envirosuit"
+	desc = "The pet project of a particularly posh plasmaman, this custom suit was modified by Nanotrasen for its detectives."
+	icon_state = "enviroslacks"
+	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/security/warden
 	name = "warden plasma envirosuit"
