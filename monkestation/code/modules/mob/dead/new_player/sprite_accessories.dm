@@ -272,10 +272,6 @@
 	name = "Demon Horns"
 	icon_state = "demon"
 
-/datum/sprite_accessory/anime_head/lopbunny
-	name = "Lopbunny Ears"
-	icon_state = "lopbunny"
-
 /datum/sprite_accessory/anime_head/antlers
 	name = "Antlers"
 	icon_state = "antlers"
