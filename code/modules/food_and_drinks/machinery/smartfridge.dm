@@ -12,6 +12,7 @@
 	light_power = 1
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	integrity_failure = 0.5
+	can_atmos_pass = ATMOS_PASS_NO
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
@@ -27,6 +28,8 @@
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
+	air_update_turf()
+
 	create_reagents(100, NO_REACT)
 
 	if(islist(initial_contents))
@@ -36,6 +39,10 @@
 				amount = 1
 			for(var/i in 1 to amount)
 				load(new typekey(src))
+
+/obj/machinery/smartfridge/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	air_update_turf()
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
