@@ -139,7 +139,7 @@
 	id = "micro_mani"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
-	build_path = /obj/item/stock_parts/manipulator
+	build_path = /obj/item/stock_parts/servo
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
@@ -152,7 +152,7 @@
 	id = "nano_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
-	build_path = /obj/item/stock_parts/manipulator/nano
+	build_path = /obj/item/stock_parts/servo/nano
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
@@ -165,7 +165,7 @@
 	id = "pico_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
-	build_path = /obj/item/stock_parts/manipulator/pico
+	build_path = /obj/item/stock_parts/servo/pico
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
 	)
@@ -178,7 +178,7 @@
 	id = "femto_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/diamond = 30, /datum/material/titanium = 30)
-	build_path = /obj/item/stock_parts/manipulator/femto
+	build_path = /obj/item/stock_parts/servo/femto
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
 	)

@@ -46,8 +46,8 @@
 		E += capacitor.tier
 	power_efficiency = E
 	E = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		E += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		E += servo.tier
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
 	teleport_cooldown = initial(teleport_cooldown)
