@@ -425,8 +425,8 @@
 			return
 		var/obj/item/mop/attacked_mop = weapon
 		to_chat(user, "You wring out the [attacked_mop.name] into the [src.name].")
-		attacked_mop.reagents.trans_to(src, attacked_mop.total_reagent_volume * 0.25)
-		attacked_mop.reagents.remove_all(attacked_mop.total_reagent_volume)
+		attacked_mop.reagents.trans_to(src, attacked_mop.max_reagent_volume * 0.25)
+		attacked_mop.reagents.remove_all(attacked_mop.max_reagent_volume)
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()
