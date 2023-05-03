@@ -9,7 +9,7 @@
 		"A meatball sub, but what makes it so special?",
 		"I just need to grease back my hair...?",
 		"What kind of ancient civilization wore jorts?",
-		"So it DOES matter what angle you fold the salami in..."
+		"So it DOES matter what angle you fold the salami in...",
 	)
 
 /obj/item/book/granter/crafting_recipe/death_sandwich/recoil(mob/living/user)
