@@ -30,10 +30,6 @@ map deltastation
 	votable
 endmap
 
-map kilostation
-	votable
-endmap
-
 map icebox
 	minplayers 25
 	votable

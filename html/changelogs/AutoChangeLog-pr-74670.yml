@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - rscadd: "Stowaway Changelings will now appear as a late join form of Changeling."

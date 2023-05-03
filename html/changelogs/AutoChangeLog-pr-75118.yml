@@ -1,0 +1,4 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - bugfix: "Adds missing vendatray to Northstar, and removes the scrubber co2 infinate loop"

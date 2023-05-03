@@ -1,0 +1,4 @@
+author: "Thlumyn"
+delete-after: True
+changes:
+  - bugfix: "birdshot cryo no longer needs medbay access to leave"
