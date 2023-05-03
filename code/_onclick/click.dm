@@ -191,7 +191,7 @@
 
 		// Handles using item as a weapon (special attacks)
 		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
-		if(!isnull(using_what_style))
+		if(!isnull(using_what_style) || !(clicked_with_what.item_flags & NOBLUDGEON))
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 
 		else if(close_enough)

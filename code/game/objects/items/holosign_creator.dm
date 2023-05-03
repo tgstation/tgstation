@@ -13,6 +13,7 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
+	attack_style = null
 	var/list/signs
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.

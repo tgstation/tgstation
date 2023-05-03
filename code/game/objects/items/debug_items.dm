@@ -1,4 +1,6 @@
 /* This file contains standalone items for debug purposes. */
+/obj/item/debug
+	attack_style = null
 
 /obj/item/debug/human_spawner
 	name = "human spawner"
@@ -146,4 +148,3 @@
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))
 		new spawn_atom(loc_turf)
-

@@ -613,6 +613,8 @@ Striking a noncultist, however, will tear their flesh."}
 	on_damage = 15
 	slot_flags = null
 	on = TRUE
+	attack_style = null
+
 	var/charges = 5
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
@@ -848,6 +850,8 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
+	attack_style = null
+
 	var/charging = FALSE
 	var/firing = FALSE
 	var/angle

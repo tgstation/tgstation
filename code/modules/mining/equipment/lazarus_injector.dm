@@ -18,6 +18,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
+	attack_style = null
+
 	///Can this still be used?
 	var/loaded = TRUE
 	///Injector malf?

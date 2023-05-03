@@ -7,6 +7,7 @@
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to prevent their rapid decay."
 	w_class = WEIGHT_CLASS_TINY
+	attack_style = null
 
 /obj/item/mining_stabilizer/afterattack(obj/item/organ/target_organ, mob/user, proximity)
 	. = ..()

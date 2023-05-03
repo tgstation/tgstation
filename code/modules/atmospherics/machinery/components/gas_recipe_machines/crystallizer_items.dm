@@ -3,6 +3,7 @@
 	desc = "Crystalized oxygen and hypernoblium stored in a bottle to pressureproof your clothes or stop reactions occuring in portable atmospheric devices."
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "hypernoblium_crystal"
+	attack_style = null
 	var/uses = 1
 
 /obj/item/hypernoblium_crystal/afterattack(obj/target_object, mob/user, proximity)

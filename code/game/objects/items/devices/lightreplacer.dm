@@ -44,6 +44,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
+	attack_style = null
 
 	/// How many uses does our light replacer have?
 	var/uses = 10

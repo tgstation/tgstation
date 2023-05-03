@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
 	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
+	attack_style = null
 
 	var/last_perceived_radiation_danger = null
 

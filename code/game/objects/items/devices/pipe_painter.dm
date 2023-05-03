@@ -5,6 +5,7 @@
 	icon_state = "labeler1"
 	inhand_icon_state = null
 	item_flags = NOBLUDGEON
+	attack_style = null
 	var/paint_color = "grey"
 
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2000)

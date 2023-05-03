@@ -143,6 +143,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	desc = "It looks dangerous."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "boobytrap"
+	attack_style = null
 
 	/// Light explosion range, to hurt the person using the machine
 	var/explosion_range = 3

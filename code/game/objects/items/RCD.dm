@@ -26,6 +26,7 @@ RLD
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	armor_type = /datum/armor/item_construction
 	resistance_flags = FIRE_PROOF
+	attack_style = null
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 100

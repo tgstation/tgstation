@@ -18,6 +18,7 @@
 	icon_state = "scroll"
 	worn_icon_state = "scroll"
 	w_class = WEIGHT_CLASS_TINY
+	attack_style = null
 
 	var/upgrade_amount = 1
 	var/can_backfire = TRUE

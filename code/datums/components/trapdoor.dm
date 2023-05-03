@@ -343,6 +343,7 @@
 	desc = "A kit containing all the parts needed to build a trapdoor. Can only be used on open space."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "kitsuitcase"
+	attack_style = null
 	var/in_use = FALSE
 
 /obj/item/trapdoor_kit/Initialize(mapload)

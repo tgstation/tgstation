@@ -26,8 +26,9 @@
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
-	var/cleanspeed = 3.5 SECONDS //slower than mop
 	force_string = "robust... against germs"
+	attack_style = null
+	var/cleanspeed = 3.5 SECONDS //slower than mop
 	var/uses = 100
 
 /obj/item/soap/Initialize(mapload)

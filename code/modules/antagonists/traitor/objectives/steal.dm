@@ -252,6 +252,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bug"
+	attack_style = null
 
 	/// The object on which this bug can be planted on. Has to be a type.
 	var/obj/target_object_type

@@ -113,6 +113,7 @@
 	custom_materials = list(/datum/material/iron=10000)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	attack_style = null
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
 

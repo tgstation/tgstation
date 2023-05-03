@@ -17,6 +17,7 @@
 	tool_behaviour = TOOL_ANALYZER
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+	attack_style = null
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/barometer_accuracy // 0 is the best accuracy.

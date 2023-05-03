@@ -28,6 +28,7 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
+	attack_style = null
 
 	/// Icon state to use when capped
 	var/icon_capped

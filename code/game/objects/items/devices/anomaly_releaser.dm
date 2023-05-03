@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
+	attack_style = null
 
 	///icon state after being used up
 	var/used_icon_state = "anomaly_releaser_used"

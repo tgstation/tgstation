@@ -11,6 +11,7 @@
 	name = "control wand"
 	desc = "Remotely controls airlocks."
 	w_class = WEIGHT_CLASS_TINY
+	attack_style = null
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
 	var/list/access_list

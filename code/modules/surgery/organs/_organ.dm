@@ -4,6 +4,8 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
+	attack_style = null
+
 	///The mob that owns this organ.
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC

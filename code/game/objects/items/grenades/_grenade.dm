@@ -17,6 +17,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
+	attack_style = null
+
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
@@ -239,7 +241,6 @@
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
-// Melbert todo: needs special handling
 /obj/item/grenade/afterattack(atom/target, mob/user)
 	. = ..()
 	if(active)

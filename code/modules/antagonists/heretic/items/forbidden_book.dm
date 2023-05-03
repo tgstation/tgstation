@@ -7,6 +7,7 @@
 	icon_state = "book"
 	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
+	attack_style = null
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()

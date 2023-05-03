@@ -124,6 +124,8 @@
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
+	attack_style = null
+
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.

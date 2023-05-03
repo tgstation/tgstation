@@ -15,6 +15,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
+	attack_style = null
 	/// if the scanner is currently busy processing
 	var/scanner_busy = FALSE
 	var/list/log = list()

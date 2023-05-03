@@ -10,6 +10,8 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
+	attack_style = null
+
 	/// Which mode is the scanner currently on?
 	var/scanning_mode = SCAN_EXPORTS
 	/// A list of all available export scanner modes.

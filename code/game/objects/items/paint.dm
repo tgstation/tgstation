@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
+	attack_style = null
 	/// With what color will we paint with
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left

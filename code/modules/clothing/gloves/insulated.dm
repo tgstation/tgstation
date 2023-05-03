@@ -29,6 +29,7 @@
 	desc = "What is the number one problem facing our station today?"
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
+	attack_style = null
 
 /obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target) && proximity)

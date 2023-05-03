@@ -14,6 +14,7 @@
 	inhand_y_dimension = 64
 	force = 8
 	w_class = WEIGHT_CLASS_HUGE
+	attack_style = null // melbert todo probably not
 
 	/// How far can you cast this
 	var/cast_range = 5

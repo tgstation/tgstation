@@ -176,6 +176,7 @@
 	else
 		return FALSE
 
+// Melber todo needs speecial handling
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	. = ..()
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items

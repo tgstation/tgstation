@@ -52,6 +52,7 @@
 	if(proximity_flag)
 		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 	else
+		// Melbert todo: this needs unique handling
 		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/examine(mob/user)

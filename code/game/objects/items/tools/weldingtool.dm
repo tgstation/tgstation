@@ -178,6 +178,7 @@
 	if(!proximity)
 		return
 
+	// melbert todo remove this trash
 	if(isOn())
 		handle_fuel_and_temps(1, user)
 

@@ -29,6 +29,7 @@
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	attack_style = null
 
 	var/list/files = list()
 
@@ -1323,7 +1324,6 @@
 	theft_target = null
 	. = ..()
 
-// Melbert todo: Needs special handling
 /obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return

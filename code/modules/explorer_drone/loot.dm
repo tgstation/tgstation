@@ -145,6 +145,8 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	inhand_icon_state = "firelance"
 	righthand_file = 'icons/mob/inhands/items/firelance_righthand.dmi'
 	lefthand_file = 'icons/mob/inhands/items/firelance_lefthand.dmi'
+	attack_style = null
+
 	var/windup_time = 10 SECONDS
 	var/melt_range = 3
 	var/charge_per_use = 200

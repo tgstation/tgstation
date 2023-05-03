@@ -778,6 +778,7 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
+// Melbert todo this will need unique handing
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(timer > world.time)
@@ -1012,6 +1013,7 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
+// Melbert todo this will need unique handling
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	. |= AFTERATTACK_PROCESSED_ITEM

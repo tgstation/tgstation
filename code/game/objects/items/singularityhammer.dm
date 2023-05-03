@@ -15,7 +15,7 @@
 	armor_type = /datum/armor/item_singularityhammer
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/swing // melbert todo needs a unique style
 	///Is it able to pull shit right now?
 	var/charged = TRUE
 
