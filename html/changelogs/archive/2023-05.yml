@@ -51,3 +51,70 @@
       Maybe in the armory, maybe in a locked closet in maintenance. Be sure to be
       vigilant and splat them whenever you can to save the station from a whole lotta
       heartache!
+2023-05-02:
+  MTandi:
+  - image: extinguisher cabinet has new sprites
+  - qol: 'Mapping: Air alarm variants replaced with corresponding helpers'
+  SgtHunk:
+  - bugfix: Pirates summoned through hacking a comms console should actually spawn
+      now.
+  SyncIt21:
+  - bugfix: air alarms correctly spew out cable & electronics depending on their build
+      stage when their integrity reaches 0  i.e. destroyed
+  - bugfix: fire alarms correctly spew out cable & electronics depending on their
+      build stage when their integrity reaches 0  i.e. destroyed
+  - bugfix: balloon alerts runtiming when cutting terminals
+  - bugfix: ' Drying rack spawning a matter bin and circuit board on deconstruction'
+  Thedragmeme:
+  - qol: 'Makes the Meta station kitchen not cramped anymore
+
+      :cl:'
+  Thunder12345:
+  - bugfix: Bows will no longer randomly stop taking new arrows.
+  - rscadd: Crewmembers arriving very late will not always have time to finish their
+      breakfast.
+  nikothedude:
+  - code_imp: TGUI input datums can now accept custom ui_states
+  norsvenska:
+  - rscadd: North Star's captain's office has been expanded! It now includes a sitting
+      area as well as a photocopier and some cigars.
+  - bugfix: Various minor changes in North Star
+2023-05-03:
+  Cheshify:
+  - bugfix: Command can actually enter the AI SAT on the North Star.
+  - rscadd: The North Star AI SAT has been redone.
+  Iamgoofball:
+  - bugfix: Removes player references.
+  JohnFulpWillard:
+  - bugfix: Golems can redeem points through their ORM without an Ore silo.
+  MTandi:
+  - bugfix: Electrolysis chemical reaction works with enriched liquid electricity
+  Rhials:
+  - spellcheck: The hallucinatory anomaly announcement is no longer missing words.
+  Tattle:
+  - sound: nerfed the police whistle volume
+  Thunder12345:
+  - bugfix: A Mix to Engine gas line has been added to Birdshot's atmospherics
+  Zergspower:
+  - qol: Dangerous Research Ruin - Area redefines
+  Zonespace27:
+  - bugfix: Style meter parrying works again
+  - bugfix: Style meter bar now works correctly with very high style point count
+  nikothedude:
+  - bugfix: Number inputs work now
+  san7890:
+  - qol: The game now supports export of your preferences into a JSON file! The verb
+      (export-preferences) should now be available in the OOC tab of your stat-panel
+      if enabled by server operators.
+  - server: Exporting player preferences is controlled by a configuration option,
+      'FORBID_PREFERENCES_EXPORT'. If you do not wish to let clients access the ftp()
+      function to their own preferences file (probably for bandwidth reasons?) you
+      should uncomment this or add it to your config somehow.
+  - config: Server operators are also able to set the cooldown between requests to
+      download the JSON Preferences file via the 'SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT'
+      config option.
+  vinylspiders:
+  - bugfix: prosthetic limb quirk will no longer display a prosthetic on your character
+      preview because it is buggy and hardly ever matches what you end up getting
+      upon spawning
+  - code_imp: removing the prosthetic limb quirk will restore your original limb
