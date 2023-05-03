@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Electrolysis chemical reaction works with enriched liquid electricity"

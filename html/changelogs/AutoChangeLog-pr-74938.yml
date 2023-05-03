@@ -1,0 +1,10 @@
+author: "Dawnseer"
+delete-after: True
+changes:
+  - rscadd: "Damp rag and Money bag to service borg"
+  - rscadd: "Service borg upgrades, with accompanying tech web node"
+  - rscadd: "Sprites for kitchen toolset, and service apparatus"
+  - balance: "The RSF can print a few more things, paper cups, seaweed sheets, plates, bowls, plastic cutlery and standard decks of cards."
+  - balance: "Sugar moved from borgshaker to condiment synthesizer. Berry juice, cherry jelly and vinegar added to borgshaker. balance: Both shaker and synthesizer can also be adjusted to give 1 unit at time, so it goes 5, 10, 20 then 1, and back around."
+  - balance: "Adds blood and Carpotoxin to the emagged borgshaker."
+  - bugfix: "Money bag was missing a description, it now has one."
