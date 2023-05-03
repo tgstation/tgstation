@@ -281,9 +281,7 @@
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
-			if(!try_wallmount(new_wallmount, user, src))
-				return FALSE
-			return TRUE
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
 			ScrapeAway()
 			return TRUE
