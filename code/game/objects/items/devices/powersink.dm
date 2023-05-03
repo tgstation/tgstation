@@ -188,7 +188,7 @@
 		if (!warning_given)
 			warning_given = TRUE
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
-			notify_ghosts("The [src] is about to reach critical mass!", source = src, header = "Power Sunk")
+			notify_ghosts("The [src] is about to reach critical heat capacity!", source = src, header = "Power Sunk")
 		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
 
 	if(internal_heat >= max_heat)
