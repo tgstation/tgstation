@@ -61,7 +61,7 @@
 	name = "Secure Freezer Cabinet"
 	result = /obj/structure/closet/secure_closet/freezer/empty
 	reqs = list(
-		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/sheet/iron = 5,
 		/obj/item/assembly/igniter/condenser = 1,
 		/obj/item/electronics/airlock = 1,
 	)
@@ -75,7 +75,7 @@
 	name = "Secure Closet"
 	result = /obj/structure/closet/secure_closet
 	reqs = list(
-		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/sheet/iron = 5,
 		/obj/item/electronics/airlock = 1,
 	)
 	parts = list(
