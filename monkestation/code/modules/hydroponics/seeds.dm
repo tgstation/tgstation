@@ -72,22 +72,22 @@
 
 /obj/item/seeds/proc/Copy_drop(output_loc)
 	var/obj/item/seeds/S = new type(output_loc, 1)
-	// Copy all the stats
-	S.lifespan = lifespan
-	S.endurance = endurance
-	S.maturation = maturation
-	S.production = production
-	S.yield = yield
-	S.potency = potency
-	S.weed_rate = weed_rate
-	S.weed_chance = weed_chance
-	S.name = name
-	S.plantname = plantname
-	S.desc = desc
 	S.genes = list()
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
 		S.genes += G.Copy()
+	// Copy all the stats
+	S.set_lifespan(lifespan)
+	S.set_endurance(endurance)
+	S.set_maturation(maturation)
+	S.set_production(production)
+	S.set_yield(yield)
+	S.set_potency(potency)
+	S.set_weed_rate(weed_rate)
+	S.set_weed_chance(weed_chance)
+	S.name = name
+	S.plantname = plantname
+	S.desc = desc
 	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 
 	S.harvest_age = harvest_age
