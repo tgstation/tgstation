@@ -151,6 +151,14 @@
 /// Copy all the variables from one seed to a new instance of the same seed and return it.
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)
+
+	copy_seed.genes = list()
+	///copy traits first than we do stats
+	for(var/datum/plant_gene/gene in genes)
+		var/datum/plant_gene/copied_gene = gene.Copy()
+		copy_seed.genes += copied_gene
+		copied_gene.on_new_seed(copy_seed)
+
 	// Copy all the stats
 	copy_seed.set_lifespan(lifespan)
 	copy_seed.set_endurance(endurance)
@@ -164,11 +172,6 @@
 	copy_seed.plantname = plantname
 	copy_seed.desc = desc
 	copy_seed.productdesc = productdesc
-	copy_seed.genes = list()
-	for(var/datum/plant_gene/gene in genes)
-		var/datum/plant_gene/copied_gene = gene.Copy()
-		copy_seed.genes += copied_gene
-		copied_gene.on_new_seed(copy_seed)
 
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	copy_seed.harvest_age = harvest_age
