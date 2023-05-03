@@ -169,7 +169,7 @@
 	for(var/obj/collector in range(5, src))
 		if(!istype(collector, /obj/machinery/power/rad_collector))
 			continue
-		collector.rad_act(intensity = min(5000, (energy * 4.5) + 1000))
+		collector.rad_act(intensity = min(2500, (energy * 2) + 500))
 	check_energy()
 
 /obj/singularity/proc/dissipate(seconds_per_tick)
