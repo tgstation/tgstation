@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - refactor: "Mineral costs have been reformatted to be scaled by the number of sheets, darts, and small fractions they make up."
+  - qol: "Foam darts no longer hold a fraction of a unit of iron within themselves."
