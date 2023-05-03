@@ -65,4 +65,8 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/coroner
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
 
+	backpack = /obj/item/storage/backpack/coroner
+	satchel = /obj/item/storage/backpack/satchel/coroner
+	duffelbag = /obj/item/storage/backpack/duffelbag/coroner
+
 	skillchips = list(/obj/item/skillchip/entrails_reader)

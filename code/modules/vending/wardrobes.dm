@@ -292,6 +292,9 @@
 		/obj/item/clothing/suit/apron/surgical = 1,
 		/obj/item/clothing/gloves/latex/coroner = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
+		/obj/item/storage/backpack/coroner = 1,
+		/obj/item/storage/backpack/satchel/coroner = 1,
+		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
