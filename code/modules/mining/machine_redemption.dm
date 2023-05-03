@@ -15,6 +15,8 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
+	///Boolean on whether the ORM can claim points without being connected to an ore silo.
+	var/requires_silo = TRUE
 	/// The current amount of unclaimed points in the machine
 	var/points = 0
 	/// Smelted ore's amount is multiplied by this
@@ -22,13 +24,28 @@
 	/// Increases the amount of points the miners gain
 	var/point_upgrade = 1
 	/// Details how many credits each smelted ore is worth
-	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
+	var/static/list/ore_values = list(
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 15,
+		/datum/material/silver = 16,
+		/datum/material/gold = 18,
+		/datum/material/titanium = 30,
+		/datum/material/uranium = 30,
+		/datum/material/diamond = 50,
+		/datum/material/bluespace = 50,
+		/datum/material/bananium = 60,
+	)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
 	/// Linkage to the ORM silo
 	var/datum/component/remote_materials/materials
+
+/obj/machinery/mineral/ore_redemption/offstation
+	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
+	requires_silo = FALSE
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -241,9 +258,9 @@
 	data["disconnected"] = null
 	if (!mat_container)
 		data["disconnected"] = "Local mineral storage is unavailable"
-	else if (!materials.silo)
+	else if (!materials.silo && requires_silo)
 		data["disconnected"] = "No ore silo connection is available; storing locally"
-	else if (!materials.check_z_level())
+	else if (!materials.check_z_level() && requires_silo)
 		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
 		data["disconnected"] = "Mineral withdrawal is on hold"
@@ -300,7 +317,7 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level())
+			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
 				return TRUE
 			if(points)
 				if(user_id_card)
