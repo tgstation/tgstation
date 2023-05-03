@@ -62,7 +62,7 @@
 		. += span_notice("The status display reads: Recharge power <b>[siunit(recharge_power, "W", 1)]</b>.")
 
 /obj/machinery/mech_bay_recharge_port/power_change()
-	if(!machine_stat & NOPOWER)
+	if(!(machine_stat & NOPOWER))
 		begin_processing()
 
 
