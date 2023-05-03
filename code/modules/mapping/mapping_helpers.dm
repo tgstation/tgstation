@@ -1138,7 +1138,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	floor.burn_tile()
 	qdel(src)
 
-//machinery helpers
+///Applies BROKEN flag to the first found machine on a tile
 /obj/effect/mapping_helpers/broken_machine
 	name = "broken machine helper"
 	icon_state = "broken_machine"
@@ -1177,7 +1177,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
 	target.set_machine_stat(target.machine_stat | BROKEN)
 
-//windows helpers
+///Deals random damage to the first window found on a tile to appear cracked
 /obj/effect/mapping_helpers/damaged_window
 	name = "damaged window helper"
 	icon_state = "damaged_window"
@@ -1214,8 +1214,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(target.get_integrity() < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
-	// Minimum roll of integrity damage in percents
-	var/integrity_min_factor = 0.2
-	// Maximum roll of integrity damage in percents
-	var/integrity_max_factor = 0.8
-	target.take_damage(rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor))
+	target.take_damage(rand(target.max_integrity * 0.2, target.max_integrity * 0.8))
