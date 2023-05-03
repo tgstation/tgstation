@@ -1211,11 +1211,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	qdel(src)
 
 /obj/effect/mapping_helpers/damaged_window/proc/payload(obj/structure/window/target)
-	if(target.atom_integrity < target.max_integrity)
+	if(target.get_integrity() < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
 	// Minimum roll of integrity percentage
 	var/integrity_min_factor = 0.2
 	// Maximum roll of integrity percentage
 	var/integrity_max_factor = 0.8
-	target.atom_integrity = rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor)
+	target.take_damage(rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor))
