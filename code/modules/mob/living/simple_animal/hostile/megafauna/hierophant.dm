@@ -760,7 +760,7 @@ Difficulty: Hard
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
 				club.beacon = null
-				club.update_icon_state()
+				club.update_appearance(UPDATE_ICON_STATE)
 				user.update_mob_action_buttons()
 				qdel(src)
 		else
