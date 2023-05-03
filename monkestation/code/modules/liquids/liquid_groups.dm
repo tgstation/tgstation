@@ -218,7 +218,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members
+		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
@@ -711,7 +711,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members
+		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
@@ -729,7 +729,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members
+		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
 		passed_list[reagent_type] = amount
