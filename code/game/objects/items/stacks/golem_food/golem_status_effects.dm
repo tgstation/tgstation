@@ -66,11 +66,10 @@
 	. = ..()
 	if (!ishuman(owner))
 		return FALSE
-	if (owner.has_status_effect(/datum/status_effect/golem) )
+	if (owner.has_status_effect(/datum/status_effect/golem))
 		return FALSE
 	if (applied_fluff)
 		to_chat(owner, span_notice(applied_fluff))
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
 	if (!overlay_state_prefix || !iscarbon(owner))
 		return TRUE
 	var/mob/living/carbon/golem_owner = owner
@@ -92,14 +91,11 @@
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	QDEL_LIST(active_overlays)
 	return ..()
 
-/// Let's people know what's up with your weird growths
-/datum/status_effect/golem/proc/on_examined(datum/source, mob/user, list/examine_text)
-	SIGNAL_HANDLER
-	examine_text += span_notice("Their body has been augmented with veins of [mineral_name].")
+/datum/status_effect/golem/get_examine_text()
+	return span_notice("[owner.p_their(capitalized = TRUE)] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
@@ -214,7 +210,7 @@
 
 /// Shoot a beam at the target atom
 /datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
-	owner.Beam(target, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+	owner.Beam(target, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(owner, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 
 /// Makes you spaceproof
@@ -248,11 +244,11 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.flags_ricochet = RICOCHET_SHINY
+	owner.flags_ricochet |= RICOCHET_SHINY
 	return TRUE
 
 /datum/status_effect/golem/gold/on_remove()
-	owner.flags_ricochet = NONE
+	owner.flags_ricochet &= ~RICOCHET_SHINY
 	return ..()
 
 /// Makes you hard to see
@@ -299,14 +295,15 @@
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
-	LAZYADD(modified_arms, WEAKREF(arm))
+	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-	for (var/datum/weakref/weak_arm as anything in modified_arms)
-		reset_arm_fluff(weak_arm.resolve())
+	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		reset_arm_fluff(arm)
 	LAZYCLEARLIST(modified_arms)
 	return ..()
 
@@ -318,6 +315,12 @@
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
+	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+
+/// Remove references to deleted arms
+/datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
+	SIGNAL_HANDLER
+	modified_arms -= arm
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium
@@ -362,14 +365,15 @@
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
 	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
-	LAZYADD(modified_arms, WEAKREF(arm))
+	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
 	var/mob/living/carbon/human/human_owner = owner
 	UnregisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
-	for (var/datum/weakref/weak_arm as anything in modified_arms)
-		debuff_arm(weak_arm.resolve())
+	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		debuff_arm(arm)
 	LAZYCLEARLIST(modified_arms)
 	return ..()
 
@@ -380,6 +384,12 @@
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
 	arm.unarmed_stun_threshold -= damage_increase
+	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+
+/// Remove references to deleted arms
+/datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
+	SIGNAL_HANDLER
+	modified_arms -= arm
 
 /// Makes you slippery
 /datum/status_effect/golem/bananium

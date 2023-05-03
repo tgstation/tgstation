@@ -49,8 +49,7 @@
 	qdel(src)
 
 /obj/item/gibtonite_hand/Destroy()
-	if (held_gibtonite)
-		QDEL_NULL(held_gibtonite)
+	QDEL_NULL(held_gibtonite)
 	return ..()
 
 /// Point at a target and teleport somewhere vaguely close to it

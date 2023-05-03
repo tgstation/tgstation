@@ -54,7 +54,7 @@
 	name = "Huh"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "teleport"
-	duration = 80
+	duration = 8 SECONDS
 
 /obj/effect/temp_visual/teleport_abductor/Initialize(mapload)
 	. = ..()
@@ -66,4 +66,4 @@
 	name = "bluespace silhouette"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "teleport"
-	duration = 60
+	duration = 6 SECONDS

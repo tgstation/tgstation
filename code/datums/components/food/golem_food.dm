@@ -19,6 +19,9 @@
 	snack_type = GLOB.golem_stack_food_directory[golem_food_key]
 	src.extra_validation = extra_validation
 
+
+/datum/component/golem_food/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
@@ -87,12 +90,16 @@
 	src.food_buff = food_buff
 	src.owner = owner
 
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroyed))
+
+/// Clean ourselves up if our parent dies
+/obj/item/food/golem_food/proc/on_parent_destroyed(datum/destroyed_thing)
+	SIGNAL_HANDLER
+	qdel(src)
+
 /obj/item/food/golem_food/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
-
-/// Set up the data we need to work properly
-/obj/item/food/golem_food/proc/setup_properties()
 
 /// Called when someone bites this food, subtract one charge from our material stack
 /obj/item/food/golem_food/proc/took_bite(mob/eater)

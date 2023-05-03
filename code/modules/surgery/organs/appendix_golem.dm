@@ -8,9 +8,12 @@
 	/// Action which performs smelting
 	var/datum/action/cooldown/internal_smelting/smelter
 
+/obj/item/organ/internal/appendix/golem/Initialize(mapload)
+	. = ..()
+	smelter = new(src)
+
 /obj/item/organ/internal/appendix/golem/on_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	smelter = new(owner)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_lava))
 
 /// Give the action while in lava

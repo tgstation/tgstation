@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 	icon_state = "Gibtonite active"
 	var/notify_admins = FALSE
-	if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
+	if(!is_mining_level(z))//Only annoy the admins ingame if we're triggered off the mining zlevel
 		notify_admins = TRUE
 
 	if(triggered_by == 1)
