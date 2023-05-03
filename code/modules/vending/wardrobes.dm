@@ -289,6 +289,7 @@
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/toggle/labcoat/coroner = 1,
+		/obj/item/clothing/suit/apron/surgical = 1,
 		/obj/item/clothing/gloves/latex/coroner = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
