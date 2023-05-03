@@ -750,6 +750,118 @@
 	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
 	if (BR)
 		R.model.remove_module(BR, TRUE)
+		
+/obj/item/borg/upgrade/condiment_synthesizer
+	name = "Service Cyborg Condiment Synthesiser"
+	desc = "An upgrade to the service model cyborg, allowing it to produce solid condiments."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/condiment_synthesizer/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
+	if(cynthesizer)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	cynthesizer = new(install.model)
+	install.model.basic_modules += cynthesizer
+	install.model.add_module(cynthesizer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/condiment_synthesizer/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
+	if (cynthesizer)
+		install.model.remove_module(cynthesizer, TRUE)
+			
+/obj/item/borg/upgrade/silicon_knife
+	name = "Service Cyborg Kitchen Toolset"
+	desc = "An upgrade to the service model cyborg, to help process foods."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+			
+/obj/item/borg/upgrade/silicon_knife/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
+	if(snife)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	snife = new(install.model)
+	install.model.basic_modules += snife
+	install.model.add_module(snife, FALSE, TRUE)
+
+/obj/item/borg/upgrade/silicon_knife/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
+	if (snife)
+		install.model.remove_module(snife, TRUE)
+			
+/obj/item/borg/upgrade/service_apparatus
+	name = "Service Cyborg Service Apparatus"
+	desc = "An upgrade to the service model cyborg, to help handle foods and paper."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE			
+			
+/obj/item/borg/upgrade/service_apparatus/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
+	if(saparatus)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	saparatus = new(install.model)
+	install.model.basic_modules += saparatus
+	install.model.add_module(saparatus, FALSE, TRUE)
+
+/obj/item/borg/upgrade/service_apparatus/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
+	if (saparatus)
+		install.model.remove_module(saparatus, TRUE)
+			
+/obj/item/borg/upgrade/rolling_table
+	name = "Service Cyborg Rolling Table Dock"
+	desc = "An upgrade to the service model cyborg, to help provide mobile service."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE			
+			
+/obj/item/borg/upgrade/rolling_table/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
+	if(rtable)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	rtable = new(install.model)
+	install.model.basic_modules += rtable
+	install.model.add_module(rtable, FALSE, TRUE)
+
+/obj/item/borg/upgrade/rolling_table/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
+	if (rtable)
+		install.model.remove_module(rtable, TRUE)			
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

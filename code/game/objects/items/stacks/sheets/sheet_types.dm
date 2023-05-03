@@ -152,6 +152,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	cost = MINERAL_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/iron
 	stairs_type = /obj/structure/stairs
+	sniffable = TRUE
 
 /obj/item/stack/sheet/iron/Initialize(mapload)
 	. = ..()

@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	matter_amount = 4
 	cost = MINERAL_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/glass
+	sniffable = TRUE
 
 /datum/armor/sheet_glass
 	fire = 50

@@ -253,6 +253,9 @@
 					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
+		for(var/obj/item/bodypart/limb as anything in carbontarget.bodyparts)
+			for(var/obj/item/embed as anything in limb.embedded_objects)
+				render_list += "<span class='alert ml-1'>Embedded object: [embed] located in \the [limb.plaintext_zone]</span>\n"
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
