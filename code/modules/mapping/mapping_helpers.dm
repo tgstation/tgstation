@@ -1214,8 +1214,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(target.get_integrity() < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
-	// Minimum roll of integrity percentage
+	// Minimum roll of integrity damage in percents
 	var/integrity_min_factor = 0.2
-	// Maximum roll of integrity percentage
+	// Maximum roll of integrity damage in percents
 	var/integrity_max_factor = 0.8
 	target.take_damage(rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor))
