@@ -351,7 +351,7 @@
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
 
-	if(!proximity || !punching_person.combat_mode || !isliving(attacked_atom))
+	if(!proximity || !(punching_person.istate & ISTATE_HARM) || !isliving(attacked_atom))
 		return
 
 	var/mob/living/disrespected = attacked_atom
