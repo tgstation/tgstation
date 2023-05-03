@@ -7,7 +7,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/gold = 2000)
+	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor_type = /datum/armor/structure_plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
@@ -121,7 +121,7 @@
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/gold = 2000)
+	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.

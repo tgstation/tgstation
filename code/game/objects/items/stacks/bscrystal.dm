@@ -7,7 +7,7 @@
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
-	mats_per_unit = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	points = 50
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	grind_results = list(/datum/reagent/bluespace = 20)
@@ -54,7 +54,7 @@
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	mats_per_unit = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT*0.5)
+	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.5)
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
@@ -69,7 +69,7 @@
 	inhand_icon_state = null
 	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
-	mats_per_unit = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
 	novariants = TRUE

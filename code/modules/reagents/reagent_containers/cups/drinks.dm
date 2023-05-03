@@ -48,7 +48,7 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5)
 	volume = 5
 	flags_1 = CONDUCT_1
@@ -66,7 +66,7 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
@@ -78,7 +78,7 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
-	custom_materials = list(/datum/material/silver=800)
+	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
 
@@ -91,7 +91,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -212,7 +212,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
+	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -331,7 +331,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
+	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -402,7 +402,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic = 1000)
+	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
@@ -430,7 +430,7 @@
 	desc = "A metal shaker to mix drinks in."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
-	custom_materials = list(/datum/material/iron=1500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
@@ -448,7 +448,7 @@
 	custom_price = PAYCHECK_COMMAND * 2
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "flask"
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
 	isGlass = FALSE
 
@@ -456,7 +456,7 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
-	custom_materials = list(/datum/material/gold=500)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det
 	name = "detective's flask"

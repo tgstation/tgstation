@@ -3,7 +3,7 @@
 	name = "Pill Bottle"
 	id = "pillbottle"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 20, /datum/material/glass = 100)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/pill_bottle
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -15,7 +15,7 @@
 	name = "Stethoscope"
 	id = "stethoscope"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/neck/stethoscope
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -27,7 +27,7 @@
 	name = "Surgical Tape"
 	id = "surgical_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 500)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/sticky_tape/surgical
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -40,7 +40,7 @@
 	name = "Slime Scanner"
 	id = "slime_scanner"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/slime_scanner
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -52,7 +52,7 @@
 	name = "Petri Dish"
 	id = "petri_dish"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/petri_dish
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -64,7 +64,7 @@
 	name = "Sterile Swab"
 	id = "swab"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/plastic = 200)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/swab
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -77,8 +77,8 @@
 	id = "telescreen_research"
 	build_type = PROTOLATHE
 	materials = list(
-		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/wallframe/telescreen/research
 	category = list(
@@ -92,8 +92,8 @@
 	id = "telescreen_ordnance"
 	build_type = PROTOLATHE
 	materials = list(
-		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/wallframe/telescreen/ordnance
 	category = list(
@@ -107,7 +107,7 @@
 	name = "Syringe"
 	id = "syringe"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/reagent_containers/syringe
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -119,7 +119,7 @@
 	name = "Dropper"
 	id = "dropper"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 10, /datum/material/plastic = 30)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.3)
 	build_path = /obj/item/reagent_containers/dropper
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -131,7 +131,7 @@
 	name = "Blood Filter"
 	id = "blood_filter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver = 500)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/blood_filter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -143,7 +143,7 @@
 	name = "Scalpel"
 	id = "scalpel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/scalpel
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -155,7 +155,7 @@
 	name = "Circular Saw"
 	id = "circular_saw"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/circular_saw
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -167,7 +167,7 @@
 	name = "Bonesetter"
 	id = "bonesetter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	build_path = /obj/item/bonesetter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -179,7 +179,7 @@
 	name = "Surgical Drill"
 	id = "surgicaldrill"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/surgicaldrill
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -191,7 +191,7 @@
 	name = "Retractor"
 	id = "retractor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/retractor
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -203,7 +203,7 @@
 	name = "Cautery"
 	id = "cautery"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 7.5)
 	build_path = /obj/item/cautery
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -215,7 +215,7 @@
 	name = "Hemostat"
 	id = "hemostat"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	build_path = /obj/item/hemostat
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart"
 	base_icon_state = "foamdart"
-	custom_materials = list(/datum/material/iron = 11.25)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1125)
 	harmful = FALSE
 	var/modified = FALSE
 
@@ -61,4 +61,4 @@
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
-	custom_materials = list(/datum/material/iron = 1125)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)

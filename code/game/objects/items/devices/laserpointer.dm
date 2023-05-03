@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 10

@@ -5,7 +5,7 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	mats_per_unit = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/iron

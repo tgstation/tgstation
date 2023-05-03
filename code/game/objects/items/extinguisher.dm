@@ -13,7 +13,7 @@
 	throw_range = 7
 	force = 10
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 90)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
@@ -57,7 +57,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT* 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
@@ -76,7 +76,7 @@
 	throwforce = 1
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "coolant"
 	dog_fashion = null

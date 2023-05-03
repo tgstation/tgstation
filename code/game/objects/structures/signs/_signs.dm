@@ -4,7 +4,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	armor_type = /datum/armor/structure_sign
 	resistance_flags = FLAMMABLE
@@ -144,7 +144,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/item_sign
 	resistance_flags = FLAMMABLE
 	max_integrity = 100

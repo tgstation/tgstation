@@ -32,7 +32,7 @@
 	inhand_icon_state = "tile-plasma"
 	turf_type = /turf/open/floor/mineral/plasma
 	mineralType = "plasma"
-	mats_per_unit = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/plasma
 
 /obj/item/stack/tile/mineral/uranium
@@ -43,7 +43,7 @@
 	inhand_icon_state = "tile-uranium"
 	turf_type = /turf/open/floor/mineral/uranium
 	mineralType = "uranium"
-	mats_per_unit = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/uranium
 
 /obj/item/stack/tile/mineral/gold
@@ -54,7 +54,7 @@
 	inhand_icon_state = "tile-gold"
 	turf_type = /turf/open/floor/mineral/gold
 	mineralType = "gold"
-	mats_per_unit = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/gold
 
 /obj/item/stack/tile/mineral/silver
@@ -65,7 +65,7 @@
 	inhand_icon_state = "tile-silver"
 	turf_type = /turf/open/floor/mineral/silver
 	mineralType = "silver"
-	mats_per_unit = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/silver
 
 /obj/item/stack/tile/mineral/diamond
@@ -76,7 +76,7 @@
 	inhand_icon_state = "tile-diamond"
 	turf_type = /turf/open/floor/mineral/diamond
 	mineralType = "diamond"
-	mats_per_unit = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/diamond
 
 /obj/item/stack/tile/mineral/bananium
@@ -87,7 +87,7 @@
 	inhand_icon_state = "tile-bananium"
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
-	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25)
 	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The material tiles should still slip.
 	merge_type = /obj/item/stack/tile/mineral/bananium
 
@@ -98,7 +98,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
-	mats_per_unit = list(/datum/material/alloy/alien=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/alloy/alien=SHEET_MATERIAL_AMOUNT*0.25)
 	turf_type = /turf/open/floor/mineral/abductor
 	mineralType = "abductor"
 	merge_type = /obj/item/stack/tile/mineral/abductor
@@ -111,7 +111,7 @@
 	inhand_icon_state = "tile-shuttle"
 	turf_type = /turf/open/floor/mineral/titanium
 	mineralType = "titanium"
-	mats_per_unit = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/titanium
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/titanium,
@@ -206,7 +206,7 @@
 	inhand_icon_state = "tile-darkshuttle"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
-	mats_per_unit = list(/datum/material/alloy/plastitanium=MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/plastitanium
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/plastitanium,

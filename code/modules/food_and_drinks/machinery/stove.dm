@@ -36,7 +36,7 @@
 	amount_per_transfer_from_this = 50
 	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
-	custom_materials = list(/datum/material/iron = 5000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
 	custom_price = PAYCHECK_LOWER * 8
 	fill_icon_thresholds = null

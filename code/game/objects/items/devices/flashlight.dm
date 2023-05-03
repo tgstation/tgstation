@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_outer_range = 4
@@ -327,7 +327,7 @@
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE
-	custom_materials = list(/datum/material/plastic=50)
+	custom_materials = list(/datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
@@ -343,6 +343,16 @@
 
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/flashlight/flare/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(!isliving(victim))
+		return ..()
+
+	if(on && victim.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
+
 	return ..()
 
 /obj/item/flashlight/flare/toggle_light()

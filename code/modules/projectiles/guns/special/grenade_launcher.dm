@@ -10,7 +10,7 @@
 	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()

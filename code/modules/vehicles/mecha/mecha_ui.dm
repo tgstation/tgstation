@@ -29,7 +29,7 @@
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()
 	data["cabin_dangerous_highpressure"] = WARNING_HIGH_PRESSURE
-	data["mineral_material_amount"] = MINERAL_MATERIAL_AMOUNT
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
 	data["mechflag_keys"] = list(
 		"ADDING_ACCESS_POSSIBLE" = ADDING_ACCESS_POSSIBLE,

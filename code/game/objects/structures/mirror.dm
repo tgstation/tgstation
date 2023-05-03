@@ -128,8 +128,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(
-		/datum/material/glass = MINERAL_MATERIAL_AMOUNT,
-		/datum/material/silver = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28

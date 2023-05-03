@@ -214,7 +214,7 @@
 					else
 						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
 						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
 							mat_tram_wall.set_custom_materials(material_list)
 						tram_wall = mat_tram_wall
@@ -237,7 +237,7 @@
 					else
 						var/obj/structure/falsewall/material/mat_falsewall = new(loc)
 						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
 							mat_falsewall.set_custom_materials(material_list)
 						falsewall = mat_falsewall
@@ -259,7 +259,7 @@
 					else
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
 							newturf.set_custom_materials(material_list)
 

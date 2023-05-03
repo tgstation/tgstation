@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
-	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	merge_type = /obj/item/stack/rods/lava
