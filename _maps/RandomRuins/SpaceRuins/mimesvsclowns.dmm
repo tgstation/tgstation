@@ -27,7 +27,6 @@
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/structure/closet/secure_closet/freezer/fridge/open{
 	opened = 1;
-	icon_state = "freezeropen"
 	},
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
@@ -62,9 +61,7 @@
 /area/ruin)
 "ox" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet/open{
-	icon_state = "closetopen"
-	},
+/obj/structure/closet/open,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,
