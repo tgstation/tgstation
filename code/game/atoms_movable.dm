@@ -99,11 +99,6 @@
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
 
-#ifdef UNIT_TESTS
-	///lazylist of every spatial grid cell this movable is currently in
-	var/list/in_spatial_grid_cells = null
-#endif
-
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -192,7 +187,7 @@
 		move_packet = null
 
 	if(spatial_grid_key)
-		SSspatial_grid.force_remove_from_cell(src)
+		SSspatial_grid.force_remove_from_grid(src)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 

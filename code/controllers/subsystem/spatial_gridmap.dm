@@ -367,16 +367,16 @@ SUBSYSTEM_DEF(spatial_grid)
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 				var/list/new_target_contents = new_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_SET(intersecting_cell, intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				GRID_CELL_SET(intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 				var/list/new_target_contents = new_target.important_recursive_contents
-				GRID_CELL_SET(intersecting_cell, intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-				GRID_CELL_SET(intersecting_cell, intersecting_cell.atmos_contents, new_target)
+				GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
 ///acts like enter_cell() but only adds the target to a specified type of grid cell contents list
@@ -397,16 +397,16 @@ SUBSYSTEM_DEF(spatial_grid)
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			var/list/new_target_contents = new_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_SET(intersecting_cell, intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			GRID_CELL_SET(intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 			var/list/new_target_contents = new_target.important_recursive_contents
-			GRID_CELL_SET(intersecting_cell, intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-			GRID_CELL_SET(intersecting_cell, intersecting_cell.atmos_contents, new_target)
+			GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
 	return intersecting_cell
@@ -436,16 +436,16 @@ SUBSYSTEM_DEF(spatial_grid)
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.atmos_contents, old_target)
+				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), old_target)
 
 	return TRUE
@@ -468,77 +468,130 @@ SUBSYSTEM_DEF(spatial_grid)
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 			var/list/old_target_contents = old_target.important_recursive_contents
-			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.atmos_contents, old_target)
+			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 
 	return TRUE
 
-///find the cell this movable is associated with and removes it from all lists
-/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+/// if for whatever reason this movable is "untracked" e.g. it breaks the assumption that a movable is only inside the contents of any grid cell associated with its loc,
+/// this will error. this checks every grid cell in the world so dont call this on live unless you have to.
+/// returns TRUE if this movable is untracked, FALSE otherwise
+/datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
+
+	if(!movable_to_check?.spatial_grid_key)
+		if(istype(movable_to_check, /mob/living/trolls_the_maintainer))
+			stack_trace("untracked_movable_error() trolls_the_maintainer doesnt have a grid key!")
+		return FALSE
+
+	if(!initialized)
+		if(istype(movable_to_check, /mob/living/trolls_the_maintainer))
+			stack_trace("untracked_movable_error() not initialized!")
+		return FALSE
+
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(movable_to_check)
+	var/list/containing_cells = find_hanging_cell_refs_for_movable(movable_to_check, FALSE)
+	//if we're in multiple cells, throw an error.
+	//if we're in 1 cell but it cant be deduced by our location, throw an error.
+	if(length(containing_cells) > 1 || (length(containing_cells) == 1 && loc_cell && containing_cells[1] != loc_cell && containing_cells[1] != null))
+
+		var/error_data = ""
+
+		var/location_string = "which is in nullspace, and thus not be within the contents of any spatial grid cell"
+		if(loc_cell)
+			location_string = "which is supposed to only be in the contents of a spatial grid cell at coords: ([GRID_INDEX_TO_COORDS(loc_cell.cell_x)], [GRID_INDEX_TO_COORDS(loc_cell.cell_y)], [loc_cell.cell_z])"
+
+		var/error_explanation = "was in the contents of [length(containing_cells)] spatial grid cells when it was only supposed to be in one!"
+		if(length(containing_cells) == 1)
+			error_explanation = "was in the contents of 1 spatial grid cell but it was inside the area handled by another grid cell!"
+			var/datum/spatial_grid_cell/bad_cell = containing_cells[1]
+
+			error_data = "within the contents of a cell at coords: ([GRID_INDEX_TO_COORDS(bad_cell.cell_x)], [GRID_INDEX_TO_COORDS(bad_cell.cell_y)], [bad_cell.cell_z])"
+
+		if(!error_data)
+			for(var/datum/spatial_grid_cell/cell in containing_cells)
+				var/coords = "([GRID_INDEX_TO_COORDS(cell.cell_x)], [GRID_INDEX_TO_COORDS(cell.cell_y)], [cell.cell_z])"
+				var/contents = ""
+
+				if(movable_to_check in cell.hearing_contents)
+					contents = "hearing"
+
+				if(movable_to_check in cell.client_contents)
+					if(length(contents) > 0)
+						contents = "[contents], client"
+					else
+						contents = "client"
+
+				if(movable_to_check in cell.atmos_contents)
+					if(length(contents) > 0)
+						contents = "[contents], atmos"
+					else
+						contents = "atmos"
+
+				if(length(error_data) > 0)
+					error_data = "[error_data], {coords: [coords], within channels: [contents]}"
+				else
+					error_data = "within the contents of the following cells: {[coords], within channels: [contents]}"
+
+		/**
+		 * example:
+		 *
+		 * /mob/living/trolls_the_maintainer instance, which is supposed to only be in the contents of a spatial grid cell at coords: (136, 136, 14),
+		 * was in the contents of 3 spatial grid cells when it was only supposed to be in one! within the contents of the following cells:
+		 * {(68, 153, 2), within channels: hearing},
+		 * {coords: (221, 170, 3), within channels: hearing},
+		 * {coords: (255, 153, 11), within channels: hearing},
+		 * {coords: (136, 136, 14), within channels: hearing}.
+		 * ping @KylerAce in discord if you see this
+		 */
+		stack_trace("[movable_to_check.type] instance, [location_string], [error_explanation] [error_data]. ping @KylerAce in discord if you see this")
+
+		return TRUE
+
+	else if(istype(movable_to_check, /mob/living/trolls_the_maintainer))//TODOKYLER: remove
+		stack_trace("somehow trolls_the_maintainer didnt fail the check!")
+
+	return FALSE
+
+/**
+ * remove this movable from the grid by finding the grid cell its in and removing it from that.
+ * if it cant infer a grid cell its located in (e.g. if its in nullspace but it can happen if the grid isnt expanded to a z level), search every grid cell.
+ */
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_grid(atom/movable/to_remove)
+	if(!to_remove?.spatial_grid_key)
+		return
+
 	if(!initialized)
 		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
 		return
 
+#ifdef UNIT_TESTS
+	if(untracked_movable_error(to_remove))
+		find_hanging_cell_refs_for_movable(to_remove, TRUE)
+		return
+#endif
+
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(to_remove)
+
+	if(loc_cell)
+		GRID_CELL_REMOVE_ALL(loc_cell, to_remove)
+	else
+		find_hanging_cell_refs_for_movable(to_remove, TRUE)
+
+///remove this movable from the given spatial_grid_cell
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
 	if(!input_cell)
-		input_cell = get_cell_of(to_remove)
+		return
 
-		#ifdef UNIT_TESTS
-
-		if(input_cell && (!(input_cell in to_remove.in_spatial_grid_cells) || length(to_remove.in_spatial_grid_cells) > 1))
-			var/input_cell_coords = "([input_cell.cell_x], [input_cell.cell_y], [input_cell.cell_z])"
-
-			var/error_data = ""
-			for(var/datum/spatial_grid_cell/cell in to_remove.in_spatial_grid_cells)
-				var/coords = "([cell.cell_x], [cell.cell_y], [cell.cell_z])"
-				var/contents = ""
-
-				if(to_remove in cell.hearing_contents)
-					contents = "hearing contents"
-
-				if(to_remove in cell.client_contents)
-					if(length(contents) > 0)
-						contents = "[contents], client contents"
-					else
-						contents = "client contents"
-
-				if(to_remove in cell.atmos_contents)
-					if(length(contents) > 0)
-						contents = "[contents], atmos contents"
-					else
-						contents = "atmos contents"
-
-				if(length(error_data) > 0)
-					error_data = "[error_data], {[coords] in [contents]}"
-				else
-					error_data = "{[coords] in: [contents]}"
-
-			stack_trace("[to_remove] at cell indices: [input_cell_coords], found in [length(to_remove.in_spatial_grid_cells)] spatial grid cells and they wouldnt have been caught by force_remove_by()! cells: [error_data]")
-
-			find_hanging_cell_refs_for_movable(to_remove, TRUE)
-			return
-
-		#endif
-
-		if(!input_cell)
-			find_hanging_cell_refs_for_movable(to_remove, TRUE)
-			return
-
-	GRID_CELL_REMOVE(input_cell, input_cell.client_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell, input_cell.hearing_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell, input_cell.atmos_contents, to_remove)
-
-	#ifdef UNIT_TESTS
-	to_remove.in_spatial_grid_cells = null
-	#endif
+	GRID_CELL_REMOVE_ALL(input_cell, to_remove)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
@@ -568,7 +621,7 @@ SUBSYSTEM_DEF(spatial_grid)
 ///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
-	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
+	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, remove_from_cells)
 
 	message_admins("[src] is located in the contents of [length(containing_cells)] spatial grid cells")
 
