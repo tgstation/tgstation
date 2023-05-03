@@ -140,7 +140,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "kZ" = (
 /obj/machinery/status_display/evac/directional/west,
@@ -467,10 +467,10 @@ gc
 pY
 pY
 gc
-kB
 gc
 kB
 gc
+kB
 gc
 pY
 pY
@@ -489,10 +489,10 @@ gc
 pY
 gc
 Ag
+gg
 QX
 ys
 QX
-gg
 Ag
 gc
 pY
@@ -666,8 +666,8 @@ pY
 gc
 Ag
 KW
-aR
 KW
+aR
 KW
 Ag
 gc
