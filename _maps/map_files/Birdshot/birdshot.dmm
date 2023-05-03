@@ -44728,6 +44728,9 @@
 	},
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/iron/white/small,
 /area/station/medical/cryo)
 "qiX" = (
