@@ -1183,6 +1183,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "damaged_window"
 	layer = ABOVE_OBJ_LAYER
 	late = TRUE
+	/// Minimum roll of integrity damage in percents
+	var/integrity_min_factor = 0.2
+	/// Maximum roll of integrity damage in percents
+	var/integrity_max_factor = 0.8
 
 /obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
 	. = ..()
@@ -1214,4 +1218,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(target.get_integrity() < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
-	target.take_damage(rand(target.max_integrity * 0.2, target.max_integrity * 0.8))
+	target.take_damage(rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor))
