@@ -494,6 +494,7 @@
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+
 /obj/item/mod/module/minigun
 	name = "MOD laser gatling gun module"
 	icon_state = "minigun_module"
@@ -517,14 +518,11 @@
 /obj/item/mod/module/minigun/Initialize(mapload)
 	. = ..()
 	battery = new(src)
-	
-	START_PROCESSING(SSobj, src)
-/obj/item/mod/module/minigun/proc/attach_gun(mob/user)
-	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 25)
+	START_PROCESSING(SSobj, src)// Starts the processing so the heat can go down over time
 
 
 /obj/item/mod/module/minigun/process(delta_time)
 	overheat = max(0, overheat - heat_diffusion * delta_time)
-	if(!overheat == 0)
+	if(overheat)
 		drain_power(overheat * 0.5)//It drains power if it overheats
 

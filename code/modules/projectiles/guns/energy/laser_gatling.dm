@@ -84,10 +84,7 @@
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
 	return ..()
-
-/obj/item/minigunpack/proc/drain_power()
-	return //This is here for the mod suit just so the normal one doesn't error out
-
+	
 /obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)
 		gun = new(src)
@@ -118,15 +115,21 @@
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
+	var/obj/item/mod/module/minigun/modpack
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
-	if(istype(loc, /obj/item/minigunpack)||istype(loc, /obj/item/mod/module/minigun)) 
+	if(istype(loc, /obj/item/minigunpack)) 
 		ammo_pack = loc
 		AddElement(/datum/element/update_icon_blocker)
 		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 		return ..()
-	else
-		return INITIALIZE_HINT_QDEL
+	else if(istype(loc, /obj/item/mod/module/minigun))
+		modpack = loc
+		ammo_pack = loc
+		AddElement(/datum/element/update_icon_blocker)
+		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+		return ..()
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/minigun/mod
 	name = "laser gatling gun"
@@ -157,12 +160,14 @@
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
 	..()
-	ammo_pack.drain_power(15)
+	if(istype(ammo_pack, /obj/item/mod/module/minigun))
+		modpack.drain_power(15)
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
 		var/transferred = cell.give(totransfer)
 		ammo_pack.battery.use(transferred)
+
 
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
