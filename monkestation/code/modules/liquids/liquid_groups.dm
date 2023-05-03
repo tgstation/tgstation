@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/created_reagent_list = list()
 	for(var/datum/reagent/reagent in otherg.reagents.reagent_list)
 		created_reagent_list |= reagent.type
-		created_reagent_list[reagent.type] = reagent.volume
+		created_reagent_list[reagent.type] = reagent
 
 	add_reagents(reagent_list = created_reagent_list, chem_temp = otherg.group_temperature)
 	cached_edge_turfs |= otherg.cached_edge_turfs
@@ -217,7 +217,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
-		var/amount = reagents.reagent_list[reagent_type] / members
+		var/datum/reagent/pulled_reagent = reagent_type
+		var/amount = pulled_reagent.volume / members
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
@@ -709,7 +710,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/datum/reagents/exposed_reagents = new(1000)
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
-		var/amount = reagents.reagent_list[reagent_type] / members
+		var/datum/reagent/pulled_reagent = reagent_type
+		var/amount = pulled_reagent.volume / members
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
@@ -726,7 +728,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/datum/reagents/exposed_reagents = new(1000)
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
-		var/amount = reagents.reagent_list[reagent_type] / members
+		var/datum/reagent/pulled_reagent = reagent_type
+		var/amount = pulled_reagent.volume / members
 		if(!amount)
 			continue
 		passed_list[reagent_type] = amount
