@@ -1,0 +1,8 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - rscadd: "Blood drunk now drops all four disks for PKA mods"
+  - rscadd: "Added meathook shotgun to tendrils and icebox portals"
+  - rscadd: "Added all of the missing tendril drops for icebox portals (cursed katana, champ armor, power miner shard, etc)"
+  - rscdel: "Removed nuka cola and regular hiking boots from icebox portal drops"
+  - rscdel: "Removed disks from tendril drop pool"
