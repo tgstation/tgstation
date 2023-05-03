@@ -540,7 +540,10 @@
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))
 
-/mob/living/simple_animal/slime/random_tier_one/Initialize(mapload, new_colour, new_is_adult=FALSE) ///A random slime that is blue, metal, orange, or purple.
+///A random slime that is blue, metal, orange, or purple.
+/mob/living/simple_animal/slime/random_tier_one
+
+/mob/living/simple_animal/slime/random_tier_one/Initialize(mapload, new_colour, new_is_adult=FALSE)
 	. = ..(mapload, pick(tier_one_colours), prob(50))
 
 /mob/living/simple_animal/slime/add_cell_sample()
