@@ -282,11 +282,9 @@
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
 			if(!try_wallmount(new_wallmount, user, src))
-				qdel(new_wallmount)
 				return FALSE
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE
