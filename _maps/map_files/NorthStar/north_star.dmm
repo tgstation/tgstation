@@ -6556,7 +6556,7 @@
 /area/station/science/xenobiology/hallway)
 "bzU" = (
 /obj/effect/turf_decal/tile/green,
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
