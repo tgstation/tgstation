@@ -150,8 +150,10 @@
 
 /obj/item/gun/energy/minigun/dropped(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
-	if(ammo_pack)
+	if(istype(ammo_pack,/obj/item/minigunpack))
 		ammo_pack.attach_gun(user)
+	else if(istype(ammo_pack, /obj/item/mod/module/minigun))
+		modpack.attach_gun(user)
 	else
 		qdel(src)
 

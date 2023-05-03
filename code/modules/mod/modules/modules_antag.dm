@@ -520,6 +520,9 @@
 	battery = new(src)
 	START_PROCESSING(SSobj, src)// Starts the processing so the heat can go down over time
 
+/obj/item/mod/module/minigun/proc/attach_gun(mob/user)
+	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 25)
+
 
 /obj/item/mod/module/minigun/process(delta_time)
 	overheat = max(0, overheat - heat_diffusion * delta_time)
