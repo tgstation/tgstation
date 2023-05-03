@@ -1,7 +1,7 @@
 /**
  * Day Night Presets are easy to use day/night cycles for certain maps, they are what is used to dictate the sky color.
  *
- * IMPORTANT: The lightzones in this MUST all add up to 23, you cannot miss an hour!
+ * IMPORTANT: The lightzones in this MUST all add up to 23, you cannot miss an hour! This is unit tested, so if you do, it will fail.
  */
 /datum/day_night_controller
 	/// The maps that this preset should be loaded on
