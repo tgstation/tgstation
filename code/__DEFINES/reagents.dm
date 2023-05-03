@@ -47,7 +47,25 @@
 
 //used by chem masters and pill presses
 //update this if you add more patch icons
-#define PATCH_STYLE_LIST list("bandaid", "bandaid_brute", "bandaid_burn", "bandaid_both") //icon_state list
+#define PATCH_STYLE_LIST list(\
+	"bandaid", \
+	"bandaid_blank", \
+	"bandaid_brute", \
+	"bandaid_burn", \
+	"bandaid_both", \
+	"bandaid_brain", \
+	"bandaid_exclaimtwice", \
+	"bandaid_firstaid", \
+	"bandaid_gene", \
+	"bandaid_khorne", \
+	"bandaid_nurgle", \
+	"bandaid_oxygen", \
+	"bandaid_quad", \
+	"bandaid_questionmark", \
+	"bandaid_skull", \
+	"bandaid_slaanesh", \
+	"bandaid_tzeentch", \
+) //icon_state list
 #define DEFAULT_PATCH_STYLE "bandaid"
 
 //used by chem master
