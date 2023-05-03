@@ -101,7 +101,7 @@
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 	requisition_text += "<hr/>"
 	requisition_text += "Order #[id]<br/>"
-	requisition_text+= "Time of Order: [SSday_night.get_twentyfourhour_timestamp()]<br/>"
+	requisition_text+= "Time of Order: [SSday_night.get_twenty_four_hour_timestamp()]<br/>"
 	requisition_text += "Item: [pack.name]<br/>"
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"

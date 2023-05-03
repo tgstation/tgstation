@@ -177,7 +177,7 @@
 	// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 	var/found_something = FALSE
-	add_log("<B>[SSday_night.get_twentyfourhour_timestamp()][get_timestamp()] - [target_name]</B>", 0)
+	add_log("<B>[SSday_night.get_twenty_four_hour_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
 	for(var/category in DETSCAN_DEFAULT_ORDER())
 		if(!LAZYLEN(det_data[category]))

@@ -17,7 +17,7 @@
 	src.author = author
 	src.details = details
 	src.name = name
-	src.time = SSday_night.get_twentyfourhour_timestamp()
+	src.time = SSday_night.get_twenty_four_hour_timestamp()
 
 /datum/crime/citation
 	/// Fine for the crime

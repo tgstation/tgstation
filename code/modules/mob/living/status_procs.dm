@@ -558,7 +558,7 @@
 	if(!silent)
 		emote("deathgasp")
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
-	tod = SSday_night.get_twentyfourhour_timestamp()
+	tod = SSday_night.get_twenty_four_hour_timestamp()
 
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.

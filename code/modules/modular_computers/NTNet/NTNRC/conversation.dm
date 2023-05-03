@@ -44,12 +44,12 @@
 	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
-	message = "[SSday_night.get_twentyfourhour_timestamp()] [username]: [message]"
+	message = "[SSday_night.get_twenty_four_hour_timestamp()] [username]: [message]"
 	messages.Add(message)
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
-	messages.Add("[SSday_night.get_twentyfourhour_timestamp()] -!- [message]")
+	messages.Add("[SSday_night.get_twenty_four_hour_timestamp()] -!- [message]")
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/trim_message_list()

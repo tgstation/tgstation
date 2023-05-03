@@ -1,5 +1,3 @@
-
-
 /**
  * Day Night Cycle Subsystem
  *
@@ -9,7 +7,7 @@
 
 SUBSYSTEM_DEF(day_night)
 	name = "Day/Night Cycle"
-	wait = 6 SECONDS // Every 6 seconds, the clock moves forward 1 minutes
+	wait = 6 SECONDS // Time to move forward DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT minutes
 	init_order = INIT_ORDER_DAY_NIGHT
 	/// The current hour
 	var/current_hour = 0
@@ -24,7 +22,6 @@ SUBSYSTEM_DEF(day_night)
 	current_hour = rand(0, 23) // We set the starting station time to something random.
 	load_day_night_controller()
 	update_controllers(current_hour)
-	return ..()
 
 /datum/controller/subsystem/day_night/fire(resumed)
 	tick_tock(tick_time)
@@ -68,7 +65,7 @@ SUBSYSTEM_DEF(day_night)
  *
  * Returns HH:MM
  */
-/datum/controller/subsystem/day_night/proc/get_twentyfourhour_timestamp()
+/datum/controller/subsystem/day_night/proc/get_twenty_four_hour_timestamp()
 	var/hour_entry = TIMESTAMP_TO_PROPER_FORMAT(current_hour)
 	var/minute_entry = TIMESTAMP_TO_PROPER_FORMAT(current_minute)
 	return "[hour_entry]:[minute_entry]"
@@ -78,7 +75,7 @@ SUBSYSTEM_DEF(day_night)
  *
  * Returns HH:MM PM/AM
  */
-/datum/controller/subsystem/day_night/proc/get_twelvehour_timestamp()
+/datum/controller/subsystem/day_night/proc/get_twelve_hour_timestamp()
 	var/am_or_pm = current_hour < 12 ? "AM" : "PM"
 	var/hour_entry = current_hour > 12 ? "[current_hour - 12]" : current_hour < 10 ? "0[current_hour]" : current_hour
 	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
@@ -94,7 +91,7 @@ SUBSYSTEM_DEF(day_night)
  * Checks if the current hour is within a given timeframe.
  */
 /datum/controller/subsystem/day_night/proc/check_timeframe(start_hour, end_hour)
-	return ((current_hour >= start_hour) && (current_hour <= end_hour))
+	 return (current_hour >= start_hour) && (current_hour <= end_hour)
 
 /**
  * Checks if the current time is within a given timeframe.

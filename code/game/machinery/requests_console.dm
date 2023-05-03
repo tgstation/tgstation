@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/authentic = (msgVerified || msgStamped) && " (Authenticated)"
 	var/alert = "Message from [source][authentic]"
 	var/silenced = silent
-	var/header = "<b>From:</b> [linkedsender] Received: [SSday_night.get_twentyfourhour_timestamp()]<BR>"
+	var/header = "<b>From:</b> [linkedsender] Received: [SSday_night.get_twenty_four_hour_timestamp()]<BR>"
 
 	switch(priority)
 		if(REQ_NORMAL_MESSAGE_PRIORITY)

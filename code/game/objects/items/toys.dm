@@ -942,7 +942,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += span_info("Station Time: [SSday_night.get_twentyfourhour_timestamp()]")
+	. += span_info("Station Time: [SSday_night.get_twenty_four_hour_timestamp()]")
 
 /*
  * Toy Dagger

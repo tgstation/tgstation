@@ -44,9 +44,9 @@
 
 	switch(format.value)
 		if(COMP_TIMEPIECE_TWENTYFOUR_HOUR)
-			time = SSday_night.get_twentyfourhour_timestamp()
+			time = SSday_night.get_twenty_four_hour_timestamp()
 		if(COMP_TIMEPIECE_TWELVE_HOUR)
-			time = SSday_night.get_twelvehour_timestamp()
+			time = SSday_night.get_twelve_hour_timestamp()
 
 	text_output.set_output(time)
 

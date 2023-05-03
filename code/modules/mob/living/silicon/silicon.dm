@@ -457,7 +457,7 @@
 		create_modularInterface()
 	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
 	if(istype(robo))
-		modularInterface.borglog += "[SSday_night.get_twentyfourhour_timestamp()] - [string]"
+		modularInterface.borglog += "[SSday_night.get_twenty_four_hour_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()

@@ -12,4 +12,4 @@
 /datum/medical_note/New(author = "Anonymous", content = "No details provided.")
 	src.author = author
 	src.content = content
-	src.time = SSday_night.get_twentyfourhour_timestamp()
+	src.time = SSday_night.get_twenty_four_hour_timestamp()

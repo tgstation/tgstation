@@ -302,7 +302,7 @@
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
-	.["statustime"] = SSday_night.get_twentyfourhour_timestamp()
+	.["statustime"] = SSday_night.get_twenty_four_hour_timestamp()
 	.["statusid"] = GLOB.round_id
 	.["statushealth"] = mod.wearer?.health || 0
 	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0

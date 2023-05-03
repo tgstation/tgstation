@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(modular_computers)
  */
 /datum/controller/subsystem/modular_computers/proc/add_log(log_string)
 	var/list/log_text = list()
-	log_text += "\[[SSday_night.get_twentyfourhour_timestamp()]\]"
+	log_text += "\[[SSday_night.get_twenty_four_hour_timestamp()]\]"
 	log_text += "*SYSTEM* - "
 	log_text += log_string
 	log_string = log_text.Join()

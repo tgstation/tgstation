@@ -308,7 +308,7 @@
 				requisition_paper.name = "requisition form"
 				var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 				requisition_text += "<hr/>"
-				requisition_text += "Time of Order: [SSday_night.get_twentyfourhour_timestamp()]<br/><br/>"
+				requisition_text += "Time of Order: [SSday_night.get_twenty_four_hour_timestamp()]<br/><br/>"
 				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
 					requisition_text += "<b>[order.pack.name]</b></br>"
 					requisition_text += "- Order ID: [order.id]</br>"
