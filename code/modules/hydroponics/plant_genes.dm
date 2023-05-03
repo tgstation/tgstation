@@ -62,8 +62,9 @@
 /datum/plant_gene/core/proc/apply_stat(obj/item/seeds/our_seed)
 	return
 
-/datum/plant_gene/core/New(initial_value = 0)
-	value = initial_value
+/datum/plant_gene/core/New(initial_value)
+	if(initial_value)
+		value = initial_value
 
 	return
 
