@@ -93,6 +93,8 @@
 			if (prob(50))
 				qdel(src)
 
+	return TRUE
+
 /obj/item/latexballoon/bullet_act(obj/projectile/projectile)
 	if(projectile.damage > 0)
 		burst()

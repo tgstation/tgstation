@@ -44,6 +44,7 @@
 
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/cleanable/glass/plasma
 	icon_state = "plasmatiny"
@@ -191,6 +192,9 @@
 /obj/effect/decal/cleanable/shreds/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /obj/effect/decal/cleanable/shreds/Initialize(mapload, oldname)
 	pixel_x = rand(-10, 10)
