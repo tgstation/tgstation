@@ -16,7 +16,7 @@
 /obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
-	var/loot = rand(1,20) //MARK
+	var/loot = rand(1,20)
 	var/mod
 	switch(loot)
 		if(1)
