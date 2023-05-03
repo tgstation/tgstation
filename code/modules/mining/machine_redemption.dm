@@ -143,7 +143,7 @@
 
 	for(var/mat in mat_container.materials)
 		var/datum/material/M = mat
-		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
+		var/mineral_amount = mat_container.materials[mat] / SHEET_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
 		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
@@ -237,7 +237,7 @@
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
-			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
+			var/sheet_amount = amount / SHEET_MATERIAL_AMOUNT
 			data["materials"] += list(list(
 				"name" = material.name,
 				"id" = REF(material),
@@ -342,7 +342,7 @@
 				if(!amount)
 					return
 
-				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
+				var/stored_amount = CEILING(amount / SHEET_MATERIAL_AMOUNT, 0.1)
 				if(!stored_amount)
 					return
 
@@ -351,7 +351,7 @@
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
-				mats[mat] = MINERAL_MATERIAL_AMOUNT
+				mats[mat] = SHEET_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
 				//Logging deleted for quick coding
 			return TRUE
