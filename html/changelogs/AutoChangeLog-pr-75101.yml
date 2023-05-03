@@ -1,0 +1,4 @@
+author: "BlueMemesauce"
+delete-after: True
+changes:
+  - bugfix: "Fixed the Chef not having CQC outside the kitchen on Tramstation"
