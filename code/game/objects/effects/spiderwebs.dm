@@ -184,3 +184,22 @@
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()
+
+/obj/structure/spider/spikes
+	name = "web spikes"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "webspikes"
+	max_integrity = 40
+	decal_reagent = /datum/reagent/toxin/acid
+	reagent_amount = 25
+
+/obj/structure/spider/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/spider/proc/update_spikes_damage(spikes_min_damage, spikes_max_damage)
+	if(!spikes_max_damage)
+		spikes_max_damage = 30
+	if(!spikes_min_damage)
+		spikes_min_damage = 10
