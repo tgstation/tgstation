@@ -11,6 +11,7 @@ import { get } from 'http';
 import { env } from 'process';
 import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
+import flattenCode from './lib/flatten.js'
 import { yarn } from './lib/yarn.js';
 
 Juke.chdir('../..', import.meta.url);
@@ -77,21 +78,31 @@ export const DmTarget = new Juke.Target({
     'icons/**',
     'interface/**',
     `${DME_NAME}.dme`,
-    `${DME_NAME}.flat.dme`,
     NamedVersionFile,
   ],
   outputs: ({ get }) => {
     if (get(DmVersionParameter)) {
       return []; // Always rebuild when dm version is provided
     }
+    const outputName = `${DME_NAME}${get(FlatParameter) ? '.flat' : ''}`;
     return [
-      `${DME_NAME}.dmb`,
-      `${DME_NAME}.rsc`,
+      `${outputName}.dmb`,
+      `${outputName}.rsc`,
     ]
   },
   executes: async ({ get }) => {
-    await DreamMaker(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, {
-      defines: ['CBT', ...get(DefineParameter)],
+    const defines = ['CBT', ...get(DefineParameter)];
+    let dmePath = DME_NAME;
+    if(get(FlatParameter)){
+      dmePath += '.flat';
+      defines.push('FLAT_CODE_TREE');
+
+      await flattenCode('.', `${DME_NAME}.dme`);
+    }
+
+    dmePath += '.dme';
+    await DreamMaker(dmePath, {
+      defines,
       warningsAsErrors: get(WarningParameter).includes('error'),
       namedDmVersion: get(DmVersionParameter),
     });
@@ -104,6 +115,10 @@ export const DmTestTarget = new Juke.Target({
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
   executes: async ({ get }) => {
+    if (get(FlatParameter)){
+      await flattenCode('.', `${DME_NAME}.dme`);
+    }
+
     fs.copyFileSync(`${DME_NAME}${get(FlatParameter) ? '.flat' : ''}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
       defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],

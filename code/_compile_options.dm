@@ -131,8 +131,8 @@
 #define DO_NOT_DEFER_ASSETS
 #endif
 
-#ifdef CODE_COVERAGE
-#define __TG_FILE__ replacetext(__FILE__, "!", "/")
+#ifdef FLAT_CODE_TREE
+#define __TG_FILE__ replacetext(copytext(__FILE__, 6), "!", "/") // strip the "flat/" prefix
 #else
 #define __TG_FILE__ __FILE__
 #endif

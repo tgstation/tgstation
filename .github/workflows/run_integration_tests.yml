@@ -28,7 +28,6 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/setup-dotnet@v2
       - uses: actions/checkout@v3
       - name: Restore BYOND cache
         uses: actions/cache@v3
@@ -56,8 +55,6 @@ jobs:
           echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
           echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
         if: ${{ inputs.major }}
-      - name: Build /flat code tree
-        run: dotnet run -c Release --project tools/BuildFlatCodeTree
       - name: Install BYOND
         run: bash tools/ci/install_byond.sh
       - name: Compile Tests

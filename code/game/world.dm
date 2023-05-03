@@ -470,7 +470,6 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/init_coverage()
 	AUXTOOLS_CHECK_NO_CONFIG(AUXCOV)
-
 	enable_code_coverage()
 
 /world/Profile(command, type, format)

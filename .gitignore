@@ -179,9 +179,6 @@ Temporary Items
 /tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /tools/CreditsTool/bin/*
 /tools/CreditsTool/obj/*
-/tools/BuildFlatCodeTree/.vs/*
-/tools/BuildFlatCodeTree/bin/*
-/tools/BuildFlatCodeTree/obj/*
 
 #GitHub Atom
 .atom-build.json
@@ -242,6 +239,7 @@ define_sanity_output.txt
 *.flat.dme
 *.flat.m.dme
 
-# From auxtools code coverage
+# For/From auxtools code coverage
+executable_lines.json
 auxtools_coverage.dll
 auxtools_coverage.xml
