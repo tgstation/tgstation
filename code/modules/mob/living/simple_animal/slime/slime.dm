@@ -534,7 +534,7 @@
 	. = ..(mapload, pick(slime_colours), prob(50))
 
 /mob/living/simple_animal/slime/random_tier_one
-///List containing all of the tier one slimes, possible colors that a grey baby slime can evolve into
+///List containing all of the tier one slimes, possible colors that a grey baby slime can evolve into, used for random slime generation
 	var/static/list/tier_one_colours = list(
 		"blue",
 		"metal",
