@@ -19,18 +19,17 @@
 	var/charge_cost = 1000
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
-	if(ishuman(attacked_mob))
-		var/mob/living/carbon/human/human = attacked_mob
-		if(human.check_shields(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
-			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return FALSE
+	if(attacked_mob.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
+		playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
+		return FALSE
+
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell.use(charge_cost))
-			return
+			return FALSE
 
 	user.do_attack_animation(attacked_mob)
-	attacked_mob.Paralyze(100)
+	attacked_mob.Paralyze(10 SECONDS)
 	attacked_mob.adjust_stutter(10 SECONDS)
 
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
@@ -39,6 +38,7 @@
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+	return TRUE
 
 /obj/item/borg/cyborghug
 	name = "hugging module"

@@ -2286,6 +2286,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return BRUTE
 
 
+/*
 /**
  * Apply a martial art move from src to target.
  *
@@ -2309,6 +2310,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			return FALSE
 		return style.harm_act(src, target)
 	return style.help_act(src, target)
+
+*/
 
 /**
  * Returns an assoc list of assignments and minutes for updating a client's exp time in the databse.

@@ -253,7 +253,7 @@
 		return
 	in_the_way_mob.knockOver(owner)
 
-/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+/obj/item/organ/internal/brain/primate/get_attacking_limb()
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

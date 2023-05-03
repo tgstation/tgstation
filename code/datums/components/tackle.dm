@@ -154,11 +154,12 @@
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
 		return
 
-	var/mob/living/carbon/target = hit
-	var/mob/living/carbon/human/T = target
-	var/mob/living/carbon/human/S = user
-	var/tackle_word = isfelinid(user) ? "pounce" : "tackle" //If cat, "pounce" instead of "tackle".
+	INVOKE_ASYNC(src, PROC_REF(async_sack), user, hit)
+	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
+/datum/component/tackler/proc/async_sack(mob/living/carbon/user, mob/living/carbon/target)
+	var/datum/thrownthing/tackle = tackle_ref.resolve()
+	var/tackle_word = isfelinid(user) ? "pounce" : "tackle" //If cat, "pounce" instead of "tackle".
 	var/roll = rollTackle(target)
 	tackling = FALSE
 	tackle.gentle = TRUE
@@ -179,9 +180,10 @@
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
 
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			var/mob/living/carbon/human/human_target = target
+			if(ishuman(target) && !human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
+				addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)
@@ -211,9 +213,8 @@
 			target.adjustStaminaLoss(40)
 			target.Paralyze(0.5 SECONDS)
 			target.Knockdown(3 SECONDS)
-			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
-				S.setGrabState(GRAB_PASSIVE)
+			target.grabbedby(user)
+			user.setGrabState(GRAB_PASSIVE)
 
 		if(5 to INFINITY) // absolutely BODIED
 			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
@@ -234,12 +235,8 @@
 				target.adjustStaminaLoss(40)
 				target.Paralyze(0.5 SECONDS)
 				target.Knockdown(3 SECONDS)
-				if(ishuman(target) && ishuman(user))
-					INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
-					S.setGrabState(GRAB_AGGRESSIVE)
-
-
-	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
+				target.grabbedby(user)
+				user.setGrabState(GRAB_AGGRESSIVE)
 
 /**
  * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)

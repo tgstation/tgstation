@@ -508,11 +508,13 @@
 		owner.clear_mood_event("brain_damage")
 
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
-/obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
+/obj/item/organ/internal/brain/proc/get_attacking_limb()
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	/*
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
 		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
+	*/
 	return active_hand
 
 /// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer

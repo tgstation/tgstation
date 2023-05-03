@@ -18,6 +18,11 @@
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
+
+	// This works differently for limbs, as it's ALSO used for unarmed combat
+	// Meaning a leg can be used in "kick style" both by smacking someone with a leg and also by kicking someone
+	attack_style = null
+
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use set_owner()
 	var/mob/living/carbon/owner
@@ -159,21 +164,6 @@
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
-	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
-	var/attack_type = BRUTE
-	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
-	var/unarmed_attack_verb = "bump"
-	/// what visual effect is used when this limb is used to strike someone.
-	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
-	/// Sounds when this bodypart is used in an umarmed attack
-	var/sound/unarmed_attack_sound = 'sound/weapons/punch1.ogg'
-	var/sound/unarmed_miss_sound = 'sound/weapons/punchmiss.ogg'
-	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
-	var/unarmed_damage_low = 1
-	///Highest possible punch damage this bodypart can ive.
-	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 

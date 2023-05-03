@@ -692,10 +692,8 @@
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
-	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
-	if(!arm)
-		return
-	if(arm.bodypart_disabled)
+	var/obj/item/bodypart/arm = user.get_active_hand()
+	if(!arm || arm.bodypart_disabled)
 		return
 	var/damage = damage_deflection * 0.1
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)

@@ -82,11 +82,8 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
-	unarmed_damage_low = 1
-	unarmed_damage_high = 10
-	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
@@ -175,9 +172,7 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
-	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/monkey
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -278,9 +273,7 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
-	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/monkey
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -304,12 +297,8 @@
 	max_damage = 50
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 2
-	unarmed_damage_high = 15
-	unarmed_stun_threshold = 10
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick
 
 /obj/item/bodypart/leg/left
 	name = "left leg"
@@ -387,9 +376,7 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
-	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/monkey
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -481,9 +468,7 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
-	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/monkey
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -501,11 +486,9 @@
 /obj/item/bodypart/leg/right/tallboy
 	limb_id = SPECIES_TALLBOY
 	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/leg_day
 
 /obj/item/bodypart/leg/left/tallboy
 	limb_id = SPECIES_TALLBOY
 	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/leg_day

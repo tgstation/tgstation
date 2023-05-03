@@ -380,13 +380,6 @@
 		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
 		return FALSE
 
-/mob/living/attack_hulk(mob/living/carbon/human/user)
-	..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt [src]!"))
-		return FALSE
-	return TRUE
-
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE
@@ -533,3 +526,37 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)
+
+
+/**
+ * Checks if this mob has some form of shield or blocking implement
+ *
+ * * hitby - the thing that is attacking us
+ * * damage - how much it's doing
+ * * attack_text - the text of the attack, usually like "the baton" (so you can format feedback messages as "blocks the baton with their shield")
+ * * attack_type - what type of attack is incoming
+ * * armour_penetration - how much, if any, armor penetration the attack has. compared agaiinst armor penetration of the item doing the blocking.
+ * this means that items which have their own armor penetration are better at shielding
+ */
+/mob/living/proc/check_block(atom/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration) & SUCCESSFUL_BLOCK)
+		return TRUE
+
+	return FALSE
+
+/**
+ * Checks if this mob cannot be knocked down from a shove
+ */
+/mob/living/proc/is_shove_knockdown_blocked()
+	return !(status_flags & CANKNOCKDOWN)
+
+/**
+ * Called when a mob is struck by a hulk.
+ * See [/datum/attack_style/unarmed/generic_damage/hulk].
+ */
+/mob/living/proc/hulk_smashed(mob/living/carbon/human/hulk)
+	return
+
+// See above.
+/mob/living/attack_hulk(mob/living/carbon/human/user)
+	return FALSE

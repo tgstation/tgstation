@@ -9,22 +9,19 @@
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_attack_verb = "slap"
-	unarmed_attack_effect = ATTACK_EFFECT_DISARM
-	unarmed_damage_high = 0.5 //snails are soft and squishy
+	attack_style = /datum/attack_style/unarmed/generic_damage/snail
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_attack_verb = "slap"
-	unarmed_attack_effect = ATTACK_EFFECT_DISARM
-	unarmed_damage_high = 0.5
+	attack_style = /datum/attack_style/unarmed/generic_damage/snail
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_damage_high = 0.5
+	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_damage_high = 0.5
+	attack_style = /datum/attack_style/unarmed/generic_damage/snail
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor
@@ -186,17 +183,11 @@
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
-	unarmed_attack_verb = "slash"
-	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
 
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
-	unarmed_attack_verb = "slash"
-	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
 
 /obj/item/bodypart/leg/left/pod
 	limb_id = SPECIES_PODPERSON
@@ -321,27 +312,20 @@
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 6
-	unarmed_damage_high = 14
-	unarmed_stun_threshold = 14
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/mushroom
+
 
 /obj/item/bodypart/arm/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 6
-	unarmed_damage_high = 14
-	unarmed_stun_threshold = 14
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/mushroom
 
 /obj/item/bodypart/leg/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 9
-	unarmed_damage_high = 21
-	unarmed_stun_threshold = 14
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/mushroom
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 9
-	unarmed_damage_high = 21
-	unarmed_stun_threshold = 14
+	attack_style = /datum/attack_style/unarmed/generic_damage/kick/mushroom
 
 ///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
 /obj/item/bodypart/head/golem

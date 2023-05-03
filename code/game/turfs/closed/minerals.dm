@@ -162,7 +162,7 @@
 		gets_drilled(user)
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
-	..()
+	. = ..()
 	if(do_after(H, 50, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")

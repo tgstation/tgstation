@@ -20,10 +20,7 @@
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
-	unarmed_attack_verb = "slash"
-	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
 
 /obj/item/bodypart/arm/right/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
@@ -31,10 +28,7 @@
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
-	unarmed_attack_verb = "slash"
-	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
 
 /obj/item/bodypart/leg/left/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'

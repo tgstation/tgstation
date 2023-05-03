@@ -121,8 +121,8 @@
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 ///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
-	#define SHIELD_BLOCK (1<<0)
+#define COMSIG_LIVING_CHECK_BLOCK "human_check_shields"
+	#define SUCCESSFUL_BLOCK (1<<0)
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 

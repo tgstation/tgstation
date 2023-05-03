@@ -189,9 +189,16 @@
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 
-		// Handles using item as a weapon (special attacks)
 		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
-		if(!isnull(using_what_style) || !(clicked_with_what.item_flags & NOBLUDGEON))
+		// Determine if we should skip using special attack styles or not
+		// Nobludgeon items will always skip special attacks,
+		// and surgical tools will skip special attacks if a mob undergoing surgery was clicked on
+		var/skip_attack_style = isnull(using_what_style) || (clicked_with_what.item_flags & NOBLUDGEON)
+		if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
+			var/mob/living/living_clicked = clicked_on
+			skip_attack_style ||= length(living_clicked.surgeries)
+
+		if(!skip_attack_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 
 		else if(close_enough)
@@ -199,19 +206,17 @@
 
 		else
 			if(right_clicking)
-				var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
+				var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+					clicked_with_what.afterattack(clicked_on, src, FALSE, params)
 
 			else
-				clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+				clicked_with_what.afterattack(clicked_on, src, FALSE, params)
 
 		return
 
 	// -- Unarmed combat (punching) --
 	else if(CanReach(clicked_on))
-		if(ismob(clicked_on))
-			changeNext_move(CLICK_CD_MELEE)
 		UnarmedAttack(clicked_on, TRUE, modifiers)
 
 	// -- Ranged combat without a weapon --
@@ -330,7 +335,6 @@
  * modifiers is a lazy list of click modifiers this attack had,
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
-
 /mob/proc/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
@@ -395,45 +399,17 @@
 /atom/proc/CtrlClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
-	var/mob/living/ML = user
-	if(istype(ML))
-		ML.pulled(src)
-	if(!can_interact(user))
-		return FALSE
 
-/mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
+	if(!isliving(user))
+		return
 
-	if(world.time < user.next_move)
-		return FALSE
+	var/mob/living/living_user = user
+	if(living_user.Adjacent(src) && !isliving(src)) // Icky istype src but meh
+		living_user.pulled(src)
 
-	var/mob/living/user_living = user
-	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
-		user_living.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
-	return ..()
-
-
-/mob/living/carbon/human/CtrlClick(mob/user)
-	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	if (ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-			human_user.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	else if(isalien(user))
-		var/mob/living/carbon/alien/adult/alien_boy = user
-		if(alien_boy.grab(src))
-			alien_boy.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	return ..()
+	else if(world.time < living_user.next_move)
+		var/datum/attack_style/unarmed/grab/grabbies = GLOB.attack_styles[/datum/attack_style/unarmed/grab]
+		grabbies.process_attack(living_user, null, src)
 
 /mob/proc/CtrlMiddleClickOn(atom/A)
 	if(check_rights_for(client, R_ADMIN))

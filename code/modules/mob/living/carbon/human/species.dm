@@ -1136,6 +1136,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
 	return
 
+/*
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE
@@ -1147,7 +1148,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return TRUE
 
 	user.do_cpr(target)
-
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
@@ -1173,82 +1173,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return FALSE
 	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
-	else
 
-		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart
-		if(brain)
-			attacking_bodypart = brain.get_attacking_limb(target)
-		if(!attacking_bodypart)
-			attacking_bodypart = user.get_active_hand()
-		var/atk_verb = attacking_bodypart.unarmed_attack_verb
-		var/atk_effect = attacking_bodypart.unarmed_attack_effect
+	/*
+	if(user.limb_destroyer)
+		target.dismembering_strike(user, affecting.body_zone)
+	*/
+*/
 
-		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(ITEM_SLOT_MASK))
-				to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
-				return FALSE
-		user.do_attack_animation(target, atk_effect)
-
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
-
-		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(attacking_bodypart.unarmed_damage_low)
-			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else
-				miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
-
-		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
-			playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
-			target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
-							span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
-			log_combat(user, target, "attempted to punch")
-			return FALSE
-
-		var/armor_block = target.run_armor_check(affecting, MELEE)
-
-		playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
-
-		target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
-						span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [atk_verb] [target]!"))
-
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
-		user.dna.species.spec_unarmedattacked(user, target)
-
-		if(user.limb_destroyer)
-			target.dismembering_strike(user, affecting.body_zone)
-
-		var/attack_direction = get_dir(user, target)
-		var/attack_type = attacking_bodypart.attack_type
-		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, "kicked")
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, "punched")
-
-		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
-			target.visible_message(span_danger("[user] knocks [target] down!"), \
-							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You knock [target] down!"))
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
-			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			log_combat(user, target, "got a stun punch with their previous punch")
-
-/datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return
-
+/*
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
 		target.visible_message(span_warning("[user]'s shove is blocked by [target]!"), \
@@ -1264,11 +1196,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(user.loc == target.loc)
 		return FALSE
 	user.disarm(target)
-
+*/
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
+/*
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/owner, mob/living/carbon/human/target, datum/martial_art/attacker_style, modifiers)
 	if(!istype(owner))
 		return
@@ -1295,16 +1228,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		harm(owner, target, attacker_style)
 	else
 		help(owner, target, attacker_style)
+*/
 
 /datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
 	// Allows you to put in item-specific reactions based on species
 	if(user != human)
-		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
+		if(human.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
 			return FALSE
-	if(human.check_block())
-		human.visible_message(span_warning("[human] blocks [weapon]!"), \
-						span_userdanger("You block [weapon]!"))
-		return FALSE
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?

@@ -5,6 +5,7 @@
 /datum/unit_test/knockoff_component/Run()
 	var/mob/living/carbon/human/wears_the_glasses = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/shoves_the_guy = allocate(/mob/living/carbon/human/consistent)
+	var/datum/attack_style/unarmed/disarm/disarm_style = GLOB.attack_styles[/datum/attack_style/unarmed/disarm]
 
 	// No pre-existing items have a 100% chance of being knocked off,
 	// so we'll just apply it to a relatively generic item (glasses)
@@ -26,7 +27,7 @@
 	// Test disarm, targeting chest
 	// A disarm targeting chest should not knockdown or lose glasses
 	shoves_the_guy.zone_selected = BODY_ZONE_CHEST
-	shoves_the_guy.disarm(wears_the_glasses)
+	disarm_style.process_attack(shoves_the_guy, null, wears_the_glasses)
 	TEST_ASSERT(!wears_the_glasses.IsKnockdown(), "Dummy was knocked down when being disarmed shouldn't have been.")
 	TEST_ASSERT(wears_the_glasses.glasses == glasses, "Dummy lost their glasses even thought they were disarmed targeting the wrong slot.")
 
@@ -35,7 +36,7 @@
 	// Test disarm, targeting eyes
 	// A disarm targeting eyes should not knockdown but should lose glasses
 	shoves_the_guy.zone_selected = BODY_ZONE_PRECISE_EYES
-	shoves_the_guy.disarm(wears_the_glasses)
+	disarm_style.process_attack(shoves_the_guy, null, wears_the_glasses)
 	TEST_ASSERT(!wears_the_glasses.IsKnockdown(), "Dummy was knocked down when being disarmed shouldn't have been.")
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though they were shoved targeting the correct zone.")
 
@@ -76,7 +77,7 @@
 	shoves_the_guy.forceMove(right_of_shover)
 
 	shoves_the_guy.zone_selected = BODY_ZONE_CHEST
-	shoves_the_guy.disarm(wears_the_glasses)
+	disarm_style.process_attack(shoves_the_guy, null, wears_the_glasses)
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though were disarm shoved into a wall.")
 
 /// Helper to reset the glasses dummy back to it's original position, clear knockdown, and return glasses (if gone)

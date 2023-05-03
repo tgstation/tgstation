@@ -17,24 +17,52 @@
 
 // Flags for the item_flags var on /obj/item
 
+/// The only thing this is used for is for checking if you're already attempting to resist off cuffs
+/// (This can really be moved to a trait)
+/// NOT SET MANUALLY
 #define BEING_REMOVED (1<<0)
-#define IN_INVENTORY (1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
-#define FORCE_STRING_OVERRIDE (1<<2) // used for tooltips
-///Used by security bots to determine if this item is safe for public use.
+/// Is this item equipped into an inventory slot or hand of a mob?
+/// Used for tooltips, doesn't necessarily mean it's in someone's bag though
+/// NOT SET MANUALLY
+#define IN_INVENTORY (1<<1)
+/// used for item tooltips which have a custom "force" string set
+/// NOT SET MANUALLY
+#define FORCE_STRING_OVERRIDE (1<<2)
+/// Used by security bots to determine if this item is safe for public use.
 #define NEEDS_PERMIT (1<<3)
+/// Set this for items that have a slowdown set to have the slowdown contribute when held in hand.
 #define SLOWS_WHILE_IN_HAND (1<<4)
-#define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define DROPDEL (1<<6) // When dropped, it calls qdel on itself
-#define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define ABSTRACT (1<<9) // for all things that are technically items but used for various different stuff <= wow thanks for the fucking insight sherlock
-#define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
-#define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
-#define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
-#define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
-#define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
-#define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
-///Can be equipped on digitigrade legs.
+/// Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
+#define NO_MAT_REDEMPTION (1<<5)
+/// When dropped, it calls qdel on itself
+#define DROPDEL (1<<6)
+/**
+ * Item will not smack the target with it when clicking on people
+ *
+ * No "X has been hit by Y with Z" message will be displayed in the default attackby(),
+ * and any attack styles it has will not be executed
+ *
+ * Wise to use for items that are primarily used to appl y
+ */
+#define NOBLUDGEON (1<<7)
+/// Used for /obj/items which are not technically real items that can be passed around, dropped, or picked up
+#define ABSTRACT (1<<9)
+/// When players should not be able to change the slowdown of the item (Speed potions, etc)
+#define IMMUTABLE_SLOW (1<<10)
+/// is this item in the storage item, such as backpack? used for tooltips
+/// NOT SET MANUALLY
+#define IN_STORAGE (1<<11)
+/// Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+#define SURGICAL_TOOL (1<<12)
+/// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
+#define HAND_ITEM (1<<14)
+/// Makes the Examine proc not read out this item.
+#define EXAMINE_SKIP (1<<15)
+/// A Xenomorph can hold this item.
+#define XENOMORPH_HOLDABLE (1<<16)
+///if dropped, it wont have a randomized pixel_x/pixel_y
+#define NO_PIXEL_RANDOM_DROP (1<<17)
+///Can be equipped on digitigrade legs. Prefer to use [CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON]
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)

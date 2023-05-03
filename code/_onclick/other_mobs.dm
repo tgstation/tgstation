@@ -15,11 +15,13 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/carbon/human/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		if(src == A)
+		// Only thing we can do without hands is check ourself.
+		if(src == attack_target)
 			check_self_for_injuries()
 		return
+
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
 		if(check_arm?.bodypart_disabled)
@@ -30,12 +32,29 @@
 		return
 
 	//This signal is needed to prevent gloves of the north star + hulk.
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag, modifiers)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
 
-	if(!right_click_attack_chain(A, modifiers) && !dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
-		A.attack_hand(src, modifiers)
+	if(proximity_flag)
+		var/datum/attack_style/selected_style = select_unarmed_strike(modifiers)
+		return selected_style?.process_attack(src, null, attack_target)
+
+	/*
+	if(!right_click_attack_chain(attack_target, modifiers) && !dna?.species?.spec_unarmedattack(src, attack_target, modifiers)) //Because species like monkeys dont use attack hand
+		attack_target.attack_hand(src, modifiers)
+	*/
+
+/mob/living/carbon/human/proc/select_unarmed_strike(list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return GLOB.attack_styles[/datum/attack_style/unarmed/disarm]
+
+	else if(combat_mode)
+		var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb() || get_active_hand()
+		return attacking_bodypart.attack_style
+
+	return GLOB.attack_styles[/datum/attack_style/unarmed/help]
 
 /mob/living/carbon/human/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_hand_secondary(src, modifiers)
@@ -126,9 +145,17 @@
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return FALSE
+
+	default_unarmed_attack_style?.process_attack(src, null, attack_target)
+
+	/*
 	if(!right_click_attack_chain(attack_target, modifiers))
 		resolve_unarmed_attack(attack_target, modifiers)
+	*/
+
 	return TRUE
+
+/*
 
 /**
  * Called when the unarmed attack hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro or the right_click_attack_chain proc.
@@ -136,6 +163,8 @@
  */
 /mob/living/proc/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	attack_target.attack_animal(src, modifiers)
+
+*/
 
 /**
  * Called when an unarmed attack performed with right click hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro.

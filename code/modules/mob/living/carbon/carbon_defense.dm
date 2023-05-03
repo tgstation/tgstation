@@ -165,15 +165,13 @@
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			user.ContactContractDisease(D)
+	for(var/datum/disease/our_disease as anything in user.diseases)
+		if(our_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			user.ContactContractDisease(our_disease)
 
-	for(var/thing in user.diseases)
-		var/datum/disease/D = thing
-		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			ContactContractDisease(D)
+	for(var/datum/disease/their_disease as anything in user.diseases)
+		if(their_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(their_disease)
 
 	for(var/datum/surgery/operations as anything in surgeries)
 		if(user.combat_mode)
@@ -259,108 +257,24 @@
 		return affecting.body_zone
 	return dam_zone
 
-/**
- * Attempt to disarm the target mob.
- * Will shove the target mob back, and drop them if they're in front of something dense
- * or another carbon.
-*/
-/mob/living/carbon/proc/disarm(mob/living/carbon/target)
-	do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	if (ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		human_target.w_uniform?.add_fingerprint(src)
-
-	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
-	var/shove_dir = get_dir(loc, target.loc)
-	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
-	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-	var/turf/target_old_turf = target.loc
-
-	//Are we hitting anything? or
-	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
-		shove_blocked = TRUE
-	else
-		target.Move(target_shove_turf, shove_dir)
-		if(get_turf(target) == target_old_turf)
-			shove_blocked = TRUE
-
-	if(!shove_blocked)
-		target.setGrabState(GRAB_PASSIVE)
-
-	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
-		target.Paralyze(SHOVE_CHAIN_PARALYZE)
-		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-
-	var/directional_blocked = FALSE
-	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
-
-	//Directional checks to make sure that we're not shoving through a windoor or something like that
-	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
-		var/target_turf = get_turf(target)
-		for(var/obj/obj_content in target_turf)
-			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
-				directional_blocked = TRUE
-				break
-		if(target_turf != target_shove_turf && !directional_blocked) //Make sure that we don't run the exact same check twice on the same tile
-			for(var/obj/obj_content in target_shove_turf)
-				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
-					directional_blocked = TRUE
-					break
-
-	if(can_hit_something)
-		//Don't hit people through windows, ok?
-		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
-			return
-		if(directional_blocked || shove_blocked)
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
-			log_combat(src, target, "shoved", "knocking them down")
-			return
-
-	target.visible_message(span_danger("[name] shoves [target.name]!"),
-		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name]!"))
-
-	//Take their lunch money
-	var/target_held_item = target.get_active_held_item()
-	var/append_message = ""
-	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
-		target_held_item = null
-
-	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		if(target_held_item)
-			append_message = "loosening [target.p_their()] grip on [target_held_item]"
-			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
-				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
-
-	else if(target_held_item)
-		target.dropItemToGround(target_held_item)
-		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
-
-	log_combat(src, target, "shoved", append_message)
-
-/mob/living/carbon/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	for (var/obj/item/clothing/clothing in get_equipped_items())
+/mob/living/carbon/is_shove_knockdown_blocked()
+	for (var/obj/item/clothing/clothing in get_equipped_items(include_pockets = FALSE))
 		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 			return TRUE
-	return FALSE
+	return ..()
 
-/mob/living/carbon/proc/clear_shove_slowdown()
+/**
+ * Used primarily for callbacks, clears the slowdown from being shoved
+ */
+/mob/living/carbon/proc/clear_shove_slowdown(obj/item/was_holding)
 	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
-	var/active_item = get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message(span_warning("[name] regains their grip on \the [active_item]!"), span_warning("You regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
+	var/obj/item/active_item = get_active_held_item()
+	if(!QDELETED(was_holding) && active_item && active_item == was_holding)
+		visible_message(
+			span_warning("[name] regains their grip on \the [active_item]!"),
+			span_warning("You regain your grip on \the [active_item]"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
@@ -416,8 +330,16 @@
 		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP, helper) & COMPONENT_BLOCK_HELP_ACT)
+		return
+
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+		return
+
+	if(ishuman(helper) && body_position != STANDING_UP && !appears_alive())
+		var/mob/living/carbon/human/human_helper = helper
+		human_helper.do_cpr(src)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
@@ -427,6 +349,7 @@
 		check_self_for_injuries()
 		return
 
+	var/additional_logging = ""
 	if(body_position == LYING_DOWN)
 		if(buckled)
 			to_chat(helper, span_warning("You need to unbuckle [src] first to do that!"))
@@ -435,6 +358,8 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[helper] shakes you to get you up!"))
+
+		additional_logging += "(Shaken up)"
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
@@ -443,6 +368,8 @@
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
+			additional_logging += "(Triggered Bad Touch)"
+		additional_logging += "(Headpat)"
 
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
@@ -451,8 +378,10 @@
 		to_chat(src, span_notice("[helper] pulls on your tail!"))
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
 			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
+			additional_logging += "(Triggered Bad Touch)"
 		else
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
+			additional_logging += "(Tailpulled)"
 
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
 		var/obj/item/clothing/head/faketail = head
@@ -464,6 +393,7 @@
 		dropItemToGround(faketail)
 		helper.put_in_hands(faketail)
 		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
+		additional_logging += "(Fake Tailpulled)"
 
 	else
 		if (helper.grab_state >= GRAB_AGGRESSIVE)
@@ -471,11 +401,13 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
 			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
+			additional_logging += "(Bear Hugged)"
 		else
 			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
 			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+			additional_logging += "(Hugged)"
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)
@@ -515,6 +447,9 @@
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you hug [p_them()]."))
+			additional_logging += "(Triggered Bad Touch)"
+
+	log_combat(helper, src, "help-acted", addition = additional_logging)
 
 	SEND_SIGNAL(src, COMSIG_CARBON_HELP_ACT, helper)
 	SEND_SIGNAL(helper, COMSIG_CARBON_HELPED, src)

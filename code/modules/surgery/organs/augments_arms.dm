@@ -382,6 +382,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+	// melbert todo : make this an attack style
 
 	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)) || !proximity)
 		return
@@ -408,13 +409,11 @@
 			source.Paralyze(1 SECONDS)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
-			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(living_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]", UNARMED_ATTACK))
+		source.do_attack_animation(target)
+		playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)

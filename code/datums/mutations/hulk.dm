@@ -47,7 +47,6 @@
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
-
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/mutation/human/hulk/proc/scream_attack(mob/living/carbon/human/source)

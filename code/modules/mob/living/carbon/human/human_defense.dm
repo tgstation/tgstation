@@ -96,7 +96,11 @@
 
 	return ..()
 
-///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/**
+ * Checks if this mob is wearing anything refective on the given body part
+ *
+ * Used in bullet code to determine if we should refect bullets
+ */
 /mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone))
@@ -109,38 +113,22 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/check_block(atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	. = ..()
+	if(.)
+		return TRUE
+
 	var/block_chance_modifier = round(damage / -3)
 
-	for(var/obj/item/I in held_items)
-		if(!isclothing(I))
-			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
-	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(head)
-		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_CHECK_SHIELDS, AM, damage, attack_text, attack_type, armour_penetration) & SHIELD_BLOCK)
-		return TRUE
-	return FALSE
+	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
+		if(worn_thing.slot_flags && (worn_thing in held_items))
+			// Covers clothes that block things which are being held and not worn
+			continue
 
-/mob/living/carbon/human/proc/check_block()
-	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !incapacitated(IGNORE_GRAB))
+		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration ) / 2, 0, 100)) + block_chance_modifier
+		if(worn_thing.hit_reaction(src, hitby, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
+
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
@@ -150,12 +138,15 @@
 			return spec_return
 	var/obj/item/I
 	var/throwpower = 30
+	var/throw_pen = 0
 	if(isitem(AM))
 		I = AM
 		throwpower = I.throwforce
+		throw_pen = I.armour_penetration
 		if(I.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
-	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
+
+	if(check_block(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, throw_pen))
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
@@ -189,30 +180,6 @@
 
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, src)
-
-
-/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	var/hulk_verb = pick("smash","pummel")
-	if(check_shields(user, 15, "the [hulk_verb]ing", attack_type = UNARMED_ATTACK))
-		return
-	if(check_block()) //everybody is kung fu fighting
-		return
-	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
-	visible_message(span_danger("[user] [hulk_verb]ed [src]!"), \
-					span_userdanger("[user] [hulk_verb]ed [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
-	to_chat(user, span_danger("You [hulk_verb] [src]!"))
-	apply_damage(15, BRUTE, wound_bonus=10)
-
-/mob/living/carbon/human/attack_hand(mob/user, list/modifiers)
-	if(..()) //to allow surgery to return properly.
-		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		dna.species.spec_attack_hand(H, src, null, modifiers)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

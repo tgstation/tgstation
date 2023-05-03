@@ -147,8 +147,9 @@
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
 	if(shock(user, 70))
-		return
-	. = ..()
+		return FALSE
+
+	return ..()
 
 /obj/structure/grille/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

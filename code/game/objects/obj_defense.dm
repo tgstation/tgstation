@@ -31,7 +31,7 @@
 		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/attack_hulk(mob/living/carbon/human/user)
-	..()
+	. = ..()
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else

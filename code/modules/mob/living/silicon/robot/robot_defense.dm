@@ -238,13 +238,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		update_icons()
 		diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
+/mob/living/silicon/robot/hulk_smashed(mob/living/carbon/human/hulk)
 	spark_system.start()
-	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 3)
+	step_away(src, hulk, 15)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(hulk), 15), 3)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode && usr != src)

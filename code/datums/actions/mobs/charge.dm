@@ -196,11 +196,9 @@
 		return
 
 	var/mob/living/living_target = target
-	if(ishuman(living_target))
-		var/mob/living/carbon/human/human_target = living_target
-		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
-			living_source.Stun(6, ignore_canstun = TRUE)
-			return
+	if(living_target.check_block(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
+		living_source.Stun(6, ignore_canstun = TRUE)
+		return
 
 	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
 	living_target.Knockdown(6)

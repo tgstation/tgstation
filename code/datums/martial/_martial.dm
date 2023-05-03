@@ -5,7 +5,8 @@
 	var/max_streak_length = 6
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
-	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	///Chance to block and counter melee attacks using items while on throw mode.
+	var/block_chance = 0
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes
@@ -67,6 +68,7 @@
 		add_verb(holder_living, help_verb)
 	holder_living.mind.martial_art = src
 	holder = WEAKREF(holder_living)
+	RegisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_check))
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/old, mob/living/holder_living)
@@ -90,7 +92,32 @@
 /datum/martial_art/proc/on_remove(mob/living/holder_living)
 	if(help_verb)
 		remove_verb(holder_living, help_verb)
-	return
+	UnregisterSignal(holder_living, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/martial_art/proc/block_check(mob/living/source, atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	SIGNAL_HANDLER
+
+	if(attack_type != MELEE_ATTACK || attack_type != UNARMED_ATTACK)
+		return NONE
+	if(!source.throw_mode || !can_use(source) || source.incapacitated(IGNORE_GRAB))
+		return NONE
+
+	if(prob(block_chance))
+		INVOKE_ASYNC(src, PROC_REF(counter_attack), source, hitby, attack_text)
+		return SUCCESSFUL_BLOCK
+
+/datum/martial_art/proc/counter_attack(mob/living/martial_artist, atom/hitby, attack_text = "the attack")
+	var/mob/living/assailant = GET_ASSAILANT(hitby)
+	if(!istype(assailant))
+		return
+	if(!martial_artist.Adjacent(hitby))
+		return
+
+	martial_artist.visible_message(
+		span_danger("[martial_artist] blocks [attack_text] and twists [assailant]'s arm behind [assailant.p_their()] back!"),
+		span_userdanger("You block [attack_text] and twist [assailant]'s arm behind [assailant.p_their()] back!"),
+	)
+	assailant.Stun(4 SECONDS)
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.
 /datum/martial_art/proc/on_projectile_hit(mob/living/A, obj/projectile/P, def_zone)

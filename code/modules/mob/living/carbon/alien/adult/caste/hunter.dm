@@ -68,18 +68,13 @@
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
-			var/blocked = FALSE
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
-					blocked = TRUE
-			if(!blocked)
+			if(L.check_block(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+				Paralyze(40, ignore_canstun = TRUE)
+			else
 				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))
 				L.Paralyze(100)
 				sleep(0.2 SECONDS)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
-			else
-				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))

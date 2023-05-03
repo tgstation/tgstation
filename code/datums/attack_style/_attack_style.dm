@@ -16,12 +16,42 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * Handles sticking behavior onto a weapon to make it attack a certain way
  */
 /datum/attack_style
-	var/execute_sound = 'sound/weapons/fwoosh.ogg'
+	var/successful_hit_sound = 'sound/weapons/punch1.ogg'
+	var/miss_sound = 'sound/weapons/fwoosh.ogg'
 	var/cd = CLICK_CD_MELEE
 	var/slowdown = 1
 	var/reverse_for_lefthand = TRUE
+	/// If TRUE, pacifists are completely disallowed from using this attack style
+	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
+	var/pacifism_completely_banned = FALSE
 
+/**
+ * Process attack -> execute attack -> finalize attack
+ *
+ * Arguments
+ * * attacker - the mob doing the attack
+ * * weapon - optional, the item being attacked with.
+ * * aimed_towards - what atom the attack is being aimed at, does not necessarily correspond to the atom being attacked,
+ * but is also checked as a priority target if multiple mobs are on the same turf.
+ * * right_clicking - whether the attack was done via r-click
+ *
+ * Implementation notes
+ * * Do not override process attack
+ * * You may extend execute attack with additonal checks, but call parent
+ * * You can freely override finalize attack with whatever behavior you want
+ *
+ * Usage notes
+ * * Does NOT check for nextmove, that should be checked before entering this
+ * * DOES check for pacifism
+ *
+ * Return TRUE on success, and FALSE on failure
+ */
 /datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))
+		return FALSE
+
 	var/attack_direction = get_dir(attacker, get_turf(aimed_towards))
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
 	if(reverse_for_lefthand)
@@ -35,6 +65,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
 	if(!execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking))
+		// Just apply a small second CD so they don't spam failed attacks
+		attacker.changeNext_move(0.33 SECONDS)
 		return FALSE
 
 	if(slowdown > 0)
@@ -49,6 +81,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	attack_effect_animation(attacker, weapon, affecting)
 
+	var/attack_flag = NONE
 	for(var/turf/hitting as anything in affecting)
 
 #ifdef TESTING
@@ -62,16 +95,22 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			smack_who = locate() in hitting
 		if(!isliving(smack_who))
 			continue
-/*
-		var/attack_results = weapon.attack(smack_who, attacker)
-		if(attack_results & ATTACK_BLOCKED)
-			return
-*/
-		weapon.attack(smack_who, attacker)
 
-	if(execute_sound)
-		playsound(attacker, execute_sound, 50, TRUE)
-	return TRUE
+		attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+		if(attack_flag & ATTACK_STYLE_CANCEL)
+			return ATTACK_STYLE_CANCEL
+		if(attack_flag & ATTACK_STYLE_BLOCKED)
+			break
+
+	if(attack_flag & ATTACK_STYLE_HIT)
+		if(successful_hit_sound)
+			playsound(attacker, successful_hit_sound, 50, TRUE)
+
+	else
+		if(miss_sound)
+			playsound(attacker, miss_sound, 50, TRUE)
+
+	return attack_flag
 
 #ifdef TESTING
 /datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
@@ -90,6 +129,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return list(get_step(attacker, attack_direction))
 
 /datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+	if(isnull(weapon))
+		return
+
 	var/num_turfs_to_move = length(affecting)
 	var/time_per_turf = 0.4 SECONDS
 	var/final_animation_length = time_per_turf * num_turfs_to_move
@@ -108,6 +150,40 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	animate(attack_image, time = final_animation_length, alpha = 120, transform = final_transform)
 	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
 
+/datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	return weapon.melee_attack_chain(smacked, attacker)
+	// Convert to bitflags, ATTACK_STYLE_HIT / ATTACK_STYLE_BLOCKED
+	// Attack chain current
+	// Click -> item Melee attack chain -> item tool act -> item pre attack -> mob attackby -> item attack -> mob attacked by -> item attack qdeleted -> item after attack
+
+/**
+ * Unarmed attack styles work slightly differently
+ *
+ * For normal attack styles, the style should not be handling the damage whatsoever, it should be handled by the weapon.
+ *
+ * But since we have no weapon for these, we kinda hvae to do it ourselves.
+ */
+/datum/attack_style/unarmed
+	reverse_for_lefthand = FALSE
+	successful_hit_sound = 'sound/weapons/punch1.ogg'
+	miss_sound = 'sound/weapons/punchmiss.ogg'
+
+	var/attack_effect = ATTACK_EFFECT_PUNCH
+/*
+/datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	if(!isnull(weapon))
+		// Not intended for use here
+		return
+
+	return ..()
+*/
+/datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	CRASH("No narmed interaction for [type]!")
+
+/datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+	if(attack_effect)
+		attacker.do_attack_animation(affecting[1], attack_effect)
+
 // swings at 3 targets in a direction
 /datum/attack_style/swing
 	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
@@ -119,6 +195,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
+		attacker.balloon_alert(attacker, "wield your weapon!")
 		return FALSE
 	return ..()
 
@@ -128,6 +205,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!weapon.blade_active)
+		attacker.balloon_alert(attacker, "activate your weapon!")
 		return FALSE
 
 	// Right clicking attacks the opposite direction
@@ -177,6 +255,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
+		attacker.balloon_alert(attacker, "wield your weapon!")
 		return FALSE
 	return ..()
 

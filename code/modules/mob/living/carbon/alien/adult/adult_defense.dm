@@ -1,18 +1,6 @@
-
-
-/mob/living/carbon/alien/adult/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	adjustBruteLoss(15)
-	var/hitverb = "hit"
+/mob/living/carbon/alien/adult/hulk_smashed(mob/living/carbon/human/hulk)
 	if(mob_size < MOB_SIZE_LARGE)
-		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
-		hitverb = "slam"
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
-	visible_message(span_danger("[user] [hitverb]s [src]!"), \
-					span_userdanger("[user] [hitverb]s you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You [hitverb] [src]!"))
+		safe_throw_at(get_edge_target_turf(src, get_dir(hulk, src)), 2, 1, hulk)
 
 /mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!..() || !user.combat_mode)

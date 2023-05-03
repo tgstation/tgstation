@@ -67,10 +67,10 @@
 	overlay_state_use = "module_pepper_used"
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_shields))
 
 /obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
 	. = ..()
