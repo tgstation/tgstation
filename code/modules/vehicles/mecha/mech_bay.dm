@@ -64,6 +64,7 @@
 /obj/machinery/mech_bay_recharge_port/power_change()
 	if(!(machine_stat & NOPOWER))
 		begin_processing()
+	return ..()
 
 
 /**
