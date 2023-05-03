@@ -173,7 +173,7 @@
 
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
-	if(!istype(ammo_pack, /obj/item/minigunpack)&& !istype(ammo_pack, /obj/item/mod/module/minigun))
+	if(!istype(ammo_pack, /obj/item/minigunpack) && !istype(ammo_pack, /obj/item/mod/module/minigun))
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 
