@@ -1247,6 +1247,9 @@
 		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/ore_redemption/offstation
+	build_path = /obj/machinery/mineral/ore_redemption/offstation
+
 /obj/item/circuitboard/machine/ore_silo
 	name = "Ore Silo"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY

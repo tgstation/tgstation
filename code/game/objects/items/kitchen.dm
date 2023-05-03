@@ -102,6 +102,44 @@
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
+/obj/item/knife/kitchen/silicon
+	name = "Kitchen Toolset"
+	icon_state = "sili_knife"	
+	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
+	force = 0
+	throwforce = 0
+	sharpness = SHARP_EDGED
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
+	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
+	tool_behaviour = TOOL_KNIFE
+
+/obj/item/knife/kitchen/silicon/examine()
+	. = ..()
+	. += " It's fitted with a [tool_behaviour] head."
+
+/obj/item/knife/kitchen/silicon/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
+	if(tool_behaviour != TOOL_ROLLINGPIN)
+		tool_behaviour = TOOL_ROLLINGPIN
+		to_chat(user, span_notice("You attach the rolling pin bit to the [src]."))
+		icon_state = "sili_rolling_pin"
+		force = 8
+		sharpness = NONE
+		hitsound = SFX_SWING_HIT
+		attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
+		attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
+
+	else
+		tool_behaviour = TOOL_KNIFE
+		to_chat(user, span_notice("You attach the knife bit to the [src]."))
+		icon_state = "sili_knife"
+		force = 0
+		sharpness = SHARP_EDGED
+		hitsound = 'sound/weapons/bladeslice.ogg'
+		attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
+		attack_verb_simple = list("prod", "whiff", "scratch", "poke")
+
 /obj/item/kitchen/rollingpin
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."

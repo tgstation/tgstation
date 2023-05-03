@@ -8,6 +8,8 @@
 	///role flags (special status of roles like detection immune)
 	var/role_flags = NONE
 
+	///The mafia popup we edit text to give different alerts for (such as when to vote).
+	var/atom/movable/screen/mafia_popup/mafia_alert
 	///List of all mafia abilities this role is able to perform.
 	var/list/datum/mafia_ability/role_unique_actions = list()
 	///The player's written notes, that they can send to chat at any time.
@@ -44,6 +46,7 @@
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
+	QDEL_NULL(mafia_alert)
 	QDEL_NULL(body)
 	QDEL_NULL(role_unique_actions)
 	return ..()
@@ -65,12 +68,14 @@
 		reveal_role(game, verbose = TRUE)
 	if(!(player_key in game.mafia_spectators)) //people who played will want to see the end of the game more often than not
 		game.mafia_spectators += player_key
+	game.living_roles -= src
 	return TRUE
 
 /datum/mafia_role/proc/greet()
+	mafia_alert = new(body, src)
 	SEND_SOUND(body, 'sound/ambience/ambifailure.ogg')
-	to_chat(body,span_danger("You are the [name]."))
-	to_chat(body,span_danger("[desc]"))
+	to_chat(body, span_danger("You are the [name]."))
+	to_chat(body, span_danger("[desc]"))
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
 			to_chat(body,span_danger("You and your co-conspirators win if you outnumber crewmembers."))
@@ -94,12 +99,6 @@
 
 /datum/mafia_role/proc/special_reveal_equip(datum/mafia_controller/game)
 	return
-
-/datum/mafia_role/proc/check_total_victory(alive_town, alive_mafia) //solo antags can win... solo.
-	return FALSE
-
-/datum/mafia_role/proc/block_team_victory(alive_town, alive_mafia) //solo antags can also block team wins.
-	return FALSE
 
 /datum/mafia_role/proc/show_help(clueless)
 	var/list/result = list()

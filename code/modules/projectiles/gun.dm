@@ -202,14 +202,16 @@
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)
-			return ..() //we're already holding them up, shoot that mans instead of complaining
-		balloon_alert(user, "already holding someone up!")
+			balloon_alert(user, "already holding them up!")
+		else
+			balloon_alert(user, "already holding someone up!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if (user == victim)
 		balloon_alert(user, "can't hold yourself up!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.AddComponent(/datum/component/gunpoint, victim, src)
+	if(do_after(user, 0.5 SECONDS, victim))
+		user.AddComponent(/datum/component/gunpoint, victim, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)

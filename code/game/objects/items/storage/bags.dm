@@ -542,6 +542,7 @@
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
+	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
