@@ -59,7 +59,7 @@
 		return FALSE
 	if(!user.Adjacent(T))
 		return FALSE
-	if(!(user.istate & ISTATE_HARM))
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 	if(liquids.fire_state) //Use an extinguisher first
 		to_chat(user, "<span class='warning'>You can't scoop up anything while it's on fire!</span>")
