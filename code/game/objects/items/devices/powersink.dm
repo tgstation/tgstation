@@ -26,7 +26,7 @@
 	var/max_heat = 5e7 // Maximum contained heat before exploding. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
-	var/warning_given = FALSE // Stop warning spam, only warn the admins/deadchat once that we are about to boom.
+	var/warning_given = FALSE //! Stop warning spam, only warn the admins/deadchat once that we are about to boom.
 
 	var/obj/structure/cable/attached
 
