@@ -153,7 +153,12 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
+	if(..())
+		return
+	if(!(obj_flags & CAN_BE_HIT))
+		return
+
+	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())

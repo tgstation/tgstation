@@ -159,7 +159,6 @@
 	inhand_icon_state = "decal_sprayer"
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	initial_ink_type = /obj/item/toner/large
-	attack_style = /datum/attack_style/item_iteraction
 	/// The current direction of the decal being printed
 	var/stored_dir = 2
 	/// The current color of the decal being printed.
@@ -212,15 +211,14 @@
 	. = ..()
 	stored_custom_color = stored_color
 
-/obj/item/airlock_painter/decal/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(isfloorturf(clicked_on) && use_paint(attacker))
-		paint_floor(clicked_on)
-		return TRUE
+/obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		balloon_alert(user, "get closer!")
+		return
 
-/obj/item/airlock_painter/decal/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(isfloorturf(clicked_on))
-		balloon_alert(attacker, "get closer!")
-	return TRUE
+	if(isfloorturf(target) && use_paint(user))
+		paint_floor(target)
 
 /**
  * Actually add current decal to the floor.

@@ -191,21 +191,22 @@
 
 		// Handles using item as a weapon (special attacks)
 		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
-		if(isnull(using_what_style))
-			stack_trace("Item ([clicked_with_what], [clicked_with_what.type]) without an attack style!")
+		if(!isnull(using_what_style))
+			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 
-		else if(using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking))
-			return
-
-		/*
-		if(right_clicking)
-			var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
-			if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-				clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+		else if(close_enough)
+			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 
 		else
-			clicked_with_what.afterattack(clicked_on, src, close_enough, params)
-		*/
+			if(right_clicking)
+				var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
+				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
+					clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+
+			else
+				clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+
+		return
 
 	// -- Unarmed combat (punching) --
 	else if(CanReach(clicked_on))

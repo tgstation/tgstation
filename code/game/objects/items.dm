@@ -1567,29 +1567,3 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
-
-/**
- * This proc is used for items that have [/datum/attack_style/item_iteraction] set, when clicking on an atom that is not adjacent
- *
- * Essentially it is used for items that aren't weapons, but do things when you click on an atom with them
- *
- * Prefer to use this if your item has no other interactions with the attack chain / is not a weapon
- *
- * Return TRUE on success and FALSE / null on failure
- */
-/obj/item/proc/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	stack_trace("[type] did not implement special_click_on_range despite being set to use it.")
-	return FALSE
-
-/**
- * This proc is used for items that have [/datum/attack_style/item_iteraction] set, when clicking on an atom that is adjacent
- *
- * Essentially it is used for items that aren't weapons, but do things when you click on an atom with them
- *
- * Prefer to use this if your item has no other interactions with the attack chain / is not a weapon
- *
- * Return TRUE on success and FALSE / null on failure
- */
-/obj/item/proc/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	stack_trace("[type] did not implement special_click_on_melee despite being set to use it.")
-	return FALSE

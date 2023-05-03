@@ -108,23 +108,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	animate(attack_image, time = final_animation_length, alpha = 120, transform = final_transform)
 	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
 
-/**
- * Not necessarily an attack style, but essentialy this allows you to have item specific interations
- * for clicking on atoms.
- *
- * Set your item to use this rather than any other attack style and it will execute an item level proc instead.
- */
-/datum/attack_style/item_iteraction
-
-/datum/attack_style/item_iteraction/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking)
-	var/close_enough = attacker.CanReach(aimed_towards, weapon)
-	if(close_enough)
-		. = weapon.special_click_on_melee(attacker, aimed_towards, right_clicking)
-	else
-		. = weapon.special_click_on_range(attacker, aimed_towards, right_clicking)
-
-	return .
-
 // swings at 3 targets in a direction
 /datum/attack_style/swing
 	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown

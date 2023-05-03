@@ -7,12 +7,10 @@
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
-	base_icon_state = "paint"
 	inhand_icon_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	attack_style = /datum/attack_style/item_iteraction
 	/// With what color will we paint with
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left
@@ -108,19 +106,16 @@
 		return FALSE
 	return TRUE
 
-/obj/item/paint/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	return
-
-/obj/item/paint/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(!isturf(clicked_on) || isspaceturf(clicked_on) || isopenspaceturf(clicked_on))
-		return
-	clicked_on.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-	update_appearance(UPDATE_ICON)
-
-/obj/item/paint/update_icon_state()
+/obj/item/paint/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(paintleft <= 0)
-		icon_state = "[base_icon_state]_empty"
+		icon_state = "paint_empty"
+		return
+	if(!isturf(target) || isspaceturf(target))
+		return
+	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
 	gender = PLURAL
@@ -128,11 +123,12 @@
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"
 
-/obj/item/paint/paint_remover/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(!isobj(color))
+/obj/item/paint/paint_remover/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
 		return
-	if(clicked_on.color == initial(clicked_on.color))
+	if(!isturf(target) || !isobj(target))
 		return
-
-	clicked_on.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	return TRUE
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(target.color != initial(target.color))
+		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

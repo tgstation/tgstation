@@ -467,34 +467,31 @@
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
-	attack_style = /datum/attack_style/item_iteraction
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	return special_click_on_range(attacker, clicked_on)
-
-/obj/item/hand_item/kisser/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(HAS_TRAIT(attacker, TRAIT_GARLIC_BREATH))
+/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
-	if(HAS_TRAIT(attacker, TRAIT_CHEF_KISS))
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
 		kiss_type = /obj/projectile/kiss/chef
 
-	var/obj/projectile/blown_kiss = new kiss_type(get_turf(attacker))
-	attacker.visible_message("<b>[attacker]</b> blows \a [blown_kiss] at [clicked_on]!", span_notice("You blow \a [blown_kiss] at [clicked_on]!"))
+	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
+	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
 	//Shooting Code:
-	blown_kiss.original = clicked_on
-	blown_kiss.fired_from = attacker
-	blown_kiss.firer = attacker // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(attacker = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(clicked_on, attacker)
+	blown_kiss.original = target
+	blown_kiss.fired_from = user
+	blown_kiss.firer = user // don't hit ourself that would be really annoying
+	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
-	return TRUE
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))

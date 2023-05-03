@@ -13,8 +13,6 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
-	attack_style = /datum/attack_style/item_iteraction
-
 	var/list/signs
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
@@ -34,37 +32,39 @@
 		return
 	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
 
-/obj/item/holosign_creator/special_click_on_melee(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	if(!check_allowed_items(clicked_on, not_inside = TRUE))
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag)
 		return
-	var/turf/target_turf = get_turf(clicked_on)
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(!check_allowed_items(target, not_inside = TRUE))
+		return .
+	var/turf/target_turf = get_turf(target)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 	if(target_holosign)
 		qdel(target_holosign)
-		return
+		return .
 	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
-		return
+		return .
 	if(holocreator_busy)
-		to_chat(attacker, span_notice("[src] is busy creating a hologram."))
-		return
+		to_chat(user, span_notice("[src] is busy creating a hologram."))
+		return .
 	if(LAZYLEN(signs) >= max_signs)
-		balloon_alert(attacker, "max capacity!")
-		return
+		balloon_alert(user, "max capacity!")
+		return .
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		holocreator_busy = TRUE
-		if(!do_after(attacker, creation_time, target_turf))
+		if(!do_after(user, creation_time, target = target))
 			holocreator_busy = FALSE
-			return
+			return .
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
-			return
+			return .
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-			return
-	target_holosign = new holosign_type(target_turf, src)
-
-/obj/item/holosign_creator/special_click_on_range(mob/living/attacker, atom/clicked_on, right_clicking  = FALSE)
-	return
+			return .
+	target_holosign = new holosign_type(get_turf(target), src)
+	return .
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
