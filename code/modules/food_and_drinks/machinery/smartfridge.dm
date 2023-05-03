@@ -321,6 +321,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	has_emissive = FALSE
+	can_atmos_pass = ATMOS_PASS_YES
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
@@ -594,6 +595,7 @@
 	icon_state = "disktoaster"
 	icon = 'icons/obj/vending.dmi'
 	pass_flags = PASSTABLE
+	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/disks
 
