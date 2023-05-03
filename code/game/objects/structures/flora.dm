@@ -193,7 +193,7 @@
 	//If it *is* an item stack, we don't want to go through 50 different iterations of a new object where it just gets qdeleted after the first
 	. = list()
 	for(var/product in products_to_create)
-		var/amount_to_create = products_to_create[product]*product_amount_multiplier
+		var/amount_to_create = round(products_to_create[product]*product_amount_multiplier, 1)
 		products_created += amount_to_create
 		if(ispath(product, /obj/item/stack))
 			var/product_left = amount_to_create
