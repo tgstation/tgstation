@@ -114,10 +114,10 @@
 	update_appearance()
 
 /obj/structure/closet/crate/open
-	opened = 1
+	opened = TRUE
 
 /obj/structure/closet/crate/mail/open
-	opened = 1
+	opened = TRUE
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
