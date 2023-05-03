@@ -97,7 +97,7 @@
 /datum/martial_art/proc/block_check(mob/living/source, atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	SIGNAL_HANDLER
 
-	if(attack_type != MELEE_ATTACK || attack_type != UNARMED_ATTACK)
+	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
 		return NONE
 	if(!source.throw_mode || !can_use(source) || source.incapacitated(IGNORE_GRAB))
 		return NONE
@@ -108,9 +108,7 @@
 
 /datum/martial_art/proc/counter_attack(mob/living/martial_artist, atom/hitby, attack_text = "the attack")
 	var/mob/living/assailant = GET_ASSAILANT(hitby)
-	if(!istype(assailant))
-		return
-	if(!martial_artist.Adjacent(hitby))
+	if(!istype(assailant) || !martial_artist.Adjacent(assailant))
 		return
 
 	martial_artist.visible_message(

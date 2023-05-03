@@ -827,6 +827,7 @@
 #include "code\datums\attack_style\unarmed_damage.dm"
 #include "code\datums\attack_style\unarmed_help.dm"
 #include "code\datums\attack_style\unarmed_utility.dm"
+#include "code\datums\attack_style\weapon_styles.dm"
 #include "code\datums\bodypart_overlays\bodypart_overlay.dm"
 #include "code\datums\bodypart_overlays\emote_bodypart_overlay.dm"
 #include "code\datums\bodypart_overlays\mutant_bodypart_overlay.dm"

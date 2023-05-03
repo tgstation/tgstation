@@ -326,11 +326,6 @@
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
 	..()
 
-//picks up dead monkies
-/mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
-	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
-	..()
-
 //places monkies
 /turf/open/CtrlClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)

@@ -15,6 +15,9 @@
 
 	heat_protection = 0.5 // minor heat insulation
 
+	default_harm_attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno
+	default_disarm_attack_style = /datum/attack_style/unarmed/instant_disarm
+
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE

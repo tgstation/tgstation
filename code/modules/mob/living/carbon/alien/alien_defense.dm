@@ -37,11 +37,10 @@ In all, this is a lot like the monkey code. /N
 	else
 		to_chat(user, span_warning("[name] is too injured for that."))
 
-
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	return attack_alien(L)
 
-
+/*
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(.) //to allow surgery to return properly.
@@ -59,14 +58,7 @@ In all, this is a lot like the monkey code. /N
 		return TRUE
 	else
 		help_shake_act(user)
-
-
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(..())
-		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
-			apply_damage(rand(1, 3), BRUTE, affecting)
-
+*/
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()

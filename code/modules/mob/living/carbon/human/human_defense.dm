@@ -90,7 +90,7 @@
 
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+		if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone, piercing_hit)
 			return BULLET_ACT_HIT
 
@@ -181,6 +181,7 @@
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, src)
 
+/*
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(dam_zone))
@@ -230,8 +231,10 @@
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
+*/
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
+	/*
 	if(check_shields(user, 0, "the [user.name]"))
 		visible_message(span_danger("[user] attempts to touch [src]!"), \
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
@@ -256,6 +259,7 @@
 							span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
 			to_chat(user, span_danger("You tackle [src] down!"))
 		return TRUE
+	*/
 
 	if(user.combat_mode)
 		if (w_uniform)
@@ -279,9 +283,7 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-
-
-
+/*
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	. = ..()
 	if(!.)
@@ -311,8 +313,9 @@
 	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
 	var/attack_direction = get_dir(user, src)
 	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
+*/
 
-
+	// melbert todo : slimes
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	. = ..()
 	if(!.) // slime attack failed
@@ -325,7 +328,7 @@
 		damage += rand(5, 10)
 		wound_mod = -90 // 35^1.4=145, 145-90=55
 
-	if(check_shields(M, damage, "the [M.name]"))
+	if(check_block(M, damage, "the [M.name]"))
 		return FALSE
 
 	var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))

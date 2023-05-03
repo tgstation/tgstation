@@ -42,7 +42,7 @@
 			if(BURN)
 				adjustFireLoss(damage)
 
-/mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
+/mob/living/silicon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)

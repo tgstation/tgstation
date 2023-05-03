@@ -9,47 +9,41 @@
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
 		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
-/*
-	Humans:
-	Adds an exception for gloves, to allow special glove types like the ninja ones.
-
-	Otherwise pretty standard.
-*/
-/mob/living/carbon/human/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/carbon/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		// Only thing we can do without hands is check ourself.
 		if(src == attack_target)
 			check_self_for_injuries()
-		return
+			return TRUE
+		// Melbert todo : We can bite, so we need to account for that
+		return ..()
 
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
 		if(check_arm?.bodypart_disabled)
 			to_chat(src, span_warning("Your [check_arm.name] is in no condition to be used."))
-			return
+			return FALSE
 
 		to_chat(src, span_notice("You look at your arm and sigh."))
-		return
+		return FALSE
 
-	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
 
-	if(proximity_flag)
-		var/datum/attack_style/selected_style = select_unarmed_strike(modifiers)
-		return selected_style?.process_attack(src, null, attack_target)
+	return ..()
 
 	/*
 	if(!right_click_attack_chain(attack_target, modifiers) && !dna?.species?.spec_unarmedattack(src, attack_target, modifiers)) //Because species like monkeys dont use attack hand
 		attack_target.attack_hand(src, modifiers)
 	*/
 
-/mob/living/carbon/human/proc/select_unarmed_strike(list/modifiers)
+/mob/living/carbon/select_unarmed_strike(list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		return GLOB.attack_styles[/datum/attack_style/unarmed/disarm]
 
 	else if(combat_mode)
+		// melbert todo : needs to handle kicking
 		var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb() || get_active_hand()
 		return attacking_bodypart.attack_style
@@ -138,24 +132,52 @@
 	Animals & All Unspecified
 */
 
-// If the UnarmedAttack chain is blocked
-#define LIVING_UNARMED_ATTACK_BLOCKED(target_atom) (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
-	|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, target_atom, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-
 /mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		// Melbert todo : handle bite handling here
+		if(proximity_flag)
+			return handle_bite(attack_target)
 		return FALSE
 
-	default_unarmed_attack_style?.process_attack(src, null, attack_target)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return FALSE
 
-	/*
-	if(!right_click_attack_chain(attack_target, modifiers))
-		resolve_unarmed_attack(attack_target, modifiers)
-	*/
+	if(ismovable(attack_target) && !isliving(attack_target))
+		if(!right_click_attack_chain(attack_target, modifiers))
+			resolve_unarmed_attack(attack_target, modifiers)
+		return TRUE
 
-	return TRUE
+	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
+	if(hit_style)
+		hit_style.process_attack(src, null, attack_target)
+		return TRUE
+	return FALSE
 
-/*
+/mob/living/proc/select_unarmed_strike(list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		. = default_disarm_attack_style
+
+	if(combat_mode)
+		. ||= default_harm_attack_style
+
+	return . || GLOB.attack_styles[/datum/attack_style/unarmed/help]
+
+/mob/living/proc/handle_bite(atom/attack_target)
+	var/datum/attack_style/unarmed/bite_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/bite]
+	return bite_style?.process_attack(src, null, attack_target)
+
+/mob/living/silicon/handle_bite(atom/attack_target)
+	return // ??
+
+/mob/living/carbon/handle_bite(atom/attack_target)
+	if(get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/handle_bite(atom/attack_target)
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_BITER))
+		return FALSE
+	return ..()
 
 /**
  * Called when the unarmed attack hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro or the right_click_attack_chain proc.
@@ -163,8 +185,6 @@
  */
 /mob/living/proc/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	attack_target.attack_animal(src, modifiers)
-
-*/
 
 /**
  * Called when an unarmed attack performed with right click hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro.
@@ -197,23 +217,33 @@
 /atom/proc/handle_basic_attack(user, modifiers)
 	return attack_animal(user, modifiers)
 
-///Attacked by monkey. It doesn't need its own *_secondary proc as it just uses attack_hand_secondary instead.
+/**
+ * This is called when a monkey that is NOT an advanced tool user clicks on this atom with an empty hand in melee range.
+ * It is also called by [xenomorphs][/mob/living/carbon/alien] under similar conditions.
+ *
+ * In most cases, it may end up redirecting to normal human attack hand.
+ *
+ * However if the monkey is right clicking, it will not call this, but call attack_hand_secondary instead.
+ *
+ * Return TRUE on successful handling and FALSE on no handling done / handling failed.
+ */
 /atom/proc/attack_paw(mob/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE
 
-
-/*
-	Aliens
-	Defaults to same as monkey in most places
-*/
 /mob/living/carbon/alien/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	attack_target.attack_alien(src, modifiers)
 
 /mob/living/carbon/alien/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_alien_secondary(src, modifiers)
 
+/**
+ * This is called when an xenomorphs ([/mob/living/carbon/alien]) clicks on this atom with an empty hand in melee range.
+ *
+ * By default it ends up doing identical behavior to monkeys (attack_paw)
+ *
+ */
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	return attack_paw(user, modifiers)
 
@@ -278,7 +308,7 @@
 
 /// Defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
-	attack_hand(user, modifiers)
+	return attack_hand(user, modifiers)
 
 /**
  * Called when a maintenance drone right clicks an atom.
@@ -344,8 +374,6 @@
 		return ..()
 	else
 		AttackingTarget(attack_target)
-
-#undef LIVING_UNARMED_ATTACK_BLOCKED
 
 /*
 	New Players:

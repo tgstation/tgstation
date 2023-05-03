@@ -66,7 +66,7 @@
 	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 
-/obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
+/obj/vehicle/sealed/mecha/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)

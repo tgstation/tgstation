@@ -394,10 +394,12 @@
 		radiation_pulse(H, max_range = 1, threshold = RAD_VERY_LIGHT_INSULATION, chance = 3)
 		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
 
+/*
 /datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && M != H && M.combat_mode)
 		radiation_emission(H)
+*/
 
 /datum/species/golem/uranium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
@@ -509,10 +511,12 @@
 		else
 			reactive_teleport(H)
 
+/*
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_teleport + teleport_cooldown && M != H && M.combat_mode)
 		reactive_teleport(H)
+*/
 
 /datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
@@ -623,11 +627,13 @@
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
+/*
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(COOLDOWN_FINISHED(src, banana_cooldown) && M != H && M.combat_mode)
 		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		COOLDOWN_START(src, banana_cooldown, banana_delay)
+*/
 
 /datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
@@ -982,10 +988,12 @@
 	if(world.time > last_gong_time + gong_cooldown)
 		gong(H)
 
+/*
 /datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_gong_time + gong_cooldown && M.combat_mode)
 		gong(H)
+*/
 
 /datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
@@ -1152,9 +1160,11 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/durathread,
 	)
 
+/*
 /datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
+*/
 
 /datum/species/golem/bone
 	name = "Bone Golem"

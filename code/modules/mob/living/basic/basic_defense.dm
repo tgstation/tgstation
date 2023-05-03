@@ -3,24 +3,6 @@
 	if (..())
 		return TRUE
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(user.move_force < move_resist)
-			return
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		var/shove_dir = get_dir(user, src)
-		if(!Move(get_step(src, shove_dir), shove_dir))
-			log_combat(user, src, "shoved", "failing to move it")
-			user.visible_message(span_danger("[user.name] shoves [src]!"),
-				span_danger("You shove [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
-			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
-			return TRUE
-		log_combat(user, src, "shoved", "pushing it")
-		user.visible_message(span_danger("[user.name] shoves [src], pushing [p_them()]!"),
-			span_danger("You shove [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
-		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
-		return TRUE
-
 	if(!user.combat_mode)
 		if (stat == DEAD)
 			return
@@ -28,22 +10,25 @@
 						span_notice("[user] [response_help_continuous] you."), null, null, user)
 		to_chat(user, span_notice("You [response_help_simple] [src]."))
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	else
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to hurt [src]!"))
-			return
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
-						span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
-		playsound(loc, attacked_sound, 25, TRUE, -1)
-		var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-		var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
-
-		attack_threshold_check(damage)
-		log_combat(user, src, "attacked")
-		updatehealth()
 		return TRUE
+
+	/*
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt [src]!"))
+		return
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
+					span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
+	playsound(loc, attacked_sound, 25, TRUE, -1)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+
+	attack_threshold_check(damage)
+	log_combat(user, src, "attacked")
+	updatehealth()
+	return TRUE
+	*/
 
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
@@ -78,6 +63,7 @@
 	attack_threshold_check(damage)
 	log_combat(user, src, "attacked")
 
+/*
 /mob/living/basic/attack_larva(mob/living/carbon/alien/larva/attacking_larva, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
@@ -91,6 +77,7 @@
 	if(.)
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
+*/
 
 /mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack

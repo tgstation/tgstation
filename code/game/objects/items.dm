@@ -584,48 +584,17 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
-/obj/item/attack_paw(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!user)
-		return
-	if(anchored)
-		return
+/obj/item/attack_paw(mob/living/carbon/human/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-	. = TRUE
-
-	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
-		return
-
-	//If the item is in a storage item, take it out
-	if(loc.atom_storage?.remove_single(user, src, user.loc, silent = TRUE))
-		return
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
-		return
-
-	if(throwing)
-		throwing.finalize(FALSE)
-	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
-			return
-
-	. = FALSE
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
-		user.dropItemToGround(src)
-		return TRUE
-
-/obj/item/attack_alien(mob/user, list/modifiers)
-	var/mob/living/carbon/alien/ayy = user
-
+/obj/item/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.can_hold_items(src))
-		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
-			ayy.dropItemToGround(src)
+		if(src in user) // To stop Aliens having items stuck in their pockets
+			user.dropItemToGround(src)
 		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
 		return
-	attack_paw(ayy, modifiers)
+
+	return attack_hand(user, modifiers)
 
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/robot_model))

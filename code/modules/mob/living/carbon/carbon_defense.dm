@@ -235,6 +235,7 @@
 					updatehealth()
 		return 1
 
+// melbert todo : whatever the hell this is
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)
 		return dam_zone

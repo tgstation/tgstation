@@ -168,96 +168,26 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	successful_hit_sound = 'sound/weapons/punch1.ogg'
 	miss_sound = 'sound/weapons/punchmiss.ogg'
 
+	/// Used for playing a little animation over the turf
 	var/attack_effect = ATTACK_EFFECT_PUNCH
-/*
+
 /datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!isnull(weapon))
-		// Not intended for use here
-		return
+		if(weapon.attack_style == src)
+			// The only time this would occur is if someone is thwacking another person with a detached limb.
+			// Technically we could allow it, but I can imagine it being a huge mistake. We'll see
+			pass()
+		else
+			CRASH("Unarmed attack style executed with a weapon [weapon]")
 
 	return ..()
-*/
+
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	CRASH("No narmed interaction for [type]!")
 
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	if(attack_effect)
 		attacker.do_attack_animation(affecting[1], attack_effect)
-
-// swings at 3 targets in a direction
-/datum/attack_style/swing
-	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
-
-/datum/attack_style/swing/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	return get_turfs_and_adjacent_in_direction(attacker, attack_direction)
-
-/datum/attack_style/swing/requires_wield
-
-/datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
-		attacker.balloon_alert(attacker, "wield your weapon!")
-		return FALSE
-	return ..()
-
-/datum/attack_style/swing/esword
-	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
-	reverse_for_lefthand = FALSE
-
-/datum/attack_style/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!weapon.blade_active)
-		attacker.balloon_alert(attacker, "activate your weapon!")
-		return FALSE
-
-	// Right clicking attacks the opposite direction
-	if(right_clicking)
-		reverse_range(affecting)
-
-	return ..()
-
-/datum/attack_style/swing/requires_wield/desword
-	cd = CLICK_CD_MELEE * 1.25
-	reverse_for_lefthand = FALSE
-
-/datum/attack_style/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	var/behind_us = REVERSE_DIR(attack_direction)
-	var/list/cone_turfs = list()
-	for(var/around_dir in list(NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST))
-		if(around_dir & behind_us)
-			continue
-		var/turf/found_turf = get_step(attacker, around_dir)
-		if(istype(found_turf))
-			cone_turfs += found_turf
-
-	return cone_turfs
-
-// Direct stabs out to turfs in front
-/datum/attack_style/stab_out
-	reverse_for_lefthand = FALSE
-	var/stab_range = 1
-
-/datum/attack_style/stab_out/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	var/max_range = stab_range
-	var/turf/last_turf = get_turf(attacker)
-	var/list/select_turfs = list()
-	while(max_range > 0)
-		var/turf/next_turf = get_step(last_turf, attack_direction)
-		if(!isturf(next_turf) || next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker))
-			return select_turfs
-		select_turfs += next_turf
-		last_turf = next_turf
-		max_range--
-
-	return select_turfs
-
-/datum/attack_style/stab_out/spear
-	cd = CLICK_CD_MELEE * 2
-	stab_range = 2
-
-/datum/attack_style/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
-		attacker.balloon_alert(attacker, "wield your weapon!")
-		return FALSE
-	return ..()
 
 // Overhead swings, bypass blocks / targets heads
 /datum/attack_style/overhead

@@ -226,4 +226,5 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
-	var/datum/attack_style/unarmed/default_unarmed_attack_style
+	var/datum/attack_style/unarmed/default_harm_attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack
+	var/datum/attack_style/unarmed/default_disarm_attack_style = /datum/attack_style/unarmed/disarm

@@ -169,6 +169,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 /// Makes it so the mob can use guns regardless of tool user status
 #define TRAIT_GUN_NATURAL "gunnatural"
+/// This human can bite with their mouth when their hands are blocked
+/// Be careful about giving this to players unless you hate security players
+#define TRAIT_HUMAN_BITER "human_biter"
 /// Causes death-like unconsciousness
 #define TRAIT_DEATHCOMA "deathcoma"
 /// Makes the owner appear as dead to most forms of medical examination

@@ -9,7 +9,7 @@
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_warning("[smacked] blocks your grab!"))
+		to_chat(attacker, span_warning("[smacked] blocks your touch!"))
 		return ATTACK_STYLE_BLOCKED
 
 	// Todo : move this out and into its own style?

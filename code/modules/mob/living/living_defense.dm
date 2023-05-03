@@ -295,6 +295,7 @@
 	log_combat(user, src, "attacked")
 	return TRUE
 
+/*
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	var/martial_result = user.apply_martial_art(src, modifiers)
@@ -362,7 +363,7 @@
 		to_chat(L, span_notice("You rub your head against [src]."))
 		return FALSE
 	return FALSE
-
+*/
 /mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

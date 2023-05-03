@@ -8,11 +8,14 @@
 	var/attack_type = BRUTE
 	/// The verb used for an unarmed attack when using this limb, "punch".
 	var/unarmed_attack_verb = "bump"
+
+	var/deaf_miss_phrase = "a swoosh"
 	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
 	/// Highest possible punch damage this bodypart can give.
 	var/unarmed_damage_high = 1
 	/// Damage at which attacks from this bodypart will stun.
+	/// If negative, we will never stun. Likewise if 0, we will always stun.
 	var/unarmed_stun_threshold = 2
 	/// Wound bonus on attacks
 	var/wound_bonus = 0
@@ -21,13 +24,18 @@
 	/// Amount of bonus stamina damage to apply in addition to the main attack type
 	var/bonus_stamina_damage_modifier = 1.5
 
+	var/miss_chance_modifier = 0
+
+/datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked)
+	return rand(unarmed_damage_low, unarmed_damage_high)
+
 /datum/attack_style/unarmed/generic_damage/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/damage = rand(unarmed_damage_low, unarmed_damage_high)
+	var/damage = select_damage(attacker, smacked)
 	if(smacked.check_block(attacker, damage, "[attacker]'s [unarmed_attack_verb]", UNARMED_ATTACK, attack_penetration))
 		smacked.visible_message(
 			span_warning("[smacked] blocks [attacker]'s [unarmed_attack_verb]!"),
 			span_userdanger("You block [attacker]'s [unarmed_attack_verb]!"),
-			span_hear("You hear a swoosh!"),
+			span_hear("You hear [deaf_miss_phrase]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
@@ -43,7 +51,6 @@
 			if(MARTIAL_ATTACK_FAIL)
 				return ATTACK_STYLE_MISSED
 
-	var/direction = get_dir(attacker, smacked)
 	var/obj/item/bodypart/affecting = smacked.get_bodypart(smacked.get_random_valid_zone(attacker.zone_selected))
 
 	// calculate the odds that a punch misses entirely.
@@ -54,13 +61,13 @@
 		if((smacked.body_position == LYING_DOWN) || HAS_TRAIT(attacker, TRAIT_PERFECT_ATTACKER))
 			miss_chance = 0
 		else
-			miss_chance = (unarmed_damage_high / unarmed_damage_low) + attacker.getStaminaLoss() + (attacker.getBruteLoss() * 0.5)
+			miss_chance = (unarmed_damage_high / unarmed_damage_low) + attacker.getStaminaLoss() + (attacker.getBruteLoss() * 0.5) + miss_chance_modifier
 
 	if(damage <= 0 || !istype(affecting) || prob(miss_chance))
 		smacked.visible_message(
 			span_danger("[attacker]'s [unarmed_attack_verb] misses [smacked]!"),
 			span_danger("You avoid [attacker]'s [unarmed_attack_verb]!"),
-			span_hear("You hear a swoosh!"),
+			span_hear("You hear [deaf_miss_phrase]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
@@ -79,22 +86,22 @@
 	)
 	to_chat(attacker, span_danger("You [unarmed_attack_verb] [smacked]!"))
 
-	var/additional_logging = "([unarmed_attack_verb])"
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
-	// SEND_SIGNAL(attacker) // For durathread golems here // Or have their own attack style // Yeah do that
+	actually_apply_damage(attacker, smacked, damage, affecting, armor_block)
 
-	smacked.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)
-	if(bonus_stamina_damage_modifier > 0)
-		smacked.apply_damage(damage * bonus_stamina_damage_modifier, attack_type, affecting, armor_block, attack_direction = direction)
-
+	var/additional_logging = "([unarmed_attack_verb])"
 	if(damage >= 9 && ishuman(smacked))
 		var/mob/living/carbon/human/human_smacked = smacked
 		human_smacked.force_say()
 		additional_logging += "(causing forced say)"
+		if(human_smacked.wear_suit)
+			human_smacked.wear_suit.add_fingerprint(attacker)
+		else if(human_smacked.w_uniform)
+			human_smacked.w_uniform.add_fingerprint(attacker)
 
-	if(smacked.stat != DEAD && damage >= unarmed_stun_threshold)
+	if(smacked.stat != DEAD && unarmed_stun_threshold >= 0 && damage >= unarmed_stun_threshold)
 		smacked.visible_message(
 			span_danger("[attacker] knocks [smacked] down!"),
 			span_userdanger("You're knocked down by [attacker]!"),
@@ -109,6 +116,13 @@
 
 	log_combat(attacker, smacked, "unarmed attack", addition = additional_logging)
 	return ATTACK_STYLE_HIT
+
+/// Called when the damage actually is being applied to the smacked mob
+/datum/attack_style/unarmed/generic_damage/proc/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor_block)
+	var/direction = get_dir(attacker, smacked)
+	smacked.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)
+	if(bonus_stamina_damage_modifier > 0)
+		smacked.apply_damage(damage * bonus_stamina_damage_modifier, attack_type, affecting, armor_block, attack_direction = direction)
 
 /datum/attack_style/unarmed/generic_damage/punch
 	unarmed_attack_verb = "punch" // The classic punch, wonderfully classic and completely random
@@ -150,16 +164,40 @@
 	miss_sound = 'sound/weapons/bite.ogg'
 	attack_effect = ATTACK_EFFECT_BITE
 	unarmed_attack_verb = "bite"
+	deaf_miss_phrase = "jaws snapping shut"
 	unarmed_damage_low = 1 // Yeah, biting is pretty weak, blame the monkey super-nerf
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
+	miss_chance_modifier = 25
+
+	/// Having less armor than this on the hit bodypart will result in diseases being spread by the attacker.
+	var/disease_armor_thresold = 2
 
 /datum/attack_style/unarmed/generic_damage/bite/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(attacker.is_mouth_covered(ITEM_SLOT_MASK))
+	if(attacker.is_muzzled() || attacker.is_mouth_covered(ITEM_SLOT_MASK))
 		attacker.balloon_alert(attacker, "mouth covered, can't bite!")
 		return FALSE
 
 	return ..()
+
+/datum/attack_style/unarmed/generic_damage/bite/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor)
+	. = ..()
+	if(armor >= disease_armor_thresold)
+		return
+	if(!smacked.try_inject(attacker, affecting))
+		return
+
+	for(var/datum/disease/bite_infection as anything in attacker.diseases)
+		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL|DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue // ignore diseases that have special spread logic, or are not contagious
+		smacked.ForceContractDisease(bite_infection)
+
+/datum/attack_style/unarmed/generic_damage/bite/larva
+	miss_chance_modifier = 10
+
+/datum/attack_style/unarmed/generic_damage/bite/larva/actually_apply_damage(mob/living/carbon/alien/larva/attacker, mob/living/smacked, damage, affecting, armor)
+	. = ..()
+	attacker.amount_grown = min(attacker.amount_grown + damage, attacker.max_grown)
 
 /datum/attack_style/unarmed/generic_damage/hulk
 	unarmed_damage_low = 12
@@ -196,3 +234,31 @@
 	unarmed_damage_low = 9
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
+
+/datum/attack_style/unarmed/generic_damage/mob_attack
+	unarmed_stun_threshold = -1
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked)
+	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+	if(isanimal(attacker))
+		var/mob/living/simple_animal/animal = attacker
+		if(animal.attack_vis_effect)
+			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
+
+	if(isbasicmob(attacker))
+		var/mob/living/basic/animal = attacker
+		if(animal.attack_vis_effect)
+			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/xeno
+	successful_hit_sound = 'sound/weapons/slice.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_verb = "slash"
+	miss_chance_modifier = 10
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/xeno/select_damage(mob/living/attacker, mob/living/smacked)
+	if(isalien(smacked))
+		return 1
+	return ..()

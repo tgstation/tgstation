@@ -1,5 +1,3 @@
-#define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
-
 /datum/species/monkey
 	name = "Monkey"
 	id = SPECIES_MONKEY
@@ -22,9 +20,9 @@
 	)
 	inherent_traits = list(
 		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
+		TRAIT_HUMAN_BITER,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
@@ -61,72 +59,29 @@
 	H.butcher_results = knife_butcher_results
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
-
+	RegisterSignal(H, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(monkey_melee))
+	RegisterSignal(H, COMSIG_CLICK_CTRL, PROC_REF(ctrl_clicked))
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.pass_flags = initial(C.pass_flags)
 	C.butcher_results = null
 	C.dna.remove_mutation(/datum/mutation/human/race)
+	UnregisterSignal(C, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	UnregisterSignal(C, COMSIG_CLICK_CTRL)
 
-/datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	// If our hands are not blocked, dont try to bite them
-	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
-		if(!ISADVANCEDTOOLUSER(user))
-			target.attack_paw(user, modifiers)
-			return TRUE
-		return ..()
+/datum/species/monkey/proc/monkey_melee(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
+	SIGNAL_HANDLER
 
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
-	var/mob/living/carbon/victim = target
-	if(user.is_muzzled())
-		return TRUE // cannot bite them if we're muzzled
+	// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
+	if(!ISADVANCEDTOOLUSER(source)) // melbert todo : needs prox flag?
+		target.attack_paw(source, modifiers)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/bodypart/affecting
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
-	var/armor = victim.run_armor_check(affecting, MELEE)
-
-	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
-		victim.visible_message(
-			span_danger("[user]'s bite misses [victim]!"),
-			span_danger("You avoid [user]'s bite!"),
-			span_hear("You hear jaws snapping shut!"),
-			COMBAT_MESSAGE_RANGE,
-			user,
-		)
-		to_chat(user, span_danger("Your bite misses [victim]!"))
-		return TRUE
-
-	var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!mouth) // check for them having a head, ala HARS
-		return TRUE
-
-	var/damage_roll = rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high)
-	victim.apply_damage(damage_roll, BRUTE, affecting, armor)
-
-	victim.visible_message(
-		span_danger("[name] bites [victim]!"),
-		span_userdanger("[name] bites you!"),
-		span_hear("You hear a chomp!"),
-		COMBAT_MESSAGE_RANGE,
-		name,
-	)
-	to_chat(user, span_danger("You bite [victim]!"))
-
-	if(armor >= 2) // if they have basic armor on the limb we bit, don't spread diseases
-		return TRUE
-	for(var/datum/disease/bite_infection as anything in user.diseases)
-		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-			continue // ignore diseases that have special spread logic, or are not contagious
-		victim.ForceContractDisease(bite_infection)
-
-	return TRUE
+/datum/species/monkey/proc/ctrl_clicked(mob/living/carbon/human/source, mob/user)
+	SIGNAL_HANDLER
+	// bad code ahead: redirects ctrl click to "xeno ctrl click" for the purpose of the xenobiology camera console
+	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(check_holidays(MONKEYDAY))
@@ -255,5 +210,3 @@
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb()
 	return owner.get_bodypart(BODY_ZONE_HEAD)
-
-#undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

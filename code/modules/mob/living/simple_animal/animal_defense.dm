@@ -74,6 +74,7 @@
 			log_combat(user, src, "attacked")
 		return 1
 
+/*
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
@@ -87,6 +88,7 @@
 	if(.)
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
+*/
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack

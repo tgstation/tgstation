@@ -20,6 +20,17 @@
 		to_chat(attacker, span_warning("[smacked] blocks your shove!"))
 		return ATTACK_STYLE_BLOCKED
 
+	if(attacker.move_force < smacked.move_resist)
+		smacked.visible_message(
+			span_warning("[smacked] resists [attacker]'s shove!"),
+			span_userdanger("You resist [attacker]'s shove!"),
+			span_hear("You hear a swoosh!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = attacker,
+		)
+		to_chat(attacker, span_warning("[smacked] resists your shove!"))
+		return ATTACK_STYLE_BLOCKED
+
 	if (ishuman(smacked))
 		var/mob/living/carbon/human/human_smacked = smacked
 		human_smacked.w_uniform?.add_fingerprint(attacker)
@@ -161,3 +172,33 @@
 
 	smacked.grabbedby(attacker)
 	return ATTACK_STYLE_HIT
+
+/datum/attack_style/unarmed/instant_disarm
+	attack_effect = ATTACK_EFFECT_DISARM
+	successful_hit_sound = null
+
+/datum/attack_style/unarmed/instant_disarm/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	var/obj/item/held_thing = smacked.get_active_held_item()
+	if(held_thing && smacked.dropItemToGround(held_thing))
+		playsound(smacked, 'sound/weapons/slash.ogg', 25, TRUE, -1)
+		smacked.visible_message(
+			span_danger("[attacker] disarms [smacked]!"),
+			span_userdanger("[attacker] disarms you!"),
+			span_hear("You hear aggressive shuffling!"),
+			ignored_mobs = attacker,
+		)
+		to_chat(attacker, span_danger("You disarm [smacked]!"))
+		log_combat(attacker, smacked, "instant-disarmed")
+
+	else
+		playsound(smacked, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+		smacked.Paralyze(10 SECONDS)
+		smacked.visible_message(
+			span_danger("[attacker] tackles [smacked] down!"),
+			span_userdanger("[attacker] tackles you down!"),
+			span_hear("You hear aggressive shuffling followed by a loud thud!"),
+			ignored_mobs = attacker,
+		)
+		to_chat(attacker, span_danger("You tackle [smacked] down!"))
+		log_combat(attacker, smacked, "tackled (paralyzed)")
+	return TRUE
