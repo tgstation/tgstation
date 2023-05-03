@@ -61,7 +61,7 @@
 		..()
 
 /obj/machinery/syndicatebomb/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -321,6 +321,7 @@
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
+	return TRUE
 
 /obj/item/bombcore/burn()
 	detonate()
@@ -346,7 +347,7 @@
 	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/item/bombcore/syndicate/burn()
 	return ..()
