@@ -222,7 +222,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
-		passed_list[reagent_type] = amount
+		passed_list[reagent_type.type] = amount
 
 	turf_reagents.add_reagent_list(passed_list)
 	turf_reagents.chem_temp = group_temperature
@@ -715,7 +715,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!amount)
 			continue
 		remove_specific(src, amount * 0.2, reagent_type)
-		passed_list[reagent_type] = amount
+		passed_list[reagent_type.type] = amount
 
 	exposed_reagents.add_reagent_list(passed_list)
 	exposed_reagents.chem_temp = group_temperature
@@ -732,7 +732,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
-		passed_list[reagent_type] = amount
+		passed_list[reagent_type.type] = amount
 
 	exposed_reagents.add_reagent_list(passed_list)
 	exposed_reagents.chem_temp = group_temperature
