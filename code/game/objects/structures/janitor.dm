@@ -247,6 +247,11 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	if(istype(weapon, /obj/item/mop))
+		var/obj/item/mop/attacked_mop = weapon
+		to_chat(user, "You completly wring out the [attacked_mop.name] into the waste bucket of the cart.")
+		attacked_mop.reagents.remove_all(attacked_mop.max_reagent_volume)
+
 	if(istype(weapon, /obj/item/reagent_containers))
 		update_appearance(UPDATE_OVERLAYS)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN //so we can empty the cart via our afterattack without trying to put the item in the bag

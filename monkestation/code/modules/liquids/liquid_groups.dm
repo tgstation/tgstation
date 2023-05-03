@@ -16,6 +16,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/burning_members = list()
 	///our reagent holder, where the entire liquid groups reagents are stored
 	var/datum/reagents/reagents
+	///our reagent holder for a single turf
+	var/datum/reagents/turf_reagents
 	///the expected height of all the collective turfs
 	var/expected_turf_height = 1
 	///A saved variable of the total reagent volumes to avoid calling reagents.total_volume constantly
@@ -206,7 +208,23 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/process_member(turf/member)
 	if(!(member in members))
 		return
-	reagents.expose(member, TOUCH, liquid = TRUE)
+	turf_reagents.expose(member, TOUCH, liquid = TRUE)
+
+/datum/liquid_group/proc/build_turf_reagent()
+	if(turf_reagents)
+		qdel(turf_reagents)
+	turf_reagents = new(100000)
+
+	var/list/passed_list = list()
+	for(var/reagent_type in reagents.reagent_list)
+		var/amount = reagents.reagent_list[reagent_type] / members
+		if(!amount)
+			continue
+		remove_specific(src, amount * 0.2, reagent_type)
+		passed_list[reagent_type] = amount
+
+	turf_reagents.add_reagent_list(passed_list)
+	turf_reagents.chem_temp = group_temperature
 
 /datum/liquid_group/proc/process_turf_disperse()
 	if(!total_reagent_volume)

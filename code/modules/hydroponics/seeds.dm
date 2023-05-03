@@ -152,14 +152,14 @@
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)
 	// Copy all the stats
-	copy_seed.lifespan = lifespan
-	copy_seed.endurance = endurance
-	copy_seed.maturation = maturation
-	copy_seed.production = production
-	copy_seed.yield = yield
-	copy_seed.potency = potency
-	copy_seed.weed_rate = weed_rate
-	copy_seed.weed_chance = weed_chance
+	copy_seed.set_lifespan(lifespan)
+	copy_seed.set_endurance(endurance)
+	copy_seed.set_maturation(maturation)
+	copy_seed.set_production(production)
+	copy_seed.set_yield(yield)
+	copy_seed.set_potency(potency)
+	copy_seed.set_weed_rate(weed_rate)
+	copy_seed.set_weed_chance(weed_chance)
 	copy_seed.name = name
 	copy_seed.plantname = plantname
 	copy_seed.desc = desc
