@@ -10,7 +10,6 @@
 		return
 	while(query_gear.NextRow())
 		var/key = query_gear.item[1]
-		var/value = text2num(query_gear.item[2])
 		inventory += text2path(key)
 	qdel(query_gear)
 
