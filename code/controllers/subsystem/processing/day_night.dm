@@ -48,10 +48,10 @@ SUBSYSTEM_DEF(day_night)
  * Loads the currently chosen day night controller from config, if there is one.
  */
 /datum/controller/subsystem/day_night/proc/load_day_night_controller()
-	if(!SSmapping.config.day_night_controller)
+	if(!SSmapping.config.day_night_controller_path)
 		return
 	var/list/z_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	add_controller(SSmapping.config.day_night_controller, z_levels[LAZYLEN(z_levels)])
+	add_controller(SSmapping.config.day_night_controller_path, z_levels[LAZYLEN(z_levels)])
 
 /**
  * Adds and loads a controller into the subsystem for processing.

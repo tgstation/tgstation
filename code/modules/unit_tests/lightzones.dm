@@ -7,7 +7,7 @@
 
 /datum/unit_test/lightzones/Run()
 	for(var/datum/day_night_controller/iterating_controller as anything in subtypesof(/datum/lightzone))
-		iterating_controller = new
+		iterating_controller = allocate
 		for(var/hour in 0 to 23)
 			var/found_lightzone
 			for(var/datum/lightzone/iterating_lightzone as anything in iterating_controller.lightzone_cache)

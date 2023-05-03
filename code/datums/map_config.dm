@@ -205,7 +205,7 @@
 		if(!ispath(path, /datum/day_night_controller))
 			stack_trace("Invalid path in mapping config for day_night_controller! Received [json["day_night_controller"]]")
 		else
-			day_night_controller = path
+			day_night_controller_path = path
 
 	defaulted = FALSE
 	return TRUE

@@ -159,7 +159,7 @@ All ShuttleMove procs go here
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove(new_parallax_dir)
 	SEND_SIGNAL(src, COMSIG_AREA_AFTER_SHUTTLE_MOVE)
-	update_day_night_turfs(FALSE, TRUE)
+	update_day_night_turfs(initialize_turfs = FALSE, search_for_controller = TRUE)
 	parallax_movedir = new_parallax_dir
 	return TRUE
 

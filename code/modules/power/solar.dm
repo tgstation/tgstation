@@ -65,10 +65,7 @@
 /obj/machinery/power/solar/proc/update_day_night_exposure(datum/source, light_color, light_alpha)
 	SIGNAL_HANDLER
 
-	if(light_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER)
-		light_level_too_low = TRUE
-	else
-		light_level_too_low = FALSE
+	light_level_too_low = light_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER
 
 /obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/solar_panel/overlay = new(src)

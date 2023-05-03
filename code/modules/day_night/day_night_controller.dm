@@ -32,15 +32,15 @@
 	if(!incoming_affected_z_level)
 		return
 	affected_z_level = incoming_affected_z_level
-	get_affected_areas()
+	register_areas()
 	load_lightzones()
 	compile_transitions()
 
 /**
- * Simple proc to get the areas that are affected by this controller
+ * Simple proc to register the areas that are affected by this controller
  */
-/datum/day_night_controller/proc/get_affected_areas()
-	for(var/area/iterating_area as anything in get_areas(/area, TRUE))
+/datum/day_night_controller/proc/register_areas()
+	for(var/area/iterating_area as anything in get_areas(/area))
 		if(iterating_area.z != affected_z_level)
 			continue
 		if(iterating_area.underground)
@@ -84,7 +84,7 @@
 	if(area_to_register in unaffected_area_cache)
 		return FALSE
 	unaffected_area_cache += area_to_register
-	area_to_register.update_day_night_turfs(TRUE, FALSE, src)
+	area_to_register.update_day_night_turfs(initialize_turfs = TRUE, search_for_controller = FALSE, incoming_controller = src)
 	area_to_register.RegisterSignal(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, TYPE_PROC_REF(/area, apply_day_night_turfs))
 	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, PROC_REF(unregister_unaffected_area))
 	RegisterSignal(area_to_register, COMSIG_AREA_AFTER_SHUTTLE_MOVE, PROC_REF(after_shuttle_move))
@@ -181,7 +181,7 @@
 			offset_spokesman = iterating_area,
 			plane = LIGHTING_PLANE,
 			alpha = light_alpha,
-			)
+		)
 		area_cache[iterating_area] = updated_appearance
 		updated_appearance.color = light_color
 
@@ -205,7 +205,7 @@
  * * light_alpha - The new alpha that we are going to be setting.
  */
 /datum/day_night_controller/proc/set_area_luminosity(light_alpha)
-	var/luminosity = (light_alpha >= MINIMUM_ALPHA_FOR_LUMINOSITY) ? TRUE : FALSE
+	var/luminosity = light_alpha >= MINIMUM_ALPHA_FOR_LUMINOSITY
 	current_luminosity = luminosity
 	for(var/area/iterating_area as anything in area_cache)
 		iterating_area.luminosity = luminosity
