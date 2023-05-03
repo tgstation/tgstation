@@ -14614,8 +14614,8 @@
 /area/station/maintenance/floor1/starboard/fore)
 "dLk" = (
 /obj/machinery/door/poddoor/shutters{
-	id_tag = "survshop";
-	name = "Ancient Workshop"
+	name = "Ancient Workshop";
+	id = "survshop"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard/aft)
@@ -14793,6 +14793,7 @@
 /area/station/service/bar)
 "dNo" = (
 /obj/structure/closet/secure_closet/freezer/meat,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "dNr" = (
@@ -22855,8 +22856,8 @@
 /area/station/hallway/floor2/fore)
 "fZS" = (
 /obj/machinery/door/poddoor/shutters{
-	id_tag = "survshop";
-	name = "Ancient Workshop"
+	name = "Ancient Workshop";
+	id = "survshop"
 	},
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/aft)
@@ -37293,6 +37294,15 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/port/fore)
+"jWs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/textured_large,
+/area/station/cargo/storage)
 "jWt" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -61589,13 +61599,12 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/port/fore)
 "qlj" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
 /turf/open/floor/carpet/red,
 /area/station/service/library/artgallery)
 "qln" = (
@@ -65650,13 +65659,12 @@
 	},
 /area/station/hallway/floor1/fore)
 "rlq" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
 /turf/open/floor/carpet/red,
 /area/station/service/library/artgallery)
 "rlC" = (
@@ -80090,9 +80098,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "vpv" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/kitchen,
-/area/station/service/kitchen)
+/turf/open/floor/iron/stairs/medium,
+/area/station/science/lobby)
 "vpy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -83466,7 +83473,9 @@
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "wjq" = (
-/turf/open/floor/iron/stairs,
+/turf/open/floor/iron/stairs{
+	icon_state = "stairs-m"
+	},
 /area/station/science/lobby)
 "wjt" = (
 /obj/structure/closet/emcloset,
@@ -120540,7 +120549,7 @@ irS
 hMu
 hKN
 wIr
-hLP
+jWs
 hLP
 hLP
 ydt
@@ -182992,7 +183001,7 @@ cwq
 cwq
 xuv
 uKn
-wjq
+vpv
 lIL
 fFu
 kEF
@@ -247532,7 +247541,7 @@ giM
 tBD
 qvW
 sFt
-vpv
+sFt
 sFt
 tHs
 sGR
