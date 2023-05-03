@@ -35,9 +35,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "j" = (
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)

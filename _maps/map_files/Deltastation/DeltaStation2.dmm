@@ -2514,9 +2514,7 @@
 /area/station/cargo/storage)
 "aDg" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aDt" = (
@@ -17181,9 +17179,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
@@ -17680,9 +17676,7 @@
 "etg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -23870,9 +23864,7 @@
 /area/station/command/heads_quarters/hos)
 "fXt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -59930,9 +59922,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "pdF" = (
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
@@ -72674,9 +72664,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sji" = (
-/obj/structure/closet/crate/open{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/open,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot,
 /obj/item/electronics/apc,
