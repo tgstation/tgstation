@@ -495,6 +495,7 @@
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
+
 /obj/item/mod/module/minigun
 	name = "MOD laser gatling gun module"
 	icon_state = "minigun_module"
