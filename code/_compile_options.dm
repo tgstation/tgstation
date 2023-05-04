@@ -131,12 +131,6 @@
 #define DO_NOT_DEFER_ASSETS
 #endif
 
-#ifdef FLAT_CODE_TREE
-#define __TG_FILE__ replacetext(copytext(__FILE__, 6), "!", "/") // strip the "flat/" prefix
-#else
-#define __TG_FILE__ __FILE__
-#endif
-
 #ifdef TGS
 // TGS performs its own build of dm.exe, but includes a prepended TGS define.
 #define CBT

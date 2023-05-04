@@ -19,6 +19,8 @@ const flattenCode = async (directoryToFlatten, dmeFile) => {
     filePath = path.resolve(filePath).substring(currentDirectoryA.length - 1);
 
     let fileContents = await fsPromises.readFile(filePath, "utf8");
+    // normalize __FILE__
+    fileContents = fileContents.replace(/__FILE__/g, 'replacetext(copytext(__FILE__, 6), "!", "/")');
 
     const matches = Array.from(fileContents.matchAll(includeRegex));
 

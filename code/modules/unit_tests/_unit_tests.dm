@@ -4,17 +4,17 @@
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 
 /// For advanced cases, fail unconditionally but don't return (so a test can return multiple results)
-#define TEST_FAIL(reason) (Fail(reason || "No reason", __TG_FILE__, __LINE__))
+#define TEST_FAIL(reason) (Fail(reason || "No reason", __FILE__, __LINE__))
 
 /// Asserts that a condition is true
 /// If the condition is not true, fails the test
-#define TEST_ASSERT(assertion, reason) if (!(assertion)) { return Fail("Assertion failed: [reason || "No reason"]", __TG_FILE__, __LINE__) }
+#define TEST_ASSERT(assertion, reason) if (!(assertion)) { return Fail("Assertion failed: [reason || "No reason"]", __FILE__, __LINE__) }
 
 /// Asserts that a parameter is not null
-#define TEST_ASSERT_NOTNULL(a, reason) if (isnull(a)) { return Fail("Expected non-null value: [reason || "No reason"]", __TG_FILE__, __LINE__) }
+#define TEST_ASSERT_NOTNULL(a, reason) if (isnull(a)) { return Fail("Expected non-null value: [reason || "No reason"]", __FILE__, __LINE__) }
 
 /// Asserts that a parameter is null
-#define TEST_ASSERT_NULL(a, reason) if (!isnull(a)) { return Fail("Expected null value but received [a]: [reason || "No reason"]", __TG_FILE__, __LINE__) }
+#define TEST_ASSERT_NULL(a, reason) if (!isnull(a)) { return Fail("Expected null value but received [a]: [reason || "No reason"]", __FILE__, __LINE__) }
 
 /// Asserts that the two parameters passed are equal, fails otherwise
 /// Optionally allows an additional message in the case of a failure
@@ -22,7 +22,7 @@
 	var/lhs = ##a; \
 	var/rhs = ##b; \
 	if (lhs != rhs) { \
-		return Fail("Expected [isnull(lhs) ? "null" : lhs] to be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]", __TG_FILE__, __LINE__); \
+		return Fail("Expected [isnull(lhs) ? "null" : lhs] to be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]", __FILE__, __LINE__); \
 	} \
 } while (FALSE)
 
@@ -32,7 +32,7 @@
 	var/lhs = ##a; \
 	var/rhs = ##b; \
 	if (lhs == rhs) { \
-		return Fail("Expected [isnull(lhs) ? "null" : lhs] to not be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]", __TG_FILE__, __LINE__); \
+		return Fail("Expected [isnull(lhs) ? "null" : lhs] to not be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]", __FILE__, __LINE__); \
 	} \
 } while (FALSE)
 
@@ -44,7 +44,7 @@
 /// Logs a noticable message on GitHub, but will not mark as an error.
 /// Use this when something shouldn't happen and is of note, but shouldn't block CI.
 /// Does not mark the test as failed.
-#define TEST_NOTICE(source, message) source.log_for_test((##message), "notice", __TG_FILE__, __LINE__)
+#define TEST_NOTICE(source, message) source.log_for_test((##message), "notice", __FILE__, __LINE__)
 
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0

@@ -16,11 +16,6 @@ cp tools/ci/ci_config.txt ci_test/config/config.txt
 #set the map
 cp _maps/$MAP.json ci_test/data/next_map.json
 
-wget -nv -O ./spaceman "https://github.com/Cyberboss/auxtools/releases/download/CodeCoverageTest2/spaceman"
-chmod +x ./spaceman
-./spaceman -e ./tgstation.flat.dme executable-lines > ci_test/executable_lines.json
-sed -i 's/flat\///g' ci_test/executable_lines.json
-
 cd ci_test
 DreamDaemon tgstation.flat.dmb -close -trusted -verbose -params "log-directory=ci"
 
