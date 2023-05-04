@@ -125,6 +125,20 @@
 	//return QDEL_HINT_FINDREFERENCE
 
 /**
+ * start atmos processing based off the air on its turf. used mostly by vents & scrubbers
+ */
+/obj/machinery/atmospherics/proc/try_turf_atmos_process()
+	var/turf/open/turf = get_turf(src)
+	if (!istype(turf))
+		return
+
+	var/datum/gas_mixture/turf_gas = turf.air
+	if (isnull(turf_gas))
+		return
+
+	check_atmos_process(turf, turf_gas, turf_gas.temperature)
+
+/**
  * Called by the machinery disconnect(), custom for each type
  */
 /obj/machinery/atmospherics/proc/destroy_network()

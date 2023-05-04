@@ -301,12 +301,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("power")
 			var/obj/machinery/atmospherics/components/powering = vent || scrubber
 			powering.on = !!params["val"]
+			powering.try_turf_atmos_process()
 			powering.update_appearance(UPDATE_ICON)
-			//special check for scrubbers since its turf determines if it should process
-			if(isnull(scrubber))
-				vent.check_atmos_process()
-			else
-				scrubber.try_update_atmos_process()
 		if ("direction")
 			if (isnull(vent))
 				return TRUE

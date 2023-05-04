@@ -185,17 +185,6 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/try_update_atmos_process()
-	var/turf/open/turf = get_turf(src)
-	if (!istype(turf))
-		return
-
-	var/datum/gas_mixture/turf_gas = turf.air
-	if (isnull(turf_gas))
-		return
-
-	check_atmos_process(turf, turf_gas, turf_gas.temperature)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(idle_power_usage)
@@ -219,7 +208,7 @@
 
 	src.scrubbing = scrubbing
 	update_appearance(UPDATE_ICON)
-	try_update_atmos_process()
+	try_turf_atmos_process()
 	update_power_usage()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
