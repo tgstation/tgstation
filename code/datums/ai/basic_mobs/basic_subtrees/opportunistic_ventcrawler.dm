@@ -1,7 +1,7 @@
 /// Opportunistically searches for and hides/scurries through vents.
 /datum/ai_planning_subtree/opportunistic_ventcrawler
 
-/datum/ai_planning_subtree/opportunistic_ventcrawler/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/opportunistic_ventcrawler/select_behaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(HAS_TRAIT(controller.pawn, TRAIT_MOVE_VENTCRAWLING))
 		return SUBTREE_RETURN_FINISH_PLANNING // hold on let me cook
 
