@@ -217,8 +217,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		if(C && C.prefs)
-			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 		C?.playtitlemusic(40)
 		if(speed_round)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
@@ -282,7 +280,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
-
+	for(var/client/C in GLOB.clients)
+		if(C && C.prefs)
+			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
