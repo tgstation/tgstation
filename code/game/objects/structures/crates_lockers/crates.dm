@@ -115,9 +115,11 @@
 
 /obj/structure/closet/crate/open
 	opened = TRUE
+	icon_state = "crateopen"
 
 /obj/structure/closet/crate/mail/open
 	opened = TRUE
+	icon_state = "mailopen"
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
