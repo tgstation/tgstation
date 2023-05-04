@@ -28,7 +28,7 @@
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
-	air_update_turf()
+	air_update_turf(TRUE, TRUE)
 
 	create_reagents(100, NO_REACT)
 
@@ -40,9 +40,11 @@
 			for(var/i in 1 to amount)
 				load(new typekey(src))
 
-/obj/machinery/smartfridge/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+
+/obj/machinery/smartfridge/set_anchored(anchorvalue)
 	. = ..()
-	air_update_turf()
+	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, anchorvalue)
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
