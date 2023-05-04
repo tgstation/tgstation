@@ -546,9 +546,8 @@ SUBSYSTEM_DEF(spatial_grid)
 		 * {coords: (221, 170, 3), within channels: hearing},
 		 * {coords: (255, 153, 11), within channels: hearing},
 		 * {coords: (136, 136, 14), within channels: hearing}.
-		 * ping @KylerAce in discord if you see this
 		 */
-		stack_trace("[movable_to_check.type] instance, [location_string], [error_explanation] [error_data]. ping @KylerAce in discord if you see this")
+		stack_trace("[movable_to_check.type] instance, [location_string], [error_explanation] [error_data].")
 
 		return TRUE
 
