@@ -488,13 +488,9 @@ SUBSYSTEM_DEF(spatial_grid)
 /datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
 
 	if(!movable_to_check?.spatial_grid_key)
-		if(istype(movable_to_check, /mob/living/trolls_the_maintainer))
-			stack_trace("untracked_movable_error() trolls_the_maintainer doesnt have a grid key!")
 		return FALSE
 
 	if(!initialized)
-		if(istype(movable_to_check, /mob/living/trolls_the_maintainer))
-			stack_trace("untracked_movable_error() not initialized!")
 		return FALSE
 
 	var/datum/spatial_grid_cell/loc_cell = get_cell_of(movable_to_check)
