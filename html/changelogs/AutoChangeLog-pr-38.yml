@@ -1,0 +1,5 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - rscdel: "Removed the meathook shotgun from tendrils and portals... oops how'd that get in there?"
+  - rscadd: "adds the meathook back into tendrils, without the shotgun part. Use it to reposition fauna or people!"
