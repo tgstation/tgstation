@@ -167,7 +167,7 @@
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 
-	set_access(null)
+	set_access()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
