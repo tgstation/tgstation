@@ -40,8 +40,6 @@ SUBSYSTEM_DEF(economy)
 	var/inflation_value = 1
 	/// How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.
 	var/civ_bounty_tracker = 0
-	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
-	var/earning_report
 	///The modifier multiplied to the value of bounties paid out.
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
@@ -112,30 +110,7 @@ SUBSYSTEM_DEF(economy)
 		if(!issue_paydays())
 			return
 
-		processing_part = ECON_PRICE_UPDATE_STEP
-		var/list/obj/machinery/vending/prices_to_update = list()
-		// Assoc list of "z level" -> if it's on the station
-		// Hack, is station z level is too expensive to do for each machine, I hate this place
-		var/list/station_z_status = list()
-		for(var/obj/machinery/vending/vending_lad in GLOB.machines)
-			if(istype(vending_lad, /obj/machinery/vending/custom))
-				continue
-			var/vending_level = vending_lad.z
-			var/station_status = station_z_status["[vending_level]"]
-			if(station_status == null)
-				station_status = is_station_level(vending_level)
-				station_z_status["[vending_level]"] = station_status
-			if(!station_status)
-				continue
-
-			prices_to_update += vending_lad
-
-		cached_processing = prices_to_update
 		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-
-	if(processing_part == ECON_PRICE_UPDATE_STEP)
-		if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) && !price_update())
-			return
 
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
@@ -179,23 +154,6 @@ SUBSYSTEM_DEF(economy)
 		if(MC_TICK_CHECK)
 			cached_processing.Cut(1, i + 1)
 			return FALSE
-	return TRUE
-
-/**
- * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
- *
- * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
- **/
-/datum/controller/subsystem/economy/proc/price_update()
-	var/list/cached_processing = src.cached_processing
-	for(var/i in 1 to length(cached_processing))
-		var/obj/machinery/vending/V = cached_processing[i]
-		V.reset_prices(V.product_records, V.coin_records)
-		if(MC_TICK_CHECK)
-			cached_processing.Cut(1, i + 1)
-			return FALSE
-	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>.<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br> That's all from the <i>Nanotrasen Economist Division</i>."
-	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 	return TRUE
 
 /**

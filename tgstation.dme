@@ -3271,7 +3271,6 @@
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\heart_attack.dm"
 #include "code\modules\events\ion_storm.dm"
-#include "code\modules\events\market_crash.dm"
 #include "code\modules\events\mass_hallucination.dm"
 #include "code\modules\events\mice_migration.dm"
 #include "code\modules\events\portal_storm.dm"
