@@ -3,6 +3,9 @@
 	"map_name": "MultiZ Debug",
 	"map_path": "map_files/debug",
 	"map_file": "multiz.dmm",
+	"ignored_unit_tests": [
+		"/datum/unit_test/job_roundstart_spawnpoints"
+	],
 	"traits": [
 		{
 			"Up": 1,
