@@ -24,7 +24,7 @@
 	setup_expected_types()
 
 	// We should find something, at the very least.
-	ASSERT(length(GLOB.required_map_items) > 0, "No required map items were found!")
+	TEST_ASSERT(length(GLOB.required_map_items) > 0, "No required map items were found!")
 
 	var/list/required_map_items = GLOB.required_map_items.Copy()
 	for(var/got_type in expected_types)
@@ -45,7 +45,7 @@
 
 	// Primarily serves as a reminder to include the typepath in the expected types list.
 	// But easily can be removed in the future if it runs into false positives.
-	ASSERT(length(required_map_items) == 0, "The following paths were found in required map items, but weren't checked: [english_list(required_map_items)]")
+	TEST_ASSERT(length(required_map_items) == 0, "The following paths were found in required map items, but weren't checked: [english_list(required_map_items)]")
 
 /// Datum for tracking required map items
 /datum/required_item
