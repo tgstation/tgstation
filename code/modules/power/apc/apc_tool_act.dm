@@ -2,7 +2,7 @@
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
 
-		//Prying off broken cover
+	//Prying off broken cover
 	if(opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
 		balloon_alert(user, "prying...")
