@@ -1,3 +1,13 @@
+// This script does the following:
+// Loads the .dme and recurively and indiscriminately (no preprocessing) finds all #included files
+// The included file are then copied to /flat but they have their directory separators replace with `!`s
+// i.e. /code/game/world.dm becomes /flat/code!game!world.dm
+// All #includes are adjusted to reflect this
+// It then outputs /{dmeFile}.flat.dme which can be used to build the /flat tree
+// We do this for code coverage purposes in CI generally
+// It would not be necessary if not for this decade old BYOND bug
+// http://www.byond.com/forum/post/108025
+
 import fsPromises from 'fs/promises';
 import path from 'path';
 
