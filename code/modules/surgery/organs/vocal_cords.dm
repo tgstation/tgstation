@@ -111,7 +111,7 @@
 	owner.say(".x[message]")
 
 /obj/item/organ/internal/vocal_cords/adamantine/handle_speech(message)
-	var/msg = span_resonate(span_name("[owner.real_name] resonates, \"[message]\""))
+	var/msg = span_resonate("[span_name("[owner.real_name]")] resonates, \"[message]\"")
 	for(var/player in GLOB.player_list)
 		if(iscarbon(player))
 			var/mob/living/carbon/speaker = player
