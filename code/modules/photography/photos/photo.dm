@@ -42,7 +42,7 @@
 			continue
 		if(!isobserver(seen))
 			continue
-		set_custom_materials(list(/datum/material/hauntium = 2000))
+		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		break
 
 /obj/item/photo/update_icon_state()

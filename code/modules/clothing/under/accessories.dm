@@ -134,7 +134,7 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
@@ -203,7 +203,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	medaltype = "medal-silver"
-	custom_materials = list(/datum/material/silver=1000)
+	custom_materials = list(/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -226,7 +226,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	medaltype = "medal-gold"
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
@@ -253,7 +253,7 @@
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
 	armor_type = /datum/armor/medal_plasma
-	custom_materials = list(/datum/material/plasma=1000)
+	custom_materials = list(/datum/material/plasma=HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/medal_plasma
 	fire = -10
