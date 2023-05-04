@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embedding = list(embed_chance = 50)
 	novariants = TRUE
 	matter_amount = 2
-	cost = MINERAL_MATERIAL_AMOUNT / 2
+	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/rods
 

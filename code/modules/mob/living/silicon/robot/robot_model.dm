@@ -989,7 +989,7 @@
 	var/datum/material/mat_type
 
 /datum/robot_energy_storage/material/New(obj/item/robot_model/model)
-	max_energy = 60 * MINERAL_MATERIAL_AMOUNT
+	max_energy = 60 * SHEET_MATERIAL_AMOUNT
 	return ..()
 
 /datum/robot_energy_storage/material/iron
