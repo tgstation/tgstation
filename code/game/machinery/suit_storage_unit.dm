@@ -585,8 +585,17 @@
 		open_machine()
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
-	if(state_open || !card_reader_installed || !panel_open)
-		return TRUE
+	if(!card_reader_installed)
+        balloon_alert(user, "no card reader!")
+		return
+
+	if(state_open)
+        balloon_alert(user, "must be closed!")
+		return
+
+	if(!panel_open)
+        balloon_alert(user, "panel is screwed shut!")
+		return
 
 	if(locked)
 		balloon_alert(user, "unlock first!")
