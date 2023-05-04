@@ -1,5 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes:
-  - bugfix: "Style meter parrying works again"
-  - bugfix: "Style meter bar now works correctly with very high style point count"

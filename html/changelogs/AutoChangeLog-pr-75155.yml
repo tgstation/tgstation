@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Powersinks no longer always show as being very hot if you're too close."

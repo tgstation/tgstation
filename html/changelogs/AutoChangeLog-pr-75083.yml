@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Golems can redeem points through their ORM without an Ore silo."
