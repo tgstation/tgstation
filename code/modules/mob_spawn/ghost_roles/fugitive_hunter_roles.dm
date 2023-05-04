@@ -100,3 +100,15 @@
 	prompt_name = "a psyker Captain"
 	back_story = HUNTER_PACK_PSYKER
 	outfit = /datum/outfit/psyker/captain
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/seer
+	name = "cryosleep pod"
+	desc = "A dingy, poorly maintained, but still run-of-the-mill cryo sleeper."
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	prompt_name = "a psyker seer"
+	you_are_text = "psyker seer"
+	flavour_text = "Oh great, the fortunte-tellers want my help with something again. They picked up up while I was space-hitchhiking, said they would take me anywhere \
+		if I assisted them with my 'flesh-gaze'. They're a bunch of freaks, but at least they leave me be after I'm done helping them..."
+	back_story = HUNTER_PACK_PSYKER
+	outfit = /datum/outfit/psyker_seer

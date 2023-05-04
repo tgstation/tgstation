@@ -55,14 +55,8 @@
 	},
 /area/shuttle/hunter)
 "dq" = (
-/obj/structure/rack,
-/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = 9;
-	pixel_y = 1
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/seer{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/shuttle/hunter)
@@ -397,6 +391,9 @@
 /obj/item/storage/box/lethalshot{
 	pixel_x = 2
 	},
+/obj/item/gun/ballistic/shotgun/lethal{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "xa" = (
@@ -499,7 +496,6 @@
 /area/shuttle/hunter)
 "AF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/spacecash/c1,
 /turf/open/floor/engine,
 /area/shuttle/hunter)
 "AH" = (
@@ -533,6 +529,14 @@
 	pixel_y = 2
 	},
 /obj/structure/sign/departments/security/directional/south,
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = 9;
+	pixel_y = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Ck" = (
@@ -852,6 +856,10 @@
 /area/shuttle/hunter)
 "SG" = (
 /obj/effect/decal/cleanable/vomit/old,
+/obj/item/stack/spacecash/c1{
+	pixel_x = 5;
+	pixel_y = -4
+	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "SI" = (
@@ -1006,8 +1014,15 @@
 "ZW" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/gun/ballistic/shotgun/lethal{
-	pixel_y = 4
+/obj/item/binoculars{
+	pixel_x = -1
+	},
+/obj/item/knife/hunting{
+	pixel_y = 3
+	},
+/obj/item/megaphone,
+/obj/item/clothing/glasses/thermal/monocle{
+	pixel_y = 2
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)

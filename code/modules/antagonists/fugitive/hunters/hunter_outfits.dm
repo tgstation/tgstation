@@ -162,8 +162,18 @@
 /datum/id_trim/bounty_hunter/psykers
 	assignment = "Psyker-gang Shikari"
 
-/datum/id_trim/pirate/captain/psykers
+/datum/id_trim/bounty_hunter/psykers/captain
 	assignment = "Psyker-gang Shikari Captain"
+
+/datum/id_trim/bounty_hunter/psykers/seer
+	assignment = "Psyker-gang Shikari Seer"
+
+/datum/outfit/psyker/captain
+	name = "Psyker-Shikari Leader"
+
+	id_trim = /datum/id_trim/bounty_hunter/psykers/captain
+	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
+	uniform = /obj/item/clothing/under/pants/camo
 
 /datum/outfit/psyker
 	name = "Psyker-Shikari Hunter"
@@ -176,6 +186,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
+	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers
 
@@ -183,12 +194,18 @@
 	. = ..()
 	equipped.psykerize()
 
-/datum/outfit/psyker/captain
-	name = "Psyker-Shikari Leader"
+/datum/outfit/psyker_seer
+	name = "Psyker-Shikari Seer"
+	glasses = /obj/item/clothing/glasses/regular/thin
+	ears = /obj/item/radio/headset
+	uniform = /obj/item/clothing/under/pants/jeans
+	suit = /obj/item/clothing/suit/hazardvest
+	gloves = /obj/item/clothing/gloves/fingerless
+	shoes = /obj/item/clothing/shoes/sandal
+	l_pocket = /obj/item/restraints/handcuffs/cable/zipties
+	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 
-	id_trim = /datum/id_trim/pirate/captain/psykers
-	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
-	uniform = /obj/item/clothing/under/pants/camo
+	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
 
 //ids and ert code
 
