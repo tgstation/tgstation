@@ -18,7 +18,7 @@ GLOBAL_PROTECT(##log_var_name);\
 	}\
 }
 
-#define DECLARE_LOG(log_name, start) DECLARE_LOG_NAMED(##log_name, "[copytext(#log_name, 1, length(#log_name) - 4)]", start)
+#define DECLARE_LOG(log_name, start) DECLARE_LOG_NAMED(##log_name, "[copytext(#log_name, 1, length(#log_name) - 3)]", start)
 #define START_LOG TRUE
 #define DONT_START_LOG FALSE
 

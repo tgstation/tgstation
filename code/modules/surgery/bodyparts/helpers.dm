@@ -11,12 +11,19 @@
 		if(bodypart.body_zone == zone)
 			return bodypart
 
-///Replaces a single limb and deletes the old one if there was one
+/// Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
+
+/// Replaces a single limb and returns the old one if there was one
+/// Note: the old limb gets sent to nullspace during try_attach_limb
+/mob/living/carbon/proc/return_and_replace_bodypart(obj/item/bodypart/new_limb, special)
+	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
+	new_limb.try_attach_limb(src, special = special)
+	return old_limb
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)

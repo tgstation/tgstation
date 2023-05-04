@@ -94,6 +94,10 @@
 	name = "Engineering Maintenance"
 	icon_state = "maint_engi"
 
+/area/station/maintenance/department/prison
+	name = "Prison Maintenance"
+	icon_state = "sec_prison"
+
 /area/station/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
@@ -216,6 +220,14 @@
 /area/station/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
+
+/area/station/maintenance/hallway/abandoned_command
+	name = "\improper Abandoned Command Hallway"
+	icon_state = "maint_bridge"
+
+/area/station/maintenance/hallway/abandoned_recreation
+	name = "\improper Abandoned Recreation Hallway"
+	icon_state = "maint_dorms"
 
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
@@ -346,9 +358,21 @@
 	icon_state = "entry"
 	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
+/area/station/hallway/secondary/dock
+	name = "\improper Secondary Station Dock Hallway"
+	icon_state = "hall"
+
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
 	icon_state = "hall_service"
+
+/area/station/hallway/secondary/spacebridge
+	name = "\improper Space Bridge"
+	icon_state = "hall"
+
+/area/station/hallway/secondary/recreation
+	name = "\improper Recreation Hallway"
+	icon_state = "hall"
 
 //Command
 
@@ -377,6 +401,11 @@
 	name = "\improper Corporate Showroom"
 	icon_state = "showroom"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+
+/area/station/command/corporate_suite
+	name = "\improper Corporate Guest Suite"
+	icon_state = "command"
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/station/command/heads_quarters
 	icon_state = "heads_quarters"
@@ -426,6 +455,13 @@
 	name = "\improper Gateway"
 	icon_state = "gateway"
 	ambience_index = AMBIENCE_ENGI
+
+//Command - Bonus
+
+/area/station/command/corporate_dock
+	name = "\improper Corporate Private Dock"
+	icon_state = "command"
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 //Commons
 
@@ -645,6 +681,11 @@
 	name = "\improper Theater"
 	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
+
+/area/station/service/greenroom
+	name = "\improper Greenroom"
+	icon_state = "theatre"
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/station/service/theater/abandoned
 	name = "\improper Abandoned Theater"
@@ -1105,6 +1146,14 @@
 	name = "\improper Security Office"
 	icon_state = "security"
 
+/area/station/security/breakroom
+	name = "\improper Security Break Room"
+	icon_state = "brig"
+
+/area/station/security/tram
+	name = "\improper Security Transfer Tram"
+	icon_state = "security"
+
 /area/station/security/lockers
 	name = "\improper Security Locker Room"
 	icon_state = "securitylockerroom"
@@ -1319,6 +1368,11 @@
 	name = "\improper Drone Bay"
 	icon_state = "cargo_drone"
 
+/area/station/cargo/boutique
+	name = "\improper Boutique"
+	icon_state = "cargo_delivery"
+	sound_environment = SOUND_AREA_WOODFLOOR
+
 /area/station/cargo/warehouse/upper
 	name = "\improper Upper Warehouse"
 
@@ -1386,6 +1440,11 @@
 /area/station/science/cytology
 	name = "\improper Cytology Lab"
 	icon_state = "cytology"
+
+/area/station/science/cubicle
+	name = "\improper Science Cubicles"
+	icon_state = "science"
+	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
 // Use this for the main lab. If test equipment, storage, etc is also present use this one too.
 /area/station/science/ordnance
@@ -1456,6 +1515,11 @@
 /area/station/science/robotics/lab
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
+
+/area/station/science/robotics/augments
+	name = "improper Augmentation Theater"
+	icon_state = "robotics"
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
 /area/station/science/research
 	name = "\improper Research Division"

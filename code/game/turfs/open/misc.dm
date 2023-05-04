@@ -67,6 +67,7 @@
 				break_tile()
 				hotspot_expose(1000,CELL_VOLUME)
 
+	return TRUE
 
 /turf/open/misc/is_shielded()
 	for(var/obj/structure/A in contents)
