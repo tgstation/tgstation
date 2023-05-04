@@ -24,7 +24,7 @@
 	var/charge = 0
 	///Maximum charge in cell units
 	var/maxcharge = 1000
-	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
 	var/rigged = FALSE
@@ -215,7 +215,7 @@
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
 	if(QDELETED(src))
-		return
+		return FALSE
 
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -224,6 +224,8 @@
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				corrupt()
+
+	return TRUE
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(ishuman(user))
@@ -280,7 +282,7 @@
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = 500
-	custom_materials = list(/datum/material/glass=40)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -289,7 +291,7 @@
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
-	custom_materials = list(/datum/material/glass=50)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = 1000
 
 /obj/item/stock_parts/cell/upgraded/plus
@@ -300,7 +302,7 @@
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
 	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
-	custom_materials = list(/datum/material/glass=40)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/secborg/empty
 	empty = TRUE
@@ -330,14 +332,14 @@
 	name = "black power cell"
 	icon_state = "bscell"
 	maxcharge = 10000
-	custom_materials = list(/datum/material/glass=60)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = 2000
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
 	maxcharge = 10000
-	custom_materials = list(/datum/material/glass=60)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = 1500
 
 /obj/item/stock_parts/cell/high/empty
@@ -347,7 +349,7 @@
 	name = "super-capacity power cell"
 	icon_state = "scell"
 	maxcharge = 20000
-	custom_materials = list(/datum/material/glass=300)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = 2000
 
 /obj/item/stock_parts/cell/super/empty
@@ -357,7 +359,7 @@
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	custom_materials = list(/datum/material/glass=400)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = 3000
 
 /obj/item/stock_parts/cell/hyper/empty
@@ -368,7 +370,7 @@
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
 	maxcharge = 40000
-	custom_materials = list(/datum/material/glass=600)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
 	chargerate = 4000
 
 /obj/item/stock_parts/cell/bluespace/empty
@@ -378,7 +380,7 @@
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
-	custom_materials = list(/datum/material/glass=1000)
+	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
@@ -454,7 +456,7 @@
 	name = "miniature power cell"
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."
 	maxcharge = 120 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
-	custom_materials = list(/datum/material/glass = 20)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*0.2)
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)

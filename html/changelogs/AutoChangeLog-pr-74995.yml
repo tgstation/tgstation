@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Tramstation Robotics and RD now spawn in their departments roundstart"
+  - bugfix: "Birdboat detective now spawns in their office"

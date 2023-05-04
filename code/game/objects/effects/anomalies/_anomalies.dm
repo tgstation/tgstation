@@ -88,6 +88,9 @@
 /obj/effect/anomaly/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)

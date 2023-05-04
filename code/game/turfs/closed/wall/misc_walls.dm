@@ -119,7 +119,7 @@
 
 /turf/closed/wall/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/closed/wall/material/meat/airless
 	baseturfs = /turf/open/floor/material/meat/airless

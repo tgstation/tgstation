@@ -1,0 +1,6 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Fixed math on cyborg restocking"
+  - qol: "borgs entering chargers now have the restocking feature enabled by default. It can be disabled with a right-click while charging if you don't want to eat the station's mats."
+  - balance: "Borg restocking speed now scales with the charger's manipulator tier."
