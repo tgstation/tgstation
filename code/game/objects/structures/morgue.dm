@@ -53,6 +53,12 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		connected.connected = src
 	GLOB.bodycontainers += src
 	toggle_organ_decay(src)
+	register_context()
+
+/obj/structure/bodycontainer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!locked)
+		context[SCREENTIP_CONTEXT_LMB] = "Open/Close"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
@@ -159,7 +165,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
  */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
+	desc = "Used to keep bodies in until someone fetches them. Includes a high-tech alert system."
 	icon_state = "morgue1"
 	base_icon_state = "morgue"
 	dir = EAST
@@ -174,7 +180,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	COOLDOWN_DECLARE(next_beep)
 
 /obj/structure/bodycontainer/morgue/beeper_off
+	name = "secure morgue"
+	desc = "Used to keep bodies in until someone fetches them. Starts with their beeper off."
 	beeper = FALSE
+
+/obj/structure/bodycontainer/morgue/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[beeper ? "disable beeper" : "enable beeper"]"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

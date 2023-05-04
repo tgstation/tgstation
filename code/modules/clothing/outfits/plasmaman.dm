@@ -51,7 +51,7 @@
 
 	uniform = /obj/item/clothing/under/plasmaman/coroner
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
-	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
+	head = /obj/item/clothing/head/helmet/space/plasmaman/coroner
 	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/paramedic

@@ -341,7 +341,7 @@
 		/obj/item/storage/box/dishdrive = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
-	payment_department = ACCOUNT_SRV
+	payment_department = ACCOUNT_MED
 	extra_price = PAYCHECK_COMMAND
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"

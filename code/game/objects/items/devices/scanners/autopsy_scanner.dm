@@ -61,13 +61,13 @@
 	else
 		var/blood_id = scanned.get_blood_id()
 		if(blood_id)
-			var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = carbontarget.dna.blood_type
+			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+			var/blood_type = scanned.dna.blood_type
 			if(blood_id != /datum/reagent/blood)
 				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
 				blood_type = reagents ? reagents.name : blood_id
 				autopsy_information += "Blood Type: [blood_type]<br>"
-				autopsy_information += "Blood Volume: [carbontarget.blood_volume] cl ([round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)]) %<br>"
+				autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]) %<br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"
