@@ -1433,7 +1433,7 @@
 	max_integrity = 700
 	max_loaded_items = 40
 	light_mask = "greed-light-mask"
-	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()

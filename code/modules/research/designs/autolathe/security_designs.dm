@@ -2,7 +2,7 @@
 	name = "Beanbag Slug (Less Lethal)"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -50,7 +50,7 @@
 	name = "Universal Recorder Tape"
 	id = "tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = 5)
 	build_path = /obj/item/tape/random
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -62,7 +62,7 @@
 	name = "Box of Foam Darts (Harmless)"
 	id = "foam_dart"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/ammo_box/foambox
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -74,7 +74,7 @@
 	name = "Flamethrower (Lethal/Highly Destructive)"
 	id = "flamethrower"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/flamethrower/full
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -98,7 +98,7 @@
 	name = "Handcuffs"
 	id = "handcuffs"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/restraints/handcuffs
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -154,7 +154,7 @@
 	name = "Foam Riot Dart (Nonlethal)"
 	id = "riot_dart"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less iron!
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT) //Discount for making individually - no box = less iron!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -202,7 +202,7 @@
 	name = "Ammo Box (10mm) (Lethal)"
 	id = "c10mm"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c10mm
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -214,7 +214,7 @@
 	name = "Ammo Box (.45) (Lethal)"
 	id = "c45"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c45
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -226,7 +226,7 @@
 	name = "Ammo Box (9mm) (Lethal)"
 	id = "c9mm"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -240,7 +240,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/interrogation
 	category = list(
@@ -255,7 +255,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/prison
 	category = list(

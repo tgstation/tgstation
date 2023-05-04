@@ -31,6 +31,7 @@
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+	return FALSE
 
 /obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)

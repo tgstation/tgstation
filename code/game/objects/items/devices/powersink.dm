@@ -22,7 +22,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	custom_materials = list(/datum/material/iron=750)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT* 7.5)
 	var/max_heat = 5e7 // Maximum contained heat before exploding. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
@@ -38,7 +38,7 @@
 	. = ..()
 	if(mode)
 		. += "\The [src] is bolted to the floor."
-	if(in_range(user, src) || isobserver(user) && internal_heat > max_heat * 0.5)
+	if((in_range(user, src) || isobserver(user)) && internal_heat > max_heat * 0.5)
 		. += span_danger("[src] is warping the air above it. It must be very hot.")
 
 /obj/item/powersink/set_anchored(anchorvalue)
