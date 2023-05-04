@@ -1,6 +1,5 @@
 // Todo:
 // Add action figure
-// Add bag/satchel/duffel
 // Wintercoat?
 
 /datum/job/coroner
