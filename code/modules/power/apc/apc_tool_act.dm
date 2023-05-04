@@ -5,8 +5,7 @@
 		//Prying off broken cover
 	if(opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
-		user.visible_message(span_notice("[user.name] begins prying off the broken [name] cover!"))
-		balloon_alert(user, "you begin prying")
+		balloon_alert(user, "prying...")
 		if(!crowbar.use_tool(src, user, 5 SECONDS))
 			return
 		opened = APC_COVER_REMOVED
