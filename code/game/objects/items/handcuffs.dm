@@ -7,10 +7,17 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
+// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+#define HANDCUFFS_TYPE_WEAK 0
+// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+#define HANDCUFFS_TYPE_STRONG 1
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/restraints.dmi'
+	var/restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -42,6 +49,7 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
+	restraint_strength = HANDCUFFS_TYPE_STRONG
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
@@ -132,6 +140,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -151,6 +160,7 @@
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
