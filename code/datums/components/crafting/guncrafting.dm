@@ -11,7 +11,7 @@
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6)
 	resistance_flags = FLAMMABLE
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"

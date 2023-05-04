@@ -321,6 +321,7 @@
 
 /obj/machinery/anomalous_crystal/ex_act()
 	ActivationReaction(null, ACTIVATE_BOMB)
+	return TRUE
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
@@ -628,7 +629,7 @@
 	return
 
 /obj/structure/closet/stasis/ex_act()
-	return
+	return FALSE
 
 /datum/action/exit_possession
 	name = "Exit Possession"

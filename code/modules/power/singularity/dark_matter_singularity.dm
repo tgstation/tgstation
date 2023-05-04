@@ -39,7 +39,7 @@
 
 /obj/singularity/dark_matter/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
-		return
+		return FALSE
 	return ..()
 
 /obj/singularity/dark_matter/supermatter_upgrade()
