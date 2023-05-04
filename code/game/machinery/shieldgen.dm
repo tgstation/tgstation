@@ -555,11 +555,11 @@
 #undef ACTIVE_HASFIELDS
 
 //Modular Shield Generator Start
-/obj/machinery/power/ModularShieldGen
+/obj/machinery/ModularShieldGen
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "shield_wall_gen"
+	icon_state = "shield_wall_gen" //temporary icon
 	density = TRUE
 	opacity = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
@@ -570,17 +570,45 @@
 	var/recovering = FALSE
 
 	///Determins max health of the shield
-	var/max_power_cap = 100
+	var/max_shield_strength = 100
 
-	///Shield Regeneration
+	///Shield Regeneration amount
 	var/regeneration = 5
 
+	///Determines the max radius the shield can support
 	var/max_radius = 5
 
+	///Current radius the sield is set to
 	var/radius = 5
 
-/obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
+	var/list/deployed_shields
+
+	/obj/machinery/ModularShieldGen/proc/activate()
+	active = TRUE
+	update_appearance()
+
+	//please god yell at me for this i dont know a better way to do this
+	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
+		if (!(target_tile == circle_range_turfs(src, radius -1)) && isopenturf(target_tile))
+			deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
+
+
+/obj/machinery/ModularShieldGen/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
 		return
 
 
+
+/obj/structure/emergency_shield/Modular
+	name = "Modular energy shield"
+	desc = "An energy shield with varying configurations."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield-old"
+
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE
+
+	//How the shield loses integrity
+	/obj/structure/emergency_shield/Modular/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(damage_type == BRUTE || damage_type == BURN)
+		drain_strength(damage_amount)
