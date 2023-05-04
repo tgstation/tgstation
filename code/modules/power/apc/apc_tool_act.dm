@@ -122,7 +122,7 @@
 			balloon_alert(user, "no cover to repair!")
 			return
 		if (machine_stat & BROKEN)
-			balloon_alert(user, "the cover is too damaged to repair!")
+			balloon_alert(user, "too damaged to repair!")
 			return
 		if(!welder.tool_start_check(user, amount=0))
 			return
