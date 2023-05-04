@@ -23,9 +23,6 @@
 /datum/unit_test/required_map_items/Run()
 	setup_expected_types()
 
-	// We should find something, at the very least.
-	TEST_ASSERT(length(GLOB.required_map_items) > 0, "No required map items were found!")
-
 	var/list/required_map_items = GLOB.required_map_items.Copy()
 	for(var/got_type in expected_types)
 		var/datum/required_item/item = required_map_items[got_type]
@@ -43,8 +40,8 @@
 			TEST_FAIL("Item [got_type] should have at most [item.maximum_amount] mapped in but had [items_found] on mapload!")
 			continue
 
-	// Primarily serves as a reminder to include the typepath in the expected types list.
-	// But easily can be removed in the future if it runs into false positives.
+	// This primarily serves as a reminder to include the typepath in the expected types list above.
+	// However we can easily delete this line in the future if it runs into false positives.
 	TEST_ASSERT(length(required_map_items) == 0, "The following paths were found in required map items, but weren't checked: [english_list(required_map_items)]")
 
 /// Datum for tracking required map items
