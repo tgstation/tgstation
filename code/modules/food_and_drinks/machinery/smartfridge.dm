@@ -40,6 +40,10 @@
 			for(var/i in 1 to amount)
 				load(new typekey(src))
 
+/obj/machinery/smartfridge/Move(atom/newloc, direct, glide_size_override, update_dir)
+	var/turf/old_loc = loc
+	. = ..()
+	move_update_air(old_loc)
 
 /obj/machinery/smartfridge/set_anchored(anchorvalue)
 	. = ..()
