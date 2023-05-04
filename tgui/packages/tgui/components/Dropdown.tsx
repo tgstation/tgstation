@@ -24,7 +24,6 @@ type DropdownUniqueProps = {
   // you freaks really are just doing anything with this shit
   selected?: any;
   onSelected?: (selected: any) => void;
-  // icon props - name is not mandatory
 };
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
