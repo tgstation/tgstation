@@ -236,7 +236,7 @@
 				authed = TRUE
 			clients.Add(list(list(
 				"name" = channel_client.username,
-				"online" = !!(channel_client == channel_client.computer.active_program),
+				"online" = (channel_client == channel_client.computer.active_program),
 				"away" = (channel_client in channel_client.computer.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),
