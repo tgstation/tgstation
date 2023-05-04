@@ -7,7 +7,7 @@
 		crowbar.play_tool_sound(src)
 		user.visible_message(span_notice("[user.name] begins prying off the broken [name] cover!"))
 		balloon_alert(user, "you begin prying")
-		if(!crowbar.use_tool(src, user, 50))
+		if(!crowbar.use_tool(src, user, 5 SECONDS))
 			return
 		opened = APC_COVER_REMOVED
 		user.visible_message(span_notice("[user.name] prys off the broken [name] cover!"))
