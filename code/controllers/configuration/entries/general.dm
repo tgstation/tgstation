@@ -686,3 +686,6 @@
 
 /datum/config_entry/number/minimum_age
 	default = 7
+
+/datum/config_entry/flag/vpn_kick
+	default = FALSE
