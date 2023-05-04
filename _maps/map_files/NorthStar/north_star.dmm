@@ -5234,7 +5234,7 @@
 /area/station/hallway/floor3/fore)
 "blR" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "viro-outer";
 	name = "Virology Outer Shutters"
 	},
@@ -13111,8 +13111,27 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/box/white,
-/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/button/door/directional/west{
+	id = "viro-inner";
+	name = "Inner Virology Lockdown";
+	pixel_y = -24;
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "viro-outer";
+	name = "Outer Virology Lockdown";
+	pixel_y = -33;
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "viro-iso";
+	name = "Isolation Bolts";
+	normaldoorcontrol = 1;
+	pixel_x = -3;
+	specialfunctions = 4;
+	pixel_y = -33
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "dqn" = (
@@ -51163,7 +51182,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Virology Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "viro-inner";
 	name = "Virology Inner Shutters"
 	},
@@ -69464,7 +69483,7 @@
 "svL" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "viro-inner";
 	name = "Virology Inner Shutters"
 	},
@@ -70847,23 +70866,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/button/door/directional/west{
-	id = "viro-inner";
-	name = "Inner Virology Lockdown";
-	pixel_y = -8
-	},
-/obj/machinery/button/door/directional/west{
-	id = "viro-outer";
-	name = "Outer Virology Lockdown";
-	pixel_y = 8
-	},
-/obj/machinery/button/door/directional/west{
-	id = "viro-iso";
-	name = "Isolation Bolts";
-	normaldoorcontrol = 1;
-	pixel_x = -36;
-	specialfunctions = 4
-	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/landmark/start/virologist,
 /obj/structure/disposalpipe/segment{
@@ -71295,7 +71297,7 @@
 "sVw" = (
 /obj/machinery/smartfridge,
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "viro-inner";
 	name = "Virology Inner Shutters"
 	},
@@ -89193,10 +89195,10 @@
 /area/station/maintenance/floor3/port)
 "xIG" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	dir = 4;
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "viro-outer";
-	name = "Virology Outer Shutters"
+	name = "Virology Outer Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/medical/virology/isolation)
@@ -89509,6 +89511,10 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/structure/disposalpipe/segment,
+/obj/item/radio/intercom/directional/south{
+	pixel_y = -35;
+	pixel_x = -28
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xND" = (
