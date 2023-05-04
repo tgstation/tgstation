@@ -556,9 +556,6 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		return TRUE
 
-	else if(istype(movable_to_check, /mob/living/trolls_the_maintainer))//TODOKYLER: remove
-		stack_trace("somehow trolls_the_maintainer didnt fail the check!")
-
 	return FALSE
 
 /**
