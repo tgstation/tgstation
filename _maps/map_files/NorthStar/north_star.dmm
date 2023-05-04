@@ -15210,10 +15210,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "dSW" = (
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dTe" = (
@@ -28757,6 +28757,9 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/bar)
