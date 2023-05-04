@@ -325,7 +325,7 @@
 	name = "coroner satchel"
 	desc = "A satchel used to carry whatever's left of human bodies."
 	icon_state = "satchel-coroner"
-	inhand_icon_state = "satchel-coroner" //to do: inhands
+	inhand_icon_state = "satchel-coroner"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"

@@ -1,5 +1,4 @@
 // Todo:
-// Add action figure
 // Wintercoat?
 
 /datum/job/coroner
