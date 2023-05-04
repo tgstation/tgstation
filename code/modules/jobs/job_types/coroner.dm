@@ -14,7 +14,7 @@
 	config_tag = "CORONER"
 
 	outfit = /datum/outfit/job/coroner
-	plasmaman_outfit = /datum/outfit/plasmaman/medical
+	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
