@@ -10,8 +10,7 @@
 		if(!crowbar.use_tool(src, user, 5 SECONDS))
 			return
 		opened = APC_COVER_REMOVED
-		user.visible_message(span_notice("[user.name] prys off the broken [name] cover!"))
-		balloon_alert(user, "the cover falls apart")
+		balloon_alert(user, "cover removed")
 		update_appearance()
 		return
 
