@@ -35,7 +35,7 @@
 		update_appearance()
 		return
 
-		//Taking out the electronics
+	//Taking out the electronics
 	if(!opened || has_electronics != APC_ELECTRONICS_INSTALLED)
 		return
 	if(terminal)
