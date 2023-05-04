@@ -539,7 +539,7 @@ SUBSYSTEM_DEF(spatial_grid)
 				if(length(error_data) > 0)
 					error_data = "[error_data], {coords: [coords], within channels: [contents]}"
 				else
-					error_data = "within the contents of the following cells: {[coords], within channels: [contents]}"
+					error_data = "within the contents of the following cells: {coords: [coords], within channels: [contents]}"
 
 		/**
 		 * example:
