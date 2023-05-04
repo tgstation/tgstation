@@ -15,7 +15,7 @@
 		if(src == attack_target)
 			check_self_for_injuries()
 			return TRUE
-		// Melbert todo : We can bite, so we need to account for that
+		// .. Or bite.
 		return ..()
 
 	if(!has_active_hand()) //can't attack without a hand.
@@ -39,10 +39,15 @@
 	*/
 
 /mob/living/carbon/select_unarmed_strike(list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		return GLOB.attack_styles[/datum/attack_style/unarmed/disarm]
+	. = ..()
+	if(.)
+		return
 
-	else if(combat_mode)
+	if(combat_mode)
+		// figure out a better way to do this.
+		if(HAS_TRAIT(src, TRAIT_HULK))
+			return GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
+
 		// melbert todo : needs to handle kicking
 		var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb() || get_active_hand()
@@ -50,8 +55,11 @@
 
 	return GLOB.attack_styles[/datum/attack_style/unarmed/help]
 
-/mob/living/carbon/human/resolve_right_click_attack(atom/target, list/modifiers)
+/mob/living/carbon/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_hand_secondary(src, modifiers)
+
+/mob/living/carbon/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	attack_target.attack_hand(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
 /atom/proc/attack_hand(mob/user, list/modifiers)
@@ -118,6 +126,29 @@
 		return ui_interact(user)
 	return FALSE
 
+/mob/living/RangedAttack(atom/A, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
+	if(hit_style)
+		testing("[src] is attacking with [hit_style], targeting [A]. (Ranged)")
+		changeNext_move(hit_style.cd * 0.8)
+		hit_style.process_attack(src, null, A)
+		return TRUE
+
+/mob/living/ranged_secondary_attack(atom/atom_target, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
+	if(hit_style)
+		testing("[src] is attacking with [hit_style], targeting [atom_target]. (Ranged)")
+		changeNext_move(hit_style.cd * 0.8)
+		hit_style.process_attack(src, null, atom_target)
+		return TRUE
 
 /mob/living/carbon/human/RangedAttack(atom/A, modifiers)
 	. = ..()
@@ -149,18 +180,20 @@
 
 	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
 	if(hit_style)
+		testing("[src] is attacking with [hit_style], targeting [attack_target]. (Melee)")
+		changeNext_move(hit_style.cd * 0.8)
 		hit_style.process_attack(src, null, attack_target)
 		return TRUE
 	return FALSE
 
 /mob/living/proc/select_unarmed_strike(list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		. = default_disarm_attack_style
+		. ||= default_disarm_attack_style
 
 	if(combat_mode)
 		. ||= default_harm_attack_style
 
-	return . || GLOB.attack_styles[/datum/attack_style/unarmed/help]
+	return .
 
 /mob/living/proc/handle_bite(atom/attack_target)
 	var/datum/attack_style/unarmed/bite_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/bite]

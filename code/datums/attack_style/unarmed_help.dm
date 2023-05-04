@@ -1,4 +1,7 @@
 /datum/attack_style/unarmed/help
+	attack_effect = null
+	successful_hit_sound = null
+	miss_sound = null
 
 /datum/attack_style/unarmed/help/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(smacked.check_block(attacker, 0, "[attacker]'s touch", UNARMED_ATTACK))
@@ -22,4 +25,5 @@
 				return ATTACK_STYLE_MISSED
 
 	var/list/new_modifiers = list(LEFT_CLICK = !right_clicking, RIGHT_CLICK = right_clicking)
-	return smacked.attack_hand(attacker, new_modifiers)
+	smacked.attack_hand(attacker, new_modifiers)
+	return ATTACK_STYLE_HIT

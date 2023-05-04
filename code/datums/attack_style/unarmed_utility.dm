@@ -148,6 +148,9 @@
 	return . | ATTACK_STYLE_HIT
 
 /datum/attack_style/unarmed/grab
+	attack_effect = null
+	successful_hit_sound = null
+	miss_sound = null
 
 /datum/attack_style/unarmed/grab/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(smacked.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))

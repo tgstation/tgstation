@@ -214,7 +214,7 @@
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	user.do_attack_animation(target_mob)
-	target_mob.attacked_by(src, user)
+	. = target_mob.attacked_by(src, user)
 
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)

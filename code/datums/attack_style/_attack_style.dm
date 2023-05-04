@@ -16,11 +16,24 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * Handles sticking behavior onto a weapon to make it attack a certain way
  */
 /datum/attack_style
+	/// Hitsound played on a successful attack hit
 	var/successful_hit_sound = 'sound/weapons/punch1.ogg'
+
+	var/hit_volume = 50
+	/// Hitsound played on if the attack fails to hit anyone
 	var/miss_sound = 'sound/weapons/fwoosh.ogg'
+
+	var/miss_volume = 50
+	/// Click CD imparted by successful attacks
+	/// Failed attacks still apply a click CD, but reduced
 	var/cd = CLICK_CD_MELEE
+	/// Movement slowdown applied on a successful attack
 	var/slowdown = 1
+	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
+	/// Used primarily for attacks like swings, where instead of travelling right to left they would instead go left to right
 	var/reverse_for_lefthand = TRUE
+	/// The number of mobs that can be hit per hit turf
+	var/hits_per_turf_allowed = 1
 	/// If TRUE, pacifists are completely disallowed from using this attack style
 	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
 	var/pacifism_completely_banned = FALSE
@@ -83,20 +96,28 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	var/attack_flag = NONE
 	for(var/turf/hitting as anything in affecting)
-
+		if(hitting.is_blocked_turf(TRUE, attacker))
+			break
 #ifdef TESTING
 		apply_testing_color(hitting, affecting.Find(hitting))
 #endif
 
-		var/mob/living/smack_who
-		if(isliving(priority_target) && (priority_target in hitting))
-			smack_who = priority_target
-		else
-			smack_who = locate() in hitting
-		if(!isliving(smack_who))
-			continue
+		var/list/mob/living/foes = list()
+		for(var/mob/living/foes_in_turf in hitting)
+			foes += foes_in_turf
 
-		attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+		shuffle_inplace(foes)
+		if(priority_target in foes)
+			foes.Remove(priority_target)
+			foes.Insert(1, priority_target)
+
+		var/total_hit = 0
+		for(var/mob/living/smack_who as anything in foes)
+			attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+			total_hit++
+			if(total_hit >= hits_per_turf_allowed)
+				break
+
 		if(attack_flag & ATTACK_STYLE_CANCEL)
 			return ATTACK_STYLE_CANCEL
 		if(attack_flag & ATTACK_STYLE_BLOCKED)
@@ -104,11 +125,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	if(attack_flag & ATTACK_STYLE_HIT)
 		if(successful_hit_sound)
-			playsound(attacker, successful_hit_sound, 50, TRUE)
+			playsound(attacker, successful_hit_sound, hit_volume, TRUE)
 
 	else
 		if(miss_sound)
-			playsound(attacker, miss_sound, 50, TRUE)
+			playsound(attacker, miss_sound, miss_volume, TRUE)
 
 	return attack_flag
 
@@ -132,6 +153,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(isnull(weapon))
 		return
 
+	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
+
+	attacker.do_attack_animation(midpoint, used_item = weapon)
+	/*
 	var/num_turfs_to_move = length(affecting)
 	var/time_per_turf = 0.4 SECONDS
 	var/final_animation_length = time_per_turf * num_turfs_to_move
@@ -145,13 +170,25 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	attack_image.transform.Turn(initial_angle)
 	var/matrix/final_transform = base_transform.Turn(final_angle)
 
-	message_admins("[final_animation_length]")
 	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf)
 	animate(attack_image, time = final_animation_length, alpha = 120, transform = final_transform)
 	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
+	*/
 
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	return weapon.melee_attack_chain(smacked, attacker)
+	var/melee_result = weapon.melee_attack_chain(attacker, smacked)
+	switch(melee_result)
+		if(TRUE)
+			return ATTACK_STYLE_HIT
+		if(FALSE)
+			return ATTACK_STYLE_MISSED
+		if(null)
+			stack_trace("Melee attack chain returned null, update it.")
+			return ATTACK_STYLE_MISSED
+		else
+			stack_trace("Melee attack chain returned unknown value ([melee_result]), update it.")
+			return ATTACK_STYLE_MISSED
+
 	// Convert to bitflags, ATTACK_STYLE_HIT / ATTACK_STYLE_BLOCKED
 	// Attack chain current
 	// Click -> item Melee attack chain -> item tool act -> item pre attack -> mob attackby -> item attack -> mob attacked by -> item attack qdeleted -> item after attack

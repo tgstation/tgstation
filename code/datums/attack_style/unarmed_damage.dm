@@ -63,7 +63,7 @@
 		else
 			miss_chance = (unarmed_damage_high / unarmed_damage_low) + attacker.getStaminaLoss() + (attacker.getBruteLoss() * 0.5) + miss_chance_modifier
 
-	if(damage <= 0 || !istype(affecting) || prob(miss_chance))
+	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
 		smacked.visible_message(
 			span_danger("[attacker]'s [unarmed_attack_verb] misses [smacked]!"),
 			span_danger("You avoid [attacker]'s [unarmed_attack_verb]!"),
@@ -200,9 +200,12 @@
 	attacker.amount_grown = min(attacker.amount_grown + damage, attacker.max_grown)
 
 /datum/attack_style/unarmed/generic_damage/hulk
+	cd = 1.5 SECONDS
+	attack_effect = ATTACK_EFFECT_SMASH
+	successful_hit_sound = 'sound/effects/meteorimpact.ogg'
 	unarmed_damage_low = 12
 	unarmed_damage_high = 15
-	unarmed_stun_threshold = 0
+	unarmed_stun_threshold = -1
 	wound_bonus = 10
 	unarmed_attack_verb = "smash"
 

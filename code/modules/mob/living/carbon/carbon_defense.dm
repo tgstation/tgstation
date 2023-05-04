@@ -185,6 +185,7 @@
 		if(wounds.try_handling(user))
 			return TRUE
 
+	help_shake_act(user)
 	return FALSE
 
 

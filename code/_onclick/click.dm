@@ -186,8 +186,8 @@
 		var/close_enough = CanReach(clicked_on, clicked_with_what)
 		// Handle non-combat uses of attacking, IE using a screwdriver on a wall
 		if(close_enough && !ismob(clicked_on))
-			clicked_with_what.melee_attack_chain(src, clicked_on, params)
-			return
+			if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
+				return
 
 		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
 		// Determine if we should skip using special attack styles or not
@@ -407,7 +407,7 @@
 	if(living_user.Adjacent(src) && !isliving(src)) // Icky istype src but meh
 		living_user.pulled(src)
 
-	else if(world.time < living_user.next_move)
+	else if(world.time >= living_user.next_move)
 		var/datum/attack_style/unarmed/grab/grabbies = GLOB.attack_styles[/datum/attack_style/unarmed/grab]
 		grabbies.process_attack(living_user, null, src)
 
