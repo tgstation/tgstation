@@ -54,6 +54,9 @@ type DropdownState = {
   open: boolean;
 };
 
+const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
+const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
+
 export class Dropdown extends Component<DropdownProps, DropdownState> {
   static renderedMenu: HTMLDivElement | undefined;
   static singletonPopper: ReturnType<typeof createPopper> | undefined;
@@ -94,7 +97,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     let renderedMenu = Dropdown.renderedMenu;
     if (renderedMenu === undefined) {
       renderedMenu = document.createElement('div');
-      renderedMenu.className = 'Layout Dropdown__menu';
+      renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
       document.body.appendChild(renderedMenu);
       Dropdown.renderedMenu = renderedMenu;
     }
@@ -140,6 +143,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const renderedMenu = Dropdown.renderedMenu;
     if (!renderedMenu) {
       return;
+    }
+    if (renderedMenu.offsetHeight > 200) {
+      Dropdown.renderedMenu.className = DROPDOWN_SCROLL_CLASSNAMES;
+    } else {
+      Dropdown.renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
     }
 
     const { options = [] } = this.props;
