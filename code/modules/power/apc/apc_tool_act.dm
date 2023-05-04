@@ -121,7 +121,7 @@
 	//repairing the cover
 	if((atom_integrity < max_integrity && APC_ELECTRONICS_SECURED))
 		if(opened == APC_COVER_REMOVED)
-			balloon_alert(user,"no cover to repair!")
+			balloon_alert(user, "no cover to repair!")
 			return
 		if (machine_stat & BROKEN)
 			balloon_alert(user, "the cover is too damaged to repair!")
