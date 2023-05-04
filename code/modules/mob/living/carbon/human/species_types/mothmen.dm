@@ -58,7 +58,7 @@
 		H.adjustToxLoss(3 * REM * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 
-/datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/moth/check_species_weakness(obj/item/weapon)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 10 //flyswatters deal 10x damage to moths
 	return 1

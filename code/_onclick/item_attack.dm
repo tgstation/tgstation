@@ -19,7 +19,7 @@
 			if (SECONDARY_ATTACK_CALL_NORMAL)
 				pre_attack_result = pre_attack(target, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return TRUE
+				return ATTACK_STYLE_SKIPPED // Return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -28,7 +28,7 @@
 		pre_attack_result = pre_attack(target, user, params)
 
 	if(pre_attack_result)
-		return TRUE
+		return ATTACK_STYLE_SKIPPED // Return TRUE
 
 	var/attackby_result
 
@@ -37,7 +37,7 @@
 			if (SECONDARY_ATTACK_CALL_NORMAL)
 				attackby_result = target.attackby(src, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return TRUE
+				return ATTACK_STYLE_SKIPPED // Return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -46,18 +46,18 @@
 		attackby_result = target.attackby(src, user, params)
 
 	if (attackby_result)
-		return TRUE
+		return attackby_result // Return TRUE
 
 	if(QDELETED(src) || QDELETED(target))
 		attack_qdeleted(target, user, TRUE, params)
-		return TRUE
+		return ATTACK_STYLE_SKIPPED // Return TRUE
 
 	if (is_right_clicking)
 		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
 
 		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return TRUE
+			return ATTACK_STYLE_SKIPPED // Return TRUE
 
 	var/afterattack_result = afterattack(target, user, TRUE, params)
 
@@ -189,18 +189,18 @@
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
+		return ATTACK_STYLE_CANCEL
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return
+		return ATTACK_STYLE_SKIPPED
 
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
-		return
+		return ATTACK_STYLE_SKIPPED
 
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return
+		return ATTACK_STYLE_SKIPPED
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
@@ -241,7 +241,13 @@
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 
-/// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
+/**
+ * Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
+ *
+ * Note this is !!NOT THE SAME AS ATTACK_BY!!
+ *
+ * This proc handles the damage and effects of an attack, so it only happens after the attack has occurred.
+ */
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!uses_integrity)
 		CRASH("attacked_by() was called on an object that doesnt use integrity!")
@@ -259,32 +265,235 @@
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
-	send_item_attack_message(attacking_item, user)
-	if(!attacking_item.force)
-		return FALSE
-	var/damage = attacking_item.force
+
+	var/obj/item/bodypart/affecting
+	var/damage = get_final_damage_for_weapon(attacking_item)
+	var/damage_type = attacking_item.damtype
+
+	if(user == human)
+		affecting = get_attacked_bodypart(user)
+
+	else
+		// note: this check does not include damage from multipliers, like physiology
+		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration))
+			return ATTACK_STYLE_BLOCKED
+
+		var/zone_hit_chance = 80
+		if(body_position == LYING_DOWN)
+			// bonus to accuracy for lying down
+			zone_hit_chance += 10
+		affecting = get_attacked_bodypart(user, zone_hit_chance)
+
+	var/hit_zone = parse_zone(affecting?.body_zone) || "body"
+	send_item_attack_message(attacking_item, user, hit_zone, affecting)
+	if(damage <= 0)
+		return ATTACK_STYLE_SKIPPED
+
+	var/armor_block = min(ARMOR_MAX_BLOCK, run_armor_check(
+		def_zone = affecting,
+		attack_flag = MELEE,
+		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
+		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+		armour_penetration = attacking_item.armour_penetration,
+		weak_against_armour = attacking_item.weak_against_armour,
+	))
+	var/final_wound_bonus = attacking_item.wound_bonus
+
+	// this way, you can't wound with a surgical tool on help intent
+	// if they have a surgery active and are lying down,
+	// so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
+	if((attacking_item.item_flags & SURGICAL_TOOL) \
+		&& !user.combat_mode \
+		&& body_position == LYING_DOWN \
+		&& (length(surgeries) > 0) \
+	)
+		final_wound_bonus = CANT_WOUND
+
+	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
+
+	apply_damage(
+		damage = damage,
+		damagetype = damage_type,
+		def_zone = affecting,
+		wound_bonus = final_wound_bonus,
+		bare_would_bonus = attacking_item.bare_wound_bonus,
+		sharpness = attacking_item.get_sharpness(),
+		attack_direction = get_dir(user, src),
+	)
+
+	was_attacked_effects(attacking_item, user, affecting, damage, armor_block)
+
+	if(damage_type == BRUTE && prob(33))
+		add_blood_from_being_attacked(attacking_item, user, affecting)
+
+	return ATTACK_STYLE_HIT
+
+/**
+ * Effects ran when this mob is attacked with an item by another mob, from [attacked_by].
+ */
+/mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	return
+
+/mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
+	SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
+
+	if(damage > 10 || (damage >= 5 && prob(33)))
+		force_say(user)
+
+	if(isnull(hit_limb) || attacking_item.get_sharpness() || armor_block >= 50)
+		return
+
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			if(prob(damage))
+				adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+				if(stat == CONSCIOUS)
+					visible_message(span_danger("[src] is knocked senseless!"), ignored_mobs = src)
+					to_chat(src, span_userdanger("You're knocked senseless!"))
+					set_confusion_if_lower(20 SECONDS)
+					adjust_eye_blur(20 SECONDS)
+				if(prob(10))
+					gain_trauma(/datum/brain_trauma/mild/concussion)
+
+			else
+				adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * 0.2)
+
+			// rev deconversion through blunt trauma.
+			if(!isnull(mind) \
+				&& stat == CONSCIOUS \
+				&& src != user \
+				&& prob(damage + ((100 - health) * 0.5)) \
+			)
+				var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
+				rev?.remove_revolutionary(FALSE, user)
+
+		if(BODY_ZONE_CHEST)
+			if(stat == CONSCIOUS && prob(damage))
+				visible_message(span_danger("[src] is knocked down!"), ignored_mobs = src)
+				to_chat(src, span_userdanger("You're knocked down!"))
+				apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+
+/**
+ * This takes an item (that's probably attacking us) and gets the final damage
+ * of it based on its force and other modifiers that may affect it
+ *
+ * These are items affecting the WEAPON'S DAMAGE, but not affecting THE DAMAGE WE RECIEVE.
+ * This may sound confusing at first but it's the difference is simply
+ * "is the weapon becoming stronger" vs "is our guy weaker"
+ *
+ * Where "demolition modifier" would be in the former camp and covered by this proc,
+ * and physiology is in the latter camp and is covered later in damage code
+ *
+ * Returns a number, the final damage of the weapon
+ */
+/mob/living/proc/get_final_damage_for_weapon(obj/item/attacking_item)
+	. = attacking_item.force
 	if(mob_biotypes & MOB_ROBOTIC)
-		damage *= attacking_item.demolition_mod
-	apply_damage(damage, attacking_item.damtype)
-	if(attacking_item.damtype == BRUTE && prob(33))
-		attacking_item.add_mob_blood(src)
-		var/turf/location = get_turf(src)
-		add_splatter_floor(location)
-		if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
-			user.add_mob_blood(src)
-	return TRUE //successful attack
+		. *= attacking_item.demolition_mod
+
+	return .
+
+/mob/living/carbon/get_final_damage_for_weapon(obj/item/attacking_item)
+	. = ..()
+	if(dna?.species)
+		. *= dna.species.check_species_weakness(attacking_item)
+
+	return .
+
+/**
+ * Determines which bodypart is being hit by an incoming attack by a user
+ *
+ * Hit chance is the probability that it will divert to another random nearby limb (via [get_random_valid_zone])
+ *
+ * Returns a bodypart, or null if there are no valid bodyparts
+ */
+/mob/living/proc/get_attacked_bodypart(mob/living/user, hit_chance = 100)
+	RETURN_TYPE(/obj/item/bodypart)
+	return null
+
+/mob/living/carbon/get_attacked_bodypart(mob/living/user, hit_chance = 100)
+	return get_bodypart(user == src ? check_zone(user.zone_selected) : get_random_valid_zone(user.zone_selected, hit_chance)) || bodyparts[1]
+
+/**
+ * Called when this mob is attacked by a BRUTE WEAPON and handles applying blood to the mob, the attacker, and the ground
+ *
+ * Returns a bodypart, or null if there are no valid bodyparts
+ */
+/mob/living/proc/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
+	attacking_item.add_mob_blood(src)
+	if(isturf(loc))
+		add_splatter_floor(loc)
+	if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
+		user.add_mob_blood(src)
+
+/mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
+	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
+		return
+
+	. = ..()
+	if(hit_limb.body_zone == BODY_ZONE_HEAD)
+		if(wear_mask)
+			wear_mask.add_mob_blood(src)
+			update_worn_mask()
+		if(wear_neck)
+			wear_neck.add_mob_blood(src)
+			update_worn_neck()
+		if(head)
+			head.add_mob_blood(src)
+			update_worn_head()
+
+/mob/living/carbon/human/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
+	if(!prob(25 + (attacking_item.force * 2)))
+		return
+	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
+		return
+
+	attacking_item.add_mob_blood(src) //Make the weapon bloody, not the person.
+	if(!prob(attacking_item.force * 2))
+		return
+
+	if(isturf(loc))
+		add_splatter_floor(loc)
+	if(get_dist(user, src) <= 1)
+		user.add_mob_blood(src)
+
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			if(wear_mask)
+				wear_mask.add_mob_blood(src)
+				update_worn_mask()
+			if(head)
+				head.add_mob_blood(src)
+				update_worn_head()
+			if(glasses && prob(33))
+				glasses.add_mob_blood(src)
+				update_worn_glasses()
+			if(wear_neck)
+				wear_neck.add_mob_blood(src)
+				update_worn_neck()
+
+		if(BODY_ZONE_CHEST)
+			if(wear_suit)
+				wear_suit.add_mob_blood(src)
+				update_worn_oversuit()
+			if(w_uniform)
+				w_uniform.add_mob_blood(src)
+				update_worn_undersuit()
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-	else
-		return ..()
+		return ATTACK_STYLE_BLOCKED
+
+	return ..()
 
 /mob/living/basic/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-	else
-		return ..()
+		return ATTACK_STYLE_BLOCKED
+
+	return ..()
 
 /**
  * Last proc in the [/obj/item/proc/melee_attack_chain].

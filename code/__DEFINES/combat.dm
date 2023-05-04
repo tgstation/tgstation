@@ -340,6 +340,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Cancels the attack entirely, doesn't go to the next turf, doesn't play any sound.
 /// Do not pass go, do not collect $200.
 #define ATTACK_STYLE_CANCEL (1<<3)
+#define ATTACK_STYLE_SKIPPED (1<<4)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living

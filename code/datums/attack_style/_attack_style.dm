@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(successful_hit_sound)
 			playsound(attacker, successful_hit_sound, hit_volume, TRUE)
 
-	else
+	else if(attack_flag & ATTACK_STYLE_MISSED)
 		if(miss_sound)
 			playsound(attacker, miss_sound, miss_volume, TRUE)
 
@@ -189,6 +189,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			stack_trace("Melee attack chain returned unknown value ([melee_result]), update it.")
 			return ATTACK_STYLE_MISSED
 
+	// obj/item.+attack\(
 	// Convert to bitflags, ATTACK_STYLE_HIT / ATTACK_STYLE_BLOCKED
 	// Attack chain current
 	// Click -> item Melee attack chain -> item tool act -> item pre attack -> mob attackby -> item attack -> mob attacked by -> item attack qdeleted -> item after attack

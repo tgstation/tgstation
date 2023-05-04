@@ -66,7 +66,7 @@
 		vampire.adjust_fire_stacks(3 * delta_time)
 		vampire.ignite_mob()
 
-/datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/vampire/check_species_weakness(obj/item/weapon)
 	if(istype(weapon, /obj/item/nullrod/whip))
 		return 2 //Whips deal 2x damage to vampires. Vampire killer.
 	return 1
