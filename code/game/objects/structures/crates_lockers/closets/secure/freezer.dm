@@ -33,6 +33,7 @@
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+	return FALSE
 
 /obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
 	if (!(flags_1 & NODECONSTRUCT_1))

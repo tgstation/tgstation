@@ -1093,7 +1093,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	mats_per_unit = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
@@ -1141,7 +1141,7 @@
 	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
 	icon_state = "tile_brass"
 	turf_type = /turf/open/floor/bronze
-	mats_per_unit = list(/datum/material/bronze=500)
+	mats_per_unit = list(/datum/material/bronze=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/bronze
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bronze,
@@ -1169,7 +1169,7 @@
 	desc = "A strange tile made from runed metal. Doesn't seem to actually have any paranormal powers."
 	icon_state = "tile_cult"
 	turf_type = /turf/open/floor/cult
-	mats_per_unit = list(/datum/material/runedmetal=500)
+	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult
 
 /// Floor tiles used to test emissive turfs.
@@ -1207,7 +1207,7 @@
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
-	mats_per_unit = list(/datum/material/iron=100)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	turf_type = /turf/open/floor/catwalk_floor
 	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
 	tile_reskin_types = list(
@@ -1268,7 +1268,7 @@
 	turf_type = /turf/open/floor/glass
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
-	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
 	replace_plating = TRUE
 
 /obj/item/stack/tile/glass/sixty
@@ -1282,7 +1282,7 @@
 	inhand_icon_state = "tile-rglass"
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
-	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
 	replace_plating = TRUE
 
 /obj/item/stack/tile/rglass/sixty
@@ -1295,7 +1295,7 @@
 	icon_state = "tile_pglass"
 	turf_type = /turf/open/floor/glass/plasma
 	merge_type = /obj/item/stack/tile/glass/plasma
-	mats_per_unit = list(/datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)
+	mats_per_unit = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)
 
 /obj/item/stack/tile/rglass/plasma
 	name = "reinforced plasma glass floor"
@@ -1304,4 +1304,4 @@
 	icon_state = "tile_rpglass"
 	turf_type = /turf/open/floor/glass/reinforced/plasma
 	merge_type = /obj/item/stack/tile/rglass/plasma
-	mats_per_unit = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)
