@@ -158,7 +158,6 @@
 		return FALSE
 	if(!nodes[1])
 		on = FALSE
-		return FALSE
 	if(!on || welded)
 		return FALSE
 	var/turf/open/us = loc
