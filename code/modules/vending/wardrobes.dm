@@ -295,6 +295,7 @@
 		/obj/item/storage/backpack/coroner = 1,
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
+		/obj/item/clothing/suit/hooded/wintercoat/medical/coroner = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
