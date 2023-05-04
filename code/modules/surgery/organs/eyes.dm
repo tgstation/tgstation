@@ -443,10 +443,12 @@
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
+	RegisterSignal(eye_owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_visuals))
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
+	UnregisterSignal(eye_owner, COMSIG_MOVABLE_MOVED)
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component
