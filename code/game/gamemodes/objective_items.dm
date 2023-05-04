@@ -384,6 +384,9 @@
 	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
+	//blueprints from xenobiology should not complete the objective
+	if(istype(I, /obj/item/areaeditor/blueprints/slime))
+		return FALSE
 	if(istype(I, /obj/item/areaeditor/blueprints))
 		return TRUE
 	if(istype(I, /obj/item/photo))
