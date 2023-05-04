@@ -1089,6 +1089,6 @@
 
 /obj/structure/closet/open
 	opened = TRUE
-	icon_state = "closetopen"
+	icon_state = "closet_open"
 
 #undef LOCKER_FULL
