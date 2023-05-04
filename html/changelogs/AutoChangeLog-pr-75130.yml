@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Mime using captain's announcement visible message is correct"
