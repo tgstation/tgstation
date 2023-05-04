@@ -29,6 +29,8 @@
 
 
 /datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE)
+	set waitfor = FALSE
+
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
