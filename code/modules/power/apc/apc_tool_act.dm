@@ -126,10 +126,10 @@
 			return
 		if(!welder.tool_start_check(user, amount=0))
 			return
-		to_chat(user, span_notice("You begin repairing [src]..."))
+		balloon_alert(user, "repairing...")
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
 			atom_integrity = min(atom_integrity + 50, max_integrity)
-			to_chat(user, span_notice("You repair [src]."))
+			balloon_alert(user, "repaired")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	//disassembling the frame
