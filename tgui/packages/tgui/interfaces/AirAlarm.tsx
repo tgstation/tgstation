@@ -221,7 +221,7 @@ const AirAlarmControlHome = (props, context) => {
       />
       {!!sensor && (
         <Box mt={1}>
-          <Button
+          <Button.Confirm
             icon="link-slash"
             content="Disconnect Sensor"
             color="danger"

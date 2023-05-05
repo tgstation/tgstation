@@ -58,7 +58,9 @@
 	var/tlv_no_checks = FALSE
 
 	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
-	var/connected_sensor = null
+	var/connected_sensor
+	/// Used to link air alarm to air sensor via map helpers
+	var/air_sensor_chamber_id
 
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
@@ -589,3 +591,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
+/obj/machinery/airalarm/proc/setup_chamber_link()
+	var/obj/machinery/sensor = GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(air_sensor_chamber_id)]
+	if(isnull(sensor))
+		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
+		return
+	connected_sensor = sensor
+	my_area = get_area(connected_sensor)
+	update_name()
