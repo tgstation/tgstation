@@ -2143,7 +2143,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -6849,7 +6849,7 @@
 /area/station/medical/break_room)
 "aQH" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -11624,7 +11624,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "cBi" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -23694,7 +23694,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "hiu" = (
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/east,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -24456,7 +24456,7 @@
 /area/station/science/robotics/mechbay)
 "hAv" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
@@ -24839,7 +24839,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "hHf" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "hHu" = (
@@ -42479,7 +42479,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "nZS" = (
-/obj/structure/locker/l3closet/security,
+/obj/structure/locker/l3locker/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "nZW" = (
@@ -56977,7 +56977,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
@@ -63303,7 +63303,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/machinery/light/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Science - Xenobiology Airlock";

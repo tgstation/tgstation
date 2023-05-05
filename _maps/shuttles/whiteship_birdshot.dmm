@@ -578,7 +578,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
 "uj" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
@@ -767,7 +767,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "CG" = (
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/machinery/light/small/broken/directional/north,

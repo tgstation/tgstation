@@ -96,7 +96,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "aA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "aB" = (
@@ -5674,7 +5674,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "Ac" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Ae" = (
@@ -6398,7 +6398,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "Gr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Gz" = (
@@ -6581,7 +6581,7 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/machinery/light/small/directional/east{
 	dir = 1
 	},
@@ -7945,7 +7945,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Ts" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
@@ -8109,7 +8109,7 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "Vb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Vk" = (

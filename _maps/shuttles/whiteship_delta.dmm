@@ -91,7 +91,7 @@
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "an" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -1185,7 +1185,7 @@
 "cF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "cG" = (
@@ -1664,7 +1664,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "dS" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dT" = (

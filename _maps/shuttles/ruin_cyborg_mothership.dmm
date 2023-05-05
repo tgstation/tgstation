@@ -75,7 +75,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "fB" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)

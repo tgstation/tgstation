@@ -805,7 +805,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "kP" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -3870,7 +3870,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "YC" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
 "YL" = (

@@ -51,7 +51,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bH" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -111,7 +111,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,

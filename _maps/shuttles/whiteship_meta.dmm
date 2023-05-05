@@ -189,7 +189,7 @@
 /area/shuttle/abandoned/engine)
 "aB" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -198,7 +198,7 @@
 "aC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -441,7 +441,7 @@
 "bs" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -950,7 +950,7 @@
 "cH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/engine)
@@ -1144,7 +1144,7 @@
 "di" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
@@ -1816,7 +1816,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

@@ -9608,7 +9608,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "dFz" = (
@@ -11993,7 +11993,7 @@
 /area/station/service/kitchen)
 "euc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -21403,7 +21403,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "hUd" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
@@ -32924,7 +32924,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
 "lQC" = (
-/obj/structure/locker/l3closet/security,
+/obj/structure/locker/l3locker/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -42229,7 +42229,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "pha" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -52316,7 +52316,7 @@
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
 "sKs" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -67530,7 +67530,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ydz" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},

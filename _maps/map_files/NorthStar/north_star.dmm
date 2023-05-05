@@ -1153,7 +1153,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/starboard/fore)
 "aoo" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/port/aft)
 "aoq" = (
@@ -7422,7 +7422,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/hallway/secondary/service)
 "bMP" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -7481,7 +7481,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/port/fore)
 "bNs" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/fore)
 "bNu" = (
@@ -8646,7 +8646,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/fore)
 "cek" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/starboard)
 "cem" = (
@@ -9115,7 +9115,7 @@
 /turf/open/floor/engine,
 /area/station/maintenance/floor4/starboard/aft)
 "cjC" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/aft)
 "cjE" = (
@@ -10208,7 +10208,7 @@
 /turf/closed/wall/r_wall,
 /area/station/command/meeting_room)
 "czr" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
 "czK" = (
@@ -11471,7 +11471,7 @@
 /area/station/security/prison/garden)
 "cRH" = (
 /obj/machinery/light/small/directional/north,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/fore)
@@ -11948,7 +11948,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
 "cXu" = (
@@ -12058,7 +12058,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cYS" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard/aft)
@@ -13692,7 +13692,7 @@
 	},
 /obj/machinery/vending/wallmed/directional/north,
 /obj/item/radio/intercom/directional/west,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -13757,7 +13757,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/aft)
 "dzD" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/floor4/aft)
 "dzE" = (
@@ -14487,7 +14487,7 @@
 /area/station/solars/starboard/aft)
 "dJx" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
@@ -17832,7 +17832,7 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/aft)
 "eEN" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port)
@@ -18374,7 +18374,7 @@
 /area/station/maintenance/floor3/starboard/aft)
 "eNj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
@@ -18488,7 +18488,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "eOZ" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "ePa" = (
@@ -19020,7 +19020,7 @@
 /area/station/science/breakroom)
 "eXB" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port/aft)
 "eXI" = (
@@ -20348,7 +20348,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
 "fqJ" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -21366,7 +21366,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/fore)
 "fFo" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "fFu" = (
@@ -22325,7 +22325,7 @@
 /area/station/medical/morgue)
 "fRN" = (
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
@@ -22896,7 +22896,7 @@
 /turf/open/floor/fakebasalt,
 /area/station/maintenance/floor3/port)
 "fZI" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/machinery/light/red/dim/directional/north,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/starboard)
@@ -25978,7 +25978,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "gTs" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "gTt" = (
@@ -27584,7 +27584,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
 "hpe" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -29605,7 +29605,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/port/fore)
 "hTr" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
@@ -30329,7 +30329,7 @@
 /turf/open/floor/iron,
 /area/station/science/auxlab)
 "ieI" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -32088,7 +32088,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/port/fore)
 "iEm" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard/aft)
 "iEs" = (
@@ -33307,7 +33307,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "iWm" = (
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "iWu" = (
@@ -36689,7 +36689,7 @@
 	},
 /area/station/science/ordnance/bomb)
 "jOA" = (
-/obj/structure/locker/l3closet/security,
+/obj/structure/locker/l3locker/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
@@ -37714,7 +37714,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kct" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/fore)
@@ -38057,7 +38057,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "khm" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -39976,11 +39976,11 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "kHs" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "kHx" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -41650,7 +41650,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "leo" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/starboard/aft)
 "les" = (
@@ -41878,7 +41878,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "lgO" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/trimline/blue/warning,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
@@ -41918,7 +41918,7 @@
 "lhq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
@@ -43234,7 +43234,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port/aft)
 "lyd" = (
@@ -44493,7 +44493,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/port/fore)
 "lPf" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -47009,7 +47009,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/fore)
 "mus" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard)
 "muB" = (
@@ -47143,7 +47143,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint)
 "mvS" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/aft)
@@ -48264,7 +48264,7 @@
 	},
 /area/station/cargo/drone_bay)
 "mLH" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port/fore)
 "mLI" = (
@@ -48404,7 +48404,7 @@
 	},
 /area/station/science/genetics)
 "mMD" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -49051,7 +49051,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/fore)
 "mVy" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "mVz" = (
@@ -49471,7 +49471,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/fore)
 "nbc" = (
@@ -50632,7 +50632,7 @@
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningoffice)
 "nod" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -50795,7 +50795,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "npK" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
@@ -55998,7 +55998,7 @@
 "oGQ" = (
 /obj/effect/turf_decal/tile/green/half,
 /obj/machinery/status_display/ai/directional/north,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -64368,7 +64368,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
@@ -65967,7 +65967,7 @@
 "rpY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rqa" = (
@@ -66694,7 +66694,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
 "rAy" = (
@@ -67752,7 +67752,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "rQo" = (
@@ -67817,7 +67817,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/starboard/aft)
 "rRC" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard)
 "rRP" = (
@@ -69800,7 +69800,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "sxZ" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port)
 "syd" = (
@@ -70161,7 +70161,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "sCv" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard)
 "sCz" = (
@@ -72326,7 +72326,7 @@
 "tgP" = (
 /obj/effect/turf_decal/tile/green/full,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
 "tgS" = (
@@ -72354,7 +72354,7 @@
 /area/station/security/courtroom)
 "thi" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "thj" = (
@@ -73460,7 +73460,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/ordnance/storage)
 "twS" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port)
@@ -74515,7 +74515,7 @@
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/entertainment)
 "tLF" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/port)
 "tLQ" = (
@@ -75157,7 +75157,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/fore)
 "tWo" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
@@ -76635,7 +76635,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/starboard/fore)
 "usZ" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /turf/open/floor/iron/white,
@@ -78486,7 +78486,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
 "uTP" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard/aft)
 "uTW" = (
@@ -78957,7 +78957,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/aft)
 "uZo" = (
@@ -80212,7 +80212,7 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_x = 32
 	},
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/trimline/green/filled/arrow_cw{
 	dir = 5
 	},
@@ -82807,7 +82807,7 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/west,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/structure/sign/departments/psychology/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -87000,7 +87000,7 @@
 /turf/open/floor/pod,
 /area/station/maintenance/floor4/starboard/aft)
 "xbK" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
 "xbN" = (
@@ -87146,7 +87146,7 @@
 /turf/open/floor/pod,
 /area/station/maintenance/floor4/starboard/aft)
 "xdy" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/aft)
@@ -88531,7 +88531,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/floor3/fore)
 "xwL" = (
-/obj/structure/locker/bombcloset/white,
+/obj/structure/locker/bomblocker/white,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "xwM" = (
@@ -88847,7 +88847,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "xBB" = (
@@ -90902,7 +90902,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard)
 "yex" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
@@ -91306,7 +91306,7 @@
 /area/station/hallway/floor4/aft)
 "ykL" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
 "ykP" = (

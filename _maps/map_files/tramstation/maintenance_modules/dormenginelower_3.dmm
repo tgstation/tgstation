@@ -716,7 +716,7 @@
 /area/station/maintenance/central/lesser)
 "Vt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "Xm" = (

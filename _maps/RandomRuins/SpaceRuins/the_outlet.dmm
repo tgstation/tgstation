@@ -827,7 +827,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "ua" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -2080,7 +2080,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Xb" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Xj" = (

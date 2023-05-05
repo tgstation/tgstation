@@ -379,7 +379,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "fa" = (
 /obj/structure/cable,
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal{
@@ -1065,7 +1065,7 @@
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
 	},
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal{

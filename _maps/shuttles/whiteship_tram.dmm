@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/engine)
 "ab" = (
@@ -1023,7 +1023,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "du" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1

@@ -482,7 +482,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -491,7 +491,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "eg" = (
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1227,7 +1227,7 @@
 "hK" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -2022,7 +2022,7 @@
 "ms" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -3268,7 +3268,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "EV" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 6
 	},
@@ -3477,7 +3477,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Jo" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -3866,7 +3866,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Qv" = (
-/obj/structure/locker/firecloset/full{
+/obj/structure/locker/firelocker/full{
 	anchored = 1
 	},
 /turf/open/floor/iron,

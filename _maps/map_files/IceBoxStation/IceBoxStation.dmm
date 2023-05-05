@@ -9458,7 +9458,7 @@
 "cTt" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/light/directional/south,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -16881,7 +16881,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "foT" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "foW" = (
@@ -19879,7 +19879,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gnL" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "gnM" = (
@@ -20524,7 +20524,7 @@
 /area/station/maintenance/starboard/fore)
 "gAk" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -22457,7 +22457,7 @@
 /area/station/tcommsat/computer)
 "hfL" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "hgc" = (
@@ -24025,7 +24025,7 @@
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
 "hJY" = (
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -29098,7 +29098,7 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "jpE" = (
-/obj/structure/locker/l3closet/security,
+/obj/structure/locker/l3locker/security,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
@@ -31053,7 +31053,7 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "jWJ" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/structure/sign/warning/gas_mask/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/main)
@@ -34042,7 +34042,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "kRi" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/item/extinguisher,
 /obj/machinery/requests_console/directional/north{
 	department = "Science";
@@ -49894,7 +49894,7 @@
 	dir = 5
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/camera{
 	c_tag = "Virology Airlock";
 	dir = 9;
@@ -64511,7 +64511,7 @@
 /turf/open/floor/plating/icemoon,
 /area/station/security/execution/education)
 "uDi" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
@@ -73529,7 +73529,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)

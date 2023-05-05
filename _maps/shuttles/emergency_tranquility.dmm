@@ -802,7 +802,7 @@
 /area/shuttle/escape)
 "oy" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1068,7 +1068,7 @@
 /area/shuttle/escape)
 "sW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/structure/sign/poster/official/jim_nortons{
 	pixel_y = 32
 	},
@@ -2537,7 +2537,7 @@
 /area/shuttle/escape)
 "UF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)

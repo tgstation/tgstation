@@ -540,7 +540,7 @@
 	dir = 8
 	},
 /obj/item/pickaxe/mini,
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "np" = (

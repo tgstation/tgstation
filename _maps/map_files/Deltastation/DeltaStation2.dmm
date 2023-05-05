@@ -8245,7 +8245,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/psychology)
 "bVW" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line,
@@ -12312,7 +12312,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "cYk" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -21001,7 +21001,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "fkz" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -26857,7 +26857,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
@@ -28663,7 +28663,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "hgi" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -32180,7 +32180,7 @@
 /area/station/security/prison)
 "ibh" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -37633,7 +37633,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/morgue)
 "jrG" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/warning/vacuum/directional/north,
@@ -39703,7 +39703,7 @@
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "jQq" = (
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/green,
 /obj/item/radio/intercom/directional/north,
@@ -49668,7 +49668,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "mub" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
@@ -51312,7 +51312,7 @@
 "mNK" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -53168,7 +53168,7 @@
 /area/station/maintenance/disposal)
 "nov" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/l3closet/virology,
+/obj/structure/locker/l3locker/virology,
 /obj/structure/sign/warning/biohazard{
 	pixel_y = -32
 	},
@@ -57913,7 +57913,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "oBn" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -66721,7 +66721,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/security)
 "qJl" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway)
@@ -68847,7 +68847,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "rlU" = (
-/obj/structure/locker/l3closet/security,
+/obj/structure/locker/l3locker/security,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
@@ -79270,7 +79270,7 @@
 	},
 /area/station/service/bar)
 "tQr" = (
-/obj/structure/locker/bombcloset/security,
+/obj/structure/locker/bomblocker/security,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
@@ -83583,7 +83583,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "uTf" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -86282,7 +86282,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "vBt" = (
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
@@ -91591,7 +91591,7 @@
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "wSD" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/departments/xenobio/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,

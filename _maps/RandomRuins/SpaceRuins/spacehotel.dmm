@@ -1733,7 +1733,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hotel)
 "qd" = (
-/obj/structure/locker/l3closet/janitor,
+/obj/structure/locker/l3locker/janitor,
 /obj/item/grenade/chem_grenade/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,

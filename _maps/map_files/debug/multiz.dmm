@@ -363,7 +363,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bU" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/iron{
 	dir = 9
 	},

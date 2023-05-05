@@ -3587,7 +3587,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/central)
 "jF" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3596,7 +3596,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jG" = (
-/obj/structure/locker/l3closet/scientist,
+/obj/structure/locker/l3locker/scientist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

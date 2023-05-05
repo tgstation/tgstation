@@ -7,16 +7,16 @@
 /obj/effect/spawner/random/clothing/wardrobe_closet : /obj/effect/spawner/random/clothing/wardrobe_locker{@OLD}
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored : /obj/effect/spawner/random/clothing/wardrobe_locker_colored{@OLD}
 
-/obj/structure/locker/acloset : /obj/structure/locker/alocker{@OLD}
-/obj/structure/locker/bombcloset : /obj/structure/locker/bomblocker{@OLD}
-/obj/structure/locker/chefcloset : /obj/structure/locker/cheflocker{@OLD}
-/obj/structure/locker/emcloset : /obj/structure/locker/emlocker{@OLD}
-/obj/structure/locker/firecloset : /obj/structure/locker/firelocker{@OLD}
-/obj/structure/locker/gmcloset : /obj/structure/locker/gmlocker{@OLD}
-/obj/structure/locker/jcloset : /obj/structure/locker/jlocker{@OLD}
-/obj/structure/locker/l3closet : /obj/structure/locker/l3locker{@OLD}
-/obj/structure/locker/lawcloset : /obj/structure/locker/lawlocker{@OLD}
-/obj/structure/locker/toolcloset : /obj/structure/locker/toollocker{@OLD}
+/obj/structure/locker/acloset/@SUBTYPES : /obj/structure/locker/alocker/@SUBTYPES{@OLD}
+/obj/structure/locker/bombcloset/@SUBTYPES : /obj/structure/locker/bomblocker/@SUBTYPES{@OLD}
+/obj/structure/locker/chefcloset/@SUBTYPES : /obj/structure/locker/cheflocker/@SUBTYPES{@OLD}
+/obj/structure/locker/emcloset/@SUBTYPES : /obj/structure/locker/emlocker/@SUBTYPES{@OLD}
+/obj/structure/locker/firecloset/@SUBTYPES : /obj/structure/locker/firelocker/@SUBTYPES{@OLD}
+/obj/structure/locker/gmcloset/@SUBTYPES : /obj/structure/locker/gmlocker/@SUBTYPES{@OLD}
+/obj/structure/locker/jcloset/@SUBTYPES : /obj/structure/locker/jlocker/@SUBTYPES{@OLD}
+/obj/structure/locker/l3closet/@SUBTYPES : /obj/structure/locker/l3locker/@SUBTYPES{@OLD}
+/obj/structure/locker/lawcloset/@SUBTYPES : /obj/structure/locker/lawlocker/@SUBTYPES{@OLD}
+/obj/structure/locker/toolcloset/@SUBTYPES : /obj/structure/locker/toollocker/@SUBTYPES{@OLD}
 
 /obj/effect/overlay/closet_door : /obj/effect/overlay/locker_door{@OLD}
 /obj/effect/landmark/start/hangover/closet : /obj/effect/landmark/start/hangover/locker{@OLD}

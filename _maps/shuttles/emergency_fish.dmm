@@ -122,7 +122,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "gh" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3

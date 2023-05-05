@@ -32,7 +32,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "j" = (
-/obj/structure/locker/firecloset/full,
+/obj/structure/locker/firelocker/full,
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "k" = (

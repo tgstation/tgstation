@@ -5383,7 +5383,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
 "LW" = (
-/obj/structure/locker/emcloset/anchored,
+/obj/structure/locker/emlocker/anchored,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge_hall)
 "LY" = (
