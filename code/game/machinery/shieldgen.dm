@@ -565,6 +565,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
+
 	var/overclocked = FALSE
 	var/active = FALSE
 	var/recovering = FALSE
@@ -583,6 +584,9 @@
 	///Current radius the shield is set to
 	var/radius = 5
 
+	///Determines if we only generate a shield on space tiles or not
+	var/exterior_only = FALSE
+
 	var/list/deployed_shields
 
 /obj/machinery/modularshieldgen/RefreshParts()
@@ -599,18 +603,45 @@
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		max_radius += new_laser.tier * 2
 
+/obj/machinery/modularshieldgen/interact(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(panel_open)
+		to_chat(user, span_warning("The panel must be closed before operating this machine!"))
+		return
+	if (active)
+		deactivate_shields()
+		return
+	activate_shields()
+
+/obj/machinery/shieldgen/proc/deactivate_shields()
+	active = FALSE
+	update_appearance()
+	QDEL_LIST(deployed_shields)
 
 
-/obj/machinery/modularshieldgen/proc/activate()
+
+/obj/machinery/modularshieldgen/proc/activate_shields()
 	active = TRUE
 	update_appearance()
-	var/list/inside_shield = circle_range_turfs(src, radius -1)
+
+	//please god yell at me for this i dont know if its the right way to do this
+	var/list/inside_shield = circle_range_turfs(src, radius - 1)
+	if (exterior_only)
+		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
+			if (!(target_tile in inside_shield) && isspaceturf(target_tile))
+				deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
+				active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+		return
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 		if (!(target_tile in inside_shield) && isopenturf(target_tile))
 			deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
+			active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
 /obj/machinery/modularshieldgen/Destroy()
 	QDEL_LIST(deployed_shields)
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
 /obj/machinery/modularshieldgen/update_icon_state()
@@ -620,6 +651,21 @@
 /obj/machinery/modularshieldgen/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
 		return
+
+/obj/machinery/modularshieldgen/shield_drain(damage_amount)
+	stored_strength -= damage_amount
+	START_PROCESSING(SSobj, src)
+	if stored_strength <= 5
+		deactivate_shields()
+		recovering = TRUE
+
+/obj/machinery/modularshieldgen/process(seconds_per_tick)
+	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
+	if(stored_strength == max_strength)
+		STOP_PROCESSING(SSobj, src)
+		return
+	deployed_shields.opacity = min(255 * (stored_strength/max_strength), 50)
+
 
 
 /obj/structure/emergency_shield/modular
@@ -640,6 +686,4 @@
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		drain_strength(damage_amount)
-
-/obj/structure/emergency_shield/modular/proc/drain_strength(drain_amount)
+		ParentGen.shield_drain(damage_amount)
