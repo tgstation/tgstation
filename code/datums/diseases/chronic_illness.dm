@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
 	process_dead = TRUE
-	stage_prob = 0.25
+	stage_prob = 0.5
 	cure_text = "Sansufentanyl"
 	cures = list(/datum/reagent/medicine/sansufentanyl)
 	infectivity = 0
