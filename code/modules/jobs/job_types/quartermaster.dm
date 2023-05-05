@@ -51,4 +51,4 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
 
-	chameleon_extras = /obj/item/stamp/qm
+	chameleon_extras = /obj/item/stamp/head/qm

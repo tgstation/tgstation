@@ -38,7 +38,7 @@
 	. = ..()
 	if(mode)
 		. += "\The [src] is bolted to the floor."
-	if(in_range(user, src) || isobserver(user) && internal_heat > max_heat * 0.5)
+	if((in_range(user, src) || isobserver(user)) && internal_heat > max_heat * 0.5)
 		. += span_danger("[src] is warping the air above it. It must be very hot.")
 
 /obj/item/powersink/set_anchored(anchorvalue)
