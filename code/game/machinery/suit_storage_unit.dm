@@ -228,7 +228,6 @@
 	. = ..()
 
 	if(card_reader_installed)
-		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 		. += span_notice("Swipe your ID to change access levels.")
 		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel after opening panel.")
 	else
