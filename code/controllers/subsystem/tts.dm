@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(tts)
 	if(!tts_enabled)
 		return
 
-	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]", "g")
+	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
 	// If there is no alphanumeric char, the output will usually be static, so
 	// don't bother sending
 	if(contains_alphanumeric.Find(message) == 0)
