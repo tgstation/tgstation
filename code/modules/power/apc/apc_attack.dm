@@ -146,8 +146,7 @@
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
 				atom_integrity = 30 //needs to be welded to fully repair but can work without
-				set_machine_stat(machine_stat & ~BROKEN)
-				set_machine_stat(machine_stat & ~MAINT)
+				set_machine_stat(machine_stat & ~(BROKEN|MAINT))
 				opened = APC_COVER_OPENED
 				update_appearance()
 			return
