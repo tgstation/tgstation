@@ -14,7 +14,7 @@
 	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=2000)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -70,7 +70,7 @@
 		if(/obj/item/shard/plasma)
 			force = 11
 			throwforce = 21
-			custom_materials = list(/datum/material/iron=1000, /datum/material/alloy/plasmaglass=2000)
+			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plasmaglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			icon_prefix = "spearplasma"
 			force_unwielded = 11
 			force_wielded = 19
@@ -80,7 +80,7 @@
 			throwforce = 21
 			throw_range = 8
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron=1000, /datum/material/alloy/titaniumglass=2000)
+			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/titaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
 			force_unwielded = 13
 			force_wielded = 18
@@ -91,7 +91,7 @@
 			throwforce = 22
 			throw_range = 9
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron=1000, /datum/material/alloy/plastitaniumglass=2000)
+			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
 			bare_wound_bonus = 20
 			force_unwielded = 13
@@ -216,7 +216,7 @@
 
 	throwforce = 22
 	armour_penetration = 15 //Enhanced armor piercing
-	custom_materials = list(/datum/material/bone=7000)
+	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT * 7)
 	force_unwielded = 12
 	force_wielded = 20
 
@@ -231,6 +231,6 @@
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
 	throwforce = 22	//Better to throw
-	custom_materials = list(/datum/material/bamboo=40000)
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
 	force_unwielded = 10
 	force_wielded = 18

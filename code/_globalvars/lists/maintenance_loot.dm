@@ -208,6 +208,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stock_parts/cell/high = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
 		) = 8,
 
 	list(//medical and chemicals

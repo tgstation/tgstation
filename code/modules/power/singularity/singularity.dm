@@ -156,6 +156,8 @@
 		if(EXPLODE_LIGHT)
 			energy -= round(((energy + 1) / 4), 1)
 
+	return TRUE
+
 /obj/singularity/process(seconds_per_tick)
 	time_since_act += seconds_per_tick
 	if(time_since_act < 2)
