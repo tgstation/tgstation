@@ -117,13 +117,13 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aj" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "ak" = (
@@ -312,16 +312,8 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"aH" = (
-/obj/structure/closet/wardrobe/black,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "aI" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/locker/wardrobe/grey,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
@@ -333,14 +325,14 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aK" = (
-/obj/structure/closet/wardrobe/yellow,
+/obj/structure/locker/wardrobe/yellow,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aL" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/locker/wardrobe/grey,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
@@ -401,7 +393,7 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aT" = (
-/obj/structure/closet/wardrobe/black,
+/obj/structure/locker/wardrobe/black,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/arrival)

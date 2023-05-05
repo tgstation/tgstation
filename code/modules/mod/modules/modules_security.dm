@@ -195,9 +195,9 @@
 	/// Time to dematerialize a bodybag.
 	var/packup_time = 1 SECONDS
 	/// Typepath of our bodybag
-	var/bodybag_type = /obj/structure/closet/body_bag/environmental/prisoner/hardlight
+	var/bodybag_type = /obj/structure/locker/body_bag/environmental/prisoner/hardlight
 	/// Our linked bodybag.
-	var/obj/structure/closet/body_bag/linked_bodybag
+	var/obj/structure/locker/body_bag/linked_bodybag
 
 /obj/item/mod/module/criminalcapture/on_process(seconds_per_tick)
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
@@ -256,7 +256,7 @@
 		return
 	packup()
 
-/obj/item/mod/module/criminalcapture/proc/delete_bag(obj/structure/closet/body_bag/bag)
+/obj/item/mod/module/criminalcapture/proc/delete_bag(obj/structure/locker/body_bag/bag)
 	if(mod?.wearer)
 		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 		balloon_alert(mod.wearer, "bag dissipated")

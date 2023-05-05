@@ -51,7 +51,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bH" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -111,7 +111,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,
@@ -188,7 +188,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/structure/closet/crate/science,
+/obj/structure/locker/crate/science,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/raw_anomaly_core/random{
 	pixel_x = -5;
@@ -237,7 +237,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/abandoned)
 "kZ" = (
-/obj/structure/closet/crate/radiation,
+/obj/structure/locker/crate/radiation,
 /obj/item/lazarus_injector,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/east,
@@ -246,7 +246,7 @@
 /area/shuttle/abandoned)
 "lO" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate/science,
+/obj/structure/locker/crate/science,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -445,7 +445,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/toggle/labcoat,
 /obj/item/clothing/neck/tie/horrible,
@@ -501,7 +501,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/end{
 	dir = 4
 	},
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/food/meat/slab/human/mutant/golem/adamantine,
 /obj/item/storage/fancy/donut_box,
 /obj/effect/decal/cleanable/dirt,
@@ -713,7 +713,7 @@
 	pixel_x = -2;
 	pixel_y = 1
 	},
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
@@ -731,7 +731,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/medical/minor_healing,
@@ -843,7 +843,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/end{
 	dir = 4
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/radio/off{
 	pixel_x = 4;
 	pixel_y = -6
@@ -1018,7 +1018,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,

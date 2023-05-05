@@ -65,7 +65,7 @@
 	var/static/list/desired_trash = list(/obj/item/storage/cans)
 	/// Structures that AI carp are willing to attack. This prevents them from deconstructing supermatter cooling equipment.
 	var/static/list/allowed_obstacle_targets = typecacheof(list(
-		/obj/structure/closet,
+		/obj/structure/locker,
 		/obj/machinery/door,
 		/obj/structure/door_assembly,
 		/obj/structure/filingcabinet,

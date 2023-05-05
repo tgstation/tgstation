@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/drop_somewhere_on_station()
 	var/turf/random_spot = get_safe_random_station_turf()
 
-	var/obj/structure/closet/supplypod/pod = podspawn(list(
+	var/obj/structure/locker/supplypod/pod = podspawn(list(
 		"target" = random_spot,
 	))
 	forceMove(pod)

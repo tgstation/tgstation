@@ -21,7 +21,7 @@
 /area/station/maintenance/central/lesser)
 "bU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -226,7 +226,7 @@
 /area/station/maintenance/central/lesser)
 "nw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/material,
@@ -376,7 +376,7 @@
 /area/station/maintenance/central/lesser)
 "vQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -397,7 +397,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "xi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/iron/smooth,
@@ -623,7 +623,7 @@
 /area/station/asteroid)
 "Lw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "LX" = (
@@ -683,7 +683,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Oo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "OF" = (
@@ -830,7 +830,7 @@
 /area/template_noop)
 "WR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/wardrobe/engineering_yellow,
+/obj/structure/locker/wardrobe/engineering_yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "Xm" = (

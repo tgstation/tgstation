@@ -102,7 +102,7 @@
 #include "chain_pull_through_space.dm"
 #include "chat_filter.dm"
 #include "circuit_component_category.dm"
-#include "closets.dm"
+#include "lockers.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"

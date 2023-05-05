@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		to_chat(collector, span_danger("You've already gotten some loot, just get out of there with it!"))
 		return
 	visible_message(span_warning("Something falls free of the tendril!"))
-	var/obj/structure/closet/crate/necropolis/tendril/loot = new /obj/structure/closet/crate/necropolis/tendril(loc)
+	var/obj/structure/locker/crate/necropolis/tendril/loot = new /obj/structure/locker/crate/necropolis/tendril(loc)
 	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
 

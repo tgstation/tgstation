@@ -446,7 +446,7 @@
 /area/centcom/basketball)
 "LV" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "MS" = (

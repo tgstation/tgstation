@@ -159,7 +159,7 @@
   - code_imp: Migrates mob weather immunity to defines rather than strings.
   - refactor: Gave atom/movable the ability to be spaceproofed and insulated to protect
       its contents.
-  - refactor: Gave /obj/structure/closet the ability to protect its contents from
+  - refactor: Gave /obj/structure/locker the ability to protect its contents from
       weather.
   - bugfix: Using wirecutters on an unlabeled bodybag no longer sends the "You cut
       the tag off of the bodybag" message.

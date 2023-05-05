@@ -1,9 +1,9 @@
-/obj/structure/closet/secure_closet/engineering_chief
+/obj/structure/locker/secure/engineering_chief
 	name = "chief engineer's locker"
 	req_access = list(ACCESS_CE)
 	icon_state = "ce"
 
-/obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
+/obj/structure/locker/secure/engineering_chief/PopulateContents()
 	..()
 
 	new /obj/item/storage/bag/garment/engineering_chief (src)
@@ -19,19 +19,19 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
-/obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
+/obj/structure/locker/secure/engineering_chief/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objective
 	new /obj/item/areaeditor/blueprints(src)
 
-/obj/structure/closet/secure_closet/engineering_electrical
+/obj/structure/locker/secure/engineering_electrical
 	name = "electrical supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng"
 	icon_door = "eng_elec"
 
-/obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
+/obj/structure/locker/secure/engineering_electrical/PopulateContents()
 	..()
 	var/static/items_inside = list(
 		/obj/item/clothing/gloves/color/yellow = 2,
@@ -41,25 +41,25 @@
 		/obj/item/multitool = 3)
 	generate_items_inside(items_inside,src)
 
-/obj/structure/closet/secure_closet/engineering_welding
+/obj/structure/locker/secure/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng"
 	icon_door = "eng_weld"
 
-/obj/structure/closet/secure_closet/engineering_welding/PopulateContents()
+/obj/structure/locker/secure/engineering_welding/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/utility/welding(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weldingtool(src)
 
-/obj/structure/closet/secure_closet/engineering_personal
+/obj/structure/locker/secure/engineering_personal
 	name = "engineer's locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	icon_state = "eng_secure"
 
-/obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
+/obj/structure/locker/secure/engineering_personal/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_eng(src)
 	new /obj/item/storage/toolbox/mechanical(src)
@@ -71,12 +71,12 @@
 	new /obj/item/storage/bag/construction(src)
 
 
-/obj/structure/closet/secure_closet/atmospherics
+/obj/structure/locker/secure/atmospherics
 	name = "atmospheric technician's locker"
 	req_access = list(ACCESS_ATMOSPHERICS)
 	icon_state = "atmos"
 
-/obj/structure/closet/secure_closet/atmospherics/PopulateContents()
+/obj/structure/locker/secure/atmospherics/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_eng(src)
 	new /obj/item/pipe_dispenser(src)

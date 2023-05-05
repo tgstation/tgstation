@@ -81,14 +81,14 @@
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
 			Contents are sorted to always be worth 30 TC. The Syndicate will only provide one surplus item per agent."
-	item = /obj/structure/closet/crate // will be replaced in purchase()
+	item = /obj/structure/locker/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
 	var/crate_tc_value = 30
 	/// crate that will be used for the surplus crate
-	var/crate_type = /obj/structure/closet/crate
+	var/crate_type = /obj/structure/locker/crate
 
 /// generates items that can go inside crates, edit this proc to change what items could go inside your specialized crate
 /datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
@@ -116,7 +116,7 @@
 	return uplink_item
 
 /// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
-/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
+/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/locker/crate/surplus_crate, list/possible_items)
 	var/tc_budget = crate_tc_value
 	while(tc_budget)
 		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
@@ -127,7 +127,7 @@
 
 /// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
 /datum/uplink_item/bundles_tc/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
-	var/obj/structure/closet/crate/surplus_crate = new crate_type()
+	var/obj/structure/locker/crate/surplus_crate = new crate_type()
 	if(!istype(surplus_crate))
 		CRASH("crate_type is not a crate")
 	var/list/possible_items = generate_possible_items(user, handler)
@@ -148,14 +148,14 @@
 			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 80 TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
-	item = /obj/structure/closet/crate/syndicrate
+	item = /obj/structure/locker/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 80
-	crate_type = /obj/structure/closet/crate/syndicrate
+	crate_type = /obj/structure/locker/crate/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
-/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/syndicrate/surplus_crate, list/possible_items)
+/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/locker/crate/syndicrate/surplus_crate, list/possible_items)
 	if(!istype(surplus_crate))
 		return
 	var/tc_budget = crate_tc_value

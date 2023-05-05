@@ -76,7 +76,7 @@
 /turf/open/floor/iron,
 /area/ruin/powered/beach)
 "bb" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
@@ -165,7 +165,7 @@
 /turf/open/water/beach/biodome,
 /area/ruin/powered/beach)
 "cV" = (
-/obj/structure/closet/secure_closet/freezer/meat{
+/obj/structure/locker/secure_closet/freezer/meat{
 	req_access = null
 	},
 /obj/item/food/meat/rawbacon,
@@ -423,7 +423,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "nI" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure_closet/freezer/kitchen{
 	req_access = null
 	},
 /obj/item/reagent_containers/condiment/milk,
@@ -567,7 +567,7 @@
 /area/ruin/powered/beach)
 "sM" = (
 /obj/machinery/light/directional/east,
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
 	req_access = list("bar")
@@ -590,7 +590,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/beach)
 "tf" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
@@ -768,7 +768,7 @@
 /area/ruin/powered/beach)
 "AC" = (
 /obj/item/storage/crayons,
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
@@ -783,7 +783,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "AY" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/cultivator,
@@ -867,7 +867,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Ds" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure_closet/freezer/kitchen{
 	req_access = null
 	},
 /turf/open/floor/wood,
@@ -997,7 +997,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "cabinet";
 	name = "booze storage";
 	req_access = list("bar")
@@ -1245,7 +1245,7 @@
 	},
 /area/ruin/powered/beach)
 "RB" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/suit/costume/ianshirt,
@@ -1276,7 +1276,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "SH" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "Cooler"
 	},
 /obj/item/reagent_containers/cup/glass/ice,
@@ -1388,7 +1388,7 @@
 /area/ruin/powered/beach)
 "VL" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "fuel crate"
 	},
 /obj/item/stack/sheet/mineral/coal/ten,
@@ -1416,7 +1416,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Wy" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/purple,
 /obj/item/clothing/shoes/cookflops{

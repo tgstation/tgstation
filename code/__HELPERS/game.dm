@@ -40,7 +40,7 @@
 				found_organ.organ_flags ^= ORGAN_FROZEN
 
 		for(var/atom/contained_to_check in object_to_check) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
-			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/closet/crate/freezer) && !istype(contained_to_check, /obj/structure/closet/secure_closet/freezer))
+			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/locker/crate/freezer) && !istype(contained_to_check, /obj/structure/locker/secure/freezer))
 				processing_list+= contained_to_check
 
 		index++

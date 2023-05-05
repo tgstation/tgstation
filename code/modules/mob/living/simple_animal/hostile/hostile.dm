@@ -2,7 +2,7 @@
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES // Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES // Set to ENVIRONMENT_SMASH_STRUCTURES to break lockers,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	///The current target of our attacks, use GiveTarget and LoseTarget to set this var
 	var/atom/target
 	///Does this mob use ranged attacks?
@@ -559,7 +559,7 @@
 		A.attack_animal(src)//Bang on it till we get out
 
 /mob/living/simple_animal/hostile/proc/FindHidden()
-	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
+	if(istype(target.loc, /obj/structure/locker) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		Goto(A,move_to_delay,minimum_distance)

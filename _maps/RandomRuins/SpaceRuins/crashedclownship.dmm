@@ -26,7 +26,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "i" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,
@@ -35,14 +35,14 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "j" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "k" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	name = "clown locker";
 	req_access = list("theatre")
 	},
@@ -141,7 +141,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "y" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,

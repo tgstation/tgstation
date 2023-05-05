@@ -254,7 +254,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/closet/crate/trashcart{
+/obj/structure/locker/crate/trashcart{
 	desc = "A heavy, metal trashcart with wheels. Feel free to hop in at any time!"
 	},
 /obj/item/toy/sword,
@@ -318,7 +318,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "Zf" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/toy/sword,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)

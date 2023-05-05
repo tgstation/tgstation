@@ -358,7 +358,7 @@
 "lX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "mn" = (
@@ -826,7 +826,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Gf" = (
-/obj/structure/closet/syndicate,
+/obj/structure/locker/syndicate,
 /obj/item/clothing/suit/space/syndicate/black/red{
 	pixel_y = -2;
 	pixel_x = 8
@@ -876,7 +876,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "HI" = (
-/obj/structure/closet/syndicate,
+/obj/structure/locker/syndicate,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/suit/space/syndicate/black/red{

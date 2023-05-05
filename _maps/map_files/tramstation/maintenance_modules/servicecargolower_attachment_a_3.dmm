@@ -88,14 +88,14 @@
 "C" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/plating,

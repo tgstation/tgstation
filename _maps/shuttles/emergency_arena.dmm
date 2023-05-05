@@ -11,7 +11,7 @@
 	},
 /area/shuttle/escape/arena)
 "i" = (
-/obj/structure/closet/crate/necropolis/dragon,
+/obj/structure/locker/crate/necropolis/dragon,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
@@ -26,7 +26,7 @@
 	},
 /area/shuttle/escape/arena)
 "l" = (
-/obj/structure/closet/crate/necropolis/tendril,
+/obj/structure/locker/crate/necropolis/tendril,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "m" = (

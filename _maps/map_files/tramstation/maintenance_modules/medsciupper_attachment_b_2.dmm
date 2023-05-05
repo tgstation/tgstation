@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -20,7 +20,7 @@
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)

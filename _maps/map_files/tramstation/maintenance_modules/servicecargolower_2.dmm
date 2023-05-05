@@ -4,7 +4,7 @@
 /area/station/asteroid)
 "bs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/maintenance/three,
@@ -168,7 +168,7 @@
 "tx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/material_cheap,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
@@ -230,7 +230,7 @@
 /area/station/asteroid)
 "Ex" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "EZ" = (
@@ -329,7 +329,7 @@
 /area/station/maintenance/starboard/greater)
 "Pe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
@@ -383,7 +383,7 @@
 /area/station/maintenance/starboard/greater)
 "Xg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "XB" = (

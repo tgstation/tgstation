@@ -39,7 +39,7 @@
 "k" = (
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "m" = (

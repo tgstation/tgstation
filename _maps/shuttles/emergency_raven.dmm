@@ -667,7 +667,7 @@
 /area/shuttle/escape)
 "bO" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bP" = (
@@ -681,7 +681,7 @@
 /area/shuttle/escape)
 "bR" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
@@ -698,7 +698,7 @@
 /area/shuttle/escape)
 "bU" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bV" = (
@@ -755,7 +755,7 @@
 /area/shuttle/escape)
 "cc" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1123,7 +1123,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /obj/effect/turf_decal/bot_white,
@@ -1131,7 +1131,7 @@
 /area/shuttle/escape)
 "cV" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cW" = (
@@ -1185,7 +1185,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "db" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
@@ -1434,12 +1434,12 @@
 "dH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dI" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)

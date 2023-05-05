@@ -1,42 +1,42 @@
-/obj/structure/closet/cabinet
+/obj/structure/locker/cabinet
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/wooden_locker_open.ogg'
+	close_sound = 'sound/machines/wooden_locker_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
 	door_anim_time = 0 // no animation
 
-/obj/structure/closet/acloset
-	name = "strange closet"
+/obj/structure/locker/alocker
+	name = "strange locker"
 	desc = "It looks alien!"
 	icon_state = "alien"
 	material_drop = /obj/item/stack/sheet/mineral/abductor
 
-/obj/structure/closet/gimmick
-	name = "administrative supply closet"
+/obj/structure/locker/gimmick
+	name = "administrative supply locker"
 	desc = "It's a storage unit for things that have no right being here."
 	icon_state = "syndicate"
 
-/obj/structure/closet/gimmick/russian
-	name = "\improper Russian surplus closet"
+/obj/structure/locker/gimmick/russian
+	name = "\improper Russian surplus locker"
 	desc = "It's a storage unit for Russian standard-issue surplus."
 
-/obj/structure/closet/gimmick/russian/PopulateContents()
+/obj/structure/locker/gimmick/russian/PopulateContents()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/costume/ushanka(src)
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/under/costume/soviet(src)
 
-/obj/structure/closet/gimmick/tacticool
-	name = "tacticool gear closet"
+/obj/structure/locker/gimmick/tacticool
+	name = "tacticool gear locker"
 	desc = "It's a storage unit for Tacticool gear."
 
-/obj/structure/closet/gimmick/tacticool/PopulateContents()
+/obj/structure/locker/gimmick/tacticool/PopulateContents()
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
@@ -54,16 +54,16 @@
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 
 
-/obj/structure/closet/thunderdome
-	name = "\improper Thunderdome closet"
+/obj/structure/locker/thunderdome
+	name = "\improper Thunderdome locker"
 	desc = "Everything you need!"
 	anchored = TRUE
 
-/obj/structure/closet/thunderdome/tdred
-	name = "red-team Thunderdome closet"
+/obj/structure/locker/thunderdome/tdred
+	name = "red-team Thunderdome locker"
 	icon_door = "red"
 
-/obj/structure/closet/thunderdome/tdred/PopulateContents()
+/obj/structure/locker/thunderdome/tdred/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/red(src)
@@ -78,11 +78,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
 
-/obj/structure/closet/thunderdome/tdgreen
-	name = "green-team Thunderdome closet"
+/obj/structure/locker/thunderdome/tdgreen
+	name = "green-team Thunderdome locker"
 	icon_door = "green"
 
-/obj/structure/closet/thunderdome/tdgreen/PopulateContents()
+/obj/structure/locker/thunderdome/tdgreen/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/tdome/green(src)
@@ -97,11 +97,11 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
 
-/obj/structure/closet/malf/suits
+/obj/structure/locker/malf/suits
 	desc = "It's a storage unit for operational gear."
 	icon_state = "syndicate"
 
-/obj/structure/closet/malf/suits/PopulateContents()
+/obj/structure/locker/malf/suits/PopulateContents()
 	..()
 	new /obj/item/tank/jetpack/void(src)
 	new /obj/item/clothing/mask/breath(src)
@@ -111,7 +111,7 @@
 	new /obj/item/stock_parts/cell(src)
 	new /obj/item/multitool(src)
 
-/obj/structure/closet/mini_fridge
+/obj/structure/locker/mini_fridge
 	name = "grimy mini-fridge"
 	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
 	icon_state = "mini_fridge"
@@ -119,7 +119,7 @@
 	max_mob_size = MOB_SIZE_SMALL
 	storage_capacity = 10
 
-/obj/structure/closet/mini_fridge/PopulateContents()
+/obj/structure/locker/mini_fridge/PopulateContents()
 	. = ..()
 	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)

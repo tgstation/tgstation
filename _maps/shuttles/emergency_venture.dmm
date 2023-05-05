@@ -75,7 +75,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /obj/effect/turf_decal/delivery,
@@ -211,7 +211,7 @@
 /area/shuttle/escape)
 "kb" = (
 /obj/machinery/light/directional/north,
-/obj/structure/closet{
+/obj/structure/locker{
 	anchorable = 0;
 	anchored = 1
 	},
@@ -353,7 +353,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ra" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchorable = 0;
 	anchored = 1
 	},
@@ -554,7 +554,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "DN" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -889,12 +889,12 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "WL" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "XM" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -908,7 +908,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Za" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchorable = 0;
 	anchored = 1
 	},

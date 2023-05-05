@@ -149,7 +149,7 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "sd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/large,
+/obj/structure/locker/crate/large,
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/mod/maint,
@@ -280,7 +280,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "FY" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/wallframe/apc,
 /obj/item/circuitboard/computer/apc_control,
 /obj/item/wallframe/airalarm,
@@ -326,7 +326,7 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "JA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/maintenance/two,
@@ -385,7 +385,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "SY" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)

@@ -211,7 +211,7 @@
 	junk_mail()
 
 /// Crate for mail from CentCom.
-/obj/structure/closet/crate/mail
+/obj/structure/locker/crate/mail
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
@@ -220,7 +220,7 @@
 	lid_x = -26
 	lid_y = 2
 
-/obj/structure/closet/crate/mail/update_icon_state()
+/obj/structure/locker/crate/mail/update_icon_state()
 	. = ..()
 	if(opened)
 		icon_state = "[initial(icon_state)]open"
@@ -230,7 +230,7 @@
 		icon_state = "[initial(icon_state)]sealed"
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
-/obj/structure/closet/crate/mail/proc/populate(amount)
+/obj/structure/locker/crate/mail/proc/populate(amount)
 	var/mail_count = min(amount, storage_capacity)
 	// Fills the
 	var/list/mail_recipients = list()
@@ -260,17 +260,17 @@
 	update_icon()
 
 /// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
-/obj/structure/closet/crate/mail/economy/Initialize(mapload)
+/obj/structure/locker/crate/mail/economy/Initialize(mapload)
 	. = ..()
 	populate(SSeconomy.mail_waiting)
 	SSeconomy.mail_waiting = 0
 
 /// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
-/obj/structure/closet/crate/mail/full
+/obj/structure/locker/crate/mail/full
 	name = "brimming mail crate"
 	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
 
-/obj/structure/closet/crate/mail/full/Initialize(mapload)
+/obj/structure/locker/crate/mail/full/Initialize(mapload)
 	. = ..()
 	populate(INFINITY)
 

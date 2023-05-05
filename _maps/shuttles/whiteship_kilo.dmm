@@ -20,7 +20,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/item/bikehorn/rubberducky,
-/obj/structure/closet/crate/trashcart/filled,
+/obj/structure/locker/crate/trashcart/filled,
 /obj/item/bodypart/arm/right/robot/surplus{
 	name = "rusty robotic arm";
 	desc = "A rusted and decayed robotic arm. Probably still works... Probably."
@@ -96,7 +96,7 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -460,7 +460,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi{
 	pixel_x = 5
@@ -473,7 +473,7 @@
 "tz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/secure/weapon,
+/obj/structure/locker/crate/secure/weapon,
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -509,7 +509,7 @@
 	},
 /obj/effect/turf_decal/box/corners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/pickaxe/drill,
 /obj/item/shovel,
 /turf/open/floor/plating,
@@ -592,7 +592,7 @@
 "Am" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/large,
+/obj/structure/locker/crate/large,
 /obj/machinery/space_heater,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -696,7 +696,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
+/obj/effect/spawner/random/clothing/wardrobe_locker_colored,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
@@ -754,7 +754,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "JL" = (
-/obj/structure/closet/secure_closet/freezer{
+/obj/structure/locker/secure_closet/freezer{
 	locked = 0;
 	name = "fridge"
 	},
@@ -817,7 +817,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /obj/item/storage/box/lights/mixed{
 	pixel_y = 5
@@ -1080,7 +1080,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "TP" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},

@@ -37,10 +37,10 @@ SUBSYSTEM_DEF(eigenstates)
 	for(var/atom/target as anything in targets)
 		eigen_targets["[id_counter]"] += target
 		eigen_id[target] = "[id_counter]"
-		RegisterSignal(target, COMSIG_CLOSET_INSERT, PROC_REF(use_eigenlinked_atom))
+		RegisterSignal(target, COMSIG_LOCKER_INSERT, PROC_REF(use_eigenlinked_atom))
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(remove_eigen_entry))
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(tool_interact))
-		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, TYPE_PROC_REF(/obj/structure/closet,bust_open))
+		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, TYPE_PROC_REF(/obj/structure/locker,bust_open))
 		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 		var/obj/item = target
 		if(item)
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(eigenstates)
 	entry.alpha = 255
 	UnregisterSignal(entry, list(
 		COMSIG_PARENT_QDELETING,
-		COMSIG_CLOSET_INSERT,
+		COMSIG_LOCKER_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
 	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
@@ -111,9 +111,9 @@ SUBSYSTEM_DEF(eigenstates)
 		do_sparks(5, FALSE, eigen_target)
 		do_sparks(5, FALSE, object_sent_from)
 	spark_time = world.time
-	//Calls a special proc for the atom if needed (closets use bust_open())
+	//Calls a special proc for the atom if needed (lockers use bust_open())
 	SEND_SIGNAL(eigen_target, COMSIG_EIGENSTATE_ACTIVATE)
-	return COMPONENT_CLOSET_INSERT_INTERRUPT
+	return COMPONENT_LOCKER_INSERT_INTERRUPT
 
 ///Prevents tool use on the item
 /datum/controller/subsystem/eigenstates/proc/tool_interact(atom/source, mob/user, obj/item/item)

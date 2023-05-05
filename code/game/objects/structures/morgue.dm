@@ -369,7 +369,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(!ismovable(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
 		return
 	if(!ismob(O))
-		if(!istype(O, /obj/structure/closet/body_bag))
+		if(!istype(O, /obj/structure/locker/body_bag))
 			return
 	else
 		var/mob/M = O

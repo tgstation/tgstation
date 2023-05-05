@@ -139,7 +139,7 @@
 	},
 /area/shuttle/escape)
 "os" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,

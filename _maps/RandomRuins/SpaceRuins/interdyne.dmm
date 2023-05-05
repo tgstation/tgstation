@@ -281,7 +281,7 @@
 /area/ruin/space/has_grav/interdyne)
 "kA" = (
 /obj/structure/cable,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "kH" = (
@@ -618,7 +618,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xb" = (
-/obj/structure/closet/wardrobe/white/medical,
+/obj/structure/locker/wardrobe/white/medical,
 /obj/item/clothing/suit/toggle/labcoat/interdyne,
 /obj/item/clothing/under/syndicate/scrubs,
 /obj/item/clothing/head/beret/medical,
@@ -682,7 +682,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "AC" = (
-/obj/structure/closet/secure_closet/chemical,
+/obj/structure/locker/secure_closet/chemical,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "AF" = (
@@ -958,7 +958,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "LE" = (
-/obj/structure/closet/crate/mail,
+/obj/structure/locker/crate/mail,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /obj/item/paper/fluff/junkmail_generic,
@@ -1173,7 +1173,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "TC" = (
-/obj/structure/closet/wardrobe/chemistry_white,
+/obj/structure/locker/wardrobe/chemistry_white,
 /obj/item/storage/bag/chemistry,
 /obj/item/storage/bag/chemistry,
 /obj/item/clothing/suit/toggle/labcoat/interdyne,

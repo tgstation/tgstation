@@ -122,7 +122,7 @@
 
 /// Creates the drop pod the nukie will be dropped by
 /obj/item/antag_spawner/nuke_ops/proc/setup_pod()
-	var/obj/structure/closet/supplypod/pod = new(null, pod_style)
+	var/obj/structure/locker/supplypod/pod = new(null, pod_style)
 	pod.explosionSize = list(0,0,0,0)
 	pod.bluespace = TRUE
 	return pod
@@ -146,7 +146,7 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
-	var/obj/structure/closet/supplypod/pod = setup_pod()
+	var/obj/structure/locker/supplypod/pod = setup_pod()
 	C.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = C.key
 	var/datum/mind/op_mind = nukie.mind
@@ -199,7 +199,7 @@
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(!creator_op)
 		return
-	var/obj/structure/closet/supplypod/pod = setup_pod()
+	var/obj/structure/locker/supplypod/pod = setup_pod()
 	switch(borg_to_spawn)
 		if("Medical")
 			borg = new /mob/living/silicon/robot/model/syndicate/medical()

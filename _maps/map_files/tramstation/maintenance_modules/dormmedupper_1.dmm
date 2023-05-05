@@ -142,7 +142,7 @@
 "uH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/entertainment/gambling,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "da loot"
 	},
 /obj/effect/spawner/random/entertainment/money_small,
@@ -155,7 +155,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "vb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "vB" = (

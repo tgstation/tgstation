@@ -81,7 +81,7 @@
 /turf/open/floor/carpet/purple,
 /area/ruin/space/djstation)
 "A" = (
-/obj/effect/spawner/random/clothing/wardrobe_closet,
+/obj/effect/spawner/random/clothing/wardrobe_locker,
 /turf/open/floor/wood/tile,
 /area/ruin/space/djstation)
 "B" = (

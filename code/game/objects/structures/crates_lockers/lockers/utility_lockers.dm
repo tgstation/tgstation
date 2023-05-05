@@ -1,32 +1,32 @@
-/* Utility Closets
+/* Utility Lockers
  * Contains:
- * Emergency Closet
- * Fire Closet
- * Tool Closet
- * Radiation Closet
- * Bombsuit Closet
+ * Emergency Locker
+ * Fire Locker
+ * Tool Locker
+ * Radiation Locker
+ * Bombsuit Locker
  * Hydrant
  * First Aid
  */
 
 /*
- * Emergency Closet
+ * Emergency Locker
  */
-/obj/structure/closet/emcloset
-	name = "emergency closet"
+/obj/structure/locker/emlocker
+	name = "emergency locker"
 	desc = "It's a storage unit for emergency breath masks and O2 tanks."
 	icon_state = "emergency"
 
-/obj/structure/closet/emcloset/anchored
+/obj/structure/locker/emlocker/anchored
 	anchored = TRUE
 
-/obj/structure/closet/emcloset/Initialize(mapload)
+/obj/structure/locker/emlocker/Initialize(mapload)
 	. = ..()
 
 	if (prob(1))
 		return INITIALIZE_HINT_QDEL
 
-/obj/structure/closet/emcloset/PopulateContents()
+/obj/structure/locker/emlocker/PopulateContents()
 	..()
 
 	if (prob(40))
@@ -57,14 +57,14 @@
 			pass()
 
 /*
- * Fire Closet
+ * Fire Locker
  */
-/obj/structure/closet/firecloset
-	name = "fire-safety closet"
+/obj/structure/locker/firelocker
+	name = "fire-safety locker"
 	desc = "It's a storage unit for fire-fighting supplies."
 	icon_state = "fire"
 
-/obj/structure/closet/firecloset/PopulateContents()
+/obj/structure/locker/firelocker/PopulateContents()
 	..()
 
 	new /obj/item/clothing/suit/utility/fire/firefighter(src)
@@ -74,7 +74,7 @@
 	new /obj/item/clothing/head/utility/hardhat/red(src)
 	new /obj/item/crowbar/large/emergency(src)
 
-/obj/structure/closet/firecloset/full/PopulateContents()
+/obj/structure/locker/firelocker/full/PopulateContents()
 	new /obj/item/clothing/suit/utility/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/flashlight(src)
@@ -84,15 +84,15 @@
 	new /obj/item/crowbar/large/emergency(src)
 
 /*
- * Tool Closet
+ * Tool Locker
  */
-/obj/structure/closet/toolcloset
-	name = "tool closet"
+/obj/structure/locker/toollocker
+	name = "tool locker"
 	desc = "It's a storage unit for tools."
 	icon_state = "eng"
 	icon_door = "eng_tool"
 
-/obj/structure/closet/toolcloset/PopulateContents()
+/obj/structure/locker/toollocker/PopulateContents()
 	..()
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
@@ -127,42 +127,42 @@
 
 
 /*
- * Radiation Closet
+ * Radiation Locker
  */
-/obj/structure/closet/radiation
-	name = "radiation suit closet"
+/obj/structure/locker/radiation
+	name = "radiation suit locker"
 	desc = "It's a storage unit for rad-protective suits."
 	icon_state = "eng"
 	icon_door = "eng_rad"
 
-/obj/structure/closet/radiation/PopulateContents()
+/obj/structure/locker/radiation/PopulateContents()
 	..()
 	new /obj/item/geiger_counter(src)
 	new /obj/item/clothing/suit/utility/radiation(src)
 	new /obj/item/clothing/head/utility/radiation(src)
 
 /*
- * Bombsuit closet
+ * Bombsuit Locker
  */
-/obj/structure/closet/bombcloset
-	name = "\improper EOD closet"
+/obj/structure/locker/bomblocker
+	name = "\improper EOD locker"
 	desc = "It's a storage unit for explosion-protective suits."
 	icon_state = "bomb"
 
-/obj/structure/closet/bombcloset/PopulateContents()
+/obj/structure/locker/bomblocker/PopulateContents()
 	..()
 	new /obj/item/clothing/suit/utility/bomb_suit(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/head/utility/bomb_hood(src)
 
-/obj/structure/closet/bombcloset/security/PopulateContents()
+/obj/structure/locker/bomblocker/security/PopulateContents()
 	new /obj/item/clothing/suit/utility/bomb_suit/security(src)
 	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/utility/bomb_hood/security(src)
 
-/obj/structure/closet/bombcloset/white/PopulateContents()
+/obj/structure/locker/bomblocker/white/PopulateContents()
 	new /obj/item/clothing/suit/utility/bomb_suit/white(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -171,10 +171,10 @@
 /*
  * Ammunition
  */
-/obj/structure/closet/ammunitionlocker
+/obj/structure/locker/ammunitionlocker
 	name = "ammunition locker"
 
-/obj/structure/closet/ammunitionlocker/PopulateContents()
+/obj/structure/locker/ammunitionlocker/PopulateContents()
 	..()
 	for(var/i in 1 to 8)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)

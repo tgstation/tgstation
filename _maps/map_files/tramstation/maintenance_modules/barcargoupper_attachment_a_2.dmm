@@ -25,7 +25,7 @@
 /area/station/maintenance/department/cargo)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/locker/secure_closet/freezer/meat,
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "e" = (
@@ -113,7 +113,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "D" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,

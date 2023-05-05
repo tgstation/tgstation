@@ -747,7 +747,7 @@
 /area/station/maintenance/central/greater)
 "WI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,

@@ -49,7 +49,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "V" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/djstation)
 "W" = (

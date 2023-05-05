@@ -124,7 +124,7 @@
 /area/station/maintenance/port/aft)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "C" = (
@@ -154,7 +154,7 @@
 /area/station/maintenance/port/aft)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "H" = (
@@ -181,14 +181,14 @@
 /area/station/asteroid)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/five,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,

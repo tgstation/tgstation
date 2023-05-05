@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
 
-#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
+#define issupplypod(A) (istype(A, /obj/structure/locker/supplypod))
 
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 

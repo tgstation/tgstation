@@ -14,7 +14,7 @@
 	to_chat(c, span_notice("***********************************************************"))
 
 /datum/buildmode_mode/fill/change_settings(client/c)
-	var/target_path = input(c, "Enter typepath:" ,"Typepath","/obj/structure/closet")
+	var/target_path = input(c, "Enter typepath:" ,"Typepath","/obj/structure/locker")
 	objholder = text2path(target_path)
 	if(!ispath(objholder))
 		objholder = pick_closest_path(target_path)

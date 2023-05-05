@@ -14,7 +14,7 @@
 					/obj/item/toy/crayon/rainbow,
 				)
 	crate_name = "art supply crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/misc/tattoo_kit
 	name = "Tattoo Kit"
@@ -24,7 +24,7 @@
 		/obj/item/tattoo_kit,
 		/obj/item/toner = 2)
 	crate_name = "tattoo crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/misc/aquarium_kit
 	name = "Aquarium Kit"
@@ -38,7 +38,7 @@
 					/obj/item/aquarium_kit,
 				)
 	crate_name = "aquarium kit crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/misc/aquarium_fish
 	name = "Aquarium Fish Case"
@@ -74,7 +74,7 @@
 	cost = 1000000 //Special case, we don't want to make this in terms of crates because having bikes be a million credits is the whole meme.
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "bicycle crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
@@ -92,7 +92,7 @@
 					/obj/item/instrument/harmonica,
 					/obj/structure/musician/piano/unanchored,
 				)
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
@@ -103,7 +103,7 @@
 					/obj/item/book/manual/random = 3,
 					/obj/item/book/random = 3,
 				)
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/misc/commandkeys
 	name = "Command Encryption Key Crate"
@@ -114,7 +114,7 @@
 	access = ACCESS_COMMAND
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/encryptionkey/headset_com = 3)
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 	crate_name = "command encryption key crate"
 
 /datum/supply_pack/misc/exploration_drone
@@ -163,7 +163,7 @@
 	desc = "Sign death warrants in style with these seven executive fountain pens."
 	cost = CARGO_CRATE_VALUE * 1.45
 	contains = list(/obj/item/storage/box/fountainpens)
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 	crate_name = "calligraphy crate"
 
 /datum/supply_pack/misc/wrapping_paper
@@ -172,7 +172,7 @@
 		You can do all that, with this crate full of wrapping paper."
 	cost = CARGO_CRATE_VALUE * 1.8
 	contains = list(/obj/item/stack/wrapping_paper)
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 	crate_name = "festive wrapping paper crate"
 
 
@@ -187,7 +187,7 @@
 					/obj/item/food/grown/poppy/geranium,
 				)
 	crate_name = "coffin"
-	crate_type = /obj/structure/closet/crate/coffin
+	crate_type = /obj/structure/locker/crate/coffin
 
 /datum/supply_pack/misc/empty
 	name = "Empty Supplypod"
@@ -197,7 +197,7 @@
 	contains = list()
 	drop_pod_only = TRUE
 	crate_type = null
-	special_pod = /obj/structure/closet/supplypod/bluespacepod
+	special_pod = /obj/structure/locker/supplypod/bluespacepod
 
 /datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account)
 	return
@@ -246,14 +246,14 @@
 	special = TRUE //Cannot be ordered via cargo
 	contains = list()
 	crate_name = "syndicate gear crate"
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/locker/crate
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
 	///What uplink the contents are pulled from
 	var/contents_uplink_type = UPLINK_TRAITORS
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
-/datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/misc/syndicate/fill(obj/structure/locker/crate/C)
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]

@@ -255,7 +255,7 @@
 	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
-	mail_goodies = list(/obj/structure/closet/cardboard)
+	mail_goodies = list(/obj/structure/locker/cardboard)
 
 /datum/quirk/item_quirk/spiritual
 	name = "Spiritual"

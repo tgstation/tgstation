@@ -15,7 +15,7 @@
 /area/station/maintenance/central/lesser)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "r" = (
@@ -24,7 +24,7 @@
 /area/station/maintenance/central/lesser)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/backpack,
 /obj/effect/spawner/random/clothing/bowler_or_that,

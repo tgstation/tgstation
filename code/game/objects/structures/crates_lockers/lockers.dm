@@ -1,26 +1,26 @@
 #define LOCKER_FULL -1
 
-/obj/structure/closet
-	name = "closet"
+/obj/structure/locker
+	name = "locker"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/storage/closet.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "generic"
 	density = TRUE
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor_type = /datum/armor/structure_closet
+	armor_type = /datum/armor/locker
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
-	/// The overlay for the closet's door
-	var/obj/effect/overlay/closet_door/door_obj
+	/// The overlay for the locker's door
+	var/obj/effect/overlay/locker_door/door_obj
 	/// Whether or not this door is being animated
 	var/is_animating_door = FALSE
 	/// Vertical squish of the door
 	var/door_anim_squish = 0.12
 	/// The maximum angle the door will be drawn at
 	var/door_anim_angle = 136
-	/// X position of the closet door hinge
+	/// X position of the locker door hinge
 	var/door_hinge_x = -6.5
 	/// Amount of time it takes for the door animation to play
 	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
@@ -44,23 +44,23 @@
 	var/allow_dense = FALSE
 	var/dense_when_open = FALSE //if it's dense when open or not
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
-	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
+	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a locker.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
 	var/cutting_tool = /obj/item/weldingtool
-	var/open_sound = 'sound/machines/closet_open.ogg'
-	var/close_sound = 'sound/machines/closet_close.ogg'
+	var/open_sound = 'sound/machines/locker_open.ogg'
+	var/close_sound = 'sound/machines/locker_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
 	var/material_drop = /obj/item/stack/sheet/iron
 	var/material_drop_amount = 2
-	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
+	var/delivery_icon = "deliverylocker" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
 	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
 	contents_pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
-	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
+	/// Whether a skittish person can dive inside this locker. Disable if opening the locker causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
 	var/strong_grab = FALSE
@@ -70,7 +70,7 @@
 
 	var/contents_initialized = FALSE
 
-/datum/armor/structure_closet
+/datum/armor/locker
 	melee = 20
 	bullet = 10
 	laser = 10
@@ -78,7 +78,7 @@
 	fire = 70
 	acid = 60
 
-/obj/structure/closet/Initialize(mapload)
+/obj/structure/locker/Initialize(mapload)
 	. = ..()
 
 	// if closed, any item at the crate's loc is put in the contents
@@ -94,44 +94,44 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
 
-/obj/structure/closet/LateInitialize()
+/obj/structure/locker/LateInitialize()
 	. = ..()
 
 	take_contents()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
-/obj/structure/closet/proc/PopulateContents()
-	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+/obj/structure/locker/proc/PopulateContents()
+	SEND_SIGNAL(src, COMSIG_LOCKER_POPULATE_CONTENTS)
 
-/// Populate the closet with stuff that needs to be added before it is opened.
+/// Populate the locker with stuff that needs to be added before it is opened.
 /// This is useful for things like traitor objectives.
-/obj/structure/closet/proc/populate_contents_immediate()
+/obj/structure/locker/proc/populate_contents_immediate()
 	return
 
-/obj/structure/closet/Destroy()
+/obj/structure/locker/Destroy()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
 
-/obj/structure/closet/update_appearance(updates=ALL)
+/obj/structure/locker/update_appearance(updates=ALL)
 	. = ..()
 	if(opened || broken || !secure)
 		luminosity = 0
 		return
 	luminosity = 1
 
-/obj/structure/closet/update_icon()
+/obj/structure/locker/update_icon()
 	. = ..()
 	if(issupplypod(src))
 		return
 
 	layer = opened ? BELOW_OBJ_LAYER : OBJ_LAYER
 
-/obj/structure/closet/update_overlays()
+/obj/structure/locker/update_overlays()
 	. = ..()
-	closet_update_overlays(.)
+	locker_update_overlays(.)
 
-/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+/obj/structure/locker/proc/locker_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(enable_door_overlay && !is_animating_door)
 		if(opened && has_opened_overlay)
@@ -153,7 +153,7 @@
 	. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
-/obj/structure/closet/vv_edit_var(vname, vval)
+/obj/structure/locker/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, opened))
 		if(vval == opened)
 			return FALSE
@@ -173,8 +173,8 @@
 	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
 		update_appearance()
 
-/// Animates the closet door opening and closing
-/obj/structure/closet/proc/animate_door(closing = FALSE)
+/// Animates the locker door opening and closing
+/obj/structure/locker/proc/animate_door(closing = FALSE)
 	if(!door_anim_time)
 		return
 	if(!door_obj)
@@ -210,20 +210,20 @@
 	addtimer(CALLBACK(src, PROC_REF(end_door_animation)), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /// Ends the door animation and removes the animated overlay
-/obj/structure/closet/proc/end_door_animation()
+/obj/structure/locker/proc/end_door_animation()
 	is_animating_door = FALSE
 	vis_contents -= door_obj
 	update_icon()
 
 /// Calculates the matrix to be applied to the animated door overlay
-/obj/structure/closet/proc/get_door_transform(angle)
+/obj/structure/locker/proc/get_door_transform(angle)
 	var/matrix/door_matrix = matrix()
 	door_matrix.Translate(-door_hinge_x, 0)
 	door_matrix.Multiply(matrix(cos(angle), 0, 0, -sin(angle) * door_anim_squish, 1, 0))
 	door_matrix.Translate(door_hinge_x, 0)
 	return door_matrix
 
-/obj/structure/closet/examine(mob/user)
+/obj/structure/locker/examine(mob/user)
 	. = ..()
 
 	. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
@@ -232,7 +232,7 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-/obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/structure/locker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	var/screentip_change = FALSE
 
@@ -256,12 +256,12 @@
 
 	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
-/obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/locker/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(wall_mounted)
 		return TRUE
 
-/obj/structure/closet/proc/can_open(mob/living/user, force = FALSE)
+/obj/structure/locker/proc/can_open(mob/living/user, force = FALSE)
 	if(force)
 		return TRUE
 	if(welded || locked)
@@ -277,12 +277,12 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/closet/proc/can_close(mob/living/user)
+/obj/structure/locker/proc/can_close(mob/living/user)
 	var/turf/T = get_turf(src)
-	for(var/obj/structure/closet/closet in T)
-		if(closet != src && !closet.wall_mounted)
+	for(var/obj/structure/locker/locker in T)
+		if(locker != src && !locker.wall_mounted)
 			if(user)
-				balloon_alert(user, "[closet.name] is in the way!")
+				balloon_alert(user, "[locker.name] is in the way!")
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
@@ -291,7 +291,7 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/closet/dump_contents()
+/obj/structure/locker/dump_contents()
 	if (!contents_initialized)
 		contents_initialized = TRUE
 		PopulateContents()
@@ -299,30 +299,30 @@
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
-		if(throwing) // you keep some momentum when getting out of a thrown closet
+		if(throwing) // you keep some momentum when getting out of a thrown locker
 			step(AM, dir)
 	if(throwing)
 		throwing.finalize(FALSE)
 
-/obj/structure/closet/proc/take_contents(mapload = FALSE)
+/obj/structure/locker/proc/take_contents(mapload = FALSE)
 	var/atom/location = drop_location()
 	if(!location)
 		return
 	for(var/atom/movable/AM in location)
 		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
 			if(mapload) // Yea, it's a mapping issue. Blame mappers.
-				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
+				log_mapping("locker storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
 		thing.atom_storage?.close_all()
 
-/obj/structure/closet/proc/open(mob/living/user, force = FALSE)
+/obj/structure/locker/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
 		return FALSE
 	if(opened)
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
+	if(SEND_SIGNAL(src, COMSIG_LOCKER_PRE_OPEN, user, force) & BLOCK_OPEN)
 		return FALSE
 	welded = FALSE
 	locked = FALSE
@@ -335,14 +335,14 @@
 	update_appearance()
 
 	after_open(user, force)
-	SEND_SIGNAL(src, COMSIG_CLOSET_POST_OPEN, force)
+	SEND_SIGNAL(src, COMSIG_LOCKER_POST_OPEN, force)
 	return TRUE
 
 ///Proc to override for effects after opening a door
-/obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
+/obj/structure/locker/proc/after_open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/proc/insert(atom/movable/inserted, mapload = FALSE)
+/obj/structure/locker/proc/insert(atom/movable/inserted, mapload = FALSE)
 	if(length(contents) >= storage_capacity)
 		if(!mapload)
 			return LOCKER_FULL
@@ -350,14 +350,14 @@
 		return insertion_allowed(inserted) ? LOCKER_FULL : FALSE
 	if(!insertion_allowed(inserted))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
+	if(SEND_SIGNAL(src, COMSIG_LOCKER_INSERT, inserted) & COMPONENT_LOCKER_INSERT_INTERRUPT)
 		return TRUE
 	inserted.forceMove(src)
 	return TRUE
 
-/obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
+/obj/structure/locker/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
-		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+		if(!isliving(AM)) //let's not put ghosts or camera mobs inside lockers...
 			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
@@ -374,7 +374,7 @@
 					return FALSE
 		L.stop_pulling()
 
-	else if(istype(AM, /obj/structure/closet))
+	else if(istype(AM, /obj/structure/locker))
 		return FALSE
 	else if(isobj(AM))
 		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM))
@@ -388,7 +388,7 @@
 
 	return TRUE
 
-/obj/structure/closet/proc/close(mob/living/user)
+/obj/structure/locker/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
 		return FALSE
 	take_contents()
@@ -401,19 +401,19 @@
 	return TRUE
 
 ///Proc to override for effects after closing a door
-/obj/structure/closet/proc/after_close(mob/living/user)
+/obj/structure/locker/proc/after_close(mob/living/user)
 	return
 
 /**
- * Toggles a closet open or closed, to the opposite state. Does not respect locked or welded states, however.
+ * Toggles a locker open or closed, to the opposite state. Does not respect locked or welded states, however.
  */
-/obj/structure/closet/proc/toggle(mob/living/user)
+/obj/structure/locker/proc/toggle(mob/living/user)
 	if(opened)
 		return close(user)
 	else
 		return open(user)
 
-/obj/structure/closet/deconstruct(disassembled = TRUE)
+/obj/structure/locker/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
@@ -424,12 +424,12 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/atom_break(damage_flag)
+/obj/structure/locker/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, params)
+/obj/structure/locker/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))
@@ -437,7 +437,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/locker/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/locker was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -476,7 +476,7 @@
 			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
 							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [W]."),
 							span_hear("You hear welding."))
-			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
+			user.log_message("[welded ? "welded":"unwelded"] locker [src] with [W]", LOG_GAME)
 			update_appearance()
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
@@ -530,7 +530,7 @@
 	else
 		return FALSE
 
-/obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/structure/locker/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!anchorable)
 		balloon_alert(user, "no anchor bolts!")
 		return TRUE
@@ -542,10 +542,10 @@
 	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
 	return TRUE
 
-/obj/structure/closet/proc/after_weld(weld_state)
+/obj/structure/locker/proc/after_weld(weld_state)
 	return
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
+/obj/structure/locker/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
@@ -577,7 +577,7 @@
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
-			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
+			if(istype(src, /obj/structure/locker/supplypod/extractionpod))
 				O.forceMove(src)
 			else
 				O.forceMove(T)
@@ -587,7 +587,7 @@
 		O.forceMove(T)
 	return 1
 
-/obj/structure/closet/relaymove(mob/living/user, direction)
+/obj/structure/locker/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
 		return
 	if(locked)
@@ -598,7 +598,7 @@
 	container_resist_act(user)
 
 
-/obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
+/obj/structure/locker/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -611,25 +611,25 @@
 	if(!opened)
 		togglelock(user)
 
-/obj/structure/closet/attack_paw(mob/user, list/modifiers)
+/obj/structure/locker/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/closet/attack_robot(mob/user)
+/obj/structure/locker/attack_robot(mob/user)
 	if(user.Adjacent(src))
 		return attack_hand(user)
 
-/obj/structure/closet/attack_robot_secondary(mob/user, list/modifiers)
+/obj/structure/locker/attack_robot_secondary(mob/user, list/modifiers)
 	if(!user.Adjacent(src))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user)
+/obj/structure/locker/attack_self_tk(mob/user)
 	if(attack_hand(user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/structure/closet/verb/verb_toggleopen()
+/obj/structure/locker/verb/verb_toggleopen()
 	set src in view(1)
 	set category = "Object"
 	set name = "Toggle Open"
@@ -645,13 +645,13 @@
 // Objects that try to exit a locker by stepping were doing so successfully,
 // and due to an oversight in turf/Enter() were going through walls.  That
 // should be independently resolved, but this is also an interesting twist.
-/obj/structure/closet/Exit(atom/movable/leaving, direction)
+/obj/structure/locker/Exit(atom/movable/leaving, direction)
 	open()
 	if(leaving.loc == src)
 		return FALSE
 	return TRUE
 
-/obj/structure/closet/container_resist_act(mob/living/user)
+/obj/structure/locker/container_resist_act(mob/living/user)
 	if(isstructure(loc))
 		relay_container_resist_act(user, loc)
 	if(opened)
@@ -666,7 +666,7 @@
 		open()
 		return
 
-	//okay, so the closet is either welded or locked... resist!!!
+	//okay, so the locker is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
@@ -683,18 +683,18 @@
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
-/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+/obj/structure/locker/relay_container_resist_act(mob/living/user, obj/container)
 	container.container_resist_act()
 
 
-/obj/structure/closet/proc/bust_open()
+/obj/structure/locker/proc/bust_open()
 	SIGNAL_HANDLER
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
+/obj/structure/locker/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
 	if(!user.can_perform_action(src) || !isturf(loc))
@@ -704,7 +704,7 @@
 		togglelock(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/closet/proc/togglelock(mob/living/user, silent)
+/obj/structure/locker/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
@@ -719,7 +719,7 @@
 	else if(secure && broken)
 		balloon_alert(user, "broken!")
 
-/obj/structure/closet/emag_act(mob/user)
+/obj/structure/locker/emag_act(mob/user)
 	if(secure && !broken)
 		if(user)
 			user.visible_message(span_warning("Sparks fly from [src]!"),
@@ -730,11 +730,11 @@
 		locked = FALSE
 		update_appearance()
 
-/obj/structure/closet/get_remote_view_fullscreens(mob/user)
+/obj/structure/locker/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
-/obj/structure/closet/emp_act(severity)
+/obj/structure/locker/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -752,7 +752,7 @@
 				req_access = list()
 				req_access += pick(SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
-/obj/structure/closet/contents_explosion(severity, target)
+/obj/structure/locker/contents_explosion(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			SSexplosions.high_mov_atom += contents
@@ -761,17 +761,17 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/structure/closet/singularity_act()
+/obj/structure/locker/singularity_act()
 	dump_contents()
 	..()
 
-/obj/structure/closet/AllowDrop()
+/obj/structure/locker/AllowDrop()
 	return TRUE
 
-/obj/structure/closet/return_temperature()
+/obj/structure/locker/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+/obj/structure/locker/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
 	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
 		return
@@ -799,7 +799,7 @@
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
-/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+/obj/structure/locker/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	locked = FALSE

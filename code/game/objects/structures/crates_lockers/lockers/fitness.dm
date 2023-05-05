@@ -1,9 +1,9 @@
-/obj/structure/closet/athletic_mixed
+/obj/structure/locker/athletic_mixed
 	name = "athletic wardrobe"
 	desc = "It's a storage unit for athletic wear."
 	icon_door = "mixed"
 
-/obj/structure/closet/athletic_mixed/PopulateContents()
+/obj/structure/locker/athletic_mixed/PopulateContents()
 	..()
 	new /obj/item/clothing/under/shorts/purple(src)
 	new /obj/item/clothing/under/shorts/grey(src)
@@ -14,11 +14,11 @@
 	new /obj/item/clothing/under/costume/jabroni(src)
 
 
-/obj/structure/closet/boxinggloves
-	name = "boxing gloves closet"
+/obj/structure/locker/boxinggloves
+	name = "boxing gloves locker"
 	desc = "It's a storage unit for gloves for use in the boxing ring."
 
-/obj/structure/closet/boxinggloves/PopulateContents()
+/obj/structure/locker/boxinggloves/PopulateContents()
 	..()
 	new /obj/item/clothing/gloves/boxing/blue(src)
 	new /obj/item/clothing/gloves/boxing/green(src)
@@ -26,23 +26,23 @@
 	new /obj/item/clothing/gloves/boxing(src)
 
 
-/obj/structure/closet/masks
-	name = "mask closet"
+/obj/structure/locker/masks
+	name = "mask locker"
 	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!"
 
-/obj/structure/closet/masks/PopulateContents()
+/obj/structure/locker/masks/PopulateContents()
 	..()
 	new /obj/item/clothing/mask/luchador(src)
 	new /obj/item/clothing/mask/luchador/rudos(src)
 	new /obj/item/clothing/mask/luchador/tecnicos(src)
 
 
-/obj/structure/closet/lasertag/red
+/obj/structure/locker/lasertag/red
 	name = "red laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "red"
 
-/obj/structure/closet/lasertag/red/PopulateContents()
+/obj/structure/locker/lasertag/red/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser/redtag(src)
@@ -51,12 +51,12 @@
 	new /obj/item/clothing/head/helmet/redtaghelm(src)
 
 
-/obj/structure/closet/lasertag/blue
+/obj/structure/locker/lasertag/blue
 	name = "blue laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "blue"
 
-/obj/structure/closet/lasertag/blue/PopulateContents()
+/obj/structure/locker/lasertag/blue/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser/bluetag(src)

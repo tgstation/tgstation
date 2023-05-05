@@ -59,7 +59,7 @@
 
 /datum/crafting_recipe/freezer_cabinat
 	name = "Freezer Cabinet"
-	result = /obj/structure/closet/secure_closet/freezer/empty
+	result = /obj/structure/locker/secure/freezer/empty
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/assembly/igniter/condenser = 1,

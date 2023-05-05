@@ -21,11 +21,11 @@
 
 /**********************Miner Lockers**************************/
 
-/obj/structure/closet/wardrobe/miner
+/obj/structure/locker/wardrobe/miner
 	name = "mining wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/miner/PopulateContents()
+/obj/structure/locker/wardrobe/miner/PopulateContents()
 	new /obj/item/storage/backpack/duffelbag/explorer(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
@@ -42,15 +42,15 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
-/obj/structure/closet/secure_closet/miner
+/obj/structure/locker/secure/miner
 	name = "miner's equipment locker"
 	icon_state = "mining"
 	req_access = list(ACCESS_MINING)
 
-/obj/structure/closet/secure_closet/miner/unlocked
+/obj/structure/locker/secure/miner/unlocked
 	locked = FALSE
 
-/obj/structure/closet/secure_closet/miner/PopulateContents()
+/obj/structure/locker/secure/miner/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/storage/box/emptysandbags(src)
@@ -125,7 +125,7 @@
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
-/obj/structure/closet/crate/miningcar
+/obj/structure/locker/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
 	icon_state = "miningcar"

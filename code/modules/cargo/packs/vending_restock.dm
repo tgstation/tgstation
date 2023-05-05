@@ -17,7 +17,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/locker/crate
 
 /datum/supply_pack/vending/dinnerware
 	name = "Dinnerware Supply Crate"
@@ -46,14 +46,14 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/games)
 	crate_name = "games supply crate"
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/locker/crate
 
 /datum/supply_pack/vending/hydro_refills
 	name = "Hydroponics Vending Machines Refills"
 	desc = "When the clown takes all the banana seeds. \
 		Contains a NutriMax refill and a MegaSeed Servitor refill."
 	cost = CARGO_CRATE_VALUE * 4
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/locker/crate
 	contains = list(/obj/item/vending_refill/hydroseeds,
 					/obj/item/vending_refill/hydronutrients,
 				)
@@ -97,7 +97,7 @@
 	access = ACCESS_SECURITY
 	contains = list(/obj/item/vending_refill/security)
 	crate_name = "\improper SecTech supply crate"
-	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_type = /obj/structure/locker/crate/secure/gear
 
 /datum/supply_pack/vending/snack
 	name = "Snack Supply Crate"

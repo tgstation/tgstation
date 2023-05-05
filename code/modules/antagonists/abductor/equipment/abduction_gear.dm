@@ -873,7 +873,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/closet/abductor
+/obj/structure/locker/abductor
 	name = "alien locker"
 	desc = "Contains secrets of the universe."
 	icon_state = "abductor"

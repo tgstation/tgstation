@@ -24,7 +24,7 @@
 	health = 200
 	del_on_death = TRUE
 	var/opened = FALSE
-	var/obj/structure/closet/supplypod/centcompod/linked_pod
+	var/obj/structure/locker/supplypod/centcompod/linked_pod
 
 /mob/living/simple_animal/pet/gondola/gondolapod/Initialize(mapload, pod)
 	if(!pod)

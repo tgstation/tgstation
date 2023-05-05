@@ -161,7 +161,7 @@
 /area/station/maintenance/starboard/central)
 "py" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
@@ -305,7 +305,7 @@
 /area/station/maintenance/starboard/central)
 "BC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "Cj" = (
@@ -349,7 +349,7 @@
 /area/station/maintenance/starboard/central)
 "EG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -362,7 +362,7 @@
 /area/station/maintenance/starboard/central)
 "Gs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "GE" = (

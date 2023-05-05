@@ -11,7 +11,7 @@
 	},
 /area/template_noop)
 "b" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"

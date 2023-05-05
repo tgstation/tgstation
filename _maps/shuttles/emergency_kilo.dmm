@@ -74,7 +74,7 @@
 /area/shuttle/escape)
 "aw" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -143,7 +143,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -215,7 +215,7 @@
 /area/shuttle/escape/brig)
 "bn" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bo" = (
@@ -377,7 +377,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cl" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "emergency supplies crate"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -427,7 +427,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ct" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
@@ -513,7 +513,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,

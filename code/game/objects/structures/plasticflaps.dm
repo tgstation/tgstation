@@ -110,8 +110,8 @@
 		if(bed_mover.density || bed_mover.has_buckled_mobs())//if it's a bed/chair and is dense or someone is buckled, it will not pass
 			return FALSE
 
-	else if(istype(mover, /obj/structure/closet/cardboard))
-		var/obj/structure/closet/cardboard/cardboard_mover = mover
+	else if(istype(mover, /obj/structure/locker/cardboard))
+		var/obj/structure/locker/cardboard/cardboard_mover = mover
 		if(cardboard_mover.move_delay)
 			return FALSE
 

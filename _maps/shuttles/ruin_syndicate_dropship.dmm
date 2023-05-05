@@ -22,7 +22,7 @@
 	},
 /obj/structure/sign/warning/vacuum/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/under/syndicate/combat,
@@ -58,7 +58,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/structure/sign/warning/vacuum/directional/north,
@@ -103,7 +103,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/under/syndicate/combat,
@@ -140,7 +140,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/under/syndicate,
@@ -152,7 +152,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/under/syndicate/combat,
@@ -194,7 +194,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/under/syndicate,
@@ -265,7 +265,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -331,7 +331,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/storage/box/syndie_kit/chameleon,
@@ -392,7 +392,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1
 	},
 /obj/item/clothing/shoes/jackboots,

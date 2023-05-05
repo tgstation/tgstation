@@ -31,7 +31,7 @@
 	},
 /area/ruin/space/has_grav/powered)
 "i" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	icon_state = "oldcloset";
 	name = "strange closet";
 	enable_door_overlay = 0

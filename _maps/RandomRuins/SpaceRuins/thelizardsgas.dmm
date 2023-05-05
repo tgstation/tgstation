@@ -39,7 +39,7 @@
 	},
 /area/ruin/space/has_grav/thelizardsgas)
 "bO" = (
-/obj/structure/closet/crate/secure/gear,
+/obj/structure/locker/crate/secure/gear,
 /turf/closed/mineral,
 /area/ruin/space/has_grav/thelizardsgas)
 "bW" = (
@@ -125,7 +125,7 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -198,7 +198,7 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "wb" = (
@@ -238,7 +238,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "AZ" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/crate/secure/freezer{
+/obj/structure/locker/crate/secure/freezer{
 	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
 	locked = 0;
 	name = "The GOOD Stuff"
@@ -256,7 +256,7 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "Bi" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	desc = "Why leave the chairs in a locker?";
 	name = "CHAIRS"
 	},
@@ -551,7 +551,7 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "Zr" = (

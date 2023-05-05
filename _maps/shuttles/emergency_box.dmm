@@ -121,7 +121,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aE" = (
@@ -255,11 +255,11 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bi" = (
@@ -346,7 +346,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "XC" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 

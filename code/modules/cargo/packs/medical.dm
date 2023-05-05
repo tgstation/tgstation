@@ -1,7 +1,7 @@
 /datum/supply_pack/medical
 	group = "Medical"
 	access_view = ACCESS_MEDICAL
-	crate_type = /obj/structure/closet/crate/medical
+	crate_type = /obj/structure/locker/crate/medical
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -18,7 +18,7 @@
 					/obj/item/reagent_containers/blood/ethereal,
 				)
 	crate_name = "blood freezer"
-	crate_type = /obj/structure/closet/crate/freezer
+	crate_type = /obj/structure/locker/crate/freezer
 
 /datum/supply_pack/medical/medipen_variety
 	name = "Medipen Variety-Pak"
@@ -97,7 +97,7 @@
 				)
 	crate_name = "medical supplies crate"
 
-/datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/medical/supplies/fill(obj/structure/locker/crate/C)
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
@@ -145,7 +145,7 @@
 					/obj/item/reagent_containers/cup/bottle/mutagen,
 				)
 	crate_name = "virus crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/locker/crate/secure/plasma
 	dangerous = TRUE
 
 /datum/supply_pack/medical/cmoturtlenecks

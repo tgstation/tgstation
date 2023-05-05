@@ -42,7 +42,7 @@
 	},
 /area/template_noop)
 "cI" = (
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
@@ -262,7 +262,7 @@
 	},
 /area/template_noop)
 "xz" = (
-/obj/structure/closet/wardrobe/white,
+/obj/structure/locker/wardrobe/white,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

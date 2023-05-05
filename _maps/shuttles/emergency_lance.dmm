@@ -186,7 +186,7 @@
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/hypospray/medipen/atropine,
-/obj/structure/closet/crate/medical{
+/obj/structure/locker/crate/medical{
 	name = "emergency survival supplies"
 	},
 /obj/item/reagent_containers/hypospray/medipen/blood_loss,
@@ -301,7 +301,7 @@
 /area/shuttle/escape)
 "kb" = (
 /obj/item/borg/upgrade/defib,
-/obj/structure/closet/crate/medical{
+/obj/structure/locker/crate/medical{
 	anchored = 1
 	},
 /obj/item/defibrillator/loaded,
@@ -737,7 +737,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "zh" = (
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/locker/secure_closet/atmospherics,
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/dark/side{
@@ -947,7 +947,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/wrench/bolter,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -1058,7 +1058,7 @@
 /area/shuttle/escape)
 "Iq" = (
 /obj/machinery/light/small/directional/east,
-/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
+/obj/effect/spawner/random/clothing/wardrobe_locker_colored,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "JN" = (
@@ -1113,7 +1113,7 @@
 	pixel_x = 3
 	},
 /obj/item/lazarus_injector,
-/obj/structure/closet/crate/medical{
+/obj/structure/locker/crate/medical{
 	anchored = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,

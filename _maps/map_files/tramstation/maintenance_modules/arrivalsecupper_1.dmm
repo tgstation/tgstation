@@ -25,7 +25,7 @@
 /area/station/maintenance/department/eva)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,
@@ -42,7 +42,7 @@
 /area/station/maintenance/department/eva)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/maintenance/three,
@@ -62,7 +62,7 @@
 /area/station/asteroid)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "z" = (
@@ -80,7 +80,7 @@
 /area/station/maintenance/department/eva)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/six,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,

@@ -257,7 +257,7 @@
 
 //Ruin version
 /obj/effect/sliding_puzzle/lavaland
-	reward_type = /obj/structure/closet/crate/necropolis/puzzle
+	reward_type = /obj/structure/locker/crate/necropolis/puzzle
 
 /obj/effect/sliding_puzzle/lavaland/dispense_reward()
 	if(prob(25))

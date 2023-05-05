@@ -23,7 +23,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ai" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ak" = (
@@ -117,7 +117,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aG" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/gold,
 /obj/item/stack/sheet/mineral/silver,
@@ -130,7 +130,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aH" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
@@ -141,7 +141,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aJ" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/drinkingglasses,
@@ -152,7 +152,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aK" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/stack/sheet/iron/fifty{
 	pixel_x = 2;
 	pixel_y = 2
@@ -178,7 +178,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aL" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -223,7 +223,7 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "aR" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/flashlight/flare,
 /obj/item/flashlight/flare,
 /obj/item/flashlight/flare,
@@ -242,7 +242,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aS" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/flashlight/lantern,
 /obj/item/flashlight/lantern,
 /obj/item/flashlight/lantern,
@@ -259,7 +259,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aT" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakers,
@@ -273,7 +273,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/knife/kitchen,
 /obj/item/knife/kitchen,
 /obj/item/cultivator,
@@ -284,7 +284,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aV" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/defibrillator,
 /obj/item/storage/box/medipens,
 /obj/effect/turf_decal/delivery,
@@ -292,7 +292,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aW" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/exotic/languagebook,
@@ -385,7 +385,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bs" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure_closet/freezer/kitchen{
 	req_access = null
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -457,7 +457,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bI" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
@@ -538,7 +538,7 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/machinery/light/directional/west,
@@ -569,7 +569,7 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -653,7 +653,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cB" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
@@ -799,7 +799,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dw" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/item/storage/box/donkpockets{
@@ -839,7 +839,7 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "dx" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/item/storage/box/donkpockets{
@@ -951,7 +951,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/card/id/away/deep_storage,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -1315,7 +1315,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fP" = (
-/obj/structure/closet/wardrobe/pjs,
+/obj/structure/locker/wardrobe/pjs,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -1645,7 +1645,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/chemical,
+/obj/structure/locker/secure_closet/chemical,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lr" = (
@@ -2081,7 +2081,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "zS" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/cable_coil,
 /obj/item/stack/sheet/mineral/wood,
@@ -2247,7 +2247,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "Fw" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -2383,7 +2383,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "KW" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
@@ -2486,7 +2486,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "OD" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -2502,7 +2502,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "Pw" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/crate/bin{
+/obj/structure/locker/crate/bin{
 	name = "laundry bin"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2554,7 +2554,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Sn" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8

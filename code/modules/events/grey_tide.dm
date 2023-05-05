@@ -49,7 +49,7 @@
 // Objects currently impacted by the greytide event:
 // /obj/machinery/door/airlock -- Signal bolts open the door
 // /obj/machinery/status_display/door_timer -- Signal instantly ends the timer, releasing the occupant
-// /obj/structure/closet/secure_closet -- Signal unlocks locked lockers
+// /obj/structure/locker/secure -- Signal unlocks locked lockers
 // /obj/machinery/power/apc -- Signal turns the lighting channel off
 
 /datum/round_event/grey_tide/end()

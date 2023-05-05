@@ -222,7 +222,7 @@
 		any extreme scenario the wearer could think of, this bag is perfectly designed for \
 		transport of any body in any environment, any time."
 	icon_state = "patient_transport"
-	bodybag_type = /obj/structure/closet/body_bag/environmental/hardlight
+	bodybag_type = /obj/structure/locker/body_bag/environmental/hardlight
 	capture_time = 1.5 SECONDS
 	packup_time = 0.5 SECONDS
 

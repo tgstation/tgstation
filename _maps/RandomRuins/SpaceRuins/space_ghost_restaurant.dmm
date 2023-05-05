@@ -235,7 +235,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/space_ghost_restaurant)
 "My" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/ruin/space/space_ghost_restaurant)
 "Ng" = (

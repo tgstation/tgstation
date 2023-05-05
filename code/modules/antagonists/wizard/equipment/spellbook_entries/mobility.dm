@@ -7,7 +7,7 @@
 
 /datum/spellbook_entry/knock
 	name = "Knock"
-	desc = "Opens nearby doors and closets."
+	desc = "Opens nearby doors and lockers."
 	spell_type = /datum/action/cooldown/spell/aoe/knock
 	category = "Mobility"
 	cost = 1

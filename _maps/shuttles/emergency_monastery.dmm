@@ -125,7 +125,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
 	},
@@ -296,7 +296,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "eA" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "eG" = (
@@ -425,7 +425,7 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "gW" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "hq" = (
@@ -1085,7 +1085,7 @@
 	department = "Chapel";
 	supplies_requestable = 1
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/chaplain/nun_hood,
 /obj/item/clothing/suit/chaplainsuit/nun,
@@ -1610,7 +1610,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "yr" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/machinery/light/small/directional/south,
 /obj/item/storage/book/bible,
 /obj/item/storage/book/bible,
@@ -1648,7 +1648,7 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "yO" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "beekeeping wardrobe"
 	},
 /obj/item/clothing/suit/utility/beekeeper_suit,
@@ -1767,7 +1767,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ab" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "beekeeping supplies"
 	},
 /obj/item/honey_frame,
@@ -1943,7 +1943,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Cg" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -2170,7 +2170,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Fh" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/chaplain/nun_hood,
@@ -2252,7 +2252,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Gb" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Gg" = (
@@ -2280,7 +2280,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Gy" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "GB" = (
@@ -2330,7 +2330,7 @@
 /turf/closed/mineral,
 /area/shuttle/escape)
 "Hw" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/chaplain/nun_hood,
@@ -2452,7 +2452,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Jg" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
@@ -3111,7 +3111,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Rv" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
@@ -3605,7 +3605,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WF" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -3696,7 +3696,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "XK" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/reagent_containers/cup/rag,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,

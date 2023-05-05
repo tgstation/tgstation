@@ -233,19 +233,19 @@
 
 /obj/projectile/magic/locker/Initialize(mapload)
 	. = ..()
-	var/obj/structure/closet/decay/locker_temp_instance = new(src)
+	var/obj/structure/locker/decay/locker_temp_instance = new(src)
 	locker_ref = WEAKREF(locker_temp_instance)
 
 /obj/projectile/magic/locker/prehit_pierce(atom/A)
 	. = ..()
 	if(. == PROJECTILE_DELETE_WITHOUT_HITTING)
-		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
+		var/obj/structure/locker/decay/locker_temp_instance = locker_ref.resolve()
 		qdel(locker_temp_instance)
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	if(isliving(A) && locker_suck)
 		var/mob/living/target = A
-		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
+		var/obj/structure/locker/decay/locker_temp_instance = locker_ref.resolve()
 		if(!locker_temp_instance?.insertion_allowed(target))
 			return
 		target.forceMove(src)
@@ -255,7 +255,7 @@
 	if(created)
 		return ..()
 	if(LAZYLEN(contents))
-		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
+		var/obj/structure/locker/decay/locker_temp_instance = locker_ref.resolve()
 		if(!locker_temp_instance)
 			return ..()
 		for(var/atom/movable/AM in contents)
@@ -272,40 +272,40 @@
 		AM.forceMove(get_turf(src))
 	. = ..()
 
-/obj/structure/closet/decay
+/obj/structure/locker/decay
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
-/obj/structure/closet/decay/Initialize(mapload)
+/obj/structure/locker/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
-/obj/structure/closet/decay/after_weld(weld_state)
+/obj/structure/locker/decay/after_weld(weld_state)
 	if(weld_state)
 		unmagify()
 
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
+/obj/structure/locker/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself
-/obj/structure/closet/decay/proc/unmagify()
+/obj/structure/locker/decay/proc/unmagify()
 	icon_state = weakened_icon
 	update_appearance()
 
 	addtimer(CALLBACK(src, PROC_REF(decay)), 15 SECONDS)
 
 ///Fade away into nothing
-/obj/structure/closet/decay/proc/decay()
+/obj/structure/locker/decay/proc/decay()
 	animate(src, alpha = 0, time = 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(decay_finished)), 3 SECONDS)
 
-/obj/structure/closet/decay/proc/decay_finished()
+/obj/structure/locker/decay/proc/decay_finished()
 	dump_contents()
 	qdel(src)
 

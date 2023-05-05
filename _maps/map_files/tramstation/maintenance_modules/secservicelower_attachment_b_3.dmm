@@ -38,7 +38,7 @@
 /area/station/maintenance/port/central)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/mod/maint,
 /obj/effect/spawner/random/engineering/vending_restock,
@@ -46,7 +46,7 @@
 /area/station/maintenance/port/central)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/maintenance/three,

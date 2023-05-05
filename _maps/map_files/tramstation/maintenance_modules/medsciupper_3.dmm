@@ -80,7 +80,7 @@
 /area/station/asteroid)
 "iq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
@@ -172,7 +172,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/window/spawner/directional/east,
-/obj/structure/closet/crate/trashcart/filled,
+/obj/structure/locker/crate/trashcart/filled,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "ps" = (
@@ -206,7 +206,7 @@
 "vz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/drip,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "vE" = (
@@ -306,7 +306,7 @@
 /area/station/maintenance/department/medical)
 "AV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/tool,
@@ -400,7 +400,7 @@
 "IC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/directional/east,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
@@ -462,7 +462,7 @@
 /area/station/maintenance/department/science)
 "Ms" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/contraband/narcotics,

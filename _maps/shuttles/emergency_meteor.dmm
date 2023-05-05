@@ -38,7 +38,7 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "k" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "l" = (

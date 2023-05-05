@@ -248,7 +248,7 @@
 /area/ruin/bughabitat)
 "Cv" = (
 /obj/machinery/light/warm/directional/east,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/food/cheese/wedge,
 /obj/item/stack/rods/ten,
 /turf/open/floor/plastic,

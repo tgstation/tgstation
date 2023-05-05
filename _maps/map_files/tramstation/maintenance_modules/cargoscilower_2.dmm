@@ -259,7 +259,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "CW" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -411,7 +411,7 @@
 /area/station/maintenance/starboard/central)
 "RR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/seven,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)

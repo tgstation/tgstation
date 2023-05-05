@@ -135,22 +135,22 @@
 			parcel.base_icon_state = "deliverypackage[size]"
 			parcel.update_icon()
 
-	else if(istype(target, /obj/structure/closet))
-		var/obj/structure/closet/closet = target
-		if(closet.opened)
+	else if(istype(target, /obj/structure/locker))
+		var/obj/structure/locker/locker = target
+		if(locker.opened)
 			balloon_alert(user, "can't wrap while open!")
 			return
-		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
+		if(!locker.delivery_icon) //no delivery icon means unwrappable locker (e.g. body bags)
 			balloon_alert(user, "can't wrap!")
 			return
 		if(use(3))
-			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
-			parcel.base_icon_state = closet.delivery_icon
+			var/obj/item/delivery/big/parcel = new(get_turf(locker.loc))
+			parcel.base_icon_state = locker.delivery_icon
 			parcel.update_icon()
-			parcel.drag_slowdown = closet.drag_slowdown
-			closet.forceMove(parcel)
+			parcel.drag_slowdown = locker.drag_slowdown
+			locker.forceMove(parcel)
 			parcel.add_fingerprint(user)
-			closet.add_fingerprint(user)
+			locker.add_fingerprint(user)
 		else
 			balloon_alert(user, "not enough paper!")
 			return

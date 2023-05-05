@@ -323,14 +323,14 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bE" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bF" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -407,7 +407,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bQ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bR" = (
@@ -498,7 +498,7 @@
 "ci" = (
 /obj/machinery/light/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cj" = (
@@ -670,7 +670,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dd" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -685,7 +685,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "df" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
 	genetic_makeup_buffer = list("label"="Buffer1:Kr-$$@##","UI"="f8f603857000f930127c4","SE"="414401462231053131010241514651403453121613263463440351136366","UE"="340008485c321e542aed4df7032ac04d","name"="Krystal Symers","blood_type"="A+");
@@ -728,7 +728,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/security)
 "dp" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -769,7 +769,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dL" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off with the words 'DO NOT CLONE' hastily written over it.";
 	genetic_makeup_buffer = list("label"="Buffer1:George Melons","UI"="3c300f11b5421ca7014d8","SE"="430431205660551642142504334461413202111310233445620533134255","UE"="6893e6a0b0076a41897776b10cc2b324","name"="George Melons","blood_type"="B+");
@@ -786,7 +786,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dM" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -1587,7 +1587,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "hG" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -1683,7 +1683,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "hS" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -1701,7 +1701,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "hT" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -1757,7 +1757,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "il" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -1934,7 +1934,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jl" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
@@ -2205,7 +2205,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "ku" = (
-/obj/structure/closet/wardrobe/pjs,
+/obj/structure/locker/wardrobe/pjs,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
@@ -2279,7 +2279,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kF" = (
-/obj/structure/closet/wardrobe/green,
+/obj/structure/locker/wardrobe/green,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
@@ -2325,7 +2325,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kV" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/locker/wardrobe/grey,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -2373,14 +2373,14 @@
 /area/awaymission/research/interior/medbay)
 "lc" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "ld" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
@@ -2547,7 +2547,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lJ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/can,
 /obj/item/trash/chips,
 /obj/effect/turf_decal/tile/blue{
@@ -2627,7 +2627,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lX" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 10
 	},
@@ -2655,7 +2655,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mg" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
@@ -2929,7 +2929,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "na" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -2945,7 +2945,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "nb" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
@@ -3006,7 +3006,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "pW" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -3076,7 +3076,7 @@
 "rB" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "sf" = (
@@ -3866,7 +3866,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Re" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance,
@@ -4017,7 +4017,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "VW" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)

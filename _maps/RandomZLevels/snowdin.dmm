@@ -623,7 +623,7 @@
 "ce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /turf/open/floor/iron,
@@ -785,7 +785,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "cD" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1145,11 +1145,11 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "dn" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "do" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1196,14 +1196,14 @@
 /area/awaymission/snowdin/post/kitchen)
 "dx" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "explosives ordinance"
 	},
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "dy" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen";
 	name = "explosives ordinance"
 	},
@@ -1279,7 +1279,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -1449,7 +1449,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -1616,7 +1616,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "eX" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
@@ -1967,7 +1967,7 @@
 /area/awaymission/snowdin/cave)
 "gk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/crowbar,
@@ -1990,7 +1990,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2289,7 +2289,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/clothing/shoes/winterboots,
@@ -2423,7 +2423,7 @@
 	},
 /area/awaymission/snowdin/cave/cavern)
 "hG" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat/captain{
 	name = "overseer's winter coat"
 	},
@@ -2606,7 +2606,7 @@
 /obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = list("away_maintenance")
@@ -3492,7 +3492,7 @@
 /obj/structure/sign/poster/contraband/tools{
 	pixel_x = 32
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/tank/internals/plasma,
@@ -4765,7 +4765,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/custodials)
 "nD" = (
-/obj/structure/closet/jcloset,
+/obj/structure/locker/jcloset,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/custodials)
 "nE" = (
@@ -5171,7 +5171,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "oS" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/wrench,
 /obj/item/reagent_containers/cup/bucket,
@@ -5187,7 +5187,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "oV" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/locker/secure_closet/hydroponics,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "oW" = (
@@ -5430,7 +5430,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/secpost)
 "pN" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -5456,7 +5456,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "pR" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
@@ -5588,7 +5588,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "qk" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /turf/open/floor/iron/grimy,
 /area/awaymission/snowdin/post/cavern2)
 "ql" = (
@@ -5744,7 +5744,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "qI" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
 "qK" = (
@@ -6351,7 +6351,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "ta" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "tb" = (
@@ -6434,7 +6434,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tu" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
@@ -6757,7 +6757,7 @@
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/cavern1)
 "vB" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -7265,7 +7265,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "yj" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /obj/item/relic,
 /obj/effect/mapping_helpers/broken_floor,
@@ -7345,7 +7345,7 @@
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/outside)
 "yx" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /obj/item/relic,
 /obj/item/relic,
@@ -7970,7 +7970,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "AY" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
@@ -8253,7 +8253,7 @@
 /area/awaymission/snowdin/cave)
 "Ca" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen";
 	name = "explosives ordinance"
 	},
@@ -8280,7 +8280,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "Ce" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "explosives ordinance"
 	},
 /turf/open/floor/plating/snowed,
@@ -8359,14 +8359,14 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "CK" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = "It's a storage unit for a Syndicate boarding party."
 	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "CL" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = "It's a storage unit for a Syndicate boarding party."
 	},
 /obj/effect/turf_decal/bot_white,
@@ -8528,7 +8528,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Ds" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Dv" = (
@@ -9473,14 +9473,14 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "HY" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "HZ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -9567,7 +9567,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Ir" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /turf/open/floor/iron/grimy,
 /area/awaymission/snowdin/post/mining_main)
 "Is" = (
@@ -9619,7 +9619,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "IC" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door/directional/south{
@@ -9721,7 +9721,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "IX" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/mineral/plasma{
@@ -9739,7 +9739,7 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Jb" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door/directional/south{
@@ -9815,7 +9815,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "Jp" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -9830,7 +9830,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Jt" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -9904,7 +9904,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "JE" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -9958,7 +9958,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "JN" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -10248,7 +10248,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "KP" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
@@ -10506,7 +10506,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "Mc" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
@@ -10679,7 +10679,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Nh" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/tome,
@@ -10692,7 +10692,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "Nk" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat/security,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/decal/cleanable/cobweb,
@@ -10752,7 +10752,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post)
 "ND" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door/directional/south{
 	id = "snowdindormresearch1";
@@ -10803,7 +10803,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/research)
 "NR" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
@@ -10894,7 +10894,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "Oz" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
@@ -10915,7 +10915,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "OD" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -10989,7 +10989,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "Pc" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /obj/item/relic,
 /obj/item/relic,
@@ -11075,7 +11075,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "PH" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
@@ -11568,7 +11568,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/secpost)
 "Sm" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
@@ -11698,7 +11698,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "SN" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -11877,7 +11877,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "TZ" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -11957,7 +11957,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/garage)
 "Ut" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/machinery/button/door/directional/south{
 	id = "snowdindormhydro2";
 	name = "Dorm Bolt Control";
@@ -11981,7 +11981,7 @@
 /area/awaymission/snowdin/cave)
 "UA" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/cavern1)
@@ -12194,7 +12194,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "VU" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
@@ -12383,7 +12383,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/snowdin/post/broken_shuttle)
 "Xk" = (
-/obj/structure/closet/wardrobe/robotics_black,
+/obj/structure/locker/wardrobe/robotics_black,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -12674,7 +12674,7 @@
 /area/awaymission/snowdin/post/research)
 "YR" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen";
 	name = "explosives ordinance"
 	},

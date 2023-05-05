@@ -19,7 +19,7 @@
 /area/shuttle/escape/simulation)
 "aS" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "be" = (
@@ -599,7 +599,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "BO" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "emergency supplies crate"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -717,7 +717,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fd" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Fs" = (
@@ -1202,7 +1202,7 @@
 /turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "WA" = (
-/obj/structure/closet/crate/large,
+/obj/structure/locker/crate/large,
 /obj/item/clothing/suit/armor/vest/cuirass,
 /obj/item/clothing/suit/armor/vest/cuirass,
 /obj/item/clothing/suit/armor/vest/cuirass,
@@ -1217,7 +1217,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Xk" = (
-/obj/structure/closet/crate/critter,
+/obj/structure/locker/crate/critter,
 /mob/living/simple_animal/hostile/lizard/space{
 	name = "Stows-Away"
 	},
@@ -1358,7 +1358,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "ZU" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;

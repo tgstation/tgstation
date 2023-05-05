@@ -24,11 +24,11 @@
 /obj/modular_map_root/syndicatebase
 	config_file = "strings/modular_maps/syndicatebase.toml"
 
-/obj/structure/closet/crate/secure/freezer/commsagent
+/obj/structure/locker/crate/secure/freezer/commsagent
 	name = "Assorted Tongues And Tongue Accessories"
 	desc = "Unearthing this was probably a mistake."
 
-/obj/structure/closet/crate/secure/freezer/commsagent/PopulateContents()
+/obj/structure/locker/crate/secure/freezer/commsagent/PopulateContents()
 	. = ..() //Contains a variety of less exotic tongues (And tongue accessories) for the comms agent to mess with.
 	new /obj/item/organ/internal/tongue(src)
 	new /obj/item/organ/internal/tongue/lizard(src)

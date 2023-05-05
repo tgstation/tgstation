@@ -40,7 +40,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "i" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "j" = (

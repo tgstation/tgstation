@@ -80,7 +80,7 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "r" = (
-/obj/structure/closet/cabinet{
+/obj/structure/locker/cabinet{
 	anchored = 1
 	},
 /turf/open/indestructible/hotelwood,
@@ -165,7 +165,7 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "K" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)

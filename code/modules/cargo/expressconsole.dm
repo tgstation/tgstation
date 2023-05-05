@@ -15,7 +15,7 @@
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
 	var/area/landingzone = /area/station/cargo/storage //where we droppin boys
-	var/podType = /obj/structure/closet/supplypod
+	var/podType = /obj/structure/locker/supplypod
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
@@ -39,7 +39,7 @@
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the interface."))
 		return
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
-		podType = /obj/structure/closet/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
+		podType = /obj/structure/locker/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
 		to_chat(user, span_notice("You insert the disk into [src], allowing for advanced supply delivery vehicles."))
 		qdel(W)
 		return TRUE

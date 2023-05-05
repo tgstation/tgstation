@@ -599,7 +599,7 @@ SUBSYSTEM_DEF(job)
 	for(var/i=equip_needed-5, i>0, i--)
 		if(GLOB.secequipment.len)
 			var/spawnloc = GLOB.secequipment[1]
-			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
+			new /obj/structure/locker/secure/security/sec(spawnloc)
 			GLOB.secequipment -= spawnloc
 		else //We ran out of spare locker spawns!
 			break
@@ -937,7 +937,7 @@ SUBSYSTEM_DEF(job)
 	if(!spawn_turf)
 		SendToLateJoin(living_mob)
 	else
-		var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+		var/obj/structure/locker/supplypod/centcompod/toLaunch = new()
 		living_mob.forceMove(toLaunch)
 		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
@@ -1036,7 +1036,7 @@ SUBSYSTEM_DEF(job)
 
 /// Send a drop pod containing a piece of paper with the spare ID safe code to loc
 /datum/controller/subsystem/job/proc/send_spare_id_safe_code(loc)
-	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code())
+	new /obj/effect/pod_landingzone(loc, /obj/structure/locker/supplypod/centcompod, new /obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code())
 	safe_code_timer_id = null
 	safe_code_request_loc = null
 

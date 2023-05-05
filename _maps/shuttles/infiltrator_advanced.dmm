@@ -870,7 +870,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "bT" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -1147,7 +1147,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "universal blood storage"
 	},
 /obj/machinery/iv_drip,
@@ -1777,7 +1777,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dO" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
@@ -1887,7 +1887,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "ea" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

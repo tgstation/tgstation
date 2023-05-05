@@ -22,7 +22,7 @@
 /area/ruin/space/djstation/service)
 "h" = (
 /obj/machinery/light/small/directional/north,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/gps/spaceruin,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
@@ -92,7 +92,7 @@
 "G" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/head/costume/ushanka,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
@@ -105,7 +105,7 @@
 /area/ruin/space/djstation/service)
 "M" = (
 /obj/structure/cable,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)

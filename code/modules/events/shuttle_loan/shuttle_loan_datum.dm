@@ -44,7 +44,7 @@
 			spawn_list.Add(/obj/item/shard)
 		var/turf/assistant_turf = pick_n_take(empty_shuttle_turfs)
 		new infected_assistant(assistant_turf)
-	spawn_list.Add(/obj/structure/closet/crate)
+	spawn_list.Add(/obj/structure/locker/crate)
 	spawn_list.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
 	spawn_list.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
@@ -115,7 +115,7 @@
 	spawn_list.Add(/obj/item/honey_frame)
 	spawn_list.Add(/obj/structure/beebox/unwrenched)
 	spawn_list.Add(/obj/item/queen_bee/bought)
-	spawn_list.Add(/obj/structure/closet/crate/hydroponics)
+	spawn_list.Add(/obj/structure/locker/crate/hydroponics)
 
 	for(var/i in 1 to 8)
 		spawn_list.Add(/mob/living/simple_animal/hostile/bee/toxin)

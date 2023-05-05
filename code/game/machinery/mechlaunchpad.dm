@@ -61,13 +61,13 @@
 	var/turf/reverse_turf = get_turf(where)
 	podspawn(list(
 		"target" = get_turf(src),
-		"path" = /obj/structure/closet/supplypod/mechpod,
+		"path" = /obj/structure/locker/supplypod/mechpod,
 		"style" = STYLE_SEETHROUGH,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
 	use_power(active_power_usage)
 
-/obj/structure/closet/supplypod/mechpod
+/obj/structure/locker/supplypod/mechpod
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
@@ -81,6 +81,6 @@
 	close_sound = null
 	pod_flags = FIRST_SOUNDS
 
-/obj/structure/closet/supplypod/mechpod/handleReturnAfterDeparting(atom/movable/holder = src)
+/obj/structure/locker/supplypod/mechpod/handleReturnAfterDeparting(atom/movable/holder = src)
 	effectGib = TRUE
 	return ..()

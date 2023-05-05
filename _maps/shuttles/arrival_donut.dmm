@@ -19,7 +19,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "e" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "f" = (

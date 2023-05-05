@@ -154,7 +154,7 @@
 "aK" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aL" = (
@@ -712,7 +712,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/tcommsat_oldaisat)
 "cM" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -723,7 +723,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/tcommsat_oldaisat)
 "cO" = (
-/obj/structure/closet/malf/suits,
+/obj/structure/locker/malf/suits,
 /turf/open/floor/iron,
 /area/ruin/space/tcommsat_oldaisat)
 "cP" = (
@@ -745,7 +745,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cT" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/glasses/night,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10

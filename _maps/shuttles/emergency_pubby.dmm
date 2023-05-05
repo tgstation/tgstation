@@ -181,7 +181,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/locker/secure_closet/freezer/fridge,
 /obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
@@ -385,7 +385,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -424,7 +424,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/machinery/light/directional/south,

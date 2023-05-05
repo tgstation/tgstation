@@ -29,19 +29,19 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "h" = (
-/obj/structure/closet/wardrobe/green,
+/obj/structure/locker/wardrobe/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "i" = (
-/obj/structure/closet/wardrobe/black,
+/obj/structure/locker/wardrobe/black,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "j" = (
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "k" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/locker/wardrobe/grey,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "l" = (
@@ -112,7 +112,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "x" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "y" = (

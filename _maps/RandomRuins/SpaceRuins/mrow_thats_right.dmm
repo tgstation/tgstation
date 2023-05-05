@@ -12,7 +12,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/cat_man)
 "ae" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
@@ -50,7 +50,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "am" = (
@@ -308,7 +308,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bb" = (
 /obj/machinery/light/directional/east,
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -525,7 +525,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bJ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -758,7 +758,7 @@
 	dir = 1;
 	id_tag = "o2_out_cat"
 	},
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "cat hide"
 	},
 /obj/item/stack/sheet/animalhide/human,
@@ -778,7 +778,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cu" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "cat ears"
 	},
 /obj/item/organ/internal/ears/cat,
@@ -790,7 +790,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cv" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "cat meat"
 	},
 /obj/item/food/meat/slab/synthmeat{
@@ -832,7 +832,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cx" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "cat tails"
 	},
 /obj/item/organ/external/tail/cat,

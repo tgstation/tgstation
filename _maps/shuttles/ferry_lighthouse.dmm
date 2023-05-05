@@ -180,7 +180,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aV" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (

@@ -106,7 +106,7 @@
 "A" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light/red/dim/directional/north,
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/plant_analyzer,
 /turf/open/floor/plating/airless,

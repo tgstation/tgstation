@@ -103,7 +103,7 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "y" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
 	name = "mining cart"
 	},

@@ -515,11 +515,11 @@
 	},
 /area/awaymission/caves/research)
 "dd" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron,
 /area/awaymission/caves/research)
 "df" = (
-/obj/structure/closet/secure_closet/miner{
+/obj/structure/locker/secure_closet/miner{
 	name = "weapon equipment"
 	},
 /obj/item/grenade/syndieminibomb/concussion,
@@ -592,7 +592,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "ds" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/pickaxe/rusted{
 	pixel_x = 5
 	},
@@ -618,7 +618,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dx" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/sord,
 /turf/open/floor/wood,
@@ -631,7 +631,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dA" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
@@ -640,7 +640,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dC" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
@@ -747,12 +747,12 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "el" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/gun/energy/laser/captain/scattershot,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "em" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "en" = (
@@ -788,7 +788,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "ex" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/locker/secure_closet/miner,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
@@ -813,7 +813,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eD" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/locker/secure_closet/miner,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
 /turf/open/floor/iron,
@@ -829,7 +829,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eI" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/item/switchblade,
 /obj/item/switchblade,
 /turf/open/floor/iron,
@@ -871,7 +871,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eT" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eU" = (
@@ -881,7 +881,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eV" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eW" = (
@@ -1004,7 +1004,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gb" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gc" = (
@@ -1164,7 +1164,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gO" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1258,7 +1258,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "ki" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
@@ -1303,7 +1303,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "mX" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	name = "Mining cart"
 	},
 /turf/open/misc/asteroid/basalt{
@@ -1373,7 +1373,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "rl" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	name = "Mining cart"
 	},
 /obj/item/stack/sheet/mineral/mythril{
@@ -1505,7 +1505,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/research)
 "yS" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/gun/energy/laser/captain/scattershot,
 /obj/item/gun/energy/laser/captain/scattershot,
@@ -1660,7 +1660,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "DH" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	name = "Mining cart"
 	},
 /obj/item/pickaxe/rusted{
@@ -1778,7 +1778,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ly" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	name = "Mining cart"
 	},
 /obj/item/pickaxe/rusted{

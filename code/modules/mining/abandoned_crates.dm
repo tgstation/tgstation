@@ -1,6 +1,6 @@
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
 
-/obj/structure/closet/crate/secure/loot
+/obj/structure/locker/crate/secure/loot
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
@@ -16,7 +16,7 @@
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
 	divable = FALSE
 
-/obj/structure/closet/crate/secure/loot/Initialize(mapload)
+/obj/structure/locker/crate/secure/loot/Initialize(mapload)
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
@@ -26,7 +26,7 @@
 		digits -= dig  //there are never matching digits in the answer
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user, list/modifiers)
+/obj/structure/locker/crate/secure/loot/attack_hand(mob/user, list/modifiers)
 	if(locked)
 		to_chat(user, span_notice("The crate is locked with a Deca-code lock."))
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
@@ -59,12 +59,12 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
+/obj/structure/locker/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.can_perform_action(src))
 		return
 	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
-/obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
+/obj/structure/locker/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
 		if(W.tool_behaviour == TOOL_MULTITOOL)
 			to_chat(user, span_notice("DECA-CODE LOCK REPORT:"))
@@ -99,13 +99,13 @@
 			return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/locker/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
+/obj/structure/locker/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
 		. = ..() //Run the normal code.
 		if(locked) //Double check if the crate actually locked itself when the normal code ran.
@@ -118,18 +118,18 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
+/obj/structure/locker/crate/secure/loot/deconstruct(disassembled = TRUE)
 	if(locked)
 		boom()
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/locker/crate/secure/loot/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)
 
-/obj/structure/closet/crate/secure/loot/proc/spawn_loot()
+/obj/structure/locker/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance

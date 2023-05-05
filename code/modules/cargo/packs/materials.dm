@@ -72,7 +72,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/structure/reagent_dispensers/foamtank)
 	crate_name = "foam tank crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/fueltank
 	name = "Fuel Tank Crate"
@@ -80,7 +80,7 @@
 	cost = CARGO_CRATE_VALUE * 1.6
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
 	crate_name = "fuel tank crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/hightank
 	name = "Large Water Tank Crate"
@@ -88,7 +88,7 @@
 	cost = CARGO_CRATE_VALUE * 2.4
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
 	crate_name = "high-capacity water tank crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/hightankfuel
 	name = "Large Fuel Tank Crate"
@@ -97,7 +97,7 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/structure/reagent_dispensers/fueltank/large)
 	crate_name = "high-capacity fuel tank crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/watertank
 	name = "Water Tank Crate"
@@ -105,12 +105,12 @@
 	cost = CARGO_CRATE_VALUE * 1.2
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_name = "water tank crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/gas_canisters
 	cost = CARGO_CRATE_VALUE * 0.05
 	contains = list(/obj/machinery/portable_atmospherics/canister)
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/materials/gas_canisters/generate_supply_packs()
 	var/list/canister_packs = list()

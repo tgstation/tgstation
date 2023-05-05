@@ -26,7 +26,7 @@
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/mod/maint,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,

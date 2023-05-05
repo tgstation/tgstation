@@ -95,43 +95,43 @@
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1
 	)
 
-/obj/effect/spawner/random/clothing/wardrobe_closet
-	name = "wardrobe closet spawner"
+/obj/effect/spawner/random/clothing/wardrobe_locker
+	name = "wardrobe locker spawner"
 	icon_state = "locker_clothing"
 	loot = list(
-		/obj/structure/closet/gmcloset,
-		/obj/structure/closet/chefcloset,
-		/obj/structure/closet/jcloset,
-		/obj/structure/closet/lawcloset,
-		/obj/structure/closet/wardrobe/chaplain_black,
-		/obj/structure/closet/wardrobe/red,
-		/obj/structure/closet/wardrobe/cargotech,
-		/obj/structure/closet/wardrobe/atmospherics_yellow,
-		/obj/structure/closet/wardrobe/engineering_yellow,
-		/obj/structure/closet/wardrobe/white/medical,
-		/obj/structure/closet/wardrobe/robotics_black,
-		/obj/structure/closet/wardrobe/chemistry_white,
-		/obj/structure/closet/wardrobe/genetics_white,
-		/obj/structure/closet/wardrobe/virology_white,
-		/obj/structure/closet/wardrobe/science_white,
-		/obj/structure/closet/wardrobe/botanist,
-		/obj/structure/closet/wardrobe/curator,
-		/obj/structure/closet/wardrobe/pjs,
+		/obj/structure/locker/gmlocker,
+		/obj/structure/locker/cheflocker,
+		/obj/structure/locker/jlocker,
+		/obj/structure/locker/lawlocker,
+		/obj/structure/locker/wardrobe/chaplain_black,
+		/obj/structure/locker/wardrobe/red,
+		/obj/structure/locker/wardrobe/cargotech,
+		/obj/structure/locker/wardrobe/atmospherics_yellow,
+		/obj/structure/locker/wardrobe/engineering_yellow,
+		/obj/structure/locker/wardrobe/white/medical,
+		/obj/structure/locker/wardrobe/robotics_black,
+		/obj/structure/locker/wardrobe/chemistry_white,
+		/obj/structure/locker/wardrobe/genetics_white,
+		/obj/structure/locker/wardrobe/virology_white,
+		/obj/structure/locker/wardrobe/science_white,
+		/obj/structure/locker/wardrobe/botanist,
+		/obj/structure/locker/wardrobe/curator,
+		/obj/structure/locker/wardrobe/pjs,
 	)
 
-/obj/effect/spawner/random/clothing/wardrobe_closet_colored
-	name = "colored uniform closet spawner"
+/obj/effect/spawner/random/clothing/wardrobe_locker_colored
+	name = "colored uniform locker spawner"
 	icon_state = "locker_clothing"
 	loot = list(
-		/obj/structure/closet/wardrobe/mixed,
-		/obj/structure/closet/wardrobe,
-		/obj/structure/closet/wardrobe/pink,
-		/obj/structure/closet/wardrobe/black,
-		/obj/structure/closet/wardrobe/green,
-		/obj/structure/closet/wardrobe/orange,
-		/obj/structure/closet/wardrobe/yellow,
-		/obj/structure/closet/wardrobe/white,
-		/obj/structure/closet/wardrobe/grey,
+		/obj/structure/locker/wardrobe/mixed,
+		/obj/structure/locker/wardrobe,
+		/obj/structure/locker/wardrobe/pink,
+		/obj/structure/locker/wardrobe/black,
+		/obj/structure/locker/wardrobe/green,
+		/obj/structure/locker/wardrobe/orange,
+		/obj/structure/locker/wardrobe/yellow,
+		/obj/structure/locker/wardrobe/white,
+		/obj/structure/locker/wardrobe/grey,
 	)
 
 /obj/effect/spawner/random/clothing/backpack

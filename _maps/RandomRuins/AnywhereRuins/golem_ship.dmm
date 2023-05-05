@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/golem_ship)
 "c" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/shovel,
 /obj/item/shovel,
 /obj/item/shovel,
@@ -21,7 +21,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/shovel,
 /obj/item/shovel,
 /obj/item/pickaxe,

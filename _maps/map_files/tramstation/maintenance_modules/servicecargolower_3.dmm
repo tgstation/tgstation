@@ -22,7 +22,7 @@
 /area/station/maintenance/starboard/greater)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "g" = (
@@ -172,7 +172,7 @@
 /area/station/maintenance/starboard/greater)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "J" = (

@@ -120,7 +120,7 @@
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -129,7 +129,7 @@
 "ar" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/item/vending_refill/cigarette{
@@ -189,7 +189,7 @@
 /area/shuttle/abandoned/engine)
 "aB" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -198,12 +198,12 @@
 "aC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aE" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "food crate"
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
@@ -363,7 +363,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/black,
+/obj/structure/locker/wardrobe/black,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
@@ -441,7 +441,7 @@
 "bs" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -500,7 +500,7 @@
 /obj/machinery/light/built/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/west,
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/tank/internals/oxygen{
 	pixel_x = -3;
 	pixel_y = 3
@@ -950,7 +950,7 @@
 "cH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/engine)
@@ -1041,7 +1041,7 @@
 /area/shuttle/abandoned/cargo)
 "cQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/secure/weapon,
+/obj/structure/locker/crate/secure/weapon,
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -1144,14 +1144,14 @@
 "di" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "dj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/flour{
 	pixel_x = -3;
 	pixel_y = 3
@@ -1307,7 +1307,7 @@
 "dJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -1406,7 +1406,7 @@
 /area/shuttle/abandoned/engine)
 "dX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/shovel,
 /obj/item/pickaxe,
 /obj/item/storage/box/lights/mixed,
@@ -1717,7 +1717,7 @@
 /area/shuttle/abandoned/cargo)
 "ss" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/cup/bottle/morphine,
 /obj/item/reagent_containers/syringe,
@@ -1739,7 +1739,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -1816,7 +1816,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1825,7 +1825,7 @@
 "DL" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -1984,7 +1984,7 @@
 "Nw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -2016,7 +2016,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -2045,7 +2045,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/three,
@@ -2054,7 +2054,7 @@
 "Sm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/three,

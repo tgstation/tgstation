@@ -361,7 +361,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "ds" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
@@ -402,7 +402,7 @@
 /area/ruin/space/has_grav/hotel)
 "eg" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "ek" = (
@@ -1052,7 +1052,7 @@
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "jp" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/whitebeet,
@@ -1346,7 +1346,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/under/syndicate/tacticool,
 /turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/hotel/dock)
@@ -1417,7 +1417,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "mO" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
@@ -1466,7 +1466,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/catwalk_floor,
@@ -1521,7 +1521,7 @@
 /area/ruin/space/has_grav/hotel/pool)
 "nl" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/camera/directional/east{
 	c_tag = "Docking Area";
@@ -1733,7 +1733,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hotel)
 "qd" = (
-/obj/structure/closet/l3closet/janitor,
+/obj/structure/locker/l3closet/janitor,
 /obj/item/grenade/chem_grenade/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,
@@ -1908,7 +1908,7 @@
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "sx" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "sz" = (
@@ -2045,7 +2045,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "ul" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
@@ -2288,7 +2288,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel)
 "wO" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
@@ -2311,7 +2311,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "wX" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
@@ -2414,7 +2414,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "xI" = (
@@ -2709,7 +2709,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "CE" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/card/id/away/hotel,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
@@ -2840,7 +2840,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "Em" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "Er" = (
@@ -2946,7 +2946,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Fj" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "Ft" = (
@@ -3593,7 +3593,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Oz" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "OF" = (
@@ -3726,7 +3726,7 @@
 /area/ruin/space/has_grav/hotel)
 "PQ" = (
 /obj/structure/cable,
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "PW" = (
@@ -4455,7 +4455,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "Yb" = (
@@ -4520,7 +4520,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)

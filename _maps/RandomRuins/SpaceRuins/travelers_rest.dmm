@@ -472,7 +472,7 @@
 "Xo" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1
 	},
 /obj/item/stock_parts/capacitor/super,

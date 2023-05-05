@@ -68,8 +68,8 @@
 	vis_flags = VIS_INHERIT_PLANE
 	plane = HIGH_GAME_PLANE
 
-/// Door overlay for animating closets
-/obj/effect/overlay/closet_door
+/// Door overlay for animating lockers
+/obj/effect/overlay/locker_door
 	anchored = TRUE
 	plane = FLOAT_PLANE
 	layer = FLOAT_LAYER

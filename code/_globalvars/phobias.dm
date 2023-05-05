@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/machinery/abductor,
 		/obj/structure/alien,
 		/obj/structure/bed/abductor,
-		/obj/structure/closet/abductor,
+		/obj/structure/locker/abductor,
 		/obj/structure/statue/plasma/xeno,
 		/obj/structure/table_frame/abductor,
 		/obj/structure/table/abductor,

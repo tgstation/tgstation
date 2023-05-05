@@ -64,7 +64,7 @@
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material,
@@ -89,7 +89,7 @@
 /area/station/maintenance/central/lesser)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/plating,

@@ -50,7 +50,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
-/obj/structure/closet/secure_closet/engineering_electrical{
+/obj/structure/locker/secure_closet/engineering_electrical{
 	locked = 0
 	},
 /turf/open/floor/iron,
@@ -109,7 +109,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
@@ -523,7 +523,7 @@
 /area/station/science)
 "cp" = (
 /obj/machinery/light/directional/south,
-/obj/structure/closet/secure_closet/engineering_chief{
+/obj/structure/locker/secure_closet/engineering_chief{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -538,7 +538,7 @@
 /area/station/command/bridge)
 "cr" = (
 /obj/machinery/light/directional/south,
-/obj/structure/closet/secure_closet/hos{
+/obj/structure/locker/secure_closet/hos{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -1742,7 +1742,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "hD" = (
-/obj/structure/closet/secure_closet/chemical/heisenberg{
+/obj/structure/locker/secure_closet/chemical/heisenberg{
 	locked = 0
 	},
 /turf/open/floor/iron,
@@ -1936,7 +1936,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ut" = (
-/obj/structure/closet/secure_closet/atmospherics{
+/obj/structure/locker/secure_closet/atmospherics{
 	locked = 0
 	},
 /obj/machinery/light/directional/north,
@@ -2043,7 +2043,7 @@
 /turf/open/floor/iron,
 /area/station/science)
 "BD" = (
-/obj/structure/closet/secure_closet/chief_medical{
+/obj/structure/locker/secure_closet/chief_medical{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -2059,7 +2059,7 @@
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "Ct" = (
-/obj/structure/closet/syndicate/resources/everything,
+/obj/structure/locker/syndicate/resources/everything,
 /turf/open/floor/iron,
 /area/station/science)
 "CQ" = (
@@ -2111,7 +2111,7 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "EI" = (
-/obj/structure/closet/secure_closet/captains{
+/obj/structure/locker/secure_closet/captains{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -2173,14 +2173,14 @@
 /turf/open/floor/plating,
 /area/station/science/explab)
 "Iy" = (
-/obj/structure/closet/secure_closet/research_director{
+/obj/structure/locker/secure_closet/research_director{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "IH" = (
-/obj/structure/closet/secure_closet/engineering_welding{
+/obj/structure/locker/secure_closet/engineering_welding{
 	locked = 0
 	},
 /obj/machinery/airalarm/directional/north,
@@ -2344,7 +2344,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "RM" = (
-/obj/structure/closet/secure_closet/hop{
+/obj/structure/locker/secure_closet/hop{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -2385,7 +2385,7 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "Ut" = (
-/obj/structure/closet/secure_closet/medical3{
+/obj/structure/locker/secure_closet/medical3{
 	locked = 0
 	},
 /obj/item/healthanalyzer/advanced,

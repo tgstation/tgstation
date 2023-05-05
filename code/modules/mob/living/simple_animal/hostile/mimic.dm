@@ -92,7 +92,7 @@
 	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/mimic/crate/death()
-	var/obj/structure/closet/crate/C = new(get_turf(src))
+	var/obj/structure/locker/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/obj/O in src)
 		O.forceMove(C)
@@ -315,7 +315,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 	toggle_open()
 
 /mob/living/simple_animal/hostile/mimic/xenobio/death()
-	var/obj/structure/closet/crate/C = new(get_turf(src))
+	var/obj/structure/locker/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/atom/movable/AM in src)
 		AM.forceMove(C)
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 
 /mob/living/simple_animal/hostile/mimic/xenobio/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(istype(mover, /obj/structure/closet))
+	if(istype(mover, /obj/structure/locker))
 		return FALSE
 /**
 * Used to open and close the mimic
@@ -386,7 +386,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 					return FALSE
 		L.stop_pulling()
 
-	else if(istype(AM, /obj/structure/closet))
+	else if(istype(AM, /obj/structure/locker))
 		return FALSE
 	else if(isobj(AM))
 		if(AM.anchored || AM.has_buckled_mobs())

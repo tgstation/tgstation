@@ -67,7 +67,7 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "n" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/locker/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

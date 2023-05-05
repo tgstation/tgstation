@@ -2,13 +2,13 @@
 	"": [
 		{
 			"type": "icon_state",
-			"icon_state": "giftdeliverycloset_base",
+			"icon_state": "giftdeliverylocker_base",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "giftdeliverycloset_ribbon",
+			"icon_state": "giftdeliverylocker_ribbon",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}

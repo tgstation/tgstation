@@ -18,7 +18,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "i" = (
-/obj/structure/closet/wardrobe/black,
+/obj/structure/locker/wardrobe/black,
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -73,7 +73,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "I" = (
-/obj/structure/closet/wardrobe/black,
+/obj/structure/locker/wardrobe/black,
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -81,7 +81,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "K" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,

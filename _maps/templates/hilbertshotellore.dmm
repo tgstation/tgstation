@@ -98,14 +98,14 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "aw" = (
-/obj/structure/closet/cabinet{
+/obj/structure/locker/cabinet{
 	anchored = 1
 	},
 /obj/item/mod/module/eradication_lock,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "ay" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)

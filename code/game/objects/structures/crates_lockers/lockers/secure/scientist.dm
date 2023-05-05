@@ -1,9 +1,9 @@
-/obj/structure/closet/secure_closet/research_director
+/obj/structure/locker/secure/research_director
 	name = "research director's locker"
 	req_access = list(ACCESS_RD)
 	icon_state = "rd"
 
-/obj/structure/closet/secure_closet/research_director/PopulateContents()
+/obj/structure/locker/secure/research_director/PopulateContents()
 	..()
 
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
@@ -19,19 +19,19 @@
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/storage/box/skillchips/science(src)
 
-/obj/structure/closet/secure_closet/research_director/populate_contents_immediate()
+/obj/structure/locker/secure/research_director/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objectives
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
 	new /obj/item/laser_pointer(src)
 
-/obj/structure/closet/secure_closet/cytology
+/obj/structure/locker/secure/cytology
 	name = "cytology equipment locker"
 	icon_state = "science"
 	req_access = list(ACCESS_RESEARCH)
 
-/obj/structure/closet/secure_closet/cytology/PopulateContents()
+/obj/structure/locker/secure/cytology/PopulateContents()
 	. = ..()
 	new /obj/item/pushbroom(src)
 	new /obj/item/plunger(src)

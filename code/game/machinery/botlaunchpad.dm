@@ -48,7 +48,7 @@
 		launched_bot = possible_bot
 		podspawn(list(
 			"target" = get_turf(src),
-			"path" = /obj/structure/closet/supplypod/botpod,
+			"path" = /obj/structure/locker/supplypod/botpod,
 			"style" = STYLE_SEETHROUGH,
 			"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 		))
@@ -63,7 +63,7 @@
 	user?.balloon_alert(user, "bot sent back to pad")
 	launched_bot.call_bot(src,  get_turf(src))
 
-/obj/structure/closet/supplypod/botpod
+/obj/structure/locker/supplypod/botpod
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE

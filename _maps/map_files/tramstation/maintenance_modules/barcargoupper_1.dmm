@@ -67,7 +67,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
@@ -188,7 +188,7 @@
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/tool,
 /obj/item/relic,
@@ -239,7 +239,7 @@
 /area/station/maintenance/department/cargo)
 "FJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "Gy" = (
@@ -330,7 +330,7 @@
 /area/station/asteroid)
 "RX" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/vending_restock,

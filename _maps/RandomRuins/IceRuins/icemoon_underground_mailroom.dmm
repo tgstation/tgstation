@@ -90,7 +90,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "jh" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -104,7 +104,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "jm" = (
-/obj/structure/closet/crate/mail{
+/obj/structure/locker/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/item/mail/junkmail,
@@ -165,7 +165,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "oU" = (
-/obj/structure/closet/crate/mail{
+/obj/structure/locker/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/item/mail/junkmail,
@@ -248,7 +248,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "AP" = (
-/obj/structure/closet/crate/secure,
+/obj/structure/locker/crate/secure,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "AS" = (
@@ -317,7 +317,7 @@
 	},
 /area/ruin/powered/mailroom)
 "Jd" = (
-/obj/structure/closet/crate/mail{
+/obj/structure/locker/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/effect/turf_decal/siding/yellow,
@@ -405,7 +405,7 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/turf_decal/siding/thinplating/corner,
 /obj/item/paper/crumpled/fluff/poem,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "PQ" = (
@@ -413,7 +413,7 @@
 /turf/open/misc/grass,
 /area/ruin/powered/mailroom)
 "Qb" = (
-/obj/structure/closet/crate/mail{
+/obj/structure/locker/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/effect/turf_decal/stripes{
@@ -494,7 +494,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
-/obj/structure/closet/crate/mail{
+/obj/structure/locker/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/effect/turf_decal/siding/yellow,

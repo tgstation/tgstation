@@ -96,7 +96,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "uB" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "uG" = (
@@ -146,7 +146,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "zF" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/airlock_painter/decal,
 /obj/effect/decal/cleanable/dirt/dust,

@@ -55,7 +55,7 @@
 /area/station/maintenance/starboard/central)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/decoration/paint,
 /obj/effect/spawner/random/decoration/paint,
 /obj/effect/spawner/random/maintenance/three,

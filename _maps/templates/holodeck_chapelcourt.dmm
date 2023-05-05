@@ -1,14 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/courtroom,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
 "ab" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -248,7 +238,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "az" = (
-/obj/structure/closet/secure_closet/courtroom,
+/obj/structure/locker/secure_closet/courtroom,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},

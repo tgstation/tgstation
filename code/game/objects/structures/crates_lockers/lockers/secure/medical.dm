@@ -1,10 +1,10 @@
-/obj/structure/closet/secure_closet/medical1
-	name = "medicine closet"
+/obj/structure/locker/secure/medical1
+	name = "medicine locker"
 	desc = "Filled to the brim with medical junk."
 	icon_state = "med"
 	req_access = list(ACCESS_MEDICAL)
 
-/obj/structure/closet/secure_closet/medical1/PopulateContents()
+/obj/structure/locker/secure/medical1/PopulateContents()
 	..()
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker = 2,
@@ -18,24 +18,24 @@
 		/obj/item/storage/box/rxglasses = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/structure/closet/secure_closet/medical2
-	name = "anesthetic closet"
+/obj/structure/locker/secure/medical2
+	name = "anesthetic locker"
 	desc = "Used to knock people out."
 	req_access = list(ACCESS_SURGERY)
 
-/obj/structure/closet/secure_closet/medical2/PopulateContents()
+/obj/structure/locker/secure/medical2/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/muzzle/breath(src)
 
-/obj/structure/closet/secure_closet/medical3
+/obj/structure/locker/secure/medical3
 	name = "medical doctor's locker"
 	req_access = list(ACCESS_SURGERY)
 	icon_state = "med_secure"
 
-/obj/structure/closet/secure_closet/medical3/PopulateContents()
+/obj/structure/locker/secure/medical3/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_med(src)
 	new /obj/item/defibrillator/loaded(src)
@@ -44,16 +44,16 @@
 	new /obj/item/clothing/glasses/hud/health(src)
 	return
 
-/obj/structure/closet/secure_closet/psychology
+/obj/structure/locker/secure/psychology
 	name = "psychology locker"
 	req_access = list(ACCESS_PSYCHOLOGY)
 	icon_state = "cabinet"
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/wooden_locker_open.ogg'
+	close_sound = 'sound/machines/wooden_locker_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 
-/obj/structure/closet/secure_closet/psychology/PopulateContents()
+/obj/structure/locker/secure/psychology/PopulateContents()
 	..()
 	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/suit/black/skirt(src)
@@ -67,12 +67,12 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
 
-/obj/structure/closet/secure_closet/chief_medical
+/obj/structure/locker/secure/chief_medical
 	name = "chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
 	icon_state = "cmo"
 
-/obj/structure/closet/secure_closet/chief_medical/PopulateContents()
+/obj/structure/locker/secure/chief_medical/PopulateContents()
 	..()
 
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
@@ -93,29 +93,29 @@
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
 
-/obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
+/obj/structure/locker/secure/chief_medical/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objective
 	new /obj/item/reagent_containers/hypospray/cmo(src)
 
-/obj/structure/closet/secure_closet/animal
+/obj/structure/locker/secure/animal
 	name = "animal control locker"
 	req_access = list(ACCESS_SURGERY)
 
-/obj/structure/closet/secure_closet/animal/PopulateContents()
+/obj/structure/locker/secure/animal/PopulateContents()
 	..()
 	new /obj/item/assembly/signaler(src)
 	for(var/i in 1 to 3)
 		new /obj/item/electropack(src)
 
-/obj/structure/closet/secure_closet/chemical
-	name = "chemical closet"
+/obj/structure/locker/secure/chemical
+	name = "chemical locker"
 	desc = "Store dangerous chemicals in here."
 	req_access = list(ACCESS_PHARMACY)
 	icon_door = "chemical"
 
-/obj/structure/closet/secure_closet/chemical/PopulateContents()
+/obj/structure/locker/secure/chemical/PopulateContents()
 	..()
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/pillbottles(src)
@@ -125,11 +125,11 @@
 	new /obj/item/reagent_containers/dropper(src)
 	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src) //hopefully they get the hint
 
-/obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
-	name = "advanced chemical closet"
+/obj/structure/locker/secure/chemical/heisenberg //contains one of each beaker, syringe etc.
+	name = "advanced chemical locker"
 	req_access = list(ACCESS_PLUMBING)
 
-/obj/structure/closet/secure_closet/chemical/heisenberg/PopulateContents()
+/obj/structure/locker/secure/chemical/heisenberg/PopulateContents()
 	..()
 	new /obj/item/reagent_containers/dropper(src)
 	new /obj/item/reagent_containers/dropper(src)

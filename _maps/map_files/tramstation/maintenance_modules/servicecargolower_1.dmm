@@ -113,7 +113,7 @@
 /area/station/maintenance/starboard/greater)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/decoration/paint,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/clothing/costume,
@@ -243,7 +243,7 @@
 /area/station/maintenance/starboard/greater)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/iron/smooth,
@@ -303,7 +303,7 @@
 /area/station/maintenance/starboard/greater)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/clothing/wardrobe_closet,
+/obj/effect/spawner/random/clothing/wardrobe_locker,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "V" = (

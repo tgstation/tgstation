@@ -21,13 +21,13 @@
 /// Test that you can resist out of a container
 /datum/unit_test/container_resist/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
-	var/obj/structure/closet/closet = allocate(/obj/structure/closet, get_turf(human))
+	var/obj/structure/locker/locker = allocate(/obj/structure/locker, get_turf(human))
 
-	closet.open(human)
-	TEST_ASSERT(!(human in closet.contents), "Human was in the contents of an open closet")
+	locker.open(human)
+	TEST_ASSERT(!(human in locker.contents), "Human was in the contents of an open locker")
 
-	closet.close(human)
-	TEST_ASSERT(human in closet.contents, "Human was not in the contents of the closed closet")
+	locker.close(human)
+	TEST_ASSERT(human in locker.contents, "Human was not in the contents of the closed locker")
 
 	human.resist()
 
@@ -35,4 +35,4 @@
 	//the callback. either that or sleep ourselves and see if it ran.
 	SSverb_manager.run_verb_queue()
 
-	TEST_ASSERT(!(human in closet.contents), "Human resisted out of a standard closet, but was still in it")
+	TEST_ASSERT(!(human in locker.contents), "Human resisted out of a standard locker, but was still in it")

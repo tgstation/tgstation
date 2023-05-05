@@ -21,7 +21,7 @@
 /area/station/maintenance/department/security)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
@@ -45,7 +45,7 @@
 /area/station/maintenance/department/security)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)

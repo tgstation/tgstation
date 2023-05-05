@@ -459,7 +459,7 @@
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "by" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
@@ -675,7 +675,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "eG" = (
-/obj/structure/closet/crate/radiation,
+/obj/structure/locker/crate/radiation,
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
@@ -918,7 +918,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/flashlight/flare/torch,
 /obj/item/flashlight/flare/torch,
 /obj/item/flashlight/flare/torch,
@@ -1107,7 +1107,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/lavaland/porcini,
@@ -1312,7 +1312,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/lizard,
@@ -1338,7 +1338,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/pickaxe,
 /obj/item/pickaxe,
 /obj/item/pickaxe,

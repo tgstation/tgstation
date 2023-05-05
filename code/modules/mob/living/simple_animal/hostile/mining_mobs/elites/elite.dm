@@ -324,7 +324,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
 	visible_message(span_boldwarning("[src] begins to convulse violently before beginning to dissipate."))
 	visible_message(span_boldwarning("As [src] closes, something is forced up from down below."))
-	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
+	var/obj/structure/locker/crate/necropolis/tendril/lootbox = new /obj/structure/locker/crate/necropolis/tendril(loc)
 	if(boosted)
 		if(mychild.loot_drop != null && prob(50))
 			new mychild.loot_drop(lootbox)

@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/railing,
@@ -42,7 +42,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "ah" = (
-/obj/structure/closet/emcloset{
+/obj/structure/locker/emcloset{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas/syndicate,
@@ -171,7 +171,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "av" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_corvette)
 "aw" = (
@@ -390,7 +390,7 @@
 /turf/open/floor/iron/dark/small,
 /area/shuttle/sbc_corvette)
 "up" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},

@@ -44,7 +44,7 @@
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "gS" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
@@ -195,7 +195,7 @@
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "pg" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
@@ -332,7 +332,7 @@
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "wP" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/structure/locker/crate/freezer/surplus_limbs,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
 /area/shuttle/ruin/caravan/pirate)
@@ -408,7 +408,7 @@
 /obj/item/stack/sheet/mineral/diamond{
 	amount = 5
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/coin/silver,
 /obj/item/coin/silver,
 /obj/item/coin/silver,
@@ -432,7 +432,7 @@
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "BX" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/dark,
@@ -663,7 +663,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -778,7 +778,7 @@
 /area/shuttle/ruin/caravan/pirate)
 "Wo" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},

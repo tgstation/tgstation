@@ -9,7 +9,7 @@
 
 //Box Object
 
-/obj/structure/closet/cardboard/agent
+/obj/structure/locker/cardboard/agent
 	name = "inconspicious box"
 	desc = "It's so normal that you didn't notice it before."
 	icon_state = "agentbox"
@@ -17,14 +17,14 @@
 	move_speed_multiplier = 0.5
 	enable_door_overlay = FALSE
 
-/obj/structure/closet/cardboard/agent/proc/go_invisible()
+/obj/structure/locker/cardboard/agent/proc/go_invisible()
 	animate(src, , alpha = 0, time = 20)
 
-/obj/structure/closet/cardboard/agent/Initialize(mapload)
+/obj/structure/locker/cardboard/agent/Initialize(mapload)
 	. = ..()
 	go_invisible()
 
-/obj/structure/closet/cardboard/agent/open(mob/living/user, force = FALSE)
+/obj/structure/locker/cardboard/agent/open(mob/living/user, force = FALSE)
 	. = ..()
 
 	if(!.)
@@ -32,19 +32,19 @@
 
 	qdel(src)
 
-/obj/structure/closet/cardboard/agent/process()
+/obj/structure/locker/cardboard/agent/process()
 	alpha = max(0, alpha - 50)
 
-/obj/structure/closet/cardboard/agent/proc/reveal()
+/obj/structure/locker/cardboard/agent/proc/reveal()
 	alpha = 255
 	addtimer(CALLBACK(src, PROC_REF(go_invisible)), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/obj/structure/closet/cardboard/agent/Bump(atom/A)
+/obj/structure/locker/cardboard/agent/Bump(atom/A)
 	. = ..()
 	if(isliving(A))
 		reveal()
 
-/obj/structure/closet/cardboard/agent/Bumped(atom/movable/A)
+/obj/structure/locker/cardboard/agent/Bumped(atom/movable/A)
 	. = ..()
 	if(isliving(A))
 		reveal()

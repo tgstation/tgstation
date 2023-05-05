@@ -183,7 +183,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -345,7 +345,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "emergency supplies crate"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -585,7 +585,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "wF" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;

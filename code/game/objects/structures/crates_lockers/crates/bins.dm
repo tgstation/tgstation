@@ -1,4 +1,4 @@
-/obj/structure/closet/crate/bin
+/obj/structure/locker/crate/bin
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
 	icon_state = "largebins"
@@ -9,11 +9,11 @@
 	delivery_icon = null
 	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/bin/Initialize(mapload)
+/obj/structure/locker/crate/bin/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
-/obj/structure/closet/crate/bin/update_overlays()
+/obj/structure/locker/crate/bin/update_overlays()
 	. = ..()
 	if(contents.len == 0)
 		. += "largebing"
@@ -23,7 +23,7 @@
 		return
 	. += "largebino"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
+/obj/structure/locker/crate/bin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage/bag/trash))
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, span_notice("You fill the bag."))
@@ -35,11 +35,11 @@
 	else
 		return ..()
 
-/obj/structure/closet/crate/bin/proc/do_animate()
+/obj/structure/locker/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, TRUE, -3)
 	flick("animate_largebins", src)
 	addtimer(CALLBACK(src, PROC_REF(do_close)), 13)
 
-/obj/structure/closet/crate/bin/proc/do_close()
+/obj/structure/locker/crate/bin/proc/do_close()
 	playsound(loc, close_sound, 15, TRUE, -3)
 	update_appearance()

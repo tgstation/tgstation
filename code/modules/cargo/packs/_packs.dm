@@ -24,7 +24,7 @@
 	/// The description shown on the cargo purchasing UI. No desc by default.
 	var/desc = ""
 	/// What typepath of crate do you spawn?
-	var/crate_type = /obj/structure/closet/crate
+	var/crate_type = /obj/structure/locker/crate
 	/// Should we message admins?
 	var/dangerous = FALSE
 	/// Event/Station Goals/Admin enabled packs
@@ -44,9 +44,9 @@
 	id = type
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
-	var/obj/structure/closet/crate/C
+	var/obj/structure/locker/crate/C
 	if(paying_account)
-		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		C = new /obj/structure/locker/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
 	else if(!crate_type)
 		CRASH("tried to generate a supply pack without a valid crate type")
@@ -65,7 +65,7 @@
 	. = cost
 	. *= SSeconomy.pack_price_modifier
 
-/datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/proc/fill(obj/structure/locker/crate/C)
 	for(var/item in contains)
 		if(!contains[item])
 			contains[item] = 1

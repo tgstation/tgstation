@@ -49,7 +49,7 @@
 "cZ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/two,
@@ -320,7 +320,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "nT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/wallframe/apc,
 /obj/item/electronics/apc,
 /obj/item/stock_parts/cell/empty,
@@ -485,7 +485,7 @@
 /area/station/maintenance/central/lesser)
 "vB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "vC" = (
@@ -575,7 +575,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "BN" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,
@@ -802,7 +802,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "OI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -843,7 +843,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "QC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "Rn" = (
@@ -942,7 +942,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Wp" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/closet/wardrobe/miner,
+/obj/structure/locker/wardrobe/miner,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "WC" = (
@@ -1030,7 +1030,7 @@
 /area/station/maintenance/central/lesser)
 "ZD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/wallframe/airalarm,
 /obj/item/electronics/airalarm,
 /obj/item/stack/cable_coil/five,

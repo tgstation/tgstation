@@ -211,7 +211,7 @@
 /obj/item/delivery/big
 	name = "large parcel"
 	desc = "A large delivery parcel."
-	icon_state = "deliverycloset"
+	icon_state = "deliverylocker"
 	density = TRUE
 	interaction_flags_item = 0 // Disable the ability to pick it up. Wow!
 	layer = BELOW_OBJ_LAYER

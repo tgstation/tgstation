@@ -5,7 +5,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "am" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/hypospray/medipen/gore,
 /obj/item/reagent_containers/hypospray/medipen/gore,
@@ -190,7 +190,7 @@
 "kN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/reagent_containers/syringe/contraband,
 /obj/item/reagent_containers/syringe/contraband,
 /obj/item/reagent_containers/syringe/contraband,
@@ -724,7 +724,7 @@
 /area/shuttle/pirate)
 "Mc" = (
 /obj/item/storage/pill_bottle,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/iron/grimy,
 /area/shuttle/pirate)
@@ -964,7 +964,7 @@
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/pirate)
 "Xk" = (
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/pirate)
 "Xp" = (

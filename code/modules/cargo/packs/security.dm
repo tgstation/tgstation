@@ -1,7 +1,7 @@
 /datum/supply_pack/security
 	group = "Security"
 	access = ACCESS_SECURITY
-	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_type = /obj/structure/locker/crate/secure/gear
 
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
@@ -175,7 +175,7 @@
 	group = "Armory"
 	access = ACCESS_ARMORY
 	access_view = ACCESS_ARMORY
-	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_type = /obj/structure/locker/crate/secure/weapon
 
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
@@ -223,7 +223,7 @@
 	cost = CARGO_CRATE_VALUE * 18
 	contains = list(/obj/item/gun/energy/e_gun = 2)
 	crate_name = "energy gun crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/locker/crate/secure/plasma
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
@@ -243,7 +243,7 @@
 					/obj/item/grenade/chem_grenade/incendiary = 3,
 				)
 	crate_name = "incendiary weapons crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/locker/crate/secure/plasma
 	dangerous = TRUE
 
 /datum/supply_pack/security/armory/mindshield
@@ -270,7 +270,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/clothing/suit/armor/laserproof = 2)
 	crate_name = "reflector vest crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/locker/crate/secure/plasma
 
 /datum/supply_pack/security/armory/riotarmor
 	name = "Riot Armor Crate"

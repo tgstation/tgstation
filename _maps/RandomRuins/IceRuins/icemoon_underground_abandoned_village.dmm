@@ -192,7 +192,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered)
 "rC" = (
-/obj/structure/closet/secure_closet/freezer,
+/obj/structure/locker/secure_closet/freezer,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
@@ -303,7 +303,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "AN" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/reagent_containers/cup/bottle/venom,
@@ -336,7 +336,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "DI" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath/medical,
@@ -372,7 +372,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "Gr" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/chips,
 /obj/item/trash/semki{
@@ -392,7 +392,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Hx" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/under/rank/cargo/miner,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
@@ -452,7 +452,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Qh" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/item/bodypart/head,
@@ -551,7 +551,7 @@
 /area/icemoon/underground/explored)
 "ZG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/under/suit/tan,

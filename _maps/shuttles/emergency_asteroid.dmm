@@ -107,7 +107,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aJ" = (
@@ -130,7 +130,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aM" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -305,7 +305,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bw" = (
@@ -341,7 +341,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bD" = (
-/obj/structure/closet/secure_closet/medical2,
+/obj/structure/locker/secure_closet/medical2,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bE" = (

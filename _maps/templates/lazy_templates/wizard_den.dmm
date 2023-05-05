@@ -455,7 +455,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/wizard_station)
 "Uu" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/clothing/suit/wizrobe/red,
@@ -515,7 +515,7 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "YT" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/item/banhammer,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,

@@ -240,7 +240,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /obj/effect/turf_decal/delivery,
@@ -780,7 +780,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "wu" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/clothing/neck/petcollar,
 /obj/item/clothing/neck/petcollar,
 /obj/item/clothing/neck/petcollar,
@@ -816,7 +816,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "xg" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/toy/crayon/spraycan,
 /obj/item/toy/crayon/spraycan,
 /obj/item/toy/crayon/spraycan,
@@ -859,7 +859,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "yH" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/paint/black,
 /obj/item/paint/blue,
 /obj/item/paint/green,
@@ -1014,7 +1014,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "EF" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -1212,7 +1212,7 @@
 /area/shuttle/escape)
 "Ny" = (
 /obj/item/radio/intercom/directional/south,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
@@ -1398,7 +1398,7 @@
 /area/shuttle/escape)
 "Vj" = (
 /obj/machinery/light/directional/north,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Vl" = (
@@ -1471,14 +1471,14 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "XR" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "XW" = (
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},

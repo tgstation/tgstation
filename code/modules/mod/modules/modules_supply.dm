@@ -51,7 +51,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
+	if(istype(target, /obj/structure/locker/crate) || istype(target, /obj/item/delivery/big))
 		var/atom/movable/picked_crate = target
 		if(!check_crate_pickup(picked_crate))
 			return
@@ -315,16 +315,16 @@
 	. = ..()
 	if(!.)
 		return
-	if(istype(mod.wearer.pulling, /obj/structure/closet))
-		var/obj/structure/closet/locker = mod.wearer.pulling
+	if(istype(mod.wearer.pulling, /obj/structure/locker))
+		var/obj/structure/locker/locker = mod.wearer.pulling
 		playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
 		locker.forceMove(mod.wearer.loc)
 		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
-	if(!istype(target, /obj/structure/closet) || !(target in view(mod.wearer)))
+	if(!istype(target, /obj/structure/locker) || !(target in view(mod.wearer)))
 		balloon_alert(mod.wearer, "invalid target!")
 		return
-	var/obj/structure/closet/locker = target
+	var/obj/structure/locker/locker = target
 	if(locker.anchored || locker.move_resist >= MOVE_FORCE_OVERPOWERING)
 		balloon_alert(mod.wearer, "target anchored!")
 		return
@@ -337,10 +337,10 @@
 	. = ..()
 	if(!.)
 		return
-	if(istype(mod.wearer.pulling, /obj/structure/closet))
+	if(istype(mod.wearer.pulling, /obj/structure/locker))
 		mod.wearer.stop_pulling()
 
-/obj/item/mod/module/magnet/proc/check_locker(obj/structure/closet/locker)
+/obj/item/mod/module/magnet/proc/check_locker(obj/structure/locker/locker)
 	if(!mod?.wearer)
 		return
 	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
@@ -349,7 +349,7 @@
 	locker.strong_grab = TRUE
 	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_stop_pull))
 
-/obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
+/obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/locker/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
 	locker.strong_grab = FALSE

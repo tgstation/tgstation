@@ -157,7 +157,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},

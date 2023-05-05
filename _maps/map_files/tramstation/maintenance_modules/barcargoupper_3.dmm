@@ -80,7 +80,7 @@
 /area/station/maintenance/department/cargo)
 "li" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "lx" = (
@@ -105,7 +105,7 @@
 /area/station/maintenance/department/cargo)
 "mP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/plating,
@@ -176,13 +176,13 @@
 /area/station/asteroid)
 "sy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "sT" = (

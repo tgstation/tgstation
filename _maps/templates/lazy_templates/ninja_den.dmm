@@ -58,7 +58,7 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "cn" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1;
 	desc = "A storage unit for plasmaman internals, courtesy of the Spider Clan.";
 	icon_state = "emergency";
@@ -144,7 +144,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "ed" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/clothing/under/costume/jabroni,
 /obj/item/clothing/under/costume/geisha,
 /obj/item/clothing/under/costume/kilt,
@@ -362,7 +362,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "jG" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
@@ -567,7 +567,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "oZ" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
@@ -598,7 +598,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "pu" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/vending_refill/autodrobe,
 /obj/item/stack/sheet/paperframes/fifty,
 /obj/item/stack/sheet/paperframes/fifty,
@@ -801,7 +801,7 @@
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "uv" = (
@@ -828,7 +828,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "uL" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/clothing/suit/costume/xenos,
 /obj/item/clothing/head/costume/xenos,
 /obj/item/xenos_claw,
@@ -897,7 +897,7 @@
 /area/centcom/central_command_areas/holding)
 "xj" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/camera_film,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/tile,
@@ -1180,7 +1180,7 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Dk" = (
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Do" = (
@@ -1220,7 +1220,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "Ea" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)
 "Ed" = (
@@ -1275,7 +1275,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/closet/crate/bin{
+/obj/structure/locker/crate/bin{
 	pixel_y = 6
 	},
 /turf/open/floor/stone,
@@ -1506,7 +1506,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "JC" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1;
 	name = "Plasmaman suits"
 	},
@@ -1541,7 +1541,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "JV" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
@@ -1611,7 +1611,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)
 "Mz" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/iv_drip,
 /obj/item/roller,
@@ -1843,7 +1843,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "RS" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -1990,7 +1990,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "VC" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/soap/syndie,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
@@ -2010,7 +2010,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "VW" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open{
+/obj/structure/locker/secure_closet/freezer/fridge/open{
 	name = "freezer"
 	},
 /obj/item/food/meat/slab/killertomato,

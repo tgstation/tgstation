@@ -7,7 +7,7 @@
 /area/station/maintenance/starboard/central)
 "h" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/iron/smooth,
@@ -26,7 +26,7 @@
 /area/station/maintenance/starboard/central)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/mini_fridge,
+/obj/structure/locker/mini_fridge,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "z" = (
@@ -36,7 +36,7 @@
 /area/station/maintenance/starboard/central)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/iron/smooth,

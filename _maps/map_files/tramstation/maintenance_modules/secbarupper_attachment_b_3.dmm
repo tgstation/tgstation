@@ -21,7 +21,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "l" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/maintenance/three,

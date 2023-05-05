@@ -24,7 +24,7 @@
 		if(victim.z == 0)
 			continue
 
-		//Hilariously enough, running into a closet should make you get hit the hardest.
+		//Hilariously enough, running into a locker should make you get hit the hardest.
 		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
 		victim.adjust_hallucinations(hallucination_amount)
 

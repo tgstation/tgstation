@@ -602,7 +602,7 @@
   - admin: Setting machine_stat flags on machinery will now call the set_machine_stat
       proc so things update properly lol.
   - bugfix: Fixed a runtime when deconstructing newscaster w/ a wrench.
-  - admin: Improved some varedit handling for anything w/ the /obj/structure/closet
+  - admin: Improved some varedit handling for anything w/ the /obj/structure/locker
       path (closets / lockers / crates)
   itseasytosee:
   - bugfix: Skeletons can drink milk again, sorry about that.

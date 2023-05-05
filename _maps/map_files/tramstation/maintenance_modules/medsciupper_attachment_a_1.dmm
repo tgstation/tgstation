@@ -48,7 +48,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "t" = (
-/obj/structure/closet/crate/science,
+/obj/structure/locker/crate/science,
 /obj/effect/spawner/random/mod/maint,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -152,7 +152,7 @@
 /area/station/maintenance/department/science)
 "X" = (
 /obj/effect/spawner/random/mod/maint,
-/obj/structure/closet/crate/science,
+/obj/structure/locker/crate/science,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5

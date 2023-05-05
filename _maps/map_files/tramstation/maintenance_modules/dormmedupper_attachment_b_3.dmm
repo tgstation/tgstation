@@ -57,7 +57,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "t" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/stack/sheet/mineral/wood{
 	amount = 10
 	},
@@ -70,7 +70,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "w" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/locker/mini_fridge,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "y" = (
@@ -111,7 +111,7 @@
 /area/station/asteroid)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)

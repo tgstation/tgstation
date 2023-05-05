@@ -177,7 +177,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /turf/open/floor/mineral/titanium,
@@ -625,7 +625,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ja" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/crowbar,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/mineral/titanium/blue,

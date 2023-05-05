@@ -115,14 +115,14 @@
 /obj/item/fishing_hook/weighted,
 /obj/effect/turf_decal/stripes,
 /obj/item/fishing_rod,
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1
 	},
 /obj/item/fishing_hook/rescue,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "gh" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
@@ -193,7 +193,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ko" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1
 	},
 /obj/item/bait_can/worm/premium,
@@ -205,7 +205,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "kE" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/machinery/light/directional/south,
 /obj/item/clothing/mask/breath{
 	pixel_x = -3;
@@ -715,7 +715,7 @@
 /obj/item/fishing_line/reinforced,
 /obj/effect/turf_decal/stripes,
 /obj/item/fishing_rod,
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium,

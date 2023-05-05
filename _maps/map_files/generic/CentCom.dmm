@@ -108,7 +108,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "aM" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
@@ -193,7 +193,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "bf" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/bear,
@@ -428,7 +428,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
-/obj/structure/closet/secure_closet/ert_engi,
+/obj/structure/locker/secure_closet/ert_engi,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -1036,7 +1036,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "fN" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -1126,7 +1126,7 @@
 	pixel_y = -9;
 	pixel_x = -9
 	},
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/grass,
@@ -1614,7 +1614,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
 "iD" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -1625,7 +1625,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iE" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -1727,7 +1727,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iV" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -1738,7 +1738,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iW" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -2075,7 +2075,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "jN" = (
-/obj/structure/closet/wardrobe/cargotech,
+/obj/structure/locker/wardrobe/cargotech,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
@@ -2095,7 +2095,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "jQ" = (
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/structure/locker/secure_closet/quartermaster,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -3081,7 +3081,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "oA" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
@@ -3106,7 +3106,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "oF" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/whitebeet,
@@ -3193,7 +3193,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "oU" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -3426,7 +3426,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "qc" = (
@@ -3512,7 +3512,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
 "qr" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
@@ -4149,7 +4149,7 @@
 	pixel_y = 4;
 	dir = 1
 	},
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -4490,7 +4490,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "uN" = (
-/obj/structure/closet/secure_closet/contraband/heads,
+/obj/structure/locker/secure_closet/contraband/heads,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
@@ -4633,7 +4633,7 @@
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/ferry)
 "vB" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -4797,7 +4797,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "wg" = (
-/obj/structure/closet/secure_closet/ert_com,
+/obj/structure/locker/secure_closet/ert_com,
 /obj/structure/sign/directions/command{
 	pixel_y = 24
 	},
@@ -5854,7 +5854,7 @@
 /area/centcom/central_command_areas/evacuation)
 "Bb" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "Bc" = (
@@ -6570,7 +6570,7 @@
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "Fg" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/status_display/evac/directional/south,
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
@@ -6796,7 +6796,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/central_command_areas/evacuation/ship)
 "Hj" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -7026,7 +7026,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "IK" = (
-/obj/structure/closet/secure_closet/ert_sec,
+/obj/structure/locker/secure_closet/ert_sec,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -7801,7 +7801,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "MQ" = (
-/obj/structure/closet/secure_closet/courtroom,
+/obj/structure/locker/secure_closet/courtroom,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
@@ -7983,7 +7983,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "NM" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
@@ -8202,7 +8202,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "OH" = (
@@ -8416,13 +8416,13 @@
 /area/centcom/central_command_areas/admin)
 "PH" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "PJ" = (
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -8513,7 +8513,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "PY" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
@@ -8802,7 +8802,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
 "Rs" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -9051,7 +9051,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "SH" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "SI" = (
@@ -9133,7 +9133,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/two)
 "Te" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
@@ -9232,7 +9232,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -9258,7 +9258,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "TB" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
@@ -9400,7 +9400,7 @@
 	},
 /area/centcom/tdome/administration)
 "Uo" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -9411,7 +9411,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "Ur" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter,
 /obj/item/clothing/under/dress/skirt,
 /obj/item/clothing/under/shorts/black,
@@ -9459,7 +9459,7 @@
 /area/centcom/central_command_areas/evacuation)
 "UH" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "UI" = (
@@ -9614,7 +9614,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Vu" = (
-/obj/structure/closet/secure_closet/ert_med,
+/obj/structure/locker/secure_closet/ert_med,
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
 	},
@@ -9690,7 +9690,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "VM" = (
-/obj/structure/closet/secure_closet/ert_sec,
+/obj/structure/locker/secure_closet/ert_sec,
 /obj/structure/sign/directions/security{
 	dir = 1;
 	pixel_y = -24
@@ -9743,7 +9743,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "VZ" = (
-/obj/structure/closet/secure_closet/ert_med,
+/obj/structure/locker/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
 	dir = 1;
 	pixel_y = -24
@@ -9901,7 +9901,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "WG" = (
-/obj/structure/closet/secure_closet/ert_engi,
+/obj/structure/locker/secure_closet/ert_engi,
 /obj/structure/sign/directions/engineering{
 	pixel_y = 24
 	},
@@ -10217,7 +10217,7 @@
 /area/centcom/tdome/observation)
 "XK" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -10263,7 +10263,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "Ye" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -10408,7 +10408,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin/storage)
 "YV" = (
-/obj/structure/closet/lawcloset,
+/obj/structure/locker/lawcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
@@ -10459,7 +10459,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "Zj" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/wheat,

@@ -1,6 +1,6 @@
 /datum/supply_pack/critter
 	group = "Livestock"
-	crate_type = /obj/structure/closet/crate/critter
+	crate_type = /obj/structure/locker/crate/critter
 
 /datum/supply_pack/critter/parrot
 	name = "Bird Crate"
@@ -166,7 +166,7 @@
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list (/obj/item/storage/box/monkeycubes)
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/locker/crate
 	crate_name = "monkey cube crate"
 
 /datum/supply_pack/critter/pug

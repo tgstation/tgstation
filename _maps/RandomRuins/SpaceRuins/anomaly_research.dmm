@@ -130,7 +130,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "eO" = (
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
@@ -1422,7 +1422,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "Lb" = (
@@ -1467,7 +1467,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/bombcloset,
+/obj/structure/locker/bombcloset,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
@@ -1626,7 +1626,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "QP" = (

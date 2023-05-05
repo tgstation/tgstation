@@ -20,42 +20,42 @@
 	if(scooby.stat != CONSCIOUS || scooby.m_intent != MOVE_INTENT_RUN)
 		return
 
-	if(!istype(target, /obj/structure/closet))
+	if(!istype(target, /obj/structure/locker))
 		return
 
-	var/obj/structure/closet/closet = target
+	var/obj/structure/locker/locker = target
 
-	if(!closet.divable)
+	if(!locker.divable)
 		// Things like secure crates can blow up under certain circumstances
 		return
 
-	var/turf/closet_turf = get_turf(closet)
+	var/turf/locker_turf = get_turf(locker)
 
-	if(!closet.opened)
-		if(closet.locked)
-			closet.togglelock(scooby, silent = TRUE)
-		if(!closet.open(scooby))
+	if(!locker.opened)
+		if(locker.locked)
+			locker.togglelock(scooby, silent = TRUE)
+		if(!locker.open(scooby))
 			// No message if unable to open, since this is on Bump, spammy potential
 			return
 
 	// If it's a crate, "dive for cover" and start resting so people can jump into crates without slamming the lid on their head
-	if(closet.horizontal)
+	if(locker.horizontal)
 		// need to rest before moving, otherwise "can't get crate to close" message will be printed erroneously
 		scooby.set_resting(TRUE, silent = TRUE)
 
-	scooby.forceMove(closet_turf)
+	scooby.forceMove(locker_turf)
 
-	if(!closet.close(scooby))
-		to_chat(scooby, span_warning("You can't get [closet] to close!"))
-		if(closet.horizontal)
+	if(!locker.close(scooby))
+		to_chat(scooby, span_warning("You can't get [locker] to close!"))
+		if(locker.horizontal)
 			scooby.set_resting(FALSE, silent = TRUE)
 		return
 
-	closet.togglelock(scooby, silent = TRUE)
+	locker.togglelock(scooby, silent = TRUE)
 
-	if(closet.horizontal)
+	if(locker.horizontal)
 		scooby.set_resting(FALSE, silent = TRUE)
 
-	closet_turf.visible_message(span_warning("[scooby] dives into [closet]!"))
+	locker_turf.visible_message(span_warning("[scooby] dives into [locker]!"))
 	// If you run into a locker, you don't want to run out immediately
 	scooby.Immobilize(0.5 SECONDS)

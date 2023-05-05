@@ -49,7 +49,7 @@
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/mining)
 "z" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/trimline/brown,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1

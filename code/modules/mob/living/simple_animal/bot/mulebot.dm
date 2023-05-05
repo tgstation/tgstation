@@ -387,7 +387,7 @@
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	var/obj/structure/closet/crate/crate = AM
+	var/obj/structure/locker/crate/crate = AM
 	if(!istype(crate))
 		if(!wires.is_cut(WIRE_LOADCHECK))
 			buzz(SIGH)
@@ -642,7 +642,7 @@
 							AM = A
 							break
 				else // otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
+					AM = locate(/obj/structure/locker/crate) in get_step(loc,loaddir)
 				if(AM?.Adjacent(src))
 					load(AM)
 					if(report_delivery)
@@ -827,8 +827,8 @@
 			buzz(SIGH)
 			return
 
-		if(istype(O, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = O
+		if(istype(O, /obj/structure/locker/crate))
+			var/obj/structure/locker/crate/crate = O
 			crate.close() //make sure it's closed
 
 		O.forceMove(src)

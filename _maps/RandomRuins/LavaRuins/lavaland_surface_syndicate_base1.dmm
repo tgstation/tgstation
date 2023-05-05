@@ -182,7 +182,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "cc" = (
 /obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -3;
 	pixel_y = 3
@@ -280,7 +280,7 @@
 	},
 /area/ruin/syndicate_lava_base/virology)
 "do" = (
-/obj/structure/closet/secure_closet/medical1{
+/obj/structure/locker/secure_closet/medical1{
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -310,7 +310,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/chemistry)
@@ -318,7 +318,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "dA" = (
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
@@ -384,7 +384,7 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "dL" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/extinguisher{
 	pixel_x = -5;
 	pixel_y = 5
@@ -482,7 +482,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -491,7 +491,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "eg" = (
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -509,7 +509,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/chemistry)
 "et" = (
@@ -561,7 +561,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "eG" = (
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/structure/locker/secure_closet/personal/patient,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 9
@@ -635,7 +635,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/box/donkpockets{
 	pixel_x = -2;
 	pixel_y = 6
@@ -658,7 +658,7 @@
 /area/ruin/syndicate_lava_base/cargo)
 "fb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -818,7 +818,7 @@
 /area/ruin/syndicate_lava_base/virology)
 "fE" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -907,7 +907,7 @@
 /area/ruin/syndicate_lava_base/cargo)
 "gi" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/vending_refill/snack{
 	pixel_x = -3;
 	pixel_y = 3
@@ -1227,7 +1227,7 @@
 "hK" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -1522,7 +1522,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/toolcloset{
+/obj/structure/locker/toolcloset{
 	anchored = 1
 	},
 /obj/item/crowbar,
@@ -1611,7 +1611,7 @@
 	desc = "The HS-452. Installed recently by the Donk Co. Hygiene Division.";
 	name = "emergency shower"
 	},
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "jY" = (
@@ -1624,7 +1624,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "ka" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -1833,7 +1833,7 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "lm" = (
-/obj/structure/closet/secure_closet/medical1{
+/obj/structure/locker/secure_closet/medical1{
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2022,7 +2022,7 @@
 "ms" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
@@ -2062,7 +2062,7 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "my" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/enzyme,
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
@@ -2800,7 +2800,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
+/obj/structure/locker/secure_closet/freezer/kitchen/maintenance{
 	req_access = null
 	},
 /obj/structure/cable,
@@ -3047,7 +3047,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/box/donkpockets{
 	pixel_x = -2;
 	pixel_y = 6
@@ -3090,7 +3090,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/tank/internals/oxygen/yellow,
 /obj/item/tank/internals/oxygen/yellow,
 /obj/item/tank/internals/oxygen/yellow,
@@ -3158,7 +3158,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/stack/sheet/iron/fifty,
@@ -3207,7 +3207,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/virology)
 "DP" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/fire{
 	pixel_x = 3;
 	pixel_y = 3
@@ -3268,7 +3268,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "EV" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 6
 	},
@@ -3477,7 +3477,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Jo" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -3866,7 +3866,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Qv" = (
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /turf/open/floor/iron,
@@ -3964,7 +3964,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/bar)
 "RP" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/clothing/gloves/combat,
@@ -4074,7 +4074,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "Ub" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 4
 	},
@@ -4234,7 +4234,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Xd" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
@@ -4343,7 +4343,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/obj/structure/closet/crate/secure/weapon{
+/obj/structure/locker/crate/secure/weapon{
 	req_access = list("syndicate")
 	},
 /obj/item/ammo_box/c9mm{
@@ -4417,7 +4417,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/radiation/rad_area/directional/south,
 /obj/effect/turf_decal/stripes,
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
 	},

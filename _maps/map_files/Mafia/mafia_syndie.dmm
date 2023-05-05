@@ -3,7 +3,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/mafia)
 "b" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
@@ -47,7 +47,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "m" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
@@ -156,7 +156,7 @@
 /area/centcom/mafia)
 "G" = (
 /obj/item/clothing/under/syndicate/tacticool,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},

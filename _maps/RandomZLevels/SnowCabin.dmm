@@ -85,7 +85,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ap" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "aq" = (
@@ -310,7 +310,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aX" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "aY" = (
@@ -550,7 +550,7 @@
 /obj/item/instrument/violin,
 /obj/item/instrument/accordion,
 /obj/item/instrument/trumpet,
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bU" = (
@@ -571,7 +571,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bX" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bY" = (
@@ -732,7 +732,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
@@ -947,7 +947,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -1105,7 +1105,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "eb" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -1225,7 +1225,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ew" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
@@ -1238,7 +1238,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "ex" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
@@ -1397,7 +1397,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eT" = (
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	anchored = 1
 	},
 /obj/effect/turf_decal/delivery/red,
@@ -1429,7 +1429,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eY" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
@@ -1446,7 +1446,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "eZ" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/locker/crate/wooden,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
@@ -1909,7 +1909,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gM" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/key/atv,
 /obj/item/key/atv,
@@ -2092,7 +2092,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hw" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
@@ -2326,7 +2326,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "is" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -2352,7 +2352,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iD" = (
-/obj/structure/closet/acloset,
+/obj/structure/locker/acloset,
 /obj/item/clothing/suit/hooded/bloated_human,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
@@ -2365,7 +2365,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iI" = (
-/obj/structure/closet/acloset,
+/obj/structure/locker/acloset,
 /obj/item/toy/foamblade,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
@@ -2579,7 +2579,7 @@
 /area/awaymission/cabin)
 "jr" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2591,7 +2591,7 @@
 /area/awaymission/cabin)
 "jt" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2603,7 +2603,7 @@
 /area/awaymission/cabin)
 "ju" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2615,7 +2615,7 @@
 /area/awaymission/cabin)
 "jv" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2627,7 +2627,7 @@
 /area/awaymission/cabin)
 "jw" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2695,32 +2695,32 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jE" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/tank/internals/emergency_oxygen/engi/empty,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "jF" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/tray,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jG" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/pistachios,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jH" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/can,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jI" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/candy,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jJ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/cheesie,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -2908,7 +2908,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/caves)
 "kE" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -3608,7 +3608,7 @@
 /obj/item/clothing/head/hats/warden/police{
 	desc = "I am the law!"
 	},
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1;
 	name = "uniform closet"
 	},
@@ -3953,7 +3953,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "zB" = (
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	desc = "Gotta know what waits within! Could it be a secret treasure cache or a deadly tool of sin?";
 	name = "wooden box"
 	},
@@ -3969,7 +3969,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Ad" = (
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	desc = "Gotta know what waits within! Could it be a secret treasure cache or a deadly tool of sin?";
 	name = "wooden box"
 	},
@@ -4007,7 +4007,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "AQ" = (
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	desc = "Gotta know what waits within! Could it be a secret treasure cache or a deadly tool of sin?";
 	name = "wooden box"
 	},

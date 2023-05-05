@@ -1,6 +1,6 @@
 //The "pod_landingzone" temp visual is created by anything that "launches" a supplypod. This is what animates the pod and makes the pod forcemove to the station.
 //------------------------------------SUPPLY POD-------------------------------------//
-/obj/structure/closet/supplypod
+/obj/structure/locker/supplypod
 	name = "supply pod" //Names and descriptions are normally created with the setStyle() proc during initialization, but we have these default values here as a failsafe
 	desc = "A Nanotrasen supply drop pod."
 	icon = 'icons/obj/supplypods.dmi'
@@ -11,7 +11,7 @@
 	allow_dense = TRUE
 	delivery_icon = null
 	can_weld_shut = FALSE
-	armor_type = /datum/armor/closet_supplypod
+	armor_type = /datum/armor/locker_supplypod
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -60,17 +60,17 @@
 	var/list/reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 	var/list/turfs_in_cargo = list()
 
-/obj/structure/closet/supplypod/bluespacepod
+/obj/structure/locker/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 
 //type used for one drop spawning items. doesn't have a style as style is set by the helper that creates this
-/obj/structure/closet/supplypod/podspawn
+/obj/structure/locker/supplypod/podspawn
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
-/obj/structure/closet/supplypod/extractionpod
+/obj/structure/locker/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
 	specialised = TRUE
@@ -83,14 +83,14 @@
 	leavingSound = 'sound/effects/podwoosh.ogg'
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
-/obj/structure/closet/supplypod/centcompod
+/obj/structure/locker/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/datum/armor/closet_supplypod
+/datum/armor/locker_supplypod
 	melee = 30
 	bullet = 50
 	laser = 50
@@ -99,7 +99,7 @@
 	fire = 100
 	acid = 80
 
-/obj/structure/closet/supplypod/Initialize(mapload, customStyle = FALSE)
+/obj/structure/locker/supplypod/Initialize(mapload, customStyle = FALSE)
 	. = ..()
 	if (!loc)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
@@ -108,7 +108,7 @@
 		style = customStyle
 	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/proc/setStyle(chosenStyle) //Used to give the sprite an icon state, name, and description.
+/obj/structure/locker/supplypod/proc/setStyle(chosenStyle) //Used to give the sprite an icon state, name, and description.
 	style = chosenStyle
 	var/base = GLOB.podstyles[chosenStyle][POD_BASE] //GLOB.podstyles is a 2D array we treat as a dictionary. The style represents the verticle index, with the icon state, name, and desc being stored in the horizontal indexes of the 2D array.
 	icon_state = base
@@ -123,7 +123,7 @@
 		door = FALSE
 	update_appearance()
 
-/obj/structure/closet/supplypod/proc/SetReverseIcon()
+/obj/structure/locker/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
 	if (GLOB.podstyles[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = GLOB.podstyles[style][POD_BASE] + "_reverse"
@@ -131,7 +131,7 @@
 	transform = matrix()
 	update_appearance()
 
-/obj/structure/closet/supplypod/proc/backToNonReverseIcon()
+/obj/structure/locker/supplypod/proc/backToNonReverseIcon()
 	fin_mask = initial(fin_mask)
 	if (GLOB.podstyles[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = GLOB.podstyles[style][POD_BASE]
@@ -139,10 +139,10 @@
 	transform = matrix()
 	update_appearance()
 
-/obj/structure/closet/supplypod/closet_update_overlays(list/new_overlays)
+/obj/structure/locker/supplypod/locker_update_overlays(list/new_overlays)
 	return
 
-/obj/structure/closet/supplypod/update_overlays()
+/obj/structure/locker/supplypod/update_overlays()
 	. = ..()
 	if(style == STYLE_INVISIBLE)
 		return
@@ -195,25 +195,25 @@
 	if(decal)
 		. += decal
 
-/obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
+/obj/structure/locker/supplypod/tool_interact(obj/item/W, mob/user)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
 		return FALSE
 	else
 		..()
 
-/obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+/obj/structure/locker/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
 	return FALSE
 
-/obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
+/obj/structure/locker/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
-/obj/structure/closet/supplypod/toggle(mob/living/user)
+/obj/structure/locker/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/locker/supplypod/open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
+/obj/structure/locker/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	pod_flags &= ~FIRST_SOUNDS //Make it so we play sounds now
@@ -234,7 +234,7 @@
 	var/turf/return_turf = locate(reverse_dropoff_coords[1], reverse_dropoff_coords[2], reverse_dropoff_coords[3])
 	new /obj/effect/pod_landingzone(return_turf, src)
 
-/obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
+/obj/structure/locker/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
 	resistance_flags = initial(resistance_flags)
@@ -276,7 +276,7 @@
 			target_living.adjustBruteLoss(damage)
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
-		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
+		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/locker/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
@@ -295,7 +295,7 @@
 	else
 		addtimer(CALLBACK(src, PROC_REF(open_pod), src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
-/obj/structure/closet/supplypod/proc/open_pod(atom/movable/holder, broken = FALSE, forced = FALSE) //The holder var represents an atom whose contents we will be working with
+/obj/structure/locker/supplypod/proc/open_pod(atom/movable/holder, broken = FALSE, forced = FALSE) //The holder var represents an atom whose contents we will be working with
 	if (!holder)
 		return
 	if (opened) //This is to ensure we don't open something that has already been opened
@@ -325,7 +325,7 @@
 		if(!stay_after_drop) // Departing should be handled manually
 			addtimer(CALLBACK(src, PROC_REF(startExitSequence), holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
 
-/obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
+/obj/structure/locker/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
@@ -338,7 +338,7 @@
 		if (holder != src)
 			qdel(holder)
 
-/obj/structure/closet/supplypod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
+/obj/structure/locker/supplypod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
 	if (!holder)
 		return
 	take_contents(holder)
@@ -346,14 +346,14 @@
 	holder.setClosed()
 	addtimer(CALLBACK(src, PROC_REF(preReturn), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 
-/obj/structure/closet/supplypod/take_contents(atom/movable/holder)
+/obj/structure/locker/supplypod/take_contents(atom/movable/holder)
 	var/turf/turf_underneath = holder.drop_location()
 	for(var/atom_to_check in turf_underneath)
 		if(atom_to_check != src && !insert(atom_to_check, holder)) // Can't insert that
 			continue
 	insert(turf_underneath, holder)
 
-/obj/structure/closet/supplypod/insert(atom/to_insert, atom/movable/holder)
+/obj/structure/locker/supplypod/insert(atom/to_insert, atom/movable/holder)
 	if(insertion_allowed(to_insert))
 		if(isturf(to_insert))
 			var/turf/turf_to_insert = to_insert
@@ -366,7 +366,7 @@
 	else
 		return FALSE
 
-/obj/structure/closet/supplypod/insertion_allowed(atom/to_insert)
+/obj/structure/locker/supplypod/insertion_allowed(atom/to_insert)
 	if(to_insert.invisibility == INVISIBILITY_ABSTRACT)
 		return FALSE
 	if(ismob(to_insert))
@@ -417,35 +417,35 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/closet/supplypod/proc/preReturn(atom/movable/holder)
+/obj/structure/locker/supplypod/proc/preReturn(atom/movable/holder)
 	deleteRubble()
 	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
 	addtimer(CALLBACK(src, PROC_REF(handleReturnAfterDeparting), holder), 15) //Finish up the pod's duties after a certain amount of time
 
-/obj/structure/closet/supplypod/extractionpod/preReturn(atom/movable/holder)
+/obj/structure/locker/supplypod/extractionpod/preReturn(atom/movable/holder)
 	// Double ensure we're loaded, this SHOULD be here by now but you never know
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
 	return ..()
 
-/obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
+/obj/structure/locker/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
 
-/obj/structure/closet/supplypod/extractionpod/setOpened()
+/obj/structure/locker/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
 
-/obj/structure/closet/supplypod/setClosed() //Ditto
+/obj/structure/locker/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
 
-/obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
+/obj/structure/locker/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
 		return
 	if (rubble)
@@ -458,16 +458,16 @@
 	rubble.setStyle(rubble_type, src)
 	update_appearance()
 
-/obj/structure/closet/supplypod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/locker/supplypod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	deleteRubble()
 	return ..()
 
-/obj/structure/closet/supplypod/proc/deleteRubble()
+/obj/structure/locker/supplypod/proc/deleteRubble()
 	rubble?.fadeAway()
 	rubble = null
 	update_appearance()
 
-/obj/structure/closet/supplypod/proc/addGlow()
+/obj/structure/locker/supplypod/proc/addGlow()
 	if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML)
 		return
 	glow_effect = new(src)
@@ -477,26 +477,26 @@
 	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, PROC_REF(remove_glow))
 
-/obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+/obj/structure/locker/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
 	if(same_z_layer)
 		return
 	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
-/obj/structure/closet/supplypod/proc/endGlow()
+/obj/structure/locker/supplypod/proc/endGlow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
 	//Trust the signals
 
-/obj/structure/closet/supplypod/proc/remove_glow()
+/obj/structure/locker/supplypod/proc/remove_glow()
 	SIGNAL_HANDLER
 	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
 	vis_contents -= glow_effect
 	glow_effect = null
 
-/obj/structure/closet/supplypod/Destroy()
+/obj/structure/locker/supplypod/Destroy()
 	deleteRubble()
 	//Trust the signals even harder
 	qdel(glow_effect)
@@ -542,7 +542,7 @@
 	var/foreground = "rubble_fg"
 	var/verticle_offset = 0
 
-/obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
+/obj/effect/supplypod_rubble/proc/getForeground(obj/structure/locker/supplypod/pod)
 	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
 	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
@@ -552,7 +552,7 @@
 	animate(src, alpha=0, time = 30)
 	QDEL_IN(src, 35)
 
-/obj/effect/supplypod_rubble/proc/setStyle(type, obj/structure/closet/supplypod/pod)
+/obj/effect/supplypod_rubble/proc/setStyle(type, obj/structure/locker/supplypod/pod)
 	if (type == RUBBLE_WIDE)
 		icon_state += "_wide"
 		foreground += "_wide"
@@ -573,7 +573,7 @@
 	icon_state = "LZ_Slider"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-/obj/effect/pod_landingzone_effect/Initialize(mapload, obj/structure/closet/supplypod/pod)
+/obj/effect/pod_landingzone_effect/Initialize(mapload, obj/structure/locker/supplypod/pod)
 	. = ..()
 	if(!pod)
 		stack_trace("Pod landingzone effect created with no pod")
@@ -590,7 +590,7 @@
 	light_range = 2
 	anchored = TRUE
 	alpha = 0
-	var/obj/structure/closet/supplypod/pod //The supplyPod that will be landing ontop of this pod_landingzone
+	var/obj/structure/locker/supplypod/pod //The supplyPod that will be landing ontop of this pod_landingzone
 	var/obj/effect/pod_landingzone_effect/helper
 	var/list/smoke_effects = new /list(13)
 

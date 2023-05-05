@@ -60,7 +60,7 @@
 /turf/closed/wall,
 /area/shuttle/auxiliary_base)
 "U" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/locker/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

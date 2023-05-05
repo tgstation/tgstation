@@ -5,7 +5,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "b" = (
-/obj/structure/closet/wardrobe/pjs,
+/obj/structure/locker/wardrobe/pjs,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical)

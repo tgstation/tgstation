@@ -234,19 +234,19 @@
 	name = "box spawner"
 	icon_state = "box"
 	loot = list(
-		/obj/structure/closet/cardboard = 9,
-		/obj/structure/closet/cardboard/metal = 1,
+		/obj/structure/locker/cardboard = 9,
+		/obj/structure/locker/cardboard/metal = 1,
 	)
 
 /obj/effect/spawner/random/trash/bin
 	name = "trashbin spawner"
 	icon_state = "trash_bin"
 	loot = list(
-		/obj/structure/closet/crate/bin = 10,
-		/obj/structure/closet/crate/trashcart = 3,
-		/obj/structure/closet/crate/trashcart/filled = 3,
+		/obj/structure/locker/crate/bin = 10,
+		/obj/structure/locker/crate/trashcart = 3,
+		/obj/structure/locker/crate/trashcart/filled = 3,
 		/obj/effect/spawner/random/trash/box = 3,
-		/obj/structure/closet/crate/trashcart/laundry = 1,
+		/obj/structure/locker/crate/trashcart/laundry = 1,
 	)
 
 

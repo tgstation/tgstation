@@ -602,8 +602,8 @@ GLOBAL_VAR(station_nuke_source)
  * Helper proc that handles gibbing someone who has been nuked.
  */
 /proc/nuke_gib(mob/living/gibbed, atom/source)
-	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
-		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
+	if(istype(gibbed.loc, /obj/structure/locker/secure/freezer))
+		var/obj/structure/locker/secure/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
 			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as [source] goes off. \
 				Luckily, as [freezer] is lead-lined, you survive."))

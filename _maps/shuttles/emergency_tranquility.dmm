@@ -361,7 +361,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/floor,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -802,7 +802,7 @@
 /area/shuttle/escape)
 "oy" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -838,7 +838,7 @@
 /area/shuttle/escape)
 "pe" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -925,7 +925,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "qm" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/structure/sign/poster/official/cohiba_robusto_ad{
 	pixel_y = 32
 	},
@@ -1068,7 +1068,7 @@
 /area/shuttle/escape)
 "sW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/structure/sign/poster/official/jim_nortons{
 	pixel_y = 32
 	},
@@ -1759,7 +1759,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "FY" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -2180,7 +2180,7 @@
 /area/shuttle/escape)
 "NC" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2272,7 +2272,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Pi" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/locker/secure_closet/bar,
 /obj/machinery/light/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)
@@ -2302,7 +2302,7 @@
 /turf/open/water/jungle,
 /area/shuttle/escape)
 "Qz" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2478,7 +2478,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "SU" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -2537,7 +2537,7 @@
 /area/shuttle/escape)
 "UF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)

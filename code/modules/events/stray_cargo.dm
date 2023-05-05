@@ -96,17 +96,17 @@
 			supply_pack = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
 		else
 			supply_pack = SSshuttle.supply_packs[pack_type]
-	var/obj/structure/closet/crate/crate = supply_pack.generate(null)
+	var/obj/structure/locker/crate/crate = supply_pack.generate(null)
 	if(crate) //empty supply packs are a thing! get memed on.
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
-	var/obj/structure/closet/supplypod/pod = make_pod()
+	var/obj/structure/locker/supplypod/pod = make_pod()
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
 	announce_to_ghosts(landing_marker)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/obj/structure/locker/supplypod/S = new
 	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
@@ -181,6 +181,6 @@
 
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/obj/structure/locker/supplypod/S = new
 	S.setStyle(STYLE_SYNDICATE)
 	return S

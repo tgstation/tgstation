@@ -13,7 +13,7 @@
 /area/station/maintenance/port/central)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
@@ -50,7 +50,7 @@
 /area/station/maintenance/port/central)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/entertainment/dice,
 /obj/effect/spawner/random/entertainment/deck,
 /obj/effect/spawner/random/clothing/costume,

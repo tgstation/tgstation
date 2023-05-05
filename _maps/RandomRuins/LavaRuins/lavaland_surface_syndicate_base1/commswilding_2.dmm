@@ -67,7 +67,7 @@
 /turf/open/floor/circuit,
 /area/ruin/syndicate_lava_base/telecomms)
 "x" = (
-/obj/structure/closet/crate/secure/freezer/commsagent,
+/obj/structure/locker/crate/secure/freezer/commsagent,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "y" = (

@@ -27,9 +27,9 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	strongpulling = pulled
 	RegisterSignal(strongpulling, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(reject_further_pulls))
 	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
-	if(istype(strongpulling, /obj/structure/closet) && !istype(strongpulling, /obj/structure/closet/body_bag))
-		var/obj/structure/closet/grabbed_closet = strongpulling
-		grabbed_closet.strong_grab = TRUE
+	if(istype(strongpulling, /obj/structure/locker) && !istype(strongpulling, /obj/structure/locker/body_bag))
+		var/obj/structure/locker/grabbed_locker = strongpulling
+		grabbed_locker.strong_grab = TRUE
 
 /**
  * Signal for rejecting further grabs
@@ -45,9 +45,9 @@ Basically, the items they pull cannot be pulled (except by the puller)
  */
 /datum/component/strong_pull/proc/lose_strong_grip()
 	UnregisterSignal(strongpulling, list(COMSIG_ATOM_CAN_BE_PULLED, COMSIG_ATOM_NO_LONGER_PULLED))
-	if(istype(strongpulling, /obj/structure/closet))
-		var/obj/structure/closet/ungrabbed_closet = strongpulling
-		ungrabbed_closet.strong_grab = FALSE
+	if(istype(strongpulling, /obj/structure/locker))
+		var/obj/structure/locker/ungrabbed_locker = strongpulling
+		ungrabbed_locker.strong_grab = FALSE
 	strongpulling = null
 
 /**

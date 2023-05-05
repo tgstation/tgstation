@@ -95,7 +95,7 @@
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/tape/random,
 /obj/item/gps/spaceruin,
 /turf/open/misc/asteroid/airless,
@@ -202,7 +202,7 @@
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "Q" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/exotic/technology,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)

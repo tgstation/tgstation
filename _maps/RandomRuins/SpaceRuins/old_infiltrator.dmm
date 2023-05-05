@@ -381,7 +381,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Aa" = (
-/obj/structure/closet/syndicate,
+/obj/structure/locker/syndicate,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 /obj/item/coin/antagtoken{
 	pixel_y = 4;
@@ -469,7 +469,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "ET" = (
-/obj/structure/closet/cardboard/metal,
+/obj/structure/locker/cardboard/metal,
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/unpowered)
 "Fn" = (
@@ -624,7 +624,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "RP" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "SE" = (

@@ -14,7 +14,7 @@
 /area/station/maintenance/department/cargo)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/structure/locker/secure_closet/freezer/cream_pie,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/cargo)
 "m" = (
@@ -63,7 +63,7 @@
 /area/station/maintenance/department/cargo)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	name = "costume crate"
 	},
 /obj/effect/spawner/random/clothing/costume,
@@ -84,7 +84,7 @@
 /area/station/maintenance/department/cargo)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/wooden/toy,
+/obj/structure/locker/crate/wooden/toy,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "L" = (
@@ -111,7 +111,7 @@
 /area/station/maintenance/department/cargo)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/empty{
+/obj/structure/locker/secure_closet/freezer/empty{
 	name = "prop fridge"
 	},
 /obj/item/food/grown/banana,

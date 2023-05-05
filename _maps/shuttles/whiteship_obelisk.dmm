@@ -59,7 +59,7 @@
 "dD" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/broken/directional/west,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/maintenance,
@@ -339,7 +339,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "sm" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/entertainment/money_small,
 /obj/item/paper/crumpled,
 /turf/open/floor/mineral/titanium/white,
@@ -803,7 +803,7 @@
 "Ta" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
 "Ua" = (

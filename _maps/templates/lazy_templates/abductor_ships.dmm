@@ -38,7 +38,7 @@
 	},
 /area/centcom/abductor_ship)
 "ie" = (
-/obj/structure/closet/abductor,
+/obj/structure/locker/abductor,
 /obj/item/storage/box/alienhandcuffs,
 /obj/item/reagent_containers/cup/beaker/synthflesh,
 /turf/open/floor/plating/abductor,

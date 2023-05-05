@@ -73,7 +73,7 @@
 /area/station/maintenance/department/science)
 "hi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -133,7 +133,7 @@
 /area/station/maintenance/department/medical)
 "rR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/science,
+/obj/structure/locker/crate/science,
 /obj/item/taperecorder{
 	pixel_x = -3;
 	pixel_y = 2
@@ -252,7 +252,7 @@
 /area/station/maintenance/department/science)
 "Gb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/wardrobe/science_white,
+/obj/structure/locker/wardrobe/science_white,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "Go" = (
@@ -418,7 +418,7 @@
 /area/station/maintenance/department/science)
 "Yt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "ZB" = (

@@ -91,7 +91,7 @@
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "an" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -117,7 +117,7 @@
 "as" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/north,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
@@ -141,7 +141,7 @@
 "av" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -3;
 	pixel_y = 3
@@ -167,7 +167,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/food/candy{
 	pixel_x = -3;
 	pixel_y = 1
@@ -530,7 +530,7 @@
 /area/shuttle/abandoned/crew)
 "bo" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -699,7 +699,7 @@
 "bH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/firecloset{
+/obj/structure/locker/firecloset{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1185,7 +1185,7 @@
 "cF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "cG" = (
@@ -1216,7 +1216,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate/secure/weapon,
+/obj/structure/locker/crate/secure/weapon,
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -1532,7 +1532,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -1545,7 +1545,7 @@
 /area/shuttle/abandoned/engine)
 "dB" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/shovel,
 /obj/item/pickaxe,
 /obj/item/storage/box/lights/mixed,
@@ -1651,7 +1651,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "dR" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
@@ -1664,7 +1664,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "dS" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dT" = (
@@ -1775,7 +1775,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
 /obj/item/t_scanner,
@@ -1794,7 +1794,7 @@
 /area/shuttle/abandoned/cargo)
 "xt" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1803,7 +1803,7 @@
 "zL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/roller{
 	pixel_y = 4
 	},
@@ -1864,7 +1864,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/secure_closet/freezer{
+/obj/structure/locker/secure_closet/freezer{
 	locked = 0;
 	name = "fridge"
 	},
@@ -1911,13 +1911,13 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "Ps" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/three,
@@ -1927,7 +1927,7 @@
 "Pt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/three,

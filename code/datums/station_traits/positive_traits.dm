@@ -24,7 +24,7 @@
 	var/area/area_to_spawn_in = pick(GLOB.bar_areas)
 	var/turf/T = pick(area_to_spawn_in.contents)
 
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+	var/obj/structure/locker/supplypod/centcompod/toLaunch = new()
 	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
 	new pizza_to_spawn(toLaunch)
 	for(var/i in 1 to 6)

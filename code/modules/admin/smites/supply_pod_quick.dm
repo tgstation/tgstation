@@ -36,7 +36,7 @@
 	. = ..()
 	podspawn(list(
 		"target" = get_turf(target),
-		"path" = /obj/structure/closet/supplypod/centcompod,
+		"path" = /obj/structure/locker/supplypod/centcompod,
 		"style" = STYLE_CENTCOM,
 		"spawn" = target_path,
 		"damage" = SUPPLY_POD_QUICK_DAMAGE,

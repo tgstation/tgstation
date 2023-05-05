@@ -70,8 +70,8 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/metal/core_effect(mob/living/target, mob/user)
 	target.visible_message(span_warning("The milky goo hardens and reshapes itself, encasing [target]!"))
-	var/obj/structure/closet/C = new /obj/structure/closet(target.loc)
-	C.name = "slimy closet"
+	var/obj/structure/locker/C = new /obj/structure/locker(target.loc)
+	C.name = "slimy locker"
 	C.desc = "Looking closer, it seems to be made of a sort of solid, opaque, metal-like goo."
 	target.forceMove(C)
 

@@ -291,7 +291,7 @@
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a locker or not adjacent, we cancel cuffing.
 		return FALSE
 	if(!isturf(current_target.loc))
 		return FALSE
@@ -373,7 +373,7 @@
 				frustration = 0
 
 		if(BOT_PREP_ARREST) // preparing to arrest target
-			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
+			// see if he got away. If he's no no longer adjacent or inside a locker or about to get up, we hunt again.
 			if(!Adjacent(target) || !isturf(target.loc) || !HAS_TRAIT(target, TRAIT_FLOORED))
 				back_to_hunt()
 				return
@@ -404,7 +404,7 @@
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a locker, we prep arrest again.
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

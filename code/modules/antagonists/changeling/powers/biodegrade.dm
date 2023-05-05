@@ -1,7 +1,7 @@
 /datum/action/changeling/biodegrade
 	name = "Biodegrade"
 	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
-	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
+	helptext = "This is obvious to nearby people, and can destroy standard restraints and lockers."
 	button_icon_state = "biodegrade"
 	chemical_cost = 30 //High cost to prevent spam
 	dna_cost = 2
@@ -43,13 +43,13 @@
 		used = TRUE
 
 
-	if(istype(user.loc, /obj/structure/closet) && !used)
-		var/obj/structure/closet/C = user.loc
+	if(istype(user.loc, /obj/structure/locker) && !used)
+		var/obj/structure/locker/C = user.loc
 		if(!istype(C))
 			return FALSE
 		C.visible_message(span_warning("[C]'s hinges suddenly begin to melt and run!"))
 		to_chat(user, span_warning("We vomit acidic goop onto the interior of [C]!"))
-		addtimer(CALLBACK(src, PROC_REF(open_closet), user, C), 70)
+		addtimer(CALLBACK(src, PROC_REF(open_locker), user, C), 70)
 		used = TRUE
 
 	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
@@ -81,7 +81,7 @@
 		new /obj/effect/decal/cleanable/greenglow(S.drop_location())
 		qdel(S)
 
-/datum/action/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/structure/closet/C)
+/datum/action/changeling/biodegrade/proc/open_locker(mob/living/carbon/human/user, obj/structure/locker/C)
 	if(C && user.loc == C)
 		C.visible_message(span_warning("[C]'s door breaks and opens!"))
 		new /obj/effect/decal/cleanable/greenglow(C.drop_location())

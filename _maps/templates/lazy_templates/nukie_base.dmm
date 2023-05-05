@@ -319,7 +319,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/syndicate_mothership/control)
 "eh" = (
-/obj/structure/closet/cardboard/metal,
+/obj/structure/locker/cardboard/metal,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
@@ -1086,7 +1086,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "mG" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "pantry crate"
 	},
 /obj/structure/sign/poster/contraband/moffuchis_pizza{
@@ -1187,7 +1187,7 @@
 /area/centcom/syndicate_mothership)
 "nw" = (
 /obj/machinery/light/cold/directional/west,
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "nz" = (
@@ -1261,7 +1261,7 @@
 /area/centcom/syndicate_mothership/control)
 "os" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
 "ov" = (
@@ -1372,7 +1372,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/centcom/syndicate_mothership/control)
 "pF" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
 	pixel_x = 32
 	},
@@ -1450,7 +1450,7 @@
 /area/centcom/syndicate_mothership/control)
 "qs" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
@@ -2211,7 +2211,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/stack/spacecash/c100,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
@@ -2761,7 +2761,7 @@
 /area/centcom/syndicate_mothership/control)
 "Gz" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "fruits and veggies freezer"
 	},
 /obj/item/food/grown/potato,
@@ -2945,7 +2945,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)
 "Id" = (
-/obj/structure/closet/crate/freezer{
+/obj/structure/locker/crate/freezer{
 	name = "meat freezer"
 	},
 /obj/item/food/meat/slab/bear,
@@ -3159,7 +3159,7 @@
 /area/centcom/syndicate_mothership/control)
 "Ld" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/textured_half,
 /area/centcom/syndicate_mothership/control)
@@ -3667,7 +3667,7 @@
 /area/centcom/syndicate_mothership/control)
 "Rf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/structure/sign/poster/contraband/gorlex_recruitment{
 	pixel_y = 32
 	},
@@ -3743,7 +3743,7 @@
 /obj/machinery/camera/autoname/directional/east{
 	network = list("nukie")
 	},
-/obj/structure/closet/crate/cardboard/mothic,
+/obj/structure/locker/crate/cardboard/mothic,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "Sj" = (
@@ -3968,7 +3968,7 @@
 /area/centcom/syndicate_mothership/control)
 "Ul" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_y = 32
 	},
@@ -4160,7 +4160,7 @@
 /area/centcom/syndicate_mothership/control)
 "WU" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/closet/syndicate/personal,
+/obj/structure/locker/syndicate/personal,
 /obj/machinery/camera/autoname/directional/west{
 	network = list("nukie")
 	},
@@ -4383,7 +4383,7 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "Zk" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "Zt" = (
@@ -4407,7 +4407,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "ZG" = (

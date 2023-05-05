@@ -1,7 +1,7 @@
 /datum/supply_pack/science
 	group = "Science"
 	access_view = ACCESS_RESEARCH
-	crate_type = /obj/structure/closet/crate/science
+	crate_type = /obj/structure/locker/crate/science
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -17,7 +17,7 @@
 					/obj/item/assembly/timer = 3,
 				)
 	crate_name = "plasma assembly crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/locker/crate/secure/plasma
 
 /datum/supply_pack/science/raw_flux_anomaly
 	name = "Raw Flux Anomaly"
@@ -27,7 +27,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/flux)
 	crate_name = "raw flux anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_hallucination_anomaly
 	name = "Raw Hallucination Anomaly"
@@ -37,7 +37,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/hallucination)
 	crate_name = "raw hallucination anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_grav_anomaly
 	name = "Raw Gravitational Anomaly"
@@ -47,7 +47,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/grav)
 	crate_name = "raw gravitational anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_vortex_anomaly
 	name = "Raw Vortex Anomaly"
@@ -57,7 +57,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/vortex)
 	crate_name = "raw vortex anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_bluespace_anomaly
 	name = "Raw Bluespace Anomaly"
@@ -67,7 +67,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/bluespace)
 	crate_name = "raw bluespace anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_pyro_anomaly
 	name = "Raw Pyro Anomaly"
@@ -77,7 +77,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_bioscrambler_anomaly
 	name = "Raw Bioscrambler Anomaly"
@@ -87,7 +87,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/bioscrambler)
 	crate_name = "raw bioscrambler anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/raw_dimensional_anomaly
 	name = "Raw Dimensional Anomaly"
@@ -97,7 +97,7 @@
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/dimensional)
 	crate_name = "raw dimensional anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 
 /datum/supply_pack/science/robotics
@@ -113,7 +113,7 @@
 					/obj/item/clothing/head/utility/hardhat/red = 2,
 					/obj/item/storage/medkit = 2)
 	crate_name = "robotics assembly crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/rped
 	name = "RPED crate"
@@ -132,7 +132,7 @@
 	access_view = ACCESS_TELEPORTER
 	contains = list(/obj/machinery/power/shieldwallgen = 4)
 	crate_name = "shield generators crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
@@ -142,7 +142,7 @@
 	access = ACCESS_RD
 	contains = list(/obj/item/transfer_valve = 2)
 	crate_name = "tank transfer valves crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science
 	dangerous = TRUE
 
 /datum/supply_pack/science/monkey_helmets
@@ -176,4 +176,4 @@
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/locker/crate/secure/science

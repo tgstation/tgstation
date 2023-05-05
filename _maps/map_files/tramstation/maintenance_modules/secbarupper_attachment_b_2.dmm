@@ -5,7 +5,7 @@
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/plating,
@@ -26,12 +26,12 @@
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/directional/north,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)

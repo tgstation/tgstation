@@ -43,7 +43,7 @@
 "bo" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/maintenance/three,
@@ -96,7 +96,7 @@
 /area/shuttle/abandoned/crew)
 "cq" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth_large,
@@ -185,7 +185,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -247,7 +247,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
 "in" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/enzyme{
 	layer = 5
 	},
@@ -451,7 +451,7 @@
 /area/shuttle/abandoned/engine)
 "ol" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
@@ -578,7 +578,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
 "uj" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
@@ -627,7 +627,7 @@
 /turf/open/floor/iron/textured,
 /area/shuttle/abandoned/cargo)
 "wp" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
@@ -647,7 +647,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
@@ -665,7 +665,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "yN" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/grimy,
@@ -767,7 +767,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "CG" = (
-/obj/structure/closet/firecloset/full{
+/obj/structure/locker/firecloset/full{
 	anchored = 1
 	},
 /obj/machinery/light/small/broken/directional/north,
@@ -1155,7 +1155,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -1169,7 +1169,7 @@
 /area/shuttle/abandoned/engine)
 "Ot" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/closet/secure_closet/personal{
+/obj/structure/locker/secure_closet/personal{
 	name = "Security Closet"
 	},
 /obj/item/gun/energy/laser/retro,

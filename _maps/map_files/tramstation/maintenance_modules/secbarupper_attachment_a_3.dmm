@@ -49,7 +49,7 @@
 /area/station/maintenance/department/security)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -84,7 +84,7 @@
 /area/station/maintenance/department/security)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/structure/window/spawner/directional/north,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/material_cheap,

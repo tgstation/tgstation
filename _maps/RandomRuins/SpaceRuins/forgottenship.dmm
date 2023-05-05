@@ -118,7 +118,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ay" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -298,7 +298,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bd" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/iron/fifty,
@@ -325,7 +325,7 @@
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/circuitboard/machine/circuit_imprinter/offstation,
@@ -357,7 +357,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
-/obj/structure/closet/crate/secure/engineering{
+/obj/structure/locker/crate/secure/engineering{
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -398,7 +398,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bp" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/mining_scanner,
@@ -424,7 +424,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bu" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/toy/nuke,
@@ -442,7 +442,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bw" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -481,7 +481,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bA" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
@@ -489,7 +489,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/stack/medical/bruise_pack{
 	amount = 12
 	},
@@ -604,7 +604,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bU" = (
 /obj/machinery/light/directional/south,
-/obj/structure/closet/crate/solarpanel_small,
+/obj/structure/locker/crate/solarpanel_small,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bV" = (
@@ -620,7 +620,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bY" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -658,7 +658,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ce" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -677,7 +677,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cg" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -764,7 +764,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cs" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/toy/sword,
@@ -790,7 +790,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cw" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/switchblade,
@@ -813,7 +813,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cz" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/mineral/titanium{
@@ -1059,7 +1059,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dd" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/language_manual/codespeak_manual/unlimited,
@@ -1069,7 +1069,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "df" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -1085,7 +1085,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dg" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -1112,7 +1112,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "di" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/disk/surgery/forgottenship,
@@ -1134,7 +1134,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/stack/ore/diamond{
@@ -1150,7 +1150,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "do" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/mineral/gold{
@@ -1163,7 +1163,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dp" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/stack/ore/plasma{
@@ -1181,14 +1181,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "jN" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "kY" = (
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	anchored = 1;
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
@@ -1200,7 +1200,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Ia" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/maintenance,
@@ -1208,7 +1208,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Il" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/melee/energy/sword/saber/red,
@@ -1216,7 +1216,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "WR" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/clothing/costume,

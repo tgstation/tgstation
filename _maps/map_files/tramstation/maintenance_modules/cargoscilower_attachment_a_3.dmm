@@ -49,7 +49,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "J" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,

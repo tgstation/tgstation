@@ -1,9 +1,9 @@
-/obj/structure/closet/secure_closet/quartermaster
+/obj/structure/locker/secure/quartermaster
 	name = "quartermaster's locker"
 	req_access = list(ACCESS_QM)
 	icon_state = "qm"
 
-/obj/structure/closet/secure_closet/quartermaster/PopulateContents()
+/obj/structure/locker/secure/quartermaster/PopulateContents()
 	..()
 	new /obj/item/storage/lockbox/medal/cargo(src)
 	new /obj/item/radio/headset/heads/qm(src)
@@ -16,7 +16,7 @@
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/storage/bag/garment/quartermaster(src)
 
-/obj/structure/closet/secure_closet/quartermaster/populate_contents_immediate()
+/obj/structure/locker/secure/quartermaster/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objective

@@ -31,7 +31,7 @@
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/directional/east,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
@@ -60,7 +60,7 @@
 /area/station/maintenance/port/central)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/plating,
@@ -98,7 +98,7 @@
 /area/station/maintenance/port/central)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/relic,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
@@ -113,7 +113,7 @@
 /area/station/maintenance/port/central)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/plating,
@@ -135,14 +135,14 @@
 /area/station/maintenance/port/central)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "Z" = (

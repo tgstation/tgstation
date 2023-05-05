@@ -13,7 +13,7 @@
 /area/station/maintenance/starboard/greater)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
+/obj/effect/spawner/random/clothing/wardrobe_locker_colored,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "r" = (

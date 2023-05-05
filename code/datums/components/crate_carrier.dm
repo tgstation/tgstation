@@ -20,7 +20,7 @@
 		src.carriable_cache = typecacheof(carriable_types)
 
 	else
-		var/static/default_cache = typecacheof(list(/obj/structure/closet/crate))
+		var/static/default_cache = typecacheof(list(/obj/structure/locker/crate))
 		src.carriable_cache = default_cache
 
 /datum/component/crate_carrier/Destroy(force, silent)
@@ -80,6 +80,6 @@
 
 /// Drops all the crates in our crate list.
 /datum/component/crate_carrier/proc/drop_all_crates(atom/drop_to)
-	for(var/obj/structure/closet/crate/held_crate as anything in crates_in_hand)
+	for(var/obj/structure/locker/crate/held_crate as anything in crates_in_hand)
 		held_crate.forceMove(drop_to)
 		LAZYREMOVE(crates_in_hand, held_crate)

@@ -820,7 +820,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "Aa" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "Bk" = (
@@ -924,7 +924,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "FM" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/closet/syndicate{
+/obj/structure/locker/syndicate{
 	desc = null
 	},
 /obj/item/clothing/under/rank/centcom/military{

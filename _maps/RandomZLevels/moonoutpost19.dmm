@@ -715,7 +715,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cY" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron{
 	amount = 12
 	},
@@ -776,7 +776,7 @@
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "dg" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -916,7 +916,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "dW" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	req_access = "150"
 	},
 /obj/item/ammo_box/magazine/m9mm,
@@ -1241,7 +1241,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "fm" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
@@ -1462,7 +1462,7 @@
 /area/awaymission/moonoutpost19/research)
 "ga" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1886,7 +1886,7 @@
 	},
 /area/awaymission/moonoutpost19/mines)
 "hn" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/clothing/gloves/latex,
 /obj/item/trash/chips,
 /obj/effect/decal/cleanable/dirt,
@@ -2053,7 +2053,7 @@
 	},
 /area/awaymission/moonoutpost19/mines)
 "if" = (
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 1;
@@ -2061,7 +2061,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ig" = (
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/white/side{
 	dir = 1;
@@ -2097,7 +2097,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iv" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -2139,7 +2139,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iO" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -2515,7 +2515,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kM" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/plate,
 /obj/item/food/badrecipe,
 /turf/open/floor/iron/cafeteria{
@@ -2732,7 +2732,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "me" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mh" = (
@@ -2798,7 +2798,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mA" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3027,7 +3027,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nR" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3125,7 +3125,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -3384,7 +3384,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "qM" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "rd";
 	name = "research director's locker";
 	req_access = "201"
@@ -3526,7 +3526,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "rH" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
@@ -3937,7 +3937,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "uM" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access = "201"
 	},
@@ -3955,7 +3955,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "uU" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -3973,7 +3973,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "vj" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/structure/fluff/paper,
 /turf/open/floor/pod/dark,
@@ -4028,7 +4028,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "vI" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/locker/mini_fridge,
 /obj/item/food/pizzaslice/margherita,
 /obj/item/food/pizzaslice/margherita{
 	pixel_x = 5;
@@ -4160,7 +4160,7 @@
 /area/awaymission/moonoutpost19/mines)
 "ws" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "science";
 	name = "scientist's locker";
 	req_access = "201"
@@ -4237,7 +4237,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "wQ" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = "201"
@@ -4260,7 +4260,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "wR" = (
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4322,7 +4322,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "wZ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/syndi_cakes,
 /obj/item/trash/sosjerky,
 /obj/effect/turf_decal/tile/bar,
@@ -4379,7 +4379,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "xp" = (
-/obj/structure/closet/secure_closet/freezer{
+/obj/structure/locker/secure_closet/freezer{
 	locked = 0;
 	name = "refrigerator";
 	req_access = "201"
@@ -4694,7 +4694,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "yB" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/machinery/light/small/directional/west,
 /obj/item/trash/cheesie,
 /obj/item/trash/can,
@@ -4834,7 +4834,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "zt" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	icon_state = "science";
 	locked = 0;
 	name = "scientist's locker";
@@ -5056,7 +5056,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "Ai" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/structure/alien/weeds,
 /obj/item/xenos_claw{
 	pixel_x = -5
@@ -5275,7 +5275,7 @@
 /area/awaymission/moonoutpost19/main)
 "Bw" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/item/clothing/gloves/color/yellow,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/clothing/under/rank/engineering/atmospheric_technician,
@@ -5493,7 +5493,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "CF" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 10
 	},
@@ -5885,7 +5885,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ES" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/bag/ore,
 /obj/structure/alien/weeds,
 /obj/item/mining_scanner,
@@ -5974,7 +5974,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "Fu" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/shovel,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -6195,7 +6195,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "GG" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	locked = 0;
 	name = "kitchen Cabinet";
 	req_access = "201"
@@ -6234,7 +6234,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "GQ" = (
-/obj/structure/closet/secure_closet/freezer{
+/obj/structure/locker/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
 	req_access = "201"
@@ -6660,7 +6660,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "JB" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access = "150"
 	},
@@ -7015,7 +7015,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "LX" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access = "201"
 	},
@@ -7783,7 +7783,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "RE" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/candy,
 /obj/item/trash/can,
 /obj/effect/turf_decal/tile/blue{
@@ -8197,7 +8197,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "UO" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	desc = "A mining cart. It's caked with old basalt and lunar debris.";
 	name = "mining car"
 	},
@@ -8489,7 +8489,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "WX" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/box/lights/mixed,
 /obj/item/poster/random_contraband,
 /turf/open/floor/plating,
@@ -8587,7 +8587,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "Xz" = (
-/obj/structure/closet/firecloset{
+/obj/structure/locker/firecloset{
 	name = "fire-proof closet"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8666,7 +8666,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "XV" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	desc = "A mining cart. It's caked with old basalt and lunar debris.";
 	name = "mining car"
 	},
@@ -8723,7 +8723,7 @@
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
 "YF" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
+/obj/structure/locker/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access = "201"
 	},
@@ -8766,7 +8766,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "YP" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	desc = "It's a storage unit for kitchen clothes and equipment.";
 	name = "Kitchen Crate"
 	},
@@ -8818,7 +8818,7 @@
 /area/awaymission/moonoutpost19/main)
 "Zh" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury,

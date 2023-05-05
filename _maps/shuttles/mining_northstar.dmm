@@ -95,7 +95,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/pickaxe/emergency,
 /obj/item/pickaxe/emergency,
 /obj/effect/turf_decal/siding/brown{

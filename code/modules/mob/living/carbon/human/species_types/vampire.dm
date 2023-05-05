@@ -48,7 +48,7 @@
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
-	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
+	if(istype(vampire.loc, /obj/structure/locker/crate/coffin))
 		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 		vampire.adjustToxLoss(-2 * seconds_per_tick)
 		vampire.adjustOxyLoss(-2 * seconds_per_tick)

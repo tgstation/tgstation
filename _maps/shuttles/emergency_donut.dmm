@@ -119,7 +119,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ax" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ay" = (
@@ -311,7 +311,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "emergency supplies crate"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -345,7 +345,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
@@ -370,7 +370,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

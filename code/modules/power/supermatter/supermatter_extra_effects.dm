@@ -144,9 +144,9 @@
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
 		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
-			if(istype(movable_atom, /obj/structure/closet))
-				var/obj/structure/closet/closet = movable_atom
-				closet.open(force = TRUE)
+			if(istype(movable_atom, /obj/structure/locker))
+				var/obj/structure/locker/locker = movable_atom
+				locker.open(force = TRUE)
 			continue
 		if(ismob(movable_atom))
 			var/mob/pulled_mob = movable_atom

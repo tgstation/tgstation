@@ -21,8 +21,8 @@
 	if(!isturf(landing_location))
 		landing_location = get_turf(landing_location)
 	if(!spawn_type)
-		spawn_type = /obj/structure/closet/supplypod/podspawn
-	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
+		spawn_type = /obj/structure/locker/supplypod/podspawn
+	var/obj/structure/locker/supplypod/podspawn/pod = new spawn_type(null, style)
 	if(paths_to_spawn && !islist(paths_to_spawn))
 		paths_to_spawn = list(paths_to_spawn)
 	for(var/atom/movable/path as anything in paths_to_spawn)

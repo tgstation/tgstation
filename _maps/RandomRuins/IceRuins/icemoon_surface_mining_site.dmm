@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered)
 "c" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/item/wrench,
 /obj/item/screwdriver,
 /obj/item/crowbar,
@@ -25,7 +25,7 @@
 /obj/item/storage/backpack/explorer,
 /obj/item/flashlight/lantern,
 /obj/item/storage/bag/ore,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
@@ -45,7 +45,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "k" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "l" = (

@@ -982,7 +982,7 @@
 /mob/proc/can_interact_with(atom/A, treat_mob_as_adjacent)
 	if(isAdminGhostAI(src))
 		return TRUE
-	//Return early. we do not need to check that we are on adjacent turfs (i.e we are inside a closet)
+	//Return early. we do not need to check that we are on adjacent turfs (i.e we are inside a locker)
 	if (treat_mob_as_adjacent && src == A.loc)
 		return TRUE
 	if (Adjacent(A))

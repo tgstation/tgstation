@@ -27,8 +27,8 @@
 	var/list/doors = list()
 	///List of weakrefs to nearby flashers
 	var/list/flashers = list()
-	///List of weakrefs to nearby closets
-	var/list/closets = list()
+	///List of weakrefs to nearby lockers
+	var/list/lockers = list()
 	///needed to send messages to sec radio
 	var/obj/item/radio/sec_radio
 
@@ -47,11 +47,11 @@
 			if(F.id == id)
 				flashers += WEAKREF(F)
 
-		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
+		for(var/obj/structure/locker/secure/brig/C in urange(20, src))
 			if(C.id == id)
-				closets += WEAKREF(C)
+				lockers += WEAKREF(C)
 
-	if(!length(doors) && !length(flashers) && length(closets))
+	if(!length(doors) && !length(flashers) && length(lockers))
 		atom_break()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
@@ -107,17 +107,17 @@
 			continue
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, close))
 
-	for(var/datum/weakref/closet_ref as anything in closets)
-		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
-		if(!closet)
-			closets -= closet_ref
+	for(var/datum/weakref/locker_ref as anything in lockers)
+		var/obj/structure/locker/secure/brig/locker = locker_ref.resolve()
+		if(!locker)
+			lockers -= locker_ref
 			continue
-		if(closet.broken)
+		if(locker.broken)
 			continue
-		if(closet.opened && !closet.close())
+		if(locker.opened && !locker.close())
 			continue
-		closet.locked = TRUE
-		closet.update_appearance()
+		locker.locked = TRUE
+		locker.update_appearance()
 	return 1
 
 /**
@@ -147,17 +147,17 @@
 			continue
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, open))
 
-	for(var/datum/weakref/closet_ref as anything in closets)
-		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
-		if(!closet)
-			closets -= closet_ref
+	for(var/datum/weakref/locker_ref as anything in lockers)
+		var/obj/structure/locker/secure/brig/locker = locker_ref.resolve()
+		if(!locker)
+			lockers -= locker_ref
 			continue
-		if(closet.broken)
+		if(locker.broken)
 			continue
-		if(closet.opened)
+		if(locker.opened)
 			continue
-		closet.locked = FALSE
-		closet.update_appearance()
+		locker.locked = FALSE
+		locker.update_appearance()
 
 	return 1
 

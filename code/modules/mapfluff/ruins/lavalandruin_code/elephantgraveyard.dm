@@ -123,7 +123,7 @@
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype
-/obj/structure/closet/crate/grave
+/obj/structure/locker/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/storage/crates.dmi'
@@ -143,7 +143,7 @@
 	var/first_open = FALSE
 	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
+/obj/structure/locker/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))
@@ -172,16 +172,16 @@
 			//empty grave
 			return
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
+/obj/structure/locker/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)
 		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
 	else
 		to_chat(user, span_notice("The grave has already been dug up."))
 
-/obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
+/obj/structure/locker/crate/grave/locker_update_overlays(list/new_overlays)
 	return
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
+/obj/structure/locker/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
@@ -215,14 +215,14 @@
 				return 1
 	return
 
-/obj/structure/closet/crate/grave/bust_open()
+/obj/structure/locker/crate/grave/bust_open()
 	..()
 	opened = TRUE
 	update_appearance()
 	dump_contents()
 	return
 
-/obj/structure/closet/crate/grave/filled/lead_researcher
+/obj/structure/locker/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
 	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
 	icon = 'icons/obj/storage/crates.dmi'
@@ -230,7 +230,7 @@
 	lead_tomb = TRUE
 	first_open = TRUE
 
-/obj/structure/closet/crate/grave/filled/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
+/obj/structure/locker/crate/grave/filled/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)

@@ -127,7 +127,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/crashedship/fore)
 "fI" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/locker/mini_fridge,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/crashedship/fore)
@@ -419,7 +419,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/crashedship/aft)
 "qI" = (
@@ -451,7 +451,7 @@
 /area/space)
 "sr" = (
 /obj/effect/spawner/random/maintenance/four,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/electronics/airlock,
 /turf/open/floor/plating/airless,
@@ -568,7 +568,7 @@
 /area/ruin/space/has_grav/crashedship/midship)
 "xy" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate/large,
+/obj/structure/locker/crate/large,
 /obj/structure/canister_frame/machine/finished_canister_frame,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -652,7 +652,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/crashedship/aft)
 "zW" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/dice/d6,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
@@ -1158,7 +1158,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/crashedship/aft)
 "Pp" = (

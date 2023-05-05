@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//but the biggest reason is that the chef requires produce to cook and do their job, and if they are using this system they
 	//already got let down by the botanists. So to open a new chance for cargo to also screw them over any more than is necessary is bad.
 	if(SSshuttle.chef_groceries.len)
-		var/obj/structure/closet/crate/freezer/grocery_crate = new(pick_n_take(empty_turfs))
+		var/obj/structure/locker/crate/freezer/grocery_crate = new(pick_n_take(empty_turfs))
 		grocery_crate.name = "kitchen produce freezer"
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		var/buyer = buying_account.account_holder
 
 		if(buying_account_orders.len > GOODY_FREE_SHIPPING_MAX) // no free shipping, send a crate
-			var/obj/structure/closet/crate/secure/owned/our_crate = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs))
+			var/obj/structure/locker/crate/secure/owned/our_crate = new /obj/structure/locker/crate/secure/owned(pick_n_take(empty_turfs))
 			our_crate.buyer_account = buying_account
 			our_crate.name = "goody crate - purchased by [buyer]"
 			miscboxes[buyer] = our_crate
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += shuttle_floor
 
-	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+	new /obj/structure/locker/crate/mail/economy(pick(empty_turfs))
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

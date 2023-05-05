@@ -1,14 +1,14 @@
-/obj/structure/closet/secure_closet
+/obj/structure/locker/secure
 	name = "secure locker"
 	desc = "It's a card-locked storage unit."
 	locked = TRUE
 	icon_state = "secure"
 	max_integrity = 250
-	armor_type = /datum/armor/closet_secure_closet
+	armor_type = /datum/armor/secure_locker
 	secure = TRUE
 	damage_deflection = 20
 
-/datum/armor/closet_secure_closet
+/datum/armor/secure_locker
 	melee = 30
 	bullet = 50
 	laser = 50
@@ -16,11 +16,11 @@
 	fire = 80
 	acid = 80
 
-/obj/structure/closet/secure_closet/Initialize(mapload)
+/obj/structure/locker/secure/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
-/obj/structure/closet/secure_closet/proc/grey_tide(datum/source, list/grey_tide_areas)
+/obj/structure/locker/secure/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
 	if(!is_station_level(z))

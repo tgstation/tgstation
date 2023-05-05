@@ -263,7 +263,7 @@
 		return
 	if(!isturf(loc) && !allow_movement_on_non_turfs)
 		return
-	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
+	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a locker, gentics machine, etc.
 		return TRUE
 
 	turns_since_move++

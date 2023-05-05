@@ -29,7 +29,7 @@
 					/obj/item/clothing/head/collectable/petehat,
 				)
 	crate_name = "collectable hats crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/formalwear
 	name = "Formalwear Crate"
@@ -60,7 +60,7 @@
 					/obj/item/lipstick/random,
 				)
 	crate_name = "formalwear crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
@@ -69,7 +69,7 @@
 	contraband = TRUE
 	contains = list(/obj/item/firing_pin/clown)
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/lasertag
 	name = "Laser Tag Crate"
@@ -95,7 +95,7 @@
 					/obj/item/toy/crayon/white,
 				)
 	crate_name = "knucklebones game crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
@@ -111,7 +111,7 @@
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
 	contains = list(/obj/item/clothing/under/costume/mech_suit = 4)
 	crate_name = "mech pilot's suit crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/costume_original
 	name = "Original Costume Crate"
@@ -132,7 +132,7 @@
 					/obj/item/clothing/suit/hooded/bee_costume,
 				)
 	crate_name = "original costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/costume
 	name = "Standard Costume Crate"
@@ -156,7 +156,7 @@
 					/obj/item/storage/backpack/mime,
 				)
 	crate_name = "standard costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
@@ -167,9 +167,9 @@
 	num_contained = 5
 	contains = list()
 	crate_name = "toy crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/toys/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/costumes_toys/randomised/toys/fill(obj/structure/locker/crate/C)
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
@@ -189,9 +189,9 @@
 					/obj/item/clothing/head/wizard/fake,
 				)
 	crate_name = "wizard costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/locker/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
@@ -218,7 +218,7 @@
 		/obj/item/clothing/under/trek/medsci/voy,
 		/obj/item/clothing/under/trek/medsci/ent,
 	)
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden
 
 /datum/supply_pack/costumes_toys/randomised/tcg
 	name = "Big-Ass Booster Pack Pack"
@@ -227,7 +227,7 @@
 	contains = list()
 	crate_name = "booster pack pack"
 
-/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/locker/crate/C)
 	var/cardpacktype
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
@@ -239,7 +239,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list()
 
-/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/crate)
+/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/locker/crate/crate)
 	for(var/i in 1 to rand(1,2))
 		new /obj/item/storage/box/stickers(crate)
 	if(prob(30)) // a pair of googly eyes because funny
@@ -255,4 +255,4 @@
 		/obj/item/clothing/glasses/blindfold,
 	)
 	crate_name = "corgi pinata kit"
-	crate_type = /obj/structure/closet/crate/wooden
+	crate_type = /obj/structure/locker/crate/wooden

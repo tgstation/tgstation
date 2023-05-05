@@ -99,7 +99,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
 "o" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/plastitanium,

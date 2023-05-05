@@ -1,5 +1,5 @@
 
-/obj/structure/closet/body_bag
+/obj/structure/locker/body_bag
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
@@ -19,10 +19,10 @@
 	has_closed_overlay = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
-	var/tagged = FALSE // so closet code knows to put the tag overlay back
+	var/tagged = FALSE // so locker code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
-/obj/structure/closet/body_bag/Initialize(mapload)
+/obj/structure/locker/body_bag/Initialize(mapload)
 	. = ..()
 	var/static/list/tool_behaviors = list(
 		TOOL_WIRECUTTER = list(
@@ -36,13 +36,13 @@
 	)
 	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag")
 
-/obj/structure/closet/body_bag/Destroy()
+/obj/structure/locker/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
 	if (foldedbag_instance && !foldedbag_instance.loc)
 		QDEL_NULL(foldedbag_instance)
 	return ..()
 
-/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
+/obj/structure/locker/body_bag/attackby(obj/item/interact_tool, mob/user, params)
 	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
 		if(!user.can_write(interact_tool))
 			return
@@ -60,22 +60,22 @@
 		handle_tag()
 
 ///Handles renaming of the bodybag's examine tag.
-/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+/obj/structure/locker/body_bag/proc/handle_tag(tag_name)
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 	tagged = !!tag_name
 	update_appearance()
 
-/obj/structure/closet/body_bag/update_overlays()
+/obj/structure/locker/body_bag/update_overlays()
 	. = ..()
 	if(tagged)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/close(mob/living/user)
+/obj/structure/locker/body_bag/close(mob/living/user)
 	. = ..()
 	if(.)
 		set_density(FALSE)
 
-/obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
+/obj/structure/locker/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -91,7 +91,7 @@
 		  * Arguments:
 		  * * the_folder - aka user
 		  */
-/obj/structure/closet/body_bag/proc/attempt_fold(mob/living/carbon/human/the_folder)
+/obj/structure/locker/body_bag/proc/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
 	if(!istype(the_folder))
 		return
@@ -111,12 +111,12 @@
 		* Arguments:
 		* * the_folder - aka user
 		*/
-/obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
+/obj/structure/locker/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[the_folder] folds up [src]."))
 	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
 	the_folder.put_in_hands(folding_bodybag)
 
-/obj/structure/closet/body_bag/bluespace
+/obj/structure/locker/body_bag/bluespace
 	name = "bluespace body bag"
 	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
@@ -125,7 +125,7 @@
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
 
-/obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
+/obj/structure/locker/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
 	//copypaste zone, we do not want the content check so we don't want inheritance
 	if(!istype(the_folder))
@@ -147,7 +147,7 @@
 		return
 	return TRUE
 
-/obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
+/obj/structure/locker/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[the_folder] folds up [src]."))
 	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path
 	var/max_weight_of_contents = initial(folding_bodybag.w_class)
@@ -173,7 +173,7 @@
 
 /// Environmental bags. They protect against bad weather.
 
-/obj/structure/closet/body_bag/environmental
+/obj/structure/locker/body_bag/environmental
 	name = "environmental protection bag"
 	desc = "An insulated, reinforced bag designed to protect against exoplanetary storms and other environmental factors."
 	icon = 'icons/obj/bodybag.dmi'
@@ -187,35 +187,35 @@
 	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
-/obj/structure/closet/body_bag/environmental/Initialize(mapload)
+/obj/structure/locker/body_bag/environmental/Initialize(mapload)
 	. = ..()
 	for(var/trait in weather_protection)
 		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 	refresh_air()
 
-/obj/structure/closet/body_bag/environmental/Destroy()
+/obj/structure/locker/body_bag/environmental/Destroy()
 	if(air_contents)
 		QDEL_NULL(air_contents)
 	return ..()
 
-/obj/structure/closet/body_bag/environmental/return_air()
+/obj/structure/locker/body_bag/environmental/return_air()
 	refresh_air()
 	return air_contents
 
-/obj/structure/closet/body_bag/environmental/remove_air(amount)
+/obj/structure/locker/body_bag/environmental/remove_air(amount)
 	refresh_air()
 	return air_contents.remove(amount)
 
-/obj/structure/closet/body_bag/environmental/return_analyzable_air()
+/obj/structure/locker/body_bag/environmental/return_analyzable_air()
 	refresh_air()
 	return air_contents
 
-/obj/structure/closet/body_bag/environmental/togglelock(mob/living/user, silent)
+/obj/structure/locker/body_bag/environmental/togglelock(mob/living/user, silent)
 	. = ..()
 	for(var/mob/living/target in contents)
 		to_chat(target, span_warning("You hear a faint hiss, and a white mist fills your vision..."))
 
-/obj/structure/closet/body_bag/environmental/proc/refresh_air()
+/obj/structure/locker/body_bag/environmental/proc/refresh_air()
 	air_contents = null
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C
@@ -224,7 +224,7 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
-/obj/structure/closet/body_bag/environmental/nanotrasen
+/obj/structure/locker/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
 	desc = "A heavily reinforced and insulated bag, capable of fully isolating its contents from external factors."
 	icon = 'icons/obj/bodybag.dmi'
@@ -236,7 +236,7 @@
 
 /// Securable enviro. bags
 
-/obj/structure/closet/body_bag/environmental/prisoner
+/obj/structure/locker/body_bag/environmental/prisoner
 	name = "prisoner transport bag"
 	desc = "Intended for transport of prisoners through hazardous environments, this environmental protection bag comes with straps to keep an occupant secure."
 	icon = 'icons/obj/bodybag.dmi'
@@ -250,19 +250,19 @@
 	/// The sound that plays when the bag is done sinching.
 	var/sinch_sound = 'sound/items/equip/toolbelt_equip.ogg'
 
-/obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
+/obj/structure/locker/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
 	return ..()
 
-/obj/structure/closet/body_bag/environmental/prisoner/update_icon()
+/obj/structure/locker/body_bag/environmental/prisoner/update_icon()
 	. = ..()
 	if(sinched)
 		icon_state = initial(icon_state) + "_sinched"
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/closet/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
+/obj/structure/locker/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
 	if(sinched && !force)
 		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
 		return TRUE
@@ -278,7 +278,7 @@
 	after_open(user, force)
 	return TRUE
 
-/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
+/obj/structure/locker/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
 	/// copy-pasted with changes because flavor text as well as some other misc stuff
 	if(opened)
 		return
@@ -309,18 +309,18 @@
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 
-/obj/structure/closet/body_bag/environmental/prisoner/bust_open()
+/obj/structure/locker/body_bag/environmental/prisoner/bust_open()
 	sinched = FALSE
 	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
 	open()
 
-/obj/structure/closet/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
+/obj/structure/locker/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
 	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
+/obj/structure/locker/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
 	if(opened)
 		to_chat(user, span_warning("You can't close the buckles while [src] is unzipped!"))
 		return
@@ -344,7 +344,7 @@
 	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
 	update_appearance()
 
-/obj/structure/closet/body_bag/environmental/prisoner/syndicate
+/obj/structure/locker/body_bag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
 	icon = 'icons/obj/bodybag.dmi'
@@ -356,7 +356,7 @@
 	breakout_time = 8 MINUTES
 	sinch_time = 20 SECONDS
 
-/obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
+/obj/structure/locker/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
 	air_contents = null
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C
@@ -365,7 +365,7 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
-/obj/structure/closet/body_bag/environmental/hardlight
+/obj/structure/locker/body_bag/environmental/hardlight
 	name = "hardlight bodybag"
 	desc = "A hardlight bag for storing bodies. Resistant to space."
 	icon_state = "holobag_med"
@@ -373,11 +373,11 @@
 	foldedbag_path = null
 	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 
-/obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/locker/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/closet/body_bag/environmental/prisoner/hardlight
+/obj/structure/locker/body_bag/environmental/prisoner/hardlight
 	name = "hardlight prisoner bodybag"
 	desc = "A hardlight bag for storing bodies. Resistant to space, can be sinched to prevent escape."
 	icon_state = "holobag_sec"
@@ -385,6 +385,6 @@
 	foldedbag_path = null
 	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 
-/obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/locker/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)

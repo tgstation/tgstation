@@ -48,10 +48,10 @@
 	jump_to_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1)
 	view_range = 4.5
 
-/obj/structure/closet/crate/eva
+/obj/structure/locker/crate/eva
 	name = "EVA crate"
 
-/obj/structure/closet/crate/eva/PopulateContents()
+/obj/structure/locker/crate/eva/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/space/eva(src)

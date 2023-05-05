@@ -12,7 +12,7 @@
 "bn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -285,7 +285,7 @@
 /area/station/asteroid)
 "yB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/maintenance/three,
 /obj/item/relic,
@@ -368,7 +368,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
@@ -408,7 +408,7 @@
 "Hs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
@@ -579,7 +579,7 @@
 /area/station/maintenance/department/cargo)
 "ZR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,

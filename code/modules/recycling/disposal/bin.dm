@@ -174,7 +174,7 @@
 				return
 		else
 			return
-	if(!isturf(user.loc)) //No magically doing it from inside closets
+	if(!isturf(user.loc)) //No magically doing it from inside lockers
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return

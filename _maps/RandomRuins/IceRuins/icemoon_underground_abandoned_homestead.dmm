@@ -105,7 +105,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "uH" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -283,7 +283,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered/shuttle)
 "Of" = (
-/obj/structure/closet/cabinet{
+/obj/structure/locker/cabinet{
 	name = "Pantry"
 	},
 /obj/item/food/grown/potato,

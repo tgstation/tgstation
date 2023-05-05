@@ -55,7 +55,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ap" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
@@ -147,7 +147,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -581,7 +581,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bO" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "emergency supplies crate"
 	},
 /obj/item/storage/toolbox/emergency,
@@ -601,7 +601,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bP" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/o2{
 	pixel_x = 3;
@@ -726,7 +726,7 @@
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	name = "lifejackets"
 	},
 /obj/machinery/light/directional/east,

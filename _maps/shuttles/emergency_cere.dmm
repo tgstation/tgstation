@@ -299,7 +299,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -344,7 +344,7 @@
 /area/shuttle/escape)
 "bD" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
@@ -360,7 +360,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bF" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -422,7 +422,7 @@
 /area/shuttle/escape)
 "bP" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -551,7 +551,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cn" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -634,7 +634,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cE" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/a_minus,
@@ -740,7 +740,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "cT" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -776,7 +776,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "cZ" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},

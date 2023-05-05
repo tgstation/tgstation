@@ -38,12 +38,12 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "w" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "A" = (
 /obj/structure/sign/warning/explosives/alt/directional/east,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},

@@ -105,7 +105,7 @@
 	SIGNAL_HANDLER
 	if(!user || !user.client)//Don't allow jet self using
 		return
-	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
+	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/locker
 		return
 	if(!(user.movement_type & FLOATING) || user.buckled)//You don't want use jet in gravity or while buckled.
 		return

@@ -153,7 +153,7 @@
 /turf/closed/wall,
 /area/station/hallway/primary/starboard)
 "adD" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -724,7 +724,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "apq" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -756,7 +756,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "apB" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "apG" = (
@@ -835,8 +835,8 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "aqu" = (
-/obj/structure/closet/wardrobe/green,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/green,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -865,7 +865,7 @@
 /area/station/maintenance/starboard/greater)
 "arg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -1090,7 +1090,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "ava" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -1201,7 +1201,7 @@
 /area/station/hallway/secondary/entry)
 "axe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/locker/secure_closet/brig{
 	id = "Cell 3";
 	name = "Cell 3 locker"
 	},
@@ -1509,7 +1509,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "aDm" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
@@ -1669,7 +1669,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "aGD" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /obj/machinery/door/window/left/directional/east{
 	name = "Coffin Storage";
 	req_access = list("chapel_office")
@@ -2194,7 +2194,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aPk" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /turf/open/floor/plating,
@@ -2441,7 +2441,7 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai)
 "aUj" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/package_wrap,
@@ -2586,7 +2586,7 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "aWB" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/clothing/head/costume/festive,
 /obj/effect/spawner/random/maintenance/two,
 /obj/item/clothing/gloves/color/fyellow,
@@ -2860,7 +2860,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "baE" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -2928,7 +2928,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bbT" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/cable_coil,
 /obj/item/crowbar,
 /obj/item/screwdriver{
@@ -3015,7 +3015,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 10
 	},
@@ -3334,14 +3334,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "bje" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "bjs" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1;
 	can_be_unanchored = 1;
 	name = "Cold protection gear"
@@ -3605,7 +3605,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "bnw" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -3654,7 +3654,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "bnE" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/wrench,
 /obj/item/reagent_containers/cup/watering_can,
@@ -3718,7 +3718,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "bod" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
 "bor" = (
@@ -4078,7 +4078,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/closet/bombcloset,
+/obj/structure/locker/bombcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "buw" = (
@@ -4094,7 +4094,7 @@
 "buG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/closet/crate/secure{
+/obj/structure/locker/crate/secure{
 	desc = "A secure crate containing various materials for building a customised test-site.";
 	name = "Test Site Materials Crate";
 	req_access = list("ordnance")
@@ -4117,7 +4117,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "buL" = (
-/obj/structure/closet/secure_closet/exile,
+/obj/structure/locker/secure_closet/exile,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -4920,7 +4920,7 @@
 /turf/closed/wall,
 /area/station/medical/office)
 "bNf" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/locker/secure_closet/bar,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood,
@@ -4977,7 +4977,7 @@
 /area/station/hallway/primary/port)
 "bNU" = (
 /obj/effect/spawner/random/maintenance,
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -5247,7 +5247,7 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "bUm" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/machinery/light/small/directional/east,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -5707,7 +5707,7 @@
 /area/station/commons/dorms)
 "cfv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/structure/disposalpipe/segment,
@@ -5742,7 +5742,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "cgJ" = (
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/kitchen_coldroom,
@@ -6080,7 +6080,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "cnK" = (
@@ -6210,7 +6210,7 @@
 /area/station/command/corporate_showroom)
 "cqp" = (
 /obj/machinery/airalarm/directional/north,
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /obj/item/clothing/under/suit/tan,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
@@ -6421,7 +6421,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -6584,7 +6584,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "cwb" = (
-/obj/structure/closet/crate/wooden/toy,
+/obj/structure/locker/crate/wooden/toy,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -6660,7 +6660,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/stack/cable_coil,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/camera/directional/north{
@@ -6788,7 +6788,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "czP" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/poster/random_contraband,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -7178,7 +7178,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "cIW" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -7582,7 +7582,7 @@
 /obj/item/mod/core/standard{
 	pixel_y = 4
 	},
-/obj/structure/closet/crate/science{
+/obj/structure/locker/crate/science{
 	name = "MOD core crate"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7784,7 +7784,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "cUP" = (
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -8285,7 +8285,7 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
 "dfh" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "dfj" = (
@@ -8791,7 +8791,7 @@
 /area/station/maintenance/port/aft)
 "doD" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/item/clothing/glasses/meson/engine,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
@@ -8908,7 +8908,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "dqx" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "dqI" = (
@@ -8989,7 +8989,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "dsk" = (
-/obj/structure/closet/secure_closet/warden,
+/obj/structure/locker/secure_closet/warden,
 /obj/item/gun/energy/laser,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
@@ -9332,7 +9332,7 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "dAc" = (
-/obj/structure/closet/crate/trashcart/laundry,
+/obj/structure/locker/crate/trashcart/laundry,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
@@ -9608,7 +9608,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "dFz" = (
@@ -9853,7 +9853,7 @@
 /turf/closed/wall,
 /area/station/maintenance/aft/lesser)
 "dKE" = (
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/locker/secure_closet/atmospherics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -9874,7 +9874,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "dKL" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/tile/yellow{
@@ -10112,7 +10112,7 @@
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "dOQ" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/effect/turf_decal/delivery,
 /obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/iron,
@@ -10309,7 +10309,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/safe)
 "dSG" = (
-/obj/structure/closet/wardrobe/miner,
+/obj/structure/locker/wardrobe/miner,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -10365,7 +10365,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "dTv" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/clothing/under/misc/assistantformal,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
@@ -10581,7 +10581,7 @@
 /turf/open/floor/plating,
 /area/station/security/prison)
 "dXA" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/spawner/random/contraband/prison,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/spawner/random/trash/garbage,
@@ -11059,7 +11059,7 @@
 /area/station/engineering/atmos/pumproom)
 "eft" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -11496,7 +11496,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/item/clothing/under/misc/assistantformal,
 /obj/effect/landmark/start/hangover,
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "eme" = (
@@ -11993,7 +11993,7 @@
 /area/station/service/kitchen)
 "euc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/l3closet/janitor,
+/obj/structure/locker/l3closet/janitor,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -12242,7 +12242,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "eyl" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/structure/locker/crate/freezer/surplus_limbs,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -12277,7 +12277,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "eze" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -12324,7 +12324,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "eBn" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -12818,8 +12818,8 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/command)
 "eMG" = (
-/obj/structure/closet/lasertag/blue,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/lasertag/blue,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -13053,7 +13053,7 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
 "eRx" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/light/directional/east,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
@@ -13252,7 +13252,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "eVi" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "eVm" = (
@@ -13825,7 +13825,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "fhv" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/extinguisher,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
@@ -13979,7 +13979,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "fjd" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "fje" = (
@@ -14389,7 +14389,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "fqC" = (
-/obj/structure/closet/secure_closet/engineering_chief,
+/obj/structure/locker/secure_closet/engineering_chief,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /obj/item/storage/secure/briefcase,
@@ -14520,7 +14520,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "ftK" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -14980,7 +14980,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "fFi" = (
@@ -15907,7 +15907,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "fVY" = (
-/obj/structure/closet/secure_closet/chemical,
+/obj/structure/locker/secure_closet/chemical,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "fWm" = (
@@ -16226,7 +16226,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gbG" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/mapping_helpers/broken_floor,
@@ -16545,13 +16545,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "giT" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "gja" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/spawner/random/bureaucracy/briefcase,
 /obj/effect/turf_decal/tile/brown/opposingcorners{
 	dir = 1
@@ -16660,7 +16660,7 @@
 /area/station/maintenance/port/fore)
 "gkU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "gle" = (
@@ -16918,7 +16918,7 @@
 /area/station/cargo/storage)
 "goW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
@@ -17077,7 +17077,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/wrench,
@@ -17175,7 +17175,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "gsP" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/locker/secure_closet/freezer/meat,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -17556,7 +17556,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gAx" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/locker/secure_closet/hydroponics,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -17624,7 +17624,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "gBY" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
@@ -17854,7 +17854,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "gGh" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "gGo" = (
@@ -17962,7 +17962,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "gIK" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/locker/bombcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "gIM" = (
@@ -18306,7 +18306,7 @@
 /area/station/medical/treatment_center)
 "gNW" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -18512,7 +18512,7 @@
 "gSF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/memeorgans,
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "gSH" = (
@@ -18926,7 +18926,7 @@
 /area/station/medical/treatment_center)
 "gZG" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/locker/secure_closet/engineering_electrical,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -20170,7 +20170,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hxt" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/machinery/light/small/directional/north,
 /obj/item/clothing/under/misc/assistantformal,
 /obj/structure/sign/map/left{
@@ -20309,7 +20309,7 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/storage/eva)
 "hyT" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -20599,7 +20599,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "hEX" = (
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/locker/secure_closet/atmospherics,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "hFz" = (
@@ -20667,7 +20667,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "hHd" = (
@@ -20696,7 +20696,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "hHR" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
@@ -20772,7 +20772,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "hJH" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "hJI" = (
@@ -20803,7 +20803,7 @@
 /area/station/engineering/transit_tube)
 "hKp" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/poster/random_contraband,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -21322,8 +21322,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "hSG" = (
-/obj/structure/closet/lasertag/red,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/lasertag/red,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -21403,7 +21403,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "hUd" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
@@ -21646,7 +21646,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "hXJ" = (
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -22381,7 +22381,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "ilq" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
@@ -22394,8 +22394,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "ilx" = (
-/obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/emcloset,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -22429,7 +22429,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "ilQ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/knife/kitchen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -22515,7 +22515,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/locker/secure_closet/atmospherics,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "inH" = (
@@ -23105,7 +23105,7 @@
 "ivC" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ivM" = (
@@ -23242,7 +23242,7 @@
 /area/station/hallway/primary/fore)
 "ixT" = (
 /obj/effect/turf_decal/bot_white/left,
-/obj/structure/closet/crate/silvercrate,
+/obj/structure/locker/crate/silvercrate,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
@@ -23474,7 +23474,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "iBf" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/stack/sheet/iron{
 	amount = 34
 	},
@@ -23716,8 +23716,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iGt" = (
-/obj/structure/closet/wardrobe/white,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/white,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -23914,7 +23914,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "iJB" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -24277,7 +24277,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "iOf" = (
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/locker/crate/freezer/blood,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/camera/directional/north{
 	c_tag = "Medbay Cold Storage";
@@ -24312,7 +24312,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "iOJ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "iOS" = (
@@ -24383,7 +24383,7 @@
 /area/station/medical/office)
 "iPX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/locker/secure_closet/brig{
 	id = "Cell 2";
 	name = "Cell 2 locker"
 	},
@@ -24807,8 +24807,8 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "iVO" = (
-/obj/structure/closet/masks,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/masks,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -25118,7 +25118,7 @@
 /area/station/maintenance/starboard/fore)
 "jcI" = (
 /obj/machinery/status_display/evac/directional/west,
-/obj/structure/closet/secure_closet/psychology,
+/obj/structure/locker/secure_closet/psychology,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -25209,7 +25209,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "jet" = (
-/obj/structure/closet/secure_closet/chief_medical,
+/obj/structure/locker/secure_closet/chief_medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -25474,7 +25474,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jhD" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -25739,7 +25739,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "jmR" = (
-/obj/structure/closet/secure_closet/security/cargo,
+/obj/structure/locker/secure_closet/security/cargo,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
@@ -25875,7 +25875,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "jpG" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/locker/secure_closet/miner,
 /obj/machinery/camera/directional/north{
 	c_tag = "Mining Dock"
 	},
@@ -26149,7 +26149,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "juj" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/locker/secure_closet/brig,
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "juC" = (
@@ -26830,8 +26830,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
 "jFO" = (
-/obj/structure/closet/firecloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/firecloset,
+/obj/effect/landmark/start/hangover/locker,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
 "jGa" = (
@@ -27188,7 +27188,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "jMx" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
@@ -27374,7 +27374,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "jPo" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "jPE" = (
@@ -27491,7 +27491,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "jRz" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -27621,7 +27621,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Atmospherics - Hypertorus Fusion Reactor Chamber Aft"
 	},
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
@@ -27849,7 +27849,7 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "jXz" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
@@ -27868,7 +27868,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "jXM" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/locker/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -27876,7 +27876,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "jXQ" = (
-/obj/structure/closet/secure_closet/medical2,
+/obj/structure/locker/secure_closet/medical2,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
@@ -28036,7 +28036,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos)
 "kaU" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "evidence closet 3"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -28094,7 +28094,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/closet/crate/solarpanel_small,
+/obj/structure/locker/crate/solarpanel_small,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "kcg" = (
@@ -29099,7 +29099,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kvN" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /obj/structure/window{
 	dir = 4
 	},
@@ -29265,7 +29265,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "kyR" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -29428,7 +29428,7 @@
 /area/station/maintenance/disposal/incinerator)
 "kBS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "kBT" = (
@@ -29761,7 +29761,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kKq" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -29898,7 +29898,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
-/obj/effect/spawner/random/structure/closet_empty,
+/obj/effect/spawner/random/structure/locker_empty,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -30403,11 +30403,11 @@
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden)
 "kUX" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/sign/warning/pods{
 	pixel_y = 30
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -30599,7 +30599,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "kXU" = (
-/obj/structure/closet/crate/necropolis{
+/obj/structure/locker/crate/necropolis{
 	desc = "Presumably placed here by top men.";
 	name = "\improper Ark of the Covenant"
 	},
@@ -30694,7 +30694,7 @@
 /area/station/commons/fitness/recreation)
 "kZs" = (
 /obj/structure/sign/warning/secure_area/directional/north,
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/effect/turf_decal/delivery,
 /obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/iron,
@@ -30930,7 +30930,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "ldK" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -31290,7 +31290,7 @@
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "llh" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -31316,7 +31316,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "lls" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -31448,7 +31448,7 @@
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "lnP" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "lnR" = (
@@ -31719,7 +31719,7 @@
 /area/station/engineering/atmos)
 "lsu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink"
@@ -32029,7 +32029,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "lyf" = (
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
@@ -32239,8 +32239,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "lDA" = (
-/obj/structure/closet/wardrobe/black,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/black,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -32639,7 +32639,7 @@
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
 "lNb" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
@@ -32786,8 +32786,8 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "lPp" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/grey,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -32902,7 +32902,7 @@
 /area/station/command/bridge)
 "lQk" = (
 /obj/item/pushbroom,
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "janitorial supplies"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -32924,7 +32924,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
 "lQC" = (
-/obj/structure/closet/l3closet/security,
+/obj/structure/locker/l3closet/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -33317,7 +33317,7 @@
 /area/station/medical/pharmacy)
 "lXC" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/structure/locker/secure_closet/freezer/kitchen/maintenance,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -34016,7 +34016,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "mmR" = (
@@ -34196,7 +34196,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mpp" = (
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -34265,7 +34265,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "mqQ" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/locker/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -34595,7 +34595,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mxO" = (
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/structure/locker/secure_closet/quartermaster,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north,
 /turf/open/floor/wood,
@@ -35028,12 +35028,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "mEx" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "mEL" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mES" = (
@@ -35567,7 +35567,7 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/office)
 "mNj" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
@@ -35946,7 +35946,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "mUD" = (
-/obj/structure/closet/secure_closet/bar{
+/obj/structure/locker/secure_closet/bar{
 	pixel_x = -3;
 	pixel_y = -1
 	},
@@ -36101,7 +36101,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/space_hut)
 "mWW" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/stack/sheet/glass{
 	amount = 12
 	},
@@ -36149,7 +36149,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mXk" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -36452,7 +36452,7 @@
 /area/station/engineering/main)
 "ncG" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ndk" = (
@@ -36697,7 +36697,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "niw" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "niG" = (
@@ -37191,7 +37191,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "nqD" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "evidence closet 2"
 	},
 /obj/machinery/airalarm/directional/west,
@@ -37534,8 +37534,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "nwa" = (
-/obj/structure/closet/wardrobe/pjs,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/pjs,
+/obj/effect/landmark/start/hangover/locker,
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -37626,7 +37626,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "nwW" = (
-/obj/structure/closet/secure_closet/security/engine,
+/obj/structure/locker/secure_closet/security/engine,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/requests_console/directional/south{
 	department = "Security";
@@ -37876,7 +37876,7 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/vending_refill/cigarette,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38225,7 +38225,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nJu" = (
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -38260,7 +38260,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nJL" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/plating,
@@ -38674,7 +38674,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "nRI" = (
@@ -38803,7 +38803,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "nUF" = (
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
@@ -39190,7 +39190,7 @@
 	amount = 30
 	},
 /obj/item/gps,
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "obb" = (
@@ -39293,7 +39293,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "oca" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -39853,7 +39853,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "ooz" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/camera/directional/west{
 	c_tag = "Xenobiology Lab - Airlock";
 	network = list("ss13","rd","xeno")
@@ -39876,7 +39876,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ooP" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -40203,7 +40203,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "otM" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -40211,7 +40211,7 @@
 /turf/open/floor/plating,
 /area/station/security/prison/work)
 "ouc" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/item/stack/cable_coil{
@@ -40346,7 +40346,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "ove" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "ovf" = (
@@ -40370,7 +40370,7 @@
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "ovK" = (
-/obj/structure/closet/secure_closet/hop,
+/obj/structure/locker/secure_closet/hop,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "ovL" = (
@@ -40806,7 +40806,7 @@
 "oEO" = (
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "oEP" = (
@@ -41067,7 +41067,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oJu" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "oJD" = (
@@ -41507,7 +41507,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "oSc" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/locker/toolcloset,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -41732,7 +41732,7 @@
 "oXJ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -41756,7 +41756,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "oXM" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/locker/secure_closet/hydroponics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -42010,7 +42010,7 @@
 "pcH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "pcM" = (
@@ -42229,7 +42229,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "pha" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -42305,7 +42305,7 @@
 /area/station/hallway/secondary/command)
 "piA" = (
 /obj/machinery/airalarm/directional/north,
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -42349,7 +42349,7 @@
 	},
 /area/station/medical/medbay/central)
 "pjb" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
@@ -42520,7 +42520,7 @@
 /area/station/maintenance/starboard/greater)
 "pnD" = (
 /obj/machinery/airalarm/directional/north,
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /obj/item/clothing/under/suit/navy,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
@@ -42619,7 +42619,7 @@
 /turf/open/floor/cult,
 /area/station/service/chapel/funeral)
 "ppU" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -42721,7 +42721,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "prv" = (
@@ -42734,7 +42734,7 @@
 	c_tag = "Virology Airlock";
 	network = list("ss13","medbay")
 	},
-/obj/structure/closet/l3closet,
+/obj/structure/locker/l3closet,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -42878,7 +42878,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "pti" = (
-/obj/structure/closet/secure_closet/security/sec,
+/obj/structure/locker/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
@@ -43089,7 +43089,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "pxT" = (
-/obj/structure/closet/secure_closet/courtroom,
+/obj/structure/locker/secure_closet/courtroom,
 /obj/machinery/light_switch/directional/north,
 /obj/item/gavelblock,
 /obj/item/gavelhammer,
@@ -43196,7 +43196,7 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "pzW" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/locker/secure_closet/medical1,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -43543,7 +43543,7 @@
 "pGt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/maintenance/three,
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "pGu" = (
@@ -43676,7 +43676,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "pIv" = (
 /obj/item/radio/intercom/directional/west,
-/obj/structure/closet/secure_closet/security/science,
+/obj/structure/locker/secure_closet/security/science,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "pIw" = (
@@ -43762,7 +43762,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "pJA" = (
-/obj/structure/closet/secure_closet/cytology,
+/obj/structure/locker/secure_closet/cytology,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -44066,7 +44066,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "pPh" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/locker/secure_closet/miner,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
@@ -44369,7 +44369,7 @@
 "pVi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /turf/open/floor/iron,
@@ -44891,7 +44891,7 @@
 	},
 /area/station/service/chapel)
 "qgc" = (
-/obj/structure/closet/crate/secure/weapon{
+/obj/structure/locker/crate/secure/weapon{
 	desc = "A secure clothing crate.";
 	name = "formal uniform crate";
 	req_access = list("armory")
@@ -45136,7 +45136,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qkm" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy,
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy,
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy,
@@ -45195,8 +45195,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qli" = (
-/obj/structure/closet/athletic_mixed,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/athletic_mixed,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -45454,7 +45454,7 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "qqp" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stock_parts/cell/high,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
@@ -45700,7 +45700,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qvY" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/locker/secure_closet/miner,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -45719,11 +45719,11 @@
 /obj/machinery/airalarm/directional/north,
 /obj/item/clothing/under/suit/burgundy,
 /obj/effect/landmark/start/hangover,
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "qwG" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
@@ -45875,7 +45875,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "qzg" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -46303,7 +46303,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "qGP" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "qGQ" = (
@@ -46376,7 +46376,7 @@
 /obj/item/storage/box/coffeepack/robusta,
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/milk,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "qIq" = (
@@ -46393,7 +46393,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "qIB" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Takes you to a whole new level of thinking.";
@@ -46534,7 +46534,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "qKS" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -47230,8 +47230,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "qWw" = (
-/obj/structure/closet/boxinggloves,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/boxinggloves,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -47543,7 +47543,7 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "rbi" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -47615,7 +47615,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "rcW" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
@@ -47927,7 +47927,7 @@
 /area/station/maintenance/starboard/lesser)
 "rkQ" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/closet/secure_closet/security/med,
+/obj/structure/locker/secure_closet/security/med,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
@@ -48198,11 +48198,11 @@
 /area/station/command/heads_quarters/hos)
 "rrh" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/secure_closet/engineering_welding,
+/obj/structure/locker/secure_closet/engineering_welding,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rrj" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "rrt" = (
@@ -48597,7 +48597,7 @@
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "rxz" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
@@ -48930,7 +48930,7 @@
 /obj/item/target/clown,
 /obj/item/target/syndicate,
 /obj/item/target/syndicate,
-/obj/structure/closet/crate/secure{
+/obj/structure/locker/crate/secure{
 	desc = "A secure crate containing various materials for building a customised test-site.";
 	name = "Firing Range Gear Crate";
 	req_access = list("security")
@@ -49976,7 +49976,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/locker/secure_closet/freezer/fridge,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 9
 	},
@@ -50374,7 +50374,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "sac" = (
-/obj/structure/closet/secure_closet/research_director,
+/obj/structure/locker/secure_closet/research_director,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -50591,7 +50591,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "sdp" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/locker/secure_closet/medical1,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -51924,7 +51924,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "sCM" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/assembly/prox_sensor{
 	pixel_x = 2;
 	pixel_y = -2
@@ -52316,7 +52316,7 @@
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
 "sKs" = (
-/obj/structure/closet/bombcloset/security,
+/obj/structure/locker/bombcloset/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -52636,7 +52636,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "sPV" = (
-/obj/structure/closet/secure_closet/captains,
+/obj/structure/locker/secure_closet/captains,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -52653,7 +52653,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
 "sQq" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/paper/guides/jobs/hydroponics,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -52692,7 +52692,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Gravity Generator Foyer"
 	},
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -52876,7 +52876,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "sTq" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "sTz" = (
@@ -52975,7 +52975,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "sUJ" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -53829,7 +53829,7 @@
 /area/station/security/medical)
 "tjE" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -53873,7 +53873,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage/gas)
 "tkn" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/extinguisher,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/maintenance/two,
@@ -55866,7 +55866,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "tVm" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/locker/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -56810,7 +56810,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "umN" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/reagent_containers/cup/bowl,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/reagent_containers/cup/bowl,
@@ -56941,7 +56941,7 @@
 /area/station/cargo/storage)
 "uoM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/locker/secure_closet/brig{
 	id = "Cell 1";
 	name = "Cell 1 locker"
 	},
@@ -57053,7 +57053,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "urf" = (
-/obj/structure/closet/secure_closet/injection{
+/obj/structure/locker/secure_closet/injection{
 	name = "educational injections locker";
 	pixel_x = 2
 	},
@@ -57450,7 +57450,7 @@
 /area/station/science/robotics/lab)
 "uwP" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/obj/structure/closet/secure_closet/security,
+/obj/structure/locker/secure_closet/security,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
@@ -57718,7 +57718,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "uCq" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -57734,7 +57734,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "uCW" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "evidence closet 1"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -58052,7 +58052,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "uHa" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/rglass{
@@ -58569,7 +58569,7 @@
 /turf/open/floor/iron/checker,
 /area/station/maintenance/aft/lesser)
 "uQK" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "evidence closet 4"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -58737,7 +58737,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "uUu" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "uUL" = (
@@ -58936,7 +58936,7 @@
 /area/station/command/heads_quarters/qm)
 "uXS" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/locker/secure_closet/hydroponics,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -59186,7 +59186,7 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "vdJ" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
@@ -61452,7 +61452,7 @@
 /area/station/security/brig)
 "vSs" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/crowbar,
 /obj/item/assembly/flash/handheld,
 /obj/item/radio,
@@ -61598,7 +61598,7 @@
 /area/station/medical/treatment_center)
 "vVM" = (
 /obj/effect/turf_decal/bot_white/right,
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/locker/crate/goldcrate,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
@@ -62168,11 +62168,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wfN" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
@@ -62193,7 +62193,7 @@
 /area/station/commons/toilet/auxiliary)
 "wgf" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -62266,7 +62266,7 @@
 /turf/closed/wall,
 /area/station/commons/storage/tools)
 "wha" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -62334,9 +62334,9 @@
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "wiF" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover/locker,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "wiS" = (
@@ -62510,7 +62510,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "wmc" = (
-/obj/structure/closet/secure_closet/evidence,
+/obj/structure/locker/secure_closet/evidence,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -62757,7 +62757,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wrb" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "evidence closet 5"
 	},
 /obj/machinery/firealarm/directional/east,
@@ -62965,7 +62965,7 @@
 /area/station/hallway/primary/central)
 "wuh" = (
 /obj/effect/spawner/random/contraband/prison,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -63195,7 +63195,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "wzF" = (
-/obj/structure/closet/secure_closet{
+/obj/structure/locker/secure_closet{
 	name = "contraband locker";
 	req_access = list("armory")
 	},
@@ -63694,8 +63694,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "wLx" = (
-/obj/structure/closet/wardrobe/mixed,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/mixed,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -63727,7 +63727,7 @@
 /area/station/maintenance/department/science/xenobiology)
 "wMM" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/item/surgicaldrill,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
@@ -64338,7 +64338,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/lesser)
 "wVQ" = (
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wVW" = (
@@ -64577,7 +64577,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "xaj" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/structure/locker_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "xar" = (
@@ -64736,7 +64736,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "xel" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "xen" = (
@@ -65495,7 +65495,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xrS" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "xrW" = (
@@ -65667,9 +65667,9 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/lesser)
 "xvd" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover/locker,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "xvf" = (
@@ -66891,7 +66891,7 @@
 "xTs" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/landmark/blobstart,
-/obj/structure/closet/secure_closet/detective,
+/obj/structure/locker/secure_closet/detective,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "xTw" = (
@@ -66923,8 +66923,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xUh" = (
-/obj/structure/closet/wardrobe/pjs,
-/obj/effect/landmark/start/hangover/closet,
+/obj/structure/locker/wardrobe/pjs,
+/obj/effect/landmark/start/hangover/locker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
@@ -67285,7 +67285,7 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "yaj" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/machinery/camera/directional/south{
 	c_tag = "Science Entry";
 	network = list("ss13","rd")
@@ -67371,7 +67371,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "ybl" = (
-/obj/structure/closet/secure_closet/engineering_personal,
+/obj/structure/locker/secure_closet/engineering_personal,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -67514,7 +67514,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ydq" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "ydv" = (
@@ -67530,7 +67530,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ydz" = (
-/obj/structure/closet/l3closet/virology,
+/obj/structure/locker/l3closet/virology,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
@@ -67587,7 +67587,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "yeV" = (
-/obj/structure/closet/secure_closet/hos,
+/obj/structure/locker/secure_closet/hos,
 /obj/item/clothing/shoes/cowboy/black,
 /obj/machinery/camera/directional/north{
 	c_tag = "Head of Security's Office"

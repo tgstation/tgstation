@@ -45,7 +45,7 @@
 /area/station/maintenance/department/security)
 "eq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
@@ -71,7 +71,7 @@
 /area/station/maintenance/department/security)
 "ip" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "iV" = (
@@ -125,7 +125,7 @@
 /area/station/maintenance/department/security)
 "nW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "oD" = (

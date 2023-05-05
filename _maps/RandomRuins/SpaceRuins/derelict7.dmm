@@ -60,7 +60,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "gk" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
@@ -71,7 +71,7 @@
 /turf/template_noop,
 /area/template_noop)
 "gK" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/storage/pill_bottle/happy,
 /obj/item/clothing/ears/earmuffs,
 /turf/open/floor/wood/airless,
@@ -346,7 +346,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Jy" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,

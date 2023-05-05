@@ -25,7 +25,7 @@
 					/obj/item/clothing/mask/breath = 5,
 				)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/locker/crate/internals
 
 /datum/supply_pack/emergency/bomb
 	name = "Explosive Emergency Crate"
@@ -62,7 +62,7 @@
 	access = ACCESS_ATMOSPHERICS
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 
 /datum/supply_pack/emergency/internals
 	name = "Internals Crate"
@@ -75,7 +75,7 @@
 					/obj/item/tank/internals/oxygen = 3,
 				)
 	crate_name = "internals crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/locker/crate/internals
 
 /datum/supply_pack/emergency/metalfoam
 	name = "Metal Foam Grenade Crate"
@@ -94,7 +94,7 @@
 					/obj/item/clothing/head/helmet/space/plasmaman = 2,
 				)
 	crate_name = "plasmaman EVA crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"
@@ -123,7 +123,7 @@
 					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass = 2,
 				)
 	crate_name = "radiation protection crate"
-	crate_type = /obj/structure/closet/crate/radiation
+	crate_type = /obj/structure/locker/crate/radiation
 
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
@@ -136,7 +136,7 @@
 					/obj/item/tank/jetpack/carbondioxide,
 				)
 	crate_name = "space suit crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 
 /datum/supply_pack/emergency/weedcontrol
 	name = "Weed Control Crate"
@@ -150,7 +150,7 @@
 					/obj/item/grenade/chem_grenade/antiweed = 2,
 				)
 	crate_name = "weed control crate"
-	crate_type = /obj/structure/closet/crate/secure/hydroponics
+	crate_type = /obj/structure/locker/crate/secure/hydroponics
 
 /datum/supply_pack/emergency/mothic_rations
 	name = "Surplus Mothic Rations Triple-Pak"
@@ -159,4 +159,4 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/box/mothic_rations = 3)
 	crate_name = "surplus rations box"
-	crate_type = /obj/structure/closet/crate/cardboard/mothic
+	crate_type = /obj/structure/locker/crate/cardboard/mothic

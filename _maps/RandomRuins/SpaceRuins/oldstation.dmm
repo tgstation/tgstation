@@ -20,7 +20,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "ah" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/mineral/titanium{
 	amount = 30
 	},
@@ -67,7 +67,7 @@
 "ar" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
@@ -96,7 +96,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "aA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset/full,
+/obj/structure/locker/firecloset/full,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "aB" = (
@@ -1097,7 +1097,7 @@
 "eb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
-/obj/structure/closet/crate/secure/engineering{
+/obj/structure/locker/crate/secure/engineering{
 	req_access = list("away_engineering")
 	},
 /obj/item/pipe_dispenser,
@@ -1126,7 +1126,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/old,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -1158,7 +1158,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "ej" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -1533,7 +1533,7 @@
 "fs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -1745,7 +1745,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "gf" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
@@ -1905,7 +1905,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "gH" = (
-/obj/structure/closet/crate/radiation,
+/obj/structure/locker/crate/radiation,
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 15
 	},
@@ -2731,7 +2731,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "jK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -2759,7 +2759,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -2789,7 +2789,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/duffelbag,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -3174,7 +3174,7 @@
 /obj/item/electronics/airalarm,
 /obj/item/electronics/airalarm,
 /obj/item/electronics/airalarm,
-/obj/structure/closet/crate/engineering/electrical{
+/obj/structure/locker/crate/engineering/electrical{
 	name = "electronics crate"
 	},
 /obj/item/electronics/tracker,
@@ -3380,7 +3380,7 @@
 "lQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -3509,7 +3509,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "mm" = (
 /obj/machinery/power/supermatter_crystal/shard,
-/obj/structure/closet/crate/engineering{
+/obj/structure/locker/crate/engineering{
 	name = "supermatter shard crate"
 	},
 /turf/open/floor/iron/white/textured,
@@ -3590,7 +3590,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/old,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -3670,7 +3670,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mN" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/internals/oxygen,
@@ -3962,7 +3962,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "nC" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/cautery{
 	pixel_x = 4
 	},
@@ -4320,7 +4320,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "oJ" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
@@ -4596,7 +4596,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "qm" = (
-/obj/structure/closet/crate/engineering{
+/obj/structure/locker/crate/engineering{
 	name = "radiation suit crate"
 	},
 /obj/item/circuitboard/machine/smes,
@@ -4994,7 +4994,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "uu" = (
 /obj/structure/table/glass,
-/obj/structure/closet/mini_fridge{
+/obj/structure/locker/mini_fridge{
 	pixel_y = 8;
 	pixel_x = 2
 	},
@@ -5200,7 +5200,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "vX" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate/engineering{
+/obj/structure/locker/crate/engineering{
 	name = "camera assembly crate"
 	},
 /obj/item/wallframe/camera,
@@ -5253,7 +5253,7 @@
 "wg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate/secure/weapon{
+/obj/structure/locker/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
 /obj/item/knife/combat,
@@ -5346,7 +5346,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wF" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
@@ -5458,7 +5458,7 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "yj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/fifty,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/rust,
@@ -5539,7 +5539,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "zl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -5634,7 +5634,7 @@
 "zG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -5674,7 +5674,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "Ac" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Ae" = (
@@ -5805,7 +5805,7 @@
 "Bf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
@@ -5982,7 +5982,7 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "CV" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
@@ -6285,7 +6285,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "FK" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron{
 	amount = 50
 	},
@@ -6363,7 +6363,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Gd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
@@ -6398,7 +6398,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "Gr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset/full,
+/obj/structure/locker/firecloset/full,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Gz" = (
@@ -6581,7 +6581,7 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/machinery/light/small/directional/east{
 	dir = 1
 	},
@@ -7036,12 +7036,12 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Lr" = (
 /obj/effect/decal/cleanable/glass,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "Ls" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/radiation,
+/obj/structure/locker/crate/radiation,
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 25
 	},
@@ -7058,7 +7058,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "LA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
@@ -7326,7 +7326,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "On" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/crumpled,
 /obj/item/ph_booklet,
@@ -7647,7 +7647,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "QR" = (
@@ -7702,7 +7702,7 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "Ro" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -7877,7 +7877,7 @@
 "SQ" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate/secure/science{
+/obj/structure/locker/crate/secure/science{
 	req_access = list("away_science")
 	},
 /obj/item/relic,
@@ -7945,7 +7945,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Ts" = (
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
@@ -7961,7 +7961,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/beta/hall)
 "Tx" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/utility/radiation,
@@ -8060,7 +8060,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Up" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/skillchip/bonsai,
 /obj/item/circuitboard/machine/sleeper,
 /turf/open/floor/plating/airless,
@@ -8109,7 +8109,7 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "Vb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Vk" = (

@@ -54,7 +54,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "o" = (
-/obj/structure/closet/crate/cardboard/tiziran,
+/obj/structure/locker/crate/cardboard/tiziran,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "p" = (
@@ -74,7 +74,7 @@
 /area/ruin/space)
 "v" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,

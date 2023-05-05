@@ -147,7 +147,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/storage/bag/money/dutchmen,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 3;
@@ -305,7 +305,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/restraints/handcuffs/cable/zipties,
@@ -919,7 +919,7 @@
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Yr" = (
-/obj/structure/closet/cabinet{
+/obj/structure/locker/cabinet{
 	anchored = 1;
 	desc = "What kind of scary things could be here?";
 	name = "Davy Jones' Locker"

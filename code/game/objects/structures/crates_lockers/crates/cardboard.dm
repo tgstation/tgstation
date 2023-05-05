@@ -1,4 +1,4 @@
-/obj/structure/closet/crate/cardboard
+/obj/structure/locker/crate/cardboard
 	name = "cardboard box"
 	desc = "A box, in which you can place things. Revolutionary, I know."
 	pass_flags_self = PASSSTRUCTURE
@@ -10,12 +10,12 @@
 	open_sound_volume = 25
 	close_sound_volume = 25
 
-/obj/structure/closet/crate/cardboard/mothic
+/obj/structure/locker/crate/cardboard/mothic
 	name = "\improper Mothic Fleet box"
 	desc = "For holding moths, presumably."
 	icon_state = "cardboard_moth"
 
-/obj/structure/closet/crate/cardboard/tiziran
+/obj/structure/locker/crate/cardboard/tiziran
 	name = "\improper Tiziran shipment box"
 	desc = "For holding lizards, presumably."
 	icon_state = "cardboard_tiziran"

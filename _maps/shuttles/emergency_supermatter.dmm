@@ -14,7 +14,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/closet/radiation{
+/obj/structure/locker/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
@@ -260,7 +260,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bi" = (
-/obj/structure/closet/radiation{
+/obj/structure/locker/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
@@ -268,7 +268,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bj" = (
-/obj/structure/closet/radiation{
+/obj/structure/locker/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
@@ -294,7 +294,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "pb" = (
-/obj/structure/closet/radiation{
+/obj/structure/locker/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
@@ -304,7 +304,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Bi" = (
-/obj/structure/closet/radiation{
+/obj/structure/locker/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,

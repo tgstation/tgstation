@@ -451,7 +451,7 @@
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 40)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+	var/obj/structure/locker/supplypod/centcompod/toLaunch = new()
 
 	new /obj/machinery/roulette(toLaunch)
 

@@ -838,7 +838,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	for (var/i = 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
-		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
+		var/obj/structure/locker/body_bag/body_bag = new(morgue_tray.loc)
 		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
 
 		var/species_to_pick

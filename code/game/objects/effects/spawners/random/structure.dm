@@ -7,13 +7,13 @@
 	icon_state = "crate_secure"
 	loot = list(
 		/obj/effect/spawner/random/structure/crate_loot = 744,
-		/obj/structure/closet/crate/trashcart/filled = 75,
+		/obj/structure/locker/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
-		/obj/structure/closet/mini_fridge = 35,
+		/obj/structure/locker/mini_fridge = 35,
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/item/kirbyplants/fern = 20,
-		/obj/structure/closet/crate/decorations = 15,
+		/obj/structure/locker/crate/decorations = 15,
 		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 
@@ -21,7 +21,7 @@
 	name = "locked crate spawner"
 	icon_state = "crate_secure"
 	spawn_loot_chance = 20
-	loot = list(/obj/structure/closet/crate/secure/loot)
+	loot = list(/obj/structure/locker/crate/secure/loot)
 
 /obj/effect/spawner/random/structure/girder
 	name = "girder spawner"
@@ -92,7 +92,7 @@
 	loot = RANDOM_CRATE_LOOT
 
 /obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
-	var/obj/structure/closet/crate/peek_a_boo = ..()
+	var/obj/structure/locker/crate/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
 		peek_a_boo.update_appearance()
@@ -103,48 +103,48 @@
 	name = "lootcrate spawner"
 	icon_state = "crate"
 	loot = list(
-		/obj/structure/closet/crate/maint = 15,
+		/obj/structure/locker/crate/maint = 15,
 		/obj/effect/spawner/random/structure/crate_empty = 4,
-		/obj/structure/closet/crate/secure/loot = 1,
+		/obj/structure/locker/crate/secure/loot = 1,
 	)
 
-/obj/effect/spawner/random/structure/closet_private
-	name = "private closet spawner"
+/obj/effect/spawner/random/structure/locker_private
+	name = "private locker spawner"
 	icon_state = "cabinet"
 	loot = list(
-		/obj/structure/closet/secure_closet/personal,
-		/obj/structure/closet/secure_closet/personal/cabinet,
+		/obj/structure/locker/secure/personal,
+		/obj/structure/locker/secure/personal/cabinet,
 	)
 
-/obj/effect/spawner/random/structure/closet_empty
-	name = "empty closet spawner"
+/obj/effect/spawner/random/structure/locker_empty
+	name = "empty locker spawner"
 	icon_state = "locker"
 	loot = list(
-		/obj/structure/closet = 850,
-		/obj/structure/closet/cabinet = 150,
-		/obj/structure/closet/acloset = 1,
+		/obj/structure/locker = 850,
+		/obj/structure/locker/cabinet = 150,
+		/obj/structure/locker/alocker = 1,
 	)
 
-/obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
-	var/obj/structure/closet/peek_a_boo = ..()
+/obj/effect/spawner/random/structure/locker_empty/make_item(spawn_loc, type_path_to_make)
+	var/obj/structure/locker/peek_a_boo = ..()
 	if(istype(peek_a_boo))
 		peek_a_boo.opened = prob(50)
 		peek_a_boo.update_appearance()
 
 	return peek_a_boo
 
-/obj/effect/spawner/random/structure/closet_maintenance
-	name = "maintenance closet spawner"
+/obj/effect/spawner/random/structure/locker_maintenance
+	name = "maintenance locker spawner"
 	icon_state = "locker"
 	loot = list( // use these for maintenance areas
-		/obj/effect/spawner/random/structure/closet_empty = 10,
-		/obj/structure/closet/emcloset = 2,
-		/obj/structure/closet/firecloset = 2,
-		/obj/structure/closet/toolcloset = 2,
-		/obj/structure/closet/l3closet = 1,
-		/obj/structure/closet/radiation = 1,
-		/obj/structure/closet/bombcloset = 1,
-		/obj/structure/closet/mini_fridge = 1,
+		/obj/effect/spawner/random/structure/locker_empty = 10,
+		/obj/structure/locker/emlocker = 2,
+		/obj/structure/locker/firelocker = 2,
+		/obj/structure/locker/toollocker = 2,
+		/obj/structure/locker/l3locker = 1,
+		/obj/structure/locker/radiation = 1,
+		/obj/structure/locker/bomblocker = 1,
+		/obj/structure/locker/mini_fridge = 1,
 	)
 
 /obj/effect/spawner/random/structure/chair_flipped

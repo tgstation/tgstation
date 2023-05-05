@@ -23,7 +23,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/engineering/material,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)

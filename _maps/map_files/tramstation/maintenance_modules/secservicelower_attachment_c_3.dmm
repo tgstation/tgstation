@@ -4,7 +4,7 @@
 /area/station/asteroid)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
@@ -35,7 +35,7 @@
 /area/station/maintenance/port/central)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/locker/secure_closet/miner/unlocked,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "r" = (

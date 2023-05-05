@@ -27,7 +27,7 @@
 "aN" = (
 /obj/item/clothing/suit/hooded/cultrobes/alt,
 /obj/item/clothing/shoes/cult/alt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "aX" = (
@@ -270,7 +270,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gU" = (
-/obj/structure/closet/secure_closet/freezer/empty,
+/obj/structure/locker/secure_closet/freezer/empty,
 /obj/item/organ/internal/tongue/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/organ/external/tail/lizard,
@@ -827,7 +827,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "ua" = (
-/obj/structure/closet/l3closet/virology,
+/obj/structure/locker/l3closet/virology,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -1100,7 +1100,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "zR" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "zS" = (
@@ -1432,7 +1432,7 @@
 /obj/item/clothing/suit/hooded/cultrobes,
 /obj/item/clothing/shoes/cult,
 /obj/item/sharpener/cult,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "HV" = (
@@ -1574,7 +1574,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Lw" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
@@ -1989,7 +1989,7 @@
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Vx" = (
-/obj/structure/closet/secure_closet/freezer/empty,
+/obj/structure/locker/secure_closet/freezer/empty,
 /obj/item/food/meat/rawcutlet/plain/human,
 /obj/item/food/meat/rawcutlet/plain/human,
 /obj/item/food/meat/slab/human,
@@ -2080,7 +2080,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Xb" = (
-/obj/structure/closet/l3closet/virology,
+/obj/structure/locker/l3closet/virology,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Xj" = (
@@ -2121,7 +2121,7 @@
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "XO" = (
 /obj/machinery/light/dim/directional/north,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "XQ" = (

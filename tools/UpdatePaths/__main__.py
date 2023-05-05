@@ -14,7 +14,7 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
     /obj/effect/landmark/start/virologist : @DELETE
 Syntax for subtypes also exist, to update a path's type but maintain subtypes:
-    /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
+    /obj/structure/locker/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
     @DELETE - if used as new path name the old path will be deleted
     @OLD - if used as property name copies all modified properties from original path to this one

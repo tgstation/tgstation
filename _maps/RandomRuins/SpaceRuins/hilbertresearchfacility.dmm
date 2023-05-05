@@ -70,7 +70,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "cE" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	desc = "It's a storage unit for mining.";
 	icon_door = "eng_tool";
 	icon_state = "eng";
@@ -88,7 +88,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "cQ" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	desc = "It's a storage unit for mining.";
 	icon_door = "eng_tool";
 	icon_state = "eng";
@@ -540,7 +540,7 @@
 	dir = 8
 	},
 /obj/item/pickaxe/mini,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "np" = (
@@ -1337,7 +1337,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "EY" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/paper/crumpled/ruins/postdocs_memo,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1475,7 +1475,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "HK" = (
-/obj/structure/closet/crate/secure/plasma,
+/obj/structure/locker/crate/secure/plasma,
 /obj/item/stack/ore/plasma{
 	amount = 30
 	},
@@ -2040,7 +2040,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Th" = (
-/obj/effect/spawner/random/structure/closet_private,
+/obj/effect/spawner/random/structure/locker_private,
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ti" = (

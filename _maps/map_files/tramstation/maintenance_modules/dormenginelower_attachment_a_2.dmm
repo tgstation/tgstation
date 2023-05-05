@@ -4,7 +4,7 @@
 /area/station/asteroid)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/lasertag/blue,
+/obj/structure/locker/lasertag/blue,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "e" = (
@@ -12,7 +12,7 @@
 /area/template_noop)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/athletic_mixed,
+/obj/structure/locker/athletic_mixed,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "n" = (
@@ -37,7 +37,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/boxinggloves,
+/obj/structure/locker/boxinggloves,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "E" = (
@@ -65,7 +65,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/lasertag/red,
+/obj/structure/locker/lasertag/red,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "J" = (
@@ -82,7 +82,7 @@
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/target,
 /obj/item/target/clown,
 /obj/item/target/syndicate,

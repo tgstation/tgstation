@@ -1,6 +1,6 @@
 /datum/supply_pack/engineering
 	group = "Engineering"
-	crate_type = /obj/structure/closet/crate/engineering
+	crate_type = /obj/structure/locker/crate/engineering
 
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
@@ -65,7 +65,7 @@
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
 	crate_name = "insulated gloves crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
@@ -74,7 +74,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0} = 2) //FALSE doesn't work in modified type paths apparently.
 	crate_name = "inducer crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
@@ -84,7 +84,7 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "\improper PACMAN generator crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
@@ -92,7 +92,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/stock_parts/cell/high = 3)
 	crate_name = "power cell crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
@@ -103,7 +103,7 @@
 	access_view = ACCESS_CE
 	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/locker/crate/secure/engineering
 	special = TRUE
 
 /datum/supply_pack/engineering/tools
@@ -141,7 +141,7 @@
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/engineering/space_heater
 	name = "Space Heater Crate"
@@ -149,7 +149,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/space_heater)
 	crate_name = "space heater crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
@@ -215,7 +215,7 @@
 /datum/supply_pack/engine
 	group = "Engine Construction"
 	access_view = ACCESS_ENGINEERING
-	crate_type = /obj/structure/closet/crate/engineering
+	crate_type = /obj/structure/locker/crate/engineering
 
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
@@ -225,7 +225,7 @@
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/emitter = 2)
 	crate_name = "emitter crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/locker/crate/secure/engineering
 	dangerous = TRUE
 
 /datum/supply_pack/engine/field_gen
@@ -242,7 +242,7 @@
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod = 4)
 	crate_name = "grounding rod crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engine/solar
 	name = "Solar Panel Crate"
@@ -256,7 +256,7 @@
 					/obj/item/paper/guides/jobs/engi/solars,
 				)
 	crate_name = "solar panel crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
@@ -265,7 +265,7 @@
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/locker/crate/secure/engineering
 	dangerous = TRUE
 
 /datum/supply_pack/engine/tesla_coils
@@ -275,7 +275,7 @@
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil = 4)
 	crate_name = "tesla coil crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/locker/crate/engineering/electrical
 
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"
@@ -290,5 +290,5 @@
 					/obj/item/hfr_box/core,
 				)
 	crate_name = "HFR crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/locker/crate/secure/engineering
 	dangerous = TRUE

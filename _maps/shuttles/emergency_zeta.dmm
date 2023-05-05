@@ -259,7 +259,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Uo" = (
-/obj/structure/closet/abductor,
+/obj/structure/locker/abductor,
 /obj/item/clothing/under/misc/pj/blue,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/jackboots,
@@ -278,7 +278,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "VY" = (
-/obj/structure/closet/abductor,
+/obj/structure/locker/abductor,
 /obj/item/stack/sheet/mineral/abductor{
 	amount = 50
 	},

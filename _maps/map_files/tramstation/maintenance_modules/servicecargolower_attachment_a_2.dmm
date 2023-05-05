@@ -50,7 +50,7 @@
 /area/station/maintenance/starboard/greater)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/entertainment/coin,
@@ -62,7 +62,7 @@
 /area/station/asteroid)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/five,
 /obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/iron/smooth,

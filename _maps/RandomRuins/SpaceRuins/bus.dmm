@@ -104,7 +104,7 @@
 /area/ruin/space)
 "aA" = (
 /obj/structure/fluff/bus/passable,
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/food/meatball,
 /obj/item/food/meatball,
 /obj/item/food/meatball,
@@ -309,7 +309,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "Gt" = (
-/obj/structure/closet/crate/grave,
+/obj/structure/locker/crate/grave,
 /obj/item/clothing/head/collectable/swat,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)

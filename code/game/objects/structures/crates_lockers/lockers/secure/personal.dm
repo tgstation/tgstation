@@ -1,10 +1,10 @@
-/obj/structure/closet/secure_closet/personal
+/obj/structure/locker/secure/personal
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
-	name = "personal closet"
+	name = "personal locker"
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/PopulateContents()
+/obj/structure/locker/secure/personal/PopulateContents()
 	..()
 	if(prob(50))
 		new /obj/item/storage/backpack/duffelbag(src)
@@ -14,28 +14,28 @@
 		new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/radio/headset( src )
 
-/obj/structure/closet/secure_closet/personal/patient
-	name = "patient's closet"
+/obj/structure/locker/secure/personal/patient
+	name = "patient's locker"
 
-/obj/structure/closet/secure_closet/personal/patient/PopulateContents()
+/obj/structure/locker/secure/personal/patient/PopulateContents()
 	new /obj/item/clothing/under/color/white( src )
 	new /obj/item/clothing/shoes/sneakers/white( src )
 
-/obj/structure/closet/secure_closet/personal/cabinet
+/obj/structure/locker/secure/personal/cabinet
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/wooden_locker_open.ogg'
+	close_sound = 'sound/machines/wooden_locker_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 
-/obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
+/obj/structure/locker/secure/personal/cabinet/PopulateContents()
 	new /obj/item/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/instrument/piano_synth(src)
 	new /obj/item/radio/headset( src )
 
-/obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
+/obj/structure/locker/secure/personal/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/I = W.GetID()
 	if(istype(I))
 		if(broken)
@@ -56,7 +56,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/secure_closet/personal/allowed(mob/mob_to_check)
+/obj/structure/locker/secure/personal/allowed(mob/mob_to_check)
 	. = ..()
 	if (. || !ishuman(mob_to_check))
 		return

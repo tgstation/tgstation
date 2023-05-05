@@ -85,7 +85,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/secure_closet/freezer{
+/obj/structure/locker/secure_closet/freezer{
 	locked = 0;
 	name = "fridge"
 	},
@@ -315,7 +315,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aM" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/wood,
@@ -803,7 +803,7 @@
 /area/shuttle/pirate)
 "mD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
@@ -914,7 +914,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/bag/money/vault,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 3;
@@ -993,7 +993,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Ur" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/locker/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,

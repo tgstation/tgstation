@@ -88,7 +88,7 @@
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/directional/west,
-/obj/structure/closet/cardboard{
+/obj/structure/locker/cardboard{
 	name = "surplus clothing"
 	},
 /obj/effect/spawner/random/clothing/costume,

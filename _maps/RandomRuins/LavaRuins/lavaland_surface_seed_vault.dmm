@@ -92,7 +92,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "ar" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/clothing/under/rank/civilian/hydroponics,
 /obj/item/clothing/under/rank/civilian/hydroponics,
 /obj/item/clothing/under/rank/civilian/hydroponics,
@@ -108,7 +108,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "at" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/cultivator,
 /obj/item/cultivator,
 /obj/item/cultivator,
@@ -163,7 +163,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "az" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/item/soap/homemade,
 /obj/item/soap/homemade,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -176,7 +176,7 @@
 /area/ruin/powered/seedvault)
 "aB" = (
 /obj/effect/spawner/random/food_or_drink/seed_vault,
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/effect/spawner/random/food_or_drink/seed_vault,
 /obj/effect/spawner/random/food_or_drink/seed_vault,
 /obj/item/vending_refill/hydronutrients,
@@ -194,7 +194,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aE" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/structure/beebox,
 /obj/item/melee/flyswatter,
 /obj/item/honey_frame,
@@ -334,7 +334,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "aX" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/structure/locker/crate/hydroponics,
 /obj/structure/beebox,
 /obj/item/melee/flyswatter,
 /obj/item/honey_frame,

@@ -14,7 +14,7 @@
 /area/station/maintenance/central/lesser)
 "aO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -269,7 +269,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material,
@@ -315,7 +315,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "wQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/locker/wardrobe/mixed,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "xc" = (
@@ -364,7 +364,7 @@
 /area/station/maintenance/central/lesser)
 "zr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -389,7 +389,7 @@
 /area/station/maintenance/central/lesser)
 "Bw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
@@ -716,7 +716,7 @@
 /area/station/maintenance/central/lesser)
 "Vt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/l3closet/janitor,
+/obj/structure/locker/l3closet/janitor,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "Xm" = (
@@ -737,7 +737,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "YG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/iron/smooth,

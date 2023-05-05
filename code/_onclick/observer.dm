@@ -4,7 +4,7 @@
 
 	if(can_reenter_corpse && mind?.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
-			reenter_corpse() // (body bag, closet, mech, etc)
+			reenter_corpse() // (body bag, locker, mech, etc)
 			return // seems legit.
 
 	// Things you might plausibly want to follow

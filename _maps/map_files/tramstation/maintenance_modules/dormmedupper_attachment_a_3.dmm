@@ -20,7 +20,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "o" = (
-/obj/structure/closet/cabinet,
+/obj/structure/locker/cabinet,
 /obj/item/clothing/suit/chaplainsuit/bishoprobe,
 /obj/item/clothing/suit/chaplainsuit/clownpriest,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,

@@ -119,7 +119,7 @@
 	},
 /area/awaymission/beach)
 "au" = (
-/obj/structure/closet/crate/wooden{
+/obj/structure/locker/crate/wooden{
 	desc = "Now this is what island exploration is all about.";
 	name = "Treasure Chest"
 	},
@@ -309,7 +309,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bk" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -468,12 +468,12 @@
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "bH" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/locker/athletic_mixed,
 /obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
@@ -653,11 +653,11 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "ci" = (
-/obj/structure/closet/gmcloset,
+/obj/structure/locker/gmcloset,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cj" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/locker/secure_closet/bar,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
@@ -700,7 +700,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cr" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure_closet/freezer/kitchen{
 	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
@@ -734,7 +734,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cw" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure_closet/freezer/meat/open,
 /obj/item/food/meat/slab/goliath,
 /obj/item/food/meat/slab/xeno,
 /obj/item/food/meat/slab/spider,
@@ -934,27 +934,27 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "db" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dc" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dd" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_red,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "de" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "df" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/structure/locker/secure_closet/personal/cabinet,
 /obj/item/clothing/neck/necklace/dope,
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -1148,7 +1148,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "QU" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,

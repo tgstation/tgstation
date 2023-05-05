@@ -65,7 +65,7 @@
 /area/station/maintenance/department/eva)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/contraband/cannabis,

@@ -96,7 +96,7 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "v" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
 	name = "mining cart"
 	},
@@ -205,7 +205,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "W" = (
-/obj/structure/closet/crate/miningcar{
+/obj/structure/locker/crate/miningcar{
 	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
 	name = "mining cart"
 	},

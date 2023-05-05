@@ -1,9 +1,9 @@
-/obj/structure/closet/syndicate
-	name = "armory closet"
+/obj/structure/locker/syndicate
+	name = "armory locker"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 
-/datum/armor/closet_syndicate
+/datum/armor/locker_syndicate
 	melee = 70
 	bullet = 40
 	laser = 40
@@ -12,10 +12,10 @@
 	fire = 70
 	acid = 70
 
-/obj/structure/closet/syndicate/personal
+/obj/structure/locker/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
 
-/obj/structure/closet/syndicate/personal/PopulateContents()
+/obj/structure/locker/syndicate/personal/PopulateContents()
 	..()
 	new /obj/item/trench_tool(src)
 	new /obj/item/clothing/glasses/night(src)
@@ -27,10 +27,10 @@
 	new /obj/item/clothing/under/syndicate/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 
-/obj/structure/closet/syndicate/nuclear
+/obj/structure/locker/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
 
-/obj/structure/closet/syndicate/nuclear/PopulateContents()
+/obj/structure/locker/syndicate/nuclear/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/box/flashbangs(src)
@@ -38,11 +38,11 @@
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
 	new /obj/item/modular_computer/pda/syndicate(src)
 
-/obj/structure/closet/syndicate/resources
+/obj/structure/locker/syndicate/resources
 	desc = "An old, dusty locker."
 
 // A lot of this stuff is objective items, and it's also only used for debugging, so init times don't matter here.
-/obj/structure/closet/syndicate/resources/populate_contents_immediate()
+/obj/structure/locker/syndicate/resources/populate_contents_immediate()
 	. = ..()
 	var/common_min = 30 //Minimum amount of minerals in the stack for common minerals
 	var/common_max = 50 //Maximum amount of HONK in the stack for HONK common minerals
@@ -103,12 +103,12 @@
 	if(pickednum == 50)
 		new /obj/item/tank/jetpack/carbondioxide(src)
 
-/obj/structure/closet/syndicate/resources/everything
-	desc = "It's an emergency storage closet for repairs."
+/obj/structure/locker/syndicate/resources/everything
+	desc = "It's an emergency storage locker for repairs."
 	storage_capacity = 60 // This is gonna be used for debug.
 
 // A lot of this stuff is objective items, and it's also only used for debugging, so init times don't matter here.
-/obj/structure/closet/syndicate/resources/everything/populate_contents_immediate()
+/obj/structure/locker/syndicate/resources/everything/populate_contents_immediate()
 	var/list/resources = list(
 	/obj/item/stack/sheet/iron,
 	/obj/item/stack/sheet/glass,

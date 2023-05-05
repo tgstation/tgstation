@@ -25,7 +25,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/locker/secure_closet/atmospherics,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "am" = (
@@ -37,7 +37,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/locker/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aq" = (
@@ -46,7 +46,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ar" = (
-/obj/structure/closet/secure_closet/engineering_welding,
+/obj/structure/locker/secure_closet/engineering_welding,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "as" = (
@@ -180,7 +180,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "bf" = (
-/obj/structure/closet/secure_closet/engineering_chief,
+/obj/structure/locker/secure_closet/engineering_chief,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "bg" = (
@@ -247,7 +247,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "br" = (
-/obj/structure/closet/radiation,
+/obj/structure/locker/radiation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -281,7 +281,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/closet/jcloset,
+/obj/structure/locker/jcloset,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
@@ -303,7 +303,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bF" = (
-/obj/structure/closet/secure_closet/chief_medical,
+/obj/structure/locker/secure_closet/chief_medical,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bG" = (
@@ -311,7 +311,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/closet/secure_closet/captains,
+/obj/structure/locker/secure_closet/captains,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
@@ -333,7 +333,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bM" = (
-/obj/structure/closet/secure_closet/hop,
+/obj/structure/locker/secure_closet/hop,
 /turf/open/floor/iron{
 	dir = 4
 	},
@@ -363,20 +363,20 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bU" = (
-/obj/structure/closet/firecloset/full,
+/obj/structure/locker/firecloset/full,
 /turf/open/floor/iron{
 	dir = 9
 	},
 /area/station/hallway/secondary/entry)
 "bV" = (
 /obj/machinery/light/directional/north,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron{
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
 "bW" = (
-/obj/structure/closet/secure_closet/hos,
+/obj/structure/locker/secure_closet/hos,
 /obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
@@ -386,7 +386,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bX" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron{
 	dir = 1
 	},

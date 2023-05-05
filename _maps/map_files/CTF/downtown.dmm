@@ -295,7 +295,7 @@
 /area/centcom/ctf)
 "gN" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/structure/closet/crate/large{
+/obj/structure/locker/crate/large{
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/red{
@@ -566,7 +566,7 @@
 /turf/open/floor/wood,
 /area/centcom/ctf)
 "lk" = (
-/obj/structure/closet/crate/trashcart{
+/obj/structure/locker/crate/trashcart{
 	resistance_flags = 64
 	},
 /turf/open/floor/plating,
@@ -1058,7 +1058,7 @@
 /area/centcom/ctf)
 "yV" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/structure/closet/crate/large{
+/obj/structure/locker/crate/large{
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1673,7 +1673,7 @@
 /area/centcom/ctf)
 "KE" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/structure/closet/crate/large{
+/obj/structure/locker/crate/large{
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/red{
@@ -2033,7 +2033,7 @@
 /area/centcom/ctf)
 "SU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/trashcart{
+/obj/structure/locker/crate/trashcart{
 	resistance_flags = 64
 	},
 /turf/open/floor/plating,
@@ -2148,7 +2148,7 @@
 /area/centcom/ctf)
 "VJ" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/structure/closet/crate/large{
+/obj/structure/locker/crate/large{
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/blue,

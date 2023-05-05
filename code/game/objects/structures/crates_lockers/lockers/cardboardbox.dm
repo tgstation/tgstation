@@ -1,4 +1,4 @@
-/obj/structure/closet/cardboard
+/obj/structure/locker/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
@@ -27,7 +27,7 @@
 	/// How much time must pass before the box can trigger the next Metal Gear Solid-style '!' alert.
 	var/time_between_alerts = 60 SECONDS
 
-/obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
+/obj/structure/locker/cardboard/relaymove(mob/living/user, direction)
 	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
@@ -38,10 +38,10 @@
 	else
 		move_delay = FALSE
 
-/obj/structure/closet/cardboard/proc/ResetMoveDelay()
+/obj/structure/locker/cardboard/proc/ResetMoveDelay()
 	move_delay = FALSE
 
-/obj/structure/closet/cardboard/open(mob/living/user, force = FALSE)
+/obj/structure/locker/cardboard/open(mob/living/user, force = FALSE)
 	var/do_alert = (COOLDOWN_FINISHED(src, alert_cooldown) && (locate(/mob/living) in contents))
 
 	if(!do_alert)
@@ -72,7 +72,7 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/image/alert_image = image('icons/obj/storage/closet.dmi', src, "cardboard_special", layer+1)
+	var/image/alert_image = image('icons/obj/storage/locker.dmi', src, "cardboard_special", layer+1)
 	SET_PLANE_EXPLICIT(alert_image, ABOVE_LIGHTING_PLANE, src)
 	flick_overlay_view(alert_image, 0.8 SECONDS)
 	alert_image.alpha = 0
@@ -85,7 +85,7 @@
 /atom/proc/forget_alert_image(image/alert_image)
 	LAZYREMOVE(update_on_z, alert_image)
 
-/obj/structure/closet/cardboard/metal
+/obj/structure/locker/cardboard/metal
 	name = "large metal box"
 	desc = "THE COWARDS! THE FOOLS!"
 	icon_state = "metalbox"

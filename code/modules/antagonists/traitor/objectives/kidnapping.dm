@@ -210,11 +210,11 @@
 
 /datum/traitor_objective/target_player/kidnapping/proc/call_pod(mob/living/user)
 	pod_called = TRUE
-	var/obj/structure/closet/supplypod/extractionpod/new_pod = new()
+	var/obj/structure/locker/supplypod/extractionpod/new_pod = new()
 	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, PROC_REF(enter_check))
 	new /obj/effect/pod_landingzone(get_turf(user), new_pod)
 
-/datum/traitor_objective/target_player/kidnapping/proc/enter_check(obj/structure/closet/supplypod/extractionpod/source, entered_atom)
+/datum/traitor_objective/target_player/kidnapping/proc/enter_check(obj/structure/locker/supplypod/extractionpod/source, entered_atom)
 	if(!istype(source))
 		CRASH("Kidnapping objective's enter_check called with source being not an extraction pod: [source ? source.type : "N/A"]")
 
@@ -290,7 +290,7 @@
 
 		possible_turfs += new_turf
 
-	var/obj/structure/closet/supplypod/return_pod = new()
+	var/obj/structure/locker/supplypod/return_pod = new()
 	return_pod.bluespace = TRUE
 	return_pod.explosionSize = list(0,0,0,0)
 	return_pod.style = STYLE_SYNDICATE

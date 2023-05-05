@@ -9,7 +9,7 @@
 "l" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -45,7 +45,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)

@@ -11,7 +11,7 @@
 /area/shuttle/hunter/russian)
 "bg" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/secure/weapon{
+/obj/structure/locker/crate/secure/weapon{
 	name = "surplus crate"
 	},
 /obj/item/ammo_box/a762,
@@ -351,7 +351,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/critter{
+/obj/structure/locker/crate/critter{
 	anchorable = 0;
 	anchored = 1;
 	desc = "A large wood and steel-reinforced crate.";
@@ -373,7 +373,7 @@
 "DK" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /obj/item/storage/box/drinkingglasses,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -416,7 +416,7 @@
 /area/shuttle/hunter/russian)
 "FG" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/effect/decal/cleanable/dirt,
@@ -433,7 +433,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -630,7 +630,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/locker/crate/secure/gear{
 	name = "commandant's crate"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -695,7 +695,7 @@
 /area/shuttle/hunter/russian)
 "Xu" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/ancient,
 /obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,

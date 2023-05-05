@@ -399,10 +399,10 @@
 	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
 
-/datum/greyscale_config/giftdeliverycloset
-	name = "Gift Closet"
+/datum/greyscale_config/giftdeliverylocker
+	name = "Gift Locker"
 	icon_file = 'icons/obj/storage/wrapping.dmi'
-	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverylocker.json'
 
 /datum/greyscale_config/giftdeliverycrate
 	name = "Gift Crate"

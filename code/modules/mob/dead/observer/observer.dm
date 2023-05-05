@@ -366,7 +366,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else if((direct & WEST) && x > 1)
 			destination = get_step(destination, WEST)
 
-		abstract_move(destination)//Get out of closets and such as a ghost
+		abstract_move(destination)//Get out of lockers and such as a ghost
 
 /mob/dead/observer/forceMove(atom/destination)
 	abstract_move(destination) // move like the wind

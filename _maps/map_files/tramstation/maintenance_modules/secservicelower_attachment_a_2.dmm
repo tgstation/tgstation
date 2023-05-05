@@ -115,7 +115,7 @@
 /area/station/maintenance/central/greater)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{

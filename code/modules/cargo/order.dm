@@ -156,8 +156,8 @@
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
-	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
+	if(istype(container, /obj/structure/locker/crate))
+		var/obj/structure/locker/crate/C = container
 		C.manifest = manifest_paper
 		C.update_appearance()
 	else
@@ -171,7 +171,7 @@
 		account_holder = paying_account.account_holder
 	else
 		account_holder = "Cargo"
-	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
+	var/obj/structure/locker/crate/crate = pack.generate(A, paying_account)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)

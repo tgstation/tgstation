@@ -168,27 +168,28 @@
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
-///from [/obj/structure/closet/supplypod/proc/preOpen]:
+///from [/obj/structure/locker/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 ///from /obj/item/storage/book/bible/afterattack(): (mob/user, proximity)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
-///Closets
-///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
-#define COMSIG_CLOSET_INSERT "closet_insert"
+
+///Lockers
+///From base of [/obj/structure/locker/proc/insert]: (atom/movable/inserted)
+#define COMSIG_LOCKER_INSERT "locker_insert"
 	///used to interrupt insertion
-	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
+	#define COMPONENT_LOCKER_INSERT_INTERRUPT (1<<0)
 
 ///From open: (forced)
-#define COMSIG_CLOSET_PRE_OPEN "closet_pre_open"
+#define COMSIG_LOCKER_PRE_OPEN "locker_pre_open"
 	#define BLOCK_OPEN (1<<0)
 ///From open: (forced)
-#define COMSIG_CLOSET_POST_OPEN "closet_post_open"
+#define COMSIG_LOCKER_POST_OPEN "locker_post_open"
 
-///a deliver_first element closet was successfully delivered
-#define COMSIG_CLOSET_DELIVERED "crate_delivered"
+///a deliver_first element locker was successfully delivered
+#define COMSIG_LOCKER_DELIVERED "crate_delivered"
 
 ///Eigenstasium
 ///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)

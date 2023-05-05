@@ -51,8 +51,8 @@
 	achievement_type = /datum/award/achievement/boss/colossus_kill
 	crusher_achievement_type = /datum/award/achievement/boss/colossus_crusher
 	score_achievement_type = /datum/award/score/colussus_score
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/colossus)
+	crusher_loot = list(/obj/structure/locker/crate/necropolis/colossus/crusher)
+	loot = list(/obj/structure/locker/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
@@ -565,7 +565,7 @@
 		return
 
 	var/mob/living/picked_mob = pick(valid_mobs)
-	var/obj/structure/closet/stasis/possessor_container = new /obj/structure/closet/stasis(picked_mob)
+	var/obj/structure/locker/stasis/possessor_container = new /obj/structure/locker/stasis(picked_mob)
 	user.forceMove(possessor_container)
 
 /// Returns true if this is a mob you're allowed to possess
@@ -573,7 +573,7 @@
 	return check_mob.stat != DEAD && !check_mob.ckey && check_mob.mob_size < MOB_SIZE_LARGE && check_mob.melee_damage_upper <= 5
 
 
-/obj/structure/closet/stasis
+/obj/structure/locker/stasis
 	name = "quantum entanglement stasis warp field"
 	desc = "You can hardly comprehend this thing... which is why you can't see it."
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
@@ -583,7 +583,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	var/mob/living/simple_animal/holder_animal
 
-/obj/structure/closet/stasis/process()
+/obj/structure/locker/stasis/process()
 	if(holder_animal)
 		if(holder_animal.stat == DEAD)
 			dump_contents()
@@ -591,13 +591,13 @@
 			holder_animal.gib()
 			return
 
-/obj/structure/closet/stasis/Initialize(mapload)
+/obj/structure/locker/stasis/Initialize(mapload)
 	. = ..()
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/structure/locker/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/L = arrived
 		L.notransform = 1
@@ -608,7 +608,7 @@
 		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
 
-/obj/structure/closet/stasis/dump_contents(kill = TRUE)
+/obj/structure/locker/stasis/dump_contents(kill = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/possessor in src)
 		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
@@ -625,10 +625,10 @@
 			return ..()
 	return ..()
 
-/obj/structure/closet/stasis/emp_act()
+/obj/structure/locker/stasis/emp_act()
 	return
 
-/obj/structure/closet/stasis/ex_act()
+/obj/structure/locker/stasis/ex_act()
 	return FALSE
 
 /datum/action/exit_possession
@@ -645,9 +645,9 @@
 	if(!.)
 		return FALSE
 
-	var/obj/structure/closet/stasis/stasis = locate() in owner
+	var/obj/structure/locker/stasis/stasis = locate() in owner
 	if(!stasis)
-		CRASH("[type] did not find a stasis closet thing in the owner.")
+		CRASH("[type] did not find a stasis locker thing in the owner.")
 
 	stasis.dump_contents(FALSE)
 	qdel(stasis)

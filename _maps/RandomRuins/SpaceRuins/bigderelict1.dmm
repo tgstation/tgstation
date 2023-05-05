@@ -136,12 +136,12 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aH" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aI" = (
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
 /obj/item/stock_parts/cell/hyper,
 /obj/item/stock_parts/cell/high,
@@ -165,18 +165,18 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aN" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aO" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aP" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -185,7 +185,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aQ" = (
-/obj/structure/closet/crate/radiation,
+/obj/structure/locker/crate/radiation,
 /obj/item/clothing/head/utility/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/geiger_counter,
@@ -203,7 +203,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aU" = (
-/obj/structure/closet/crate/critter{
+/obj/structure/locker/crate/critter{
 	name = "critter crate - mr.tiggles";
 	opened = 1
 	},
@@ -212,19 +212,19 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aV" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aW" = (
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
 /obj/item/stock_parts/cell/hyper,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aX" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -502,7 +502,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cb" = (
-/obj/structure/closet/wardrobe/cargotech,
+/obj/structure/locker/wardrobe/cargotech,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cc" = (
@@ -636,7 +636,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cH" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/structure/cable,
@@ -950,7 +950,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dV" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/turf_decal/delivery,
@@ -960,12 +960,12 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dX" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dY" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/plasteel/twenty,
@@ -977,13 +977,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ea" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/storage/pill_bottle/stimulant,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eb" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/target/syndicate,
 /obj/item/target/clown,
 /obj/item/target/clown,
@@ -1013,14 +1013,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ej" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/cloth/ten,
 /obj/item/stack/sheet/cloth/ten,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ek" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/cardboard/fifty,
@@ -1034,28 +1034,28 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eo" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/breath,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ep" = (
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/locker/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eq" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "es" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1099,14 +1099,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eA" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eB" = (
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/machinery/light/directional/south,
@@ -1115,7 +1115,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eC" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/modular_computer/pda/clear,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -1125,7 +1125,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eF" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1134,7 +1134,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eH" = (
-/obj/structure/closet/crate/engineering,
+/obj/structure/locker/crate/engineering,
 /obj/item/multitool,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -1245,7 +1245,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "rS" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/o2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
@@ -1318,7 +1318,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "yQ" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
@@ -1337,7 +1337,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "BI" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire,
 /obj/effect/turf_decal/delivery,
@@ -1349,7 +1349,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "Dd" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/locker/crate/internals,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/storage/medkit/toxin,
@@ -1364,7 +1364,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 "Ef" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -1481,7 +1481,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "Sd" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
@@ -1499,12 +1499,12 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "Vz" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/brute,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "YX" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)

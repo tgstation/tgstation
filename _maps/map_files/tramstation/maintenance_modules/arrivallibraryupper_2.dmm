@@ -54,7 +54,7 @@
 /area/station/maintenance/port/aft)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
+/obj/structure/locker/cardboard,
 /obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
@@ -84,7 +84,7 @@
 /area/station/maintenance/port/aft)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/material_cheap,

@@ -284,7 +284,7 @@ Also Good:
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "loot_site"
 	spawn_loot_chance = 20
-	loot = list(/obj/structure/closet/crate/secure/loot)
+	loot = list(/obj/structure/locker/crate/secure/loot)
 ```
 
 Bad:
@@ -365,7 +365,7 @@ Good:
 /obj/effect/spawner/random/structure/crate_abandoned
 	name = "locked crate spawner"
 	spawn_loot_chance = 20
-	loot = list(/obj/structure/closet/crate/secure/loot)
+	loot = list(/obj/structure/locker/crate/secure/loot)
 ```
 
 
@@ -376,7 +376,7 @@ Bad:
 	name = "lootcrate spawner"
 	loot = list(
 		"" = 80
-		/obj/structure/closet/crate/secure/loot = 20,
+		/obj/structure/locker/crate/secure/loot = 20,
 	)
 ```
 

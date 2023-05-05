@@ -9,7 +9,7 @@
 /datum/supply_pack/imports
 	group = "Imports"
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/locker/crate/internals
 
 /datum/supply_pack/imports/foamforce
 	name = "Foam Force Crate"
@@ -36,7 +36,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/storage/backpack/meat)
 	crate_name = "MEAT MEAT MEAT MEAT MEAT"
-	crate_type = /obj/structure/closet/crate/necropolis
+	crate_type = /obj/structure/locker/crate/necropolis
 
 /datum/supply_pack/imports/duct_spider
 	name = "Duct Spider Crate"
@@ -44,7 +44,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/mob/living/basic/giant_spider/maintenance)
 	crate_name = "duct spider crate"
-	crate_type = /obj/structure/closet/crate/critter
+	crate_type = /obj/structure/locker/crate/critter
 
 /datum/supply_pack/imports/duct_spider/dangerous
 	name = "Duct Spider Crate?"
@@ -80,7 +80,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/mob/living/carbon/human)
 	crate_name = "putrid dumpster"
-	crate_type = /obj/structure/closet/crate/trashcart
+	crate_type = /obj/structure/locker/crate/trashcart
 
 /datum/supply_pack/imports/dumpstercorpse/generate()
 	. = ..()
@@ -101,7 +101,7 @@
 	contains = list()
 	contraband = TRUE
 
-/datum/supply_pack/imports/mafia/fill(obj/structure/closet/crate/our_crate)
+/datum/supply_pack/imports/mafia/fill(obj/structure/locker/crate/our_crate)
 	for(var/items in 1 to 4)
 		new /obj/effect/spawner/random/clothing/mafia_outfit(our_crate)
 		new /obj/item/virgin_mary(our_crate)
@@ -151,7 +151,7 @@
 	)
 	crate_name = "crate"
 
-/datum/supply_pack/imports/contraband/fill(obj/structure/closet/crate/our_crate)
+/datum/supply_pack/imports/contraband/fill(obj/structure/locker/crate/our_crate)
 	for(var/items in 1 to 10)
 		var/item = pick(contains)
 		new item(our_crate)
@@ -180,7 +180,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/locker/crate/internals
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -235,7 +235,7 @@
 		/obj/item/gun/ballistic/rifle/boltaction/surplus = 2,
 	)
 
-/datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/our_crate)
+/datum/supply_pack/imports/russian/fill(obj/structure/locker/crate/our_crate)
 	for(var/items in 1 to 10)
 		var/item = pick(contains)
 		new item(our_crate)
@@ -265,4 +265,4 @@
 		/obj/item/clothing/mask/bandana/skull/black,
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large

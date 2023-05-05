@@ -1,0 +1,3 @@
+/obj/structure/locker:
+  banned_neighbors:
+  - /obj/structure/locker

@@ -13,12 +13,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "f" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "g" = (
-/obj/structure/closet/crate/secure/loot,
+/obj/structure/locker/crate/secure/loot,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "h" = (

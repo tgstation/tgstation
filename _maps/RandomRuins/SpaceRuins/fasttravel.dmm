@@ -40,7 +40,7 @@
 	id = "zaza"
 	},
 /obj/item/card/emagfake,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/plating/airless,
 /area/ruin/space/massdriverhub)
 "hV" = (
@@ -100,7 +100,7 @@
 	dir = 1;
 	id = "zaza"
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/plating/airless,
 /area/ruin/space/massdriverhub)
@@ -377,7 +377,7 @@
 	dir = 9;
 	id = "zaza"
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/plating/airless,
 /area/ruin/space/massdriverhub)
 "TM" = (
@@ -390,7 +390,7 @@
 	dir = 6;
 	id = "zaza"
 	},
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/plating/airless,

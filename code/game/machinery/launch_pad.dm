@@ -226,7 +226,7 @@
 			log_msg += "[key_name(T)][on_chair]"
 		else
 			log_msg += "[ROI.name]"
-			if (istype(ROI, /obj/structure/closet))
+			if (istype(ROI, /obj/structure/locker))
 				log_msg += " ("
 				var/first_inner = TRUE
 				for(var/atom/movable/Q as mob|obj in ROI)

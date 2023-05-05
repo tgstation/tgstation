@@ -421,7 +421,7 @@
 /turf/closed/wall,
 /area/ruin/pizzeria/kitchen)
 "rY" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk{
@@ -766,7 +766,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Hm" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/trash/raisins,
 /obj/item/trash/syndi_cakes,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -799,7 +799,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "IA" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/item/toy/crayon/spraycan,
 /obj/item/camera,
 /obj/machinery/light/small/directional/west,
@@ -882,7 +882,7 @@
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
 "KL" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/locker/secure_closet/freezer/meat,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

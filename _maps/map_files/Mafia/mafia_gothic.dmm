@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "l" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/carpet/red,
 /area/centcom/mafia)
 "m" = (
@@ -50,7 +50,7 @@
 	},
 /area/centcom/mafia)
 "o" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -97,13 +97,13 @@
 	},
 /area/centcom/mafia)
 "H" = (
-/obj/structure/closet/cabinet{
+/obj/structure/locker/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/mafia)
 "J" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -122,11 +122,11 @@
 /turf/open/floor/iron/chapel,
 /area/centcom/mafia)
 "P" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/iron/chapel,
 /area/centcom/mafia)
 "Q" = (
-/obj/structure/closet/crate/coffin,
+/obj/structure/locker/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},

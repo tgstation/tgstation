@@ -224,7 +224,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/closet/secure_closet/freezer/empty{
+/obj/structure/locker/secure_closet/freezer/empty{
 	name = "fridge"
 	},
 /turf/open/floor/iron/dark/diagonal,
@@ -805,7 +805,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "kP" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -978,7 +978,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "nT" = (
-/obj/structure/closet/crate/trashcart/filled,
+/obj/structure/locker/crate/trashcart/filled,
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
 	},
@@ -1074,7 +1074,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "oJ" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/stack/medical/suture/emergency,
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/reagent_containers/hypospray/medipen/blood_loss,
@@ -1257,7 +1257,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "qB" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/item/broken_bottle,
 /obj/item/shard,
 /obj/item/trash/champagne_cork,
@@ -1351,7 +1351,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "rl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet{
+/obj/structure/locker{
 	anchored = 1;
 	name = "HO Locker"
 	},
@@ -2129,7 +2129,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
 "AT" = (
-/obj/structure/closet/crate/trashcart/laundry,
+/obj/structure/locker/crate/trashcart/laundry,
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
 	},
@@ -2138,7 +2138,7 @@
 "AU" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/item/trash/ready_donk,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "Ba" = (
@@ -2195,7 +2195,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "BG" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/stack/sheet/mineral/wood/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -3381,7 +3381,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "Rx" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "Greyham's Locker"
 	},
 /obj/machinery/light/small/directional/east,
@@ -3678,7 +3678,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "VP" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "Outpost Security Locker"
 	},
 /obj/structure/window/reinforced/spawner,
@@ -3689,7 +3689,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
 "VQ" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/item/reagent_containers/cup/glass/waterbottle/large,
 /obj/item/reagent_containers/cup/glass/waterbottle/large,
 /obj/item/reagent_containers/cup/glass/waterbottle/large,
@@ -3870,11 +3870,11 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "YC" = (
-/obj/structure/closet/l3closet/scientist,
+/obj/structure/locker/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
 "YL" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	name = "Smith's Locker"
 	},
 /obj/structure/window/reinforced/spawner/directional/west,

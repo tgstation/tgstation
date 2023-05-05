@@ -20,7 +20,7 @@
 	contains = list(/obj/item/food/sandwich = 5)
 	crate_name = "outsourced food crate"
 
-/datum/supply_pack/exploration/catering/fill(obj/structure/closet/crate/crate)
+/datum/supply_pack/exploration/catering/fill(obj/structure/locker/crate/crate)
 	. = ..()
 	if(!prob(30))
 		return
@@ -37,6 +37,6 @@
 	crate_name = "shrubbery crate"
 	var/shrub_amount = 8
 
-/datum/supply_pack/exploration/shrubbery/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/exploration/shrubbery/fill(obj/structure/locker/crate/C)
 	for(var/i in 1 to shrub_amount)
 		new /obj/item/grown/shrub(C)

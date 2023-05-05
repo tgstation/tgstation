@@ -305,7 +305,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tX" = (
@@ -382,7 +382,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "AC" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/plating,
@@ -506,7 +506,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Lu" = (
-/obj/structure/closet,
+/obj/structure/locker,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "LI" = (
@@ -529,7 +529,7 @@
 /area/centcom/basketball)
 "LV" = (
 /obj/structure/sign/poster/contraband/random/directional/south,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/centcom/basketball)
@@ -628,7 +628,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tc" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/locker/mini_fridge,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tl" = (
@@ -643,7 +643,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Uq" = (
-/obj/structure/closet/crate/cardboard,
+/obj/structure/locker/crate/cardboard,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,

@@ -91,7 +91,7 @@
 #define CLOTHING_DAMAGED 1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
 #define CLOTHING_SHREDDED 2 // The clothing is useless and cannot be equipped unless repaired first
 
-/// Flags for the pod_flags var on /obj/structure/closet/supplypod
+/// Flags for the pod_flags var on /obj/structure/locker/supplypod
 #define FIRST_SOUNDS (1<<0) // If it shouldn't play sounds the first time it lands, used for reverse mode
 
 /// Flags for the gun_flags var for firearms

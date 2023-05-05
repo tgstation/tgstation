@@ -136,7 +136,7 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
 /obj/machinery/light/directional/west,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/spawner/random/exotic/syndie,
@@ -175,7 +175,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aM" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/locker/crate/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/healthanalyzer,
 /obj/item/reagent_containers/blood/o_minus,
@@ -534,7 +534,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -612,7 +612,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cc" = (
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cd" = (
@@ -867,7 +867,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "da" = (
-/obj/structure/closet/firecloset/full,
+/obj/structure/locker/firecloset/full,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "db" = (

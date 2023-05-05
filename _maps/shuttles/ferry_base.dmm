@@ -52,7 +52,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "q" = (

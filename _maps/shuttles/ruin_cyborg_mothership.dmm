@@ -75,7 +75,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "fB" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
@@ -242,7 +242,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/closet/crate{
+/obj/structure/locker/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -769,7 +769,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "Pf" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/crate/solarpanel_small,
+/obj/structure/locker/crate/solarpanel_small,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},

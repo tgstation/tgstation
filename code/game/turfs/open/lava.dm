@@ -302,9 +302,9 @@
 		if(burn_obj.get_armor_rating(FIRE) > 50) //obj with 100% fire armor still get slowly burned away.
 			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
-		if(istype(burn_obj, /obj/structure/closet))
-			var/obj/structure/closet/burn_closet = burn_obj
-			for(var/burn_content in burn_closet.contents)
+		if(istype(burn_obj, /obj/structure/locker))
+			var/obj/structure/locker/burn_locker = burn_obj
+			for(var/burn_content in burn_locker.contents)
 				burn_stuff(burn_content)
 		return
 

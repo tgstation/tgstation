@@ -49,12 +49,12 @@
 			podspawn(list(
 				"target" = get_turf(user),
 				"style" = STYLE_SYNDICATE,
-				"spawn" = /obj/structure/closet/crate/engineering/smuggled_meteor_shields,
+				"spawn" = /obj/structure/locker/crate/engineering/smuggled_meteor_shields,
 			))
 
-/obj/structure/closet/crate/engineering/smuggled_meteor_shields
+/obj/structure/locker/crate/engineering/smuggled_meteor_shields
 
-/obj/structure/closet/crate/engineering/smuggled_meteor_shields/PopulateContents()
+/obj/structure/locker/crate/engineering/smuggled_meteor_shields/PopulateContents()
 	..()
 	for(var/i in 1 to 11)
 		new /obj/machinery/satellite/meteor_shield(src)

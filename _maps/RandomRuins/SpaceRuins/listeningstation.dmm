@@ -8,7 +8,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "ad" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/closet/crate/secure/freezer/commsagent,
+/obj/structure/locker/crate/secure/freezer/commsagent,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -378,7 +378,7 @@
 /area/ruin/space)
 "vP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/medical1{
+/obj/structure/locker/secure_closet/medical1{
 	req_access = list("syndicate")
 	},
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
@@ -594,7 +594,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Ey" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/emcloset/anchored,
+/obj/structure/locker/emcloset/anchored,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
@@ -618,7 +618,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "GR" = (
-/obj/structure/closet{
+/obj/structure/locker{
 	icon_door = "black";
 	name = "wardrobe"
 	},
@@ -746,7 +746,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Ni" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure_closet/freezer/empty/open,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
@@ -805,7 +805,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "RB" = (
-/obj/structure/closet/crate/bin,
+/obj/structure/locker/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/north,
@@ -921,7 +921,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "VK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/freezer,
+/obj/structure/locker/crate/freezer,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus{
 	pixel_x = -3;
@@ -976,7 +976,7 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,

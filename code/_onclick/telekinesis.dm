@@ -61,7 +61,7 @@
  * Telekinesis item attack_self act.
  *
  * * This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.
- * * It is used for manipulating things at range, for example, opening and closing closets..
+ * * It is used for manipulating things at range, for example, opening and closing lockers..
  * * Defined at the `/atom` level but only used at the `/obj/item` one.
  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
  */
@@ -119,7 +119,7 @@
 		update_appearance()
 
 /obj/item/tk_grab/dropped(mob/user)
-	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
+	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/locker with an item
 		if(focus.Adjacent(loc))
 			focus.forceMove(loc)
 	. = ..()

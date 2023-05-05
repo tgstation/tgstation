@@ -14,7 +14,7 @@
 	spawnableTurfs = list()
 	spawnableAtoms = list(/obj/structure/table = 20,/obj/structure/chair = 15,/obj/structure/chair/stool = 10, \
 		/obj/structure/frame/computer = 15, /obj/item/storage/toolbox/syndicate = 15 ,\
-		/obj/structure/closet/syndicate = 25, /obj/machinery/suit_storage_unit/syndicate = 15)
+		/obj/structure/locker/syndicate = 25, /obj/machinery/suit_storage_unit/syndicate = 15)
 
 /datum/map_generator_module/splatter_layer/syndie_mobs
 	spawnableAtoms = list(/mob/living/basic/syndicate = 30, \

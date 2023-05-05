@@ -150,7 +150,7 @@
 /area/station/maintenance/central/greater)
 "kb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/structure/locker/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -175,7 +175,7 @@
 /area/station/maintenance/central/greater)
 "mp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
+/obj/structure/locker/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "nV" = (
@@ -296,7 +296,7 @@
 /area/station/maintenance/central/greater)
 "wA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
+/obj/structure/locker/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "xB" = (
@@ -535,7 +535,7 @@
 /area/station/maintenance/central/greater)
 "Ul" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,

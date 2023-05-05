@@ -51,7 +51,7 @@
 					/obj/item/clothing/shoes/galoshes,
 				)
 	crate_name = "janitorial cart crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/service/janitor/janitank
 	name = "Janitor Backpack Crate"
@@ -61,7 +61,7 @@
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/watertank/janitor)
 	crate_name = "janitor backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
@@ -70,7 +70,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/simple_animal/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large
 
 /datum/supply_pack/service/party
 	name = "Party Equipment"
@@ -160,7 +160,7 @@
 	access_view = ACCESS_MINING_STATION
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/locker/crate/secure
 
 /datum/supply_pack/service/survivalknives
 	name = "Survival Knives Crate"
@@ -225,7 +225,7 @@
 				)
 	crate_name = "donk pocket crate"
 
-/datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/locker/crate/C)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
@@ -241,7 +241,7 @@
 				)
 	crate_name = "\improper Ready-Donk crate"
 
-/datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/locker/crate/C)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
@@ -269,4 +269,4 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/machinery/coffeemaker/impressa)
 	crate_name = "coffeemaker crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/locker/crate/large

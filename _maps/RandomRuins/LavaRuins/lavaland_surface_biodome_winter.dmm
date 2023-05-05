@@ -166,7 +166,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "aL" = (
-/obj/structure/closet/crate/trashcart,
+/obj/structure/locker/crate/trashcart,
 /obj/item/trash/semki,
 /obj/item/trash/candy,
 /turf/open/misc/asteroid/snow,
@@ -380,7 +380,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "HR" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure_closet/freezer/fridge/open,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "JZ" = (
@@ -390,7 +390,7 @@
 /area/ruin/powered/snow_biodome)
 "KS" = (
 /obj/item/chainsaw,
-/obj/structure/closet,
+/obj/structure/locker,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
