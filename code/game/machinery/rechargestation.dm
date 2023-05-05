@@ -58,10 +58,9 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.")
 		if(materials.silo)
-			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be activated by <b>Right-Clicking</b> [src].")
+			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be toggled by <b>Right-Clicking</b> [src].")
 		if(repairs)
 			. += span_notice("[src] has been upgraded to support automatic repairs.")
-
 
 /obj/machinery/recharge_station/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -111,20 +110,20 @@
 /obj/machinery/recharge_station/proc/toggle_restock(mob/user)
 	if(sendmats)
 		sendmats = FALSE
-		balloon_alert(user, "restocking from ore silo: disabled")
+		say("Restocking from ore silo: disabled.")
 		return
 	if(state_open || !occupant)
 		return
 	if(!iscyborg(occupant))
 		return
 	if(!materials.silo)
-		balloon_alert(user, "error: ore silo connection offline")
+		say("Error: ore silo connection offline.")
 		return
 	if(materials.on_hold())
-		balloon_alert(user, "error: access denied")
+		say("Error: ore silo access denied.")
 		return FALSE
 	sendmats = TRUE
-	balloon_alert(user, "restocking from ore silo: enabled")
+	say("Restocking from ore silo: enabled.")
 
 /obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()
@@ -133,12 +132,13 @@
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
 		close_machine(density_to_set = TRUE)
+		toggle_restock() //defaults to enabled
 	else
 		open_machine()
 
 /obj/machinery/recharge_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
-	sendmats = FALSE //Leaving off for the next user
+	sendmats = FALSE
 	update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
