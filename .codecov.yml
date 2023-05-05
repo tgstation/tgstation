@@ -3,6 +3,7 @@ coverage:
     project:
       default:
         informational: true
+    patch: off
 comment: false
 ignore:
   - "code/modules/unit_tests"
