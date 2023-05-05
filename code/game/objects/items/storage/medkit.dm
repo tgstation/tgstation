@@ -669,10 +669,6 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)
 
-/*
- * Test tube rack
- */
-
 /obj/item/storage/test_tube_rack
 	name = "test tube rack"
 	desc = "A wooden rack for storing test tubes."

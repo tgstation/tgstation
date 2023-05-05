@@ -62,7 +62,6 @@
 /obj/item/reagent_containers/cup/bottle/phlogiston
 	name = "Phlogiston bottle"
 	desc = "A small bottle of Phlogiston, that will set you on fire if used."
-	volume = 50
 	list_reagents = list(/datum/reagent/phlogiston = 30)
 
 /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
