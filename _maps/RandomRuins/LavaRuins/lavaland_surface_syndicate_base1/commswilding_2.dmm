@@ -8,6 +8,13 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
+"d" = (
+/obj/machinery/computer/records/medical/syndie{
+	dir = 2;
+	req_access = list("syndicate")
+	},
+/turf/open/floor/wood,
+/area/ruin/syndicate_lava_base/telecomms)
 "h" = (
 /obj/item/storage/toolbox/syndicate,
 /obj/item/multitool,
@@ -233,7 +240,7 @@ k
 (5,1,1) = {"
 a
 K
-y
+d
 y
 y
 Q

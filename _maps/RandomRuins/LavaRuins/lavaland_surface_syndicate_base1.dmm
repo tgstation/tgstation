@@ -1798,6 +1798,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/syndicate_lava_base/main)
 "ld" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
 "le" = (
@@ -2102,16 +2103,14 @@
 	},
 /area/ruin/syndicate_lava_base/medbay)
 "mE" = (
-/obj/structure/table/reinforced,
-/obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_y = 9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/machinery/computer/operating{
+	dir = 8
 	},
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -2211,6 +2210,10 @@
 /obj/item/surgicaldrill,
 /obj/item/cautery,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/white/side,
 /area/ruin/syndicate_lava_base/medbay)
 "nC" = (
@@ -2510,6 +2513,7 @@
 /area/ruin/syndicate_lava_base/main)
 "rg" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/ruin/syndicate_lava_base/engineering)
 "rn" = (
@@ -3958,6 +3962,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "Rl" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/ruin/syndicate_lava_base/engineering)
 "Rn" = (
@@ -4374,6 +4379,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "Yt" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/ruin/syndicate_lava_base/engineering)
 "YS" = (
