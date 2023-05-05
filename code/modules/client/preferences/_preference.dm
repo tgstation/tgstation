@@ -340,7 +340,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// returns an assoc list of names to atoms/icons.
 	var/should_generate_icons = FALSE
 
-	var/cache_generating
 	var/list/cached_values
 
 	/// If the preference is a main feature (PREFERENCE_CATEGORY_FEATURES or PREFERENCE_CATEGORY_CLOTHING)
@@ -358,11 +357,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	UNTIL(!cache_generating)
 	if (isnull(cached_values))
-		cache_generating = TRUE
 		cached_values = init_possible_values()
-		cache_generating = FALSE
 		ASSERT(cached_values.len)
 
 	return cached_values
@@ -394,6 +390,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// - An assoc list of raw values to atoms/icons, in which case
 /// icons will be generated.
 /datum/preference/choiced/proc/init_possible_values()
+	SHOULD_NOT_SLEEP(TRUE) // TODO: There's a spacemanDMM bug as this is set higher in the call chain, but if you remove this line and make an override of this function sleep, it won't get detected
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
 /datum/preference/choiced/is_valid(value)

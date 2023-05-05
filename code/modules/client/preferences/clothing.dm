@@ -21,7 +21,6 @@
 		icon_with_socks.Scale(32, 32)
 
 		values[accessory_name] = icon_with_socks
-		CHECK_TICK
 
 	return values
 
@@ -116,7 +115,6 @@
 		icon_with_undershirt.Crop(9, 9, 23, 23)
 		icon_with_undershirt.Scale(32, 32)
 		values[accessory_name] = icon_with_undershirt
-		CHECK_TICK
 
 	return values
 
