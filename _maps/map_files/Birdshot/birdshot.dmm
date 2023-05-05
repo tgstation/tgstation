@@ -55922,7 +55922,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "sTu" = (
-/obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/station/hallway/primary/port)
