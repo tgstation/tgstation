@@ -5,7 +5,6 @@
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/green,
 /obj/item/clothing/shoes/sneakers/green,
-/obj/item/clothing/shoes/sneakers/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
@@ -30,25 +29,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"f" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 8
-	},
-/obj/structure/chair/sofa/bench/right{
-	dir = 8
-	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"g" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
-/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "h" = (
@@ -168,15 +148,6 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
-"I" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
-/turf/open/floor/holofloor,
-/area/template_noop)
 "J" = (
 /obj/item/toy/basketball,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -240,10 +211,10 @@
 
 (1,1,1) = {"
 C
-I
+A
 s
 w
-I
+A
 s
 w
 A
@@ -252,11 +223,11 @@ a
 "}
 (2,1,1) = {"
 q
-g
+m
 v
 Q
-I
-s
+m
+v
 Q
 m
 v
@@ -337,7 +308,7 @@ G
 (9,1,1) = {"
 C
 p
-f
+d
 w
 p
 d
