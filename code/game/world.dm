@@ -175,11 +175,7 @@ GLOBAL_VAR(restart_counter)
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
 	var/datum/callback/cb
-#ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
-#else
-	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
-#endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
 
@@ -469,8 +465,11 @@ GLOBAL_VAR(restart_counter)
 		enable_debugging()
 
 /world/proc/init_coverage()
+#ifdef CODE_COVERAGE
 	AUXTOOLS_CHECK_NO_CONFIG(AUXCOV)
-	enable_code_coverage()
+	start_code_coverage("coverage/full.xml")
+	start_code_coverage("coverage/init.xml")
+#endif
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))

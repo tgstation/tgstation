@@ -46,7 +46,10 @@ GLOBAL_PROTECT(auxtools_initialized)
 	CRASH("auxtools not loaded")
 
 /proc/enable_debugging(mode, port)
-	CRASH("auxtools not loaded")
+	CRASH("debug_server not loaded")
 
-/proc/enable_code_coverage()
-	CRASH("auxtools not loaded")
+/proc/start_code_coverage(filename)
+	CRASH("auxcov not loaded")
+
+/proc/stop_code_coverage(filename)
+	CRASH("auxcov not loaded")

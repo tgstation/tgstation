@@ -161,6 +161,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/duration = REALTIMEOFDAY
 
 	log_world("::group::[test_path]")
+
+	start_code_coverage("coverage/test-[copytext("[test_path]", length("[/datum/unit_test]") + 2)].xml")
 	test.Run()
 
 	duration = REALTIMEOFDAY - duration
@@ -197,6 +199,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	qdel(test)
 
 /proc/RunUnitTests()
+#ifdef CODE_COVERAGE
+	stop_code_coverage("coverage/init.xml")
+#endif
+
 	CHECK_TICK
 
 	var/list/tests_to_run = subtypesof(/datum/unit_test)
@@ -212,13 +218,19 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	var/list/test_results = list()
 
+	start_code_coverage("coverage/unit_tests.xml")
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	stop_code_coverage("coverage/unit_tests.xml")
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
 	file(file_name) << json_encode(test_results)
+
+#ifdef CODE_COVERAGE
+	start_code_coverage("coverage/shutdown.xml")
+#endif
 
 	SSticker.force_ending = TRUE
 	//We have to call this manually because del_text can preceed us, and SSticker doesn't fire in the post game

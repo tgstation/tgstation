@@ -65,13 +65,13 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
-// #define USE_BYOND_TRACY
-
 // If this is uncommented, we will use auxtools to generate a cobertura XML file (auxtools_coverage.xml) that can be shunted to a CI service like https://codecov.io
 // Note,this requires using CBT to build in flat file mode
 // #define CODE_COVERAGE
+
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// #define USE_BYOND_TRACY
 
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS

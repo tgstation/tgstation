@@ -25,12 +25,14 @@ mkdir -p data/screenshots_new
 cp -r ci_test/data/screenshots_new data/screenshots_new
 
 cat ci_test/data/logs/ci/clean_run.lk
-if [[ ! -f ci_test/auxtools_coverage.xml ]] ; then
-    echo 'File "auxtools_coverage.xml" is not there, aborting.'
+if [[ ! -d ci_test/coverage ]] ; then
+    echo 'Directory "coverage" is not there, aborting.'
     exit 1
 fi
 
-#unflatten
-sed -i 's/!/\//g' ci_test/auxtools_coverage.xml
-#fix the !DOCTYPE
-sed -i 's/<\/DOCTYPE/<!DOCTYPE/g' ci_test/auxtools_coverage.xml
+for filename in ci_test/coverage/*.xml; do
+	#unflatten
+	sed -i 's/!/\//g' $filename
+	#fix the !DOCTYPE
+	sed -i 's/<\/DOCTYPE/<!DOCTYPE/g' ci_test/auxtools_coverage.xml
+done

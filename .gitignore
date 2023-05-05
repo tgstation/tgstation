@@ -240,6 +240,6 @@ define_sanity_output.txt
 *.flat.m.dme
 
 # For/From auxtools code coverage
-executable_lines.json
-auxtools_coverage.dll
-auxtools_coverage.xml
+auxcov.dll
+libauxcov.so
+/coverage/**/*
