@@ -3,7 +3,7 @@
 	. = TRUE
 
 	//Prying off broken cover
-	if(opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED && (machine_stat & BROKEN))
+	if((opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED) && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
 		balloon_alert(user, "prying...")
 		if(!crowbar.use_tool(src, user, 5 SECONDS))
@@ -128,7 +128,7 @@
 			return
 		balloon_alert(user, "repairing...")
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
-			update_integrity(atom_integrity += 50)
+			update_integrity(min(atom_integrity += 50,max_integrity))
 			balloon_alert(user, "repaired")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
