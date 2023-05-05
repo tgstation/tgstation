@@ -591,6 +591,8 @@
 /obj/effect/temp_visual/sonar_ping/process(seconds_per_tick)
 	var/mob/living/looker = mod_man?.resolve()
 	var/mob/living/creature = pinged_person?.resolve()
+	if(isnull(looker) || isnull(creature))
+	    return PROCESS_KILL
 	modsuit_image.loc = looker.loc
 	modsuit_image.pixel_x = ((creature.x - looker.x) * 32)
 	modsuit_image.pixel_y = ((creature.y - looker.y) * 32)
