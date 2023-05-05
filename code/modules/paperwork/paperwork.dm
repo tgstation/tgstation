@@ -113,7 +113,7 @@
 //HEAD OF STAFF DOCUMENTS
 
 /obj/item/paperwork/cargo
-	stamp_requested = /obj/item/stamp/qm
+	stamp_requested = /obj/item/stamp/head/qm
 	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 
@@ -126,7 +126,7 @@
 	detailed_desc += span_info(" Despite how disorganized the documents are, they're all appropriately filled in. You should probably stamp this.")
 
 /obj/item/paperwork/security
-	stamp_requested = /obj/item/stamp/hos
+	stamp_requested = /obj/item/stamp/head/hos
 	stamp_job = /datum/job/head_of_security
 	stamp_icon = "paper_stamp-hos"
 
@@ -139,7 +139,7 @@
 	detailed_desc += span_info(" What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")
 
 /obj/item/paperwork/service
-	stamp_requested = /obj/item/stamp/hop
+	stamp_requested = /obj/item/stamp/head/hop
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
@@ -152,7 +152,7 @@
 	detailed_desc += span_info(" A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")
 
 /obj/item/paperwork/medical
-	stamp_requested = /obj/item/stamp/cmo
+	stamp_requested = /obj/item/stamp/head/cmo
 	stamp_job = /datum/job/chief_medical_officer
 	stamp_icon = "paper_stamp-cmo"
 
@@ -166,7 +166,7 @@
 
 
 /obj/item/paperwork/engineering
-	stamp_requested = /obj/item/stamp/ce
+	stamp_requested = /obj/item/stamp/head/ce
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
@@ -179,7 +179,7 @@
 	detailed_desc += span_info(" Damn, that's impressive stuff. You should probably stamp this.")
 
 /obj/item/paperwork/research
-	stamp_requested = /obj/item/stamp/rd
+	stamp_requested = /obj/item/stamp/head/rd
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
@@ -192,7 +192,7 @@
 	detailed_desc += span_info(" Regardless, they're still perfectly usable test results. You should probably stamp this.")
 
 /obj/item/paperwork/captain
-	stamp_requested = /obj/item/stamp/captain
+	stamp_requested = /obj/item/stamp/head/captain
 	stamp_job = /datum/job/captain
 	stamp_icon = "paper_stamp-cap"
 

@@ -165,3 +165,26 @@
   - bugfix: Even more fixes to North Star decals and detailing
   san7890:
   - bugfix: Basic mobs will now be affected by explosions again.
+2023-05-05:
+  MTandi:
+  - qol: 'Mapping: Added broken machine map helper'
+  - qol: 'Mapping: Replaced damaged window spawner with a universal helper'
+  Melbert:
+  - bugfix: Tramstation Robotics and RD now spawn in their departments roundstart
+  - bugfix: Birdboat detective now spawns in their office
+  Rhials:
+  - bugfix: Powersinks no longer always show as being very hot if you're too close.
+  Striders13:
+  - rscadd: miners with style meter can now parry kisses
+  lizardqueenlexi:
+  - bugfix: The hierophant club's sprite updates when it should
+  - bugfix: The hierophant club grants the blink action when summoned into hand
+  vinylspiders:
+  - bugfix: a mob will now once again spill their organs when they are gibbed
+  zxaber:
+  - bugfix: Fixed math on cyborg restocking
+  - qol: borgs entering chargers now have the restocking feature enabled by default.
+      It can be disabled with a right-click while charging if you don't want to eat
+      the station's mats.
+  - balance: Borg restocking speed now scales with the charger's manipulator tier.
+  - bugfix: Mech chargers on Tram (and possibly elsewhere) no longer sync oddly.
