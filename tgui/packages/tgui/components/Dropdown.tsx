@@ -145,9 +145,9 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return;
     }
     if (renderedMenu.offsetHeight > 200) {
-      Dropdown.renderedMenu.className = DROPDOWN_SCROLL_CLASSNAMES;
+      renderedMenu.className = DROPDOWN_SCROLL_CLASSNAMES;
     } else {
-      Dropdown.renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
+      renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
     }
 
     const { options = [] } = this.props;
