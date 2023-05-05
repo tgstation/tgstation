@@ -158,6 +158,15 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/modular_shield_gen
+	name = "Modular Shield Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modularshieldgen
+	req_components = list(
+		/datum/stock_part/manipulator =	1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1)
+
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

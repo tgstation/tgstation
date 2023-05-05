@@ -555,7 +555,7 @@
 #undef ACTIVE_HASFIELDS
 
 //Modular Shield Generator Start
-/obj/machinery/ModularShieldGen
+/obj/machinery/modularshieldgen
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/stationobjs.dmi'
@@ -563,14 +563,16 @@
 	density = TRUE
 	opacity = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
-	circuit = /obj/item/circuitboard/machine/ModularShieldGen
+	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
 	var/overclocked = FALSE
 	var/active = FALSE
 	var/recovering = FALSE
 
 	///Determins max health of the shield
-	var/max_shield_strength = 100
+	var/max_strength = 100
+
+	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
 
 	///Shield Regeneration amount
 	var/regeneration = 5
@@ -578,37 +580,66 @@
 	///Determines the max radius the shield can support
 	var/max_radius = 5
 
-	///Current radius the sield is set to
+	///Current radius the shield is set to
 	var/radius = 5
 
 	var/list/deployed_shields
 
-	/obj/machinery/ModularShieldGen/proc/activate()
+/obj/machinery/modularshieldgen/RefreshParts()
+	. = ..()
+	regeneration = 5
+	max_radius = 5
+	max_strength = 100
+	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
+		max_strength += new_capacitor.tier * 50
+
+	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
+		regeneration += new_manipulator.tier * 2
+
+	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
+		max_radius += new_laser.tier * 2
+
+
+
+/obj/machinery/modularshieldgen/proc/activate()
 	active = TRUE
 	update_appearance()
-
-	//please god yell at me for this i dont know a better way to do this
+	var/list/inside_shield = circle_range_turfs(src, radius -1)
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-		if (!(target_tile == circle_range_turfs(src, radius -1)) && isopenturf(target_tile))
+		if (!(target_tile in inside_shield) && isopenturf(target_tile))
 			deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
 
+/obj/machinery/modularshieldgen/Destroy()
+	QDEL_LIST(deployed_shields)
+	return ..()
 
-/obj/machinery/ModularShieldGen/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/modularshieldgen/update_icon_state()
+	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
+	return ..()
+
+/obj/machinery/modularshieldgen/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
 		return
 
 
-
-/obj/structure/emergency_shield/Modular
+/obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
+	color = "#24f8ff"
+	resistance_flags = INDESTRUCTIBLE
 
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE
+	var/obj/machinery/modularshieldgen/ParentGen
 
-	//How the shield loses integrity
-	/obj/structure/emergency_shield/Modular/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/emergency_shield/modular/Initialize(mapload, obj/machinery/modularshieldgen/Generator,)
+	. = ..()
+	ParentGen = Generator
+
+	//How the shield loses strength
+/obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
 		drain_strength(damage_amount)
+
+/obj/structure/emergency_shield/modular/proc/drain_strength(drain_amount)
