@@ -113,6 +113,12 @@
 	req_access = null
 	locked = FALSE
 
+/obj/structure/closet/secure_closet/freezer/fridge/opened
+	req_access = null
+	locked = FALSE
+	opened = 1
+	icon_state = "freezer_open"
+
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
 	desc = "This contains cold hard cash."

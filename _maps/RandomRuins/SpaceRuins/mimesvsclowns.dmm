@@ -25,10 +25,7 @@
 /area/ruin)
 "hG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/open{
-	opened = 1;
-	icon_state = "freezer_open"
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/opened,
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
 /obj/item/food/pie/mimetart,
