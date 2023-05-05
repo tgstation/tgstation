@@ -5,7 +5,6 @@ coverage:
         target: auto
         threshold: 5%
     patch: off
-comment:
-  layout: "header, diff, changes"
+comment: false
 ignore:
   - "code/modules/unit_tests"
