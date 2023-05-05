@@ -4,7 +4,7 @@
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	card_reader_installed = TRUE
 
-/obj/structure/closet/secure_closet/Initialize(mapload)
+/obj/structure/closet/secure_closet/personal/Initialize(mapload)
 	. = ..()
 	var/static/list/choices = list("Personal")
 	access_choices = choices
