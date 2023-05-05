@@ -40,20 +40,16 @@
 	},
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ci" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "cE" = (
@@ -157,10 +153,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "ht" = (
@@ -243,10 +237,8 @@
 /area/shuttle/pirate)
 "lu" = (
 /obj/item/storage/secure/safe/directional/north,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /turf/open/floor/carpet/royalblack,
@@ -523,7 +515,7 @@
 /obj/docking_port/mobile/pirate{
 	dir = 4;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Silverscale Cruiser";
 	preferred_direction = 4
 	},
@@ -558,10 +550,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "DP" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "DX" = (
@@ -805,6 +795,7 @@
 	},
 /obj/item/multitool,
 /obj/effect/turf_decal/bot,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "RE" = (
@@ -831,8 +822,8 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime,
-/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime{
+/obj/item/gun/ballistic/rifle/boltaction/prime,
+/obj/item/gun/ballistic/rifle/boltaction/prime{
 	pixel_y = 4
 	},
 /turf/open/floor/pod/dark,
@@ -869,10 +860,8 @@
 	anchored = 1
 	},
 /obj/structure/cable,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)

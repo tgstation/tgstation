@@ -10,7 +10,7 @@
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
@@ -83,11 +83,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/forcefield_projector/process(delta_time)
+/obj/item/forcefield_projector/process(seconds_per_tick)
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + delta_time * 2, max_shield_integrity)
+		shield_integrity = min(shield_integrity + seconds_per_tick * 2, max_shield_integrity)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * delta_time * 0.5, 0) //fields degrade slowly over time
+		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * seconds_per_tick * 0.5, 0) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
 		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
 			qdel(F)

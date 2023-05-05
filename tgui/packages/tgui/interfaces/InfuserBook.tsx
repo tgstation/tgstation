@@ -143,7 +143,9 @@ export const InfuserBook = (props, context) => {
                       icon={tabIcon}
                       key={tabIndex}
                       selected={chapter === tabIndex}
-                      onClick={() => switchChapter(tabIndex)}>
+                      onClick={
+                        tabIndex === 4 ? null : () => switchChapter(tabIndex)
+                      }>
                       <Box color={tabIndex === 4 && 'red'}>{tab}</Box>
                     </Tabs.Tab>
                   );
@@ -246,7 +248,7 @@ const InfuserEntry = (props: InfuserEntryProps, context) => {
         <Stack.Item>
           <BlockQuote>
             {entry.desc}{' '}
-            {!entry.threshold_desc && (
+            {entry.threshold_desc && (
               <>If a subject infuses with enough DNA, {entry.threshold_desc}</>
             )}
           </BlockQuote>

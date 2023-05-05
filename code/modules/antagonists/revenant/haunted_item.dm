@@ -55,7 +55,7 @@
 				continue
 			// This gives all mobs in view "5" haunt level
 			// For reference picking one up gives "2"
-			haunted_item.ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
+			haunted_item.ai_controller.add_blackboard_key_assoc(BB_TO_HAUNT_LIST, victim, 5)
 
 	if(haunted_item.throwforce < throw_force_max)
 		pre_haunt_throwforce = haunted_item.throwforce

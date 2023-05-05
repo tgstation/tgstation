@@ -459,8 +459,10 @@
 		"monkey_recycler",
 		"oven",
 		"processor",
+		"range", // should be in a further node, probably
 		"reagentgrinder",
 		"smartfridge",
+		"stove",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
@@ -872,7 +874,8 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"paicard",
-		"mecha_camera"
+		"mecha_camera",
+		"botnavbeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -940,6 +943,19 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
+		
+/datum/techweb_node/cyborg_upg_serv
+	id = "cyborg_upg_serv"
+	display_name = "Cyborg Upgrades: Service"
+	description = "Service upgrades for cyborgs."
+	prereq_ids = list("adv_robotics")
+	design_ids = list(
+		"borg_upgrade_rolling_table",
+		"borg_upgrade_condiment_synthesizer",
+		"borg_upgrade_silicon_knife",
+		"borg_upgrade_service_apparatus",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/cyborg_upg_engiminer
 	id = "cyborg_upg_engiminer"
@@ -2153,6 +2169,9 @@
 		"donksoft_refill",
 		"donksofttoyvendor",
 		"largecrossbow",
+		"mag_autorifle",
+		"mag_autorifle_ap",
+		"mag_autorifle_ic",
 		"rapidsyringe",
 		"suppressor",
 		"super_pointy_tape",

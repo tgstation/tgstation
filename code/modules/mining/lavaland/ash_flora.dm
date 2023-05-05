@@ -26,7 +26,7 @@
 	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon_state
 
-/obj/structure/flora/ash/harvest(user)
+/obj/structure/flora/ash/harvest(user, product_amount_multiplier)
 	if(!..())
 		return FALSE
 	icon_state = "[base_icon_state]p"
@@ -367,16 +367,10 @@
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
-
-/obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_overlays()
-	. = ..()
-	if(!reagents?.total_volume)
-		return
-	var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
-	filling.color = mix_color_from_reagents(reagents.reagent_list)
-	. += filling
+	fill_icon_state = "fullbowl"
+	fill_icon = 'icons/obj/lavaland/ash_flora.dmi'
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_icon_state()
-	if(!reagents || !reagents.total_volume)
+	if(!reagents.total_volume)
 		icon_state = "mushroom_bowl"
 	return ..()

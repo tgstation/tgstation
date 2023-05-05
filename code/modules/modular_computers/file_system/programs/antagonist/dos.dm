@@ -16,7 +16,7 @@
 	var/error = ""
 	var/executed = 0
 
-/datum/computer_file/program/ntnet_dos/process_tick(delta_time)
+/datum/computer_file/program/ntnet_dos/process_tick(seconds_per_tick)
 	dos_speed = 0
 	switch(ntnet_status)
 		if(1)
@@ -40,10 +40,7 @@
 
 	..()
 
-/datum/computer_file/program/ntnet_dos/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/ntnet_dos/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)

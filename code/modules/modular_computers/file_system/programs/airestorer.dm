@@ -34,7 +34,7 @@
 	try_eject(forced = TRUE)
 	return ..()
 
-/datum/computer_file/program/ai_restorer/process_tick(delta_time)
+/datum/computer_file/program/ai_restorer/process_tick(seconds_per_tick)
 	. = ..()
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
@@ -98,11 +98,7 @@
 	return TRUE
 
 
-/datum/computer_file/program/ai_restorer/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/datum/computer_file/program/ai_restorer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(!stored_card || !stored_card.AI)

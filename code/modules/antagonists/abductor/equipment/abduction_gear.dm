@@ -134,8 +134,8 @@
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/armor/abductor/vest/process(delta_time)
-	combat_cooldown += delta_time
+/obj/item/clothing/suit/armor/abductor/vest/process(seconds_per_tick)
+	combat_cooldown += seconds_per_tick
 	if(combat_cooldown >= initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
@@ -830,7 +830,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_TABLES
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_TABLES
 	frame = /obj/structure/table_frame/abductor
-	custom_materials = list(/datum/material/silver = 2000)
+	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/table/optable/abductor
 	name = "alien operating table"
@@ -861,13 +861,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		START_PROCESSING(SSobj, src)
 		to_chat(AM, span_danger("You feel a series of tiny pricks!"))
 
-/obj/structure/table/optable/abductor/process(delta_time)
+/obj/structure/table/optable/abductor/process(seconds_per_tick)
 	. = PROCESS_KILL
 	for(var/mob/living/carbon/C in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_am * delta_time)
-				C.reagents.add_reagent(chemical, inject_am * delta_time)
+			if(C.reagents.get_reagent_amount(chemical) < inject_am * seconds_per_tick)
+				C.reagents.add_reagent(chemical, inject_am * seconds_per_tick)
 
 /obj/structure/table/optable/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)

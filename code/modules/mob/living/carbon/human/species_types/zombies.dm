@@ -54,7 +54,7 @@
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	return
 
 /datum/species/zombie/check_roundstart_eligible()
@@ -139,7 +139,7 @@
 	if(.)
 		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
 
-/datum/species/zombie/infectious/spec_life(mob/living/carbon/C, delta_time, times_fired)
+/datum/species/zombie/infectious/spec_life(mob/living/carbon/C, seconds_per_tick, times_fired)
 	. = ..()
 	C.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
 
@@ -149,13 +149,13 @@
 		var/heal_amt = heal_rate
 		if(HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION))
 			heal_amt *= 2
-		C.heal_overall_damage(heal_amt * delta_time, heal_amt * delta_time)
-		C.adjustToxLoss(-heal_amt * delta_time)
+		C.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick)
+		C.adjustToxLoss(-heal_amt * seconds_per_tick)
 		for(var/i in C.all_wounds)
 			var/datum/wound/iter_wound = i
-			if(DT_PROB(2-(iter_wound.severity/2), delta_time))
+			if(SPT_PROB(2-(iter_wound.severity/2), seconds_per_tick))
 				iter_wound.remove_wound()
-	if(!HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION) && DT_PROB(2, delta_time))
+	if(!HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 
 //Congrats you somehow died so hard you stopped being a zombie
