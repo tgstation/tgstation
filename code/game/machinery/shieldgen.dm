@@ -565,13 +565,18 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
-
+	///Multipliar on stats at the cost of heat generation and volatility
 	var/overclocked = FALSE
+
+	///Doesnt actually control it, just tells us if its running or not
 	var/active = FALSE
+
+	///Determins if we can turn it on or not
 	var/recovering = TRUE
 
 	///Determins max health of the shield
 	var/max_strength = 100
+
 
 	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
 
@@ -587,7 +592,11 @@
 	///Determines if we only generate a shield on space tiles or not
 	var/exterior_only = FALSE
 
+	///The list of shields that are ours
 	var/list/deployed_shields = null
+
+	///The list of machines that are boosting us
+	var/list/connected_machines = null
 
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
@@ -620,7 +629,6 @@
 	deployed_shields = list()
 	if(mapload && active && anchored)
 		activate_shields()
-
 /obj/machinery/modularshieldgen/proc/deactivate_shields()
 	active = FALSE
 	update_appearance()
@@ -633,7 +641,6 @@
 	update_appearance()
 
 	//please god yell at me for this i dont know if its the right way to do this
-    //the shield we are currently making
 	var/list/inside_shield = circle_range_turfs(src, radius - 1)
 	if (exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
@@ -670,15 +677,19 @@
 	if (stored_strength < 5)
 		deactivate_shields()
 		recovering = TRUE
+	var/random_num = rand(1,deployed_shields.len)
+	var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
+	random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 /obj/machinery/modularshieldgen/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		recovering = FALSE
-		//STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSobj, src)
 		return
-	 //.set_a = max(255 * (stored_strength/max_strength), 50) commented out so i can test
-
+	var/random_num = rand(1,deployed_shields.len)
+	var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
+	random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 
 /obj/structure/emergency_shield/modular
