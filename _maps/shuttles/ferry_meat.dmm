@@ -28,8 +28,7 @@
 /area/shuttle/transport)
 "h" = (
 /obj/structure/locker/secure/freezer/meat/open{
-	name = "\";
-	meat\" fridge" = None
+	name = "\"meat\" fridge"
 	},
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/corgi,
