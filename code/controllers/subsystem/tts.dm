@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(tts)
 	/// HTTP requests that are being processed to see if they've been finished
 	var/list/current_processing_tts_messages = list()
 
-	/// A list of available speakers
+	/// A list of available speakers (string identifiers)
 	var/list/available_speakers = list()
 
 	var/list/cached_voices = list()
@@ -45,9 +45,6 @@ SUBSYSTEM_DEF(tts)
 	/// For tts messages which time out, it won't keep tracking the tts message and will just assume that the message took
 	/// 7 seconds (or whatever the value of message_timeout is) to receive back a response.
 	var/average_tts_messages_time = 0
-
-/proc/cmp_word_length_asc(list/a, list/b)
-	return length(a[MESSAGE_INDEX]) - length(b[MESSAGE_INDEX])
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -78,9 +75,9 @@ SUBSYSTEM_DEF(tts)
 	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, local, range = 7)
+/datum/controller/subsystem/tts/proc/play_tts(target, sound/audio, datum/language/language, local, range = 7)
 	if(local)
-		SEND_SOUND(target, sound)
+		SEND_SOUND(target, audio)
 		return
 
 	var/turf/turf_source = get_turf(target)
@@ -98,12 +95,11 @@ SUBSYSTEM_DEF(tts)
 		if(get_dist(listening_mob, turf_source) <= range && holder.has_language(language, spoken = FALSE))
 			listening_mob.playsound_local(
 				turf_source,
-				sound,
-				vol = listening_mob == target? 60 : 85,
+				vol = (listening_mob == target)? 60 : 85,
 				falloff_exponent = SOUND_FALLOFF_EXPONENT,
 				channel = channel,
 				pressure_affected = TRUE,
-				sound_to_use = sound,
+				sound_to_use = audio,
 				max_distance = SOUND_RANGE,
 				falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
 				distance_multiplier = 1,
@@ -126,7 +122,8 @@ SUBSYSTEM_DEF(tts)
 
 	if(!resumed)
 		while(length(in_process_tts_messages) < max_concurrent_requests && queued_tts_messages.len > 0)
-			var/list/entry = popleft(queued_tts_messages)
+			var/list/entry = queued_tts_messages[queued_tts_messages.len]
+			queued_tts_messages.len--
 			handle_request(entry)
 		current_processing_tts_messages = in_process_tts_messages.Copy()
 
@@ -144,18 +141,20 @@ SUBSYSTEM_DEF(tts)
 		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_message[START_TIME_INDEX])
 		// If it took too long to process, don't bother playing it
 		var/timeout_time = current_message[START_TIME_INDEX] + message_timeout
+		var/identifier = current_message[IDENTIFIER_INDEX]
+		cached_voices -= identifier
 		if(response.errored || timeout_time < world.time)
-			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
 
-		var/identifier = current_message[IDENTIFIER_INDEX]
 		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
 		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_message[LOCAL_INDEX], current_message[MESSAGE_RANGE_INDEX])
 		for(var/extra_target in current_message[EXTRA_TARGETS_INDEX])
 			play_tts(extra_target["target"], new_sound, current_message[LANGUAGE_INDEX], extra_target["local"], extra_target["range"])
-		cached_voices -= identifier
 		if(MC_TICK_CHECK)
 			return
+
+/proc/cmp_word_length_asc(list/a, list/b)
+	return length(b[MESSAGE_INDEX]) - length(a[MESSAGE_INDEX])
 
 /datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE, message_range = 7)
 	if(!tts_enabled)
@@ -167,9 +166,9 @@ SUBSYSTEM_DEF(tts)
 	if(contains_alphanumeric.Find(message) == 0)
 		return
 
-	var/shell_scrubbed_input = tts_alphanumeric_filter(message)
+	var/shell_scrubbed_input = tts_speech_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
-	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
+	var/identifier = sha1(speaker + filter + shell_scrubbed_input)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
 		cached_voice[EXTRA_TARGETS_INDEX] += list(list("target" = target, "local" = local, "range" = message_range))
@@ -180,7 +179,6 @@ SUBSYSTEM_DEF(tts)
 		return
 	if(!(speaker in available_speakers))
 		return
-	speaker = tts_alphanumeric_filter(speaker)
 
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
@@ -188,11 +186,6 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	var/list/waiting_list = queued_tts_messages
-	if(length(in_process_tts_messages) < max_concurrent_requests)
-		request.begin_async()
-		waiting_list = in_process_tts_messages
-
 	var/list/data = list(
 		// TARGET_INDEX = 1
 		target,
@@ -214,8 +207,13 @@ SUBSYSTEM_DEF(tts)
 		message_range
 	)
 	cached_voices[identifier] = data
-	waiting_list += list(data)
-	sortTim(waiting_list, GLOBAL_PROC_REF(cmp_word_length_asc))
+	if(length(in_process_tts_messages) < max_concurrent_requests)
+		request.begin_async()
+		in_process_tts_messages += list(data)
+		sortTim(in_process_tts_messages, GLOBAL_PROC_REF(cmp_word_length_asc))
+	else
+		queued_tts_messages += list(data)
+		sortTim(queued_tts_messages, GLOBAL_PROC_REF(cmp_word_length_asc))
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
