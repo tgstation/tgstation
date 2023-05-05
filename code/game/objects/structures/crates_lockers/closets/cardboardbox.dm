@@ -61,7 +61,6 @@
 	if(!(locate(/mob/living) in alerted))
 		alerted = null
 
-
 	return TRUE
 
 /obj/structure/closet/cardboard/after_open(mob/living/user, force)
@@ -74,7 +73,6 @@
 	for(var/mob/living/alerted_mob as anything in alerted)
 		if(alerted_mob.stat != CONSCIOUS || alerted_mob.is_blind())
 			continue
-
 		if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
