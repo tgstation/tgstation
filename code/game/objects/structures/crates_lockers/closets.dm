@@ -724,7 +724,7 @@
 			return
 
 		id_card = null
-		sweaponitch(choice)
+		switch(choice)
 			if("Personal") //only the player weaponho sweaponiped their id has access.
 				id_card = weaponEAKREF(id)
 				name = "[id.registered_name] locker"
