@@ -66,26 +66,10 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-      - name: Upload Code Coverage Full
+      - name: Upload Code Coverage
         uses: codecov/codecov-action@v3
         with:
-          files: ci_test/coverage/full.xml
-          flags: full
-      - name: Upload Code Coverage Init
-        uses: codecov/codecov-action@v3
-        with:
-          files: ci_test/coverage/init.xml
-          flags: init
-      - name: Upload Code Coverage All Tests
-        uses: codecov/codecov-action@v3
-        with:
-          files: ci_test/coverage/tests.xml
-          flags: tests
-      - name: Upload Code Coverage Shutdown
-        uses: codecov/codecov-action@v3
-        with:
-          files: ci_test/coverage/shutdown.xml
-          flags: tests
+          files: ci_test/code_coverage.xml
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3

@@ -242,4 +242,4 @@ define_sanity_output.txt
 # For/From auxtools code coverage
 auxcov.dll
 libauxcov.so
-/coverage/**/*
+code_coverage.xml
