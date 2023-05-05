@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(tts)
 	/// This'll determine the minimum extent of how late it is allowed to begin timing messages out
 	var/message_timeout_early_minimum = 5 SECONDS
 
+	/// The max concurrent http requests that can be made at one time. Used to prevent 1 server from overloading the tts server
 	var/max_concurrent_requests = 4
 
 	/// Used to calculate the average time it takes for a tts message to be received from the http server
