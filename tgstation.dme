@@ -5267,6 +5267,7 @@
 #include "monkestation\code\datums\stamina_container.dm"
 #include "monkestation\code\datums\announcers\duke.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
+#include "monkestation\code\datums\components\multi_hit.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
 #include "monkestation\code\datums\quirks\positive_quirks.dm"
