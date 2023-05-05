@@ -30338,11 +30338,6 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/starboard/fore)
-"jGn" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "jGx" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
@@ -52212,12 +52207,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/right)
-"rCW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "rDj" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -70624,6 +70613,7 @@
 "ykB" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ykN" = (
@@ -173659,11 +173649,11 @@ aaa
 abM
 abM
 oIa
-jGn
-rCW
-aaS
-aaS
-aaS
+oIa
+qyR
+oIa
+oIa
+oIa
 whz
 eFd
 whz
@@ -173915,10 +173905,10 @@ abW
 aaa
 abM
 abM
-aaS
-aaS
-qyR
-aaS
+abM
+abM
+abM
+abM
 abM
 abM
 abM
