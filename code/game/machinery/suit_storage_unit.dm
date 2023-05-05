@@ -226,7 +226,6 @@
 
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()
-
 	if(card_reader_installed)
 		. += span_notice("Swipe your ID to change access levels.")
 		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel after opening panel.")
@@ -621,7 +620,11 @@
 
 		balloon_alert(user, "card reader installed")
 
-	else if(!state_open && !panel_open && is_operational && card_reader_installed && !isnull((id = weapon.GetID())))
+	else if(!state_open && is_operational && card_reader_installed && !isnull((id = weapon.GetID())))
+		if(panel_open)
+			balloon_alert(user, "close panel!")
+			return
+
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
