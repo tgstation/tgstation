@@ -13,6 +13,7 @@ type AirAlarmData = {
   dangerLevel: 0 | 1 | 2;
   atmosAlarm: BooleanLike; // fix this
   fireAlarm: BooleanLike;
+  sensor: BooleanLike;
   envData: {
     name: string;
     value: string; // preformatted in backend, shorter code that way.
@@ -167,7 +168,13 @@ const AirAlarmControl = (props, context) => {
 const AirAlarmControlHome = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
   const [screen, setScreen] = useLocalState<Screen>(context, 'screen', 'home');
-  const { selectedModePath, panicSiphonPath, filteringPath, atmosAlarm } = data;
+  const {
+    selectedModePath,
+    panicSiphonPath,
+    filteringPath,
+    atmosAlarm,
+    sensor,
+  } = data;
   const isPanicSiphoning = selectedModePath === panicSiphonPath;
   return (
     <>
@@ -212,6 +219,16 @@ const AirAlarmControlHome = (props, context) => {
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')}
       />
+      <Box mt={1} />
+      {!!sensor && (
+        <Box>
+          <Button
+            icon="link-slash"
+            content="Disconnect Sensor"
+            onClick={() => act('disconnect_sensor')}
+          />
+        </Box>
+      )}
     </>
   );
 };

@@ -57,6 +57,9 @@
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
+	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
+	var/connected_sensor = null
+
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -92,7 +95,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	my_area = get_area(src)
+	my_area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 	alarm_manager = new(src)
 	select_mode(src, /datum/air_alarm_mode/filtering)
 
@@ -121,7 +124,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return
 	. = ..()
 
-	my_area = area_to_register
+	my_area = connected_sensor ? get_area(connected_sensor) : area_to_register
 	update_appearance()
 
 /obj/machinery/airalarm/update_name(updates)
@@ -134,7 +137,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return
 	. = ..()
 
-	my_area = null
+	my_area = connected_sensor ? get_area(connected_sensor) : null
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -152,6 +155,22 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE
+
+/obj/machinery/airalarm/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	.= ..()
+
+	if (!istype(multi_tool))
+		return .
+
+	if (locked)
+		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		connected_sensor = multi_tool.buffer
+		my_area = get_area(connected_sensor)
+		update_name()
+		balloon_alert(user, "connected sensor")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
@@ -180,14 +199,20 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["dangerLevel"] = danger_level
 	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
 	data["fireAlarm"] = my_area.fire
+	data["sensor"] = connected_sensor ? 1 : 0
 
-	var/turf/turf = get_turf(src)
+	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
 	var/total_moles = environment.total_moles()
 	var/temp = environment.temperature
 	var/pressure = environment.return_pressure()
 
 	data["envData"] = list()
+	if(connected_sensor)
+		data["envData"] += list(list(
+			"name" = "Linked area",
+			"value" = my_area.name
+		))
 	data["envData"] += list(list(
 		"name" = "Pressure",
 		"value" = "[round(pressure, 0.01)] kPa",
@@ -287,7 +312,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return
 
 	var/mob/user = usr
-	var/area/area = get_area(src)
+	var/area/area = connected_sensor ? get_area(connected_sensor) : get_area(src)
+
 	ASSERT(!isnull(area))
 
 	var/ref = params["ref"]
@@ -394,7 +420,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv.set_value(threshold_type, value)
 			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = get_turf(src)
+			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			check_danger(our_turf, environment, environment.temperature)
 
@@ -407,7 +433,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv.reset_value(threshold_type)
 			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = get_turf(src)
+			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			check_danger(our_turf, environment, environment.temperature)
 
@@ -418,6 +444,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("reset")
 			if (alarm_manager.clear_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_NONE
+
+		if ("disconnect_sensor")
+			if (connected_sensor)
+				connected_sensor = null
+				my_area = get_area(src)
+				update_name()
 
 	update_appearance()
 

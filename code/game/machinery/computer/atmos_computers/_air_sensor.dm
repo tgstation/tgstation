@@ -76,4 +76,8 @@
 		GLOB.objects_by_id_tag[CHAMBER_OUTPUT_FROM_ID(chamber_id)] = output
 		balloon_alert(user, "connected to output")
 
-	return TRUE
+	else
+		multi_tool.buffer = src
+		balloon_alert(user, "added to multitool buffer")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
