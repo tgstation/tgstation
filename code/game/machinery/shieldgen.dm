@@ -577,7 +577,7 @@
 	///Determins max health of the shield
 	var/max_strength = 100
 
-
+	///Current health of shield
 	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
 
 	///Shield Regeneration amount
@@ -594,6 +594,9 @@
 
 	///The list of shields that are ours
 	var/list/deployed_shields = null
+
+	///The list of tiles that are within the shield
+	var/list/inside_shield = null
 
 	///The list of machines that are boosting us
 	var/list/connected_machines = null
@@ -612,27 +615,18 @@
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		max_radius += new_laser.tier * 2
 
-/obj/machinery/modularshieldgen/interact(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(panel_open)
-		to_chat(user, span_warning("The panel must be closed before operating this machine!"))
-		return
-	if (active)
-		deactivate_shields()
-		return
-	activate_shields()
 
 /obj/machinery/modularshieldgen/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
 	if(mapload && active && anchored)
 		activate_shields()
+
 /obj/machinery/modularshieldgen/proc/deactivate_shields()
 	active = FALSE
 	update_appearance()
 	QDEL_LIST(deployed_shields)
+
 
 
 
@@ -641,7 +635,7 @@
 	update_appearance()
 
 	//please god yell at me for this i dont know if its the right way to do this
-	var/list/inside_shield = circle_range_turfs(src, radius - 1)
+	var/list/inside_shield = circle_range_turfs(src, radius - 1) //in the future we might want to apply an effect to the turfs inside the shield
 	if (exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 			if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
@@ -668,8 +662,33 @@
 	return ..()
 
 /obj/machinery/modularshieldgen/ui_interact(mob/user, datum/tgui/ui)
-	if(!is_operational)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Shieldgencontrol")
+		ui.open()
+
+/obj/machinery/modularshieldgen/ui_data(mob/user)
+
+	var/list/data = list()
+	data["max_radius"] = max_radius
+	data["current_radius"] = radius
+	data["max_strength"] = max_strength
+	data["regeneration_rate"] = regeneration
+	data["status"] = active
+	return data
+
+/obj/machinery/modularshieldgen/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
+	switch(action)
+		if ("set_radius")
+			radius = text2num(params["current_radius"])
+		if ("activate")
+			if (active)
+				deactivate_shields()
+			activate_shields()
 
 /obj/machinery/modularshieldgen/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
@@ -685,18 +704,18 @@
 	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		recovering = FALSE
-		STOP_PROCESSING(SSobj, src)
-		return
-	var/random_num = rand(1,deployed_shields.len)
-	var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
-	random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
+		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, you arnt meant to know the exact condition of the shield without seeing the core
+	if (active)
+		var/random_num = rand(1,deployed_shields.len)
+		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
+		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
-	max_integrity = INFINITY //the shield itself is indestructible or atleast should be
+	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
 
 	//our parent
 	var/obj/machinery/modularshieldgen/shield_generator
