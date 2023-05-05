@@ -69,6 +69,7 @@ SUBSYSTEM_DEF(tts)
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
+		stack_trace(response.error)
 		return SS_INIT_FAILURE
 	available_speakers = json_decode(response.body)
 	tts_enabled = TRUE
