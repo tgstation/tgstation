@@ -671,7 +671,7 @@
 		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
 
-		var/obj/item/electronics/airlock/airlock_electronics = neweapon(drop_location())
+		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
 		if(length(req_one_access))
 			airlock_electronics.one_access = TRUE
 			airlock_electronics.accesses = req_one_access
