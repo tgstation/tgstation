@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(tts)
 	/// HTTP requests that are being processed to see if they've been finished
 	var/list/current_processing_tts_messages = list()
 
-	/// A list of available speakers (string identifiers)
+	/// A list of available speakers, which are string identifiers of the TTS voices that can be used to generate TTS messages.
 	var/list/available_speakers = list()
 
 	/// A list of current tts messages being processed, mapped by their sha1 identifier.
