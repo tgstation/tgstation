@@ -66,10 +66,35 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-      - name: Upload Code Coverage
+      - name: Upload Code Coverage Full
         uses: codecov/codecov-action@v3
         with:
-          files: ci_test/auxtools_coverage.xml
+          files: ci_test/coverage/full.xml
+          flags: full
+      - name: Upload Code Coverage Init
+        uses: codecov/codecov-action@v3
+        with:
+          files: ci_test/coverage/init.xml
+          flags: init
+      - name: Upload Code Coverage All Tests
+        uses: codecov/codecov-action@v3
+        with:
+          files: ci_test/coverage/tests.xml
+          flags: tests
+      - name: Upload Code Coverage Individual Tests # Note this uses the deprecated bash uploader, no sunset date as of yet. Need a better way to do this
+        run: |
+          curl -fLso codecov https://codecov.io/bash
+          chmod +x codecov
+          cd ci_test/coverage
+          for filename in test-*.xml; do
+            flag=${filename%.xml*};
+            ./codecov -F $flag -f $filename;
+          done
+      - name: Upload Code Coverage Shutdown
+        uses: codecov/codecov-action@v3
+        with:
+          files: ci_test/coverage/shutdown.xml
+          flags: tests
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3

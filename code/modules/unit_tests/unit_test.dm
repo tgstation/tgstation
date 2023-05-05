@@ -238,11 +238,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	var/list/test_results = list()
 
-	start_code_coverage("coverage/unit_tests.xml")
+	start_code_coverage("coverage/tests.xml")
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
-	stop_code_coverage("coverage/unit_tests.xml")
+	stop_code_coverage("coverage/tests.xml")
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
