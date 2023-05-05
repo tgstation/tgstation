@@ -1,5 +1,6 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	base_icon_state = "freezer"
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	door_anim_squish = 0.22
 	door_anim_angle = 123
@@ -117,7 +118,6 @@
 	req_access = null
 	locked = FALSE
 	opened = TRUE
-	icon_state = "freezer_open"
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
