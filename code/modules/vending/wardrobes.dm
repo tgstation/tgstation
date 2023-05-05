@@ -299,7 +299,7 @@
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
-		/obj/item/knife/rainbowknife/weak = 1,
+		/obj/item/knife/ritual = 1,
 		/obj/item/table_clock = 1,
 	)
 	premium = list(
