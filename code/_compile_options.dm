@@ -65,7 +65,7 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, we will use auxtools to generate a cobertura XML file (auxtools_coverage.xml) that can be shunted to a CI service like https://codecov.io
+// If this is uncommented, we will use auxtools to generate cobertura XML files (under /coverage) that can be shunted to a CI service like https://codecov.io
 // Note,this requires using CBT to build in flat file mode
 // #define CODE_COVERAGE
 

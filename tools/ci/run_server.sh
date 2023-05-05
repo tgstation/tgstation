@@ -34,5 +34,5 @@ for filename in ci_test/coverage/*.xml; do
 	#unflatten
 	sed -i 's/!/\//g' $filename
 	#fix the !DOCTYPE
-	sed -i 's/<\/DOCTYPE/<!DOCTYPE/g' ci_test/auxtools_coverage.xml
+	sed -i 's/<\/DOCTYPE/<!DOCTYPE/g' $filename
 done
