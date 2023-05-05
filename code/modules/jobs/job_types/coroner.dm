@@ -1,6 +1,3 @@
-// Todo:
-// Wintercoat?
-
 /datum/job/coroner
 	title = JOB_CORONER
 	description = "Perform Autopsies whenever needed, \
