@@ -21,8 +21,8 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/iron_cost = 1000
-	var/glass_cost = 1000
+	var/iron_cost =HALF_SHEET_MATERIAL_AMOUNT
+	var/glass_cost =HALF_SHEET_MATERIAL_AMOUNT
 	var/power_used = 1000
 
 	var/mode = DRONE_READY
@@ -50,7 +50,7 @@
 
 /obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
@@ -80,8 +80,8 @@
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
-	iron_cost = 2000
-	glass_cost = 2000
+	iron_cost =SHEET_MATERIAL_AMOUNT
+	glass_cost =SHEET_MATERIAL_AMOUNT
 	power_used = 2000
 	starting_amount = 10000
 

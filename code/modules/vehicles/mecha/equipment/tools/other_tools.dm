@@ -329,9 +329,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P, mob/user)
 	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*MINERAL_MATERIAL_AMOUNT,0)
+		var/to_load = max(max_fuel - fuel.amount*SHEET_MATERIAL_AMOUNT,0)
 		if(to_load)
-			var/units = min(max(round(to_load / MINERAL_MATERIAL_AMOUNT),1),P.amount)
+			var/units = min(max(round(to_load / SHEET_MATERIAL_AMOUNT),1),P.amount)
 			fuel.amount += units
 			P.use(units)
 			to_chat(user, "[icon2html(src, user)][span_notice("[units] unit\s of [fuel] successfully loaded.")]")
@@ -365,7 +365,7 @@
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuelrate_active
 		chassis.give_power(rechargerate * seconds_per_tick)
-	fuel.amount -= min(seconds_per_tick * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
+	fuel.amount -= min(seconds_per_tick * use_fuel / SHEET_MATERIAL_AMOUNT, fuel.amount)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
