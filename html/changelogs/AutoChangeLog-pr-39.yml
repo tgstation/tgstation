@@ -1,0 +1,6 @@
+author: "jamilnielsen"
+delete-after: True
+changes:
+  - rscadd: "operation computer to syndicate lavaland base medical section"
+  - rscadd: "tongues kit missing syndicate comms modular locations as well as medical record computer."
+  - rscadd: "syndicate lavaland base atmos got its miners back, no more running out of air if someone turned on the turbine."
