@@ -219,12 +219,12 @@ const AirAlarmControlHome = (props, context) => {
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')}
       />
-      <Box mt={1} />
       {!!sensor && (
-        <Box>
+        <Box mt={1}>
           <Button
             icon="link-slash"
             content="Disconnect Sensor"
+            color="danger"
             onClick={() => act('disconnect_sensor')}
           />
         </Box>
