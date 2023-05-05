@@ -606,10 +606,10 @@
 
 	return TRUE
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/weapon, mob/user, params)
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(istype(I, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+	if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
@@ -617,12 +617,12 @@
 			return
 
 		card_reader_installed = TRUE
-		I.moveToNullspace()
-		qdel(I)
+		weapon.moveToNullspace()
+		qdel(weapon)
 
 		balloon_alert(user, "card reader installed")
 
-	else if(!state_open && !panel_open && is_operational && card_reader_installed && !isnull((id = I.GetID())))
+	else if(!state_open && !panel_open && is_operational && card_reader_installed && !isnull((id = weapon.GetID())))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
@@ -658,14 +658,12 @@
 				req_one_access = null
 				set_access(list())
 
-		var/msg
 		if(!isnull(id_card))
-			msg = "now owned by [id.registered_name]"
+			balloon_alert(user, "now owned by [id.registered_name]")
 		else
-			msg = "set to [choice]"
-		balloon_alert(user, msg)
+			balloon_alert(user, "set to [choice]")
 
-	else if(!state_open && istype(I, /obj/item/pen))
+	else if(!state_open && istype(weapon, /obj/item/pen))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
@@ -677,12 +675,12 @@
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
-		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		var/str = tgui_input_text(user, "Personal Unit Name", "Unit Name")
 		if(!isnull(str))
 			name = str
 			name_set = TRUE
 
-		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		str = tgui_input_text(user, "Personal Unit Description", "Unit Description")
 		if(!isnull(str))
 			desc = str
 			desc_set = TRUE
@@ -692,62 +690,62 @@
 			bit_flag |= UPDATE_NAME
 		if(desc_set)
 			bit_flag |= UPDATE_DESC
-		if(bit_flag != NONE)
+		if(bit_flag)
 			update_appearance(bit_flag)
 
 	if(state_open && is_operational)
-		if(istype(I, /obj/item/clothing/suit))
+		if(istype(weapon, /obj/item/clothing/suit))
 			if(suit)
 				to_chat(user, span_warning("The unit already contains a suit!."))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			suit = I
-		else if(istype(I, /obj/item/clothing/head))
+			suit = weapon
+		else if(istype(weapon, /obj/item/clothing/head))
 			if(helmet)
 				to_chat(user, span_warning("The unit already contains a helmet!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			helmet = I
-		else if(istype(I, /obj/item/clothing/mask))
+			helmet = weapon
+		else if(istype(weapon, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, span_warning("The unit already contains a mask!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			mask = I
-		else if(istype(I, /obj/item/mod/control))
+			mask = weapon
+		else if(istype(weapon, /obj/item/mod/control))
 			if(mod)
 				to_chat(user, span_warning("The unit already contains a MOD!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			mod = I
+			mod = weapon
 		else
 			if(storage)
 				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			storage = I
+			storage = weapon
 
-		visible_message(span_notice("[user] inserts [I] into [src]"), span_notice("You load [I] into [src]."))
+		visible_message(span_notice("[user] inserts [weapon] into [src]"), span_notice("You load [weapon] into [src]."))
 		update_appearance()
 		return
 
 	if(panel_open)
-		if(is_wire_tool(I))
+		if(is_wire_tool(weapon))
 			wires.interact(user)
 			return
-		else if(I.tool_behaviour == TOOL_CROWBAR)
-			default_deconstruction_crowbar(I)
+		else if(weapon.tool_behaviour == TOOL_CROWBAR)
+			default_deconstruction_crowbar(weapon)
 			return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))	//Set to base_icon_state because the panels for this are overlays
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", weapon))	//Set to base_icon_state because the panels for this are overlays
 			update_appearance()
 			return
-	if(default_pry_open(I))
+	if(default_pry_open(weapon))
 		dump_inventory_contents()
 		return
 
@@ -757,17 +755,17 @@
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
-/obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
+/obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	if(!(flags_1 & NODECONSTRUCT_1) && screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
 		to_chat(user, span_warning("You cant open the panel while its [locked ? "locked" : "decontaminating"]"))
 		return TRUE
 	return ..()
 
 
-/obj/machinery/suit_storage_unit/default_pry_open(obj/item/I)//needs to check if the storage is locked.
-	. = !(state_open || panel_open || is_operational || locked || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+/obj/machinery/suit_storage_unit/default_pry_open(obj/item/crowbar)//needs to check if the storage is locked.
+	. = !(state_open || panel_open || is_operational || locked || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(.)
-		I.play_tool_sound(src, 50)
+		crowbar.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
 		open_machine()
 

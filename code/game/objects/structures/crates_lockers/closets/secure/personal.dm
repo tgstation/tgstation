@@ -3,7 +3,11 @@
 	name = "personal closet"
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	card_reader_installed = TRUE
-	access_choices = list("Personal")
+
+/obj/structure/closet/secure_closet/Initialize(mapload)
+	. = ..()
+	var/static/list/choices = list("Personal")
+	access_choices = choices
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()

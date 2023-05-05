@@ -151,7 +151,7 @@
 		return FALSE
 
 	if(!force && !grave_dug_open)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		balloon_alert(user, "Use a shovel!")
 		return FALSE
 
 	return TRUE
@@ -161,7 +161,7 @@
 	if(!.)
 		return FALSE
 
-	to_chat(user, span_notice("The grave is already dug up."))
+	balloon_alert(user, "already open!")
 	return FALSE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
