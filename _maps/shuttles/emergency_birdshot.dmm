@@ -159,7 +159,7 @@
 "gz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "gN" = (
@@ -584,7 +584,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "BC" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/trash/peanuts,
 /obj/item/trash/cnds,
 /turf/open/floor/mineral/titanium/tiled/white,

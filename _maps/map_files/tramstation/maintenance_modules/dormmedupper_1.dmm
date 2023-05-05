@@ -155,7 +155,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "vb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "vB" = (

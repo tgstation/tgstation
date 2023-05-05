@@ -280,7 +280,7 @@
 	},
 /area/ruin/syndicate_lava_base/virology)
 "do" = (
-/obj/structure/locker/secure_closet/medical1{
+/obj/structure/locker/secure/medical1{
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -318,7 +318,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "dA" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
@@ -561,7 +561,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "eG" = (
-/obj/structure/locker/secure_closet/personal/patient,
+/obj/structure/locker/secure/personal/patient,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 9
@@ -818,7 +818,7 @@
 /area/ruin/syndicate_lava_base/virology)
 "fE" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -1522,7 +1522,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/toolcloset{
+/obj/structure/locker/toollocker{
 	anchored = 1
 	},
 /obj/item/crowbar,
@@ -1833,7 +1833,7 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "lm" = (
-/obj/structure/locker/secure_closet/medical1{
+/obj/structure/locker/secure/medical1{
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2062,7 +2062,7 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "my" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/enzyme,
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
@@ -2800,7 +2800,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer/kitchen/maintenance{
+/obj/structure/locker/secure/freezer/kitchen/maintenance{
 	req_access = null
 	},
 /obj/structure/cable,

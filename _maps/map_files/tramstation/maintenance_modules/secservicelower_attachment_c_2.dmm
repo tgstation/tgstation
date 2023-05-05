@@ -142,7 +142,7 @@
 /area/station/maintenance/port/central)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "Z" = (

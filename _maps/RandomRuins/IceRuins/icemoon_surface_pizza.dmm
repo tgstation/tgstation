@@ -421,7 +421,7 @@
 /turf/closed/wall,
 /area/ruin/pizzeria/kitchen)
 "rY" = (
-/obj/structure/locker/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure/freezer/kitchen,
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk{
@@ -882,7 +882,7 @@
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
 "KL" = (
-/obj/structure/locker/secure_closet/freezer/meat,
+/obj/structure/locker/secure/freezer/meat,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

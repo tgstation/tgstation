@@ -736,7 +736,7 @@
 /area/ruin/space/ks13/service/hydro)
 "kJ" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
@@ -1391,7 +1391,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "qE" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
 "qF" = (
@@ -4136,7 +4136,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/chapel)
 "EY" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
 "Fa" = (
@@ -4781,7 +4781,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/hydro)
 "IB" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
@@ -6539,7 +6539,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/science/ordnance)
 "Sb" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge_hall)
 "Se" = (

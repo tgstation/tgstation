@@ -1052,7 +1052,7 @@
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "jp" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/whitebeet,
@@ -2311,7 +2311,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "wX" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
@@ -2709,7 +2709,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "CE" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/card/id/away/hotel,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
@@ -2840,7 +2840,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "Em" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "Er" = (
@@ -2946,7 +2946,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Fj" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "Ft" = (

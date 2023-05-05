@@ -281,7 +281,7 @@
 /area/ruin/space/has_grav/interdyne)
 "kA" = (
 /obj/structure/cable,
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "kH" = (
@@ -682,7 +682,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "AC" = (
-/obj/structure/locker/secure_closet/chemical,
+/obj/structure/locker/secure/chemical,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "AF" = (

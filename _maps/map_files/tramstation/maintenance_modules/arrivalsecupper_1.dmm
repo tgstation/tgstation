@@ -62,7 +62,7 @@
 /area/station/asteroid)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "z" = (

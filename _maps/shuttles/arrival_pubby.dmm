@@ -101,7 +101,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "s" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,

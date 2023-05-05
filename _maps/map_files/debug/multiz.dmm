@@ -25,7 +25,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/locker/secure_closet/atmospherics,
+/obj/structure/locker/secure/atmospherics,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "am" = (
@@ -37,7 +37,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/locker/secure_closet/engineering_electrical,
+/obj/structure/locker/secure/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aq" = (
@@ -46,7 +46,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ar" = (
-/obj/structure/locker/secure_closet/engineering_welding,
+/obj/structure/locker/secure/engineering_welding,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "as" = (
@@ -180,7 +180,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "bf" = (
-/obj/structure/locker/secure_closet/engineering_chief,
+/obj/structure/locker/secure/engineering_chief,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "bg" = (
@@ -281,7 +281,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/locker/jcloset,
+/obj/structure/locker/jlocker,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
@@ -303,7 +303,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bF" = (
-/obj/structure/locker/secure_closet/chief_medical,
+/obj/structure/locker/secure/chief_medical,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bG" = (
@@ -311,7 +311,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/structure/locker/secure_closet/captains,
+/obj/structure/locker/secure/captains,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
@@ -333,7 +333,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bM" = (
-/obj/structure/locker/secure_closet/hop,
+/obj/structure/locker/secure/hop,
 /turf/open/floor/iron{
 	dir = 4
 	},
@@ -370,13 +370,13 @@
 /area/station/hallway/secondary/entry)
 "bV" = (
 /obj/machinery/light/directional/north,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron{
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
 "bW" = (
-/obj/structure/locker/secure_closet/hos,
+/obj/structure/locker/secure/hos,
 /obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
@@ -386,7 +386,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bX" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron{
 	dir = 1
 	},

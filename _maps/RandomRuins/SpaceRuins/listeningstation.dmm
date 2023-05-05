@@ -378,7 +378,7 @@
 /area/ruin/space)
 "vP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/medical1{
+/obj/structure/locker/secure/medical1{
 	req_access = list("syndicate")
 	},
 /obj/item/paper/fluff/ruins/listeningstation/reports/september,
@@ -746,7 +746,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Ni" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/locker/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure/freezer/empty/open,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)

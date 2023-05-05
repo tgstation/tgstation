@@ -364,7 +364,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "gj" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
 "gk" = (
@@ -1417,7 +1417,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "yp" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/knife/kitchen,
 /obj/item/food/grown/carrot,
 /obj/item/food/grown/potato,
@@ -2148,7 +2148,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Mc" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/tile/brown/full,
 /turf/open/floor/iron/large,
 /area/ruin/plasma_facility/commons)

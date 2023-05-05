@@ -323,14 +323,14 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bE" = (
-/obj/structure/locker/secure_closet/engineering_personal,
+/obj/structure/locker/secure/engineering_personal,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bF" = (
-/obj/structure/locker/secure_closet/engineering_personal,
+/obj/structure/locker/secure/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -407,7 +407,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bQ" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bR" = (
@@ -498,7 +498,7 @@
 "ci" = (
 /obj/machinery/light/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cj" = (
@@ -1587,7 +1587,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "hG" = (
-/obj/structure/locker/secure_closet/security,
+/obj/structure/locker/secure/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -1934,7 +1934,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jl" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
@@ -2655,7 +2655,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mg" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)

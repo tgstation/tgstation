@@ -352,7 +352,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "Go" = (
-/obj/structure/locker/secure_closet/medical3{
+/obj/structure/locker/secure/medical3{
 	resistance_flags = 115
 	},
 /turf/open/floor/iron/white,

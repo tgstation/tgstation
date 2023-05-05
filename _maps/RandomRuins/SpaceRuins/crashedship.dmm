@@ -419,7 +419,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/crashedship/aft)
 "qI" = (

@@ -534,7 +534,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -612,7 +612,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cc" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cd" = (

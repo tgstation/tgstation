@@ -181,7 +181,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/locker/secure_closet/freezer/fridge,
+/obj/structure/locker/secure/freezer/fridge,
 /obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},

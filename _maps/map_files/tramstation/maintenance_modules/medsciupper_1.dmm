@@ -132,7 +132,7 @@
 /area/station/asteroid)
 "to" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "tQ" = (
@@ -231,7 +231,7 @@
 /area/station/maintenance/department/science)
 "Gw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "GI" = (

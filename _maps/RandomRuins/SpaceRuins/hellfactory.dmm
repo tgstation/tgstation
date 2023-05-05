@@ -18,7 +18,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
-/obj/structure/locker/secure_closet/freezer/meat,
+/obj/structure/locker/secure/freezer/meat,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "af" = (

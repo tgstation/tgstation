@@ -85,7 +85,7 @@
 /area/station/asteroid)
 "lJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "na" = (

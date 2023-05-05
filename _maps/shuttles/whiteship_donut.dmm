@@ -38,7 +38,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/broken/directional/east,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "ai" = (

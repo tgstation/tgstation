@@ -692,7 +692,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "Fq" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/engine)
@@ -877,7 +877,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Lv" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/engine)
@@ -962,7 +962,7 @@
 /area/shuttle/escape/engine)
 "OX" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -994,7 +994,7 @@
 /area/shuttle/escape/engine)
 "Qj" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/head/utility/hardhat,
 /obj/item/clothing/head/utility/hardhat,
 /obj/item/clothing/head/utility/hardhat,

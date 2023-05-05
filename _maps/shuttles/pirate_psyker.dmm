@@ -5,7 +5,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "am" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/hypospray/medipen/gore,
 /obj/item/reagent_containers/hypospray/medipen/gore,

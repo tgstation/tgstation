@@ -112,7 +112,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "x" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "y" = (

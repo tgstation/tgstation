@@ -161,7 +161,7 @@
 /area/station/maintenance/starboard/central)
 "py" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
@@ -362,7 +362,7 @@
 /area/station/maintenance/starboard/central)
 "Gs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "GE" = (

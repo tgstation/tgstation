@@ -130,7 +130,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)

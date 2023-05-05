@@ -124,7 +124,7 @@
 /area/station/maintenance/port/aft)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "C" = (
@@ -154,7 +154,7 @@
 /area/station/maintenance/port/aft)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "H" = (

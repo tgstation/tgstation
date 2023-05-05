@@ -65,7 +65,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "ao" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
@@ -152,12 +152,12 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/has_grav)
 "aK" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/has_grav)
 "aL" = (
-/obj/structure/locker/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure/freezer/kitchen,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/has_grav)
 "aM" = (

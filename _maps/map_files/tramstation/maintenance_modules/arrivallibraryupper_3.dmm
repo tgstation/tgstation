@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "f" = (
@@ -31,7 +31,7 @@
 /area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "p" = (

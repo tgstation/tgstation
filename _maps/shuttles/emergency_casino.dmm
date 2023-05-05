@@ -1014,7 +1014,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "EF" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -1471,7 +1471,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "XR" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

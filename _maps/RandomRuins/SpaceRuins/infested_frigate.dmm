@@ -1198,7 +1198,7 @@
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/reagent_containers/condiment/rice,
-/obj/structure/locker/secure_closet/freezer/gulag_fridge{
+/obj/structure/locker/secure/freezer/gulag_fridge{
 	locked = 0
 	},
 /obj/item/bodypart/head,

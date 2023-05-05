@@ -362,7 +362,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "jG" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
@@ -567,7 +567,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "oZ" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
@@ -801,7 +801,7 @@
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "uv" = (
@@ -1541,7 +1541,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "JV" = (
-/obj/structure/locker/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure/freezer/kitchen,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
@@ -2010,7 +2010,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "VW" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open{
+/obj/structure/locker/secure/freezer/fridge/open{
 	name = "freezer"
 	},
 /obj/item/food/meat/slab/killertomato,

@@ -19,13 +19,13 @@
 /area/station/maintenance/port/central)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "C" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "Q" = (

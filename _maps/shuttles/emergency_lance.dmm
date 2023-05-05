@@ -737,7 +737,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "zh" = (
-/obj/structure/locker/secure_closet/atmospherics,
+/obj/structure/locker/secure/atmospherics,
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/dark/side{

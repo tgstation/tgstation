@@ -9,7 +9,7 @@
 "l" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)

@@ -7036,7 +7036,7 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Lr" = (
 /obj/effect/decal/cleanable/glass,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "Ls" = (
@@ -7058,7 +7058,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "LA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)

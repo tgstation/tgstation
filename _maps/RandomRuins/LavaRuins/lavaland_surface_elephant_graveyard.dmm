@@ -58,7 +58,7 @@
 /turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "by" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/light/bulb,
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/mineral/titanium/purple,

@@ -554,7 +554,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "DN" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -889,7 +889,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "WL" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

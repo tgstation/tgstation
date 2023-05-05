@@ -551,7 +551,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cn" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -740,7 +740,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "cT" = (
-/obj/structure/locker/secure_closet/engineering_personal,
+/obj/structure/locker/secure/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -776,7 +776,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "cZ" = (
-/obj/structure/locker/secure_closet/engineering_personal,
+/obj/structure/locker/secure/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},

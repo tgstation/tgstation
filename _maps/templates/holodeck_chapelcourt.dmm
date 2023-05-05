@@ -238,7 +238,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "az" = (
-/obj/structure/locker/secure_closet/courtroom,
+/obj/structure/locker/secure/courtroom,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},

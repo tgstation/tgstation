@@ -113,7 +113,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "au" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
@@ -210,7 +210,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aK" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_x = -32
@@ -274,7 +274,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "aU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -318,7 +318,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -356,7 +356,7 @@
 /obj/item/storage/belt/security,
 /obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = list("away_maintenance")
@@ -883,7 +883,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "cD" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1357,7 +1357,7 @@
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
-/obj/structure/locker/secure_closet/freezer{
+/obj/structure/locker/secure/freezer{
 	locked = 0;
 	name = "meat fridge";
 	req_access = list("away_maintenance")
@@ -1380,7 +1380,7 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/storage/fancy/egg_box,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer{
+/obj/structure/locker/secure/freezer{
 	locked = 0;
 	name = "refrigerator";
 	req_access = list("away_maintenance")
@@ -1659,7 +1659,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ev" = (
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -1818,7 +1818,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eV" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/plating{
@@ -2310,7 +2310,7 @@
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -2711,7 +2711,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "hA" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2960,7 +2960,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "if" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3216,7 +3216,7 @@
 "iL" = (
 /obj/machinery/light/small/directional/north,
 /obj/item/clothing/gloves/latex,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -3372,7 +3372,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jf" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	locked = 0;
 	name = "kitchen Cabinet";
 	req_access = list("away_maintenance")
@@ -3654,7 +3654,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "jR" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_y = 32
@@ -3795,7 +3795,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "rd";
 	name = "research director's locker";
 	req_access = list("away_maintenance")
@@ -3864,7 +3864,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "km" = (
 /obj/item/clothing/under/suit/navy,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -3938,7 +3938,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "kv" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating{
@@ -3946,7 +3946,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kw" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4344,7 +4344,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
 /obj/item/reagent_containers/spray/pepper,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = list("away_maintenance")
@@ -4793,7 +4793,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ml" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -4802,7 +4802,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mn" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -4858,7 +4858,7 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/meson,
-/obj/structure/locker/secure_closet/engineering_personal{
+/obj/structure/locker/secure/engineering_personal{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -6739,7 +6739,7 @@
 /obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
-/obj/structure/locker/secure_closet/engineering_personal{
+/obj/structure/locker/secure/engineering_personal{
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7083,7 +7083,7 @@
 	},
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = list("away_maintenance")
@@ -7100,7 +7100,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rs" = (
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -7536,7 +7536,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	locked = 0;
 	req_access = list("away_maintenance")
 	},
@@ -7553,7 +7553,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/locker/secure_closet/engineering_personal{
+/obj/structure/locker/secure/engineering_personal{
 	icon_state = "mining";
 	locked = 0;
 	name = "miner's equipment";
@@ -7675,7 +7675,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "sw" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white/side{
 	dir = 1;
@@ -7683,7 +7683,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "sx" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 1;
@@ -8570,7 +8570,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "us" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -8747,7 +8747,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "uN" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
@@ -9241,7 +9241,7 @@
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "vY" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/mask/breath,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -9252,7 +9252,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vZ" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -9262,7 +9262,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wa" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
@@ -9520,7 +9520,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/structure/locker/secure_closet/miner{
+/obj/structure/locker/secure/miner{
 	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -10088,7 +10088,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zX" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "hydro";
 	locked = 0;
 	name = "botanist's locker";
@@ -10460,7 +10460,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "EP" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "hydro";
 	locked = 0;
 	name = "botanist's locker";
@@ -10929,7 +10929,7 @@
 "Ni" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -11477,7 +11477,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "Xq" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/effect/decal/cleanable/dirt,

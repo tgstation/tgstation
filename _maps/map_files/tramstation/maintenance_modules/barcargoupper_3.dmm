@@ -80,7 +80,7 @@
 /area/station/maintenance/department/cargo)
 "li" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "lx" = (
@@ -182,7 +182,7 @@
 /area/station/maintenance/department/cargo)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "sT" = (

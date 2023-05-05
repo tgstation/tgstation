@@ -25,7 +25,7 @@
 /area/station/maintenance/department/cargo)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer/meat,
+/obj/structure/locker/secure/freezer/meat,
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "e" = (

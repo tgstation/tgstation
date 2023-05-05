@@ -754,7 +754,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "JL" = (
-/obj/structure/locker/secure_closet/freezer{
+/obj/structure/locker/secure/freezer{
 	locked = 0;
 	name = "fridge"
 	},
@@ -1080,7 +1080,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "TP" = (
-/obj/structure/locker/secure_closet/personal,
+/obj/structure/locker/secure/personal,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},

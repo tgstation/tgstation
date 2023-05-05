@@ -121,7 +121,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aE" = (
@@ -346,7 +346,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "XC" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 

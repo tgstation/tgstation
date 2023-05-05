@@ -368,7 +368,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)

@@ -361,7 +361,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "vM" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/ammo_casing/shotgun,
 /obj/item/ammo_casing/shotgun,
 /obj/item/ammo_casing/shotgun,

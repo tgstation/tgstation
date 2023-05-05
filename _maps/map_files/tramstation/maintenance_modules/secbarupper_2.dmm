@@ -71,7 +71,7 @@
 /area/station/maintenance/department/security)
 "ip" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "iV" = (
@@ -125,7 +125,7 @@
 /area/station/maintenance/department/security)
 "nW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "oD" = (

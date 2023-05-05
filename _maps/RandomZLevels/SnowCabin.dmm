@@ -732,7 +732,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
@@ -947,7 +947,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/reagent_containers/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -2092,7 +2092,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hw" = (
-/obj/structure/locker/toolcloset,
+/obj/structure/locker/toollocker,
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
@@ -2326,7 +2326,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "is" = (
-/obj/structure/locker/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure/freezer/kitchen,
 /obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -2352,7 +2352,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iD" = (
-/obj/structure/locker/acloset,
+/obj/structure/locker/alocker,
 /obj/item/clothing/suit/hooded/bloated_human,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
@@ -2365,7 +2365,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iI" = (
-/obj/structure/locker/acloset,
+/obj/structure/locker/alocker,
 /obj/item/toy/foamblade,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
@@ -2579,7 +2579,7 @@
 /area/awaymission/cabin)
 "jr" = (
 /obj/machinery/light/directional/west,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2591,7 +2591,7 @@
 /area/awaymission/cabin)
 "jt" = (
 /obj/machinery/light/directional/west,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2603,7 +2603,7 @@
 /area/awaymission/cabin)
 "ju" = (
 /obj/machinery/light/directional/west,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2615,7 +2615,7 @@
 /area/awaymission/cabin)
 "jv" = (
 /obj/machinery/light/directional/west,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -2627,7 +2627,7 @@
 /area/awaymission/cabin)
 "jw" = (
 /obj/machinery/light/directional/west,
-/obj/structure/locker/secure_closet/personal/cabinet{
+/obj/structure/locker/secure/personal/cabinet{
 	anchored = 1
 	},
 /obj/item/clothing/suit/hooded/wintercoat,

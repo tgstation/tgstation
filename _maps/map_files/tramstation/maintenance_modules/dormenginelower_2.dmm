@@ -485,7 +485,7 @@
 /area/station/maintenance/central/lesser)
 "vB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "vC" = (
@@ -843,7 +843,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "QC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "Rn" = (

@@ -1145,11 +1145,11 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "dn" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "do" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1279,7 +1279,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -1449,7 +1449,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/locker/secure_closet/freezer/kitchen,
+/obj/structure/locker/secure/freezer/kitchen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -2606,7 +2606,7 @@
 /obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "sec";
 	name = "security officer's locker";
 	req_access = list("away_maintenance")
@@ -4765,7 +4765,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/custodials)
 "nD" = (
-/obj/structure/locker/jcloset,
+/obj/structure/locker/jlocker,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/custodials)
 "nE" = (
@@ -5187,7 +5187,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "oV" = (
-/obj/structure/locker/secure_closet/hydroponics,
+/obj/structure/locker/secure/hydroponics,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "oW" = (
@@ -5430,7 +5430,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/secpost)
 "pN" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -5456,7 +5456,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "pR" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
@@ -5744,7 +5744,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "qI" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
 "qK" = (
@@ -6351,7 +6351,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "ta" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "tb" = (
@@ -6757,7 +6757,7 @@
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/cavern1)
 "vB" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -7970,7 +7970,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "AY" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
@@ -9473,14 +9473,14 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "HY" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "HZ" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -10915,7 +10915,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "OD" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)

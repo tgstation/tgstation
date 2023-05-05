@@ -42,7 +42,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "k" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	name = "clown locker";
 	req_access = list("theatre")
 	},

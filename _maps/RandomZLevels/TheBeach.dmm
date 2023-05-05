@@ -309,7 +309,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bk" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -653,11 +653,11 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "ci" = (
-/obj/structure/locker/gmcloset,
+/obj/structure/locker/gmlocker,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cj" = (
-/obj/structure/locker/secure_closet/bar,
+/obj/structure/locker/secure/bar,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
@@ -700,7 +700,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cr" = (
-/obj/structure/locker/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure/freezer/kitchen{
 	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
@@ -734,7 +734,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cw" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /obj/item/food/meat/slab/goliath,
 /obj/item/food/meat/slab/xeno,
 /obj/item/food/meat/slab/spider,
@@ -934,27 +934,27 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "db" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dc" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dd" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_red,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "de" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "df" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/item/clothing/neck/necklace/dope,
 /turf/open/floor/wood,
 /area/awaymission/beach)

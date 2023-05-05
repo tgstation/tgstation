@@ -125,7 +125,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
 	},
@@ -1943,7 +1943,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Cg" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -2452,7 +2452,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Jg" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
@@ -3605,7 +3605,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WF" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)

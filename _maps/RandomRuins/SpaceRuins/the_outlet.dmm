@@ -270,7 +270,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gU" = (
-/obj/structure/locker/secure_closet/freezer/empty,
+/obj/structure/locker/secure/freezer/empty,
 /obj/item/organ/internal/tongue/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/organ/external/tail/lizard,
@@ -1989,7 +1989,7 @@
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Vx" = (
-/obj/structure/locker/secure_closet/freezer/empty,
+/obj/structure/locker/secure/freezer/empty,
 /obj/item/food/meat/rawcutlet/plain/human,
 /obj/item/food/meat/rawcutlet/plain/human,
 /obj/item/food/meat/slab/human,

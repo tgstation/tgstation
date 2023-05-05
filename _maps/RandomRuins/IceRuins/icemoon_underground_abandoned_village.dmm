@@ -192,7 +192,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered)
 "rC" = (
-/obj/structure/locker/secure_closet/freezer,
+/obj/structure/locker/secure/freezer,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
@@ -336,7 +336,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "DI" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath/medical,

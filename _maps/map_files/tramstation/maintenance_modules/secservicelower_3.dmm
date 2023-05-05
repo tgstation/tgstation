@@ -175,7 +175,7 @@
 /area/station/maintenance/central/greater)
 "mp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "nV" = (
@@ -296,7 +296,7 @@
 /area/station/maintenance/central/greater)
 "wA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "xB" = (

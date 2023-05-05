@@ -60,7 +60,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "gk" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)

@@ -1,5 +1,5 @@
 /obj/structure/closet/@SUBTYPES : /obj/structure/locker/@SUBTYPES{@OLD}
-/obj/structure/closet/secure_closet/@SUBTYPES : /obj/structure/locker/secure/@SUBTYPES{@OLD}
+/obj/structure/locker/secure_closet/@SUBTYPES : /obj/structure/locker/secure/@SUBTYPES{@OLD}
 
 /obj/effect/spawner/random/structure/closet_empty : /obj/effect/spawner/random/structure/locker_empty{@OLD}
 /obj/effect/spawner/random/structure/closet_private : /obj/effect/spawner/random/structure/locker_private{@OLD}
@@ -7,16 +7,16 @@
 /obj/effect/spawner/random/clothing/wardrobe_closet : /obj/effect/spawner/random/clothing/wardrobe_locker{@OLD}
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored : /obj/effect/spawner/random/clothing/wardrobe_locker_colored{@OLD}
 
-/obj/structure/closet/acloset : /obj/structure/locker/alocker{@OLD}
-/obj/structure/closet/bombcloset : /obj/structure/locker/bomblocker{@OLD}
-/obj/structure/closet/chefcloset : /obj/structure/locker/cheflocker{@OLD}
-/obj/structure/closet/emcloset : /obj/structure/locker/emlocker{@OLD}
-/obj/structure/closet/firecloset : /obj/structure/locker/firelocker{@OLD}
-/obj/structure/closet/gmcloset : /obj/structure/locker/gmlocker{@OLD}
-/obj/structure/closet/jcloset : /obj/structure/locker/jlocker{@OLD}
-/obj/structure/closet/l3closet : /obj/structure/locker/l3locker{@OLD}
-/obj/structure/closet/lawcloset : /obj/structure/locker/lawlocker{@OLD}
-/obj/structure/closet/toolcloset : /obj/structure/locker/toollocker{@OLD}
+/obj/structure/locker/acloset : /obj/structure/locker/alocker{@OLD}
+/obj/structure/locker/bombcloset : /obj/structure/locker/bomblocker{@OLD}
+/obj/structure/locker/chefcloset : /obj/structure/locker/cheflocker{@OLD}
+/obj/structure/locker/emcloset : /obj/structure/locker/emlocker{@OLD}
+/obj/structure/locker/firecloset : /obj/structure/locker/firelocker{@OLD}
+/obj/structure/locker/gmcloset : /obj/structure/locker/gmlocker{@OLD}
+/obj/structure/locker/jcloset : /obj/structure/locker/jlocker{@OLD}
+/obj/structure/locker/l3closet : /obj/structure/locker/l3locker{@OLD}
+/obj/structure/locker/lawcloset : /obj/structure/locker/lawlocker{@OLD}
+/obj/structure/locker/toolcloset : /obj/structure/locker/toollocker{@OLD}
 
 /obj/effect/overlay/closet_door : /obj/effect/overlay/locker_door{@OLD}
 /obj/effect/landmark/start/hangover/closet : /obj/effect/landmark/start/hangover/locker{@OLD}

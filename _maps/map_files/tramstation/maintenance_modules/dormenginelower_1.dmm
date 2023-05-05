@@ -623,7 +623,7 @@
 /area/station/asteroid)
 "Lw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "LX" = (
@@ -683,7 +683,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Oo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "OF" = (

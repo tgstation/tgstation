@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered)
 "c" = (
-/obj/structure/locker/toolcloset,
+/obj/structure/locker/toollocker,
 /obj/item/wrench,
 /obj/item/screwdriver,
 /obj/item/crowbar,

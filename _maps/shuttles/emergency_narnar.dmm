@@ -93,7 +93,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "t" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "u" = (

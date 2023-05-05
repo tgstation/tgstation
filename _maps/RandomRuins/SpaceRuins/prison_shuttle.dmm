@@ -67,7 +67,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "u" = (
-/obj/structure/locker/secure_closet/security,
+/obj/structure/locker/secure/security,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
@@ -105,7 +105,7 @@
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "H" = (
-/obj/structure/locker/secure_closet/contraband{
+/obj/structure/locker/secure/contraband{
 	name = "confiscation locker"
 	},
 /obj/effect/spawner/random/exotic/antag_gear,

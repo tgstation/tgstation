@@ -23,7 +23,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ai" = (
-/obj/structure/locker/secure_closet/freezer/meat/open,
+/obj/structure/locker/secure/freezer/meat/open,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ak" = (
@@ -385,7 +385,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bs" = (
-/obj/structure/locker/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure/freezer/kitchen{
 	req_access = null
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -457,7 +457,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bI" = (
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
@@ -1645,7 +1645,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/chemical,
+/obj/structure/locker/secure/chemical,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lr" = (
@@ -2486,7 +2486,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "OD" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -2554,7 +2554,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Sn" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8

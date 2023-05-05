@@ -1261,7 +1261,7 @@
 /area/centcom/syndicate_mothership/control)
 "os" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
 "ov" = (
@@ -1450,7 +1450,7 @@
 /area/centcom/syndicate_mothership/control)
 "qs" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/locker/secure_closet/freezer/fridge/open,
+/obj/structure/locker/secure/freezer/fridge/open,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
@@ -2211,7 +2211,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/stack/spacecash/c100,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
@@ -4407,7 +4407,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "ZG" = (

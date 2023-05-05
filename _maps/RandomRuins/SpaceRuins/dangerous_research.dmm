@@ -224,7 +224,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/locker/secure_closet/freezer/empty{
+/obj/structure/locker/secure/freezer/empty{
 	name = "fridge"
 	},
 /turf/open/floor/iron/dark/diagonal,
@@ -2138,7 +2138,7 @@
 "AU" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/item/trash/ready_donk,
-/obj/structure/locker/secure_closet/freezer/empty/open,
+/obj/structure/locker/secure/freezer/empty/open,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "Ba" = (

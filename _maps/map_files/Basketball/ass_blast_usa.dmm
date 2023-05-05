@@ -505,7 +505,7 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/basketball)
 "Tc" = (
-/obj/structure/locker/secure_closet/freezer/meat,
+/obj/structure/locker/secure/freezer/meat,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/basketball)
 "Uv" = (

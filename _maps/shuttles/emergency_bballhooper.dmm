@@ -625,7 +625,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ja" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/item/crowbar,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/mineral/titanium/blue,

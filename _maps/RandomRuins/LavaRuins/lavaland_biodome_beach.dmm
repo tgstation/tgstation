@@ -165,7 +165,7 @@
 /turf/open/water/beach/biodome,
 /area/ruin/powered/beach)
 "cV" = (
-/obj/structure/locker/secure_closet/freezer/meat{
+/obj/structure/locker/secure/freezer/meat{
 	req_access = null
 	},
 /obj/item/food/meat/rawbacon,
@@ -423,7 +423,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "nI" = (
-/obj/structure/locker/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure/freezer/kitchen{
 	req_access = null
 	},
 /obj/item/reagent_containers/condiment/milk,
@@ -567,7 +567,7 @@
 /area/ruin/powered/beach)
 "sM" = (
 /obj/machinery/light/directional/east,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "cabinet";
 	name = "bartender's closet";
 	req_access = list("bar")
@@ -867,7 +867,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Ds" = (
-/obj/structure/locker/secure_closet/freezer/kitchen{
+/obj/structure/locker/secure/freezer/kitchen{
 	req_access = null
 	},
 /turf/open/floor/wood,
@@ -997,7 +997,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	icon_state = "cabinet";
 	name = "booze storage";
 	req_access = list("bar")

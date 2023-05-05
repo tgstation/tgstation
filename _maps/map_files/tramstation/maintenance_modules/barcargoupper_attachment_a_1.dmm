@@ -14,7 +14,7 @@
 /area/station/maintenance/department/cargo)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer/cream_pie,
+/obj/structure/locker/secure/freezer/cream_pie,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/cargo)
 "m" = (
@@ -111,7 +111,7 @@
 /area/station/maintenance/department/cargo)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/secure_closet/freezer/empty{
+/obj/structure/locker/secure/freezer/empty{
 	name = "prop fridge"
 	},
 /obj/item/food/grown/banana,

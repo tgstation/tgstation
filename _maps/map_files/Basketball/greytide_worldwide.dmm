@@ -305,7 +305,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tX" = (

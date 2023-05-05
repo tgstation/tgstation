@@ -418,7 +418,7 @@
 	},
 /area/mine/lounge)
 "cM" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/trimline/yellow/filled/arrow_cw{
 	dir = 8
 	},
@@ -1795,7 +1795,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "ld" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/production)
@@ -3006,7 +3006,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp)
 "qy" = (
-/obj/structure/locker/secure_closet/freezer/gulag_fridge,
+/obj/structure/locker/secure/freezer/gulag_fridge,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -3211,7 +3211,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/eva)
 "sf" = (
-/obj/structure/locker/secure_closet/brig,
+/obj/structure/locker/secure/brig,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/west{
 	network = list("labor")
@@ -3227,7 +3227,7 @@
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
 "sk" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/south)
 "sn" = (
@@ -3394,7 +3394,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "tr" = (
-/obj/structure/locker/secure_closet/brig,
+/obj/structure/locker/secure/brig,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
@@ -4363,7 +4363,7 @@
 /obj/structure/sign/directions/arrival/directional/south{
 	pixel_y = -40
 	},
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/mine/cafeteria)
@@ -4545,7 +4545,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "AV" = (
-/obj/structure/locker/secure_closet/freezer/fridge,
+/obj/structure/locker/secure/freezer/fridge,
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/item/reagent_containers/cup/glass/bottle/beer,
@@ -5785,7 +5785,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "JI" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -6036,7 +6036,7 @@
 /turf/open/floor/plating,
 /area/mine/storage)
 "Lh" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -6642,7 +6642,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "OK" = (
-/obj/structure/locker/secure_closet/brig,
+/obj/structure/locker/secure/brig,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/west{
 	network = list("labor")
@@ -6671,7 +6671,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "OS" = (
-/obj/structure/locker/secure_closet/brig,
+/obj/structure/locker/secure/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge,
@@ -7034,7 +7034,7 @@
 /area/mine/laborcamp)
 "Rw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/toolcloset,
+/obj/structure/locker/toollocker,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "RB" = (
@@ -7764,7 +7764,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp)
 "VZ" = (
-/obj/structure/locker/secure_closet/engineering_welding{
+/obj/structure/locker/secure/engineering_welding{
 	req_access = list("mining_station")
 	},
 /obj/machinery/light/directional/west,
@@ -8294,7 +8294,7 @@
 /turf/closed/wall,
 /area/mine/laborcamp)
 "Zv" = (
-/obj/structure/locker/secure_closet/personal/cabinet,
+/obj/structure/locker/secure/personal/cabinet,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},
@@ -8349,7 +8349,7 @@
 	},
 /area/mine/lounge)
 "ZH" = (
-/obj/structure/locker/secure_closet/labor_camp_security,
+/obj/structure/locker/secure/labor_camp_security,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},

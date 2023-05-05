@@ -19,7 +19,7 @@
 /area/shuttle/escape/simulation)
 "aS" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "be" = (
@@ -717,7 +717,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fd" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Fs" = (

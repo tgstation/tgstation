@@ -239,7 +239,7 @@
 /area/station/maintenance/department/cargo)
 "FJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "Gy" = (

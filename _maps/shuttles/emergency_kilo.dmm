@@ -215,7 +215,7 @@
 /area/shuttle/escape/brig)
 "bn" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bo" = (

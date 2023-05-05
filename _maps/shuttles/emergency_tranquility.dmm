@@ -838,7 +838,7 @@
 /area/shuttle/escape)
 "pe" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1759,7 +1759,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "FY" = (
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -2180,7 +2180,7 @@
 /area/shuttle/escape)
 "NC" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2272,7 +2272,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Pi" = (
-/obj/structure/locker/secure_closet/bar,
+/obj/structure/locker/secure/bar,
 /obj/machinery/light/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)
@@ -2302,7 +2302,7 @@
 /turf/open/water/jungle,
 /area/shuttle/escape)
 "Qz" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},

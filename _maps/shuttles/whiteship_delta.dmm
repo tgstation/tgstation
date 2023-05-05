@@ -699,7 +699,7 @@
 "bH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/firecloset{
+/obj/structure/locker/firelocker{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,
@@ -1864,7 +1864,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/locker/secure_closet/freezer{
+/obj/structure/locker/secure/freezer{
 	locked = 0;
 	name = "fridge"
 	},

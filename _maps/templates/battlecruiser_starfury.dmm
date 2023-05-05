@@ -287,7 +287,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "aQ" = (
-/obj/structure/locker/firecloset{
+/obj/structure/locker/firelocker{
 	anchored = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -1398,7 +1398,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "eT" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas,
@@ -1482,7 +1482,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "ff" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas,
@@ -1591,7 +1591,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "fo" = (
-/obj/structure/locker/firecloset{
+/obj/structure/locker/firelocker{
 	anchored = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -1982,7 +1982,7 @@
 	},
 /area/shuttle/sbc_starfury)
 "hb" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	anchored = 1;
 	icon_state = "tac";
 	name = "Explosives Locker";
@@ -2241,7 +2241,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "hC" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	anchored = 1;
 	icon_state = "tac";
 	name = "Ammunitions Locker";
@@ -2407,7 +2407,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "ib" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	anchored = 1;
 	icon_state = "tac";
 	name = "Ammunitions Locker";
@@ -2619,7 +2619,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/sbc_starfury)
 "iu" = (
-/obj/structure/locker/secure_closet{
+/obj/structure/locker/secure{
 	anchored = 1;
 	icon_state = "hos";
 	name = "Captain's Locker";
@@ -2896,14 +2896,14 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/sbc_starfury)
 "iT" = (
-/obj/structure/locker/secure_closet/engineering_electrical{
+/obj/structure/locker/secure/engineering_electrical{
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/smooth,
 /area/shuttle/sbc_starfury)
 "iU" = (
-/obj/structure/locker/secure_closet/engineering_welding{
+/obj/structure/locker/secure/engineering_welding{
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/bot/right,
@@ -3281,7 +3281,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "kq" = (
-/obj/structure/locker/l3closet,
+/obj/structure/locker/l3locker,
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 4
 	},
@@ -3319,7 +3319,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "ky" = (
-/obj/structure/locker/toolcloset,
+/obj/structure/locker/toollocker,
 /obj/machinery/airalarm/directional/east{
 	req_access = list("syndicate")
 	},
@@ -3571,7 +3571,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "lv" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas,
@@ -4090,7 +4090,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "ry" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas,
@@ -4404,7 +4404,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "yY" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -5678,7 +5678,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "Yq" = (
-/obj/structure/locker/secure_closet/medical2{
+/obj/structure/locker/secure/medical2{
 	req_access = list("syndicate")
 	},
 /obj/item/assembly/flash/handheld,

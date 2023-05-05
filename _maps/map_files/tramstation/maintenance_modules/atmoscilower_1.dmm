@@ -18,7 +18,7 @@
 /area/station/maintenance/starboard/lesser)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "f" = (
@@ -295,7 +295,7 @@
 /area/station/maintenance/starboard/lesser)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "Q" = (

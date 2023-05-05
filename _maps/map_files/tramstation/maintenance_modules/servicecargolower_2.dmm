@@ -230,7 +230,7 @@
 /area/station/asteroid)
 "Ex" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/firecloset,
+/obj/structure/locker/firelocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "EZ" = (
@@ -383,7 +383,7 @@
 /area/station/maintenance/starboard/greater)
 "Xg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "XB" = (

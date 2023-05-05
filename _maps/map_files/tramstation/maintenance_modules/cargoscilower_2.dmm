@@ -259,7 +259,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "CW" = (
-/obj/structure/locker/emcloset,
+/obj/structure/locker/emlocker,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1

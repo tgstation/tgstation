@@ -42,7 +42,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "ah" = (
-/obj/structure/locker/emcloset{
+/obj/structure/locker/emlocker{
 	anchored = 1
 	},
 /obj/item/clothing/mask/gas/syndicate,
