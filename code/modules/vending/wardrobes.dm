@@ -306,7 +306,7 @@
 		/obj/item/autopsy_scanner = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe
-	payment_department = ACCOUNT_SRV
+	payment_department = ACCOUNT_MED
 
 /obj/item/vending_refill/wardrobe/coroner_wardrobe
 	machine_name = "MortiDrobe"
