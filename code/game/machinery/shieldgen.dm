@@ -558,8 +558,8 @@
 /obj/machinery/modularshieldgen
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "shield_wall_gen" //temporary icon
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff" //temporary icon
 	density = TRUE
 	opacity = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
@@ -568,7 +568,7 @@
 
 	var/overclocked = FALSE
 	var/active = FALSE
-	var/recovering = FALSE
+	var/recovering = TRUE
 
 	///Determins max health of the shield
 	var/max_strength = 100
@@ -587,7 +587,7 @@
 	///Determines if we only generate a shield on space tiles or not
 	var/exterior_only = FALSE
 
-	var/list/deployed_shields
+	var/list/deployed_shields = null
 
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
@@ -615,7 +615,13 @@
 		return
 	activate_shields()
 
-/obj/machinery/shieldgen/proc/deactivate_shields()
+/obj/machinery/modularshieldgen/Initialize(mapload)
+	. = ..()
+	deployed_shields = list()
+	if(mapload && active && anchored)
+		activate_shields()
+
+/obj/machinery/modularshieldgen/proc/deactivate_shields()
 	active = FALSE
 	update_appearance()
 	QDEL_LIST(deployed_shields)
@@ -630,13 +636,14 @@
 	var/list/inside_shield = circle_range_turfs(src, radius - 1)
 	if (exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-			if (!(target_tile in inside_shield) && isspaceturf(target_tile))
-				deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
+			if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+				deployed_shields += new /obj/structure/emergency_shield/modular(target_tile)
 				active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
+
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-		if (!(target_tile in inside_shield) && isopenturf(target_tile))
-			deployed_shields += new /obj/structure/emergency_shield/Modular(target_tile)
+		if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+			deployed_shields += new /obj/structure/emergency_shield/modular(target_tile)
 			active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
 /obj/machinery/modularshieldgen/Destroy()
@@ -652,38 +659,37 @@
 	if(!is_operational)
 		return
 
-/obj/machinery/modularshieldgen/shield_drain(damage_amount)
+/obj/machinery/modularshieldgen/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	START_PROCESSING(SSobj, src)
-	if stored_strength <= 5
+	if (stored_strength < 5)
 		deactivate_shields()
 		recovering = TRUE
 
 /obj/machinery/modularshieldgen/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
-		STOP_PROCESSING(SSobj, src)
+		recovering = FALSE
+		//STOP_PROCESSING(SSobj, src)
 		return
-	deployed_shields.opacity = min(255 * (stored_strength/max_strength), 50)
+	 //.set_a = max(255 * (stored_strength/max_strength), 50) commented out so i can test
 
 
 
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shield-old"
-	color = "#24f8ff"
+	color = "#00ffff"
 	resistance_flags = INDESTRUCTIBLE
 
-	var/obj/machinery/modularshieldgen/ParentGen
+	var/obj/machinery/modularshieldgen/damage_redirector
 
 /obj/structure/emergency_shield/modular/Initialize(mapload, obj/machinery/modularshieldgen/Generator,)
 	. = ..()
-	ParentGen = Generator
+	damage_redirector = Generator
 
-	//How the shield loses strength
-/obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
+//How the shield loses strength
+/obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		ParentGen.shield_drain(damage_amount)
+		damage_redirector.shield_drain(damage_amount)
