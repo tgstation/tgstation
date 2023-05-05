@@ -69,11 +69,12 @@
 
 	COOLDOWN_START(src, alert_cooldown, time_between_alerts)
 
-	for(var/mob/living/alerted_mob in alerted)
-		if(alerted_mob.stat == CONSCIOUS)
-			if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
-				alerted_mob.face_atom(src)
-			alerted_mob.do_alert_animation()
+	for(var/mob/living/alerted_mob as anything in alerted)
+		if(alerted_mob.stat != CONSCIOUS || alerted_mob.is_blind())
+			continue
+		if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
+			alerted_mob.face_atom(src)
+		alerted_mob.do_alert_animation()
 
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
