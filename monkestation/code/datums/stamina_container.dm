@@ -15,6 +15,10 @@
 	///Are we regenerating right now?
 	var/is_regenerating = TRUE
 
+	///cooldowns
+	///how long until we can lose stamina again
+	COOLDOWN_DECLARE(stamina_grace_period)
+	///how long stamina is paused for
 	COOLDOWN_DECLARE(paused_stamina)
 
 /datum/stamina_container/New(parent, maximum = STAMINA_MAX, regen_rate = STAMINA_REGEN)
@@ -63,9 +67,13 @@
 /datum/stamina_container/proc/resume()
 	is_regenerating = TRUE
 
+///adjust the grace period a mob has usually used after stam crit to prevent infinite stamina locking
+/datum/stamina_container/proc/adjust_grace_period(time)
+	COOLDOWN_START(src, stamina_grace_period, time)
+
 ///Adjust stamina by an amount.
 /datum/stamina_container/proc/adjust(amt as num, forced)
-	if(!amt)
+	if(!amt || !COOLDOWN_FINISHED(src, stamina_grace_period))
 		return
 	///Our parent might want to fuck with these numbers
 	var/modify = parent.pre_stamina_change(amt, forced)
