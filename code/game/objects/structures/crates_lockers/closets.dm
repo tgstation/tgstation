@@ -566,6 +566,62 @@
 	else
 		return ..()
 
+/// check if we can install airlock electronics in this closet
+/obj/structure/closet/proc/can_install_airlock_electronics(mob/user)
+	if(secure || !can_install_electronics || !(welded || !can_weld_shut))
+		return FALSE
+
+	if(broken)
+		balloon_alert(user, "its broken!")
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
+/// check if we can unscrew airlock electronics from this closet
+/obj/structure/closet/proc/can_unscrew_airlock_electronics(mob/user)
+	if(!secure || !(welded || !can_weld_shut))
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
+/// check if we can install card reader in this closet
+/obj/structure/closet/proc/can_install_card_reader(mob/user)
+	if(card_reader_installed || !can_install_electronics || !length(access_choices) || !(welded || !can_weld_shut))
+		return FALSE
+
+	if(broken)
+		balloon_alert(user, "its broken!")
+		return FALSE
+
+	if(!secure)
+		balloon_alert(user, "no electronics inside!")
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
+/// check if we can pry out the card reader from this closet
+/obj/structure/closet/proc/can_pryout_card_reader(mob/user)
+	if(!card_reader_installed || !(welded || !can_weld_shut))
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	var/obj/item/card/id/id = null
@@ -586,25 +642,48 @@
 
 		update_appearance()
 
-	else if(can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
-		if(broken)
-			balloon_alert(user, "its broken!")
+	else if(istype(W, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
+		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
+			span_notice("You start to install electronics into the [src]..."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
+			return
+		if(!user.transferItemToLoc(W, src))
 			return
 
-		if(!secure)
-			balloon_alert(user, "no electronics inside!")
+		CheckParts(list(W))
+		secure = TRUE
+		balloon_alert(user, "electronics installed")
+
+		update_appearance()
+
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
+		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
+			span_notice("You begin to remove the electronics from the [src]..."))
+
+		if (!W.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
 
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
+		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
+		if(length(req_one_access))
+			airlock_electronics.one_access = TRUE
+			airlock_electronics.accesses = req_one_access
+		else
+			airlock_electronics.accesses = req_access
 
+		req_access = list()
+		req_one_access = null
+		id_card = null
+		secure = FALSE
+		balloon_alert(user, "electronics removed")
+
+		update_appearance()
+
+	else if(istype(W, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
-		if(!do_after(user, 4 SECONDS, target = src))
-			return
-		if(!(secure && !broken && !locked && can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
 
 		card_reader_installed = TRUE
@@ -612,6 +691,17 @@
 		qdel(W)
 
 		balloon_alert(user, "card reader installed")
+
+	else if(W.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
+		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
+			span_notice("You begin to pry the card reader out from [src]..."))
+
+		if(!W.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
+			return
+
+		new /obj/item/stock_parts/card_reader(drop_location())
+		card_reader_installed = FALSE
+		balloon_alert(user, "card reader removed")
 
 	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = W.GetID())))
 		var/num_choices = length(access_choices)
@@ -649,22 +739,6 @@
 		else
 			msg = "set to [choice]"
 		balloon_alert(user, msg)
-
-	else if(card_reader_installed && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_CROWBAR)
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
-			span_notice("You begin to pry the card reader out from [src]..."))
-		if(!W.use_tool(src, user, 4 SECONDS))
-			return
-		if(!(card_reader_installed && !locked && (welded || !can_weld_shut)))
-			return
-
-		new /obj/item/stock_parts/card_reader(drop_location())
-		card_reader_installed = FALSE
-		balloon_alert(user, "card reader removed")
 
 	else if(!opened && istype(W, /obj/item/pen))
 		if(locked)
@@ -735,55 +809,6 @@
 							span_hear("You hear welding."))
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
-
-	else if(can_install_electronics && (welded || !can_weld_shut) && istype(W, /obj/item/electronics/airlock))
-		if(broken)
-			balloon_alert(user, "its broken!")
-			return
-
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
-		if (!do_after(user, 4 SECONDS, target = src))
-			return
-		if (!(!secure && !broken && can_install_electronics && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
-			return
-
-		CheckParts(list(W))
-		secure = TRUE
-		balloon_alert(user, "electronics installed")
-
-		update_appearance()
-
-	else if(secure && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-			span_notice("You begin to remove the electronics from the [src]..."))
-		if (!W.use_tool(src, user, 40, volume=50))
-			return
-		if(!(secure && !locked && (welded || !can_weld_shut)))
-			return
-
-		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
-		if(length(req_one_access))
-			airlock_electronics.one_access = TRUE
-			airlock_electronics.accesses = req_one_access
-		else
-			airlock_electronics.accesses = req_access
-
-		req_access = list()
-		req_one_access = null
-		id_card = null
-		secure = FALSE
-		balloon_alert(user, "electronics removed")
-
-		update_appearance()
 
 	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()

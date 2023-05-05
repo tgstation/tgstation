@@ -232,7 +232,7 @@
 		. += span_notice("Swipe your ID to change access levels.")
 		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel after opening panel.")
 	else
-		. += span_notice("A card reader can be installed for further control access by opening its panel.")
+		. += span_notice("A card reader can be installed for further control access after opening its panel.")
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access(list/accesses)
@@ -596,19 +596,24 @@
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
 	return TRUE
 
+/obj/machinery/suit_storage_unit/proc/can_install_card_reader(mob/user)
+	if(card_reader_installed || !panel_open || state_open || !is_operational)
+		return FALSE
+
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+
+	return TRUE
+
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(!card_reader_installed && panel_open && !state_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
+	if(istype(I, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
-		if(!do_after(user, 4 SECONDS, target = src))
-			return
-		if(!(!locked && !state_open && panel_open && is_operational && !card_reader_installed) || !user.transferItemToLoc(I, src))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
 
 		card_reader_installed = TRUE
@@ -617,37 +622,7 @@
 
 		balloon_alert(user, "card reader installed")
 
-	else if(!state_open && istype(I, /obj/item/pen))
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		if(isnull(id_card))
-			balloon_alert(user, "not yours to rename!")
-			return
-
-		var/name_set = FALSE
-		var/desc_set = FALSE
-
-		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
-		if(!isnull(str))
-			name = str
-			name_set = TRUE
-
-		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
-		if(!isnull(str))
-			desc = str
-			desc_set = TRUE
-
-		var/bit_flag = NONE
-		if(name_set)
-			bit_flag |= UPDATE_NAME
-		if(desc_set)
-			bit_flag |= UPDATE_DESC
-		if(bit_flag != NONE)
-			update_appearance(bit_flag)
-
-	else if(!state_open && is_operational && card_reader_installed && !isnull((id = I.GetID())))
+	else if(!state_open && !panel_open && is_operational && card_reader_installed && !isnull((id = I.GetID())))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
@@ -689,6 +664,36 @@
 		else
 			msg = "set to [choice]"
 		balloon_alert(user, msg)
+
+	else if(!state_open && istype(I, /obj/item/pen))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(isnull(id_card))
+			balloon_alert(user, "not yours to rename!")
+			return
+
+		var/name_set = FALSE
+		var/desc_set = FALSE
+
+		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		if(!isnull(str))
+			name = str
+			name_set = TRUE
+
+		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		if(!isnull(str))
+			desc = str
+			desc_set = TRUE
+
+		var/bit_flag = NONE
+		if(name_set)
+			bit_flag |= UPDATE_NAME
+		if(desc_set)
+			bit_flag |= UPDATE_DESC
+		if(bit_flag != NONE)
+			update_appearance(bit_flag)
 
 	if(state_open && is_operational)
 		if(istype(I, /obj/item/clothing/suit))
