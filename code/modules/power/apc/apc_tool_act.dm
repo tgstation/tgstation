@@ -13,7 +13,7 @@
 		update_appearance()
 		return
 
-		//Opening and closing cover
+	//Opening and closing cover
 	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
 		if(coverlocked && !(machine_stat & MAINT)) // locked...
 			balloon_alert(user, "cover is locked!")
