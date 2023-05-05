@@ -555,7 +555,7 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
-	old_limb = human_holder.return_and_replace_bodypart(prosthetic)
+	old_limb = human_holder.return_and_replace_bodypart(prosthetic, special = TRUE)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
@@ -563,7 +563,7 @@
 
 /datum/quirk/prosthetic_limb/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.del_and_replace_bodypart(old_limb)
+	human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
 	old_limb = null
 
 /datum/quirk/quadruple_amputee
