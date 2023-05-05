@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Blind people don't get alerted when someone in a cardboard box pops out nearby"
