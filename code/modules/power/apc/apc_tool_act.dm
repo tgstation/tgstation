@@ -117,7 +117,7 @@
 	. = ..()
 
 	//repairing the cover
-	if((atom_integrity < max_integrity) && APC_ELECTRONICS_SECURED)
+	if((atom_integrity < max_integrity) && has_electronics)
 		if(opened == APC_COVER_REMOVED)
 			balloon_alert(user, "no cover to repair!")
 			return
@@ -128,7 +128,7 @@
 			return
 		balloon_alert(user, "repairing...")
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
-			atom_integrity = min(atom_integrity + 50, max_integrity)
+			update_integrity(atom_integrity += 50)
 			balloon_alert(user, "repaired")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
