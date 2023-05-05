@@ -665,7 +665,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Shieldgencontrol")
+		ui = new(user, src, "Modularshieldgen")
 		ui.open()
 
 /obj/machinery/modularshieldgen/ui_data(mob/user)
@@ -704,7 +704,7 @@
 	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		recovering = FALSE
-		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, you arnt meant to know the exact condition of the shield without seeing the core
+		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
 		var/random_num = rand(1,deployed_shields.len)
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
