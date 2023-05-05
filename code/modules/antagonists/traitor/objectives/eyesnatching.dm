@@ -205,6 +205,7 @@
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
+	notify_ghosts("[target] has just had their eyes snatched!", source = target, action = NOTIFY_ORBIT, header = "Ouch!")
 	target.emote("scream")
 	if(prob(20))
 		target.emote("cry")
