@@ -27,11 +27,15 @@ SUBSYSTEM_DEF(tts)
 	/// A list of available speakers (string identifiers)
 	var/list/available_speakers = list()
 
+	/// A list of current tts messages being processed, mapped by their sha1 identifier.
+	/// Used to prevent double processing of the same message, voice and filter, since we can just
+	/// cache extra requests to the current tts message being processed at once and play them upon request completion.
 	var/list/cached_voices = list()
 
 	/// Whether TTS is enabled or not
 	var/tts_enabled = FALSE
 
+	/// TTS messages won't play if requests took longer than this duration of time.
 	var/message_timeout = 7 SECONDS
 
 	/// Messages can be timed out earlier if the algorithm thinks that
@@ -71,6 +75,7 @@ SUBSYSTEM_DEF(tts)
 	if(response.errored || response.status_code != 200)
 		stack_trace(response.error)
 		return SS_INIT_FAILURE
+	max_concurrent_requests = CONFIG_GET(number/tts_max_concurrent_requests)
 	available_speakers = json_decode(response.body)
 	tts_enabled = TRUE
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
