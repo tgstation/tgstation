@@ -349,7 +349,7 @@
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 
 	var/list/matlist = list()
-	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT * count
+	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
 
 	materials.silo_log(src, "ejected", -count, "sheets", matlist)
 
