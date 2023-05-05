@@ -203,7 +203,7 @@
 "aU" = (
 /obj/structure/closet/crate/critter{
 	name = "critter crate - mr.tiggles";
-	opened = 1;
+	opened = 1
 	},
 /obj/item/paper/crumpled/ruins/bigderelict1/manifest,
 /obj/structure/alien/weeds/creature,
