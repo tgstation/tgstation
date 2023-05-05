@@ -633,17 +633,22 @@
 	update_appearance()
 
 	//please god yell at me for this i dont know if its the right way to do this
+    //the shield we are currently making
 	var/list/inside_shield = circle_range_turfs(src, radius - 1)
 	if (exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 			if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-				deployed_shields += new /obj/structure/emergency_shield/modular(target_tile)
+				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+				deploying_shield.shield_generator = src
+				deployed_shields += deploying_shield
 				active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
 
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 		if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-			deployed_shields += new /obj/structure/emergency_shield/modular(target_tile)
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+			deploying_shield.shield_generator = src
+			deployed_shields += deploying_shield
 			active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
 /obj/machinery/modularshieldgen/Destroy()
@@ -680,16 +685,15 @@
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
-	resistance_flags = INDESTRUCTIBLE
+	max_integrity = INFINITY //the shield itself is indestructible or atleast should be
 
-	var/obj/machinery/modularshieldgen/damage_redirector
+	//our parent
+	var/obj/machinery/modularshieldgen/shield_generator
 
-/obj/structure/emergency_shield/modular/Initialize(mapload, obj/machinery/modularshieldgen/Generator,)
-	. = ..()
-	damage_redirector = Generator
+
 
 //How the shield loses strength
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		damage_redirector.shield_drain(damage_amount)
+		shield_generator.shield_drain(damage_amount)
