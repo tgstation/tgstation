@@ -105,6 +105,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const domNode = this.getDOMNode()!;
     Dropdown.currentOpenMenu = domNode;
 
+    renderedMenu.scrollTop = 0;
     renderedMenu.style.width =
       // Hack, but domNode should *always* be the parent control meaning it will have width
       // @ts-ignore
