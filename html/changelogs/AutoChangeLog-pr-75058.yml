@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "Bows will no longer randomly stop taking new arrows."

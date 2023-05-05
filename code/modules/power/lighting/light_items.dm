@@ -7,7 +7,7 @@
 	force = 2
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	///How much light it gives off
 	var/brightness = 2

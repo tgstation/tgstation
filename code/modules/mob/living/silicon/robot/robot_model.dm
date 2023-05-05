@@ -166,6 +166,8 @@
  * Pulls from the charger's silo connection, or fails otherwise.
  */
 /obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -175,12 +177,14 @@
 		charger.sendmats = FALSE
 		return
 
-	for(var/datum/robot_energy_storage/storage_datum in storages)
+	for(var/datum/robot_energy_storage/material/storage_datum in storages)
 		if(storage_datum.renewable == TRUE) //Skipping renewables, already handled in respawn_consumable()
 			continue
 		if(storage_datum.max_energy == storage_datum.energy) //Skipping full
 			continue
-		var/to_stock = min(storage_datum.max_energy / 8, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
+		var/restock_divisor = 8 - charger.repairs //Piggybacking here to avoid part checks every cycle. Repair tiers are 0 through 3, so this value will be 8 through 5. Lower means quicker restocking.
+
+		var/to_stock = min(storage_datum.max_energy / restock_divisor, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
@@ -780,24 +784,26 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/rsf,
+		/obj/item/storage/bag/tray,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
-		/obj/item/storage/bag/tray,
-		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
-		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		/obj/item/reagent_containers/cup/rag,
+		/obj/item/storage/bag/money,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -946,7 +952,6 @@
 	var/energy
 	///Whether this resource should refill from the aether inside a charging station.
 	var/renewable = TRUE
-	var/datum/material/mat_type
 
 /datum/robot_energy_storage/New(obj/item/robot_model/model)
 	energy = max_energy
@@ -977,14 +982,22 @@
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)
 
-/datum/robot_energy_storage/iron
-	name = "Iron Synthesizer"
+/datum/robot_energy_storage/material
+	name = "generic material storage"
 	renewable = FALSE
+	///The type of materials we should pull when restocking
+	var/datum/material/mat_type
+
+/datum/robot_energy_storage/material/New(obj/item/robot_model/model)
+	max_energy = 60 * SHEET_MATERIAL_AMOUNT
+	return ..()
+
+/datum/robot_energy_storage/material/iron
+	name = "Iron Synthesizer"
 	mat_type = /datum/material/iron
 
-/datum/robot_energy_storage/glass
+/datum/robot_energy_storage/material/glass
 	name = "Glass Synthesizer"
-	renewable = FALSE
 	mat_type = /datum/material/glass
 
 /datum/robot_energy_storage/wire
