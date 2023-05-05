@@ -151,7 +151,7 @@
 		return FALSE
 
 	if(!force && !grave_dug_open)
-		balloon_alert(user, "Use a shovel!")
+		balloon_alert(user, "use a shovel!")
 		return FALSE
 
 	return TRUE
