@@ -448,10 +448,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				danger_level = AIR_ALARM_ALERT_NONE
 
 		if ("disconnect_sensor")
-			if (connected_sensor)
-				connected_sensor = null
-				my_area = get_area(src)
-				update_name()
+			disconnect_sensor()
 
 	update_appearance()
 
@@ -600,4 +597,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		return
 	connected_sensor = sensor
 	my_area = get_area(connected_sensor)
+	update_name()
+
+///Used to reset the air alarm to default configuration after disconnecting from air sensor
+/obj/machinery/airalarm/proc/disconnect_sensor()
+	connected_sensor = null
+	my_area = get_area(src)
 	update_name()

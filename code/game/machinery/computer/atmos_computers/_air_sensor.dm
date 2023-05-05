@@ -10,6 +10,8 @@
 
 	/// The unique string that represents which atmos chamber to associate with.
 	var/chamber_id
+	/// The list of air alarms connected to this sensor
+	var/list/alarms = list()
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
@@ -24,6 +26,9 @@
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
+	if(alarms.len)
+		for(var/obj/machinery/airalarm/alarm as anything in alarms)
+			alarm.disconnect_sensor()
 	reset()
 	return ..()
 
