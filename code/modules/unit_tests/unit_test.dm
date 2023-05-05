@@ -172,8 +172,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	else
 
-		start_code_coverage("coverage/test-[copytext("[test_path]", length("[/datum/unit_test]") + 2)].xml")
+#ifdef CODE_COVERAGE
+		var/test_coverage = "coverage/test-[copytext("[test_path]", length("[/datum/unit_test]") + 2)].xml"
+		start_code_coverage(test_coverage)
+#endif
+
 		test.Run()
+
+#ifdef CODE_COVERAGE
+		stop_code_coverage(test_coverage)
+#endif
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
