@@ -241,6 +241,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
+	notify_ghosts("The Bluespace Artillery has been fired!", source = bullseye, header = "KABOOM!")
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
 		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
