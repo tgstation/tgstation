@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
 	wait = 0.05 SECONDS
 	priority = FIRE_PRIORITY_TTS
+	init_order = INIT_ORDER_TTS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// Queued HTTP requests that have yet to be sent
