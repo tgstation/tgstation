@@ -53,12 +53,14 @@
 	alerted = null
 	var/do_alert = (COOLDOWN_FINISHED(src, alert_cooldown) && (locate(/mob/living) in contents))
 	if(!do_alert)
+
 		return TRUE
 	// Cache the list before we open the box.
 	alerted = viewers(7, src)
 	// There are no mobs to alert? clear the list & prevent furthur action after opening the box
 	if(!(locate(/mob/living) in alerted))
 		alerted = null
+
 
 	return TRUE
 
@@ -72,6 +74,7 @@
 	for(var/mob/living/alerted_mob as anything in alerted)
 		if(alerted_mob.stat != CONSCIOUS || alerted_mob.is_blind())
 			continue
+
 		if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
