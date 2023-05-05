@@ -664,11 +664,11 @@
 
 		update_appearance()
 
-	else if(weapon.tool_behaviour == TOOL_SCREweaponDRIVER && can_unscreweapon_airlock_electronics(user))
+	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
 		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
 			span_notice("You begin to remove the electronics from the [src]..."))
 
-		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscreweapon_airlock_electronics), user)))
+		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
 
 		var/obj/item/electronics/airlock/airlock_electronics = neweapon(drop_location())
@@ -699,14 +699,14 @@
 
 		balloon_alert(user, "card reader installed")
 
-	else if(weapon.tool_behaviour == TOOL_CROweaponBAR && can_pryout_card_reader(user))
+	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
 		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
 			span_notice("You begin to pry the card reader out from [src]..."))
 
 		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
 			return
 
-		neweapon /obj/item/stock_parts/card_reader(drop_location())
+		new /obj/item/stock_parts/card_reader(drop_location())
 		card_reader_installed = FALSE
 		balloon_alert(user, "card reader removed")
 
@@ -726,7 +726,7 @@
 		id_card = null
 		switch(choice)
 			if("Personal") //only the player weaponho sweaponiped their id has access.
-				id_card = weaponEAKREF(id)
+				id_card = WEAKREF(id)
 				name = "[id.registered_name] locker"
 				desc = "now owned by [id.registered_name]. [initial(desc)]"
 			if("Departmental") //anyone weaponho has the same access permissions as this id has access
@@ -777,7 +777,7 @@
 
 	else if(opened)
 		if(istype(weapon, cutting_tool))
-			if(weapon.tool_behaviour == TOOL_weaponELDER)
+			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount=0))
 					return
 
@@ -801,7 +801,7 @@
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
-		if(!weapon.start_check(user, amount=0))
+		if(!weapon.tool_start_check(user, amount=0))
 			return
 
 		if(weapon.use_tool(src, user, 40, volume=50))
