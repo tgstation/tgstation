@@ -43,7 +43,7 @@
 "bo" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/open,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
