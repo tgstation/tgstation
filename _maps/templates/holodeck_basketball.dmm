@@ -45,12 +45,10 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 4
-	},
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "h" = (
@@ -81,21 +79,17 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "m" = (
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 4
-	},
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "o" = (
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 8
-	},
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "p" = (
@@ -107,9 +101,7 @@
 "q" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "r" = (
@@ -131,12 +123,10 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "v" = (
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 4
-	},
 /obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "w" = (
@@ -175,9 +165,7 @@
 "G" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "I" = (
@@ -223,12 +211,10 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
-/obj/effect/spawner/structure/window/hollow/directional{
-	dir = 8
-	},
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "U" = (
@@ -269,8 +255,8 @@ q
 g
 v
 Q
-g
-v
+I
+s
 Q
 m
 v
