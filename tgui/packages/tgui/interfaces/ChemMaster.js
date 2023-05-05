@@ -315,9 +315,9 @@ const PackagingControls = (props, context) => {
       )}
       {!condi && (
         <PackagingControlsItem
-          label="Bottles"
+          label="Tubes"
           amount={bottleAmount}
-          amountUnit="bottles"
+          amountUnit="tubes"
           sideNote="max 30u"
           onChangeAmount={(e, value) => setBottleAmount(value)}
           onCreate={() =>

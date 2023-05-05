@@ -201,14 +201,14 @@
 	use_power(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[adv_disease.name] culture bottle"
-	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[adv_disease.name] culture test tube"
+	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
 	wait = TRUE
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
-	log_virus("A culture bottle was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
+	log_virus("A culture test tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
