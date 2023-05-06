@@ -196,23 +196,22 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-/obj/structure/spider/snare
-	name = "web snare"
+/obj/structure/spider/sticky
+	name = "sticky web"
 	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
-	icon_state = "websnare"
+	desc = "extremly sticky soft silk ."
+	icon_state = "verystickyweb"
 	max_integrity = 20
 
-/obj/structure/spider/snare/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/spider/verysticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
 		if(istype(mover.pulledby, /mob/living/basic/spiderling))
 			return TRUE
-		if(prob(50))
+		if(prob(100))
 			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
-		return prob(90)
-
+		return prob(80)

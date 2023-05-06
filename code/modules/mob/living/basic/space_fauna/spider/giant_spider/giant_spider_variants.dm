@@ -160,8 +160,8 @@
 	var/datum/action/cooldown/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/web_snare/snare_web = new(src)
-	snare_web.Grant(src)
+	var/datum/action/cooldown/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
 
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tangle_web)
@@ -267,8 +267,8 @@
 	var/datum/action/cooldown/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/web_snare/snare_web = new(src)
-	snare_web.Grant(src)
+	var/datum/action/cooldown/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
 
 	var/datum/action/cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
