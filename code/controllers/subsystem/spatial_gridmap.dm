@@ -486,7 +486,6 @@ SUBSYSTEM_DEF(spatial_grid)
 /// this will error. this checks every grid cell in the world so dont call this on live unless you have to.
 /// returns TRUE if this movable is untracked, FALSE otherwise
 /datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
-
 	if(!movable_to_check?.spatial_grid_key)
 		return FALSE
 
