@@ -57,5 +57,7 @@
 	. = str
 
 /proc/get_random_coin()
-	var/list/blocked = list()
+	var/list/blocked = list(
+		/obj/item/coin/gold/debug,
+	)
 	return pick(subtypesof(/obj/item/coin) - blocked)
