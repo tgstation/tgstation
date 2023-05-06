@@ -47,7 +47,7 @@ const NULL_RECT: DOMRect = {
   x: 0,
   y: 0,
   toJSON: () => null,
-};
+} as const;
 
 type DropdownState = {
   selected?: string;
@@ -107,9 +107,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
 
     renderedMenu.scrollTop = 0;
     renderedMenu.style.width =
+      this.props.menuWidth ||
       // Hack, but domNode should *always* be the parent control meaning it will have width
       // @ts-ignore
-      this.props.menuWidth || `${domNode.offsetWidth}px`;
+      `${domNode.offsetWidth}px`;
     renderedMenu.style.opacity = '1';
     renderedMenu.style.pointerEvents = 'auto';
 
