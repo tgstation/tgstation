@@ -15,6 +15,8 @@
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left
 	var/paintleft = 10
+	/// Whether or not the paint is infinite
+	var/infinite_use = 0
 
 /obj/item/paint/Initialize(mapload)
 	. = ..()
@@ -59,6 +61,9 @@
 	gender = PLURAL
 	name = "adaptive paint"
 	icon_state = "paint_neutral"
+
+/obj/item/paint/anycolor/cyborg
+	infinite_use = 1
 
 /obj/item/paint/anycolor/attack_self(mob/user)
 	if(paintleft <= 0)
@@ -118,7 +123,8 @@
 		return
 	if(!isturf(target) || isspaceturf(target))
 		return
-	paintleft--
+	if(!infinite_use)
+		paintleft--
 	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
