@@ -41753,11 +41753,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
-"pez" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/medical/morgue)
 "peF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -94578,7 +94573,7 @@ hZV
 nZm
 nZm
 iEB
-pez
+lCn
 rGK
 rTD
 dPR
