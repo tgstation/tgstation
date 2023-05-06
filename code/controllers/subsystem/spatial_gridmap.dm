@@ -497,7 +497,6 @@ SUBSYSTEM_DEF(spatial_grid)
 	//if we're in multiple cells, throw an error.
 	//if we're in 1 cell but it cant be deduced by our location, throw an error.
 	if(length(containing_cells) > 1 || (length(containing_cells) == 1 && loc_cell && containing_cells[1] != loc_cell && containing_cells[1] != null))
-
 		var/error_data = ""
 
 		var/location_string = "which is in nullspace, and thus not be within the contents of any spatial grid cell"
