@@ -683,7 +683,7 @@
 /obj/item/storage/test_tube_rack/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.max_slots = 10
+	atom_storage.max_slots = 8
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/cup/tube,
 	))
