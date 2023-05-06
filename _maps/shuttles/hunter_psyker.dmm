@@ -59,7 +59,6 @@
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/seer{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/engine,
 /area/shuttle/hunter)
 "eq" = (
@@ -160,12 +159,12 @@
 "hE" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/trash/popcorn{
-	pixel_y = 3;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /obj/item/trash/raisins{
-	pixel_y = 1;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 1
 	},
 /obj/item/trash/shrimp_chips{
 	pixel_x = 6
@@ -375,6 +374,11 @@
 	},
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"ug" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/restroom/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "uy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1288,7 +1292,7 @@ rS
 SG
 WU
 ke
-HI
+ug
 tH
 hE
 bV
