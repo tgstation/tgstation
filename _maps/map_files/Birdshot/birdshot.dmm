@@ -34591,10 +34591,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "mJC" = (
-/obj/structure/table/optable{
-	desc = "A cold, hard place for your final rest.";
-	name = "Morgue Slab"
-	},
+/obj/structure/table/optable/morgue,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/small,
@@ -56189,10 +56186,7 @@
 /area/station/security/execution/transfer)
 "tUa" = (
 /obj/effect/gibspawner/human,
-/obj/structure/table/optable{
-	desc = "A cold, hard place for your final rest.";
-	name = "Morgue Slab"
-	},
+/obj/structure/table/optable/morgue,
 /mob/living/carbon/human/species/monkey/humand_legged{
 	name = "Charles";
 	real_name = "Charles"

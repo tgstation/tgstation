@@ -772,6 +772,13 @@
 			return
 	patient = null
 
+/obj/structure/table/optable/morgue
+	name = "Morgue Slab"
+	desc = "A cold, hard place for your final rest."
+
+/obj/structure/table/optable/robotics
+	name = "Robotics Operating Table"
+
 /*
  * Racks
  */

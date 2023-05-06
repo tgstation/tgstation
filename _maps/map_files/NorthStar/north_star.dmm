@@ -88890,10 +88890,7 @@
 /area/space/nearstation)
 "xBN" = (
 /obj/machinery/newscaster/directional/north,
-/obj/structure/table/optable{
-	desc = "A cold, hard place for your final rest.";
-	name = "Morgue Slab"
-	},
+/obj/structure/table/optable/morgue,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},

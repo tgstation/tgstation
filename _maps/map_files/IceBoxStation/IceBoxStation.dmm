@@ -18980,9 +18980,7 @@
 /turf/open/floor/plating,
 /area/station/command/teleporter)
 "fZk" = (
-/obj/structure/table/optable{
-	name = "Robotics Operating Table"
-	},
+/obj/structure/table/optable/robotics,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
@@ -37608,9 +37606,7 @@
 /area/station/commons/dorms/laundry)
 "lXl" = (
 /obj/structure/sign/poster/official/random/directional/south,
-/obj/structure/table/optable{
-	name = "Robotics Operating Table"
-	},
+/obj/structure/table/optable/robotics,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
