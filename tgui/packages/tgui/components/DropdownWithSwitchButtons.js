@@ -47,6 +47,21 @@ export class DropdownWithSwitchButtons extends Dropdown {
     return selectedIndex;
   }
 
+  hasSwitchToPrevious() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const previousIndex = parseInt(selectedIndex) - 1;
+    const opts = this.getOptionsValues();
+
+    const previous = opts[previousIndex];
+
+    return previous !== undefined;
+  }
+
   switchToPrevious() {
     const selectedIndex = this.getSelectedIndex();
 
@@ -64,6 +79,21 @@ export class DropdownWithSwitchButtons extends Dropdown {
     }
 
     this.setSelected(previous);
+  }
+
+  hasSwitchToNext() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const nextIndex = parseInt(selectedIndex) + 1;
+    const opts = this.getOptionsValues();
+
+    const next = opts[nextIndex];
+
+    return next !== undefined;
   }
 
   switchToNext() {
@@ -133,9 +163,9 @@ export class DropdownWithSwitchButtons extends Dropdown {
           <Button
             height={'100%'}
             content="<"
-            disabled={disabled}
+            disabled={disabled || !this.hasSwitchToPrevious()}
             onClick={() => {
-              if (disabled) {
+              if (disabled || !this.hasSwitchToPrevious()) {
                 return;
               }
 
@@ -193,9 +223,9 @@ export class DropdownWithSwitchButtons extends Dropdown {
           <Button
             height={'100%'}
             content=">"
-            disabled={disabled}
+            disabled={disabled || !this.hasSwitchToNext()}
             onClick={() => {
-              if (disabled) {
+              if (disabled || !this.hasSwitchToNext()) {
                 return;
               }
 
