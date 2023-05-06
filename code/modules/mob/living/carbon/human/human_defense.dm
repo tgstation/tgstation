@@ -294,7 +294,7 @@
 		visible_message(span_danger("[user] tackles [src] down!"), \
 						span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
 		to_chat(user, span_danger("You tackle [src] down!"))
-		h_mon.stamina.adjust(-30) //monkestation edit end
+		stamina.adjust(-30) //monkestation edit end
 		return TRUE
 
 	if((user.istate & ISTATE_HARM))
