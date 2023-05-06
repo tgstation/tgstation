@@ -346,7 +346,7 @@ Doesn't work on other aliens/AI.*/
 	var/sneak_alpha = 75
 
 /datum/action/cooldown/alien/sneak/Remove(mob/living/remove_from)
-	if(HAS_TRAIT(remove_from, TRAIT_SNEAK
+	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
 		remove_from.alpha = initial(remove_from.alpha)
 		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, name)
 
@@ -363,7 +363,7 @@ Doesn't work on other aliens/AI.*/
 	else
 		owner.alpha = sneak_alpha
 		to_chat(owner, span_noticealien("You blend into the shadows..."))
-		ADD_TRAIT(owner, TRAIT_SNEAK)
+		ADD_TRAIT(owner, TRAIT_SNEAK, name)
 
 	return TRUE
 

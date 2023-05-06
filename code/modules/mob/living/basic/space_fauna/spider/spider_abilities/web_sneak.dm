@@ -10,7 +10,7 @@
 	var/sneak_alpha = 75
 
 /datum/action/cooldown/web_sneak/Remove(mob/living/remove_from)
-	if(HAS_TRAIT(remove_from, TRAIT_SNEAK
+	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
 		remove_from.alpha = initial(remove_from.alpha)
 		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, name)
 

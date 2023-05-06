@@ -210,4 +210,3 @@
 		if(prob(100))
 			balloon_alert(mover, "stuck in web!")
 			return FALSE
-	else if(isprojectile(mover))
