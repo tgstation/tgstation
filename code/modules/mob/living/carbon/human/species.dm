@@ -1424,7 +1424,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(damage_amount > 5)
 				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
-				to_chat(world,"stun reduced [damage_amount * -0.35] seconds")
 			if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
 				H.damage_taken_in_stam_crit += damage_amount
 				if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
@@ -1439,7 +1438,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(damage_amount > 5)
 				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
-				to_chat(world,"stun reduced [damage_amount * -0.35] seconds")
 			if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
 				H.damage_taken_in_stam_crit += damage_amount
 				if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
