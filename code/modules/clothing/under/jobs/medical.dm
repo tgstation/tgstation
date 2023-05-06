@@ -94,6 +94,11 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubswine"
 
+/obj/item/clothing/under/rank/medical/scrubs/coroner
+	name = "coroner scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is as dark as an emo's poetry."
+	icon_state = "scrubsblack"
+
 /obj/item/clothing/under/rank/medical/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
 	name = "chemist's jumpsuit"

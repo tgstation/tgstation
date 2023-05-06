@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
 			to_chat(H, span_warning("[src] cuts into your hand!"))
-			H.apply_damage(force*0.5, BRUTE, hit_hand)
+			H.apply_damage(force*0.5, BRUTE, hit_hand, attacking_item = src)
 
 /obj/item/shard/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/lightreplacer))

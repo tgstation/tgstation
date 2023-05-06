@@ -99,7 +99,7 @@
 	send_item_attack_message(I, user, affecting.plaintext_zone, affecting)
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
-		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
+		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction, attacking_item = I)
 		if(I.damtype == BRUTE && IS_ORGANIC_LIMB(affecting))
 			if(prob(33))
 				I.add_mob_blood(src)

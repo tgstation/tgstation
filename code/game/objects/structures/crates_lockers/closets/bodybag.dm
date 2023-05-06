@@ -21,8 +21,9 @@
 
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
-	/// so closet code knows to put the tag overlay back
-	var/tagged = FALSE
+	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
+	var/tag_name
+
 
 /obj/structure/closet/body_bag/Initialize(mapload)
 	. = ..()
@@ -55,21 +56,21 @@
 			return
 		handle_tag("[t ? t : initial(name)]")
 		return
-	if(!tagged)
+	if(!tag_name)
 		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		handle_tag()
 
 ///Handles renaming of the bodybag's examine tag.
-/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+/obj/structure/closet/body_bag/proc/handle_tag(new_name)
+	tag_name = new_name
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
-	tagged = !!tag_name
 	update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
-	if(tagged)
+	if(tag_name)
 		. += "bodybag_label"
 
 /obj/structure/closet/body_bag/after_close(mob/living/user)

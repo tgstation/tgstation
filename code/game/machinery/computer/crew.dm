@@ -111,6 +111,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_VIROLOGIST = 22,
 		JOB_MEDICAL_DOCTOR = 23,
 		JOB_PARAMEDIC = 24,
+		JOB_CORONER = 25,
 		// 30-39: Science
 		JOB_RESEARCH_DIRECTOR = 30,
 		JOB_SCIENTIST = 31,
