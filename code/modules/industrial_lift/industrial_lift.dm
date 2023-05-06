@@ -319,13 +319,13 @@ GLOBAL_LIST_EMPTY(lifts)
 					crushed.gib(FALSE, FALSE, FALSE)
 				else
 					// Less violent landing simply crushes every bone in your body.
-					crushed.Paralyze(30 SECONDS, ignore_canstun = TRUE)
 					crushed.apply_damage(30, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30)
 					crushed.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 25)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 15)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 15)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 15)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 15)
+					crushed.Paralyze(30 SECONDS, ignore_canstun = TRUE)
 
 	else if(going == UP)
 		for(var/turf/dest_turf as anything in entering_locs)

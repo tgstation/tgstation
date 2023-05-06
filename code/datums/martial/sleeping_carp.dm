@@ -200,13 +200,13 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, span_warning("You club yourself over the head with [src]."))
-		user.Paralyze(6 SECONDS)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 		else
 			user.take_bodypart_damage(2*force)
 		return
+		user.Paralyze(6 SECONDS)
 	if(iscyborg(target))
 		return ..()
 	if(!isliving(target))

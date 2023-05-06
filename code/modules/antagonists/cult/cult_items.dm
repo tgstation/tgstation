@@ -94,7 +94,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!IS_CULTIST(user))
-		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
 				span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
@@ -104,6 +103,7 @@ Striking a noncultist, however, will tear their flesh."}
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
+		user.Paralyze(100)
 	..()
 
 /obj/item/melee/cultblade/ghost
