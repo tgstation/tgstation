@@ -91,6 +91,9 @@
 	///used to halt stamina regen temporarily
 	var/stam_regen_start_time = 0
 
+	///tracks how much damage was taken since entering stam crit to unstun after a certain amount of brute/burn damage is taken
+	var/damage_taken_in_stam_crit = 0
+
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
 	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection

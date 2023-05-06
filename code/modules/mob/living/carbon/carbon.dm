@@ -535,6 +535,7 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
+		damage_taken_in_stam_crit = 0
 	else
 		return
 	update_stamina_hud()

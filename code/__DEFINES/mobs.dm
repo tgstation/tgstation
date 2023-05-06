@@ -154,6 +154,7 @@
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
 #define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
+#define STAMINA_MAX_STUN_DAMAGE 25 //The max amount of brute/burn damage we can take in one instance of stam crit before becoming unstunned
 
 #define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point

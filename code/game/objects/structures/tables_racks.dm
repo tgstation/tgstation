@@ -167,8 +167,8 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
+	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(40, STAMINA)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
@@ -376,7 +376,7 @@
 	for(var/atom/movable/attached_movable as anything in attached_items)
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
-			
+
 /obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
