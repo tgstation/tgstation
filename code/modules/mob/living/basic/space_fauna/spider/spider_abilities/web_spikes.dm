@@ -33,15 +33,15 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	if(obstructed_by_other_web_passage())
+	if(obstructed_by_other_web_spikes())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
 	return TRUE
 
 /// Returns true if there's a web we can't put stuff on in our turf
-/datum/action/cooldown/web_passage/proc/obstructed_by_other_web_passage()
-	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
+/datum/action/cooldown/web_passage/proc/obstructed_by_other_web_spikes()
+	return !!(locate(/obj/structure/spider/spikes) in get_turf(owner))
 
 /datum/action/cooldown/web_passage/Activate()
 	. = ..()
