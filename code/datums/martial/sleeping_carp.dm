@@ -203,10 +203,11 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+			user.Paralyze(6 SECONDS)
 		else
 			user.take_bodypart_damage(2*force)
+			user.Paralyze(6 SECONDS)
 		return
-		user.Paralyze(6 SECONDS)
 	if(iscyborg(target))
 		return ..()
 	if(!isliving(target))

@@ -100,10 +100,11 @@ Striking a noncultist, however, will tear their flesh."}
 		if(ishuman(user))
 			var/mob/living/carbon/human/miscreant = user
 			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			user.Paralyze(100)
 		else
 			user.adjustBruteLoss(rand(force/2,force))
+			user.Paralyze(100)
 		return
-		user.Paralyze(100)
 	..()
 
 /obj/item/melee/cultblade/ghost
