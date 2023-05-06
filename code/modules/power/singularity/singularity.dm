@@ -100,9 +100,9 @@
 		span_userdanger("Your head feels like it's collapsing in on itself! This was really not a good idea!"),
 		span_hear("You hear something crack and explode in gore.")
 		)
-	jedi.Stun(3 SECONDS)
 	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
 	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	jedi.Stun(3 SECONDS)
 	if(QDELETED(jedi))
 		return // damage was too much
 	if(jedi.stat == DEAD)

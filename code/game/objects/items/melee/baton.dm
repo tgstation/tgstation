@@ -259,7 +259,7 @@
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
 		return FALSE
 	user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
-
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 	if(iscyborg(user))
 		if(affect_cyborg)
 			user.flash_act(affect_silicon = TRUE)
@@ -280,7 +280,6 @@
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	if(stun_animation)

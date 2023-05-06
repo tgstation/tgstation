@@ -64,8 +64,8 @@
 		for(var/mob/living/nearby_living in range(1, to_beam))
 			if(IS_HERETIC_OR_MONSTER(nearby_living) || nearby_living == owner)
 				continue
-			nearby_living.Knockdown(0.8 SECONDS)
 			nearby_living.apply_damage(15, BURN, wound_bonus = 5)
+			nearby_living.Knockdown(0.8 SECONDS)
 			nearby_living.adjust_fire_stacks(2)
 			nearby_living.ignite_mob()
 

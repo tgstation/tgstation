@@ -117,8 +117,8 @@
 		)
 	to_chat(wizard, span_boldwarning("You're suddenly jolted out of rod-form as [strongman] somehow manages to grab you, slamming you into the ground!"))
 	stop_travel()
-	wizard.Stun(6 SECONDS)
 	wizard.apply_damage(25, BRUTE)
+	wizard.Stun(6 SECONDS)
 	return TRUE
 
 /**
