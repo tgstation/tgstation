@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { Box, Stack } from '../../../../../components';
-import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from '../base';
+import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdownWithSwitchButtons } from '../base';
 
 type HexValue = {
   lightness: number;
@@ -26,7 +26,7 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
     }
 
     return (
-      <StandardizedDropdown
+      <StandardizedDropdownWithSwitchButtons
         choices={sortHexValues(Object.entries(serverData.to_hex)).map(
           ([key]) => key
         )}

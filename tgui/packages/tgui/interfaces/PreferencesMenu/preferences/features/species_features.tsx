@@ -1,4 +1,10 @@
-import { FeatureColorInput, Feature, FeatureChoiced, FeatureDropdownInput } from './base';
+import {
+    FeatureColorInput,
+    Feature,
+    FeatureChoiced,
+    FeatureDropdownInput,
+    FeatureDropdownWithSwitchButtonsInput
+} from './base';
 
 export const eye_color: Feature<string> = {
   name: 'Eye color',
@@ -12,7 +18,7 @@ export const facial_hair_color: Feature<string> = {
 
 export const facial_hair_gradient: FeatureChoiced = {
   name: 'Facial hair gradient',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const facial_hair_gradient_color: Feature<string> = {
@@ -27,7 +33,7 @@ export const hair_color: Feature<string> = {
 
 export const hair_gradient: FeatureChoiced = {
   name: 'Hair gradient',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const hair_gradient_color: Feature<string> = {
@@ -37,27 +43,27 @@ export const hair_gradient_color: Feature<string> = {
 
 export const feature_human_ears: FeatureChoiced = {
   name: 'Ears',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const feature_human_tail: FeatureChoiced = {
   name: 'Tail',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const feature_lizard_legs: FeatureChoiced = {
   name: 'Legs',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const feature_lizard_spines: FeatureChoiced = {
   name: 'Spines',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const feature_lizard_tail: FeatureChoiced = {
   name: 'Tail',
-  component: FeatureDropdownInput,
+  component: FeatureDropdownWithSwitchButtonsInput,
 };
 
 export const feature_mcolor: Feature<string> = {

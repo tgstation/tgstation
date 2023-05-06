@@ -18,6 +18,7 @@ export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';
 export { DraggableControl } from './DraggableControl';
 export { Dropdown } from './Dropdown';
+export { DropdownWithSwitchButtons } from './DropdownWithSwitchButtons';
 export { Flex } from './Flex';
 export { FitText } from './FitText';
 export { Grid } from './Grid';
