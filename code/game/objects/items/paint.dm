@@ -15,8 +15,6 @@
 	var/paint_color = COLOR_WHITE
 	/// How many uses are left
 	var/paintleft = 10
-	/// Whether or not the paint is infinite
-	var/infinite_use = FALSE
 
 /obj/item/paint/Initialize(mapload)
 	. = ..()
@@ -63,11 +61,11 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/cyborg
-	infinite_use = TRUE
+	paintleft = INFINITY
 
 /obj/item/paint/anycolor/attack_self(mob/user)
 	if(paintleft <= 0)
-		to_chat(usr, span_warning("There's no paint left in the can!"));
+		to_chat(user, span_warning("There's no paint left in the can!"));
 		return	// Don't do any of the following because there's no paint left to be able to change the color of
 	var/list/possible_colors = list(
 		"black" = image(icon = src.icon, icon_state = "paint_black"),
@@ -123,8 +121,7 @@
 		return
 	if(!isturf(target) || isspaceturf(target))
 		return
-	if(!infinite_use)
-		paintleft--
+	paintleft--
 	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
