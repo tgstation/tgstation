@@ -253,10 +253,6 @@
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/hall)
-"bc" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/charlie/hall)
 "be" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -1572,10 +1568,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
-"fy" = (
-/obj/effect/decal/cleanable/oil,
-/turf/closed/wall/r_wall,
-/area/ruin/space/ancientstation/delta/ai)
 "fB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
@@ -3844,10 +3836,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"nh" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/beta/hall)
 "nk" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/dorms)
@@ -4517,10 +4505,6 @@
 	},
 /turf/open/floor/engine/n2,
 /area/ruin/space/ancientstation/beta/atmos)
-"pw" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/charlie/kitchen)
 "pz" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -7001,7 +6985,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "Lg" = (
-/obj/effect/decal/cleanable/dirt,
 /turf/closed/mineral/diamond,
 /area/space/nearstation)
 "Lh" = (
@@ -11610,7 +11593,7 @@ aa
 mw
 mW
 mS
-nh
+jE
 dl
 eI
 ej
@@ -12541,7 +12524,7 @@ dR
 dQ
 dR
 wO
-pw
+gY
 Yk
 lx
 ht
@@ -12858,7 +12841,7 @@ aa
 aT
 fR
 AO
-bc
+hi
 Xe
 cg
 hi
@@ -15036,7 +15019,7 @@ be
 bp
 cF
 cY
-fy
+ad
 ad
 aa
 bE

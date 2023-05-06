@@ -7,7 +7,7 @@
 
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
-	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
+	if(turf_loc_check && NeverShouldHaveComeHere(loc))
 		stack_trace("[name] found in a non-turf or illegitimate turf/wall at [AREACOORD(src)] in \the [get_area(src)].")
 		return INITIALIZE_HINT_QDEL
 	var/static/list/loc_connections = list(

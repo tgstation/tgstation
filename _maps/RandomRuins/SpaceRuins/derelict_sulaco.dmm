@@ -40,9 +40,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "bV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -363,9 +361,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "lq" = (
 /turf/open/floor/iron/showroomfloor,
@@ -1168,6 +1164,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"Mf" = (
+/obj/structure/alien/weeds,
+/obj/effect/gibspawner/xeno/bodypartless,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "Mi" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -1199,9 +1200,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "MG" = (
 /obj/structure/alien/weeds,
@@ -1640,11 +1639,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
-"Zc" = (
-/obj/structure/lattice,
-/obj/effect/gibspawner/xeno/bodypartless,
-/turf/template_noop,
-/area/template_noop)
 "ZA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/xtracks{
@@ -1684,9 +1678,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "ZZ" = (
 /obj/structure/lattice,
@@ -2972,8 +2964,8 @@ RP
 Oo
 Vz
 dO
-Zc
-CU
+ZZ
+Mf
 YA
 Ot
 oV

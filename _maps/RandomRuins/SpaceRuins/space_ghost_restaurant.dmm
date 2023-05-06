@@ -199,7 +199,6 @@
 "Jd" = (
 /obj/item/food/mashed_potatoes,
 /obj/structure/lattice,
-/obj/effect/decal/cleanable/robot_debris/up,
 /obj/item/clothing/head/costume/scarecrow_hat,
 /turf/template_noop,
 /area/space/nearstation)

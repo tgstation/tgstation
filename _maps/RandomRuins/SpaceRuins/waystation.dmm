@@ -1028,11 +1028,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
-"qs" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "qC" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
@@ -4820,7 +4815,7 @@ Kc
 lP
 Ld
 ea
-qs
+UG
 LK
 Ze
 VE
