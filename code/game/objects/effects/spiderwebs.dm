@@ -141,8 +141,6 @@
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -206,11 +204,11 @@
 	. = ..()
 	if(isspider(mover))
 		return TRUE
-    else if(isliving(mover))
-        if(istype(mover.pulledby, /mob/living/basic/spiderling))
-            return TRUE
-        balloon_alert(mover, "stuck in web!")
-        return FALSE
+	else if(isliving(mover))
+	if(istype(mover.pulledby, /mob/living/basic/spiderling))
+		return TRUE
+		if(prob(100))
+			balloon_alert(mover, "stuck in web!")
+			return FALSE
 	else if(isprojectile(mover))
 		return prob(80)
-
