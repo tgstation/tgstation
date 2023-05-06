@@ -78,6 +78,9 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	var/datum/action/communication_spiders/spiders_communication = new(src)
+	spiders_communication.Grant(src)
+
 /**
  * ### Spider Nurse
  *
@@ -109,9 +112,6 @@
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
-
-	var/datum/action/cooldown/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
 
 	AddComponent(/datum/component/healing_touch,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
