@@ -1,0 +1,2 @@
+/obj/structure/optable{name="Morgue Slab"} : /obj/structure/optable/morgue{@OLD;name=@SKIP;desc=@SKIP}
+/obj/structure/table/optable{name="Robotics Operating Table"} : /obj/structure/optable/robotics{@OLD;name=@SKIP}
