@@ -203,7 +203,7 @@
 	icon_state = "verystickyweb"
 	max_integrity = 20
 
-/obj/structure/spider/verysticky/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(isspider(mover))
 		return TRUE

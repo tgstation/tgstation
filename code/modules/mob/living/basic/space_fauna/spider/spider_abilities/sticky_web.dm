@@ -41,7 +41,7 @@
 
 /// Returns true if there's a web we can't put stuff on in our turf
 /datum/action/cooldown/sticky_web/proc/obstructed_by_other_sticky_web()
-	return !!(locate(/obj/structure/spider/verysticky) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
 
 /datum/action/cooldown/sticky_web/Activate()
 	. = ..()
@@ -59,5 +59,5 @@
 	build_all_button_icons()
 
 	/// Creates a web in the current turf
-/datum/action/cooldown/sticky_web/proc/plant_stickyweb(turf/target_turf, obj/structure/spider/verysticky/existing_web)
-	new /obj/structure/spider/verysticky(target_turf)
+/datum/action/cooldown/sticky_web/proc/plant_stickyweb(turf/target_turf, obj/structure/spider/sticky/existing_web)
+	new /obj/structure/spider/sticky(target_turf)
