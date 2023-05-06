@@ -575,7 +575,7 @@
 	var/recovering = TRUE
 
 	///Determins max health of the shield
-	var/max_strength = 100
+	var/max_strength = 50
 
 	///Current health of shield
 	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
@@ -587,18 +587,18 @@
 	var/current_regeneration = 5
 
 	///Determines the max radius the shield can support
-	var/max_radius = 5
+	var/max_radius = 3
 
 	///Current radius the shield is set to
-	var/radius = 5
+	var/radius = 3
 
-	///Determines if we only generate a shield on space tiles or not
+	///Determines if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
 
 	///The list of shields that are ours
 	var/list/deployed_shields = null
 
-	///The list of tiles that are within the shield
+	///The list of turfs that are within the shield
 	var/list/inside_shield = null
 
 	///The list of machines that are boosting us
@@ -606,17 +606,19 @@
 
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
-	max_regeneration = 5
-	max_radius = 5
-	max_strength = 100
+
+	max_regeneration = 3
+	max_radius = 3
+	max_strength = 50
+
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		max_strength += new_capacitor.tier * 50
+		max_strength += new_capacitor.tier * 10
 
 	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		max_regeneration += new_manipulator.tier * 2
+		max_regeneration += new_manipulator.tier
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		max_radius += new_laser.tier * 2
+		max_radius += new_laser.tier
 
 	calculate_regeneration()
 
