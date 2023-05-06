@@ -192,7 +192,7 @@
 	icon_state = "webspikes1"
 	max_integrity = 40
 
-/obj/structure/spider/snare/Initialize(mapload)
+/obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
@@ -202,4 +202,17 @@
 	desc = "hardened silk formed into small yet deadly spikes."
 	icon_state = "websnare"
 	max_integrity = 20
-	var/tangle = TRUE
+
+/obj/structure/spider/snare/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(isspider(mover))
+		return TRUE
+	else if(isliving(mover))
+		if(istype(mover.pulledby, /mob/living/basic/spiderling))
+			return TRUE
+		if(prob(50))
+			balloon_alert(mover, "stuck in web!")
+			return FALSE
+	else if(isprojectile(mover))
+		return prob(90)
+
