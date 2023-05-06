@@ -25,7 +25,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 
-	health = 5 // very low, so true besti
+	health = 5 // very low.
 	maxHealth = 5
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
