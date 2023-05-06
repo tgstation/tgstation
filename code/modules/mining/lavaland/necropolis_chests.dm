@@ -4,6 +4,7 @@
 	name = "necropolis chest"
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
+	base_icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	can_install_electronics = FALSE
 	paint_jobs = null

@@ -181,6 +181,8 @@
 		storage = new storage_type(src)
 	update_appearance()
 
+	register_context()
+
 /obj/machinery/suit_storage_unit/Destroy()
 	QDEL_NULL(suit)
 	QDEL_NULL(helmet)
@@ -189,6 +191,28 @@
 	QDEL_NULL(storage)
 	id_card = null
 	return ..()
+
+/obj/machinery/suit_storage_unit/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	var/screentip_change = FALSE
+	if(istype(held_item, /obj/item/stock_parts/card_reader) && !locked && can_install_card_reader(user))
+		context[SCREENTIP_CONTEXT_LMB] ="Install Reader"
+		screentip_change = TRUE
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL && !locked && !panel_open && !state_open && card_reader_installed)
+		context[SCREENTIP_CONTEXT_LMB] ="[access_locked ? "Unlock" : "Lock"] Access Panel"
+		screentip_change = TRUE
+
+	if(!state_open && is_operational && card_reader_installed && !isnull((held_item.GetID())))
+		context[SCREENTIP_CONTEXT_LMB] ="Change Access"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
+
 
 /obj/machinery/suit_storage_unit/update_overlays()
 	. = ..()

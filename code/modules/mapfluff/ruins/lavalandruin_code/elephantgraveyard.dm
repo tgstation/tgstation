@@ -128,6 +128,7 @@
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
+	base_icon_state = "grave"
 	dense_when_open = TRUE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5

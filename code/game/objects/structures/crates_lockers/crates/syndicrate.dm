@@ -2,6 +2,7 @@
 	name = "surplus syndicrate"
 	desc = "A conspicuous crate with the Syndicate logo on it. You don't know how to open it."
 	icon_state = "syndicrate"
+	base_icon_state = "syndicrate"
 	max_integrity = 500
 	armor_type = /datum/armor/crate_syndicrate
 	resistance_flags = FIRE_PROOF | ACID_PROOF

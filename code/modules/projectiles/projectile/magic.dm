@@ -276,9 +276,9 @@
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
+	paint_jobs = null
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
-	paint_jobs = null
 
 /obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
