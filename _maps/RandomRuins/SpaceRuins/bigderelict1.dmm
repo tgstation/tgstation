@@ -327,7 +327,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bq" = (
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
-	outfit_override = list("head" = null)
+	outfit_override = list("head"=null)
 	},
 /obj/item/paper/crumpled/ruins/bigderelict1/coward,
 /obj/effect/decal/cleanable/blood/old{
@@ -511,10 +511,6 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "cd" = (
 /obj/structure/grille/broken,
-/obj/effect/decal/cleanable/blood/old{
-	icon_state = "trails_1";
-	name = "dried blood trail"
-	},
 /obj/structure/alien/weeds/creature,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)

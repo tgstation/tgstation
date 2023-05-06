@@ -416,11 +416,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/space/basic,
 /area/template_noop)
-"gP" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/template_noop)
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
@@ -438,7 +433,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "hx" = (
-/obj/effect/decal/cleanable/glass,
 /obj/structure/fluff/broken_flooring{
 	dir = 1;
 	icon_state = "plating"
@@ -1979,9 +1973,6 @@
 /area/ruin/space/has_grav/infested_frigate)
 "Ft" = (
 /obj/structure/lattice,
-/obj/effect/decal/cleanable/glass{
-	dir = 1
-	},
 /obj/structure/alien/resin/membrane{
 	max_integrity = 1600;
 	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
@@ -3739,7 +3730,7 @@ Or
 fl
 rB
 zN
-gP
+sT
 Lf
 wP
 VQ
