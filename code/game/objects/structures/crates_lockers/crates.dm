@@ -120,6 +120,7 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
+	base_icon_state = "coffin"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
@@ -174,11 +175,13 @@
 	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
+	base_icon_state = "o2crate"
 
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+	base_icon_state = "trashcart"
 	can_install_electronics = FALSE
 	paint_jobs = null
 
@@ -191,16 +194,19 @@
 	name = "laundry cart"
 	desc = "A large cart for hauling around large amounts of laundry."
 	icon_state = "laundry"
+	base_icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"
 	icon_state = "medicalcrate"
+	base_icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+	base_icon_state = "freezer"
 	paint_jobs = null
 
 /obj/structure/closet/crate/freezer/before_open(mob/living/user, force)
@@ -256,23 +262,28 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	base_icon_state = "radiation"
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon_state = "hydrocrate"
+	base_icon_state = "hydrocrate"
 
 /obj/structure/closet/crate/engineering
 	name = "engineering crate"
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"
+	base_icon_state = "engi_e_crate"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()
@@ -284,10 +295,12 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+	base_icon_state = "scicrate"
 
 /obj/structure/closet/crate/solarpanel_small
 	name = "budget solar panel crate"
 	icon_state = "engi_e_crate"
+	base_icon_state = "engi_e_crate"
 
 /obj/structure/closet/crate/solarpanel_small/PopulateContents()
 	..()
@@ -320,6 +333,7 @@
 
 /obj/structure/closet/crate/decorations
 	icon_state = "engi_crate"
+	base_icon_state = "engi_crate"
 
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()

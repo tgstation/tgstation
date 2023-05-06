@@ -22,3 +22,4 @@
 	name = "\improper Tiziran shipment box"
 	desc = "For holding lizards, presumably."
 	icon_state = "cardboard_tiziran"
+	base_icon_state = "cardboard_tiziran"
