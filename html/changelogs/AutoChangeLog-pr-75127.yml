@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Mech chargers on Tram (and possibly elsewhere) no longer sync oddly."
