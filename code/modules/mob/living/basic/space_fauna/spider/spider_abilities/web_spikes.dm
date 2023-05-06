@@ -58,7 +58,7 @@
 		owner?.balloon_alert(owner, "interrupted!") // Null check because we might have been interrupted via being disintegrated
 	build_all_button_icons()
 
-	/// Creates a web in the current turf
+/// Creates a web in the current turf
 /datum/action/cooldown/web_spikes/proc/plant_webspikes(turf/target_turf, obj/structure/spider/spikes/existing_web)
 	new /obj/structure/spider/spikes(target_turf)
 
