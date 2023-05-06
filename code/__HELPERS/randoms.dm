@@ -55,3 +55,7 @@
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
+
+/proc/get_random_coin()
+	var/list/blocked = list()
+	return pick(subtypesof(/obj/item/coin) - blocked)
