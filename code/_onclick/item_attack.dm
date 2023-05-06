@@ -260,7 +260,7 @@
 	var/damage = attacking_item.force
 	if(mob_biotypes & MOB_ROBOTIC)
 		damage *= attacking_item.demolition_mod
-	apply_damage(damage, attacking_item.damtype)
+	apply_damage(damage, attacking_item.damtype, attacking_item = attacking_item)
 	if(attacking_item.damtype == BRUTE && prob(33))
 		attacking_item.add_mob_blood(src)
 		var/turf/location = get_turf(src)

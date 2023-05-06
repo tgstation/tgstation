@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - qol: "Shuttles will no longer show their current destination as a choice while in transit."
