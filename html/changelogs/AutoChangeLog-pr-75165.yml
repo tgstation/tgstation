@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "The area icon for the evidence room should be visible in the map editor again."
