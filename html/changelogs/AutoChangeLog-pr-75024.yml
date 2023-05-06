@@ -1,0 +1,5 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "The North Star's cargo shuttle has working conveyors."
+  - bugfix: "The North Star has had a slew of missing and improperly done content added and reworked, see the PR for more!"
