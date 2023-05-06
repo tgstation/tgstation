@@ -61,6 +61,9 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/attack_self(mob/user)
+	if(paintleft <= 0)
+		to_chat(usr, span_warning("There's no paint left in the can!"));
+		return	// Don't do any of the following because there's no paint left to be able to change the color of
 	var/list/possible_colors = list(
 		"black" = image(icon = src.icon, icon_state = "paint_black"),
 		"blue" = image(icon = src.icon, icon_state = "paint_blue"),
@@ -115,6 +118,7 @@
 		return
 	if(!isturf(target) || isspaceturf(target))
 		return
+	paintleft--
 	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
