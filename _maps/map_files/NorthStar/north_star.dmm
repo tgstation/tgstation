@@ -6275,16 +6275,6 @@
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/robotics/lab)
-"bxs" = (
-/obj/docking_port/stationary{
-	dwidth = 5;
-	height = 6;
-	name = "Cargo Bay";
-	shuttle_id = "cargo_home";
-	width = 11
-	},
-/turf/open/floor/pod,
-/area/station/cargo/storage)
 "bxu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -48717,6 +48707,16 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/starboard)
+"mQB" = (
+/obj/docking_port/stationary{
+	dwidth = 6;
+	height = 6;
+	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
+	width = 11
+	},
+/turf/open/floor/pod,
+/area/station/cargo/storage)
 "mQF" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -56367,8 +56367,8 @@
 /area/station/commons/vacant_room/commissary)
 "oMO" = (
 /obj/machinery/door/window/brigdoor/left/directional/south{
-	req_access = list("morgue_secure");
-	name = "Coroner's Office"
+	name = "Coroner's Office";
+	req_access = list("morgue_secure")
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -57673,8 +57673,8 @@
 /area/station/science/robotics/mechbay)
 "pfZ" = (
 /obj/machinery/door/poddoor/shutters{
-	name = "Ancient Workshop";
-	id = "survshop"
+	id = "survshop";
+	name = "Ancient Workshop"
 	},
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/aft)
@@ -90781,8 +90781,8 @@
 /area/station/hallway/floor3/fore)
 "ybT" = (
 /obj/machinery/door/poddoor/shutters{
-	name = "Ancient Workshop";
-	id = "survshop"
+	id = "survshop";
+	name = "Ancient Workshop"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard/aft)
@@ -118298,7 +118298,7 @@ dOs
 dOs
 dOs
 dOs
-bxs
+dOs
 oCK
 bZr
 gun
@@ -118555,7 +118555,7 @@ dOs
 dOs
 dOs
 dOs
-dOs
+mQB
 oCK
 wcX
 hBw

@@ -6,30 +6,50 @@
 "c" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "d" = (
-/turf/open/floor/pod/light,
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_y = -8
+	},
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "QMLoad"
+	},
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
 	dir = 5;
 	id = "QMLoad"
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "g" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "QMLoad2"
-	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/turf/open/floor/plating,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad"
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "h" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
@@ -38,23 +58,22 @@
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/supply)
 "j" = (
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
-	dir = 9
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/supply)
-"k" = (
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
-	dir = 10
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/supply)
-"n" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "QMLoad"
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/supply)
+"k" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"n" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "o" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left,
@@ -69,50 +88,42 @@
 "s" = (
 /turf/template_noop,
 /area/template_noop)
-"t" = (
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
-	dir = 1
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/supply)
 "u" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad"
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "w" = (
 /obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "x" = (
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "B" = (
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor";
-	name = "Loading Doors";
-	pixel_y = -8
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor2";
-	name = "Loading Doors";
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/pod/light,
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "C" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "QMLoad"
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "D" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -120,10 +131,34 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"G" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/light/red/directional/west,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
 "I" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"K" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "M" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -132,8 +167,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "N" = (
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/pod/light,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "O" = (
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
@@ -144,47 +179,44 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "Q" = (
-/obj/machinery/light/red/directional/west,
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 9;
 	id = "QMLoad"
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
-"W" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad"
+"V" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
-/turf/open/floor/pod/light,
-/area/shuttle/supply)
-"X" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/turf/open/floor/catwalk_floor/iron,
-/area/shuttle/supply)
-"Y" = (
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+/obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"Y" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "Z" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad"
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
 /obj/machinery/light/red/directional/west,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 
 (1,1,1) = {"
-i
+h
 h
 i
 i
@@ -200,7 +232,7 @@ s
 h
 f
 Q
-v
+G
 v
 v
 Z
@@ -214,8 +246,8 @@ w
 c
 j
 Y
-Y
-Y
+k
+N
 k
 n
 D
@@ -225,10 +257,10 @@ u
 (4,1,1) = {"
 w
 c
-t
-d
-W
-d
+j
+Y
+N
+k
 N
 n
 M
@@ -238,25 +270,25 @@ u
 (5,1,1) = {"
 h
 c
-t
-d
-d
+j
 d
 B
-n
+B
+B
+V
 x
 I
 b
 "}
 (6,1,1) = {"
-i
-g
 h
-w
+g
+K
+h
 O
 w
+w
 h
-X
 h
 i
 s
