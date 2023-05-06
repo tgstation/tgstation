@@ -604,6 +604,9 @@
 	///The list of machines that are boosting us
 	var/list/connected_machines = null
 
+	///The color of the shields that we are deploying
+	var/shield_color = "#01ffff"
+
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
 	max_regeneration = 5
@@ -648,7 +651,6 @@
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
-				active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		calculate_regeneration()
 		return
 
@@ -656,10 +658,10 @@
 		if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
+			deploying_shield.color = shield_color
 			deployed_shields += deploying_shield
-			active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	calculate_regeneration()
-
+	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 /obj/machinery/modularshieldgen/Destroy()
 	QDEL_LIST(deployed_shields)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
