@@ -120,12 +120,14 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.mob_size = MOB_SIZE_SMALL
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.mob_size = initial(owner.mob_size)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
@@ -380,6 +382,7 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	owner.mob_size = MOB_SIZE_LARGE
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
@@ -388,6 +391,7 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	owner.mob_size = initial(owner.mob_size)
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
