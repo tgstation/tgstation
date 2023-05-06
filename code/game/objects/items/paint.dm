@@ -16,7 +16,7 @@
 	/// How many uses are left
 	var/paintleft = 10
 	/// Whether or not the paint is infinite
-	var/infinite_use = 0
+	var/infinite_use = FALSE
 
 /obj/item/paint/Initialize(mapload)
 	. = ..()
@@ -63,7 +63,7 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/cyborg
-	infinite_use = 1
+	infinite_use = TRUE
 
 /obj/item/paint/anycolor/attack_self(mob/user)
 	if(paintleft <= 0)
