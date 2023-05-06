@@ -493,7 +493,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		return FALSE
 
 	var/datum/spatial_grid_cell/loc_cell = get_cell_of(movable_to_check)
-	var/list/containing_cells = find_hanging_cell_refs_for_movable(movable_to_check, FALSE)
+	var/list/containing_cells = find_hanging_cell_refs_for_movable(movable_to_check, remove_from_cells=FALSE)
 	//if we're in multiple cells, throw an error.
 	//if we're in 1 cell but it cant be deduced by our location, throw an error.
 	if(length(containing_cells) > 1 || (length(containing_cells) == 1 && loc_cell && containing_cells[1] != loc_cell && containing_cells[1] != null))
@@ -565,7 +565,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 #ifdef UNIT_TESTS
 	if(untracked_movable_error(to_remove))
-		find_hanging_cell_refs_for_movable(to_remove, TRUE)
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
 		return
 #endif
 
@@ -574,7 +574,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(loc_cell)
 		GRID_CELL_REMOVE_ALL(loc_cell, to_remove)
 	else
-		find_hanging_cell_refs_for_movable(to_remove, TRUE)
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
 
 ///remove this movable from the given spatial_grid_cell
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
