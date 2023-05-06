@@ -35724,6 +35724,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "jAO" = (
@@ -59800,7 +59801,8 @@
 /area/station/hallway/secondary/service)
 "pLG" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/storage)
 "pLK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
