@@ -170,4 +170,43 @@ h1.alert, h2.alert		{color: #000000;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
 
+//MONKESTATION ADDITION START
+.brass {
+	color: #BE8700;
+}
+.big_brass {
+	color: #BE8700;
+	font-size: 3;
+	font-weight: bold;
+	font-style: italic;
+}
+.clockyellow {
+	color: #DAAA18;
+	font-weight: bold;
+	font-style: italic;
+}
+.clockgray {
+	color: #42474D;
+	font-weight: bold;
+	font-style: italic;
+}
+.clockred {
+	color: #6E001A;
+	font-weight: bold;
+	font-style: italic;
+}
+.brown {
+	color: #3d2009;
+}
+.orange {
+	color: #b8761a;
+}
+.yellow {
+	color: #c7b72c;
+}
+.cyan {
+	color: #0ea1e6;
+}
+// MONKESTATION ADDITION END
+
 </style>"}
