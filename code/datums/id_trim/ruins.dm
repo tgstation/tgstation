@@ -122,12 +122,6 @@
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
 
-/datum/id_trim/pirate/psykers
-	assignment = "Psyker-gang Member"
-
-/datum/id_trim/pirate/captain/psykers
-	assignment = "Psyker-gang Leader"
-
 //Trims for Dangerous Research, used in ``dangerous_research.dm``
 /datum/id_trim/away/dangerous_research
 	assignment = "Researcher"

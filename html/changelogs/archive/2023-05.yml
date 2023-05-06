@@ -165,3 +165,62 @@
   - bugfix: Even more fixes to North Star decals and detailing
   san7890:
   - bugfix: Basic mobs will now be affected by explosions again.
+2023-05-05:
+  MTandi:
+  - qol: 'Mapping: Added broken machine map helper'
+  - qol: 'Mapping: Replaced damaged window spawner with a universal helper'
+  Melbert:
+  - bugfix: Tramstation Robotics and RD now spawn in their departments roundstart
+  - bugfix: Birdboat detective now spawns in their office
+  Rhials:
+  - bugfix: Powersinks no longer always show as being very hot if you're too close.
+  Striders13:
+  - rscadd: miners with style meter can now parry kisses
+  lizardqueenlexi:
+  - bugfix: The hierophant club's sprite updates when it should
+  - bugfix: The hierophant club grants the blink action when summoned into hand
+  vinylspiders:
+  - bugfix: a mob will now once again spill their organs when they are gibbed
+  zxaber:
+  - bugfix: Fixed math on cyborg restocking
+  - qol: borgs entering chargers now have the restocking feature enabled by default.
+      It can be disabled with a right-click while charging if you don't want to eat
+      the station's mats.
+  - balance: Borg restocking speed now scales with the charger's manipulator tier.
+  - bugfix: Mech chargers on Tram (and possibly elsewhere) no longer sync oddly.
+2023-05-06:
+  Helg2:
+  - qol: Trees, rocks, grass and etc. now drop materials when destroyed.
+  Melbert:
+  - balance: Blind people don't get alerted when someone in a cardboard box pops out
+      nearby
+  - rscadd: ' Non-player references'
+  RealityOverseer:
+  - bugfix: fixed unrefined ectoplasm anomaly cores not appearing as unrefined
+  Rhials:
+  - qol: Observers now recieve an alert when a powersink is activated/about to explode.
+  - qol: His Grace being awoken now alerts observers, to give you a headstart on your
+      murderbone ghost ring.
+  - qol: Ascension Rituals being completed will also alert observers, for basically
+      the same reason.
+  - qol: Arming a hot potato will now alert observers. Catch!
+  - qol: Eyesnatcher victims will now notify observers, and invite them to laugh at
+      their state of misery and impotence.
+  - qol: Observers will be notified of any acute references to The Simpsons or other
+      20th Television America copyright properties.
+  - qol: Wizard Imposter spawns alert observers, much like any other ghost role event
+      should.
+  - qol: Playing Rock-Paper-Scissors with death will now alert the observers and invite
+      them to watch. Better not choke!
+  - qol: Observers now get an orbit link for BSA impact sites. Why does it keep teleporting
+      me to the AI upload??
+  - qol: Spontaneous Appendicitis now alerts deadchat.
+  - qol: The purchasing of a badass syndie balloon now alerts deadchat. You might
+      not be any more powerful, but at least you have an audience.
+  - qol: When beginning to delaminate, the Supermatter will alert observers and invite
+      them to watch the fireworks.
+  - balance: Psyker Pirates are now Psyker Shikari (bounty hunters).
+  Thlumyn:
+  - rscadd: Added wedding cakes
+  tralezab:
+  - balance: Tonguespike is better, chemspike deals slightly less damage
