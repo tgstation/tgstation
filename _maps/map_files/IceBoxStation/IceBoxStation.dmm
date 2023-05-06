@@ -50162,10 +50162,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
-"pSt" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/closed/wall,
-/area/station/medical/morgue)
 "pSu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -180713,7 +180709,7 @@ fwB
 fwB
 fwB
 btU
-pSt
+btU
 cuo
 akA
 agS
