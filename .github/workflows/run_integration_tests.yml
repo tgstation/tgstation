@@ -66,10 +66,6 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-      - name: Upload Code Coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: ci_test/code_coverage.xml
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
@@ -77,6 +73,10 @@ jobs:
           name: test_artifacts_${{ inputs.map }}
           path: data/screenshots_new/
           retention-days: 1
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ci_test/code_coverage.xml
       - name: Check client Compatibility
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
