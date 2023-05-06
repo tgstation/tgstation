@@ -10,8 +10,6 @@
 
 	/// The unique string that represents which atmos chamber to associate with.
 	var/chamber_id
-	/// The list of air alarms connected to this sensor
-	var/list/alarms = list()
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
