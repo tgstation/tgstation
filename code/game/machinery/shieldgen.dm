@@ -604,9 +604,6 @@
 	///The list of machines that are boosting us
 	var/list/connected_machines = null
 
-	///The color of the shields that we are deploying
-	var/shield_color = "#01ffff"
-
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
 	max_regeneration = 5
@@ -658,10 +655,10 @@
 		if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
-			deploying_shield.color = shield_color
 			deployed_shields += deploying_shield
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+
 /obj/machinery/modularshieldgen/Destroy()
 	QDEL_LIST(deployed_shields)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
@@ -710,7 +707,9 @@
 
 /obj/machinery/modularshieldgen/proc/calculate_regeneration()
 
-	if(!(active)||recovering)
+	if(!(active))
+		if(recovering)
+			current_regeneration = max_regeneration * 0.2
 		current_regeneration = max_regeneration
 		return
 	current_regeneration = max_regeneration / (1 + radius/max_radius)//this is how we encourage space efficiency and using higher tier parts
@@ -721,6 +720,7 @@
 	START_PROCESSING(SSobj, src)
 	if (stored_strength < 5)
 		deactivate_shields()
+		stored_strength = 0
 		recovering = TRUE
 		return
 	var/random_num = rand(1,deployed_shields.len)
