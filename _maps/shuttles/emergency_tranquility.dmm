@@ -882,7 +882,7 @@
 /obj/item/stamp/denied{
 	pixel_x = 8
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_y = -5;
 	pixel_x = 8
 	},
