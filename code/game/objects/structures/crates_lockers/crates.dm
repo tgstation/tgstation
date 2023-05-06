@@ -114,7 +114,7 @@
 	manifest = null
 	update_appearance()
 
-/obj/structure/closet/crate/open
+/obj/structure/closet/crate/preopen
 	opened = TRUE
 	icon_state = "crateopen"
 

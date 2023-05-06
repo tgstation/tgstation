@@ -146,7 +146,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter1)
 "lD" = (
-/obj/structure/closet/crate/open,
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter1)

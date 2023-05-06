@@ -278,7 +278,7 @@
 
 
 /// Opened mail crate
-/obj/structure/closet/crate/mail/open
+/obj/structure/closet/crate/mail/preopen
 	opened = TRUE
 	icon_state = "mailopen"
 

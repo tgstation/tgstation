@@ -2045,14 +2045,14 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/open,
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "Sm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/open,
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)

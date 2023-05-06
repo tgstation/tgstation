@@ -433,7 +433,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate/open,
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "Gh" = (

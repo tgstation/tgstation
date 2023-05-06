@@ -47,8 +47,6 @@
 /obj/structure/closet/secure_closet/freezer/empty/open
 	req_access = null
 	locked = FALSE
-	opened = TRUE
-	icon_state = "freezer_open"
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
@@ -114,7 +112,7 @@
 	req_access = null
 	locked = FALSE
 
-/obj/structure/closet/secure_closet/freezer/fridge/opened
+/obj/structure/closet/secure_closet/freezer/fridge/preopen
 	req_access = null
 	locked = FALSE
 	opened = TRUE
