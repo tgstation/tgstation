@@ -7,7 +7,7 @@
 	desc = "Furry and brown, it makes you shudder to look at it. This one has sparkling red eyes."
 	icon_state = "guard_spiderling"
 	icon_dead = "guard_spiderling_dead"
-	desc = "Furry and brown, specializing in defense of the hive and other spides."
+	menu_description = "Furry and brown, specializing in defense of the hive and other spides."
 
 	/// Will differentiate into the "ambush" giant spider.
 /mob/living/basic/spiderling/ambush

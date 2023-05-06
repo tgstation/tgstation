@@ -138,7 +138,6 @@
 	max_integrity = 40
 	alpha = 200
 	plane = GAME_PLANE_UPPER
-	var/can_tangle = TRUE
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()

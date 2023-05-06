@@ -5,7 +5,7 @@
 	name = "Communication"
 	desc = "Send a command to all living spiders."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
-	button_icon_state = "communication"
+	button_icon_state = "message"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -33,7 +33,7 @@
 /datum/action/communication_spiders/proc/spider_communication(mob/living/user, message)
 	if(!message)
 		return
-	var/my_message = span_spider("<>Command from [user]:</> [message]")
+	var/my_message = span_spider("[user]:</> [message]")
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
