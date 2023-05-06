@@ -1424,10 +1424,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(damage_amount > 5)
 				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
-			if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
-				H.damage_taken_in_stam_crit += damage_amount
-				if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
-					H.adjustStaminaLoss(-INFINITY)
+				if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
+					H.damage_taken_in_stam_crit += damage_amount
+					if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
+						H.adjustStaminaLoss(-INFINITY)
 			if(BP)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
@@ -1438,10 +1438,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(damage_amount > 5)
 				H.AdjustAllImmobility(damage_amount * -0.35 SECONDS)
-			if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
-				H.damage_taken_in_stam_crit += damage_amount
-				if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
-					H.adjustStaminaLoss(-INFINITY)
+				if(HAS_TRAIT_FROM(H, TRAIT_INCAPACITATED, STAMINA))
+					H.damage_taken_in_stam_crit += damage_amount
+					if(H.damage_taken_in_stam_crit >= STAMINA_MAX_STUN_DAMAGE)
+						H.adjustStaminaLoss(-INFINITY)
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
