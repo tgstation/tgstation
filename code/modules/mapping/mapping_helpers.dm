@@ -404,7 +404,7 @@
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
 	else
-		log_mapping("[src] failed to find air alarm or air sensor at [AREACOORD(src)].")
+		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
 		return INITIALIZE_HINT_QDEL
 
 //apc helpers
