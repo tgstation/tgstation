@@ -1,0 +1,9 @@
+author: "JohnFulpWillard, sprites by McRamon, tattax, and Lamb"
+delete-after: True
+changes:
+  - rscadd: "The Coroner, a new Medical role revolving around dead corpses and autopsies."
+  - rscadd: "The Coroner's Autopsy Scanner, used for discovering the cause for someone's death, listing their wounds, the causes of them, their reagents, and diseases (including stealth ones!)"
+  - qol: "Morgue Trays are now named after the bodybags inside of them."
+  - balance: "The morgue now has 'Secure' morgue trays which by default don't beep."
+  - balance: "Security Medical area and Robotics no longer have their own morgue trays."
+  - balance: "Dissected bodies now have faster surgery speed. Autopsies also count as dissections, however they're mutually exclusive."

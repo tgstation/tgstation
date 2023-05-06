@@ -91,6 +91,7 @@
 #define SECHUD_CHIEF_MEDICAL_OFFICER "hudchiefmedicalofficer"
 #define SECHUD_CLOWN "hudclown"
 #define SECHUD_COOK "hudcook"
+#define SECHUD_CORONER "hudcoroner"
 #define SECHUD_CURATOR "hudcurator"
 #define SECHUD_DETECTIVE "huddetective"
 #define SECHUD_GENETICIST "hudgeneticist"
