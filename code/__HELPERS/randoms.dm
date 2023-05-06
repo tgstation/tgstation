@@ -56,6 +56,7 @@
 		str = "0" + str
 	. = str
 
+///Gets a random coin excluding the blocked type
 /proc/get_random_coin()
 	var/list/blocked = list(
 		/obj/item/coin/gold/debug,
