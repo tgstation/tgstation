@@ -140,7 +140,7 @@
 	if(clumsy)
 		var/obj/item/bodypart/finger = user.get_active_hand()
 		var/datum/wound/slash/moderate/papercut = new
-		papercut.apply_wound(finger)
+		papercut.apply_wound(finger, wound_source = "paper cut")
 	stored_paper = null
 	qdel(stored_paper)
 	new /obj/item/paper/paperslip(get_turf(src))

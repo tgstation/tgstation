@@ -30,6 +30,18 @@
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
 
+/datum/supply_pack/medical/coroner_crate
+	name = "Autospy Kit"
+	desc = "Contains an autopsy scanner, when you lose your own and really \
+		need to complete your dissection experiments."
+	cost = CARGO_CRATE_VALUE * 2.5
+	contains = list(
+		/obj/item/autopsy_scanner = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/storage/box/bodybags = 1,
+	)
+	crate_name = "autopsy kit crate"
+
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
