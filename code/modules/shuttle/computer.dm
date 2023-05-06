@@ -118,11 +118,14 @@
 /obj/machinery/computer/shuttle/proc/get_valid_destinations()
 	var/list/destination_list = params2list(possible_destinations)
 	var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
+	var/obj/docking_port/stationary/current_destination = mobile_docking_port.destination
 	var/list/valid_destinations = list()
 	for(var/obj/docking_port/stationary/stationary_docking_port in SSshuttle.stationary_docking_ports)
 		if(!destination_list.Find(stationary_docking_port.port_destinations))
 			continue
 		if(!mobile_docking_port.check_dock(stationary_docking_port, silent = TRUE))
+			continue
+		if(stationary_docking_port == current_destination)
 			continue
 		var/list/location_data = list(
 			id = stationary_docking_port.shuttle_id,
