@@ -205,10 +205,9 @@
 	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
-	if(istype(mover.pulledby, /mob/living/basic/spiderling))
-		return TRUE
+		if(istype(mover.pulledby, /mob/living/basic/spiderling))
+			return TRUE
 		if(prob(100))
 			balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
-		return prob(80)

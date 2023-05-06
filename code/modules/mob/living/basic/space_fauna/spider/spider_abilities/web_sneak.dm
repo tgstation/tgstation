@@ -10,23 +10,23 @@
 	var/sneak_alpha = 75
 
 /datum/action/cooldown/web_sneak/Remove(mob/living/remove_from)
-	if(HAS_TRAIT(remove_from, TRAIT_ALIEN_SNEAK))
+	if(HAS_TRAIT(remove_from, TRAIT_SNEAK
 		remove_from.alpha = initial(remove_from.alpha)
-		REMOVE_TRAIT(remove_from, TRAIT_ALIEN_SNEAK, name)
+		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, name)
 
 	return ..()
 
 /datum/action/cooldown/web_sneak/Activate(atom/target)
-	if(HAS_TRAIT(owner, TRAIT_ALIEN_SNEAK))
+	if(HAS_TRAIT(owner, TRAIT_SNEAK))
 		// It's safest to go to the initial alpha of the mob.
 		// Otherwise we get permanent invisbility exploits.
 		owner.alpha = initial(owner.alpha)
 		to_chat(owner, span_noticealien("You reveal yourself!"))
-		REMOVE_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
+		REMOVE_TRAIT(owner, TRAIT_SNEAK, name)
 
 	else
 		owner.alpha = sneak_alpha
 		to_chat(owner, span_noticealien("You blend into the webs..."))
-		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
+		ADD_TRAIT(owner, TRAIT_SNEAK, name)
 
 	return TRUE
