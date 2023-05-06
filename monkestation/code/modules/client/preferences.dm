@@ -22,3 +22,7 @@
 		"medium_threat" = 0,
 		"low_threat" = 0,
 	)
+
+	///amount of metaconis you can earn per shift
+	var/max_round_coins = 1000
+
