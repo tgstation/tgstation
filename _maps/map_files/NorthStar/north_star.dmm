@@ -45319,7 +45319,7 @@
 /area/station/service/library/lounge)
 "lYn" = (
 /obj/machinery/light/cold/no_nightlight/directional/east,
-/mob/living/simple_animal/slime,
+/mob/living/simple_animal/slime/random_tier_one,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "lYr" = (
