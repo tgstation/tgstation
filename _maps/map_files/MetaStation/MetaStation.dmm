@@ -29975,10 +29975,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
-"kOt" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
 "kOB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -104579,7 +104575,7 @@ gFD
 unL
 unL
 ouR
-kOt
+tUn
 tUn
 gNW
 nQA
