@@ -1,0 +1,226 @@
+2023-05-01:
+  BlueMemesauce:
+  - spellcheck: Deleted the extra line in combat information
+  - spellcheck: Fixed Nanotrasen being miscapitalized in traitor posters, a drink,
+      the ethereal lore, and some photocopier paperwork
+  EOBGames:
+  - rscdel: Kilostation has went back to its home planet. It served us faithfully
+      for nearly 3 and a half years. May it rest in peace.
+  Helg2:
+  - bugfix: You can't spam open codex cicatrix now.
+  - qol: You can close codex cicatrix in your hand now! Also toy codex cicatrix has
+      proper animation now.
+  Iajret:
+  - bugfix: papers should count cyrillic and other non-ascii characters correctly
+      both server and client-side
+  JohnFulpWillard:
+  - balance: Mimes can no longer write on paper without breaking their vow.
+  - admin: Enslaving mobs is now logged in game.log
+  - refactor: Russian mobs are now subtypes of Syndicate basic mobs.
+  - bugfix: Birdshot's observers now spawn on-station.
+  - bugfix: Birdshot's EVA door now properly works.
+  - bugfix: Birdshot now has a few extra rooms connected to the station's distro (atmos
+      canister storage, medical coldroom)
+  - balance: Machines (such as ORM and Techfabs) will no longer unsync from Ore silos
+      when it moves Z-level, instead it will prevent materials from being used, as
+      if it was on hold.
+  MTandi:
+  - qol: Dirt pile is crafted from sand instead of sandstone and drops it on deconstruction
+  - bugfix: You can't have free water and nutriments by rebuilding hydrotray
+  Melbert:
+  - bugfix: North Star's shields now regenerate integrity over time
+  NoselessCanine:
+  - bugfix: Bloody Mary flavor is now accurate to its description.
+  Rhials:
+  - bugfix: Replaces the purely decorative mining shuttle console on the Icebox bridge
+      with an ID console.
+  Zergspower:
+  - bugfix: Deep Storage Space Ruin - Fixes atmos alarms never shutting off
+  - bugfix: Deep Storage Space Ruin - made the atmos pipenet sane
+  - bugfix: Crashedship Ruin - You can now use the teleport
+  mc-oofert:
+  - bugfix: The airlocks on the hug relaxation shuttle now align up properly
+  norsvenska:
+  - bugfix: Shuttle Loan event's resupply and hijacking have been separated into two
+      different datums
+  san7890:
+  - refactor: Spiderlings are now basic mobs, report any complete weirdness/deviation
+      from known behavior. They should be a lot more intelligent now though.
+  - rscadd: AI Spiderlings are super fragile, but they're also super fast, especially
+      when they get into a vent. Once they're in circulation, they could end up everywhere!
+      Maybe in the armory, maybe in a locked closet in maintenance. Be sure to be
+      vigilant and splat them whenever you can to save the station from a whole lotta
+      heartache!
+2023-05-02:
+  MTandi:
+  - image: extinguisher cabinet has new sprites
+  - qol: 'Mapping: Air alarm variants replaced with corresponding helpers'
+  SgtHunk:
+  - bugfix: Pirates summoned through hacking a comms console should actually spawn
+      now.
+  SyncIt21:
+  - bugfix: air alarms correctly spew out cable & electronics depending on their build
+      stage when their integrity reaches 0  i.e. destroyed
+  - bugfix: fire alarms correctly spew out cable & electronics depending on their
+      build stage when their integrity reaches 0  i.e. destroyed
+  - bugfix: balloon alerts runtiming when cutting terminals
+  - bugfix: ' Drying rack spawning a matter bin and circuit board on deconstruction'
+  Thedragmeme:
+  - qol: 'Makes the Meta station kitchen not cramped anymore
+
+      :cl:'
+  Thunder12345:
+  - bugfix: Bows will no longer randomly stop taking new arrows.
+  - rscadd: Crewmembers arriving very late will not always have time to finish their
+      breakfast.
+  nikothedude:
+  - code_imp: TGUI input datums can now accept custom ui_states
+  norsvenska:
+  - rscadd: North Star's captain's office has been expanded! It now includes a sitting
+      area as well as a photocopier and some cigars.
+  - bugfix: Various minor changes in North Star
+2023-05-03:
+  Cheshify:
+  - bugfix: Command can actually enter the AI SAT on the North Star.
+  - rscadd: The North Star AI SAT has been redone.
+  Iamgoofball:
+  - bugfix: Removes player references.
+  JohnFulpWillard:
+  - bugfix: Golems can redeem points through their ORM without an Ore silo.
+  MTandi:
+  - bugfix: Electrolysis chemical reaction works with enriched liquid electricity
+  Rhials:
+  - spellcheck: The hallucinatory anomaly announcement is no longer missing words.
+  Tattle:
+  - sound: nerfed the police whistle volume
+  Thunder12345:
+  - bugfix: A Mix to Engine gas line has been added to Birdshot's atmospherics
+  Zergspower:
+  - qol: Dangerous Research Ruin - Area redefines
+  Zonespace27:
+  - bugfix: Style meter parrying works again
+  - bugfix: Style meter bar now works correctly with very high style point count
+  nikothedude:
+  - bugfix: Number inputs work now
+  san7890:
+  - qol: The game now supports export of your preferences into a JSON file! The verb
+      (export-preferences) should now be available in the OOC tab of your stat-panel
+      if enabled by server operators.
+  - server: Exporting player preferences is controlled by a configuration option,
+      'FORBID_PREFERENCES_EXPORT'. If you do not wish to let clients access the ftp()
+      function to their own preferences file (probably for bandwidth reasons?) you
+      should uncomment this or add it to your config somehow.
+  - config: Server operators are also able to set the cooldown between requests to
+      download the JSON Preferences file via the 'SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT'
+      config option.
+  vinylspiders:
+  - bugfix: prosthetic limb quirk will no longer display a prosthetic on your character
+      preview because it is buggy and hardly ever matches what you end up getting
+      upon spawning
+  - code_imp: removing the prosthetic limb quirk will restore your original limb
+2023-05-04:
+  ArcaneMusic:
+  - refactor: Mineral costs have been reformatted to be scaled by the number of sheets,
+      darts, and small fractions they make up.
+  - qol: Foam darts no longer hold a fraction of a unit of iron within themselves.
+  BlueMemesauce:
+  - bugfix: Fixed the Chef not having CQC outside the kitchen on Tramstation
+  Dawnseer:
+  - rscadd: Damp rag and Money bag to service borg
+  - rscadd: Service borg upgrades, with accompanying tech web node
+  - rscadd: Sprites for kitchen toolset, and service apparatus
+  - balance: The RSF can print a few more things, paper cups, seaweed sheets, plates,
+      bowls, plastic cutlery and standard decks of cards.
+  - balance: 'Sugar moved from borgshaker to condiment synthesizer. Berry juice, cherry
+      jelly and vinegar added to borgshaker. balance: Both shaker and synthesizer
+      can also be adjusted to give 1 unit at time, so it goes 5, 10, 20 then 1, and
+      back around.'
+  - balance: Adds blood and Carpotoxin to the emagged borgshaker.
+  - bugfix: Money bag was missing a description, it now has one.
+  JohnFulpWillard:
+  - qol: Health Analyzers now show embeds in bodyparts on examine.
+  MTandi:
+  - balance: Meta lounge and theater are back to original sizes, art storage moved
+      to aux tools storage
+  Melbert:
+  - bugfix: Mime using captain's announcement visible message is correct
+  - bugfix: Stairs are now resistant to being shoved by mobs with high move force.
+  Rex9001:
+  - bugfix: Adds missing vendatray to Northstar, and removes the scrubber co2 infinate
+      loop
+  SethLafuente:
+  - bugfix: fixed spiderlings speaking human instead of spider
+  Thlumyn:
+  - bugfix: birdshot cryo no longer needs medbay access to leave
+  Thunder12345:
+  - bugfix: The acrade cabinet in North Star's departure lounge now works.
+  Wallem:
+  - rscadd: The ancient recipe for the Death Sandwich has been rediscovered buried
+      in the deepest depths of an erupting volcano.
+  Xander3359:
+  - spellcheck: BLOX is the name and posibrain is the game.
+  iwishforducks:
+  - rscadd: Stowaway Changelings will now appear as a late join form of Changeling.
+  norsvenska:
+  - bugfix: Even more fixes to North Star decals and detailing
+  san7890:
+  - bugfix: Basic mobs will now be affected by explosions again.
+2023-05-05:
+  MTandi:
+  - qol: 'Mapping: Added broken machine map helper'
+  - qol: 'Mapping: Replaced damaged window spawner with a universal helper'
+  Melbert:
+  - bugfix: Tramstation Robotics and RD now spawn in their departments roundstart
+  - bugfix: Birdboat detective now spawns in their office
+  Rhials:
+  - bugfix: Powersinks no longer always show as being very hot if you're too close.
+  Striders13:
+  - rscadd: miners with style meter can now parry kisses
+  lizardqueenlexi:
+  - bugfix: The hierophant club's sprite updates when it should
+  - bugfix: The hierophant club grants the blink action when summoned into hand
+  vinylspiders:
+  - bugfix: a mob will now once again spill their organs when they are gibbed
+  zxaber:
+  - bugfix: Fixed math on cyborg restocking
+  - qol: borgs entering chargers now have the restocking feature enabled by default.
+      It can be disabled with a right-click while charging if you don't want to eat
+      the station's mats.
+  - balance: Borg restocking speed now scales with the charger's manipulator tier.
+  - bugfix: Mech chargers on Tram (and possibly elsewhere) no longer sync oddly.
+2023-05-06:
+  Helg2:
+  - qol: Trees, rocks, grass and etc. now drop materials when destroyed.
+  Melbert:
+  - balance: Blind people don't get alerted when someone in a cardboard box pops out
+      nearby
+  - rscadd: ' Non-player references'
+  RealityOverseer:
+  - bugfix: fixed unrefined ectoplasm anomaly cores not appearing as unrefined
+  Rhials:
+  - qol: Observers now recieve an alert when a powersink is activated/about to explode.
+  - qol: His Grace being awoken now alerts observers, to give you a headstart on your
+      murderbone ghost ring.
+  - qol: Ascension Rituals being completed will also alert observers, for basically
+      the same reason.
+  - qol: Arming a hot potato will now alert observers. Catch!
+  - qol: Eyesnatcher victims will now notify observers, and invite them to laugh at
+      their state of misery and impotence.
+  - qol: Observers will be notified of any acute references to The Simpsons or other
+      20th Television America copyright properties.
+  - qol: Wizard Imposter spawns alert observers, much like any other ghost role event
+      should.
+  - qol: Playing Rock-Paper-Scissors with death will now alert the observers and invite
+      them to watch. Better not choke!
+  - qol: Observers now get an orbit link for BSA impact sites. Why does it keep teleporting
+      me to the AI upload??
+  - qol: Spontaneous Appendicitis now alerts deadchat.
+  - qol: The purchasing of a badass syndie balloon now alerts deadchat. You might
+      not be any more powerful, but at least you have an audience.
+  - qol: When beginning to delaminate, the Supermatter will alert observers and invite
+      them to watch the fireworks.
+  - balance: Psyker Pirates are now Psyker Shikari (bounty hunters).
+  Thlumyn:
+  - rscadd: Added wedding cakes
+  tralezab:
+  - balance: Tonguespike is better, chemspike deals slightly less damage

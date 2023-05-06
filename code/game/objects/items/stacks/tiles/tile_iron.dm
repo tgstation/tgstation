@@ -5,15 +5,15 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	mats_per_unit = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/iron
 	armor_type = /datum/armor/tile_iron
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	cost = 125
-	source = /datum/robot_energy_storage/iron
+	cost = SMALL_MATERIAL_AMOUNT * 5
+	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/tile/iron
 	tile_reskin_types = list(
 		/obj/item/stack/tile/iron,

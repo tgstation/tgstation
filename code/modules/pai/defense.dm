@@ -39,6 +39,8 @@
 			fold_in(force = 1)
 			Paralyze(200)
 
+	return TRUE
+
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
 		visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
