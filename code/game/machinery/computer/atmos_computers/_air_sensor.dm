@@ -24,9 +24,6 @@
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
-	if(alarms.len)
-		for(var/obj/machinery/airalarm/alarm as anything in alarms)
-			alarm.disconnect_sensor()
 	reset()
 	return ..()
 
