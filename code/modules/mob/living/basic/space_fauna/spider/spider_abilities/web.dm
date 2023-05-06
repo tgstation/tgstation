@@ -62,7 +62,7 @@
 /datum/action/cooldown/lay_web/proc/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/stickyweb(target_turf)
 
-/// Variant for genetics, created webs only allow the creator passage
+/// Variant for genetics, created webs only allow the creator snare
 /datum/action/cooldown/lay_web/genetic
 	desc = "Spin a web. Only you will be able to traverse your web easily."
 	cooldown_time = 4 SECONDS //the same time to lay a web

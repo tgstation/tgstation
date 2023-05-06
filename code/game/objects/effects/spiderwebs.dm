@@ -189,17 +189,17 @@
 	name = "web spikes"
 	icon = 'icons/effects/effects.dmi'
 	desc = "hardened silk formed into small yet deadly spikes."
-	icon_state = "webspikes"
+	icon_state = "webspikes1"
 	max_integrity = 40
-	decal_reagent = /datum/reagent/toxin/acid
-	reagent_amount = 25
 
-/obj/structure/spider/Initialize(mapload)
+/obj/structure/spider/snare/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-/obj/structure/spider/proc/update_spikes_damage(spikes_min_damage, spikes_max_damage)
-	if(!spikes_max_damage)
-		spikes_max_damage = 30
-	if(!spikes_min_damage)
-		spikes_min_damage = 10
+/obj/structure/spider/snare
+	name = "web snare"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "websnare"
+	max_integrity = 20
+	var/tangle = TRUE
