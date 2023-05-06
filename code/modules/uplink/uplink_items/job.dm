@@ -17,7 +17,7 @@
 	surplus = 5
 
 /datum/uplink_item/role_restricted/bureaucratic_error
-	name = "Organic Capital Disturbance virus"
+	name = "Organic Capital Disturbance Virus"
 	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
