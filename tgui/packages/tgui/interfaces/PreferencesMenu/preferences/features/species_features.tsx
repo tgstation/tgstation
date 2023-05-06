@@ -1,10 +1,4 @@
-import {
-    FeatureColorInput,
-    Feature,
-    FeatureChoiced,
-    FeatureDropdownInput,
-    FeatureDropdownWithSwitchButtonsInput
-} from './base';
+import { FeatureColorInput, Feature, FeatureChoiced, FeatureDropdownInput, FeatureDropdownWithSwitchButtonsInput } from './base';
 
 export const eye_color: Feature<string> = {
   name: 'Eye color',

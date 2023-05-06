@@ -54,7 +54,7 @@ export class DropdownWithSwitchButtons extends Dropdown {
       return false;
     }
 
-    const previousIndex = parseInt(selectedIndex) - 1;
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
     const opts = this.getOptionsValues();
 
     const previous = opts[previousIndex];
@@ -69,7 +69,7 @@ export class DropdownWithSwitchButtons extends Dropdown {
       return;
     }
 
-    const previousIndex = parseInt(selectedIndex) - 1;
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
     const opts = this.getOptionsValues();
 
     const previous = opts[previousIndex];
@@ -88,7 +88,7 @@ export class DropdownWithSwitchButtons extends Dropdown {
       return false;
     }
 
-    const nextIndex = parseInt(selectedIndex) + 1;
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
     const opts = this.getOptionsValues();
 
     const next = opts[nextIndex];
@@ -103,7 +103,7 @@ export class DropdownWithSwitchButtons extends Dropdown {
       return;
     }
 
-    const nextIndex = parseInt(selectedIndex) + 1;
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
     const opts = this.getOptionsValues();
 
     const next = opts[nextIndex];
