@@ -580,8 +580,11 @@
 	///Current health of shield
 	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
 
-	///Shield Regeneration amount
-	var/regeneration = 5
+	///Shield Regeneration when at 100% efficiency
+	var/max_regeneration = 5
+
+	///The regeneration that the shield can support
+	var/current_regeneration = 5
 
 	///Determines the max radius the shield can support
 	var/max_radius = 5
@@ -603,17 +606,19 @@
 
 /obj/machinery/modularshieldgen/RefreshParts()
 	. = ..()
-	regeneration = 5
+	max_regeneration = 5
 	max_radius = 5
 	max_strength = 100
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		max_strength += new_capacitor.tier * 50
 
 	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		regeneration += new_manipulator.tier * 2
+		max_regeneration += new_manipulator.tier * 2
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		max_radius += new_laser.tier * 2
+
+	calculate_regeneration()
 
 
 /obj/machinery/modularshieldgen/Initialize(mapload)
@@ -626,6 +631,7 @@
 	active = FALSE
 	update_appearance()
 	QDEL_LIST(deployed_shields)
+	calculate_regeneration()
 
 
 
@@ -643,6 +649,7 @@
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
 				active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+		calculate_regeneration()
 		return
 
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
@@ -651,6 +658,7 @@
 			deploying_shield.shield_generator = src
 			deployed_shields += deploying_shield
 			active_power_usage += BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+	calculate_regeneration()
 
 /obj/machinery/modularshieldgen/Destroy()
 	QDEL_LIST(deployed_shields)
@@ -674,8 +682,11 @@
 	data["max_radius"] = max_radius
 	data["current_radius"] = radius
 	data["max_strength"] = max_strength
-	data["regeneration_rate"] = regeneration
+	data["max_regeneration"] = max_regeneration
+	data["current_regeneration"] = current_regeneration
+	data["current_strength"] = stored_strength
 	data["status"] = active
+	data["recovering"] = recovering
 	return data
 
 /obj/machinery/modularshieldgen/ui_act(action, params)
@@ -684,11 +695,24 @@
 		return
 	switch(action)
 		if ("set_radius")
-			radius = text2num(params["current_radius"])
-		if ("activate")
 			if (active)
+				return
+			radius = max(1,(text2num(params["new_radius"])))
+		if ("activate")
+			if(active)
 				deactivate_shields()
+				return
+			if(recovering)
+				return
 			activate_shields()
+
+/obj/machinery/modularshieldgen/proc/calculate_regeneration()
+
+	if(!(active)||recovering)
+		current_regeneration = max_regeneration
+		return
+	current_regeneration = max_regeneration / (1 + radius/max_radius)//this is how we encourage space efficiency and using higher tier parts
+
 
 /obj/machinery/modularshieldgen/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
@@ -696,12 +720,13 @@
 	if (stored_strength < 5)
 		deactivate_shields()
 		recovering = TRUE
+		return
 	var/random_num = rand(1,deployed_shields.len)
 	var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
 	random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 /obj/machinery/modularshieldgen/process(seconds_per_tick)
-	stored_strength = min((stored_strength + (regeneration * seconds_per_tick)),max_strength)
+	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		recovering = FALSE
 		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
