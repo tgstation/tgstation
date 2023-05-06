@@ -725,9 +725,6 @@
 		stored_strength = 0
 		recovering = TRUE
 		return
-	var/random_num = rand(1,deployed_shields.len)
-	var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
-	random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 /obj/machinery/modularshieldgen/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
@@ -739,16 +736,44 @@
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
 		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
+/obj/machinery/modularshieldwell
+
+	name = "Modular Shield Well"
+	desc = "A device used to hold more energy for the modular shield generator"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	dir = SOUTH
+	//circuit = /obj/item/circuitboard/machine/modular_shield_well
+
+	///The generator we are supporting
+	var/obj/machinery/modularshieldgen/shield_generator
+	var/connected = FALSE
+
+/obj/machinery/modularshieldwell/RefreshParts()
+	. = ..()
+
+/obj/machinery/modularshieldwell
+
 
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
-
+	var/heat_resistance = 400
 	//our parent
 	var/obj/machinery/modularshieldgen/shield_generator
 
+
+/obj/structure/emergency_shield/modular/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > (T0C + heat_resistance)
+
+/obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	shield_generator.shield_drain(round(air.return_volume() / 400))
 
 
 //How the shield loses strength
