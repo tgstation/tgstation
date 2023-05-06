@@ -7,8 +7,6 @@
 	var/list/required_access = list()
 	/// List of required access to download or file host the program. Any match will do.
 	var/list/transfer_access = list()
-	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
-	var/program_state = PROGRAM_STATE_KILLED
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -158,23 +156,43 @@
 		if(requires_ntnet)
 			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
-		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
 	return FALSE
 
 /**
  * Kills the running program
  *
- * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
- * Arguments:
- * * forced - Boolean to determine if this was a forced close. Should be TRUE if the user did not willingly close the program.
+ * Use this proc to kill the program.
+ * Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+ * Args:
+ * - reload_ui - Whether we reload the UI on computer's shutdown.
  **/
-/datum/computer_file/program/proc/kill_program(forced = FALSE)
+/datum/computer_file/program/proc/kill_program()
 	SHOULD_CALL_PARENT(TRUE)
-	program_state = PROGRAM_STATE_KILLED
+
+	if(src == computer.active_program)
+		computer.active_program = null
+		if(computer.enabled)
+			computer.update_tablet_open_uis(usr)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
+
 	if(requires_ntnet)
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
+
+	computer.update_appearance(UPDATE_ICON)
+	return TRUE
+
+///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
+/datum/computer_file/program/proc/background_program()
+	SHOULD_CALL_PARENT(TRUE)
+	if(header_program)
+		return kill_program()
+
+	computer.idle_threads.Add(src)
+	computer.active_program = null
+
+	computer.update_tablet_open_uis(usr)
+	computer.update_appearance(UPDATE_ICON)
 	return TRUE
