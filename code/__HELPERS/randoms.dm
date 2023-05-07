@@ -60,6 +60,7 @@
 /proc/get_random_coin()
 	var/list/blocked = list(
 		/obj/item/coin/gold/debug,
+		/obj/item/coin/eldritch,
 	)
 	var/list/extra_coins = list(
 		/obj/item/food/chococoin,
