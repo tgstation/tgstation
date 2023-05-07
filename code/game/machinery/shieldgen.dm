@@ -626,6 +626,7 @@
 /obj/machinery/modular_shield_gen/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
+	connected_machines = list()
 	wires = new /datum/wires/modular_shield_gen(src)
 	if(mapload && active && anchored)
 		activate_shields()
@@ -656,7 +657,7 @@
 
 /obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
+	if(default_deconstruction_screwdriver(user, "gen_open[anchored]", "gen_close[anchored]", W))
 		return
 
 	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
@@ -769,65 +770,73 @@
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
 		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
-/obj/machinery/modular_shield_node
+
+/obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
+
+	dir = SOUTH
+	var/obj/machinery/modular_shield_gen/shield_generator
+	var/turf/connected_turf
+
+/obj/machinery/modular_shield/module/Initialize(mapload)
+	. = ..()
+
+	connected_turf = get_step(loc, dir)
+
+/obj/machinery/modular_shield/module/Destroy()
+
+	shield_generator.connected_machines -= (src)
+	return ..()
+/obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
+
+	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
+		return
+
+	if(default_change_direction_wrench(user, I))
+		connected_turf = get_step(loc, dir)
+		try_connect()
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
+
+/obj/machinery/modular_shield/module/proc/try_connect()
+
+	(locate(/obj/machinery/modular_shield_gen) in connected_turf).connected_machines += (src)
+
+
+
+/obj/machinery/modular_shield/module/node
 
 	name = "Modular Shield Node"
 	desc = "A waist high mess of humming pipes and wires that extend the network"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
-	///The generator we are supporting
-	var/obj/machinery/modular_shield_gen/shield_generator
-	var/connected = FALSE
-
-/obj/machinery/modular_shield_charger
+/obj/machinery/modular_shield/module/charger
 
 	name = "Modular Shield Charger"
 	desc = "A machine that somehow fabricates hardlight using electronics"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "shieldoff"
-	dir = SOUTH
-	density = FALSE
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
-	///The generator we are supporting
-	var/obj/machinery/modular_shield_gen/shield_generator
-	var/connected = FALSE
-
-/obj/machinery/modular_shield_relay
+/obj/machinery/modular_shield/module/relay
 
 	name = "Modular Shield Relay"
 	desc = "It helps the shield generator project farther out"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "shieldoff"
-	dir = SOUTH
-	density = FALSE
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
-	///The generator we are supporting
-	var/obj/machinery/modular_shield_gen/shield_generator
-	var/connected = FALSE
-
-/obj/machinery/modular_shield_well
+/obj/machinery/modular_shield/module/well
 
 	name = "Modular Shield Well"
 	desc = "A device used to hold more energy for the modular shield generator"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
-
-	///The generator we are supporting
-	var/obj/machinery/modular_shield_gen/shield_generator
-	var/connected = FALSE
-
-/obj/machinery/modular_shield_well/RefreshParts()
-	. = ..()
-
-/obj/machinery/modular_shield_well
-
 
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"

@@ -170,26 +170,26 @@
 /obj/item/circuitboard/machine/modular_shield_node
 	name = "Modular Shield Node"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/modular_shield_node
+	build_path = /obj/machinery/modular_shield/module/node
 	req_components = list(/obj/item/stack/cable_coil = 15)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/modular_shield_well
 	name = "Modular Shield Well"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/modular_shield_well
+	build_path = /obj/machinery/modular_shield/module/well
 	req_components = list(/datum/stock_part/capacitor = 1)
 
 /obj/item/circuitboard/machine/modular_shield_relay
 	name = "Modular Shield Relay"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/modular_shield_relay
+	build_path = /obj/machinery/modular_shield/module/relay
 	req_components = list(/datum/stock_part/micro_laser = 1)
 
 /obj/item/circuitboard/machine/modular_shield_charger
 	name = "Modular Shield Charger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/modular_shield_charger
+	build_path = /obj/machinery/modular_shield/module/charger
 	req_components = list(/datum/stock_part/manipulator = 1)
 
 /obj/item/circuitboard/machine/cell_charger
