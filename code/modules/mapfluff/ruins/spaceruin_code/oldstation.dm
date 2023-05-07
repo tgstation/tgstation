@@ -89,7 +89,8 @@
 
 /obj/item/paper/fluff/ruins/oldstation/apc_note
 	name = "DO NOT TOUCH!"
-	default_raw_text = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob."
+	default_raw_text = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob.<br><br> \
+	Note: Use crowbar to remove the APC cover and take out the malfunctioning battery."
 
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"
