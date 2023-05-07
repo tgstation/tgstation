@@ -123,7 +123,11 @@
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
-		user.put_in_hands(contents[1])
+		if(isitem(contents[1]))
+			user.put_in_hands(contents[1])
+		else
+			var/obj/content_item = contents[1]
+			content_item.forceMove(drop_location())
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 

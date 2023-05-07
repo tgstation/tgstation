@@ -527,10 +527,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
-"uq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/space)
 "vl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1785,7 +1781,7 @@ Er
 Er
 Er
 Er
-uq
+ED
 lX
 xm
 ZC

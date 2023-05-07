@@ -31172,10 +31172,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
-"jWU" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/commons/vacant_room/commissary)
 "jWX" = (
 /obj/effect/spawner/structure/window/hollow/middle,
 /turf/open/floor/plating,
@@ -41376,10 +41372,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"nkX" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/medical/central)
 "nll" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty{
@@ -65592,10 +65584,6 @@
 	dir = 1
 	},
 /area/station/security/lockers)
-"uWn" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/aft/lesser)
 "uWp" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall,
@@ -188471,7 +188459,7 @@ ffe
 ffe
 ffe
 meH
-uWn
+ffe
 ffe
 ffe
 ffe
@@ -231359,7 +231347,7 @@ gst
 sto
 lpj
 gst
-jWU
+gst
 oiK
 bLW
 xjP
@@ -245006,7 +244994,7 @@ mmh
 ikz
 piI
 cvS
-nkX
+kRP
 kRP
 kRP
 kRP

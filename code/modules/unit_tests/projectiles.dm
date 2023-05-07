@@ -1,8 +1,13 @@
+///Tests all projectiles that none of them are phasing.
+/datum/unit_test/projectile_movetypes
+
 /datum/unit_test/projectile_movetypes/Run()
-	for(var/path in typesof(/obj/projectile))
-		var/obj/projectile/projectile = path
+	for(var/obj/projectile/projectile as anything in typesof(/obj/projectile))
 		if(initial(projectile.movement_type) & PHASING)
-			TEST_FAIL("[path] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
+			TEST_FAIL("[projectile] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
+
+///Shoots a victim with a gun to ensure the gun properly loads and the victim take the correct amount of damage.
+/datum/unit_test/gun_go_bang
 
 /datum/unit_test/gun_go_bang/Run()
 	// test is for a ballistic gun that starts loaded + chambered

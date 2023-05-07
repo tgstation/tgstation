@@ -343,10 +343,6 @@
 /obj/structure/girder,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
-"bt" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/template_noop,
-/area/template_noop)
 "bu" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/closed/mineral/random/snow,
@@ -459,7 +455,7 @@ ad
 ad
 ad
 ad
-bt
+aa
 aa
 "}
 (2,1,1) = {"
