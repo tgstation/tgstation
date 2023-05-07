@@ -61,4 +61,8 @@
 	var/list/blocked = list(
 		/obj/item/coin/gold/debug,
 	)
-	return pick(subtypesof(/obj/item/coin) - blocked)
+	var/list/extra_coins = list(
+		/obj/item/food/chococoin,
+	)
+	var/list/allowed_coins = subtypesof(/obj/item/coin) - blocked + extra_coins
+	return pick(allowed_coins)
