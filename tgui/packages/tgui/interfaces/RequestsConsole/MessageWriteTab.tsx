@@ -13,9 +13,13 @@ export const MessageWriteTab = (props, context) => {
     information_consoles = [],
   } = data;
 
-  const sorted_assistance = sortBy((console) => console)(assistance_consoles);
-  const sorted_supply = sortBy((console) => console)(supply_consoles);
-  const sorted_information = sortBy((console) => console)(information_consoles);
+  const sorted_assistance = sortBy((console: string) => console)(
+    assistance_consoles
+  );
+  const sorted_supply = sortBy((console: string) => console)(supply_consoles);
+  const sorted_information = sortBy((console: string) => console)(
+    information_consoles
+  );
 
   const resetMessage = () => {
     setMessageText('');
