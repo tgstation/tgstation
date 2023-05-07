@@ -127,12 +127,12 @@
 
 /// Returns true if there's a web we can't put stuff on in our turf
 /datum/action/cooldown/solid_web/proc/obstructed_by_other_solid_web()
-	return !!(locate(/obj/structure/spider/stickyweb/solid) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
 
 /datum/action/cooldown/solid_web/Activate()
 	. = ..()
 	var/turf/spider_turf = get_turf(owner)
-	var/obj/structure/spider/stickyweb/solidweb = locate() in spider_turf
+	var/obj/structure/spider/solidweb = locate() in spider_turf
 	if(solidweb)
 		owner.balloon_alert_to_viewers("sealing web...")
 	else
@@ -146,7 +146,7 @@
 
 /// Creates a web in the current turf
 /datum/action/cooldown/solid_web/proc/plant_solidweb(turf/target_turf, obj/structure/spider/solid/existing_web)
-	new /obj/structure/spider/stickyweb/solid(target_turf)
+	new /obj/structure/spider/solid(target_turf)
 
 /// Make a solid web under yourself for area fortification
 /datum/action/cooldown/web_passage

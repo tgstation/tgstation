@@ -101,7 +101,7 @@
 	else if(isprojectile(mover))
 		return prob(30)
 
-/obj/structure/spider/stickyweb/solid
+/obj/structure/spider/solid
 	name = "solid web"
 	icon = 'icons/effects/effects.dmi'
 	desc = "A solid thick wall of web, airtight enough to block air flow."
@@ -112,7 +112,7 @@
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
 
-/obj/structure/spider/stickyweb/solid/Initialize(mapload)
+/obj/structure/spider/solid/Initialize(mapload)
 	. = ..()
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
