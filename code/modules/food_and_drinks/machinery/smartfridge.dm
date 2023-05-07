@@ -82,9 +82,11 @@
 		return TRUE
 	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
-		span_notice("You start to weld [src] to the floor..."), \
-		span_hear("You hear welding."))
+	user.visible_message(
+		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("You start to weld [src] to the floor..."),
+		span_hear("You hear welding."),
+	)
 	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
 		balloon_alert(user, "cancelled!")
 		return FALSE
