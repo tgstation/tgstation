@@ -198,7 +198,7 @@
 	end_processing()
 	dump_inventory_contents()
 
-	if(!isnull(component_parts))
+	if (!isnull(component_parts))
 		// Don't delete the stock part singletons
 		for (var/atom/atom_part in component_parts)
 			qdel(atom_part)
@@ -206,7 +206,6 @@
 		component_parts = null
 
 	QDEL_NULL(circuit)
-
 	unset_static_power()
 	return ..()
 
