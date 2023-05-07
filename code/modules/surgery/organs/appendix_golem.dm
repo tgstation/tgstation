@@ -27,7 +27,7 @@
 
 /obj/item/organ/internal/appendix/golem/on_remove(mob/living/carbon/organ_owner)
 	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
-	smelter.Remove(organ_owner)
+	smelter?.Remove(organ_owner) // Might have been deleted by Destroy already
 	return ..()
 
 /obj/item/organ/internal/appendix/golem/Destroy()
