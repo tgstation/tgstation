@@ -35,9 +35,13 @@
 	/**
 	 * If set, raise a warning if the proc or one of the sub-procs it calls
 	 * uses a blocking call, such as `sleep()` or `input()` without using `set waitfor = 0`
-	 * This cannot be disabled by child overrides.
 	 */
 	#define SHOULD_NOT_SLEEP(X) set SpacemanDMM_should_not_sleep = X
+	/**
+	 * If set, mark as having all child sleeps ignored when checking procs with SHOULD_NOT_SLEEP
+	 * Should only be used in extreme circumstances and clearly documented why
+	 */
+	#define ALLOWED_TO_SLEEP(X) set SpacemanDMM_allowed_to_sleep = X
 	/**
 	 * If set, ensure a proc is 'pure', such that it does not make any changes
 	 * outside itself or output. This also checks to make sure anything using
@@ -63,6 +67,7 @@
 	#define SHOULD_CALL_PARENT(X)
 	#define SHOULD_NOT_OVERRIDE(X)
 	#define SHOULD_NOT_SLEEP(X)
+	#define ALLOWED_TO_SLEEP(X)
 	#define SHOULD_BE_PURE(X)
 	#define PRIVATE_PROC(X)
 	#define PROTECTED_PROC(X)
