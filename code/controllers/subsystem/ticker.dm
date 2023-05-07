@@ -16,8 +16,6 @@ SUBSYSTEM_DEF(ticker)
 	var/start_immediately = FALSE
 	/// Boolean to track and check if our subsystem setup is done.
 	var/setup_done = FALSE
-	/// Boolean to delay game setup until at least one player is ready.
-	var/wait_for_players = TRUE
 	/// Did we broadcast at players to hurry up?
 	var/delay_notified = FALSE
 
@@ -142,10 +140,7 @@ SUBSYSTEM_DEF(ticker)
 		var/regex/codeword_match = new("([codewords])", "ig")
 
 		GLOB.syndicate_code_response_regex = codeword_match
-
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
-	if(CONFIG_GET(flag/setup_bypass_player_check))
-		wait_for_players = FALSE
 	if(CONFIG_GET(flag/randomize_shift_time))
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
@@ -182,10 +177,10 @@ SUBSYSTEM_DEF(ticker)
 
 			if(start_immediately)
 				timeLeft = 0
-				wait_for_players = FALSE
+				CONFIG_SET(flag/setup_bypass_player_check, TRUE)
 
 			//countdown
-			if(timeLeft < 0 && !wait_for_players)
+			if(timeLeft < 0 && CONFIG_GET(flag/setup_bypass_player_check))
 				return // 'DELAYED' delayed by an admin
 			timeLeft -= wait
 
@@ -193,7 +188,7 @@ SUBSYSTEM_DEF(ticker)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
-			if(timeLeft <=0 && wait_for_players && !totalPlayersReady)
+			if(timeLeft <= 0 && !CONFIG_GET(flag/setup_bypass_player_check) && !totalPlayersReady)
 				if(!delay_notified)
 					to_chat(world, "<span class='infoplain'><b>Game setup delayed! The game will start when players are ready.</b></span>", confidential = TRUE)
 					SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
