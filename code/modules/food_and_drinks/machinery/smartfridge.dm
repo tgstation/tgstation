@@ -109,7 +109,7 @@
 		if(tool.use_tool(src, user, delay=40, volume=50))
 			if(!(machine_stat & BROKEN))
 				return FALSE
-			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			balloon_alert(user, "repaired")
 			atom_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			update_icon()
