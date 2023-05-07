@@ -814,6 +814,8 @@
 	icon_state = "shieldoff"
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
+	var/list/connected_through_us
+
 /obj/machinery/modular_shield/module/charger
 
 	name = "Modular Shield Charger"
