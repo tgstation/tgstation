@@ -69,9 +69,11 @@
 	if(welded_down)
 		if(!tool.tool_start_check(user, amount=1))
 			return TRUE
-		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
-			span_notice("You start to cut [src] free from the floor..."), \
-			span_hear("You hear welding."))
+		user.visible_message(
+			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("You start to cut [src] free from the floor..."),
+			span_hear("You hear welding."),
+		)
 		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
 			return FALSE
 		welded_down = FALSE
