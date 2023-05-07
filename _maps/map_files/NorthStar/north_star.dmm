@@ -23254,10 +23254,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
-"get" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/floor3/port/aft)
 "geA" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/kirbyplants/random,
@@ -39894,10 +39890,6 @@
 	},
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
-"kEP" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/floor1/starboard/aft)
 "kET" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
@@ -65898,10 +65890,6 @@
 "roo" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/floor3/aft)
-"rov" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/floor4/starboard)
 "roy" = (
 /obj/item/toy/plush/beeplushie{
 	desc = "Maybe hugging this will make you feel better about yourself.";
@@ -142450,7 +142438,7 @@ sKt
 ieM
 jLi
 ieM
-kEP
+sKt
 xqr
 ugV
 xqr
@@ -263533,7 +263521,7 @@ foL
 leY
 piR
 awU
-get
+piR
 fHE
 piR
 mom
@@ -311811,7 +311799,7 @@ mXH
 pSI
 nmc
 xJx
-rov
+nPE
 bvM
 fUk
 rXJ
@@ -312068,7 +312056,7 @@ mKO
 rDL
 fPd
 jha
-rov
+nPE
 xVV
 gsy
 uwf
