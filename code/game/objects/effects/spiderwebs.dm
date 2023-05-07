@@ -101,7 +101,7 @@
 	else if(isprojectile(mover))
 		return prob(30)
 
-/obj/structure/spider/solid
+/obj/structure/spider/stickyweb/solid
 	name = "solid web"
 	icon = 'icons/effects/effects.dmi'
 	desc = "A solid thick wall of web, airtight enough to block air flow."
@@ -111,7 +111,6 @@
 	density = TRUE
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
-	var/override_message
 
 /obj/structure/spider/solid/Initialize(mapload)
 	. = ..()
