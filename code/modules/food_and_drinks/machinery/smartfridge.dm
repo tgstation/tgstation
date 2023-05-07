@@ -117,7 +117,7 @@
 			update_icon()
 			return TRUE
 	else
-		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
+		balloon_alert(user, "no repair needed!")
 		return FALSE
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
