@@ -252,7 +252,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/raw_anomaly_core/random{
+/obj/effect/spawner/random/anomaly_core{
 	pixel_x = -7
 	},
 /obj/machinery/light/small/directional/north,

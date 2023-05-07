@@ -29,10 +29,21 @@
 	var/obj/effect/anomaly/anomaly = .
 	anomaly.stabilize(anchor = anchor_anomaly, has_core = FALSE)
 
+///Spawns an unmoving anomaly that cannot harm the environment (can harm mobs though)
 /obj/effect/spawner/random/environmentally_safe_anomaly/immobile
 	name = "stationary safe anomaly spawner"
 	icon_state = "anomaly_stationary"
 	anchor_anomaly = TRUE
+
+///Spawn a random, ready-to-go, anomaly core. Please use extremely sparingly (if at all)
+/obj/effect/spawner/random/anomaly_core
+	name = "finished anomaly core spawner"
+	icon_state = "anomaly"
+
+/obj/effect/spawner/random/anomaly_core/Initialize(mapload)
+	loot = subtypesof(/obj/item/assembly/signaler/anomaly)
+
+	. = ..()
 
 /obj/item/paper/fluff/ruins/anomaly_research/intro
 	name = "revelation"
