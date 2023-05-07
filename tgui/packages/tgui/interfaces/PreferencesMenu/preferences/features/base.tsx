@@ -3,7 +3,7 @@ import { BooleanLike, classes } from 'common/react';
 import { ComponentType, createComponentVNode, InfernoNode } from 'inferno';
 import { VNodeFlags } from 'inferno-vnode-flags';
 import { sendAct, useBackend, useLocalState } from '../../../../backend';
-import { Box, Button, Dropdown, DropdownWithSwitchButtons, Input, NumberInput, Stack } from '../../../../components';
+import { Box, Button, Dropdown, Input, NumberInput, Stack } from '../../../../components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 
@@ -153,38 +153,14 @@ export const StandardizedDropdown = (props: {
   displayNames: Record<string, InfernoNode>;
   onSetValue: (newValue: string) => void;
   value: string;
+  buttons?: boolean;
 }) => {
-  const { choices, disabled, displayNames, onSetValue, value } = props;
+  const { choices, disabled, buttons, displayNames, onSetValue, value } = props;
 
   return (
     <Dropdown
       disabled={disabled}
-      selected={value}
-      onSelected={onSetValue}
-      width="100%"
-      displayText={displayNames[value]}
-      options={choices.map((choice) => {
-        return {
-          displayText: displayNames[choice],
-          value: choice,
-        };
-      })}
-    />
-  );
-};
-
-export const StandardizedDropdownWithSwitchButtons = (props: {
-  choices: string[];
-  disabled?: boolean;
-  displayNames: Record<string, InfernoNode>;
-  onSetValue: (newValue: string) => void;
-  value: string;
-}) => {
-  const { choices, disabled, displayNames, onSetValue, value } = props;
-
-  return (
-    <DropdownWithSwitchButtons
-      disabled={disabled}
+      buttons={buttons}
       selected={value}
       onSelected={onSetValue}
       width="100%"
@@ -202,6 +178,7 @@ export const StandardizedDropdownWithSwitchButtons = (props: {
 export const FeatureDropdownInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
     disabled?: boolean;
+    buttons?: boolean;
   }
 ) => {
   const serverData = props.serverData;
@@ -222,36 +199,7 @@ export const FeatureDropdownInput = (
     <StandardizedDropdown
       choices={sortStrings(serverData.choices)}
       disabled={props.disabled}
-      displayNames={displayNames}
-      onSetValue={props.handleSetValue}
-      value={props.value}
-    />
-  );
-};
-
-export const FeatureDropdownWithSwitchButtonsInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData> & {
-    disabled?: boolean;
-  }
-) => {
-  const serverData = props.serverData;
-  if (!serverData) {
-    return null;
-  }
-
-  const displayNames =
-    serverData.display_names ||
-    Object.fromEntries(
-      serverData.choices.map((choice) => [
-        choice,
-        capitalizeFirstLetter(choice),
-      ])
-    );
-
-  return (
-    <StandardizedDropdownWithSwitchButtons
-      choices={sortStrings(serverData.choices)}
-      disabled={props.disabled}
+      buttons={props.buttons}
       displayNames={displayNames}
       onSetValue={props.handleSetValue}
       value={props.value}

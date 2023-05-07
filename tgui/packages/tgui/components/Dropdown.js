@@ -8,6 +8,8 @@ import { classes } from 'common/react';
 import { Component } from 'inferno';
 import { Box } from './Box';
 import { Icon } from './Icon';
+import { Stack } from './Stack';
+import { Button } from './Button';
 
 export class Dropdown extends Component {
   constructor(props) {
@@ -74,6 +76,102 @@ export class Dropdown extends Component {
     return ops.length ? ops : 'No Options Found';
   }
 
+  getOptionValue(option) {
+    return typeof option === 'string' ? option : option.value;
+  }
+
+  getOptionsValues() {
+    const { options = [] } = this.props;
+
+    return options.map((option) => {
+      return this.getOptionValue(option);
+    });
+  }
+
+  getSelectedIndex() {
+    const selected = this.state.selected;
+    const { options = [] } = this.props;
+
+    let selectedIndex;
+    options.forEach((option, index) => {
+      let value = this.getOptionValue(option);
+
+      if (value === selected) {
+        selectedIndex = index;
+      }
+    });
+
+    return selectedIndex;
+  }
+
+  hasSwitchToPrevious() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
+    const opts = this.getOptionsValues();
+
+    const previous = opts[previousIndex];
+
+    return previous !== undefined;
+  }
+
+  switchToPrevious() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return;
+    }
+
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
+    const opts = this.getOptionsValues();
+
+    const previous = opts[previousIndex];
+
+    if (previous === undefined) {
+      return;
+    }
+
+    this.setSelected(previous);
+  }
+
+  hasSwitchToNext() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
+    const opts = this.getOptionsValues();
+
+    const next = opts[nextIndex];
+
+    return next !== undefined;
+  }
+
+  switchToNext() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return;
+    }
+
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
+    const opts = this.getOptionsValues();
+
+    const next = opts[nextIndex];
+
+    if (next === undefined) {
+      return;
+    }
+
+    this.setSelected(next);
+  }
+
   render() {
     const { props } = this;
     const {
@@ -93,6 +191,7 @@ export class Dropdown extends Component {
       selected,
       disabled,
       displayText,
+      buttons,
       ...boxProps
     } = props;
     const { className, ...rest } = boxProps;
@@ -117,45 +216,86 @@ export class Dropdown extends Component {
     ) : null;
 
     return (
-      <div className="Dropdown" style={dropdownStyle}>
-        <Box
-          width={this.state.open ? openWidth : width}
-          className={classes([
-            'Dropdown__control',
-            'Button',
-            'Button--color--' + color,
-            disabled && 'Button--disabled',
-            className,
-          ])}
-          {...rest}
-          onClick={(event) => {
-            if (disabled && !this.state.open) {
-              return;
-            }
-            this.setOpen(!this.state.open);
+      <Stack fill>
+        <Stack.Item width={this.state.open ? openWidth : width}>
+          <div className="Dropdown" style={dropdownStyle}>
+            <Box
+              width={'100%'}
+              className={classes([
+                'Dropdown__control',
+                'Button',
+                'Button--color--' + color,
+                disabled && 'Button--disabled',
+                className,
+              ])}
+              {...rest}
+              onClick={(event) => {
+                if (disabled && !this.state.open) {
+                  return;
+                }
+                this.setOpen(!this.state.open);
 
-            if (props.onOpen) {
-              props.onOpen(event);
-            }
-          }}>
-          {icon && (
-            <Icon name={icon} rotation={iconRotation} spin={iconSpin} mr={1} />
-          )}
-          <span
-            className="Dropdown__selected-text"
-            style={{
-              'overflow': clipSelectedText ? 'hidden' : 'visible',
-            }}>
-            {displayText ? displayText : this.state.selected}
-          </span>
-          {!!nochevron || (
-            <span className="Dropdown__arrow-button">
-              <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-            </span>
-          )}
-        </Box>
-        {menu}
-      </div>
+                if (props.onOpen) {
+                  props.onOpen(event);
+                }
+              }}>
+              {icon && (
+                <Icon
+                  name={icon}
+                  rotation={iconRotation}
+                  spin={iconSpin}
+                  mr={1}
+                />
+              )}
+              <span
+                className="Dropdown__selected-text"
+                style={{
+                  'overflow': clipSelectedText ? 'hidden' : 'visible',
+                }}>
+                {displayText ? displayText : this.state.selected}
+              </span>
+              {!!nochevron || (
+                <span className="Dropdown__arrow-button">
+                  <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+                </span>
+              )}
+            </Box>
+            {menu}
+          </div>
+        </Stack.Item>
+        {buttons && (
+          <Stack.Item height={'100%'}>
+            <Button
+              height={'100%'}
+              content="<"
+              disabled={disabled || !this.hasSwitchToPrevious()}
+              onClick={() => {
+                if (disabled || !this.hasSwitchToPrevious()) {
+                  return;
+                }
+
+                this.switchToPrevious();
+              }}
+            />
+          </Stack.Item>
+        )}
+        {buttons && (
+          <Stack.Item height={'100%'}>
+            <Button
+              height={'100%'}
+              content=">"
+              disabled={disabled || !this.hasSwitchToNext()}
+              onClick={() => {
+                if (disabled || !this.hasSwitchToNext()) {
+                  return;
+                }
+
+                this.switchToNext();
+              }}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
     );
   }
 }
