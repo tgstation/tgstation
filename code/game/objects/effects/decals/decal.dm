@@ -8,7 +8,7 @@
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
 	if(turf_loc_check && NeverShouldHaveComeHere(loc))
-		stack_trace("[name] found in a non-turf or illegitimate turf/wall at [AREACOORD(src)] in \the [get_area(src)].")
+		stack_trace("[name] spawned in a wall ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. Please remove it or set turf_loc_check to FALSE on the decal if intended.")
 		return INITIALIZE_HINT_QDEL
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_CHANGED = PROC_REF(handle_turf_change),

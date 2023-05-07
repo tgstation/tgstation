@@ -11449,10 +11449,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
-"cRw" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/security/prison/garden)
 "cRA" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -43734,10 +43730,6 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/port/fore)
-"lDM" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/medical/storage)
 "lDW" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -65837,10 +65829,6 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
-"rnu" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/security/prison)
 "rnv" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -192873,7 +192861,7 @@ mjA
 mjA
 lcr
 lqz
-lDM
+nUa
 ybG
 aal
 aal
@@ -193644,7 +193632,7 @@ kyq
 laO
 ldG
 lsX
-lDM
+nUa
 ybG
 aal
 aal
@@ -326766,7 +326754,7 @@ jVK
 ozO
 ozO
 ozO
-rnu
+ozO
 ozO
 xXd
 qry
@@ -329331,7 +329319,7 @@ wMF
 xTF
 kDz
 icn
-cRw
+wQo
 uEF
 uEF
 oiw
@@ -329588,7 +329576,7 @@ wMF
 wMF
 ttw
 oEB
-cRw
+wQo
 tun
 mSN
 siT

@@ -21042,10 +21042,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
-"ggt" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/disposal)
 "ggw" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
@@ -46057,7 +46053,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/openspace,
+/turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "pum" = (
 /obj/effect/turf_decal/sand/plating,
@@ -118879,7 +118875,7 @@ aac
 vle
 gqc
 vYW
-ggt
+vle
 mbQ
 vle
 xSG

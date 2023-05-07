@@ -37352,10 +37352,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/maintenance/solars/starboard/fore)
-"nJf" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/central)
 "nJm" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -98341,7 +98337,7 @@ stX
 wiT
 wgL
 tLt
-nJf
+sSQ
 aTc
 frB
 sSQ

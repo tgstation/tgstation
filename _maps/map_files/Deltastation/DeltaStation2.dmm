@@ -500,10 +500,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
-"afF" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/cargo/warehouse)
 "afG" = (
 /obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 8
@@ -28598,11 +28594,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
-"heP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/port/aft)
 "heT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -45330,10 +45321,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"llz" = (
-/obj/effect/decal/cleanable/oil,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "llB" = (
 /obj/structure/cable,
 /obj/structure/chair/stool/bar/directional/west,
@@ -53821,10 +53808,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"nxl" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/cargo/sorting)
 "nxn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -68851,10 +68834,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
-"rmf" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/port/aft)
 "rmh" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/stripes/line{
@@ -116945,7 +116924,7 @@ imQ
 gpy
 rVD
 gAw
-llz
+gAw
 meL
 ehD
 nEO
@@ -128818,7 +128797,7 @@ iLH
 hcW
 wnY
 wwP
-heP
+kzc
 amy
 aKp
 qSJ
@@ -129335,8 +129314,8 @@ djT
 kzc
 kzc
 kzc
-rmf
-rmf
+kzc
+kzc
 kff
 vLB
 tTg
@@ -139016,7 +138995,7 @@ yfI
 bGf
 kGo
 sCW
-nxl
+xhW
 ygL
 xhW
 sLK
@@ -139767,7 +139746,7 @@ lDi
 kRn
 kjl
 lDi
-afF
+lDi
 sLg
 bqv
 hDZ

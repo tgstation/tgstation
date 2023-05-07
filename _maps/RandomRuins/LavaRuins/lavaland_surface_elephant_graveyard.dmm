@@ -99,10 +99,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
-"bV" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/ruin/unpowered/elephant_graveyard)
 "bW" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1342,7 +1338,7 @@ ac
 ac
 NO
 dr
-bV
+ac
 ac
 ac
 "}
