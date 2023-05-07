@@ -218,6 +218,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 
 /client/New(TopicData)
+	ALLOWED_TO_SLEEP(TRUE) // Influences the checking of /datum/New() (which doesn't exist in our codebase)
+
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
 
