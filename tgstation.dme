@@ -3950,7 +3950,6 @@
 #include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spider_variants.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\hivemind.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\lay_eggs.dm"
-#include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\solid_web.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\sticky_web.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\web.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\web_passage.dm"
