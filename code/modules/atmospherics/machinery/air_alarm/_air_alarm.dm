@@ -602,6 +602,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	RegisterSignal(connected_sensor, COMSIG_PARENT_QDELETING, PROC_REF(disconnect_sensor))
 	my_area = get_area(connected_sensor)
 	update_name()
+	check_danger()
 
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
@@ -609,3 +610,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	connected_sensor = null
 	my_area = get_area(src)
 	update_name()
+	check_danger()
