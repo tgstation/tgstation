@@ -205,8 +205,7 @@
 		component_parts.Cut()
 		component_parts = null
 
-	if(!isnull(circuit))
-		QDEL_NULL(circuit)
+	QDEL_NULL(circuit)
 
 	unset_static_power()
 	return ..()
@@ -826,7 +825,6 @@
 					new stack_path(loc, board.req_components[component])
 
 	LAZYCLEARLIST(component_parts)
-	circuit = null
 	return ..()
 
 /**
