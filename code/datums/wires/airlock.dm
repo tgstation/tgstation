@@ -201,7 +201,7 @@
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
 			A.autoclose = mend
 			if(A.autoclose && !A.density)
-				A.close()
+				INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close))
 		if(WIRE_LIGHT) // Cut to disable lights, mend to re-enable.
 			A.lights = mend
 			A.update_appearance()
