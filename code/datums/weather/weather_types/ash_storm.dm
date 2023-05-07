@@ -57,10 +57,6 @@
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/end()
-	GLOB.ash_storm_sounds -= weak_sounds
-	return ..()
-
 /datum/weather/ash_storm/can_weather_act(mob/living/mob_to_check)
 	. = ..()
 	if(!. || !ishuman(mob_to_check))
@@ -74,6 +70,7 @@
 
 /datum/weather/ash_storm/end()
 	. = ..()
+	GLOB.ash_storm_sounds -= weak_sounds
 	for(var/turf/open/misc/asteroid/basalt/basalt as anything in GLOB.dug_up_basalt)
 		if(!(basalt.loc in impacted_areas) || !(basalt.z in impacted_z_levels))
 			continue

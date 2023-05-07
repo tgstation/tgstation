@@ -158,10 +158,10 @@
 		return
 	if(mapload)
 		for (var/i = 1, i < range, i++)
-			new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 			var/turf/turf_sending = get_step(src, direction)
 			if(isclosedturf(turf_sending) || isgroundlessturf(turf_sending))
 				continue
+			new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 			if (!step_to(src, turf_sending, 0))
 				break
 		return

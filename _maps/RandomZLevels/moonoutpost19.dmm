@@ -3137,9 +3137,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/east,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},

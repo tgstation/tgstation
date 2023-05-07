@@ -2395,9 +2395,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Mm" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Mp" = (

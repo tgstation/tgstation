@@ -1599,7 +1599,6 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "jT" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/main)

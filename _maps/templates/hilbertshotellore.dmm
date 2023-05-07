@@ -7,10 +7,7 @@
 /area/misc/hilbertshotel)
 "ac" = (
 /obj/structure/table/wood/fancy,
-/obj/structure/mirror/directional/north{
-	broken = 1;
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/north,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "ad" = (

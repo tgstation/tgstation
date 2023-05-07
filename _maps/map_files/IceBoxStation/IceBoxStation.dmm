@@ -10877,9 +10877,7 @@
 /area/station/ai_monitored/security/armory)
 "dqd" = (
 /obj/machinery/iv_drip,
-/obj/structure/mirror/directional/north{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "dqg" = (
@@ -24584,9 +24582,7 @@
 	icon_state = "medium"
 	},
 /obj/item/circuitboard/computer/operating,
-/obj/structure/mirror/directional/north{
-	icon_state = "mirror_broke"
-	},
+/obj/structure/mirror/broken/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "hSl" = (
