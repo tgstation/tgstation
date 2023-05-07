@@ -86,6 +86,7 @@
 		span_notice("You start to weld [src] to the floor..."), \
 		span_hear("You hear welding."))
 	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		balloon_alert(user, "cancelled!")
 		return FALSE
 	welded_down = TRUE
 	to_chat(user, span_notice("You weld [src] to the floor."))
