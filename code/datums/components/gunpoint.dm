@@ -36,7 +36,7 @@
 	target = targ
 	weapon = wep
 
-	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), PROC_REF(trigger_reaction))
+	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN, COMSIG_MOVABLE_SET_GRAB_STATE, COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
