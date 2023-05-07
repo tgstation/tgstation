@@ -146,7 +146,7 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "bI" = (
@@ -198,9 +198,7 @@
 /area/shuttle/voidcrew/osprey/engineering)
 "cc" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner/west{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/light/small{
 	dir = 1
@@ -325,7 +323,7 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 1
 	},
@@ -382,8 +380,8 @@
 	dir = 1
 	},
 /obj/machinery/griddle,
-/obj/structure/window/spawner/north,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/voidcrew/osprey/service/cafeteria)
 "dy" = (
@@ -422,8 +420,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/osprey/bridge)
 "dZ" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
@@ -1406,7 +1404,7 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/power/smes/engineering{
 	dir = 1
 	},
@@ -2672,9 +2670,7 @@
 /area/shuttle/voidcrew/osprey/maintenance/port)
 "zF" = (
 /obj/structure/closet/secure_closet/quartermaster,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3347,7 +3343,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
 	},
@@ -3816,8 +3812,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/osprey/service/dormitories)
 "KN" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
@@ -3878,8 +3874,8 @@
 	dir = 1;
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "LB" = (
@@ -4028,7 +4024,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/osprey/service/dormitories)
 "Nb" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/port)
 "Ng" = (
@@ -4121,7 +4117,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/voidcrew/osprey/service/cafeteria)
 "NX" = (
@@ -4265,15 +4261,15 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "PC" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "PL" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "PU" = (
@@ -4855,10 +4851,8 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -4932,8 +4926,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/voidcrew/osprey/service/cafeteria)
 "Xi" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},

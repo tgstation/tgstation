@@ -21,7 +21,7 @@
 /area/shuttle/voidcrew/blackbeard/hallway/aft)
 "aP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/blackbeard/engineering)
 "aS" = (
@@ -74,9 +74,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/blackbeard/hallway/aft)
 "cu" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/blackbeard/medbay)
 "du" = (
@@ -119,7 +117,7 @@
 "em" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/voidcrew/blackbeard/engineering)
 "en" = (
@@ -149,7 +147,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/blackbeard/hallway/aft)
 "fX" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -179,9 +177,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/voidcrew/blackbeard/cargo)
 "iH" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -417,7 +413,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/blackbeard/bridge)
 "wm" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -825,9 +821,9 @@
 "Rt" = (
 /obj/machinery/atmospherics/miner/plasma,
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/blackbeard/engineering)
 "RD" = (

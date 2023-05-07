@@ -325,10 +325,10 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/service/quarters)
 "hQ" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/biogenerator,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee/service/hydroponics)
@@ -519,7 +519,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/cargo)
 "me" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -842,7 +842,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/bogardee/service/bar)
 "vD" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/shower/directional/south,
 /obj/structure/curtain,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -905,7 +905,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "xj" = (
@@ -1268,8 +1268,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee/maintenance)
 "Eo" = (
@@ -1758,7 +1758,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/service/kitchen)
 "Qh" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
@@ -2067,8 +2067,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/bogardee/cargo)
 "XS" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
@@ -2146,7 +2146,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/bogardee/service/bar)
 "ZX" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/left/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 8

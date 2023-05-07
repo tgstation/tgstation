@@ -9,8 +9,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/resistance/ordnance)
 "bm" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
@@ -29,7 +29,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/resistance/ordnance)
 "cB" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
 /obj/item/assembly/infra,
 /obj/item/assembly/infra,
@@ -43,8 +43,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/resistance/ordnance/chemistry)
 "dE" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
@@ -132,7 +132,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/resistance/ordnance/storage)
 "kv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
@@ -150,7 +150,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -457,8 +457,8 @@
 /turf/closed/wall,
 /area/shuttle/voidcrew/resistance/maintenance)
 "DZ" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
 /obj/item/assembly/igniter,
 /obj/item/assembly/igniter,
@@ -494,7 +494,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/resistance/maintenance)
 "Fu" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
 /obj/item/storage/belt/utility/full/engi,
 /obj/item/storage/belt/utility/full/engi,
@@ -610,7 +610,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/resistance/maintenance)
 "Mu" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/assembly/voice,
 /obj/item/assembly/voice,
@@ -674,8 +674,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/resistance/cargo)
 "PN" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
@@ -759,7 +759,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,

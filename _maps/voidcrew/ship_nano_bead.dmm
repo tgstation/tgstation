@@ -28,7 +28,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bead/maintenance/aft)
@@ -87,8 +87,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bead/maintenance/aft)
 "gg" = (
@@ -1024,9 +1024,9 @@
 /turf/open/floor/iron/textured,
 /area/shuttle/voidcrew/bead/cargo)
 "TG" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/bed,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/head/soft/orange,

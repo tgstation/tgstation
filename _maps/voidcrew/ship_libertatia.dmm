@@ -192,10 +192,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/voidcrew/libertatia/bridge)
 "jD" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/right/directional/north{
 	name = "Engine Access"
 	},
@@ -552,10 +550,8 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/libertatia/crew_lounge)
 "vz" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	name = "Engine Access"
 	},
@@ -658,19 +654,11 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/voidcrew/libertatia/crew_lounge)
-"Aq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/libertatia/crew_lounge)
 "AL" = (
 /obj/structure/table,
@@ -843,9 +831,7 @@
 	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
@@ -1015,10 +1001,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/libertatia/cargo_bay)
 "Ll" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/right/directional/north{
 	name = "Engine Access"
 	},
@@ -1176,10 +1160,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/voidcrew/libertatia/maintenance/port)
 "Rn" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	name = "Engine Access"
 	},
@@ -1698,7 +1680,7 @@ sv
 tZ
 vx
 xv
-Aq
+xv
 Cg
 xv
 FH

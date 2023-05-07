@@ -45,9 +45,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -255,7 +253,7 @@
 /area/shuttle/voidcrew/dwayne/medbay)
 "hK" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -718,9 +716,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -964,8 +960,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/dwayne/engineering)
 "CO" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},

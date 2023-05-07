@@ -94,7 +94,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/spitfire/dormitories)
 "gI" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
 /obj/item/storage/box/syringes,
@@ -116,9 +116,7 @@
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/regular,
 /obj/item/defibrillator/compact/loaded,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
@@ -374,7 +372,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/spitfire/bridge)
 "rj" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/spitfire/maintenance)
@@ -773,7 +771,7 @@
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/syringe,
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
@@ -841,7 +839,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/spitfire/cargo_bay)
 "KM" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/spitfire/hallway)
@@ -901,8 +899,7 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8;
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
 	layer = 3
 	},
 /obj/structure/table/glass,
@@ -982,7 +979,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/voidcrew/spitfire/bridge)
 "SE" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/spitfire/cargo_bay)
@@ -998,7 +995,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/spitfire/medbay)
 "Tu" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
@@ -1024,7 +1021,7 @@
 /obj/machinery/smartfridge/chemistry,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/anticorner,
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/spitfire/medbay)
 "Ud" = (
@@ -1157,9 +1154,7 @@
 /obj/item/storage/bag/chemistry,
 /obj/item/storage/box/bodybags,
 /obj/machinery/door/window/survival_pod,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/spitfire/medbay)
 "Zw" = (

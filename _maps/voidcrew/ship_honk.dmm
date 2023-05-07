@@ -53,7 +53,7 @@
 "hn" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "hv" = (
@@ -62,7 +62,7 @@
 /area/shuttle/voidcrew/honk/bridge)
 "hx" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "iN" = (
@@ -70,7 +70,7 @@
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "kz" = (
@@ -143,7 +143,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/honk/supermatter)
@@ -197,7 +197,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "xf" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "xT" = (
@@ -260,12 +260,12 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "CJ" = (
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "Do" = (
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "Dt" = (
@@ -288,12 +288,8 @@
 /turf/open/floor/light,
 /area/shuttle/voidcrew/honk/supermatter)
 "EC" = (
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/door/window,
 /obj/structure/table/wood/fancy,
 /obj/item/dnainjector/timed/h2m,
@@ -419,7 +415,7 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/voidcrew/honk/supermatter)
 "LW" = (
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
@@ -480,7 +476,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "Pt" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "Pz" = (
@@ -516,9 +512,7 @@
 /obj/item/mod/control/pre_equipped/cosmohonk,
 /obj/item/pickaxe/drill,
 /obj/item/storage/bag/ore,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
@@ -673,7 +667,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "Ur" = (
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,

@@ -137,7 +137,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/equipment)
 "dr" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -148,7 +148,7 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hyena/maintenance/starboard)
 "dA" = (
@@ -239,8 +239,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hyena/maintenance/port)
@@ -376,7 +376,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/voidcrew/hyena/bridge/foreman)
 "ir" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -387,7 +387,7 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Engine Access"
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hyena/maintenance/port)
 "iu" = (
@@ -413,7 +413,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/dorms/commons)
 "iQ" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -466,8 +466,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hyena/maintenance/starboard)
@@ -1389,7 +1389,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "FU" = (
@@ -1438,7 +1438,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "HT" = (
@@ -1467,7 +1467,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/maintenance/port)
 "Ik" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "Iz" = (
@@ -1586,7 +1586,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "KQ" = (
@@ -1902,7 +1902,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "SP" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -1977,7 +1977,7 @@
 /obj/structure/curtain,
 /obj/structure/toilet,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/voidcrew/hyena/dorms)
 "Vv" = (
@@ -2233,7 +2233,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/hyena/cargo_bay)
 "Zn" = (

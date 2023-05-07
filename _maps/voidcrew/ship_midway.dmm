@@ -17,9 +17,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/midway/engineering)
 "aC" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -164,8 +162,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/atmospherics)
 "fD" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -280,8 +278,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/dorms)
 "kf" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/atmospherics)
 "ki" = (
@@ -409,7 +407,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/midway/engineering/storage)
 "nJ" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 5
 	},
@@ -423,14 +421,14 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/dorms)
 "oC" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/atmospherics)
 "pj" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 8
@@ -438,7 +436,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/atmospherics)
 "pl" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/atmospherics)
@@ -1113,9 +1111,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/midway/cargo/mining)
 "ND" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -1140,7 +1136,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/dorms)
 "Or" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/trinary/mixer/airmix{
 	dir = 8
 	},
@@ -1522,7 +1518,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/midway/dorms)
 "Wy" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -1626,7 +1622,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/voidcrew/midway/engineering/storage)
 "Zv" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Air to Distro"
 	},

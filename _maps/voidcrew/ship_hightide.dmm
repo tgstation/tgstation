@@ -33,8 +33,8 @@
 /area/shuttle/voidcrew/hightide/maintenance/cargo)
 "bn" = (
 /obj/structure/girder/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance/port)
 "bA" = (
@@ -133,8 +133,8 @@
 /area/shuttle/voidcrew/hightide/maintenance)
 "ee" = (
 /obj/structure/girder/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance/cargo)
 "ey" = (
@@ -176,8 +176,8 @@
 /area/shuttle/voidcrew/hightide/maintenance/cargo)
 "gz" = (
 /obj/structure/girder/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance/kitchen)
 "gL" = (
@@ -552,8 +552,8 @@
 /area/shuttle/voidcrew/hightide/maintenance/port)
 "wZ" = (
 /obj/structure/girder/reinforced,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance)
@@ -990,8 +990,8 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance)
 "RR" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/girder/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -1033,7 +1033,7 @@
 /area/shuttle/voidcrew/hightide/maintenance/starboard)
 "TV" = (
 /obj/structure/girder/reinforced,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance/cargo)

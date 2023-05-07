@@ -482,7 +482,7 @@
 	name = "\proper the archmagus's legacy"
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/lamia/cargo)
 "bQ" = (
@@ -1384,7 +1384,7 @@
 /obj/item/radio,
 /obj/item/radio,
 /obj/item/radio,
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/lamia/cargo)
 "Py" = (

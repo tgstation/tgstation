@@ -16,9 +16,7 @@
 /area/shuttle/voidcrew/high/bridge/reception)
 "aG" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "corpseclockdown"
 	},
@@ -103,7 +101,7 @@
 /turf/open/floor/carpet/stellar,
 /area/shuttle/voidcrew/high/bridge/boardroom)
 "cq" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Air to Distro"
 	},
@@ -258,7 +256,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/high/cargo_bay)
 "fc" = (
@@ -295,7 +293,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/high/bridge/captain)
 "fU" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/air,
 /area/shuttle/voidcrew/high/engineering)
 "fV" = (
@@ -473,12 +471,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/high/engineering)
 "ji" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/air_input,
 /turf/open/floor/engine/air,
 /area/shuttle/voidcrew/high/engineering)
 "jq" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input,
 /turf/open/floor/engine/o2,
 /area/shuttle/voidcrew/high/engineering)
@@ -839,7 +837,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/high/bridge/reception)
 "sk" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/high/engineering)
@@ -1359,7 +1357,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/high/bridge/reception)
 "Bc" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "O2 to Airmix"
 	},
@@ -1445,7 +1443,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/high/engineering)
 "CJ" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "N2 to Airmix"
 	},
@@ -1551,7 +1549,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/high/cargo_bay)
 "FF" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/high/engineering)
@@ -1999,7 +1997,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/computer/voidcrew_cargo{
 	dir = 1
 	},
@@ -2201,7 +2199,7 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/high/cargo_bay)
 "QX" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/o2,
 /area/shuttle/voidcrew/high/engineering)
 "Rh" = (
@@ -2328,7 +2326,7 @@
 /turf/open/floor/carpet/stellar,
 /area/shuttle/voidcrew/high/bridge/boardroom)
 "UB" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/high/engineering)
 "UO" = (
@@ -2482,7 +2480,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/high/cargo_bay)
 "Yn" = (

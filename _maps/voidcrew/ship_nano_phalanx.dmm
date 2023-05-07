@@ -136,9 +136,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
 "bU" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/secure_closet/contraband,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security/armory)
@@ -462,8 +460,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
 "fy" = (
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input,
 /turf/open/floor/engine/o2,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
@@ -692,8 +690,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/kitchen)
 "jb" = (
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input,
 /turf/open/floor/engine/n2,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
@@ -722,9 +720,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/phalanx/cafeteria)
 "jx" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
@@ -755,8 +751,8 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
 "jG" = (
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output,
 /turf/open/floor/engine/o2,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
@@ -787,9 +783,7 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
 "kc" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/displaycase/captain,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/phalanx/bridge/captain)
@@ -835,9 +829,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/aft)
 "kx" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
@@ -879,9 +871,7 @@
 /area/shuttle/voidcrew/phalanx/engineering/storage)
 "kR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/voidcrew/phalanx/medbay)
@@ -902,9 +892,7 @@
 /area/shuttle/voidcrew/phalanx/engineering/storage)
 "lq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/voidcrew/phalanx/medbay)
@@ -1006,9 +994,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/phalanx/chapel)
 "nh" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/stasis{
 	dir = 4
 	},
@@ -1264,9 +1250,7 @@
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
@@ -1301,9 +1285,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/phalanx/dorms)
 "rx" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/secure_closet/evidence,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security)
@@ -1317,9 +1299,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/cargo)
 "rK" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/vending/medical,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
@@ -1365,9 +1345,7 @@
 /turf/open/floor/carpet/executive,
 /area/shuttle/voidcrew/phalanx/bridge)
 "sj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security)
@@ -1467,9 +1445,7 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security)
 "ui" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/bombcloset/security,
@@ -1618,7 +1594,7 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
 "wo" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -1810,9 +1786,7 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/shuttle/voidcrew/phalanx/kitchen)
 "yS" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
@@ -1938,9 +1912,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/phalanx/medbay/morgue)
 "AI" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/glass,
 /obj/item/screwdriver,
 /obj/item/stack/cable_coil,
@@ -2048,16 +2020,12 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/phalanx/nanites)
 "CQ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/secure_closet/warden,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security/armory)
 "CR" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/stasis{
 	dir = 8
 	},
@@ -2079,7 +2047,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/phalanx/kitchen)
 "CY" = (
@@ -2103,8 +2071,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/phalanx/security/armory)
 "Dr" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
 "Ds" = (
@@ -2226,9 +2194,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
 "EZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
@@ -2253,9 +2219,7 @@
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/engineering/storage)
 "Fg" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
@@ -2372,9 +2336,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/central)
 "GS" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
@@ -2540,9 +2502,7 @@
 /area/shuttle/voidcrew/phalanx/nanites)
 "Kj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/dropper,
 /obj/item/clothing/glasses/science,
@@ -2574,8 +2534,8 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/aft)
 "KB" = (
-/obj/structure/window/reinforced/plasma,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrogen_output,
 /turf/open/floor/engine/n2,
 /area/shuttle/voidcrew/phalanx/engineering/atmospherics)
@@ -2714,9 +2674,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/cargo/mining)
 "MA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/voidcrew/phalanx/medbay/storage)
 "MS" = (
@@ -2791,9 +2749,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/phalanx/chapel/office)
 "Oh" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/secure_closet/security,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security)
@@ -2859,9 +2815,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
 "Pc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/security,
@@ -3060,9 +3014,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/hallway/aft)
 "SE" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/secure_closet/armory3,
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/phalanx/security/armory)
@@ -3134,7 +3086,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/phalanx/cargo/mining)
 "TT" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/phalanx/engineering)
@@ -3354,9 +3306,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/phalanx/medbay/morgue)
 "XB" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/phalanx/bridge/captain)
 "XJ" = (

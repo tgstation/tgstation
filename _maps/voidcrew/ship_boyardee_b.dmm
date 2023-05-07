@@ -33,8 +33,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "ce" = (
@@ -316,7 +316,7 @@
 /area/shuttle/voidcrew/bogardee_b/armory)
 "kD" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/gun/energy/laser/retro,
 /obj/item/gun/energy/laser/retro,
 /obj/item/gun/energy/laser/retro,
@@ -433,7 +433,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/voidcrew/bogardee_b/cargo)
 "me" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/power/smes/engineering{
 	dir = 4
 	},
@@ -789,8 +789,8 @@
 /obj/item/storage/medkit/advanced,
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/tactical,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/left/directional/north,
 /obj/item/holosign_creator/medical,
 /obj/structure/cable,
@@ -820,7 +820,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/bogardee_b/maintenance)
 "xO" = (
@@ -1214,7 +1214,7 @@
 /area/shuttle/voidcrew/bogardee_b/service/bar)
 "Jy" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/gun/ballistic/automatic/pistol,
 /obj/item/gun/ballistic/automatic/pistol,
 /obj/item/ammo_box/c38,
@@ -1370,8 +1370,8 @@
 /area/shuttle/voidcrew/bogardee_b/service/bar)
 "Pd" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/right/directional/north,
 /obj/item/gun/energy/laser/scatter,
 /obj/item/gun/energy/taser,
@@ -1483,8 +1483,8 @@
 "RH" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/left/directional/north,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,

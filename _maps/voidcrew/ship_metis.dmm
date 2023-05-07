@@ -28,8 +28,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "aT" = (
@@ -272,7 +272,7 @@
 	name = "Metis Ship Fax Machine";
 	fax_name = "Metis Fax"
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
@@ -465,8 +465,8 @@
 /area/shuttle/voidcrew/metis/science)
 "jq" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/structure/statue/gold/rd,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
@@ -633,7 +633,7 @@
 /area/shuttle/voidcrew/metis/engineering)
 "mL" = (
 /obj/machinery/suit_storage_unit/rd,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "mM" = (
@@ -1572,7 +1572,7 @@
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Fk" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/l3closet/scientist,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
@@ -1932,7 +1932,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/robotics)
 "Lo" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/template_noop)

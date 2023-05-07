@@ -234,9 +234,7 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/shuttle/voidcrew/geneva/dorms)
 "fF" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/machinery/medical_kiosk,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/geneva/medbay)
@@ -762,9 +760,7 @@
 /turf/open/floor/circuit,
 /area/shuttle/voidcrew/geneva/engineering)
 "vP" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/closet/secure_closet{
 	icon_state = "med_secure";
 	name = "student's locker"
@@ -783,9 +779,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/geneva/medbay)
 "vZ" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/closet/secure_closet{
 	icon_state = "med_secure";
 	name = "student's locker"
@@ -1134,7 +1128,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/geneva/medbay/paramedic)
 "Dl" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
@@ -1142,7 +1136,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/geneva/engineering)
 "Dm" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
@@ -1220,7 +1214,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/geneva/medbay)
 "Ge" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
@@ -1451,9 +1445,7 @@
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/geneva/bridge/cmo)
 "YX" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/geneva/medbay)

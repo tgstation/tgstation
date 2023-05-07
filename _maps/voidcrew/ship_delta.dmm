@@ -498,9 +498,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/delta/cafe)
 "bh" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/frame/computer{
 	anchored = 1;
 	dir = 8
@@ -519,9 +517,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/delta/cafe)
 "bi" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/girder/displaced,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/item/stack/rods,
@@ -573,9 +569,7 @@
 "bp" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/iron,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/voidcrew/delta/cafe)
 "bq" = (
@@ -1835,9 +1829,7 @@
 /turf/open/floor/circuit,
 /area/shuttle/voidcrew/delta/engineering)
 "lG" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -1979,8 +1971,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/delta/cargo)
 "vk" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
@@ -1994,9 +1986,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/delta/engineering)
 "wo" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engine Access"
@@ -2167,7 +2157,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/delta/medbay)
 "XZ" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4

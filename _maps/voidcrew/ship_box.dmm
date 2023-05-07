@@ -68,7 +68,7 @@
 /turf/open/floor/iron,
 /area/shuttle/voidcrew/box/cargo)
 "as" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/fueled_engine_heater{
 	dir = 8
 	},
@@ -395,7 +395,7 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Equipment Storage"
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
 	pixel_x = 8;
 	pixel_y = 8
@@ -938,7 +938,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/box/cargo)
 "dm" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/clothing/glasses/hud/health/sunglasses,
 /obj/item/retractor/advanced,
@@ -953,8 +953,8 @@
 /obj/item/pen{
 	pixel_x = 4
 	},
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/box/crew_quarters)
@@ -1026,13 +1026,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/box/medbay)
-"fW" = (
-/obj/structure/cable,
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/box/engine)
 "gh" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1253,7 +1246,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/box/medbay)
 "BE" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering{
@@ -1725,7 +1718,7 @@ aa
 aa
 aS
 aF
-fW
+bl
 bq
 aS
 OD

@@ -404,7 +404,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/voidcrew/luxembourg/bridge)
 "iR" = (
@@ -652,7 +652,7 @@
 /area/shuttle/voidcrew/luxembourg/engineering)
 "qg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "qP" = (
@@ -700,7 +700,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/luxembourg/cargo)
 "rV" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 4
 	},
@@ -797,7 +797,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/luxembourg/cargo/mining)
 "uK" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/engine/plasma,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "uO" = (
@@ -891,7 +891,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "wE" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "wN" = (
@@ -902,7 +902,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/medbay)
 "wT" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
 	dir = 8
 	},
@@ -1274,7 +1274,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/luxembourg/cargo/mining)
 "LU" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine/air,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "Mi" = (
@@ -1477,7 +1477,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/luxembourg/engineering)
 "RV" = (
