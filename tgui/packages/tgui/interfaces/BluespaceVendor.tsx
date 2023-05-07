@@ -177,7 +177,7 @@ const GasDisplay = (props: GasDisplayProps, context) => {
           maxValue={gasMax}
         />
       </TableCell>
-      <TableCell collapsing textAlign="right">
+      <TableCell collapsing color="label" textAlign="right">
         {toFixed(amount, 2)}
       </TableCell>
       <TableCell collapsing textAlign="center">
