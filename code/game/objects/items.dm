@@ -639,7 +639,6 @@
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
-		owner.balloon_alert_to_viewers("blocked!")
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, TRUE)
 		return TRUE
 
