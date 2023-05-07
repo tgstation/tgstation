@@ -1,15 +1,20 @@
+
 export const LANGUAGES = {
-  English: 'EN',
-  Russian: 'RU',
+  English: 'en',
+  Russian: 'ru',
 };
 
-export const i18n = (translations) => {
-  const fallbackLang = LANGUAGES.English;
-  let currentLang = LANGUAGES.Russian;
-
-  const changeLanguage = (newLang) => {
-    currentLang = newLang;
+export const languagesDropdownOptions = Object.entries(LANGUAGES).map(([key, value]) => {
+  return {
+    displayText: key,
+    value: value,
   };
+});
+
+const fallbackLang = LANGUAGES.English;
+
+export const i18n = (translations) => {
+  const currentLang = localStorage.getItem('language');
 
   const t = (stringName, values = {}) => {
     const rawString = translations[stringName][currentLang] || translations[stringName][fallbackLang];
@@ -19,7 +24,7 @@ export const i18n = (translations) => {
   const plural = (stringName, values = {}) => {
     const validLanguage = translations[stringName][currentLang] ? currentLang : fallbackLang;
 
-    if (typeof translations[stringName][currentLang] === 'string' || !values) {
+    if (typeof translations[stringName][validLanguage] === 'string' || !values) {
       return t(stringName);
     }
 
@@ -69,8 +74,8 @@ export const i18n = (translations) => {
     }
   };
 
+
   return {
-    changeLanguage,
     t,
     plural,
   };

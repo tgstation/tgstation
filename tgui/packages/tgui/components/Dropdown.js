@@ -93,11 +93,13 @@ export class Dropdown extends Component {
       selected,
       disabled,
       displayText,
+      options = [],
       ...boxProps
     } = props;
     const { className, ...rest } = boxProps;
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
+    const chosenValueText = options.find((option) => option.value === this.state.selected)?.displayText ?? this.state.selected;
 
     const menu = this.state.open ? (
       <div
@@ -146,7 +148,7 @@ export class Dropdown extends Component {
             style={{
               'overflow': clipSelectedText ? 'hidden' : 'visible',
             }}>
-            {displayText ? displayText : this.state.selected}
+            {displayText ? displayText : chosenValueText}
           </span>
           {!!nochevron || (
             <span className="Dropdown__arrow-button">

@@ -11,7 +11,7 @@ import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, Num
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { LANGUAGES } from '../i18n';
+import { i18n, languagesDropdownOptions } from 'common/i18n';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
@@ -55,12 +55,14 @@ export const SettingsGeneral = (props, context) => {
     context,
     selectSettings
   );
+  const { t } = i18n(translation);
+
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState(context, 'freeFont', false);
   return (
     <Section>
       <LabeledList>
-        <LabeledList.Item label="Theme">
+        <LabeledList.Item label={t('theme')}>
           <Dropdown
             selected={theme}
             options={THEMES}
@@ -73,7 +75,7 @@ export const SettingsGeneral = (props, context) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Font style">
+        <LabeledList.Item label={t('fontStyle')}>
           <Stack inline align="baseline">
             <Stack.Item>
               {(!freeFont && (
@@ -103,7 +105,7 @@ export const SettingsGeneral = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <Button
-                content="Custom font"
+                content={t('customFont')}
                 icon={freeFont ? 'lock-open' : 'lock'}
                 color={freeFont ? 'good' : 'bad'}
                 ml={1}
@@ -114,7 +116,7 @@ export const SettingsGeneral = (props, context) => {
             </Stack.Item>
           </Stack>
         </LabeledList.Item>
-        <LabeledList.Item label="Font size">
+        <LabeledList.Item label={t('fontSize')}>
           <NumberInput
             width="4em"
             step={1}
@@ -133,7 +135,7 @@ export const SettingsGeneral = (props, context) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Line height">
+        <LabeledList.Item label={t('lineHeight')}>
           <NumberInput
             width="4em"
             step={0.01}
@@ -151,14 +153,14 @@ export const SettingsGeneral = (props, context) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Language">
+        <LabeledList.Item label={t('language')}>
           <Dropdown
             selected={language}
-            options={Object.keys(LANGUAGES)}
+            options={languagesDropdownOptions}
             onSelected={(value) =>
               dispatch(
                 updateSettings({
-                  language: LANGUAGES[value],
+                  language: value,
                 })
               )
             }
@@ -322,4 +324,31 @@ const TextHighlightSetting = (props, context) => {
       />
     </Flex.Item>
   );
+};
+
+const translation = {
+  'theme': {
+    en: 'Theme',
+    ru: 'Тема',
+  },
+  'fontStyle': {
+    en: 'Font style',
+    ru: 'Стиль шрифта',
+  },
+  'customFont': {
+    en: 'Custom font',
+    ru: 'Свой шрифт',
+  },
+  'fontSize': {
+    en: 'Font size',
+    ru: 'Размер шрифта',
+  },
+  'lineHeight': {
+    en: 'Line height',
+    ru: 'Высота строки',
+  },
+  'language': {
+    en: 'Language',
+    ru: 'Язык',
+  },
 };
