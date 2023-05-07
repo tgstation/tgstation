@@ -1260,8 +1260,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "request console assistance requestable helper"
 	icon_state = "requests_console_assistance_helper"
 
-/obj/effect/mapping_helpers/requests_console/supplies/payload(obj/machinery/requests_console/console)
-	console.assistance_requestable = TRUE
+/obj/effect/mapping_helpers/requests_console/assistance/payload(obj/machinery/requests_console/console)
+	GLOB.req_console_assistance |= console.department
 	return
 
 /obj/effect/mapping_helpers/requests_console/supplies
@@ -1269,7 +1269,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "requests_console_supplies_helper"
 
 /obj/effect/mapping_helpers/requests_console/supplies/payload(obj/machinery/requests_console/console)
-	console.supplies_requestable = TRUE
+	GLOB.req_console_supplies |= console.department
 	return
 
 /obj/effect/mapping_helpers/requests_console/information
@@ -1277,7 +1277,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "requests_console_information_helper"
 
 /obj/effect/mapping_helpers/requests_console/information/payload(obj/machinery/requests_console/console)
-	console.information_receiver = TRUE
+	GLOB.req_console_information |= console.department
 	return
 
 /obj/effect/mapping_helpers/requests_console/ore_update
