@@ -2,7 +2,9 @@ import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
 import { Box, BoxProps } from './Box';
+import { Button } from './Button';
 import { Icon } from './Icon';
+import { Stack } from './Stack';
 
 export interface DropdownEntry {
   displayText: string | number | InfernoNode;
@@ -24,6 +26,7 @@ type DropdownUniqueProps = {
   // you freaks really are just doing anything with this shit
   selected?: any;
   onSelected?: (selected: any) => void;
+  buttons?: boolean;
 };
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
@@ -234,6 +237,104 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     }
   }
 
+  getOptionValue(option) {
+    return typeof option === 'string' ? option : option.value;
+  }
+
+  getOptionsValues() {
+    const { options = [] } = this.props;
+
+    return options.map((option) => {
+      return this.getOptionValue(option);
+    });
+  }
+
+  getSelectedIndex() {
+    const selected = this.state.selected
+      ? this.state.selected
+      : this.props.selected;
+    const { options = [] } = this.props;
+
+    let selectedIndex;
+    options.forEach((option, index) => {
+      let value = this.getOptionValue(option);
+
+      if (value === selected) {
+        selectedIndex = index;
+      }
+    });
+
+    return selectedIndex;
+  }
+
+  hasSwitchToPrevious() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
+    const opts = this.getOptionsValues();
+
+    const previous = opts[previousIndex];
+
+    return previous !== undefined;
+  }
+
+  switchToPrevious() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return;
+    }
+
+    const previousIndex = parseInt(selectedIndex, 10) - 1;
+    const opts = this.getOptionsValues();
+
+    const previous = opts[previousIndex];
+
+    if (previous === undefined) {
+      return;
+    }
+
+    this.setSelected(previous);
+  }
+
+  hasSwitchToNext() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return false;
+    }
+
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
+    const opts = this.getOptionsValues();
+
+    const next = opts[nextIndex];
+
+    return next !== undefined;
+  }
+
+  switchToNext() {
+    const selectedIndex = this.getSelectedIndex();
+
+    if (selectedIndex === undefined) {
+      return;
+    }
+
+    const nextIndex = parseInt(selectedIndex, 10) + 1;
+    const opts = this.getOptionsValues();
+
+    const next = opts[nextIndex];
+
+    if (next === undefined) {
+      return;
+    }
+
+    this.setSelected(next);
+  }
+
   render() {
     const { props } = this;
     const {
@@ -251,6 +352,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       selected,
       disabled,
       displayText,
+      buttons,
       ...boxProps
     } = props;
     const { className, ...rest } = boxProps;
@@ -258,41 +360,82 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const adjustedOpen = over ? !this.state.open : this.state.open;
 
     return (
-      <Box
-        width={width}
-        className={classes([
-          'Dropdown__control',
-          'Button',
-          'Button--color--' + color,
-          disabled && 'Button--disabled',
-          className,
-        ])}
-        onClick={(event) => {
-          if (disabled && !this.state.open) {
-            return;
-          }
-          this.setOpen(!this.state.open);
-          if (onClick) {
-            onClick(event);
-          }
-        }}
-        {...rest}>
-        {icon && (
-          <Icon name={icon} rotation={iconRotation} spin={iconSpin} mr={1} />
+      <Stack fill>
+        <Stack.Item width={width}>
+          <Box
+            width={'100%'}
+            className={classes([
+              'Dropdown__control',
+              'Button',
+              'Button--color--' + color,
+              disabled && 'Button--disabled',
+              className,
+            ])}
+            onClick={(event) => {
+              if (disabled && !this.state.open) {
+                return;
+              }
+              this.setOpen(!this.state.open);
+              if (onClick) {
+                onClick(event);
+              }
+            }}
+            {...rest}>
+            {icon && (
+              <Icon
+                name={icon}
+                rotation={iconRotation}
+                spin={iconSpin}
+                mr={1}
+              />
+            )}
+            <span
+              className="Dropdown__selected-text"
+              style={{
+                overflow: clipSelectedText ? 'hidden' : 'visible',
+              }}>
+              {displayText || this.state.selected}
+            </span>
+            {nochevron || (
+              <span className="Dropdown__arrow-button">
+                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+              </span>
+            )}
+          </Box>
+        </Stack.Item>
+        {buttons && (
+          <>
+            <Stack.Item height={'100%'}>
+              <Button
+                height={'100%'}
+                icon="chevron-left"
+                disabled={disabled || !this.hasSwitchToPrevious()}
+                onClick={() => {
+                  if (disabled || !this.hasSwitchToPrevious()) {
+                    return;
+                  }
+
+                  this.switchToPrevious();
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item height={'100%'}>
+              <Button
+                height={'100%'}
+                icon="chevron-right"
+                disabled={disabled || !this.hasSwitchToNext()}
+                onClick={() => {
+                  if (disabled || !this.hasSwitchToNext()) {
+                    return;
+                  }
+
+                  this.switchToNext();
+                }}
+              />
+            </Stack.Item>
+          </>
         )}
-        <span
-          className="Dropdown__selected-text"
-          style={{
-            overflow: clipSelectedText ? 'hidden' : 'visible',
-          }}>
-          {displayText || this.state.selected}
-        </span>
-        {nochevron || (
-          <span className="Dropdown__arrow-button">
-            <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-          </span>
-        )}
-      </Box>
+      </Stack>
     );
   }
 }
