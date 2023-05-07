@@ -571,9 +571,6 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
 "jk" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/barricade/security,
 /obj/structure/door_assembly/door_assembly_ext{
 	anchored = 1
