@@ -79,9 +79,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"bd" = (
-/turf/open/space/basic,
-/area/ruin/space/has_grav/infested_frigate)
 "bg" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -130,7 +127,7 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "bS" = (
 /obj/effect/decal/cleanable/blood/gibs{
@@ -144,7 +141,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "cv" = (
 /obj/effect/turf_decal{
@@ -427,7 +424,7 @@
 	max_integrity = 60;
 	faction = list("syndicate","xenomorph")
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "hu" = (
 /obj/structure/barricade/security,
@@ -657,7 +654,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "ki" = (
 /obj/effect/turf_decal/tile/bar,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "kp" = (
 /obj/machinery/light/broken/directional/west,
@@ -722,7 +719,15 @@
 	max_integrity = 60;
 	faction = list("syndicate","xenomorph")
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
+/area/ruin/space/has_grav/infested_frigate)
+"lL" = (
+/obj/machinery/door/poddoor{
+	id = "Brutusexterior";
+	closingLayer = 2.65
+	},
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "lO" = (
 /obj/structure/fluff/broken_flooring{
@@ -1241,10 +1246,8 @@
 	id = "Brutusexterior";
 	closingLayer = 2.65
 	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
-/turf/open/floor/plating,
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/closed/indestructible/grille,
 /area/ruin/space/has_grav/infested_frigate)
 "vm" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -1401,7 +1404,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "wP" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "wX" = (
 /obj/machinery/porta_turret/syndicate/pod{
@@ -1409,7 +1412,7 @@
 	max_integrity = 60;
 	faction = list("syndicate","xenomorph")
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "xi" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1588,9 +1591,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yZ" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "zE" = (
@@ -1714,7 +1715,7 @@
 	light_power = 0.5;
 	light_range = 3
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "AM" = (
 /obj/item/ammo_casing/spent,
@@ -2144,7 +2145,7 @@
 	max_integrity = 60;
 	faction = list("syndicate","xenomorph")
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "Iu" = (
 /obj/effect/turf_decal{
@@ -2253,7 +2254,7 @@
 	dir = 8;
 	max_integrity = 2000
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "JO" = (
 /obj/structure/sign/departments/engineering/directional/west,
@@ -2272,7 +2273,7 @@
 /obj/item/shard{
 	icon_state = "titaniumtiny"
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "Kl" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -2387,7 +2388,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "LF" = (
 /obj/structure/cable,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "LO" = (
 /obj/effect/turf_decal{
@@ -2407,7 +2408,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke"
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "Mp" = (
 /obj/effect/turf_decal{
@@ -2458,23 +2459,38 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "ML" = (
-/obj/item/grenade/smokebomb{
-	pixel_x = 5
+/obj/structure/cable,
+/obj/effect/decal/cleanable/glass{
+	icon_state = "plasmatiny"
 	},
-/obj/item/grenade/smokebomb{
-	pixel_x = 5
+/obj/effect/decal/cleanable/glass{
+	icon_state = "plasmalarge"
 	},
-/obj/item/suppressor,
-/obj/item/gun/energy/e_gun/mini,
-/obj/structure/closet/crate/secure/weapon{
-	req_access = list("syndicate")
+/obj/item/shard{
+	icon_state = "titaniumtiny"
 	},
-/obj/item/grenade/c4,
+/obj/structure/closet/crate/large{
+	anchored = 1;
+	name = "crew supplies"
+	},
+/obj/effect/spawner/random/aimodule/harmful,
+/obj/effect/spawner/random/decoration,
+/obj/effect/spawner/random/decoration,
+/obj/effect/spawner/random/decoration/paint,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/effect/spawner/random/entertainment/toy_figure,
+/obj/machinery/nuclearbomb/beer,
+/obj/item/fuel_pellet,
+/obj/item/fuel_pellet,
+/obj/item/fuel_pellet,
+/obj/effect/spawner/random/exotic/languagebook,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/special_lighter,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "MW" = (
@@ -2818,7 +2834,7 @@
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/infested_frigate)
 "St" = (
 /obj/effect/turf_decal{
@@ -3001,36 +3017,20 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Wk" = (
-/obj/structure/alien/weeds,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/glass{
-	icon_state = "plasmatiny"
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
 	},
-/obj/effect/decal/cleanable/glass{
-	icon_state = "plasmalarge"
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
 	},
-/obj/item/shard{
-	icon_state = "titaniumtiny"
+/obj/item/suppressor,
+/obj/item/gun/energy/e_gun/mini,
+/obj/structure/closet/crate/secure/weapon{
+	req_access = list("syndicate")
 	},
-/obj/structure/closet/crate/large{
-	anchored = 1;
-	name = "crew supplies"
-	},
-/obj/effect/spawner/random/aimodule/harmful,
-/obj/effect/spawner/random/decoration,
-/obj/effect/spawner/random/decoration,
-/obj/effect/spawner/random/decoration/paint,
-/obj/effect/spawner/random/entertainment/plushie_delux,
-/obj/effect/spawner/random/entertainment/toy_figure,
-/obj/machinery/nuclearbomb/beer,
+/obj/item/grenade/c4,
+/obj/effect/spawner/random/exotic/antag_gear,
 /obj/structure/sign/warning/electric_shock/directional/west,
-/obj/item/fuel_pellet,
-/obj/item/fuel_pellet,
-/obj/item/fuel_pellet,
-/obj/effect/spawner/random/exotic/languagebook,
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/effect/spawner/random/special_lighter,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "WG" = (
@@ -3265,7 +3265,7 @@ fl
 fl
 fl
 fl
-bd
+fl
 "}
 (2,1,1) = {"
 fl
@@ -3576,7 +3576,7 @@ fl
 fl
 fl
 fl
-vj
+lL
 OC
 OC
 qE
@@ -3603,7 +3603,7 @@ fl
 fl
 fl
 fl
-vj
+lL
 xp
 ab
 Cm

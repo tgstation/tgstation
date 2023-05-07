@@ -817,6 +817,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
 
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	desc= "A durable looking window made of an alloy of of plasma and titanium. It's seems to be extremely reinforced, Impervious to anything that isn't military-grade ship weapons."
+
 /datum/armor/plasma_plastitanium
 	melee = 95
 	bomb = 50

@@ -38,6 +38,10 @@
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+/mob/living/simple_animal/hostile/alien/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
 	icon_state = "aliend"
