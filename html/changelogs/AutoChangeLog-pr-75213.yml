@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "You can't get an Elite Syndie Modsuit (or combat defib, or dart pistol) from Space Ruins"
