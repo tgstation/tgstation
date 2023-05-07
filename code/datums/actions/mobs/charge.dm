@@ -89,7 +89,7 @@
 	charging -= charger
 
 /datum/action/cooldown/mob_cooldown/charge/update_status_on_signal(mob/source, new_stat, old_stat)
-	SIGNAL_HANDLER
+	. = ..()
 	if(new_stat == DEAD)
 		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
