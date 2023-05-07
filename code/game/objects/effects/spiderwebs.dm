@@ -111,6 +111,7 @@
 	density = TRUE
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
+	var/override_message
 
 /obj/structure/spider/solid/Initialize(mapload)
 	. = ..()
