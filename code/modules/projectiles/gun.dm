@@ -196,9 +196,9 @@
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
-		return ..() //if they're out of range, just shootem.
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!can_hold_up)
-		return ..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)

@@ -36,11 +36,18 @@
 	target = targ
 	weapon = wep
 
-	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN, COMSIG_MOVABLE_SET_GRAB_STATE, COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
+	RegisterSignals(target, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN, COMSIG_MOVABLE_SET_GRAB_STATE, COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	target.gunpointed += src
 
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
 	var/distance_description = (distance <= 1 ? "point blank " : "")
+
+	if(!target.gp_effect)
+		target.gp_effect = new
+		target.vis_contents += target.gp_effect
+	playsound(get_turf(parent), 'sound/effects/targeton.ogg', 50,1)
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
 		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
@@ -77,6 +84,7 @@
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, PROC_REF(check_shove))
 	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(check_deescalate))
 	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), PROC_REF(check_bump))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
@@ -84,6 +92,12 @@
 	UnregisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
+	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+
+/datum/component/gunpoint/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_warning("<b>[parent] [parent.p_are()] holding [target] at gunpoint with [weapon]!</b>")
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
@@ -95,6 +109,7 @@
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
+	remove_indicator()
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
@@ -106,6 +121,7 @@
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
+	remove_indicator()
 	qdel(src)
 
 ///Update the damage multiplier for whatever stage we're entering into
@@ -158,7 +174,7 @@
 		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			weapon.chambered.loaded_projectile.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
 			weapon.chambered.loaded_projectile.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
-
+	remove_indicator()
 	qdel(src)
 
 ///Shooter canceled their shot, either by dropping/equipping their weapon, leaving sight/range, or clicking on the alert
@@ -169,6 +185,7 @@
 	shooter.visible_message(span_danger("[shooter] breaks [shooter.p_their()] aim on [target]!"), \
 		span_danger("You are no longer aiming [weapon] at [target]."), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] breaks [shooter.p_their()] aim on you!"))
+	remove_indicator()
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
@@ -192,6 +209,14 @@
 		shooter.visible_message(span_danger("[shooter] flinches!"), \
 			span_danger("You flinch!"))
 		INVOKE_ASYNC(src, PROC_REF(trigger_reaction))
+
+/datum/component/gunpoint/proc/remove_indicator()
+	if(length(target.gunpointed) == 1) //Last instance being deleted
+		target.vis_contents -= target.gp_effect
+		QDEL_NULL(target.gp_effect)
+	target.gunpointed -= src
+	var/mob/living/shooter = parent
+	playsound(get_turf(shooter), 'sound/effects/targetoff.ogg', 50,1)
 
 #undef GUNPOINT_DELAY_STAGE_2
 #undef GUNPOINT_DELAY_STAGE_3

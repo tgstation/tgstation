@@ -229,3 +229,8 @@
 	var/active_thinking_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
+
+	///Who is gunpointing at our person?
+	var/list/datum/component/gunpoint/gunpointed = list()
+	///The effect from gunpointing, to make sure we dont create multiples
+	var/obj/effect/overlay/gunpoint_effect/gp_effect

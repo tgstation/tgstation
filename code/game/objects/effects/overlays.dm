@@ -75,3 +75,10 @@
 	layer = FLOAT_LAYER
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
+
+/obj/effect/overlay/gunpoint_effect
+	icon_state = "locked"
+	layer = FLY_LAYER
+	plane = GAME_PLANE_UPPER
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	mouse_opacity = 0

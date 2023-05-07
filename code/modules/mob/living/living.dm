@@ -124,6 +124,12 @@
 					if(!(world.time % 5))
 						to_chat(src, span_warning("[L] is restraining [P], you cannot push past."))
 					return TRUE
+		if(length(gunpointed))
+			to_chat(src, span_warning("[L] is being held at gunpoint, it's not wise to push [L.p_them()]."))
+			return TRUE
+		if(L.GetComponent(/datum/component/gunpoint))
+			to_chat(src, span_warning("[L] is holding someone at gunpoint, you cannot push past."))
+			return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
