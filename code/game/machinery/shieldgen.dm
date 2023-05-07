@@ -626,6 +626,7 @@
 /obj/machinery/modular_shield_gen/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
+	wires = new /datum/wires/modular_shield_gen(src)
 	if(mapload && active && anchored)
 		activate_shields()
 
@@ -635,8 +636,27 @@
 	QDEL_LIST(deployed_shields)
 	calculate_regeneration()
 
+/obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
 
+	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
+		return
 
+	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
+		return
+
+	return ..()
+
+/obj/machinery/modular_shield_gen/proc(toggle_shields)
+	if(active)
+		deactivate_shields()
+		return
+	if (recovering)
+		return
+	activate_shields()
 
 /obj/machinery/modular_shield_gen/proc/activate_shields()
 	active = TRUE
@@ -700,12 +720,7 @@
 				return
 			radius = max(1,(text2num(params["new_radius"])))
 		if ("activate")
-			if(active)
-				deactivate_shields()
-				return
-			if(recovering)
-				return
-			activate_shields()
+			toggle_shields()
 
 /obj/machinery/modular_shield_gen/proc/calculate_regeneration()
 
@@ -739,11 +754,10 @@
 /obj/machinery/modular_shield_node
 
 	name = "Modular Shield Node"
-	desc = "A mess of pipes and wires that extend the network"
+	desc = "A waist high mess of humming pipes and wires that extend the network"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
 	dir = SOUTH
-	density = FALSE
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
 	///The generator we are supporting
