@@ -11340,11 +11340,6 @@
 "cJD" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/escape)
-"cJE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/morgue)
 "cJK" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -37249,14 +37244,6 @@
 /obj/machinery/light/small/red/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
-"jmd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/morgue)
 "jme" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -46016,13 +46003,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"lvv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/closed/wall,
-/area/station/maintenance/department/medical/morgue)
 "lvw" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
@@ -136515,7 +136495,7 @@ aoN
 hFQ
 qYZ
 gHF
-lvv
+bhw
 eUW
 sAI
 bhw
@@ -136772,7 +136752,7 @@ oOv
 hFQ
 qYZ
 gHF
-cJE
+bhw
 roI
 hYf
 bhw
@@ -137029,7 +137009,7 @@ fbY
 hFQ
 qYZ
 gHF
-jmd
+bhw
 lHE
 tJV
 bhw
