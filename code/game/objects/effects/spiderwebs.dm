@@ -110,6 +110,7 @@
 	opacity = TRUE
 	density = TRUE
 	max_integrity = 60
+	plane = GAME_PLANE_UPPER
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()

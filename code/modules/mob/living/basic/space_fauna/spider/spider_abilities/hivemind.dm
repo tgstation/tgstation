@@ -61,7 +61,7 @@
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
-	var/my_message = span_spider("<b>Command from [user]:</b> [message]")
+	var/my_message = span_spider_broodmother("<b>Command from [user]:</b> [message]")
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
@@ -104,7 +104,7 @@
 /datum/action/communication_spiders/proc/spider_communication(mob/living/user, message)
 	if(!message)
 		return
-	var/my_message = span_spider("[user]:<small> [message]")
+	var/my_message = span_spider_scout("[user]:</> [message]")
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
