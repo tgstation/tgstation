@@ -331,7 +331,7 @@
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
-/obj/machinery/atmospherics/components/unary/pryothermomachine/freezer/on/coldroom
+/obj/machinery/atmospherics/components/unary/pyrothermomachine/freezer/on/coldroom
 	name = "Anomalous heating unit"
 	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
