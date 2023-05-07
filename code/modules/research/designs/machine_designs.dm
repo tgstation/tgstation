@@ -91,6 +91,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/pyrothermomachine
+	name = "Anomalous Thermomachine Board"
+	desc = "The circuit board for an anomalous thermomachine."
+	id = "pyrothermomachine"
+	build_path = /obj/item/circuitboard/machine/pyrothermomachine
+	category = list(
+		RND_CATEGORY_MACHINE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/space_heater
 	name = "Space Heater Board"
 	desc = "The circuit board for a space heater."

@@ -637,6 +637,7 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
+		"pyrothermomachine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
@@ -944,7 +945,7 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
-		
+
 /datum/techweb_node/cyborg_upg_serv
 	id = "cyborg_upg_serv"
 	display_name = "Cyborg Upgrades: Service"

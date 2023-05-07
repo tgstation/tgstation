@@ -25,7 +25,7 @@
 
 	set_dir_on_move = FALSE
 
-	var/min_temperature = 270
+	var/min_temperature = 293
 	var/max_temperature = T20C // actual temperature will be defined by RefreshParts()
 	var/target_temperature = T20C
 	var/heat_capacity = 0
