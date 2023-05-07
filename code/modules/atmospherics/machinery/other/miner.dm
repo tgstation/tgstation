@@ -120,22 +120,22 @@
 		on_overlay.color = overlay_color
 		. += on_overlay
 
-/obj/machinery/atmospherics/miner/process(delta_time)
+/obj/machinery/atmospherics/miner/process(seconds_per_tick)
 	update_power()
 	check_operation()
 	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
 		if(do_use_power(active_power_usage))
-			mine_gas(delta_time)
+			mine_gas(seconds_per_tick)
 
-/obj/machinery/atmospherics/miner/proc/mine_gas(delta_time = 2)
+/obj/machinery/atmospherics/miner/proc/mine_gas(seconds_per_tick = 2)
 	var/turf/open/O = get_turf(src)
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
+	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 

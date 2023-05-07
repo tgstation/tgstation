@@ -67,7 +67,7 @@
 	/// Final attack ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/colossus_final
 	/// Have we used DIE yet?
-	var/final_availible = TRUE
+	var/final_available = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
@@ -111,8 +111,8 @@
 	else
 		move_to_delay = initial(move_to_delay)
 
-	if(health <= maxHealth / 10 && !final_availible)
-		final_availible = FALSE
+	if(health <= maxHealth / 10 && final_available)
+		final_available = FALSE
 		colossus_final.Trigger(target = target)
 	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
@@ -321,6 +321,7 @@
 
 /obj/machinery/anomalous_crystal/ex_act()
 	ActivationReaction(null, ACTIVATE_BOMB)
+	return TRUE
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
@@ -628,7 +629,7 @@
 	return
 
 /obj/structure/closet/stasis/ex_act()
-	return
+	return FALSE
 
 /datum/action/exit_possession
 	name = "Exit Possession"

@@ -174,7 +174,6 @@
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -322,12 +321,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bf" = (
-/obj/machinery/power/apc/syndicate{
-	dir = 1;
-	name = "Syndicate Cargo Pod APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -439,12 +435,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (
-/obj/machinery/power/apc/syndicate{
-	dir = 1;
-	name = "Syndicate Forgotten Ship APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -577,10 +570,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
-/obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bQ" = (

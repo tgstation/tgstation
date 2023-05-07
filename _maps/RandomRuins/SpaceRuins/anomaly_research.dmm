@@ -82,15 +82,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "dj" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
@@ -121,7 +115,7 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "eq" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
@@ -1193,7 +1187,7 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fm" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser/ultra,
 /obj/item/stock_parts/manipulator/pico,
@@ -1378,12 +1372,8 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "Jp" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
@@ -1816,7 +1806,7 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "WM" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -1855,12 +1845,8 @@
 /turf/closed/mineral/snowmountain/cavern,
 /area/misc/anomaly_research)
 "YA" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/misc/anomaly_research)

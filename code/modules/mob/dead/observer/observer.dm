@@ -303,6 +303,7 @@ Works together with spawning an observer, noted above.
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
 /mob/living/ghostize(can_reenter_corpse = TRUE)
@@ -967,7 +968,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
 	if(!game)
-		game = create_mafia_game("mafia")
+		game = create_mafia_game()
 	game.ui_interact(usr)
 
 /mob/dead/observer/CtrlShiftClick(mob/user)

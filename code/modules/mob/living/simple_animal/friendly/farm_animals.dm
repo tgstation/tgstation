@@ -40,14 +40,14 @@
 	AddComponent(/datum/component/udder)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && DT_PROB(0.5, delta_time))
+		if(!enemies.len && SPT_PROB(0.5, seconds_per_tick))
 			Retaliate()
 
-		if(enemies.len && DT_PROB(5, delta_time))
+		if(enemies.len && SPT_PROB(5, seconds_per_tick))
 			enemies.Cut()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
@@ -165,17 +165,17 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
+		amount_grown += rand(0.5 * seconds_per_tick, 1 * seconds_per_tick)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/holo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 
@@ -250,32 +250,3 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 			location_allowlist = typecacheof(list(/turf)),\
 			spoilable = TRUE,\
 		)
-
-/mob/living/simple_animal/deer
-	name = "doe"
-	desc = "A gentle, peaceful forest animal. How did this get into space?"
-	icon_state = "deer-doe"
-	icon_living = "deer-doe"
-	icon_dead = "deer-doe-dead"
-	gender = FEMALE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak = list("Weeeeeeee?","Weeee","WEOOOOOOOOOO")
-	speak_emote = list("grunts","grunts lowly")
-	emote_hear = list("brays.")
-	emote_see = list("shakes her head.")
-	speak_chance = 1
-	turns_per_move = 5
-	butcher_results = list(/obj/item/food/meat/slab = 3)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently nudges"
-	response_disarm_simple = "gently nudges aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "bucks"
-	attack_verb_simple = "buck"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	health = 75
-	maxHealth = 75
-	blood_volume = BLOOD_VOLUME_NORMAL
-	footstep_type = FOOTSTEP_MOB_SHOE

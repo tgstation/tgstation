@@ -39,9 +39,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/syndicate3)
 "dt" = (
@@ -167,10 +165,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "nA" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -256,10 +252,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "ES" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "GU" = (
@@ -321,11 +315,8 @@
 "Jm" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/syndicate{
-	dir = 8;
-	name = "Syndicate Drop Ship APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -368,10 +359,8 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "Li" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/airalarm/syndicate{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)

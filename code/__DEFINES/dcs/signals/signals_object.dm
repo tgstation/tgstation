@@ -30,6 +30,8 @@
 #define COMSIG_MACHINERY_START_PROCESSING_AIR "start_processing_air"
 ///from /datum/controller/subsystem/air/proc/stop_processing_machine: ()
 #define COMSIG_MACHINERY_STOP_PROCESSING_AIR "stop_processing_air"
+///from /obj/machinery/RefreshParts: ()
+#define COMSIG_MACHINERY_REFRESH_PARTS "machine_refresh_parts"
 
 ///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
 #define COMSIG_TRY_USE_MACHINE "try_use_machine"
@@ -319,9 +321,9 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, Angle, hit_limb)
+///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, angle, hit_limb)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"

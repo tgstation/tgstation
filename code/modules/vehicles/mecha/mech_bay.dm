@@ -52,7 +52,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Recharge power <b>[siunit(recharge_power, "W", 1)]</b>.")
 
-/obj/machinery/mech_bay_recharge_port/process(delta_time)
+/obj/machinery/mech_bay_recharge_port/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || !recharge_console)
 		return
 	var/obj/vehicle/sealed/mecha/recharging_mech = recharging_mech_ref?.resolve()
@@ -64,7 +64,7 @@
 	if(!recharging_mech?.cell)
 		return
 	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
+		var/delta = min(recharge_power * seconds_per_tick, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 		recharging_mech.give_power(delta)
 		use_power(delta + active_power_usage)
 	else
@@ -146,7 +146,7 @@
 /obj/machinery/computer/mech_bay_power_console/proc/reconnect()
 	if(recharge_port)
 		return
-	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
+	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1, src)
 	if(!recharge_port)
 		for(var/direction in GLOB.cardinals)
 			var/turf/target = get_step(src, direction)

@@ -110,9 +110,9 @@
 	} while (0)
 
 #define HAS_TRAIT(target, trait) (target.status_traits?[trait] ? TRUE : FALSE)
-#define HAS_TRAIT_FROM(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]))
-#define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
-#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
+#define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]))
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target.status_traits[trait] - source) > 0))
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -375,7 +375,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CANT_RIDE "cant_ride"
 /// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
 #define TRAIT_CANNOT_BE_UNBUCKLED "cannot_be_unbuckled"
-/// from heparin, makes open bleeding wounds rapidly spill more blood
+/// from heparin and nitrous oxide, makes open bleeding wounds rapidly spill more blood
 #define TRAIT_BLOODY_MESS "bloody_mess"
 /// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 #define TRAIT_COAGULATING "coagulating"
@@ -465,6 +465,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
 #define TRAIT_HATED_BY_DOGS "hated_by_dogs"
+/// Mobs with this trait will not be immobilized when held up
+#define TRAIT_NOFEAR_HOLDUPS "no_fear_holdup"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -825,6 +827,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
+#define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind
@@ -1000,6 +1003,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// radiation processing as if this wasn't already irradiated.
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
 #define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"
+
+/// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
+#define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
 
 // Traits to heal for
 

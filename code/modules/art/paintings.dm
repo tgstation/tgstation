@@ -83,6 +83,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -422,7 +423,8 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -434,7 +436,8 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -614,7 +617,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -641,7 +644,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
@@ -649,8 +652,6 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
-	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

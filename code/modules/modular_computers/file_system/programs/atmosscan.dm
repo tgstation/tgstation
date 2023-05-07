@@ -85,9 +85,6 @@
 	return data
 
 /datum/computer_file/program/atmosscan/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("autoscantoggle")
 			auto_updating = !auto_updating

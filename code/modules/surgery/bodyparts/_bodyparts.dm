@@ -27,13 +27,15 @@
 	 * as well as how easily it will happen.
 	 * Set to BIO_FLESH_BONE because most species have both flesh and bone in their limbs.
 	 *
-	 * This has absolutely no meaning for robotic limbs.
+	 * This currently has absolutely no meaning for robotic limbs.
 	 */
 	var/biological_state = BIO_FLESH_BONE
 	///A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
-	var/change_exempt_flags
+	var/change_exempt_flags = NONE
+	///Random flags that describe this bodypart
+	var/bodypart_flags = NONE
 
 	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
@@ -60,8 +62,6 @@
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
-	/// For limbs that don't really exist, eg chainsaws
-	var/is_pseudopart = FALSE
 
 	// Limb disabling variables
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
@@ -102,9 +102,6 @@
 	///An "override" color that can be applied to ANY limb, greyscale or not.
 	var/variable_color = ""
 
-	///whether the limb can be mutilated, including dismemberment for appendages and heads, and disembowelment for chests. TRUE means it can be subjected to these effects.
-	var/dismemberable = TRUE
-
 	var/px_x = 0
 	var/px_y = 0
 
@@ -124,7 +121,11 @@
 	var/heavy_burn_msg = "peeling away"
 
 	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
-	var/list/damage_examines = list(BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT, BURN = DEFAULT_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/list/damage_examines = list(
+		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
+		BURN = DEFAULT_BURN_EXAMINE_TEXT,
+		CLONE = DEFAULT_CLONE_EXAMINE_TEXT,
+	)
 
 	// Wounds related variables
 	/// The wounds currently afflicting this body part
@@ -329,6 +330,9 @@
 				if(!try_attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
 					forceMove(human_victim.loc)
+					return
+				if(check_for_frankenstein(victim))
+					bodypart_flags |= BODYPART_IMPLANTED
 				if(human_victim == user)
 					human_victim.visible_message(span_warning("[human_victim] jams [src] into [human_victim.p_their()] empty socket!"),\
 					span_notice("You force [src] into your empty socket, and it locks into place!"))
@@ -336,7 +340,7 @@
 					human_victim.visible_message(span_warning("[user] jams [src] into [human_victim]'s empty socket!"),\
 					span_notice("[user] forces [src] into your empty socket, and it locks into place!"))
 				return
-	..()
+	return ..()
 
 /obj/item/bodypart/attackby(obj/item/weapon, mob/user, params)
 	SHOULD_CALL_PARENT(TRUE)
@@ -397,13 +401,28 @@
 	return bodypart_organs
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life(delta_time, times_fired)
+/obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
 
-//Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
-//Damage will not exceed max_damage using this proc
-//Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/**
+ * #receive_damage
+ *
+ * called when a bodypart is taking damage
+ * Damage will not exceed max_damage using this proc, and negative damage cannot be used to heal
+ * Returns TRUE if damage icon states changes
+ * Args:
+ * brute - The amount of brute damage dealt.
+ * burn - The amount of burn damage dealt.
+ * blocked - The amount of damage blocked by armor.
+ * update_health - Whether to update the owner's health from receiving the hit.
+ * required_bodytype - A bodytype flag requirement to get this damage (ex: BODYTYPE_ORGANIC)
+ * wound_bonus - Additional bonus chance to get a wound.
+ * bare_wound_bonus - Additional bonus chance to get a wound if the bodypart is naked.
+ * sharpness - Flag on whether the attack is edged or pointy
+ * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
+ * damage_source - The source of damage, typically a weapon.
+ */
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/hit_percent = (100-blocked)/100
@@ -476,7 +495,7 @@
 
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
-			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction)
+			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus)
@@ -1134,3 +1153,27 @@
 		owner.update_body_parts()
 	else
 		update_icon_dropped()
+
+/obj/item/bodypart/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_WIRES || !(bodytype & BODYTYPE_ROBOTIC))
+		return FALSE
+	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
+
+	var/time_needed = 10 SECONDS
+	var/brute_damage = 5 + 1.5 // Augments reduce brute damage by 5.
+	var/burn_damage = 4 + 2.5 // As above, but for burn it's 4.
+
+	if(severity == EMP_HEAVY)
+		time_needed *= 2
+		brute_damage *= 2
+		burn_damage *= 2
+
+	receive_damage(brute_damage, burn_damage)
+	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
+	return TRUE
+
+/obj/item/bodypart/proc/un_paralyze()
+	REMOVE_TRAITS_IN(src, EMP_TRAIT)

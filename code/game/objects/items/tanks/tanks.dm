@@ -24,7 +24,7 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
@@ -273,13 +273,13 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/tank/process(delta_time)
+/obj/item/tank/process(seconds_per_tick)
 	if(!air_contents)
 		return
 
 	//Allow for reactions
 	excited = (excited | air_contents.react(src))
-	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | handle_tolerances(seconds_per_tick))
 	excited = (excited | leaking)
 
 	if(!excited)
@@ -299,9 +299,9 @@
  *
  * Returns true if it did anything of significance, false otherwise
  * Arguments:
- * - delta_time: How long has passed between ticks.
+ * - seconds_per_tick: How long has passed between ticks.
  */
-/obj/item/tank/proc/handle_tolerances(delta_time)
+/obj/item/tank/proc/handle_tolerances(seconds_per_tick)
 	if(!air_contents)
 		return FALSE
 
@@ -309,13 +309,13 @@
 	var/temperature = air_contents.return_temperature()
 	if(temperature >= TANK_MELT_TEMPERATURE)
 		var/temperature_damage_ratio = (temperature - TANK_MELT_TEMPERATURE) / temperature
-		take_damage(max_integrity * temperature_damage_ratio * delta_time, BURN, FIRE, FALSE, NONE)
+		take_damage(max_integrity * temperature_damage_ratio * seconds_per_tick, BURN, FIRE, FALSE, NONE)
 		if(QDELETED(src))
 			return TRUE
 
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
-		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
+		take_damage(max_integrity * pressure_damage_ratio * seconds_per_tick, BRUTE, BOMB, FALSE, NONE)
 		return TRUE
 	return FALSE
 
