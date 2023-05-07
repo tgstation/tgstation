@@ -1239,7 +1239,6 @@
 	closingLayer = 2.65
 	},
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "vm" = (
@@ -1585,7 +1584,6 @@
 /area/ruin/space/has_grav/infested_frigate)
 "yZ" = (
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "zE" = (
@@ -2787,15 +2785,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"RO" = (
-/obj/machinery/door/poddoor{
-	id = "Brutusexterior";
-	closingLayer = 2.65
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "RQ" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -3552,7 +3541,7 @@ fl
 fl
 fl
 fl
-RO
+vj
 yJ
 wP
 wP
