@@ -176,6 +176,24 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
 
+/datum/emote/living/gasp_shock
+	key = "gaspshock"
+	key_third_person = "gaspsshock"
+	message = "gasps in shock!"
+	message_mime = "gasps in silent shock!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	stat_allowed = SOFT_CRIT
+
+/datum/emote/living/gasp_shock/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_TRAIT(human_user, TRAIT_MIMING))
+		if(human_user.gender == FEMALE)
+			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
+		else
+			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"

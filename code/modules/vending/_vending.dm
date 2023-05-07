@@ -724,7 +724,7 @@
 							var/obj/item/bodypart/squish_part = i
 							if(IS_ORGANIC_LIMB(squish_part))
 								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-								squish_part.force_wound_upwards(type_wound)
+								squish_part.force_wound_upwards(type_wound, wound_source = "crushing by vending machine")
 							else
 								squish_part.receive_damage(brute=30)
 						C.visible_message(span_danger("[C]'s body is maimed underneath the mass of [src]!"), \
@@ -1433,7 +1433,7 @@
 	max_integrity = 700
 	max_loaded_items = 40
 	light_mask = "greed-light-mask"
-	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()

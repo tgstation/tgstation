@@ -401,6 +401,10 @@
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
+
+	if(!chambered.is_cased_ammo)
+		magazine.stored_ammo -= chambered
+
 	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
