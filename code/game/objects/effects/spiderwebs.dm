@@ -138,9 +138,6 @@
 	max_integrity = 40
 	alpha = 200
 	plane = GAME_PLANE_UPPER
-
-/obj/structure/spider/passage/Initialize(mapload)
-	. = ..()
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
