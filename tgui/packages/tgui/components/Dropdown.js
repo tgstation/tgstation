@@ -264,36 +264,36 @@ export class Dropdown extends Component {
           </div>
         </Stack.Item>
         {buttons && (
-          <Stack.Item height={'100%'}>
-            <Button
-              height={'100%'}
-              content="<"
-              disabled={disabled || !this.hasSwitchToPrevious()}
-              onClick={() => {
-                if (disabled || !this.hasSwitchToPrevious()) {
-                  return;
-                }
+          <>
+            <Stack.Item height={'100%'}>
+              <Button
+                height={'100%'}
+                icon="chevron-left"
+                disabled={disabled || !this.hasSwitchToPrevious()}
+                onClick={() => {
+                  if (disabled || !this.hasSwitchToPrevious()) {
+                    return;
+                  }
 
-                this.switchToPrevious();
-              }}
-            />
-          </Stack.Item>
-        )}
-        {buttons && (
-          <Stack.Item height={'100%'}>
-            <Button
-              height={'100%'}
-              content=">"
-              disabled={disabled || !this.hasSwitchToNext()}
-              onClick={() => {
-                if (disabled || !this.hasSwitchToNext()) {
-                  return;
-                }
+                  this.switchToPrevious();
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item height={'100%'}>
+              <Button
+                height={'100%'}
+                icon="chevron-right"
+                disabled={disabled || !this.hasSwitchToNext()}
+                onClick={() => {
+                  if (disabled || !this.hasSwitchToNext()) {
+                    return;
+                  }
 
-                this.switchToNext();
-              }}
-            />
-          </Stack.Item>
+                  this.switchToNext();
+                }}
+              />
+            </Stack.Item>
+          </>
         )}
       </Stack>
     );
