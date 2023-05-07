@@ -25,12 +25,16 @@
 	var/visible_contents = TRUE
 	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
 	var/has_emissive = TRUE
+	/// Whether the smartfridge is welded down to the floor disabling unwrenching
+	var/welded_down = FALSE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
-
 	create_reagents(100, NO_REACT)
+	air_update_turf(TRUE, TRUE)
+	register_context()
+	if(mapload && !istype(src, /obj/machinery/smartfridge/drying_rack))
+		welded_down = TRUE
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -45,10 +49,80 @@
 	. = ..()
 	move_update_air(old_loc)
 
+/obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
+	if(welded_down)
+		to_chat(user, span_warning("[src] is welded to the floor!"))
+		return FAILED_UNFASTEN
+	return ..()
+
 /obj/machinery/smartfridge/set_anchored(anchorvalue)
 	. = ..()
+	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded_down = FALSE
 	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
 	air_update_turf(TRUE, anchorvalue)
+
+/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/tool)
+	..()
+	if(istype(src, /obj/machinery/smartfridge/drying_rack))
+		return FALSE
+	if(welded_down)
+		if(!tool.tool_start_check(user, amount=1))
+			return TRUE
+		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
+			span_notice("You start to cut [src] free from the floor..."), \
+			span_hear("You hear welding."))
+		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+			return FALSE
+		welded_down = FALSE
+		to_chat(user, span_notice("You cut [src] free from the floor."))
+		return TRUE
+	if(!anchored)
+		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		return TRUE
+	if(!tool.tool_start_check(user, amount=1))
+		return TRUE
+	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
+		span_notice("You start to weld [src] to the floor..."), \
+		span_hear("You hear welding."))
+	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		return FALSE
+	welded_down = TRUE
+	to_chat(user, span_notice("You weld [src] to the floor."))
+	return TRUE
+
+/obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(istype(src, /obj/machinery/smartfridge/drying_rack))
+		return FALSE
+	if(machine_stat & BROKEN)
+		if(!tool.tool_start_check(user, amount=0))
+			return FALSE
+		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
+						"<span class='notice'>You begin repairing [src]...</span>", \
+						"<span class='hear'>You hear welding.</span>")
+		if(tool.use_tool(src, user, delay=40, volume=50))
+			if(!(machine_stat & BROKEN))
+				return FALSE
+			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			atom_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_icon()
+			return TRUE
+	else
+		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
+		return FALSE
+
+/obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/smartfridge/drying_rack))
+		if(welded_down)
+			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+		else if (!welded_down && anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+		if(machine_stat & BROKEN)
+			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
@@ -57,8 +131,16 @@
 
 /obj/machinery/smartfridge/examine(mob/user)
 	. = ..()
+
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+
+	if(welded_down)
+		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+	else if(anchored)
+		. += span_info("It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.")
+	else
+		. += span_info("It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.")
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -296,23 +378,6 @@
 
 	return FALSE
 
-/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(machine_stat & BROKEN)
-		if(!I.tool_start_check(user, amount=0))
-			return
-		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
-						"<span class='notice'>You begin repairing [src]...</span>", \
-						"<span class='hear'>You hear welding.</span>")
-		if(I.use_tool(src, user, 40, volume=50))
-			if(!(machine_stat & BROKEN))
-				return
-			to_chat(user, "<span class='notice'>You repair [src].</span>")
-			atom_integrity = max_integrity
-			set_machine_stat(machine_stat & ~BROKEN)
-			update_icon()
-	else
-		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------
