@@ -1082,9 +1082,9 @@
 "qe" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/requests_console/directional/west{
-	department = "Chapel";
-	supplies_requestable = 1
+	department = "Chapel"
 	},
+/obj/effect/mapping_helpers/requests_console/supplies,
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
 /obj/item/clothing/head/chaplain/nun_hood,

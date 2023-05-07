@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	/// Can others request supplies from this terminal?
 	var/supplies_requestable = FALSE
 	/// Can you relay information to this console?
-	var/anon_tips_receiver = FALSE
+	var/information_receiver = FALSE
 	/// Did we error in the last mail?
 	var/has_mail_send_error = FALSE
 	/// Cooldown to prevent announcement spam
@@ -135,7 +135,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if((supplies_requestable)) // supplier list
 		GLOB.req_console_supplies |= department
 
-	if((anon_tips_receiver)) // tips lists
+	if((information_receiver)) // tips lists
 		GLOB.req_console_information |= department
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
