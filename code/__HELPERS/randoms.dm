@@ -56,7 +56,7 @@
 		str = "0" + str
 	. = str
 
-///Gets a random coin excluding the blocked type
+///Gets a random coin excluding the blocked type and including extra coins which aren't pathed like coins.
 /proc/get_random_coin()
 	var/list/blocked = list(
 		/obj/item/coin/gold/debug,
