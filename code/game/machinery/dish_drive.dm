@@ -15,10 +15,15 @@
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
-		/obj/item/broken_bottle)
+		/obj/item/broken_bottle,
+		/obj/item/plate/small,
+		/obj/item/plate/large,
+		/obj/item/plate,
+		/obj/item/plate_shard)
 	var/static/list/disposable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
 		/obj/item/shard,
+		/obj/item/plate_shard,
 		/obj/item/broken_bottle)
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
@@ -87,7 +92,7 @@
 	if(!suction_enabled)
 		return
 	for(var/obj/item/I in view(4, src))
-		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
+		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume) && (I.contents.len < 1))
 			if(I.Adjacent(src))
 				LAZYADD(dish_drive_contents, I)
 				visible_message(span_notice("[src] beams up [I]!"))
