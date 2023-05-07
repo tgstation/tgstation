@@ -1,6 +1,11 @@
+export const LANGUAGES = {
+  English: 'EN',
+  Russian: 'RU',
+};
+
 export const i18n = (translations) => {
-  const fallbackLang = LANGUAGES.EN;
-  let currentLang = LANGUAGES.RU;
+  const fallbackLang = LANGUAGES.English;
+  let currentLang = LANGUAGES.Russian;
 
   const changeLanguage = (newLang) => {
     currentLang = newLang;
@@ -20,10 +25,10 @@ export const i18n = (translations) => {
 
     let rawString;
     switch (validLanguage) {
-      case LANGUAGES.RU:
+      case LANGUAGES.Russian:
         rawString = russianPlural(translations[stringName][validLanguage], values.n);
         break;
-      case LANGUAGES.EN:
+      case LANGUAGES.English:
       default: {
         rawString = englishPlural(translations[stringName][validLanguage], values.n);
       }
@@ -69,9 +74,4 @@ export const i18n = (translations) => {
     t,
     plural,
   };
-};
-
-const LANGUAGES = {
-  EN: 'en',
-  RU: 'ru',
 };

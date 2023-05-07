@@ -11,6 +11,7 @@ import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, Num
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
+import { LANGUAGES } from '../i18n';
 import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
@@ -50,7 +51,7 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
+  const { theme, fontFamily, fontSize, lineHeight, language } = useSelector(
     context,
     selectSettings
   );
@@ -145,6 +146,19 @@ export const SettingsGeneral = (props, context) => {
               dispatch(
                 updateSettings({
                   lineHeight: value,
+                })
+              )
+            }
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Language">
+          <Dropdown
+            selected={language}
+            options={Object.keys(LANGUAGES)}
+            onSelected={(value) =>
+              dispatch(
+                updateSettings({
+                  language: LANGUAGES[value],
                 })
               )
             }

@@ -6,7 +6,14 @@
 
 import { storage } from 'common/storage';
 import { setClientTheme } from '../themes';
-import { loadSettings, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
+import {
+  loadSettings,
+  updateSettings,
+  addHighlightSetting,
+  removeHighlightSetting,
+  updateHighlightSetting,
+} from './actions';
+import { logger } from 'tgui/logging';
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 
@@ -43,6 +50,11 @@ export const settingsMiddleware = (store) => {
       const theme = payload?.theme;
       if (theme) {
         setClientTheme(theme);
+      }
+      // Set client language
+      const language = payload?.language;
+      if (language) {
+        logger.log('testing', language);
       }
       // Pass action to get an updated state
       next(action);

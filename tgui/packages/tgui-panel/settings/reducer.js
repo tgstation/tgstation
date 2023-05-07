@@ -7,6 +7,7 @@
 import { changeSettingsTab, loadSettings, openChatSettings, toggleSettings, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { createDefaultHighlightSetting } from './model';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
+import { LANGUAGES } from "../i18n";
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
 
@@ -29,6 +30,7 @@ const initialState = {
     visible: false,
     activeTab: SETTINGS_TABS[0].id,
   },
+  language: LANGUAGES.English,
 };
 
 export const settingsReducer = (state = initialState, action) => {
