@@ -77,6 +77,8 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
 
+	return TRUE
+
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
 	if(lava_drinker && !warmed_up && islava(target))

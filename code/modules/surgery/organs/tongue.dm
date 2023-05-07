@@ -187,7 +187,7 @@
 	if(statue.name == initial(statue.name)) //statue has not been set up
 		statue.name = "statue of [becoming_statue.real_name]"
 		statue.desc = "statue depicting [becoming_statue.real_name]"
-		statue.set_custom_materials(list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5))
+		statue.set_custom_materials(list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5))
 
 	if(is_statue)
 		statue.visible_message(span_danger("[statue] becomes animated!"))
