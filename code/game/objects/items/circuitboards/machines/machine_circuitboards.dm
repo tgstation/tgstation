@@ -300,6 +300,16 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/pyrothermomachine
+	name = "Anomalous Heating Thermomachine"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/atmospherics/components/unary/pyrothermomachine/freezer
+	var/pipe_layer = PIPING_LAYER_DEFAULT
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/obj/item/assembly/signaler/anomaly/pyro = 1,
+		/obj/item/stack/cable_coil = 1,)
+
 /obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
 	pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)

@@ -233,7 +233,7 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
-	
+
 /datum/greyscale_config/sneakers_marisa/worn
 	name = "Worn Marisa Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
@@ -448,6 +448,11 @@
 	name = "Thermomachine"
 	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
+
+/datum/greyscale_config/pyrothermomachine
+	name = "Anomalous Thermomachine"
+	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pyrothermomachine.json'
 
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"
