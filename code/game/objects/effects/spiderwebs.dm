@@ -112,7 +112,7 @@
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
 
-/obj/structure/spider/stickyweb/solidInitialize(mapload)
+/obj/structure/spider/stickyweb/solid/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
