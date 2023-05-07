@@ -773,6 +773,11 @@
 
 /obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
 
+	name = "Modular Shield Debugger" //Filler name sprite for testing
+	desc = "This is filler for testing"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_port"
+
 	dir = SOUTH
 	var/obj/machinery/modular_shield_gen/shield_generator
 	var/turf/connected_turf
@@ -810,8 +815,8 @@
 
 	name = "Modular Shield Node"
 	desc = "A waist high mess of humming pipes and wires that extend the network"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "shieldoff"
+
+
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
 	var/list/connected_through_us
@@ -820,24 +825,21 @@
 
 	name = "Modular Shield Charger"
 	desc = "A machine that somehow fabricates hardlight using electronics"
-	icon = 'icons/mecha/mech_bay.dmi'
-	icon_state = "recharge_port"
+
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
 /obj/machinery/modular_shield/module/relay
 
 	name = "Modular Shield Relay"
 	desc = "It helps the shield generator project farther out"
-	icon = 'icons/mecha/mech_bay.dmi'
-	icon_state = "recharge_port"
+
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
 /obj/machinery/modular_shield/module/well
 
 	name = "Modular Shield Well"
 	desc = "A device used to hold more energy for the modular shield generator"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "shieldoff"
+
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
 /obj/structure/emergency_shield/modular
