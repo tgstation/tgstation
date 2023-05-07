@@ -103,9 +103,11 @@
 	if(machine_stat & BROKEN)
 		if(!tool.tool_start_check(user, amount=0))
 			return FALSE
-		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
-						"<span class='notice'>You begin repairing [src]...</span>", \
-						"<span class='hear'>You hear welding.</span>")
+		user.visible_message(
+			span_notice("[user] is repairing [src]."),
+			span_notice("You begin repairing [src]..."),
+			span_hear("You hear welding."),
+		)
 		if(tool.use_tool(src, user, delay=40, volume=50))
 			if(!(machine_stat & BROKEN))
 				return FALSE
