@@ -1,0 +1,5 @@
+author: "Jacquerel with new icons mostly by INFRARED_BARON"
+delete-after: True
+changes:
+  - balance: "Golems have been reworked into a hunger-based species who gain temporary transformations when eating different kinds of mineral."
+  - rscdel: "The previous golem subtypes no longer exist."
