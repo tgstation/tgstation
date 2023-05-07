@@ -1,15 +1,16 @@
-
 export const LANGUAGES = {
   English: 'en',
   Russian: 'ru',
 };
 
-export const languagesDropdownOptions = Object.entries(LANGUAGES).map(([key, value]) => {
-  return {
-    displayText: key,
-    value: value,
-  };
-});
+export const languagesDropdownOptions = Object.entries(LANGUAGES).map(
+  ([key, value]) => {
+    return {
+      displayText: key,
+      value: value,
+    };
+  }
+);
 
 const fallbackLang = LANGUAGES.English;
 
@@ -17,25 +18,38 @@ export const i18n = (translations) => {
   const currentLang = localStorage.getItem('language');
 
   const t = (stringName, values = {}) => {
-    const rawString = translations[stringName][currentLang] || translations[stringName][fallbackLang];
+    const rawString =
+      translations[stringName][currentLang] ||
+      translations[stringName][fallbackLang];
     return fillStringValues(rawString, values);
   };
 
   const plural = (stringName, values = {}) => {
-    const validLanguage = translations[stringName][currentLang] ? currentLang : fallbackLang;
+    const validLanguage = translations[stringName][currentLang]
+      ? currentLang
+      : fallbackLang;
 
-    if (typeof translations[stringName][validLanguage] === 'string' || !values) {
+    if (
+      typeof translations[stringName][validLanguage] === 'string' ||
+      !values
+    ) {
       return t(stringName);
     }
 
     let rawString;
     switch (validLanguage) {
       case LANGUAGES.Russian:
-        rawString = russianPlural(translations[stringName][validLanguage], values.n);
+        rawString = russianPlural(
+          translations[stringName][validLanguage],
+          values.n
+        );
         break;
       case LANGUAGES.English:
       default: {
-        rawString = englishPlural(translations[stringName][validLanguage], values.n);
+        rawString = englishPlural(
+          translations[stringName][validLanguage],
+          values.n
+        );
       }
     }
 
@@ -45,7 +59,10 @@ export const i18n = (translations) => {
   const fillStringValues = (string, values) => {
     let editedString = string;
     Object.entries(values).forEach(([key, value]) => {
-      editedString = editedString.replace(RegExp(`{${key}}`, "g"), String(value));
+      editedString = editedString.replace(
+        RegExp(`{${key}}`, 'g'),
+        String(value)
+      );
     });
     return editedString;
   };
@@ -73,7 +90,6 @@ export const i18n = (translations) => {
         return translation.other;
     }
   };
-
 
   return {
     t,

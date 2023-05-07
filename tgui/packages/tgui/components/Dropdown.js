@@ -99,7 +99,9 @@ export class Dropdown extends Component {
     const { className, ...rest } = boxProps;
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
-    const chosenValueText = options.find((option) => option.value === this.state.selected)?.displayText ?? this.state.selected;
+    const chosenValueText =
+      options.find((option) => option.value === this.state.selected)
+        ?.displayText ?? this.state.selected;
 
     const menu = this.state.open ? (
       <div
