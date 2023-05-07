@@ -19,7 +19,9 @@
 /area/shuttle/hunter)
 "bx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/broken_bottle,
+/obj/item/broken_bottle{
+	pixel_x = -6
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/shuttle/hunter)
@@ -28,11 +30,10 @@
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
 "bV" = (
-/obj/machinery/computer/monitor{
-	dir = 1
-	},
+/obj/machinery/suit_storage_unit/pirate,
 /obj/effect/turf_decal/box/white,
-/turf/open/floor/iron/dark/textured,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
 /area/shuttle/hunter)
 "bX" = (
 /obj/item/reagent_containers/blood,
@@ -78,6 +79,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"fd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/engine,
 /area/shuttle/hunter)
 "gj" = (
 /obj/structure/table/wood/fancy/blue,
@@ -150,9 +157,24 @@
 /turf/open/floor/grass,
 /area/shuttle/hunter)
 "hE" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/white/diagonal,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/trash/popcorn{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/trash/raisins{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/trash/shrimp_chips{
+	pixel_x = 6
+	},
+/obj/item/trash/boritos/green{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "jl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -352,6 +374,11 @@
 	},
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"ug" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/restroom/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "uy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -570,6 +597,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "Ea" = (
@@ -612,6 +642,9 @@
 "GT" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "Hd" = (
@@ -718,7 +751,11 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/hunter)
 "Nb" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "Ne" = (
@@ -749,6 +786,12 @@
 /obj/machinery/light/floor,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
+/area/shuttle/hunter)
+"Oa" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "Oc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -824,7 +867,7 @@
 "PT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/sign/departments/restroom/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "QI" = (
@@ -889,10 +932,6 @@
 /obj/effect/turf_decal/arrows{
 	dir = 4;
 	pixel_y = -4
-	},
-/obj/effect/turf_decal/arrows{
-	dir = 4;
-	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
@@ -1145,11 +1184,11 @@ lu
 Xa
 bK
 XX
-rF
-bV
 CW
-yd
-oL
+CW
+CW
+CW
+CW
 yd
 yd
 oL
@@ -1173,9 +1212,9 @@ lu
 LI
 XX
 CW
-CW
-CW
-CW
+am
+Xp
+eZ
 CW
 CW
 CW
@@ -1199,10 +1238,10 @@ CW
 CW
 CW
 vu
-CW
-am
-Xp
-eZ
+na
+Ne
+Mk
+QI
 CW
 ZW
 ZC
@@ -1227,9 +1266,9 @@ kN
 mP
 Vw
 na
-Ne
-Mk
-QI
+Jz
+na
+na
 CW
 lI
 yg
@@ -1253,10 +1292,10 @@ rS
 SG
 WU
 ke
-na
-Jz
-na
-CW
+ug
+tH
+hE
+bV
 CW
 GT
 Dw
@@ -1281,11 +1320,11 @@ mz
 IE
 ah
 PT
-tH
+Oa
 bx
+fd
 Ea
 Id
-hE
 yg
 RA
 CW
@@ -1310,9 +1349,9 @@ cp
 aV
 Ja
 Ss
+HI
 EM
 mR
-yg
 lI
 gE
 CW
