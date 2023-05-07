@@ -452,15 +452,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "A fleshy muscle mostly used for meowing."
 	say_mod = "meows"
 
-/obj/item/organ/internal/tongue/bananium
-	name = "bananium tongue"
-	desc = "A bananium geode mostly used for honking."
-	say_mod = "honks"
-	icon = 'icons/obj/weapons/horn.dmi'
-	icon_state = "gold_horn"
-	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
@@ -488,3 +479,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
+
+/obj/item/organ/internal/tongue/golem
+	name = "golem tongue"
+	color = COLOR_WEBSAFE_DARK_GRAY
+	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
+	say_mod = "rumbles"
+	sense_of_taste = FALSE
+	status = ORGAN_MINERAL
