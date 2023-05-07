@@ -27,6 +27,10 @@
 
 /obj/item/organ/internal/appendix/golem/on_remove(mob/living/carbon/organ_owner)
 	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
+	smelter.Remove(organ_owner)
+	return ..()
+
+/obj/item/organ/internal/appendix/golem/Destroy()
 	QDEL_NULL(smelter)
 	return ..()
 
