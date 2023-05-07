@@ -258,6 +258,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
+	desc_by_access["[ACCESS_MORGUE_SECURE]"] = "Coroner"
 	desc_by_access["[ACCESS_SCIENCE]"] = "R&D Lab"
 	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
 	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"

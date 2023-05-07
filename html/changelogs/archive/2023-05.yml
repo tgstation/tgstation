@@ -188,3 +188,64 @@
       the station's mats.
   - balance: Borg restocking speed now scales with the charger's manipulator tier.
   - bugfix: Mech chargers on Tram (and possibly elsewhere) no longer sync oddly.
+2023-05-06:
+  Helg2:
+  - qol: Trees, rocks, grass and etc. now drop materials when destroyed.
+  Melbert:
+  - balance: Blind people don't get alerted when someone in a cardboard box pops out
+      nearby
+  - rscadd: ' Non-player references'
+  RealityOverseer:
+  - bugfix: fixed unrefined ectoplasm anomaly cores not appearing as unrefined
+  Rhials:
+  - qol: Observers now recieve an alert when a powersink is activated/about to explode.
+  - qol: His Grace being awoken now alerts observers, to give you a headstart on your
+      murderbone ghost ring.
+  - qol: Ascension Rituals being completed will also alert observers, for basically
+      the same reason.
+  - qol: Arming a hot potato will now alert observers. Catch!
+  - qol: Eyesnatcher victims will now notify observers, and invite them to laugh at
+      their state of misery and impotence.
+  - qol: Observers will be notified of any acute references to The Simpsons or other
+      20th Television America copyright properties.
+  - qol: Wizard Imposter spawns alert observers, much like any other ghost role event
+      should.
+  - qol: Playing Rock-Paper-Scissors with death will now alert the observers and invite
+      them to watch. Better not choke!
+  - qol: Observers now get an orbit link for BSA impact sites. Why does it keep teleporting
+      me to the AI upload??
+  - qol: Spontaneous Appendicitis now alerts deadchat.
+  - qol: The purchasing of a badass syndie balloon now alerts deadchat. You might
+      not be any more powerful, but at least you have an audience.
+  - qol: When beginning to delaminate, the Supermatter will alert observers and invite
+      them to watch the fireworks.
+  - balance: Psyker Pirates are now Psyker Shikari (bounty hunters).
+  Thlumyn:
+  - rscadd: Added wedding cakes
+  tralezab:
+  - balance: Tonguespike is better, chemspike deals slightly less damage
+2023-05-07:
+  Cheshify:
+  - bugfix: The North Star's cargo shuttle has working conveyors.
+  - bugfix: The North Star has had a slew of missing and improperly done content added
+      and reworked, see the PR for more!
+  JohnFulpWillard:
+  - bugfix: Tablets' minimize apps feature works again.
+  JohnFulpWillard, sprites by McRamon, tattax, and Lamb:
+  - rscadd: The Coroner, a new Medical role revolving around dead corpses and autopsies.
+  - rscadd: The Coroner's Autopsy Scanner, used for discovering the cause for someone's
+      death, listing their wounds, the causes of them, their reagents, and diseases
+      (including stealth ones!)
+  - qol: Morgue Trays are now named after the bodybags inside of them.
+  - balance: The morgue now has 'Secure' morgue trays which by default don't beep.
+  - balance: Security Medical area and Robotics no longer have their own morgue trays.
+  - balance: Dissected bodies now have faster surgery speed. Autopsies also count
+      as dissections, however they're mutually exclusive.
+  Jolly:
+  - bugfix: The area icon for the evidence room should be visible in the map editor
+      again.
+  Shadow-Quill:
+  - qol: Shuttles will no longer show their current destination as a choice while
+      in transit.
+  - qol: The Ice Box pharmacy and Med Sec Outpost blast doors have been replaced with
+      shutters.
