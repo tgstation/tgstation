@@ -16,7 +16,7 @@
 	melee_damage_upper = 30
 	speed = 5
 	player_speed_modifier = -3.1
-	menu_description = "Slow spider variant specializing in stalking and ambushing prey, but has goo health and damage."
+	menu_description = "Slow spider variant specializing in stalking and ambushing prey, above avarage health and damage."
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
 	. = ..()
