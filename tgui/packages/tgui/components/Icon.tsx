@@ -7,24 +7,37 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { InfernoNode } from 'inferno';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
 
-export const Icon = (props) => {
-  const { name, size, spin, className, rotation, inverse, ...rest } = props;
+type IconPropsUnique = {
+  name: string;
+  size?: number;
+  spin?: boolean;
+  className?: string;
+  rotation?: number;
+  style?: string | CSSProperties;
+};
+
+export type IconProps = IconPropsUnique & BoxProps;
+
+export const Icon = (props: IconProps) => {
+  let { style, ...restlet } = props;
+  const { name, size, spin, className, rotation, ...rest } = restlet;
 
   if (size) {
-    if (!rest.style) {
-      rest.style = {};
+    if (!style) {
+      style = {};
     }
-    rest.style['font-size'] = size * 100 + '%';
+    style['font-size'] = size * 100 + '%';
   }
-  if (typeof rotation === 'number') {
-    if (!rest.style) {
-      rest.style = {};
+  if (rotation) {
+    if (!style) {
+      style = {};
     }
-    rest.style['transform'] = `rotate(${rotation}deg)`;
+    style['transform'] = `rotate(${rotation}deg)`;
   }
 
   const boxProps = computeBoxProps(rest);
@@ -63,7 +76,14 @@ export const Icon = (props) => {
 
 Icon.defaultHooks = pureComponentHooks;
 
-export const IconStack = (props) => {
+type IconStackUnique = {
+  children: InfernoNode;
+  className?: string;
+};
+
+export type IconStackProps = IconStackUnique & BoxProps;
+
+export const IconStack = (props: IconStackProps) => {
   const { className, children, ...rest } = props;
   return (
     <span
