@@ -227,7 +227,7 @@
 	if(default_pry_open(O, close_after_pry = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(O))
+	if(!welded_down && default_deconstruction_crowbar(O))
 		SStgui.update_uis(src)
 		return
 
