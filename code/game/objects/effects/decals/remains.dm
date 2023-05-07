@@ -48,6 +48,7 @@
 
 /obj/effect/decal/remains/plasma
 	icon_state = "remainsplasma"
+	turf_loc_check = FALSE
 
 /obj/effect/decal/remains/xeno
 	desc = "They look like the remains of something... alien. They have a strange aura about them."

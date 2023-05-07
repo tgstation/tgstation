@@ -22,13 +22,13 @@
 	else
 		dry()
 
-/obj/effect/decal/cleanable/blood/process()
-	if(world.time > drytime)
-		dry()
-
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/effect/decal/cleanable/blood/process()
+	if(world.time > drytime)
+		dry()
 
 /obj/effect/decal/cleanable/blood/proc/get_timer()
 	drytime = world.time + 3 MINUTES
@@ -159,7 +159,7 @@
 	if(mapload)
 		for (var/i = 1, i < range, i++)
 			var/turf/turf_sending = get_step(src, direction)
-			if(isclosedturf(turf_sending) || isgroundlessturf(turf_sending))
+			if(isclosedturf(turf_sending) || (isgroundlessturf(turf_sending) && !SSmapping.get_turf_below(turf_sending)))
 				continue
 			new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 			if (!step_to(src, turf_sending, 0))

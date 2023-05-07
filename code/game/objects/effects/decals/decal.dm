@@ -20,7 +20,7 @@
 		qdel(src)
 
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
-	return isclosedturf(T) || isgroundlessturf(T)
+	return isclosedturf(T) || (isgroundlessturf(T) && !SSmapping.get_turf_below(T))
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
