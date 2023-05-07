@@ -597,6 +597,8 @@
 	default = -1
 	min_val = 0
 
+/datum/config_entry/flag/setup_bypass_player_check
+
 /datum/config_entry/string/default_view
 	default = "15x15"
 
