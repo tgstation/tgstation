@@ -245,7 +245,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north{
 	coverlocked = 0;
-	network_id = null;
 	start_charge = 60
 	},
 /obj/effect/mapping_helpers/apc/unlocked,
@@ -340,7 +339,6 @@
 "Io" = (
 /obj/machinery/power/smes{
 	charge = 2e+006;
-	network_id = null;
 	output_level = 0
 	},
 /obj/structure/cable,

@@ -222,6 +222,8 @@
 		if(EXPLODE_LIGHT)
 			wires.cut_random()
 
+	return TRUE
+
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()

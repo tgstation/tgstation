@@ -17,10 +17,12 @@
 	cutting_tool = null // Bodybags are not deconstructed by cutting
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
+	can_install_electronics = FALSE
+
+	///The tagged name of the bodybag, also used to check if the bodybag IS tagged.
+	var/tag_name
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
-	var/tagged = FALSE // so closet code knows to put the tag overlay back
-	can_install_electronics = FALSE
 
 /obj/structure/closet/body_bag/Initialize(mapload)
 	. = ..()
@@ -53,21 +55,21 @@
 			return
 		handle_tag("[t ? t : initial(name)]")
 		return
-	if(!tagged)
+	if(!tag_name)
 		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		handle_tag()
 
 ///Handles renaming of the bodybag's examine tag.
-/obj/structure/closet/body_bag/proc/handle_tag(tag_name)
+/obj/structure/closet/body_bag/proc/handle_tag(new_name)
+	tag_name = new_name
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
-	tagged = !!tag_name
 	update_appearance()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
-	if(tagged)
+	if(tag_name)
 		. += "bodybag_label"
 
 /obj/structure/closet/body_bag/close(mob/living/user)

@@ -23,12 +23,13 @@
 
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure()
-	if(enabled) // Shut down the computer
-		if(active_program)
-			active_program.event_powerfailure(background = FALSE)
-		for(var/datum/computer_file/program/programs as anything in idle_threads)
-			programs.event_powerfailure(background = TRUE)
-		shutdown_computer(0)
+	if(!enabled) // Shut down the computer
+		return
+	if(active_program)
+		active_program.event_powerfailure()
+	for(var/datum/computer_file/program/programs as anything in idle_threads)
+		programs.event_powerfailure()
+	shutdown_computer(loud = FALSE)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /obj/item/modular_computer/proc/handle_power(seconds_per_tick)

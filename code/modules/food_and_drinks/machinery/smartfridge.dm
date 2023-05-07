@@ -267,6 +267,7 @@
 	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
+	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	use_power = NO_POWER_USE
@@ -276,7 +277,14 @@
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-	..()
+
+	//remove all component parts inherited from smartfridge cause they were not required in crafting
+	var/obj/item/circuitboard/machine/smartfridge/board = locate() in component_parts
+	component_parts -= board
+	qdel(board)
+	component_parts.Cut()
+
+	return ..()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()

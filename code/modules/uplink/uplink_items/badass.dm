@@ -16,6 +16,14 @@
 	cant_discount = TRUE
 	illegal_tech = FALSE
 
+/datum/uplink_item/badass/balloon/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	. = ..()
+
+	if(!.)
+		return
+
+	notify_ghosts("[user] has purchased a BADASS Syndicate Balloon!", source = src, action = NOTIFY_ORBIT, header = "What are they THINKING?")
+
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
 	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, \

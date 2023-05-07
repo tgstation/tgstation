@@ -15,6 +15,8 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
+	///Boolean on whether the ORM can claim points without being connected to an ore silo.
+	var/requires_silo = TRUE
 	/// The current amount of unclaimed points in the machine
 	var/points = 0
 	/// Smelted ore's amount is multiplied by this
@@ -22,13 +24,28 @@
 	/// Increases the amount of points the miners gain
 	var/point_upgrade = 1
 	/// Details how many credits each smelted ore is worth
-	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
+	var/static/list/ore_values = list(
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 15,
+		/datum/material/silver = 16,
+		/datum/material/gold = 18,
+		/datum/material/titanium = 30,
+		/datum/material/uranium = 30,
+		/datum/material/diamond = 50,
+		/datum/material/bluespace = 50,
+		/datum/material/bananium = 60,
+	)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
 	/// Linkage to the ORM silo
 	var/datum/component/remote_materials/materials
+
+/obj/machinery/mineral/ore_redemption/offstation
+	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
+	requires_silo = FALSE
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -74,7 +91,7 @@
 		var/mats = stack_mats & mat_container.materials
 		var/amount = gathered_ore.amount
 		mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
-		materials.silo_log(src, "smelted", amount, "someone", mats)
+		materials.silo_log(src, "smelted", amount, gathered_ore.name, mats)
 		qdel(gathered_ore)
 
 	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
@@ -119,27 +136,29 @@
 
 	console_notify_timer = null
 
-	var/area/A = get_area(src)
-	var/msg = "Now available in [A]:<br>"
+	var/area/our_area = get_area(src)
+	var/message = "Now available in [our_area]:"
 
 	var/has_minerals = FALSE
+	var/list/appended_list = list()
 
-	for(var/mat in mat_container.materials)
-		var/datum/material/M = mat
-		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
+	for(var/current_material in mat_container.materials)
+		var/datum/material/material_datum = current_material
+		var/mineral_amount = mat_container.materials[current_material] / SHEET_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
-		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
+		appended_list["[capitalize(material_datum.name)]"] = "[mineral_amount] sheets"
 
 	if(!has_minerals)
 		return
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"ore_update" = TRUE,
-		"sender" = "Ore Redemption Machine",
-		"message" = msg,
-		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
-		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
+		"sender_department" = "Ore Redemption Machine",
+		"message" = message,
+		"verified" = "Ore Redemption Machine",
+		"priority" = REQ_NORMAL_MESSAGE_PRIORITY,
+		"appended_list" = appended_list,
 	))
 	signal.send_to_receivers()
 
@@ -220,7 +239,7 @@
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
-			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
+			var/sheet_amount = amount / SHEET_MATERIAL_AMOUNT
 			data["materials"] += list(list(
 				"name" = material.name,
 				"id" = REF(material),
@@ -238,12 +257,15 @@
 				"amount" = can_smelt_alloy(alloy),
 			))
 
+	data["disconnected"] = null
 	if (!mat_container)
-		data["disconnected"] = "local mineral storage is unavailable"
-	else if (!materials.silo)
-		data["disconnected"] = "no ore silo connection is available; storing locally"
+		data["disconnected"] = "Local mineral storage is unavailable"
+	else if (!materials.silo && requires_silo)
+		data["disconnected"] = "No ore silo connection is available; storing locally"
+	else if (!materials.check_z_level() && requires_silo)
+		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
-		data["disconnected"] = "mineral withdrawal is on hold"
+		data["disconnected"] = "Mineral withdrawal is on hold"
 
 	var/obj/item/card/id/card
 	if(isliving(user))
@@ -297,6 +319,8 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
+			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
+				return TRUE
 			if(points)
 				if(user_id_card)
 					user_id_card.registered_account.mining_points += points
@@ -320,7 +344,7 @@
 				if(!amount)
 					return
 
-				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
+				var/stored_amount = CEILING(amount / SHEET_MATERIAL_AMOUNT, 0.1)
 				if(!stored_amount)
 					return
 
@@ -329,7 +353,7 @@
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
-				mats[mat] = MINERAL_MATERIAL_AMOUNT
+				mats[mat] = SHEET_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
 				//Logging deleted for quick coding
 			return TRUE

@@ -241,6 +241,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
+	notify_ghosts("The Bluespace Artillery has been fired!", source = bullseye, header = "KABOOM!")
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
 		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
@@ -348,7 +349,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(istype(target, /area))
+	if(obj_flags & EMAGGED)
+		return get_turf(src)
+	else if(istype(target, /area))
 		return pick(get_area_turfs(target))
 	else if(istype(target, /datum/component/gps))
 		var/datum/component/gps/G = target
@@ -363,7 +366,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		notice = "Cannon unpowered!"
 		return
 	notice = null
-	cannon.fire(user, get_impact_turf())
+	var/turf/target_turf = get_impact_turf()
+	cannon.fire(user, target_turf)
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
 	var/obj/machinery/bsa/full/prebuilt = locate() in range(7) //In case of adminspawn
@@ -386,3 +390,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	QDEL_NULL(centerpiece.back_ref)
 	qdel(centerpiece)
 	return cannon
+/obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out."))

@@ -18,7 +18,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
@@ -204,6 +204,9 @@
 			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
 
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
+
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
@@ -225,6 +228,8 @@
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)
