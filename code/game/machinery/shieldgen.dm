@@ -555,7 +555,7 @@
 #undef ACTIVE_HASFIELDS
 
 //Modular Shield Generator Start
-/obj/machinery/modularshieldgen
+/obj/machinery/modular_shield_gen
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/objects.dmi'
@@ -604,7 +604,7 @@
 	///The list of machines that are boosting us
 	var/list/connected_machines = null
 
-/obj/machinery/modularshieldgen/RefreshParts()
+/obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
 
 	max_regeneration = 3
@@ -623,13 +623,13 @@
 	calculate_regeneration()
 
 
-/obj/machinery/modularshieldgen/Initialize(mapload)
+/obj/machinery/modular_shield_gen/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
 	if(mapload && active && anchored)
 		activate_shields()
 
-/obj/machinery/modularshieldgen/proc/deactivate_shields()
+/obj/machinery/modular_shield_gen/proc/deactivate_shields()
 	active = FALSE
 	update_appearance()
 	QDEL_LIST(deployed_shields)
@@ -638,7 +638,7 @@
 
 
 
-/obj/machinery/modularshieldgen/proc/activate_shields()
+/obj/machinery/modular_shield_gen/proc/activate_shields()
 	active = TRUE
 	update_appearance()
 
@@ -661,23 +661,23 @@
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
-/obj/machinery/modularshieldgen/Destroy()
+/obj/machinery/modular_shield_gen/Destroy()
 	QDEL_LIST(deployed_shields)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
-/obj/machinery/modularshieldgen/update_icon_state()
+/obj/machinery/modular_shield_gen/update_icon_state()
 	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
 	return ..()
 
-/obj/machinery/modularshieldgen/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/modular_shield_gen/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Modularshieldgen")
 		ui.open()
 
-/obj/machinery/modularshieldgen/ui_data(mob/user)
+/obj/machinery/modular_shield_gen/ui_data(mob/user)
 
 	var/list/data = list()
 	data["max_radius"] = max_radius
@@ -690,7 +690,7 @@
 	data["recovering"] = recovering
 	return data
 
-/obj/machinery/modularshieldgen/ui_act(action, params)
+/obj/machinery/modular_shield_gen/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -707,7 +707,7 @@
 				return
 			activate_shields()
 
-/obj/machinery/modularshieldgen/proc/calculate_regeneration()
+/obj/machinery/modular_shield_gen/proc/calculate_regeneration()
 
 	if(!(active))
 		if(recovering)
@@ -717,7 +717,7 @@
 	current_regeneration = max_regeneration / (1 + radius/max_radius)//this is how we encourage space efficiency and using higher tier parts
 
 
-/obj/machinery/modularshieldgen/proc/shield_drain(damage_amount)
+/obj/machinery/modular_shield_gen/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	START_PROCESSING(SSobj, src)
 	if (stored_strength < 5)
@@ -726,7 +726,7 @@
 		recovering = TRUE
 		return
 
-/obj/machinery/modularshieldgen/process(seconds_per_tick)
+/obj/machinery/modular_shield_gen/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		recovering = FALSE
@@ -736,23 +736,65 @@
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
 		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
-/obj/machinery/modularshieldwell
+/obj/machinery/modular_shield_node
+
+	name = "Modular Shield Node"
+	desc = "A mess of pipes and wires that extend the network"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	dir = SOUTH
+	density = FALSE
+	circuit = /obj/item/circuitboard/machine/modular_shield_node
+
+	///The generator we are supporting
+	var/obj/machinery/modular_shield_gen/shield_generator
+	var/connected = FALSE
+
+/obj/machinery/modular_shield_charger
+
+	name = "Modular Shield Charger"
+	desc = "A machine that somehow fabricates hardlight using electronics"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	dir = SOUTH
+	density = FALSE
+	circuit = /obj/item/circuitboard/machine/modular_shield_charger
+
+	///The generator we are supporting
+	var/obj/machinery/modular_shield_gen/shield_generator
+	var/connected = FALSE
+
+/obj/machinery/modular_shield_relay
+
+	name = "Modular Shield Relay"
+	desc = "It helps the shield generator project farther out"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	dir = SOUTH
+	density = FALSE
+	circuit = /obj/item/circuitboard/machine/modular_shield_relay
+
+	///The generator we are supporting
+	var/obj/machinery/modular_shield_gen/shield_generator
+	var/connected = FALSE
+
+/obj/machinery/modular_shield_well
 
 	name = "Modular Shield Well"
 	desc = "A device used to hold more energy for the modular shield generator"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
 	dir = SOUTH
-	//circuit = /obj/item/circuitboard/machine/modular_shield_well
+	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
 	///The generator we are supporting
-	var/obj/machinery/modularshieldgen/shield_generator
+	var/obj/machinery/modular_shield_gen/shield_generator
 	var/connected = FALSE
 
-/obj/machinery/modularshieldwell/RefreshParts()
+/obj/machinery/modular_shield_well/RefreshParts()
 	. = ..()
 
-/obj/machinery/modularshieldwell
+/obj/machinery/modular_shield_well
 
 
 /obj/structure/emergency_shield/modular
@@ -762,7 +804,7 @@
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
 	var/heat_resistance = 400
 	//our parent
-	var/obj/machinery/modularshieldgen/shield_generator
+	var/obj/machinery/modular_shield_gen/shield_generator
 
 
 /obj/structure/emergency_shield/modular/Initialize(mapload)
