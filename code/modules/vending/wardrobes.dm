@@ -285,6 +285,7 @@
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
 		/obj/item/storage/box/bodybags = 3,
+		/obj/item/storage/medkit/coroner = 1,
 		/obj/item/toy/crayon/white = 2,
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/clothing/shoes/sneakers/black = 1,
