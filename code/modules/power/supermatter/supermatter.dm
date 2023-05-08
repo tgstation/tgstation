@@ -144,9 +144,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/disable_gas = FALSE
 	/// Disables power changes.
 	var/disable_power_change = FALSE
-	/// Disables the SM's proccessing totally.
-	/// Make sure absorbed_gasmix and gas_percentage isnt null if this is on.
-	var/disable_process = FALSE
+	/// Disables the SM's proccessing totally when set to SM_PROCESS_DISABLED.
+	/// Temporary disables the processing when it's set to SM_PROCESS_TIMESTOP.
+	/// Make sure absorbed_gasmix and gas_percentage isnt null if this is on SM_PROCESS_DISABLED.
+	var/disable_process = SM_PROCESS_ENABLED
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
@@ -188,6 +189,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, PROC_REF(force_delam))
+	RegisterSignal(src, COMSIG_ATOM_TIMESTOP_FREEZE, PROC_REF(time_frozen))
+	RegisterSignal(src, COMSIG_ATOM_TIMESTOP_UNFREEZE, PROC_REF(time_unfrozen))
 
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(tram_contents_consume),
@@ -235,7 +238,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	// PART 1: PRELIMINARIES
-	if(disable_process)
+	if(disable_process != SM_PROCESS_ENABLED)
 		return
 
 	var/turf/local_turf = loc
@@ -441,6 +444,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		icon_state = base_icon_state
 
+/obj/machinery/power/supermatter_crystal/proc/time_frozen()
+	SIGNAL_HANDLER
+	if(disable_process != SM_PROCESS_ENABLED)
+		return
+
+	disable_process = SM_PROCESS_TIMESTOP
+
+/obj/machinery/power/supermatter_crystal/proc/time_unfrozen()
+	SIGNAL_HANDLER
+	if(disable_process != SM_PROCESS_TIMESTOP)
+		return
+
+	disable_process = SM_PROCESS_ENABLED
+
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
@@ -462,6 +479,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 
 	final_countdown = TRUE
+
+	notify_ghosts("[src] has begun the delamination process!", source = src, header = "Meltdown Incoming")
 
 	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
 	var/list/count_down_messages = delamination_strategy.count_down_messages()

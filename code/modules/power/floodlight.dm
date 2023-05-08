@@ -147,7 +147,25 @@
 
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
 	register_context()
+
+/obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, is_dark_color)
+	SIGNAL_HANDLER
+
+	if(setting > FLOODLIGHT_OFF)
+		update_light_state()
+
+/obj/machinery/power/floodlight/Destroy()
+	UnregisterSignal(src, COMSIG_OBJ_PAINTED)
+	. = ..()
+
+/// change light color during operation
+/obj/machinery/power/floodlight/proc/update_light_state()
+	var/light_color =  NONSENSICAL_VALUE
+	if(!isnull(color))
+		light_color = color
+	set_light(light_setting_list[setting], light_power, light_color)
 
 /obj/machinery/power/floodlight/add_context(
 	atom/source,
@@ -201,11 +219,12 @@
 /obj/machinery/power/floodlight/proc/change_setting(newval, mob/user)
 	if((newval < FLOODLIGHT_OFF) || (newval > light_setting_list.len))
 		return
+
 	setting = newval
 	active_power_usage = light_setting_list[setting] * light_power_coefficient
 	if(!avail(active_power_usage) && setting > FLOODLIGHT_OFF)
 		return change_setting(setting - 1)
-	set_light(light_setting_list[setting], light_power)
+	update_light_state()
 	var/setting_text = ""
 	if(setting > FLOODLIGHT_OFF)
 		icon_state = "[initial(icon_state)]_on"
@@ -280,3 +299,8 @@
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+
+#undef FLOODLIGHT_OFF
+#undef FLOODLIGHT_LOW
+#undef FLOODLIGHT_MED
+#undef FLOODLIGHT_HIGH

@@ -18,41 +18,6 @@
 /obj/item/organ/internal/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
 
-/obj/item/organ/internal/adamantine_resonator
-	visual = FALSE
-	name = "adamantine resonator"
-	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
-	zone = BODY_ZONE_HEAD
-	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
-	icon_state = "adamantine_resonator"
-
-/obj/item/organ/internal/vocal_cords/adamantine
-	name = "adamantine vocal cords"
-	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
-	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
-	icon_state = "adamantine_cords"
-
-/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
-	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
-	if(!message)
-		return
-	if(QDELETED(src) || QDELETED(owner))
-		return
-	owner.say(".x[message]")
-
-/obj/item/organ/internal/vocal_cords/adamantine/handle_speech(message)
-	var/msg = span_resonate(span_name("[owner.real_name]</span> <span class='message'>resonates, \"[message]\""))
-	for(var/player in GLOB.player_list)
-		if(iscarbon(player))
-			var/mob/living/carbon/speaker = player
-			if(speaker.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
-				to_chat(speaker, msg)
-		if(isobserver(player))
-			var/link = FOLLOW_LINK(player, owner)
-			to_chat(player, "[link] [msg]")
-
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/internal/vocal_cords/colossus
 	name = "divine vocal cords"
@@ -120,3 +85,38 @@
 /obj/item/organ/internal/vocal_cords/colossus/speak_with(message)
 	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
+
+/obj/item/organ/internal/adamantine_resonator
+	visual = FALSE
+	name = "adamantine resonator"
+	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
+	icon_state = "adamantine_resonator"
+
+/obj/item/organ/internal/vocal_cords/adamantine
+	name = "adamantine vocal cords"
+	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Golems containing these formations use this to broadcast messages to nearby golems."
+	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
+	icon_state = "adamantine_cords"
+
+/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
+	if(!IsAvailable(feedback = TRUE))
+		return
+	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
+	if(!message)
+		return
+	if(QDELETED(src) || QDELETED(owner))
+		return
+	owner.say(".x[message]")
+
+/obj/item/organ/internal/vocal_cords/adamantine/handle_speech(message)
+	var/msg = span_resonate("[span_name("[owner.real_name]")] resonates, \"[message]\"")
+	for(var/player in GLOB.player_list)
+		if(iscarbon(player))
+			var/mob/living/carbon/speaker = player
+			if(speaker.get_organ_slot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
+				to_chat(speaker, msg)
+		if(isobserver(player))
+			var/link = FOLLOW_LINK(player, owner)
+			to_chat(player, "[link] [msg]")

@@ -6,12 +6,6 @@
 #define SCROLL_RATE (0.04 SECONDS) // time per pixel
 #define LINE1_Y -8
 #define LINE2_Y -15
-
-#define SD_BLANK 0  // 0 = Blank
-#define SD_EMERGENCY 1  // 1 = Emergency Shuttle timer
-#define SD_MESSAGE 2  // 2 = Arbitrary message(s)
-#define SD_PICTURE 3  // 3 = alert picture
-
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"
@@ -40,7 +34,7 @@
 	name = "status display frame"
 	desc = "Used to build status displays, just secure to the wall."
 	icon_state = "unanchoredstatusdisplay"
-	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/status_display/evac
 	pixel_shift = 32
 

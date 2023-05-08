@@ -334,6 +334,12 @@
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "A train but in space, choo choo!"
 
+/datum/map_template/shuttle/emergency/birdshot
+	suffix = "birdshot"
+	name = "Birdshot Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 2
+	description = "We pulled this one out of Mothball just for you!"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -473,6 +479,20 @@
 	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
 	credit_cost = CARGO_CRATE_VALUE * 70
 
+/datum/map_template/shuttle/emergency/tranquility
+	suffix = "tranquility"
+	name = "The Tranquility Relocation Shuttle"
+	description = "A large shuttle, covered in flora and comfortable resting areas. The perfect way to end a peaceful shift"
+	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
+	credit_cost = CARGO_CRATE_VALUE * 25
+
+/datum/map_template/shuttle/emergency/hugcage
+	suffix = "hugcage"
+	name = "Hug Relaxation Shuttle"
+	description = "A small cozy shuttle with plenty of beds for tired or sensitive spacemen, and a box for pillow-fights."
+	admin_notes = "Has a sentience fun balloon for pets."
+	credit_cost = CARGO_CRATE_VALUE * 16
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -505,6 +525,11 @@
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
 
+/datum/map_template/shuttle/ferry/northstar
+	suffix = "northstar"
+	name = "north star transport ferry"
+	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -524,6 +549,11 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
+
+/datum/map_template/shuttle/whiteship/birdshot
+	suffix = "birdshot"
+	name = "NT Patrol Bee"
+	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an agressive and deadly Gelatinous Cube"
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
@@ -577,12 +607,23 @@
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
 
+/datum/map_template/shuttle/cargo/birdshot
+	suffix = "birdshot"
+	name = "supply shuttle (Birdshot)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
+
+/datum/map_template/shuttle/emergency/northstar
+	suffix = "northstar"
+	name = "North Star Emergency Shuttle"
+	description = "A rugged shuttle meant for long-distance transit from the tips of the frontier to Central Command and back. \
+	moderately comfortable and large, but cramped."
+	credit_cost = CARGO_CRATE_VALUE * 14
 
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
@@ -628,6 +669,10 @@
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
 
+/datum/map_template/shuttle/arrival/birdshot
+	suffix = "birdshot"
+	name = "arrival shuttle (Birdshot)"
+
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
@@ -654,6 +699,10 @@
 	suffix = "large"
 	name = "mining shuttle (Large)"
 
+/datum/map_template/shuttle/mining/northstar
+	suffix = "northstar"
+	name = "mining shuttle (North Star)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
@@ -669,6 +718,10 @@
 /datum/map_template/shuttle/mining_common/kilo
 	suffix = "kilo"
 	name = "lavaland shuttle (Kilo)"
+
+/datum/map_template/shuttle/mining_common/northstar
+	suffix = "northstar"
+	name = "lavaland shuttle (North Star)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
@@ -730,10 +783,6 @@
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
 
-/datum/map_template/shuttle/pirate/psykers
-	suffix = "psyker"
-	name = "pirate ship (Psyker-gang)"
-
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"
@@ -745,6 +794,10 @@
 /datum/map_template/shuttle/hunter/bounty
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
+
+/datum/map_template/shuttle/hunter/psyker
+	suffix = "psyker"
+	name = "Psyker Fortune-Telling Ship"
 
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"
@@ -798,6 +851,14 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/arrival/northstar
+	suffix = "northstar"
+	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/cargo/northstar
+	suffix = "northstar"
+	name = "cargo ferry (North Star)"
 
 // Custom ERT shuttles
 /datum/map_template/shuttle/ert/bounty

@@ -114,14 +114,6 @@
 #define COLOR_LIGHT_BROWN "#996666"
 #define COLOR_BROWNER_BROWN "#663300"
 
-//Color defines used by the soapstone (based on readability against grey tiles)
-#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
-#define COLOR_SOAPSTONE_IRON "#b2b2b2"
-#define COLOR_SOAPSTONE_BRONZE "#FE8001"
-#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
-#define COLOR_SOAPSTONE_GOLD "#FFD900"
-#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
-
 #define COLOR_GREEN_GRAY "#99BB76"
 #define COLOR_RED_GRAY "#B4696A"
 #define COLOR_PALE_BLUE_GRAY "#98C5DF"
@@ -129,6 +121,7 @@
 #define COLOR_PALE_RED_GRAY "#D59998"
 #define COLOR_PALE_PURPLE_GRAY "#CBB1CA"
 #define COLOR_PURPLE_GRAY "#AE8CA8"
+#define COLOR_GOLEM_GRAY "#8E8C81"
 
 //Color defines used by the assembly detailer.
 #define COLOR_ASSEMBLY_BLACK "#545454"
@@ -172,6 +165,7 @@
 #define COLOR_THEME_GLASS "#75A4C4"
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 #define COLOR_THEME_TRASENKNOX "#3ce375"
+#define COLOR_THEME_DETECTIVE "#c7b08b"
 
 ///Colors for eigenstates
 #define COLOR_PERIWINKLEE "#9999FF"
@@ -183,6 +177,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)

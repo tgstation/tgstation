@@ -125,11 +125,11 @@
 							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
 		contents.Add(user)
 
-/obj/structure/spawner/nether/process(delta_time)
+/obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-			living_mob.adjustBruteLoss(60 * delta_time)
+			living_mob.adjustBruteLoss(60 * seconds_per_tick)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
 				var/mob/living/basic/blankbody/newmob = new(loc)

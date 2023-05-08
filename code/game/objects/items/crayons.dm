@@ -678,7 +678,7 @@
 	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
@@ -1016,3 +1016,7 @@
 #undef RANDOM_ANY
 
 #undef AVAILABLE_SPRAYCAN_SPACE
+
+#undef PAINT_NORMAL
+#undef PAINT_LARGE_HORIZONTAL
+#undef PAINT_LARGE_HORIZONTAL_ICON

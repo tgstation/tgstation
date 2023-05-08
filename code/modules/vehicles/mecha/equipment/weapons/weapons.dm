@@ -199,7 +199,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)
@@ -457,7 +457,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
 	. = ..()
-	if(action == "toggle")
+	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
@@ -485,6 +485,7 @@
 	name = "punching glove"
 	desc = "INCOMING HONKS"
 	throwforce = 35
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "punching_glove"
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

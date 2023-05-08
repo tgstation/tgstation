@@ -50,7 +50,7 @@
 				[span_notice("Removing [bite_size] nutritional units per operation.")]
 				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user)
+/obj/machinery/fat_sucker/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
@@ -65,7 +65,7 @@
 		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
-/obj/machinery/fat_sucker/open_machine(mob/user)
+/obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
@@ -132,7 +132,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process(delta_time)
+/obj/machinery/fat_sucker/process(seconds_per_tick)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -144,8 +144,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size * delta_time)
-	nutrients += bite_size * delta_time
+	C.adjust_nutrition(-bite_size * seconds_per_tick)
+	nutrients += bite_size * seconds_per_tick
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
@@ -184,11 +184,11 @@
 			while(nutrients >= nutrient_to_meat)
 				nutrients -= nutrient_to_meat
 				var/atom/meat = new C.type_of_meat (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = MINERAL_MATERIAL_AMOUNT * 4))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = SHEET_MATERIAL_AMOUNT * 4))
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
 				var/atom/meat = new /obj/item/food/meat/rawcutlet/plain (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(MINERAL_MATERIAL_AMOUNT * (4/3))))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(SHEET_MATERIAL_AMOUNT * (4/3))))
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)

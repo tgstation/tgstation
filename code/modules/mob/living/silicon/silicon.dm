@@ -417,7 +417,7 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
+/mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
 /mob/living/silicon/rust_heretic_act()
@@ -460,7 +460,9 @@
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
-		program.force_full_update()
+		var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)
+		if(active_ui)
+			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
 /mob/living/silicon/fully_replace_character_name(oldname, newname)

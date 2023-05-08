@@ -326,10 +326,11 @@
  * Will update the machine icon and any user interfaces currently open.
  * Arguments:
  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
+ * * density - Boolean. Whether to make the object dense when it's open.
  */
-/obj/machinery/proc/open_machine(drop = TRUE)
+/obj/machinery/proc/open_machine(drop = TRUE, density_to_set = FALSE)
 	state_open = TRUE
-	set_density(FALSE)
+	set_density(density_to_set)
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
@@ -394,9 +395,9 @@
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
-/obj/machinery/proc/close_machine(atom/movable/target)
+/obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
-	set_density(TRUE)
+	set_density(density_to_set)
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))
@@ -779,14 +780,17 @@
 	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
+	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
-/obj/machinery/proc/default_pry_open(obj/item/crowbar)
+/obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
 	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-	open_machine()
+	open_machine(density_to_set = open_density)
+	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
+		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
@@ -1114,8 +1118,6 @@
 	if(machine_stat & BROKEN)
 		. += span_notice("It looks broken and non-functional.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(resistance_flags & ON_FIRE)
-			. += span_warning("It's on fire!")
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)

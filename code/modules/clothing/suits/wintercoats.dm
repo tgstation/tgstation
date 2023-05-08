@@ -11,6 +11,8 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
+	/// The mutable_appearance of the associated hood, when it's down. Can be null when the hood is up.
+	var/mutable_appearance/hood_overlay
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -28,6 +30,42 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
 	)
+
+	generate_hood_overlay()
+
+
+/obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
+	. = ..()
+
+	. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
+
+
+/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
+	. = ..()
+
+	if (. == FALSE) // Direct check for FALSE, because that's the specific case we want to propagate, not just null.
+		return FALSE
+
+	zipped = !zipped
+	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
+	balloon_alert(user, "[zipped ? "" : "un"]zipped")
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		wearer.update_worn_oversuit()
+
+
+/// Helper proc to generate the `hood_overlay` associated to the wintercoat.
+/obj/item/clothing/suit/hooded/wintercoat/proc/generate_hood_overlay()
+	hood_overlay = mutable_appearance(initial(worn_icon), "[initial(icon_state)]_hood", -SUIT_LAYER)
+
+
+/obj/item/clothing/suit/hooded/wintercoat/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+
+	if(!isinhands && !hood_up)
+		. += hood_overlay
+
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
@@ -49,7 +87,6 @@
 /obj/item/clothing/suit/hooded/wintercoat/eva
 	name = "\proper Endotherm winter coat"
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
-	icon_state = "coateva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.75
 	armor_type = /datum/armor/wintercoat_eva
@@ -77,7 +114,6 @@
 /obj/item/clothing/head/hooded/winterhood/eva
 	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
-	icon_state = "hood_eva"
 	armor_type = /datum/armor/winterhood_eva
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
@@ -294,12 +330,12 @@
 	icon_state = "hood_medical"
 	armor_type = /datum/armor/winterhood_medical
 
-// Chief Medical Officer
 /datum/armor/winterhood_medical
 	bio = 40
 	fire = 10
 	acid = 20
 
+// Chief Medical Officer
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
 	name = "chief medical officer's winter coat"
 	desc = "A winter coat in a vibrant shade of blue with a small silver caduceus instead of a plastic zipper tab. The normal liner is replaced with an exceptionally thick, soft layer of fur."
@@ -339,6 +375,22 @@
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
 	icon_state = "hood_chemistry"
+
+// Coroner
+/obj/item/clothing/suit/hooded/wintercoat/medical/coroner
+	name = "coroner winter coat"
+	desc = "A winter coat made with acid resistant polymers, used when the cold dead bodies are too much."
+	icon_state = "coatcoroner"
+	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/coroner
+
+/obj/item/clothing/suit/hooded/wintercoat/medical/coroner/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/autopsy_scanner
+
+/obj/item/clothing/head/hooded/winterhood/medical/coroner
+	desc = "A white winter coat hood."
+	icon_state = "hood_coroner"
 
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
@@ -468,7 +520,6 @@
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
-	species_exception = list(/datum/species/golem/uranium)
 
 /datum/armor/wintercoat_engineering
 	fire = 20

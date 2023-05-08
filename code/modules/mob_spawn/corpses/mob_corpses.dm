@@ -42,8 +42,20 @@
 	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 
 /datum/outfit/syndicatecommandocorpse/lessenedgear
-	name = "Syndicate Commando Corpse"
+	name = "Syndicate Commando Corpse (Less Antag Gear)"
 	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
+
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit
+	outfit = /datum/outfit/syndicatecommandocorpse/soft_suit
+
+/datum/outfit/syndicatecommandocorpse/soft_suit
+	name = "Syndicate Commando Corpse (Softsuit)"
+	suit = /obj/item/clothing/suit/space/syndicate/black
+	head = /obj/item/clothing/head/helmet/space/syndicate/black
+	gloves = /obj/item/clothing/gloves/color/black
 	back = null
 	id = null
 	id_trim = null
@@ -85,6 +97,19 @@
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
+
+/obj/effect/mob_spawn/corpse/human/tigercultist
+	name = "Tiger Cooperative Cultist"
+	outfit = /datum/outfit/tigercultcorpse
+
+/datum/outfit/tigercultcorpse
+	name = "Tiger Cooperative Corpse"
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	shoes = /obj/item/clothing/shoes/laceup
+	neck = /obj/item/clothing/neck/fake_heretic_amulet
+	head = /obj/item/clothing/head/hooded/chaplain_hood
+	back = /obj/item/storage/backpack/cultpack
 
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
@@ -317,3 +342,11 @@
 	facial_hairstyle = "Shaved"
 	skin_tone = "caucasian1"
 	outfit = /datum/outfit/job/assistant/consistent
+
+/obj/effect/mob_spawn/corpse/human/prey_pod
+	husk = TRUE
+	outfit = /datum/outfit/prey_pod_victim
+
+/datum/outfit/prey_pod_victim
+	name = "Prey Pod Victim"
+	uniform = /obj/item/clothing/under/rank/rnd/roboticist

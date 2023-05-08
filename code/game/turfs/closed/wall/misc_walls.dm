@@ -39,31 +39,6 @@
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
-/turf/closed/wall/vault
-	name = "strange wall"
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "rockvault"
-	base_icon_state = "rockvault"
-	turf_flags = IS_SOLID
-	smoothing_flags = NONE
-	canSmoothWith = null
-	smoothing_groups = null
-	rcd_memory = null
-
-/turf/closed/wall/vault/rock
-	name = "rocky wall"
-	desc = "You feel a strange nostalgia from looking at this..."
-
-/turf/closed/wall/vault/alien
-	name = "alien wall"
-	icon_state = "alienvault"
-	base_icon_state = "alienvault"
-
-/turf/closed/wall/vault/sandstone
-	name = "sandstone wall"
-	icon_state = "sandstonevault"
-	base_icon_state = "sandstonevault"
-
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "icedmetal_wall-0"
@@ -135,3 +110,16 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+
+/turf/closed/wall/material/meat
+	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless

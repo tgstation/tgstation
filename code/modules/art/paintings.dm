@@ -83,6 +83,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -179,13 +180,17 @@
 /obj/item/canvas/proc/finalize(mob/user)
 	if(painting_metadata.loaded_from_json || finalized)
 		return
-	finalized = TRUE
+	if(!try_rename(user))
+		return
+
 	painting_metadata.creator_ckey = user.ckey
 	painting_metadata.creator_name = user.real_name
 	painting_metadata.creation_date = time2text(world.realtime)
 	painting_metadata.creation_round_id = GLOB.round_id
 	generate_proper_overlay()
-	try_rename(user)
+	finalized = TRUE
+
+	SStgui.update_uis(src)
 
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
@@ -322,15 +327,20 @@
 
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
-		return
+		return TRUE
 	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
-	if(new_name != painting_metadata.title && new_name && user.can_perform_action(src))
+	if(isnull(new_name))
+		return FALSE
+	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
-	if(sign_choice != "Yes")
-		painting_metadata.creator_name = "Anonymous"
-	SStgui.update_uis(src)
+	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+		if("Yes")
+			return TRUE
+		if("No")
+			painting_metadata.creator_name = "Anonymous"
+			return TRUE
 
+	return FALSE
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
@@ -413,7 +423,8 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -425,7 +436,8 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -455,7 +467,8 @@
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user,I)
 	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
-		try_rename(user)
+		if(try_rename(user))
+			SStgui.update_uis(src)
 	else
 		return ..()
 
@@ -501,8 +514,11 @@
 	return FALSE
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
-	if(current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title))
-		current_canvas.try_rename(user)
+	if(current_canvas.painting_metadata.title != initial(current_canvas.painting_metadata.title))
+		return
+	if(!current_canvas.try_rename(user))
+		return
+	SStgui.update_uis(current_canvas)
 
 /obj/structure/sign/painting/update_icon_state(updates=ALL)
 	. = ..()
@@ -601,7 +617,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -628,7 +644,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
@@ -636,8 +652,6 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
-	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

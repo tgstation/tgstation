@@ -23,6 +23,7 @@
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/fire_act(exposed_temperature, exposed_volume)
 	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
@@ -57,7 +58,7 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/turf_decal/Destroy(force)
@@ -67,7 +68,7 @@
 // I hate it too bestie
 	if(GLOB.running_create_and_destroy)
 		var/turf/T = loc
-		T.RemoveElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
+		T.RemoveElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 #endif
 	// Intentionally used over moveToNullspace(), which calls doMove(), which fires
 	// off an enormous amount of procs, signals, etc, that this temporary effect object

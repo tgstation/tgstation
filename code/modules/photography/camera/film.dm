@@ -3,7 +3,7 @@
  */
 /obj/item/camera_film
 	name = "film cartridge"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	inhand_icon_state = "electropack"
@@ -11,4 +11,4 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	custom_materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)

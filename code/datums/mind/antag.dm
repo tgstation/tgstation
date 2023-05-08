@@ -201,7 +201,7 @@
 
 	else if(IS_REVOLUTIONARY(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
-		converter.add_revolutionary(src,FALSE)
+		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 
 	else if(IS_NUKE_OP(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -215,6 +215,9 @@
 
 	current.faction |= creator.faction
 	creator.faction |= current.faction
+
+	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
+	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")
 
 	if(creator.mind?.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")

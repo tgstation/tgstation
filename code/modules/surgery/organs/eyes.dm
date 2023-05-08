@@ -116,8 +116,11 @@
 
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
-	if(!istype(parent) || parent.getorgan(/obj/item/organ/internal/eyes) != src)
+	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
+
+	if(isnull(eye_icon_state))
+		return list()
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
@@ -132,11 +135,10 @@
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
 
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	if(my_head?.worn_face_offset)
 		for(var/mutable_appearance/overlay in overlays)
-			overlay.pixel_x += offset[OFFSET_X]
-			overlay.pixel_y += offset[OFFSET_Y]
+			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 
@@ -149,7 +151,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
@@ -252,6 +254,30 @@
 	sight_flags = SEE_MOBS
 	color_cutoffs = list(25, 5, 42)
 
+/obj/item/organ/internal/eyes/golem
+	name = "resonating crystal"
+	icon_state = "adamantine_cords"
+	eye_icon_state = null
+	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
+	color = COLOR_GOLEM_GRAY
+	visual = FALSE
+	status = ORGAN_MINERAL
+	color_cutoffs = list(10, 15, 5)
+	actions_types = list(/datum/action/cooldown/golem_ore_sight)
+
+/// Send an ore detection pulse on a cooldown
+/datum/action/cooldown/golem_ore_sight
+	name = "Ore Resonance"
+	desc = "Causes nearby ores to vibrate, revealing their location."
+	button_icon = 'icons/obj/device.dmi'
+	button_icon_state = "manual_mining"
+	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 10 SECONDS
+
+/datum/action/cooldown/golem_ore_sight/Activate(atom/target)
+	. = ..()
+	mineral_scan_pulse(get_turf(target))
+
 ///Robotic
 
 /obj/item/organ/internal/eyes/robotic
@@ -282,7 +308,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(10 * severity))
-		applyOrganDamage(20 * severity)
+		apply_organ_damage(20 * severity)
 		to_chat(owner, span_warning("Your eyes start to fizzle in their sockets!"))
 		do_sparks(2, TRUE, owner)
 		owner.emote("scream")
@@ -594,13 +620,13 @@
 	adapt_light.update_brightness(eye_owner)
 	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
-/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
+/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(seconds_per_tick, times_fired)
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
-		applyOrganDamage(10) //blind quickly
+		apply_organ_damage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
 	else
-		applyOrganDamage(-10) //heal quickly
+		apply_organ_damage(-10) //heal quickly
 	. = ..()
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
@@ -610,3 +636,5 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+#undef RGB2EYECOLORSTRING

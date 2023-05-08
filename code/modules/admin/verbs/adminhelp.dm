@@ -336,7 +336,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(CONFIG_GET(string/adminhelp_webhook_pfp))
 		webhook_info["avatar_url"] = CONFIG_GET(string/adminhelp_webhook_pfp)
 	// Uncomment when servers are moved to TGS4
-	// send2chat("[initiator_ckey] | [message_content]", "ahelp", TRUE)
+	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
@@ -764,7 +764,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(user_client.handle_spam_prevention(message, MUTE_ADMINHELP))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 	if(urgent)
 		if(!COOLDOWN_FINISHED(src, ahelp_cooldowns?[user_client.ckey]))

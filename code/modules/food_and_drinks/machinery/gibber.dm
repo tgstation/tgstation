@@ -117,7 +117,7 @@
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
-	else if(default_pry_open(P))
+	else if(default_pry_open(P, close_after_pry = TRUE))
 		return
 
 	else if(default_deconstruction_crowbar(P))
@@ -190,7 +190,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first

@@ -107,11 +107,6 @@
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
-	/// Default network root for this area aka station, lavaland, etc
-	var/network_root_id = null
-	/// Area network id when you want to find all devices hooked up to this area
-	var/network_area_id = null
-
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
 
@@ -177,12 +172,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 
-	if(area_flags & AREA_USES_STARLIGHT && CONFIG_GET(flag/starlight))
-		// Areas lit by starlight are not supposed to be fullbright 4head
-		base_lighting_alpha = 0
-		base_lighting_color = null
-		static_lighting = TRUE
-
 	if(requires_power)
 		luminosity = 0
 	else
@@ -199,11 +188,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		blend_mode = BLEND_MULTIPLY
 
 	reg_in_areas_in_z()
-
-	if(!mapload)
-		if(!network_root_id)
-			network_root_id = STATION_NETWORK_ROOT // default to station root because this might be created with a blueprint
-		SSnetworks.assign_area_network_id(src)
 
 	update_base_lighting()
 

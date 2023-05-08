@@ -230,3 +230,6 @@ Tracy.exe
 
 # named byond versions config
 /tools/build/dm_versions.json
+
+# From /tools/define_sanity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
+define_sanity_output.txt

@@ -1,7 +1,3 @@
-#define CAMERA_UPGRADE_XRAY (1<<0)
-#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
-#define CAMERA_UPGRADE_MOTION (1<<2)
-
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -145,15 +141,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 	else
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 	else
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(isMotion())
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 	else
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 
@@ -540,8 +536,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
+	var/turf/directly_above = SSmapping.get_turf_above(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
-	var/check_higher = pos != get_highest_turf(pos)
+	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
 		see = range(view_range, pos)

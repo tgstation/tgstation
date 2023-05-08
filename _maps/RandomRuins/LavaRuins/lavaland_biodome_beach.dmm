@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ad" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aj" = (
@@ -104,17 +104,13 @@
 /turf/open/floor/carpet/red,
 /area/ruin/powered/beach)
 "bG" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/megaphone,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bH" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -755,12 +751,8 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ao" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
 /obj/item/storage/medkit/regular,
@@ -965,11 +957,8 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "GA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /obj/structure/chair/stool/directional/south,
@@ -985,10 +974,10 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "GR" = (
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,

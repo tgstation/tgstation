@@ -63,7 +63,7 @@
 	return
 
 /turf/open/misc/asteroid/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -151,6 +151,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
+/// Used for the lavaland icemoon ruin.
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
@@ -193,6 +197,13 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
+
+/// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST | NO_RUINS
+
+/turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST | NO_CLEARING
 
 /turf/open/lava/plasma/ice_moon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -252,3 +263,19 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/snow/standard_air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+
+/turf/open/misc/asteroid/moon
+	name = "lunar surface"
+	baseturfs = /turf/open/misc/asteroid/moon
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	base_icon_state = "moon"
+	floor_variance = 40
+	dig_result = /obj/item/stack/ore/glass/basalt
+	broken_state = "moon_dug"
+
+/turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
+	dug = TRUE
+	floor_variance = 0
+	base_icon_state = "moon_dug"
+	icon_state = "moon_dug"

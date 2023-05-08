@@ -4,7 +4,7 @@
  * Arguments:
  * * typepath The typepath of the organ to get
  */
-/mob/proc/getorgan(typepath)
+/mob/proc/get_organ_by_type(typepath)
 	return
 
 /**
@@ -15,21 +15,22 @@
  * Arguments:
  * * zone [a BODY_ZONE_X define](https://github.com/tgstation/tgstation/blob/master/code/__DEFINES/combat.dm#L187-L200)
  */
-/mob/proc/getorganszone(zone)
+/mob/proc/get_organs_for_zone(zone)
 	return
+
 /**
  * Returns a list of all organs in specified slot
  *
  * Arguments:
  * * slot Slot to get the organs from
  */
-/mob/proc/getorganslot(slot)
+/mob/proc/get_organ_slot(slot)
 	return
 
-/mob/living/carbon/getorgan(typepath)
+/mob/living/carbon/get_organ_by_type(typepath)
 	return (locate(typepath) in organs)
 
-/mob/living/carbon/getorganszone(zone, include_children = FALSE)
+/mob/living/carbon/get_organs_for_zone(zone, include_children = FALSE)
 	var/valid_organs = list()
 	for(var/obj/item/organ/organ as anything in organs)
 		if(zone == organ.zone)
@@ -38,6 +39,6 @@
 			valid_organs += organ
 	return valid_organs
 
-/mob/living/carbon/getorganslot(slot)
+/mob/living/carbon/get_organ_slot(slot)
 	. = organs_slot[slot]
 

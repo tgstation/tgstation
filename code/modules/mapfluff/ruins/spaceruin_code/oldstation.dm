@@ -101,7 +101,7 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.3
 
@@ -173,13 +173,13 @@
 	mod_unit = null
 	open_machine()
 
-/obj/machinery/mod_installer/open_machine()
+/obj/machinery/mod_installer/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 	..()
 	return TRUE
 
-/obj/machinery/mod_installer/close_machine(mob/living/carbon/user)
+/obj/machinery/mod_installer/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 	..()
@@ -207,18 +207,6 @@
 		balloon_alert(user, "it's locked!")
 		return
 	open_machine()
-
-/obj/effect/spawner/structure/window/reinforced/damaged
-	name = "damaged reinforced window spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/damaged)
-
-/obj/structure/window/reinforced/fulltile/damaged
-	var/integrity_min_factor = 0.2
-	var/integrity_max_factor = 0.8
-
-/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
-	. = ..()
-	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
 
 /obj/item/petri_dish/oldstation
 	name = "molly's biopsy"

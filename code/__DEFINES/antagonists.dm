@@ -7,6 +7,8 @@
 #define NUKE_RESULT_NOSURVIVORS 6
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
+#define NUKE_RESULT_HIJACK_DISK 9
+#define NUKE_RESULT_HIJACK_NO_DISK 10
 
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
@@ -77,6 +79,7 @@
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
+#define PATH_COSMIC "Cosmic Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -199,6 +202,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 #define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
 
+/// Checks if the given mob is a traitor
+#define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
+
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
@@ -319,3 +325,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+
+#define HUNTER_PACK_COPS "cop_hunters"
+#define HUNTER_PACK_RUSSIAN "russian_hunters"
+#define HUNTER_PACK_BOUNTY "bounty_hunters"
+#define HUNTER_PACK_PSYKER "psyker_hunters"

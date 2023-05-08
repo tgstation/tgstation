@@ -155,6 +155,7 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
 	adjustBruteLoss(-30 * severity)
 	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
 	if(enraging)
@@ -404,3 +405,5 @@ Difficulty: Extremely Hard
 	color = new_color
 	set_light_color(new_color)
 	set_light(new_range)
+
+#undef FROST_MINER_SHOULD_ENRAGE

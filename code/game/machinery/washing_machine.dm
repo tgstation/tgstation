@@ -165,7 +165,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
-	)
+	),
+	DYE_LAWYER_SPECIAL_SKIRT = list(
+		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/skirt,
+		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red/skirt
+	),
 ))
 
 /obj/machinery/washing_machine
@@ -185,18 +189,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!busy)
 		. += span_notice("<b>Right-click</b> with an empty hand to start a wash cycle.")
 
-/obj/machinery/washing_machine/process(delta_time)
+/obj/machinery/washing_machine/process(seconds_per_tick)
 	if(!busy)
 		animate(src, transform=matrix(), time=2)
 		return PROCESS_KILL
 	if(anchored)
-		if(DT_PROB(2.5, delta_time))
+		if(SPT_PROB(2.5, seconds_per_tick))
 			var/matrix/M = new
 			M.Translate(rand(-1, 1), rand(0, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
-		if(DT_PROB(0.5, delta_time))
+		if(SPT_PROB(0.5, seconds_per_tick))
 			step(src, pick(GLOB.cardinals))
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
@@ -416,7 +420,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 
-/obj/machinery/washing_machine/open_machine(drop = 1)
-	..()
+/obj/machinery/washing_machine/open_machine(drop = TRUE, density_to_set = FALSE)
+	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null

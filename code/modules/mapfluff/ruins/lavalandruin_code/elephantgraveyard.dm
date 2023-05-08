@@ -6,7 +6,7 @@
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/Initialize(mapload)
@@ -17,7 +17,7 @@
 /obj/structure/statue/bone/rib
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
 	icon_preview = 'icons/obj/previews.dmi'
@@ -26,7 +26,7 @@
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
 	icon_preview = 'icons/obj/previews.dmi'
@@ -34,7 +34,7 @@
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
 	icon_preview = 'icons/obj/previews.dmi'

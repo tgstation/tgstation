@@ -9,9 +9,8 @@
 /area/ruin/syndicate_lava_base/testlab)
 "be" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	req_access = list("syndicate")
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "bs" = (
@@ -86,9 +85,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
-/obj/machinery/airalarm/directional/north{
-	req_access = list("syndicate")
-	},
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
@@ -108,6 +104,8 @@
 /obj/item/stock_parts/manipulator/femto,
 /obj/item/stock_parts/manipulator/femto,
 /obj/structure/rack,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "hJ" = (
@@ -162,9 +160,9 @@
 	name = "Experimentation Lab"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/modular_map_connector,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "oo" = (
@@ -175,7 +173,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "oV" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -263,7 +261,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "Ce" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -283,9 +281,8 @@
 /area/ruin/syndicate_lava_base/testlab)
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/directional/south{
-	req_access = list("syndicate")
-	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "It" = (

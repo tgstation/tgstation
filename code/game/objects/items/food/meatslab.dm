@@ -1,5 +1,5 @@
 /obj/item/food/meat
-	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 4)
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
 	var/subjectname = ""
@@ -352,7 +352,7 @@
 		/datum/reagent/consumable/cooking_oil = 3,
 	)
 	tastes = list("meat" = 4, "tranquility" = 1)
-	foodtypes = RAW | MEAT
+	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/gondola/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")

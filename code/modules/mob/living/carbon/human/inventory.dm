@@ -1,5 +1,8 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
+/mob/living/carbon/human/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) == COMPONENT_BLOCK_EQUIP)
+		return FALSE
+
+	return dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -103,6 +106,39 @@
 		r_store,
 		s_store,
 		)
+
+/// Returns items which are currently visible on the mob
+/mob/living/carbon/human/proc/get_visible_items()
+	var/static/list/visible_slots = list(
+		ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_ICLOTHING,
+		ITEM_SLOT_GLOVES,
+		ITEM_SLOT_EYES,
+		ITEM_SLOT_EARS,
+		ITEM_SLOT_MASK,
+		ITEM_SLOT_HEAD,
+		ITEM_SLOT_FEET,
+		ITEM_SLOT_ID,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_BACK,
+		ITEM_SLOT_NECK,
+		ITEM_SLOT_HANDS,
+		ITEM_SLOT_BACKPACK,
+		ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_HANDCUFFED,
+		ITEM_SLOT_LEGCUFFED,
+	)
+	var/list/obscured = check_obscured_slots()
+	var/list/visible_items = list()
+	for (var/slot in visible_slots)
+		if (obscured & slot)
+			continue
+		var/obj/item/equipped = get_item_by_slot(slot)
+		if (equipped)
+			visible_items += equipped
+	for (var/obj/item/held in held_items)
+		visible_items += held
+	return visible_items
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
@@ -379,6 +415,9 @@
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(!storage.supports_smart_equip)
+		return
+	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in or take something out so we dont give out information on contents (or lack of)
+		to_chat(src, span_warning("The [equipped_item.name] is locked!"))
 		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
