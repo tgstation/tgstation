@@ -311,6 +311,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 		/obj/item/clothing/under/rank/medical,
 		/obj/item/healthanalyzer,
+		/obj/item/autopsy_scanner,
 		/obj/item/hemostat,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill/,
@@ -498,7 +499,6 @@ GLOBAL_LIST_INIT(phobia_species, list(
 		/datum/species/plasmaman,
 		/datum/species/skeleton,
 	)),
-	"the supernatural" = typecacheof(list(/datum/species/golem/runic)),
 ))
 
 /// Creates a regular expression to match against the given phobia
