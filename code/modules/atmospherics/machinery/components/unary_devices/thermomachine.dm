@@ -171,11 +171,6 @@
 /// Performs heat calculation for the freezer.
 /// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
-	process_atmos_checks()
-	process_atmos_heating()
-	update_parents()
-
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/process_atmos_checks()
 	if(!on)
 		return
 
@@ -186,7 +181,6 @@
 		update_appearance()
 		return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/process_atmos_heating()
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/port = airs[1]
 
@@ -213,6 +207,7 @@
 	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
 
 	use_power(power_usage)
+	update_parents()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
@@ -374,6 +369,7 @@
 	icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous
+	allows_cooling = FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
