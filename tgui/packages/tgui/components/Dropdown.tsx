@@ -251,8 +251,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
 
   getSelectedIndex(): number {
     const selected = this.state.selected
-      ? this.state.selected
-      : this.props.selected;
+      || this.props.selected;
     const { options = [] } = this.props;
 
     return options.findIndex((option) => {
