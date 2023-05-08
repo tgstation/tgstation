@@ -86,7 +86,7 @@
 	. = ..()
 	thermomachine_refresh_parts()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/thermomachine_refresh_parts()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.tier
@@ -174,7 +174,7 @@
 	process_atmos_heating()
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/process_atmos_checks()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/process_atmos_checks()
 	if(!on)
 		return
 
@@ -185,7 +185,7 @@
 		update_appearance()
 		return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/process_atmos_heating()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/process_atmos_heating()
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/port = airs[1]
 

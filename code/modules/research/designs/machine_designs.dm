@@ -97,9 +97,9 @@
 	id = "pyrothermomachine"
 	build_path = /obj/item/circuitboard/machine/thermomachine/anomalous
 	category = list(
-		RND_CATEGORY_MACHINE
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/space_heater
 	name = "Space Heater Board"
