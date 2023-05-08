@@ -6784,8 +6784,8 @@
 "bCM" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/turf/open/misc/beach/coastline_b{
-	desc = "refreshing!";
+/turf/open/water/beach{
+	desc = "Refreshing!";
 	name = "treated water"
 	},
 /area/station/maintenance/floor1/port/aft)
@@ -10883,8 +10883,8 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/misc/beach/coastline_b{
-	desc = "refreshing!";
+/turf/open/water/beach{
+	desc = "Refreshing!";
 	name = "treated water"
 	},
 /area/station/maintenance/floor1/port/aft)
@@ -14614,8 +14614,8 @@
 /area/station/maintenance/floor1/starboard/fore)
 "dLk" = (
 /obj/machinery/door/poddoor/shutters{
-	name = "Ancient Workshop";
-	id = "survshop"
+	id = "survshop";
+	name = "Ancient Workshop"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard/aft)
@@ -22856,8 +22856,8 @@
 /area/station/hallway/floor2/fore)
 "fZS" = (
 /obj/machinery/door/poddoor/shutters{
-	name = "Ancient Workshop";
-	id = "survshop"
+	id = "survshop";
+	name = "Ancient Workshop"
 	},
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/aft)
@@ -32613,8 +32613,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "iNe" = (
-/turf/open/misc/beach/coastline_b{
-	desc = "refreshing!";
+/turf/open/water/beach{
+	desc = "Refreshing!";
 	name = "treated water"
 	},
 /area/station/maintenance/floor1/port/aft)
@@ -57912,8 +57912,8 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
-/turf/open/misc/beach/coastline_b{
-	desc = "refreshing!";
+/turf/open/water/beach{
+	desc = "Refreshing!";
 	name = "treated water"
 	},
 /area/station/maintenance/floor1/port/aft)
@@ -87002,8 +87002,8 @@
 /area/station/maintenance/floor4/starboard)
 "xbz" = (
 /obj/machinery/light/red/dim/directional/north,
-/turf/open/misc/beach/coastline_b{
-	desc = "refreshing!";
+/turf/open/water/beach{
+	desc = "Refreshing!";
 	name = "treated water"
 	},
 /area/station/maintenance/floor1/port/aft)
