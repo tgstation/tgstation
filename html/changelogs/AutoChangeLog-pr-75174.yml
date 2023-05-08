@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - balance: "Buffs the Active Sonar module for modsuits with a shorter cooldown & moving pings."
