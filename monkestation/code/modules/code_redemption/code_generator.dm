@@ -140,4 +140,5 @@ GLOBAL_LIST_INIT(stored_codes, list())
 
 	log_game("[usr] generated [amount] new redemption codes.")
 	message_admins("[usr] generated a new redemption codes.")
-	to_chat(usr, span_big("Your generated codes are: [generated_codes]"))
+	var/connected_keys = generated_codes.Join(" ,")
+	to_chat(usr, span_big("Your generated codes are: [connected_keys]"))
