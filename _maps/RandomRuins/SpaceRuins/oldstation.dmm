@@ -3871,6 +3871,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"pD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/ruin/space/ancientstation/delta/rnd)
 "pI" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters{
@@ -14716,7 +14721,7 @@ bD
 TP
 kw
 Oh
-kw
+pD
 jW
 sJ
 wx
