@@ -146,7 +146,7 @@
 		else
 			return "health-100"
 
-//called when a carbon changes stat, virus or XENO_HOST
+//called when the plant changes status
 /obj/machinery/hydroponics/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	if (isnull(holder))
@@ -157,7 +157,22 @@
 	if(plant_status == HYDROTRAY_PLANT_DEAD)
 		holder.icon_state = "huddead"
 	else if (plant_status != HYDROTRAY_NO_PLANT)
-		holder.icon_state = "hudhealthy"
+		var/weed_illness = myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) ? 0 : weedlevel >= 10 ? 3 : weedlevel >= 5 ? 2 : weedlevel >= 1 ? 1 : 0
+		var/pest_illness = myseed.get_gene(/datum/plant_gene/trait/carnivory) ? 0 : pestlevel >= 8 ? 3 : pestlevel >= 4 ? 2 : pestlevel >= 1 ? 1 : 0
+		var/toxicity_ilness = toxic >= 80 ? 5 : toxic >= 40 ? 3 : toxic >= 10 ? 1 : 0
+		switch(max(weed_illness, pest_illness, toxicity_ilness))
+			if(5)
+				holder.icon_state = "hudill5"
+			if(4)
+				holder.icon_state = "hudill4"
+			if(3)
+				holder.icon_state = "hudill3"
+			if(2)
+				holder.icon_state = "hudill2"
+			if(1)
+				holder.icon_state = "hudill1"
+			if(0)
+				holder.icon_state = "hudhealthy"
 
 /obj/machinery/hydroponics/Destroy()
 	for(var/datum/atom_hud/data/human/medical/health_hud in GLOB.huds)
@@ -649,6 +664,7 @@
 	weedlevel = new_weedlevel
 	if(update_icon)
 		update_appearance()
+	med_hud_set_status()
 
 /obj/machinery/hydroponics/proc/set_pestlevel(new_pestlevel, update_icon = TRUE)
 	if(pestlevel == new_pestlevel)
@@ -657,6 +673,7 @@
 	pestlevel = new_pestlevel
 	if(update_icon)
 		update_appearance()
+	med_hud_set_status()
 
 /obj/machinery/hydroponics/proc/set_waterlevel(new_waterlevel, update_icon = TRUE)
 	if(waterlevel == new_waterlevel)
@@ -686,6 +703,7 @@
 	toxic = new_toxic
 	if(update_icon)
 		update_appearance()
+	med_hud_set_status()
 
 /obj/machinery/hydroponics/proc/set_plant_status(new_plant_status)
 	if(plant_status == new_plant_status)
