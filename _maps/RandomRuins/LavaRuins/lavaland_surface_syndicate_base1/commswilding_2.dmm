@@ -104,14 +104,12 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
 "H" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/structure/filingcabinet/security,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit/red,
 /area/ruin/syndicate_lava_base/telecomms)
 "J" = (

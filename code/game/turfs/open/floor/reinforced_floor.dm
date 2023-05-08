@@ -76,6 +76,8 @@
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
+	return TRUE
+
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)

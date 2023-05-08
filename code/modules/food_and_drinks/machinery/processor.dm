@@ -45,8 +45,8 @@
 	. = ..()
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		rating_amount = matter_bin.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		rating_speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rating_speed = servo.tier
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()

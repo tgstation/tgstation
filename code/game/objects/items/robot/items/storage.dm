@@ -300,3 +300,40 @@
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+/obj/item/borg/apparatus/service
+	name = "Service apparatus"
+	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
+	icon_state = "borg_service_apparatus"
+	storable = list(
+		/obj/item/food,
+		/obj/item/paper,
+		/obj/item/plate,
+		/obj/item/plate/oven_tray,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/soup_pot,
+	)
+
+/obj/item/borg/apparatus/service/Initialize(mapload)
+	update_appearance()
+	return ..()
+
+/obj/item/borg/apparatus/service/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
+	if(stored)
+		stored.pixel_x = -3
+		stored.pixel_y = 0
+		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
+			arm.icon_state = "borg_hardware_apparatus_arm2"
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
+	. += arm
+
+/obj/item/borg/apparatus/service/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
+	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")

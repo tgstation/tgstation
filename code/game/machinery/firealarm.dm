@@ -31,8 +31,8 @@
 	luminosity = 1
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
-	///Buildstate for contruction steps. 2 = complete, 1 = no wires, 0 = circuit gone
-	var/buildstage = 2
+	///Buildstate for contruction steps
+	var/buildstage = FIRE_ALARM_BUILD_SECURED
 	///Our home area, set in Init. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` for var or list checks.
 	var/area/my_area = null
 	///looping sound datum for our fire alarm siren.
@@ -45,7 +45,7 @@
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
 	if(building)
-		buildstage = 0
+		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
@@ -278,14 +278,14 @@
 	update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
-	if(buildstage != 2)
+	if(buildstage != FIRE_ALARM_BUILD_SECURED)
 		return
 	. = ..()
 	add_fingerprint(user)
 	alarm(user)
 
 /obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
-	if(buildstage != 2)
+	if(buildstage != FIRE_ALARM_BUILD_SECURED)
 		return ..()
 	add_fingerprint(user)
 	reset(user)
@@ -306,7 +306,7 @@
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)
 	add_fingerprint(user)
 
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
+	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == FIRE_ALARM_BUILD_SECURED)
 		tool.play_tool_sound(src)
 		toggle_panel_open()
 		to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
@@ -334,7 +334,7 @@
 					toggle_fire_detect(user)
 					return
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
-					buildstage = 1
+					buildstage = FIRE_ALARM_BUILD_NO_WIRES
 					tool.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, span_notice("You cut the wires from \the [src]."))
@@ -355,7 +355,7 @@
 						to_chat(user, span_warning("You need more cable for this!"))
 					else
 						coil.use(5)
-						buildstage = 2
+						buildstage = FIRE_ALARM_BUILD_SECURED
 						to_chat(user, span_notice("You wire \the [src]."))
 						update_appearance()
 					return
@@ -364,21 +364,21 @@
 					user.visible_message(span_notice("[user.name] removes the electronics from [src.name]."), \
 										span_notice("You start prying out the circuit..."))
 					if(tool.use_tool(src, user, 20, volume=50))
-						if(buildstage == 1)
+						if(buildstage == FIRE_ALARM_BUILD_NO_WIRES)
 							if(machine_stat & BROKEN)
 								to_chat(user, span_notice("You remove the destroyed circuit."))
 								set_machine_stat(machine_stat & ~BROKEN)
 							else
 								to_chat(user, span_notice("You pry out the circuit."))
 								new /obj/item/electronics/firealarm(user.loc)
-							buildstage = 0
+							buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 							update_appearance()
 					return
 			if(0)
 				if(istype(tool, /obj/item/electronics/firealarm))
 					to_chat(user, span_notice("You insert the circuit."))
 					qdel(tool)
-					buildstage = 1
+					buildstage = FIRE_ALARM_BUILD_NO_WIRES
 					update_appearance()
 					return
 
@@ -388,7 +388,7 @@
 						return
 					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
-					buildstage = 1
+					buildstage = FIRE_ALARM_BUILD_NO_WIRES
 					update_appearance()
 					return
 
@@ -403,7 +403,7 @@
 	return ..()
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == FIRE_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -412,7 +412,7 @@
 		if(RCD_WALLFRAME)
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
-			buildstage = 1
+			buildstage = FIRE_ALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE
 	return FALSE
@@ -420,8 +420,8 @@
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != 0)
-			if(prob(33))
+		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
+			if(prob(33) && buildstage == FIRE_ALARM_BUILD_SECURED) //require fully wired electronics to set of the alarms
 				alarm()
 
 /obj/machinery/firealarm/singularity_pull(S, current_size)
@@ -430,18 +430,19 @@
 	return ..()
 
 /obj/machinery/firealarm/atom_break(damage_flag)
-	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+	if(buildstage == FIRE_ALARM_BUILD_NO_CIRCUIT) //can't break the electronics if there isn't any inside.
 		return
 	return ..()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, 1)
-		if(!(machine_stat & BROKEN))
+		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
 				item.update_integrity(item.max_integrity * 0.5)
-		new /obj/item/stack/cable_coil(loc, 3)
+		if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
+			new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
 // Allows users to examine the state of the thermal sensor

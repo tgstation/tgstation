@@ -41,7 +41,6 @@
 /obj/machinery/door/airlock{
 	name = "Freezer Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "ck" = (
@@ -134,7 +133,6 @@
 /obj/machinery/door/airlock{
 	name = "Bathrooms"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "eN" = (
@@ -198,7 +196,8 @@
 	},
 /obj/effect/turf_decal/siding/brown,
 /obj/machinery/jukebox{
-	active = 1
+	active = 1;
+	req_access = null
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
@@ -246,7 +245,6 @@
 /obj/machinery/door/airlock{
 	name = "Bathroom 1"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "jZ" = (
@@ -394,7 +392,6 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Janitorial Closet"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "rd" = (
@@ -475,13 +472,12 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "vu" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "The All-American Diner"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "the_all_american_diner"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
@@ -852,7 +848,6 @@
 /obj/machinery/door/airlock{
 	name = "Bathroom 2"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Is" = (
@@ -942,7 +937,6 @@
 /obj/machinery/door/airlock{
 	name = "Kitchen Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "LR" = (
@@ -1104,10 +1098,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "Tv" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "The All-American Diner"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "the_all_american_diner"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)

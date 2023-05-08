@@ -270,7 +270,8 @@
 /area/ruin)
 "Vj" = (
 /obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/template_noop,
 /area/ruin)
