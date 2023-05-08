@@ -49,7 +49,7 @@
 	///The last user to add a reagent to the tray, mostly for logging purposes.
 	var/datum/weakref/lastuser
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
-	var/self_sustaining_overlay_icon_state = "gaia_blessing"
+	var/self_sustaining_overlay_icon_state = "hydrotray_gaia"
 	///precent of nutriment drained per process defaults to 10%
 	var/nutriment_drain_precent = 5
 
@@ -275,7 +275,7 @@
  * Water
  */
 			// Drink random amount of water
-			if(!bio_boosted)
+			if(!bio_boosted && !self_sustaining)
 				adjust_waterlevel(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
@@ -287,9 +287,9 @@
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
 			else if(waterlevel > 10 && nutrilevel > 0 && !bio_boosted)
 				adjustHealth(rand(1,2) / rating)
-				if(myseed && prob(myseed.weed_chance))
+				if(myseed && prob(myseed.weed_chance) && !self_sustaining)
 					adjust_weedlevel(myseed.weed_rate)
-				else if(prob(5))  //5 percent chance the weed population will increase
+				else if(prob(5) && !self_sustaining)  //5 percent chance the weed population will increase
 					adjust_weedlevel(1 / rating)
 
 /**
@@ -359,14 +359,14 @@
 					set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 				else
 					lastproduce = age
-			if(prob(5) && !bio_boosted)  // On each tick, there's a 5 percent chance the pest population will increase
+			if(prob(5) && !bio_boosted && !self_sustaining)  // On each tick, there's a 5 percent chance the pest population will increase
 				adjust_pestlevel(1 / rating)
 		else
-			if((waterlevel > 10 && nutrilevel > 0 && prob(10)) && !bio_boosted)  // If there's no plant, the percentage chance is 10%
+			if((waterlevel > 10 && nutrilevel > 0 && prob(10)) && !bio_boosted && !self_sustaining)  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
-		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if((weedlevel >= 10 && prob(50)) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed)
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)) // If a normal plant
 					weedinvasion()
