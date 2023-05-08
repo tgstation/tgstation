@@ -449,11 +449,6 @@
 	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
 
-/datum/greyscale_config/pyrothermomachine
-	name = "Anomalous Thermomachine"
-	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	json_config = 'code/datums/greyscale/json_configs/pyrothermomachine.json'
-
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"
 	icon_file = 'icons/obj/janicart_upgrade.dmi'

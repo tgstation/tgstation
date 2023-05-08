@@ -84,6 +84,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
+	thermomachine_refresh_parts()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.tier
@@ -94,6 +97,7 @@
 		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
 	var/colors_to_use = ""
@@ -166,6 +170,11 @@
 /// Performs heat calculation for the freezer.
 /// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
+	process_atmos_checks()
+	process_atmos_heating()
+	update_parents()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/process_atmos_checks()
 	if(!on)
 		return
 
@@ -176,18 +185,19 @@
 		update_appearance()
 		return
 
+/obj/machinery/atmospherics/components/unary/thermomachine/process_atmos_heating()
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/port = airs[1]
 
 	if(!port.total_moles()) // Nothing to cool? go home lad
 		return
 
+	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
 	var/port_capacity = port.heat_capacity()
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - port.temperature
 
-	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
 	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
@@ -198,7 +208,6 @@
 	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
 
 	use_power(power_usage)
-	update_parents()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
@@ -358,5 +367,39 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "thermo_base_1"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/anomalous
+
+/obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
+	var/calculated_bin_rating = 0
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		calculated_bin_rating += bin.tier
+	min_temperature = 293
+	max_temperature = calculated_bin_rating * 2500
+	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
+
+/obj/machinery/atmospherics/components/unary/thermomachine/anomalous/process_atmos_heating() //See parent process_atmos_heating for comments
+	var/datum/gas_mixture/port = airs[1]
+
+	if(!port.total_moles())
+		return
+
+	var/port_capacity = port.heat_capacity()
+
+	var/temperature_target_delta = target_temperature - port.temperature
+
+	if(temperature_target_delta < 0)
+		return
+
+	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
+
+	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
+
+	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
+
+	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
+
+	use_power(power_usage)
+
 
 #undef THERMOMACHINE_POWER_CONVERSION

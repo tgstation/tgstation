@@ -91,11 +91,11 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/pyrothermomachine
+/datum/design/board/thermomachine/anomalous
 	name = "Anomalous Thermomachine Board"
 	desc = "The circuit board for an anomalous thermomachine."
 	id = "pyrothermomachine"
-	build_path = /obj/item/circuitboard/machine/pyrothermomachine
+	build_path = /obj/item/circuitboard/machine/thermomachine/anomalous
 	category = list(
 		RND_CATEGORY_MACHINE
 	)
