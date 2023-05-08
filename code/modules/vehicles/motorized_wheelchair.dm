@@ -15,8 +15,8 @@
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
 	var/list/required_parts = list(
-		/datum/stock_part/manipulator,
-		/datum/stock_part/manipulator,
+		/datum/stock_part/servo,
+		/datum/stock_part/servo,
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
@@ -41,8 +41,8 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed += servo.tier
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
 		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)

@@ -99,12 +99,6 @@
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
 		ear_owner.RemoveElement(/datum/element/waddling)
 
-/obj/item/organ/internal/ears/bronze
-	name = "tin ears"
-	desc = "The robust ears of a bronze golem. "
-	damage_multiplier = 0.1 //STRONK
-	bang_protect = 1 //Fear me weaklings.
-
 /obj/item/organ/internal/ears/cybernetic
 	name = "cybernetic ears"
 	icon_state = "ears-c"

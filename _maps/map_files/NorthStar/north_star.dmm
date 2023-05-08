@@ -260,7 +260,7 @@
 	pixel_y = 6
 	},
 /obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/item/stack/cable_coil,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron,
@@ -3165,7 +3165,7 @@
 "aOi" = (
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = 15;
 	pixel_y = 4
 	},
@@ -36718,7 +36718,7 @@
 /area/station/maintenance/floor3/starboard/fore)
 "jNR" = (
 /obj/structure/table,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = 2;
 	pixel_y = -4
 	},

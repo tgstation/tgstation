@@ -4173,7 +4173,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "oj" = (
 /obj/structure/table,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stack/cable_coil,

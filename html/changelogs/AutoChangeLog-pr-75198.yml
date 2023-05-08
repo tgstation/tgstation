@@ -1,5 +1,0 @@
-author: "the-og-gear"
-delete-after: True
-changes:
-  - bugfix: "Paint cans have become limited use as intended by the gods of code"
-  - bugfix: "Clown borgs get unlimited paint, as a treat."
