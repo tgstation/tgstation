@@ -378,6 +378,14 @@
 
 	..()
 
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/eva(src)
+	new /obj/item/clothing/suit/space/eva(src)
+	new /obj/item/tank/internals/oxygen/empty(src)
+	new /obj/item/tank/internals/oxygen/empty(src)
+
+	..()
+
 /obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
 	return
 
