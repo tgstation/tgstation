@@ -94,14 +94,14 @@
 	default_raw_text = "It has been several months since our Molly passed away. She was our most valuable crew member, especially compared to that prick that happily threw a party to make sure `that beef won't go to waste`...<br><br> \
 	Oh, how I miss her warm milk...<br><br>I've put Molly's biopsy in the fridge and almost completed the solution.<br><br> \
 	Next steps:<ul><li>Pour the broth to the growing vat (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
-	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
+	Just need to make sure to use the correct bottle this time... I'll even mark it as <b>\"Solution for Molly\"</b>, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
 	If everything goes well, I will try out those slimes the papers praising as the future of science. They say that the cell lines may be found on anything moldy and rotting, and these small blobs have crazy mutation potential when properly fed."
 
 /obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency
 	name = "Diary note - Emergency"
 	default_raw_text = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe depressurized and I can feel the artificial gravity weakening. \
 	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
-	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
+	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my \"pet cockroach\"... And RD is scary..."
 
 /obj/item/paper/fluff/ruins/oldstation/apc_note
 	name = "DO NOT TOUCH!"
