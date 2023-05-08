@@ -14,7 +14,7 @@
 	default_raw_text = "<h2>WARNING</h2> \
 		<ul> \
 		<li>Shields down. Space Carp invasion imminent.</li> \
-		<li>Unknown force overtaken AI satellite and occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.</li> \
+		<li>Unknown force has overtaken AI satellite and occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.</li> \
 		</ul> \
 		<h2>Status</h2> \
 		<ol> \
