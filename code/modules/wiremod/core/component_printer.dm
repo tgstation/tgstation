@@ -77,9 +77,9 @@
 /obj/machinery/component_printer/proc/calculate_efficiency()
 	var/rating = 0
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+	for(var/datum/stock_part/servo/servo in component_parts)
 		///we do -1 because normal manipulators rating of 1 gives us 1-1=0 i.e no decrement in cost
-		rating += manipulator.tier-1
+		rating += servo.tier-1
 
 	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
 	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
@@ -348,9 +348,9 @@
 
 	var/rating = 0
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+	for(var/datum/stock_part/servo/servo in component_parts)
 		///we do -1 because normal manipulators rating of 1 gives us 1-1=0 i.e no decrement in cost
-		rating += manipulator.tier - 1
+		rating += servo.tier - 1
 
 	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
 	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
