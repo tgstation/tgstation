@@ -251,6 +251,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Distributes the contents of two mixes equally between themselves
 //Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+	if(!volume || !other.volume) // how did we even get here?
+		
 	. = FALSE
 	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		. = TRUE
@@ -269,7 +271,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		//math is under the assumption temperatures are equal
 		// we check for either volume being zero, as this will cause division by zero runtimes.
 		// they can have zero volume due to one not having the gas, and then we assert it initializing it with zero moles.
-		if(volume == 0 || other.volume == 0 || abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
+		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
 			. = TRUE
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
