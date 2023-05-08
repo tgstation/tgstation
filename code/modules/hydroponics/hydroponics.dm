@@ -475,7 +475,7 @@
 	return plant_overlay
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
-/obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
+/obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE, wild = FALSE)
 	var/old_seed = myseed
 	myseed = new_seed
 	if(old_seed && delete_old_seed)
@@ -484,6 +484,10 @@
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+
+	if(wild)
+		ADD_TRAIT(new_seed, TRAIT_PLANT_WILDMUTATE, "mutated")
+
 	update_appearance()
 
 /obj/machinery/hydroponics/proc/set_weedlevel(new_weedlevel, update_icon = TRUE)
@@ -677,7 +681,7 @@
 	var/oldPlantName = myseed.plantname
 	var/datum/hydroponics/plant_mutation/picked_mutation = pick(myseed.possible_mutations)
 	var/mutantseed = initial(picked_mutation.created_seed)
-	set_seed(new mutantseed(src))
+	set_seed(new mutantseed(src), wild = TRUE)
 
 	hardmutate()
 	age = 0

@@ -265,6 +265,7 @@
 			var/obj/item/seeds/seed_prod
 			if(prob(50) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
+				ADD_TRAIT(seed_prod, TRAIT_PLANT_WILDMUTATE, "mutated")
 			else
 				seed_prod = src.Copy_drop(output_loc)
 			result.Add(seed_prod) // User gets a consumable
