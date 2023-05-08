@@ -559,7 +559,7 @@
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
-	icon_state = "gen_no_power_closed" //temporary icon
+	icon_state = "gen_recovering_closed" //temporary icon
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
@@ -585,13 +585,13 @@
 	///The regeneration that the shield can support
 	var/current_regeneration = 5
 
-	///Determines the max radius the shield can support
+	///Determins the max radius the shield can support
 	var/max_radius = 3
 
 	///Current radius the shield is set to
 	var/radius = 3
 
-	///Determines if we only generate a shield on space turfs or not
+	///Determins if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
 
 	///The list of shields that are ours
@@ -650,13 +650,12 @@
 
 /obj/machinery/modular_shield_gen/proc/deactivate_shields()
 	active = FALSE
-	update_appearance()
 	QDEL_LIST(deployed_shields)
 	calculate_regeneration()
 
 /obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "gen_open[anchored]", "gen_close[anchored]", W))
+	if(default_deconstruction_screwdriver(user,  W))
 		return
 
 	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
@@ -678,7 +677,6 @@
 
 /obj/machinery/modular_shield_gen/proc/activate_shields()
 	active = TRUE
-	update_appearance()
 
 	//please god yell at me for this i dont know if its the right way to do this
 	var/list/inside_shield = circle_range_turfs(src, radius - 1) //in the future we might want to apply an effect to the turfs inside the shield
@@ -705,7 +703,7 @@
 	return ..()
 
 /obj/machinery/modular_shield_gen/update_icon_state()
-	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
+	icon_state = "gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open) ? "open" : "closed"]"
 	return ..()
 
 /obj/machinery/modular_shield_gen/ui_interact(mob/user, datum/tgui/ui)
@@ -757,12 +755,15 @@
 		deactivate_shields()
 		stored_strength = 0
 		recovering = TRUE
+		update_appearance()
 		return
 
 /obj/machinery/modular_shield_gen/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
-		recovering = FALSE
+		if (recovering)
+			recovering = FALSE
+			update_appearance()
 		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
 		var/random_num = rand(1,deployed_shields.len)
@@ -772,7 +773,7 @@
 
 /obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
 
-	name = "Modular Shield Debugger" //Filler name sprite for testing
+	name = "Modular Shield Debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing"
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
