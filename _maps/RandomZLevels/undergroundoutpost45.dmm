@@ -2759,8 +2759,8 @@
 /area/awaymission/undergroundoutpost45/research)
 "hG" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
+/obj/item/stock_parts/servo,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/micro_laser,
