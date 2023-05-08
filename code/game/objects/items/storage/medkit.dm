@@ -322,7 +322,7 @@
 
 /obj/item/storage/medkit/coroner
 	name = "compact coroner's medkit"
-	desc = "a smaller medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	desc = "A smaller medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "compact_coronerkit"
 	inhand_icon_state = "coronerkit"
@@ -349,7 +349,7 @@
 
 /obj/item/storage/medkit/coroner/large
 	name = "coroner's medkit"
-	desc = "a medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	desc = "A medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "coronerkit"
 	inhand_icon_state = "coronerkit"
