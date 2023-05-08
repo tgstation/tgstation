@@ -73,13 +73,11 @@
 /datum/mafia_role/proc/send_back_to_body()
 	if(old_mind && !QDELETED(old_mind) && old_body && !QDELETED(old_body))
 		REMOVE_TRAIT(old_body, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
-		var/mob/dead/observer/ghost = body.ghostize(FALSE) //set to false for ethereals
+		var/mob/dead/observer/ghost = body.ghostize()
 		ghost.mind = old_mind
 		old_mind.set_current(old_body)
 		if(old_body.stat != DEAD)
 			old_body.key = old_mind.key
-		else
-			ghost.can_reenter_corpse = TRUE
 		old_mind = null
 		old_body = null
 
