@@ -413,11 +413,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
-		color = "#DA0205" // red
+		color = "#FF0022" // red
 	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
-		color = "#EC8B2F" // yellow
+		color = "#FFAA00" // yellow
 	else
-		color = "#03A728" // green
+		color = "#00FFCC" // teal
 
 	set_light(1.5, 1, color)
 
