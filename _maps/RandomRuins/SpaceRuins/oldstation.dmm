@@ -4003,10 +4003,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "rk" = (
-/obj/machinery/smartfridge{
-	machine_stat = 1
-	},
+/obj/machinery/smartfridge,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/broken_machine,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "rl" = (
