@@ -101,7 +101,7 @@
 //helper for getting the appropriate health status
 /obj/machinery/hydroponics/proc/RoundHealth()
 	if(plant_status == HYDROTRAY_PLANT_DEAD)
-		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
+		return "health-100"
 	var/maxi_health = myseed.endurance
 	var/resulthealth = (plant_health / maxi_health) * 100
 	switch(resulthealth)
