@@ -90,10 +90,9 @@
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
-	if(ownerlimb && !moving)
+	if(ownerlimb)
 		remove_from_limb()
-
-		if(use_mob_sprite_as_obj_sprite)
+		if(!moving && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
 			update_appearance(UPDATE_OVERLAYS)
 
 	if(organ_owner)
