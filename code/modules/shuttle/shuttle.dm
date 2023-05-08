@@ -39,6 +39,8 @@
 	///are we registered in SSshuttles?
 	var/registered = FALSE
 
+	var/list/datum/shuttle_event/event_list
+
 ///register to SSshuttles
 /obj/docking_port/proc/register()
 	if(registered)
@@ -831,6 +833,7 @@
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	check_effects()
+	process_events()
 
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
@@ -1136,7 +1139,6 @@
 			return FALSE
 	return ..()
 
-
 //Called when emergency shuttle leaves the station
 /obj/docking_port/mobile/proc/on_emergency_launch()
 	if(launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
@@ -1160,6 +1162,14 @@
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
+
+/obj/docking_port/mobile/proc/process_events()
+	var/list/removees
+	for(var/datum/shuttle_event/event as anything in event_list)
+		if(event.process() == 2) //god it would be so embarassing if I forget to replace this with the define
+			LAZYADD(removees, event)
+	for(var/item in removees)
+		event_list.Remove(item)
 
 #ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT

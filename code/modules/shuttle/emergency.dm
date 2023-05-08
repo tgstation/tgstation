@@ -567,6 +567,12 @@
 	setTimer(SSshuttle.emergency_escape_time)
 	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
+///Generate a list of events to run during the departure
+/obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
+	for(var/datum/shuttle_event in subtypesof(/datum/shuttle_event))
+		if(prob(initial(shuttle_event.probability)))
+			shuttle_events.Add(new shuttle_event(src, SSshuttle.emergency_escape_time))
+
 /obj/docking_port/mobile/monastery
 	name = "monastery pod"
 	shuttle_id = "mining_common" //set so mining can call it down
