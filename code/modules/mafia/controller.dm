@@ -622,7 +622,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			var/list/lobby_member = list()
 			lobby_member["name"] = key
 			lobby_member["status"] = (key in GLOB.mafia_bad_signup) ? "Disconnected" : "Ready"
-			lobby_member["spectating"] = "Ghost"
 			data["lobbydata"] += list(lobby_member)
 		return data
 

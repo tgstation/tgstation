@@ -29,7 +29,6 @@ type ActionInfo = {
 type LobbyData = {
   name: string;
   status: string;
-  spectating: string;
 };
 
 type MafiaData = {
@@ -170,9 +169,14 @@ const MafiaLobby = (props, context) => {
           />
         </>
       }>
-      <NoticeBox info>
+      <NoticeBox info textAlign="center">
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
+      </NoticeBox>
+      <NoticeBox color="green" textAlign="center">
+        Players who sign up for Mafia while dead will be returned to their
+        bodies after the game finishes, allowing you to temporarily exit to play
+        a match.
       </NoticeBox>
       {lobbydata.map((lobbyist) => (
         <Stack
@@ -183,7 +187,7 @@ const MafiaLobby = (props, context) => {
           <Stack.Item grow>{lobbyist.name}</Stack.Item>
           <Stack.Item>Status:</Stack.Item>
           <Stack.Item color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
-            {lobbyist.status} {lobbyist.spectating}
+            {lobbyist.status}
           </Stack.Item>
         </Stack>
       ))}
