@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 
 	if(!choice)
 		return
-	var/amount = tgui_input_number(usr, "Choose a number", "Number", 1, 100, 0)
+	var/amount = tgui_input_number(usr, "Choose a number", "Number", 1, 20, 0)
 	if(!amount)
 		return
 
