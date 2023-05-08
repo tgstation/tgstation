@@ -638,9 +638,8 @@
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
 
-		card_reader_installed = TRUE
-		weapon.moveToNullspace()
 		qdel(weapon)
+		card_reader_installed = TRUE
 
 		balloon_alert(user, "card reader installed")
 

@@ -694,9 +694,8 @@
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
 
-		card_reader_installed = TRUE
-		weapon.moveToNullspace()
 		qdel(weapon)
+		card_reader_installed = TRUE
 
 		balloon_alert(user, "card reader installed")
 
@@ -709,6 +708,7 @@
 
 		new /obj/item/stock_parts/card_reader(drop_location())
 		card_reader_installed = FALSE
+
 		balloon_alert(user, "card reader removed")
 
 	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = weapon.GetID())))
