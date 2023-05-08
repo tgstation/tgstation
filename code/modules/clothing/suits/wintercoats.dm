@@ -520,7 +520,6 @@
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
-	species_exception = list(/datum/species/golem/uranium)
 
 /datum/armor/wintercoat_engineering
 	fire = 20

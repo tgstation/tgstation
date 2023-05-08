@@ -151,13 +151,12 @@
 		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(human_victim.mind)
-			if(istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp))
-				. = TRUE
-		if (is_species(human_victim, /datum/species/golem/sand))
-			. = TRUE
+	if(!ishuman(victim))
+		return FALSE
+	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
+		return TRUE
+	var/mob/living/carbon/human/human_victim = victim
+	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
 	visible_message(span_colossus("[src] disintegrates [victim]!"))
