@@ -1,5 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - bugfix: "The All-American Diner no longer requires a bunker ID card for most rooms nor requires accesses to use the jukebox."
-  - bugfix: "The All-American Diner's external airlocks now all work together."
