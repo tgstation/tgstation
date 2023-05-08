@@ -3958,13 +3958,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
-"qn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/old,
-/obj/item/paper/fluff/ruins/oldstation/report,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/bridge)
 "qp" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -12464,7 +12457,7 @@ aa
 aa
 aa
 CB
-qn
+PD
 aL
 aI
 ei
