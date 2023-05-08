@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(cached_gases[id][MOLES] <= MINIMUM_MOLE_COUNT)
+		if(cached_gases[id][MOLES] < MINIMUM_MOLE_COUNT)
 			cached_gases -= id
 
 //PV = nRT
