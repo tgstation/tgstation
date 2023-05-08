@@ -31,6 +31,8 @@
 	var/sanitization
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
+	/// Can someone use this on themselves?
+	var/can_use_on_self = FALSE
 
 /obj/item/stack/medical/attack(mob/living/patient, mob/user)
 	. = ..()
@@ -72,6 +74,9 @@
 			return FALSE
 		if (patient.health == patient.maxHealth)
 			patient.balloon_alert(user, "not hurt!")
+			return FALSE
+		if(!can_use_on_self && user == patient)
+			patient.balloon_alert(user, "can't use on self!")
 			return FALSE
 		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
 		patient.heal_bodypart_damage((heal_brute * 0.5))
@@ -140,6 +145,7 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	can_use_on_self = TRUE
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
@@ -207,6 +213,7 @@
 	absorption_rate = 0.075
 	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised
+	can_use_on_self = TRUE
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,
@@ -363,6 +370,7 @@
 	heal_burn = 3
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
+	can_use_on_self = TRUE
 
 /obj/item/stack/medical/aloe/fresh
 	amount = 2
@@ -383,6 +391,7 @@
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
+	can_use_on_self = TRUE
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/patient, mob/user)
 	patient.balloon_alert(user, "no fractures!")
@@ -430,6 +439,7 @@
 	mob_throw_hit_sound = 'sound/misc/moist_impact.ogg'
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
+	can_use_on_self = TRUE
 
 /obj/item/stack/medical/poultice/heal(mob/living/patient, mob/user)
 	if(iscarbon(patient))
