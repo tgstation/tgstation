@@ -145,6 +145,7 @@
 
 /obj/effect/dummy/chameleon/ex_act(S, T)
 	master.disrupt()
+	return TRUE
 
 /obj/effect/dummy/chameleon/bullet_act()
 	. = ..()

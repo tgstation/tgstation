@@ -29,17 +29,17 @@
 	meat_produced = initial(meat_produced)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		meat_produced += matter_bin.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		gibtime -= 5 * manipulator.tier
-		if(manipulator.tier >= 2)
+	for(var/datum/stock_part/servo/servo in component_parts)
+		gibtime -= 5 * servo.tier
+		if(servo.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/datum/stock_part/manipulator/manipulator in component_parts)
-			if(manipulator.tier >= 2)
+		for(var/datum/stock_part/servo/servo in component_parts)
+			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()
@@ -190,7 +190,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first

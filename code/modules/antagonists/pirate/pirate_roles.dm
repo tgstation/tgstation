@@ -94,19 +94,3 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
-
-/obj/effect/mob_spawn/ghost_role/human/pirate/psykers
-	name = "mental energizer"
-	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
-	icon_state = "psykerpod"
-	prompt_name = "a psyker-ganger"
-	mob_species = /datum/species/human
-	outfit = /datum/outfit/pirate/psyker
-	rank = "Racketeer"
-	fluff_spawn = /obj/structure/showcase/machinery/oldpod/used/psyker
-	name_beginnings = "psyker_beginnings"
-	name_endings = "psyker_endings"
-
-/obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain
-	rank = "Allbrain"
-	outfit = /datum/outfit/pirate/psyker/captain
