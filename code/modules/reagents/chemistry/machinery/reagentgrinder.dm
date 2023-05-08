@@ -67,8 +67,8 @@
 /obj/machinery/reagentgrinder/RefreshParts()
 	. = ..()
 	speed = 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed = servo.tier
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
