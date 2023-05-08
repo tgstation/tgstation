@@ -84,7 +84,9 @@
 		return
 
 	if(ismob(loc))
-		CRASH("A foam effect ([type]) was created within a mob! (Actual location: [loc] ([loc.type]))")
+		stack_trace("A foam effect ([type]) was created within a mob! (Actual location: [loc] ([loc.type]))")
+		qdel(src)
+		return
 
 	var/fraction = (ds_seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 
