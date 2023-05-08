@@ -628,6 +628,15 @@ CACHE_ASSETS 0
 ## Will only seek to waste disk space if ran on production.
 #SAVE_SPRITESHEETS
 
+## If this remains commented out, we will allow players to download their own preferences as a JSON file to do whatever they wish.
+## This does require the game code to read (and only read) the /data folder where these files are stored, and then use the BYOND FTP Function to send the file to the client.
+## In case you get overloaded with requests such as these, simply uncomment to disable this feature to clients.
+#FORBID_PREFERENCES_EXPORT
+
+## The time (in seconds) that a player must wait between download requests of their JSON preferences.
+## Minimum number settable for this is 1.
+SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT 10
+
 ## Uncomment to allow the station name to be in the hub entry.
 ## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
 ## BYOND staff have gotten upset at us in the past for inappropriate station names.

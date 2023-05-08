@@ -304,7 +304,7 @@
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		use_power(MINERAL_MATERIAL_AMOUNT / 10)
+		use_power(SHEET_MATERIAL_AMOUNT / 10)
 	else if(item_inserted.has_material_type(/datum/material/glass))
 		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
 	else
@@ -346,9 +346,9 @@
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
-	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		efficiency -= new_manipulator.tier * 0.2
-	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of manipulator efficiency
+	for(var/datum/stock_part/servo/new_servo in component_parts)
+		efficiency -= new_servo.tier * 0.2
+	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()

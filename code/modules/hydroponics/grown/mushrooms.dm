@@ -1,5 +1,8 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
+	// This is a prototype that should never be spawned
+	// but we'll default it to SOME seed if it does end up spawning just so we don't runtime horribly
+	seed = /obj/item/seeds/chanter
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40

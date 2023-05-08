@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/M in materials.materials)
 		var/datum/material/mat = M
 		var/amount = materials.materials[M]
-		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
+		var/sheets = round(amount) / SHEET_MATERIAL_AMOUNT
 		var/ref = REF(M)
 		if (sheets)
 			if (sheets >= 1)
@@ -117,9 +117,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
 	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
 		var/atom/parent = mats.parent
-		var/hold_key = "[get_area(parent)]/[mats.category]"
 		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
-		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
+		ui += "<a href='?src=[REF(src)];hold=[REF(mats)]'>[holds[mats] ? "Allow" : "Hold"]</a>"
 		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
 	if(!ore_connected_machines.len)
 		ui += "Nothing!"
@@ -158,15 +157,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in ore_connected_machines
 		if (mats)
 			mats.disconnect_from(src)
-			ore_connected_machines -= mats
 			updateUsrDialog()
 			return TRUE
-	else if(href_list["hold1"])
-		holds[href_list["hold1"]] = TRUE
-		updateUsrDialog()
-		return TRUE
-	else if(href_list["hold0"])
-		holds -= href_list["hold0"]
+	else if(href_list["hold"])
+		var/datum/component/remote_materials/mats = locate(href_list["hold"]) in ore_connected_machines
+		mats.toggle_holding()
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
@@ -174,7 +169,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
-		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT * count
+		matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
 		silo_log(src, "ejected", -count, "sheets", matlist)
 		return TRUE
 	else if(href_list["page"])

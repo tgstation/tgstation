@@ -31,12 +31,22 @@ RSF
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
-	var/list/cost_by_item = list(/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
-								/obj/item/paper = 10,
-								/obj/item/storage/dice = 200,
-								/obj/item/pen = 50,
-								/obj/item/clothing/mask/cigarette = 10,
-								)
+	///The RSF item list below shows in the player facing ui in this order, this is why it isn't in alphabetical order, but instead sorted by category
+	var/list/cost_by_item = list(
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
+		/obj/item/reagent_containers/cup/glass/sillycup = 10,
+		/obj/item/plate = 70,
+		/obj/item/reagent_containers/cup/bowl = 70,
+		/obj/item/kitchen/fork/plastic = 30,
+		/obj/item/knife/plastic = 30,
+		/obj/item/kitchen/spoon/plastic = 30,
+		/obj/item/food/seaweedsheet = 30,
+		/obj/item/storage/dice = 200,
+		/obj/item/toy/cards/deck = 200,
+		/obj/item/paper = 10,
+		/obj/item/pen = 50,
+		/obj/item/clothing/mask/cigarette = 10,
+	)
 	///An associated list of fuel and it's value
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
 	///A list of surfaces that we are allowed to place things on.

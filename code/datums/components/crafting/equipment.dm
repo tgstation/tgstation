@@ -46,11 +46,11 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/rods = 8,
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
 	)
 	parts = list(
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -74,7 +74,7 @@
 		/obj/item/stack/sheet/iron = 4,
 		/obj/item/stack/rods = 4,
 		/obj/item/stack/cable_coil = 10,
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/assembly/signaler = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)

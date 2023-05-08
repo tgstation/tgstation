@@ -423,12 +423,12 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_amount *= capacitor.tier
 		parts_rating += capacitor.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		if (manipulator.tier > 3)
+	for(var/datum/stock_part/servo/servo in component_parts)
+		if (servo.tier > 3)
 			dispensable_reagents |= upgrade_reagents
 		else
 			dispensable_reagents -= upgrade_reagents
-		parts_rating += manipulator.tier
+		parts_rating += servo.tier
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
