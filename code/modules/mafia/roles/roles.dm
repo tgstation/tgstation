@@ -19,6 +19,11 @@
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
+	///The old mind we will be put back into when the game is over.
+	var/datum/mind/old_mind
+	///The old body we will be put back into when the game is over.
+	var/mob/living/old_body
+
 	///how many votes submitted when you vote. used in voting and deciding victory.
 	var/vote_power = 1
 	///what they get equipped with when they are revealed
@@ -46,10 +51,37 @@
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
+	send_back_to_body()
 	QDEL_NULL(mafia_alert)
 	QDEL_NULL(body)
-	QDEL_NULL(role_unique_actions)
+	QDEL_LIST(role_unique_actions)
 	return ..()
+
+/**
+ * Puts the player in their body and keeps track of their previous one to put them back in later.
+ */
+/datum/mafia_role/proc/put_player_in_body(client/player)
+	if(player.mob.mind && player.mob.mind.current)
+		old_body = player.mob.mind.current
+		old_mind = player.mob.mind
+		ADD_TRAIT(old_body, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
+	body.key = player.key
+
+/**
+ * Sends the player back into their body
+ */
+/datum/mafia_role/proc/send_back_to_body()
+	if(old_mind && !QDELETED(old_mind) && old_body && !QDELETED(old_body))
+		REMOVE_TRAIT(old_body, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
+		var/mob/dead/observer/ghost = body.ghostize(FALSE) //set to false for ethereals
+		ghost.mind = old_mind
+		old_mind.set_current(old_body)
+		if(old_body.stat != DEAD)
+			old_body.key = old_mind.key
+		else
+			ghost.can_reenter_corpse = TRUE
+		old_mind = null
+		old_body = null
 
 /**
  * Tests kill immunities, if nothing prevents the kill, kills this role.
@@ -66,8 +98,6 @@
 		body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
-	if(!(player_key in game.mafia_spectators)) //people who played will want to see the end of the game more often than not
-		game.mafia_spectators += player_key
 	game.living_roles -= src
 	return TRUE
 

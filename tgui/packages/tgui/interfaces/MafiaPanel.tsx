@@ -158,19 +158,6 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('mf_signup')}
           />
           <Button
-            icon="eye"
-            tooltipPosition="bottom-start"
-            tooltip={multiline`
-              Spectates games until you turn it off.
-              Automatically enabled when you die in game,
-              because I assumed you would want to see the
-              conclusion. You won't get messages if you
-              rejoin SS13.
-            `}
-            content="Spectate"
-            onClick={() => act('mf_spectate')}
-          />
-          <Button
             icon="arrow-right"
             tooltipPosition="bottom-start"
             tooltip={multiline`
