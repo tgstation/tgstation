@@ -20,7 +20,7 @@
 	bounty_types = CIV_JOB_MED
 	department_for_prefs = /datum/job_department/medical
 	departments_list = list(
-		/datum/job_department/service,
+		/datum/job_department/medical,
 	)
 
 	mail_goodies = list(
