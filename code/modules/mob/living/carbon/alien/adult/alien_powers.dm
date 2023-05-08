@@ -240,7 +240,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/acid/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	desc = "Spits neurotoxin at someone, dealing large amounts of stamina damage."
 	button_icon_state = "alien_neurotoxin_0"
 	plasma_cost = 50
 
@@ -343,7 +343,7 @@ Doesn't work on other aliens/AI.*/
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "alien_sneak"
 	/// The alpha we go to when sneaking.
-	var/sneak_alpha = 75
+	var/sneak_alpha = 25
 
 /datum/action/cooldown/alien/sneak/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_ALIEN_SNEAK))

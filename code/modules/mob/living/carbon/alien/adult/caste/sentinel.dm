@@ -4,6 +4,7 @@
 	maxHealth = 150
 	health = 150
 	icon_state = "aliens"
+	alien_speed = 0.2
 
 /mob/living/carbon/alien/adult/sentinel/Initialize(mapload)
 	var/datum/action/cooldown/alien/sneak/sneaky_beaky = new(src)
