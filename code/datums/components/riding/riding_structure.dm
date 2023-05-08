@@ -8,6 +8,8 @@
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move))
 
 /datum/component/riding/structure/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
+		return COMPONENT_DRIVER_BLOCK_MOVE
 	handle_ride(user, direction)
 	return ..()
 
@@ -35,7 +37,7 @@
 	return TRUE
 
 /datum/component/riding/structure/tank
-	vehicle_move_delay = 10
+	vehicle_move_delay = 3
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/structure/tank/handle_specials()
