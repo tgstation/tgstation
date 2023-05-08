@@ -162,6 +162,7 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
