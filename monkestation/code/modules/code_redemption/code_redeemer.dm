@@ -22,16 +22,19 @@
 
 	if(isnum(path))
 		usr.client.prefs.adjust_metacoins(usr.ckey, path, "Redeemed a Giveaway Code", donator_multipler = FALSE)
+	else if(path == HIGH_THREAT || path == MEDIUM_THREAT || path == LOW_THREAT)
+		usr.client.saved_tokens.adjust_tokens(path, 1)
+		to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [path] Antag Token."))
 	else
 		var/pathedstring = text2path(path)
 		var/datum/store_item/given_item = new pathedstring
 
 		if(given_item.item_path in usr.client.prefs.inventory)
 			usr.client.prefs.adjust_metacoins(usr.ckey, given_item.item_cost, "Redeemed a Giveaway Code:Already owned the item.", donator_multipler = FALSE)
-			to_chat(usr, "You already owned this item so you were instead given Monkecoins that is equal to the value.")
+			to_chat(usr, span_boldnotice("You already owned this item so you were instead given Monkecoins that is equal to the value."))
 		else
 			given_item.finalize_purchase(usr.client)
-			to_chat(usr, "You have successfully redeemed a giveaway code for: [initial(given_item.item_path.name)].")
+			to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [initial(given_item.item_path.name)]."))
 
 	message_admins("[usr] has just redeemed the code: [code], for [path]")
 	remove_code(code)
