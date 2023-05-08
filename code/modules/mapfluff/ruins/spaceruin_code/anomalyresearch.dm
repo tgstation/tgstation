@@ -42,8 +42,7 @@
 
 /obj/effect/spawner/random/anomaly_core/Initialize(mapload)
 	loot = subtypesof(/obj/item/assembly/signaler/anomaly)
-
-	. = ..()
+	return ..()
 
 /obj/item/paper/fluff/ruins/anomaly_research/intro
 	name = "revelation"
