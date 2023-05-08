@@ -166,7 +166,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/gold
 	colour = "gold"
-	effect_desc = "Produces random coins."
+	effect_desc = "Produces random coins. But no mythril, as it's to magical for something magical already."
 	plasmarequired = 10
 
 /obj/item/slimecross/industrial/gold/process()
