@@ -224,3 +224,69 @@
   - rscadd: Added wedding cakes
   tralezab:
   - balance: Tonguespike is better, chemspike deals slightly less damage
+2023-05-07:
+  Cheshify:
+  - bugfix: The North Star's cargo shuttle has working conveyors.
+  - bugfix: The North Star has had a slew of missing and improperly done content added
+      and reworked, see the PR for more!
+  JohnFulpWillard:
+  - bugfix: Tablets' minimize apps feature works again.
+  JohnFulpWillard, sprites by McRamon, tattax, and Lamb:
+  - rscadd: The Coroner, a new Medical role revolving around dead corpses and autopsies.
+  - rscadd: The Coroner's Autopsy Scanner, used for discovering the cause for someone's
+      death, listing their wounds, the causes of them, their reagents, and diseases
+      (including stealth ones!)
+  - qol: Morgue Trays are now named after the bodybags inside of them.
+  - balance: The morgue now has 'Secure' morgue trays which by default don't beep.
+  - balance: Security Medical area and Robotics no longer have their own morgue trays.
+  - balance: Dissected bodies now have faster surgery speed. Autopsies also count
+      as dissections, however they're mutually exclusive.
+  Jolly:
+  - bugfix: The area icon for the evidence room should be visible in the map editor
+      again.
+  Shadow-Quill:
+  - qol: Shuttles will no longer show their current destination as a choice while
+      in transit.
+  - qol: The Ice Box pharmacy and Med Sec Outpost blast doors have been replaced with
+      shutters.
+2023-05-08:
+  Helg2:
+  - bugfix: deleted unused airlock helper from syn-c brutus.
+  Jacquerel with new icons mostly by INFRARED_BARON:
+  - balance: Golems have been reworked into a hunger-based species who gain temporary
+      transformations when eating different kinds of mineral.
+  - rscdel: The previous golem subtypes no longer exist.
+  LT3:
+  - qol: Ghosts will now get a notification when someone is about to be hit by the
+      tram
+  Melbert:
+  - bugfix: Fixed Prosthetic Quirk not removing the limb before giving the prosthetic
+  - rscdel: You can't get an Elite Syndie Modsuit (or combat defib, or dart pistol)
+      from Space Ruins
+  Profakos:
+  - refactor: converts the request console to tgui
+  Rex9001:
+  - bugfix: Fixes the orm board in the golem ship being the wrong subtype
+  Rhials:
+  - bugfix: The psyker shuttle now has a suit for the psyker seer.
+  Thunder12345:
+  - image: Holy arrows are now 15% less holy (You can no longer click on the 2-pixel
+      hole in the arrowhead and unintentionally click the object below the arrow instead.)
+  - bugfix: The chaplain's divine bow can now be renamed like all other null rod variants.
+  YehnBeep:
+  - bugfix: The All-American Diner no longer requires a bunker ID card for most rooms
+      nor requires accesses to use the jukebox.
+  - bugfix: The All-American Diner's external airlocks now all work together.
+  actioninja:
+  - rscadd: good tgui dropdowns
+  - rscdel: tgui dropdown suck
+  - qol: tgui dropdowns suck less
+  - balance: buffed tgui dropdowns
+  larentoun:
+  - code_imp: Adds default multiplicative movespeed for basic mobs, to make them editable
+      in config
+  - config: Default multiplicative movespeed for basic mobs in example config
+  - bugfix: Stamina damage and healing now correctly applies movement slowdown
+  the-og-gear:
+  - bugfix: Paint cans have become limited use as intended by the gods of code
+  - bugfix: Clown borgs get unlimited paint, as a treat.
