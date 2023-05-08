@@ -157,9 +157,9 @@
 	if(plant_status == HYDROTRAY_PLANT_DEAD)
 		holder.icon_state = "huddead"
 	else if (plant_status != HYDROTRAY_NO_PLANT)
-		var/weed_illness = myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) ? 0 : weedlevel >= 10 ? 3 : weedlevel >= 5 ? 2 : weedlevel >= 1 ? 1 : 0
-		var/pest_illness = myseed.get_gene(/datum/plant_gene/trait/carnivory) ? 0 : pestlevel >= 8 ? 3 : pestlevel >= 4 ? 2 : pestlevel >= 1 ? 1 : 0
-		var/toxicity_ilness = toxic >= 80 ? 5 : toxic >= 40 ? 3 : toxic >= 10 ? 1 : 0
+		var/weed_illness = myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) ? 0 : weedlevel >= 10 ? 3 : weedlevel >= 5 ? 2 : weedlevel >= 2 ? 1 : 0
+		var/pest_illness = myseed.get_gene(/datum/plant_gene/trait/carnivory) ? 0 : pestlevel >= 8 ? 3 : pestlevel >= 4 ? 2 : pestlevel >= 2 ? 1 : 0
+		var/toxicity_ilness = toxic >= 80 ? 5 : toxic >= 40 ? 3 : toxic >= 20 ? 1 : 0
 		switch(max(weed_illness, pest_illness, toxicity_ilness))
 			if(5)
 				holder.icon_state = "hudill5"
