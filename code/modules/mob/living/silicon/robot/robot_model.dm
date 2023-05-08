@@ -319,7 +319,7 @@
 		/obj/item/stamp/clown,
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
-		/obj/item/paint/anycolor,
+		/obj/item/paint/anycolor/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material

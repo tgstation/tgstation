@@ -128,20 +128,42 @@
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
+	base_icon_state = "grave"
 	dense_when_open = TRUE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
-	locked = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
+	can_install_electronics = FALSE
+	paint_jobs = null
+
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
-	can_install_electronics = FALSE
+	var/grave_dug_open = FALSE
+
+/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!force && !grave_dug_open)
+		balloon_alert(user, "use a shovel!")
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/grave/before_close(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	balloon_alert(user, "already open!")
+	return FALSE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -172,12 +194,6 @@
 			//empty grave
 			return
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
-	if(!opened)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
-	else
-		to_chat(user, span_notice("The grave has already been dug up."))
-
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
 
@@ -187,10 +203,8 @@
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
-					opened = TRUE
-					locked = TRUE
-					dump_contents()
-					update_appearance()
+					grave_dug_open = TRUE
+					open(user, force = TRUE)
 					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -213,13 +227,6 @@
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
 				return 1
-	return
-
-/obj/structure/closet/crate/grave/bust_open()
-	..()
-	opened = TRUE
-	update_appearance()
-	dump_contents()
 	return
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
