@@ -30,7 +30,9 @@
 	var/target_temperature = T20C
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
-	var/allows_cooling = TRUE // Non anomalous thermomachines are always allowed to cool
+	/// If a thermomachine can lower the temperature of gasses
+	var/allows_cooling = TRUE
+	/// If a thermomachine has a pyroclastic anomaly core
 	var/has_pyro_anomaly_core = FALSE
 	var/base_heating = 140
 	var/base_cooling = 170
@@ -86,8 +88,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
-	thermomachine_refresh_parts()
+	thermomachine_refresh_parts() // Allows RefreshParts() to be easily overwritten without having to call the parent in the override which will cause issues
 
+/// Checks the parts of the machine and determines it's capabilities in regards to heating or cooling gasses
 /obj/machinery/atmospherics/components/unary/thermomachine/proc/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
@@ -219,13 +222,15 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/assembly/signaler/anomaly/pyro, mob/living/user, params)
-	if(!has_pyro_anomaly_core && allows_cooling)
-		to_chat(user, span_notice("The anomaly core fits perfectly!"))
+	if(has_pyro_anomaly_core || !allows_cooling)
+		balloon_alert(user, "already an anomaly core!")
+		return
+	else
+		balloon_alert(user, "inserted anomaly core")
 		has_pyro_anomaly_core = TRUE
 		qdel(pyro)
 		RefreshParts()
-	else
-		to_chat(user, span_notice("There is already a anomaly core slotted in."))
+		return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)

@@ -636,8 +636,8 @@
 	prereq_ids = list("adv_engi", "practical_bluespace")
 	design_ids = list(
 		"anomaly_neutralizer",
+		"pyro_thermomachine",
 		"reactive_armour",
-		"pyrothermomachine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 

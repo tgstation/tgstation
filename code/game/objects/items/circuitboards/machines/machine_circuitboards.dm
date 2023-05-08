@@ -307,7 +307,8 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/assembly/signaler/anomaly/pyro = 1,
 		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/plasteel = 1)
+		/obj/item/stack/sheet/plasteel = 1,
+		)
 
 /obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()

@@ -94,7 +94,7 @@
 /datum/design/board/thermomachine/anomalous
 	name = "Anomalous Thermomachine Board"
 	desc = "The circuit board for an anomalous thermomachine."
-	id = "pyrothermomachine"
+	id = "pyro_thermomachine"
 	build_path = /obj/item/circuitboard/machine/thermomachine/anomalous
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
