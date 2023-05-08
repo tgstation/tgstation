@@ -68,6 +68,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   menuContents: any;
   state: DropdownState = {
     open: false,
+    selected: this.props.selected,
   };
 
   handleClick = () => {
@@ -162,7 +163,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return (
         <div
           key={value}
-          className="Dropdown__menuentry"
+          className={classes([
+            'Dropdown__menuentry',
+            this.state.selected === value && 'selected',
+          ])}
           onClick={() => {
             this.setSelected(value);
           }}>

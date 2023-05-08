@@ -51,6 +51,11 @@
   line-height: base.em(17px);
   transition: background-color 100ms ease-out;
 
+  &.selected {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    transition: background-color 0ms;
+  }
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transition: background-color 0ms;
