@@ -17,7 +17,16 @@
 	if(.)
 		return
 	var/mob/living/L = user.mob
+	if(!L.buckled && !L.incapacitated() && !L.on_fire)
+		L.begin_blocking()
+
 	L.resist()
+	return TRUE
+
+/datum/keybinding/living/resist/up(client/user)
+	. = ..()
+	var/mob/living/L = user.mob
+	L.remove_status_effect(/datum/status_effect/blocking)
 	return TRUE
 
 /datum/keybinding/living/look_up

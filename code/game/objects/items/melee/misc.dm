@@ -66,6 +66,7 @@
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
+	blocking_ability = 1.2
 	armour_penetration = 75
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
@@ -158,6 +159,7 @@
 	throwforce = 10
 	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
+	blocking_ability = 2
 	armour_penetration = 65
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
@@ -445,6 +447,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
+	blocking_ability = 2.5
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

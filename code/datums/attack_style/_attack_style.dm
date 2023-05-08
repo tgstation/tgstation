@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  */
 /datum/attack_style
 	/// Hitsound played on a successful attack hit
-	var/successful_hit_sound = 'sound/weapons/punch1.ogg'
+	var/successful_hit_sound
 
 	var/hit_volume = 50
 	/// Hitsound played on if the attack fails to hit anyone
@@ -63,6 +63,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))
+		attacker.balloon_alert(attacker, "you don't want to attack!")
+		return FALSE
+
+	if(IS_BLOCKING(attacker))
+		attacker.balloon_alert(attacker, "can't act while blocking!")
 		return FALSE
 
 	var/attack_direction = get_dir(attacker, get_turf(aimed_towards))
@@ -95,9 +100,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	attack_effect_animation(attacker, weapon, affecting)
 
 	var/attack_flag = NONE
+	var/total_total_hit = 0
 	for(var/turf/hitting as anything in affecting)
 		if(hitting.is_blocked_turf(TRUE, attacker))
 			break
+
 #ifdef TESTING
 		apply_testing_color(hitting, affecting.Find(hitting))
 #endif
@@ -115,6 +122,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		for(var/mob/living/smack_who as anything in foes)
 			attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
 			total_hit++
+			total_total_hit++
 			if(total_hit >= hits_per_turf_allowed)
 				break
 
@@ -122,6 +130,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			return ATTACK_STYLE_CANCEL
 		if(attack_flag & ATTACK_STYLE_BLOCKED)
 			break
+
+	if(total_total_hit <= 0)
+		// counts as a miss if we don't hit anyone, duh
+		attack_flag |= ATTACK_STYLE_MISSED
 
 	if(attack_flag & ATTACK_STYLE_HIT)
 		if(successful_hit_sound)

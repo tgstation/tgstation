@@ -574,3 +574,13 @@
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180)))
 	ricocheting_projectile.set_angle(new_angle_s)
 	return TRUE
+
+/mob/living/proc/begin_blocking()
+	if(incapacitated(IGNORE_GRAB))
+		return FALSE
+
+	var/obj/item/blocker = get_inactive_held_item() || get_active_held_item()
+	if(apply_status_effect(/datum/status_effect/blocking, blocker))
+		return TRUE
+
+	return FALSE

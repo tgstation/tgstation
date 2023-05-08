@@ -303,11 +303,11 @@
 /datum/attack_style/unarmed/generic_damage/mob_attack/glomp
 	default_attack_verb = "glomp"
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/glomp/execute_attack(mob/living/simple_animal/slime/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+/datum/attack_style/unarmed/generic_damage/mob_attack/glomp/finalize_attack(mob/living/simple_animal/slime/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(istype(attacker) && attacker.buckled)
 		// can't attack while eating!
 		if(attacker in smacked.buckled_mobs)
 			attacker.Feedstop()
-		return
+		return ATTACK_STYLE_SKIPPED
 
 	return ..()

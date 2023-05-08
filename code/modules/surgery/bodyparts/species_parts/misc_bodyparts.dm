@@ -394,9 +394,12 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	/*
+	melbert todo
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
+	*/
 
 /obj/item/bodypart/arm/left/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -417,9 +420,12 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	/*
+	melbert todo
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
+	*/
 
 /obj/item/bodypart/arm/right/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -439,9 +445,12 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	// unarmed_damage_low = 7
-	// unarmed_damage_high = 21
-	// unarmed_stun_threshold = 11
+	/*
+	melbert todo
+	unarmed_damage_low = 7
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 11
+	*/
 
 /obj/item/bodypart/leg/right/golem
 	icon = 'icons/mob/species/golems.dmi'
@@ -452,6 +461,9 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	/*
+	melbert todo
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
+	*/

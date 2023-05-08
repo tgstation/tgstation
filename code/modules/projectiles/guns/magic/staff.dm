@@ -89,7 +89,7 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
-		
+
 /obj/item/gun/magic/staff/healing/examine(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
@@ -210,6 +210,7 @@
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
+	blocking_ability = 1.5
 	sharpness = SHARP_EDGED
 	max_charges = 4
 	school = SCHOOL_EVOCATION

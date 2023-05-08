@@ -270,7 +270,8 @@
 	var/damage = get_final_damage_for_weapon(attacking_item)
 	var/damage_type = attacking_item.damtype
 
-	if(user == human)
+	if(user == src)
+		// 100% hitrate for self harm
 		affecting = get_attacked_bodypart(user)
 
 	else
@@ -292,8 +293,8 @@
 	var/armor_block = min(ARMOR_MAX_BLOCK, run_armor_check(
 		def_zone = affecting,
 		attack_flag = MELEE,
-		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
-		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+		absorb_text = span_notice("Your armor has protected your [hit_zone]!"),
+		soften_text = span_warning("Your armor has softened a hit to your [hit_zone]!"),
 		armour_penetration = attacking_item.armour_penetration,
 		weak_against_armour = attacking_item.weak_against_armour,
 	))
@@ -316,7 +317,7 @@
 		damagetype = damage_type,
 		def_zone = affecting,
 		wound_bonus = final_wound_bonus,
-		bare_would_bonus = attacking_item.bare_wound_bonus,
+		bare_wound_bonus = attacking_item.bare_wound_bonus,
 		sharpness = attacking_item.get_sharpness(),
 		attack_direction = get_dir(user, src),
 		attacking_item = attacking_item,
@@ -366,7 +367,7 @@
 				&& src != user \
 				&& prob(damage + ((100 - health) * 0.5)) \
 			)
-				var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
+				var/datum/antagonist/rev/rev = mind?.has_antag_datum(/datum/antagonist/rev)
 				rev?.remove_revolutionary(FALSE, user)
 
 		if(BODY_ZONE_CHEST)

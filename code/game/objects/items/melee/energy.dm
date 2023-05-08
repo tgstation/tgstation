@@ -182,6 +182,7 @@
 	throw_range = 5
 	armour_penetration = 35
 	block_chance = 50
+	blocking_ability = 1.5 // melbert todo : only when active
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

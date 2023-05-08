@@ -22,6 +22,7 @@
 	force = 15
 	throwforce = 25
 	block_chance = 25
+	blocking_ability = 2
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
@@ -71,6 +72,7 @@ Striking a noncultist, however, will tear their flesh."}
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
+	blocking_ability = 1.5
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -113,6 +115,7 @@ Striking a noncultist, however, will tear their flesh."}
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
+	blocking_ability = 2
 	attack_style = /datum/attack_style/swing
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
@@ -676,6 +679,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
+	blocking_ability = 2
 	slot_flags = null
 	attack_verb_continuous = list("attacks", "slices", "shreds", "sunders", "lacerates", "cleaves")
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")

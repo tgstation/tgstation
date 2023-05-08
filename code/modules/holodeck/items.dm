@@ -13,6 +13,7 @@
 	damtype = STAMINA
 	throw_speed = 2
 	block_chance = 0
+	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
 	throwforce = 0
 	embedding = null
 	sword_color_icon = null

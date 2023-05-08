@@ -2,9 +2,8 @@
 	attack_type = STAMINA
 	bonus_stamina_damage_modifier = 0
 
-/datum/attack_style/unarmed/generic_damage/boxing/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	unarmed_attack_verb = pick("left hook", "right hook", "straight punch")
-	return ..()
+/datum/attack_style/unarmed/generic_damage/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+	return pick("left hook", "right hook", "straight punch")
 
 /datum/attack_style/unarmed/generic_damage/boxing/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor_block)
 	. = ..()

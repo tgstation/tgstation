@@ -15,6 +15,8 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
+	blocking_ability = 1
+
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -82,6 +84,7 @@
 	block_chance = 30
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
+	blocking_ability = 1.5
 
 /obj/item/shield/roman
 	name = "\improper Roman shield"
@@ -98,6 +101,7 @@
 	block_chance = 0
 	armor_type = /datum/armor/none
 	max_integrity = 30
+	blocking_ability = 2.4
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -109,6 +113,7 @@
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
+	blocking_ability = 0.75 // Block 4 e-sword hits
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/melee/baton))
@@ -242,6 +247,8 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
+	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
+
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.
@@ -276,6 +283,7 @@
 	SIGNAL_HANDLER
 
 	enabled = active
+	blocking_ability = active ? (DEFAULT_ITEM_DEFENSE_MULTIPLIER / 2) : DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 	balloon_alert(user, "[active ? "activated":"deactivated"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)

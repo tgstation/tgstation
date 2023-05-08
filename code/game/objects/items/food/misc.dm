@@ -202,7 +202,8 @@
 	)
 	force = 30
 	throwforce = 15
-	block_chance = 55
+	block_chance = 50
+	blocking_ability = 1.5
 	armour_penetration = 80
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")

@@ -173,7 +173,6 @@
 	///How fast does the tool work
 	var/toolspeed = 1
 
-	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -214,10 +213,29 @@
 
 	/**
 	 * Determines how the item is used in attacks.
+	 * Starts as a typepaths, updates to a reference to a global attack style datum singleton in init.
 	 *
-	 * By default, the item will simply affect the tile in front of the user
+	 * By default, the item will simply affect the tile in front of the user.
+	 *
+	 * Set this to null to make the item un-swingable, and by extent, un-usable in combat.
+	 * Generally don't do that unless it's stuff that would not function as a weapon, like an RCD.
 	 */
 	var/datum/attack_style/attack_style = /datum/attack_style
+
+	/// This is a % based chance of entirely preventing an attack, to be removed in favor of below
+	var/block_chance = 0
+	/**
+	 * How well can we block with this thing?
+	 * This is a multiplier to stamina damage recieved from active blocking with this item
+	 * Lower numbers means we take less stamina damage when blocking attacks (and are better).
+	 *
+	 * By default things aren't very good at blocking and will allow maybe 1 block
+	 *
+	 * Try to scale your multipliers around 20-30 force attacks (esword / other antag weapon tier).
+	 * A multiplier of 3 would mean 20-24 force weapons can be blocked 4 times (= 96 stamina damage)
+	 * while 25+ force weapons can only be blocked 3 times.
+	 */
+	var/blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -233,6 +251,9 @@
 	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
 		update_greyscale()
 
+	if(ispath(attack_style, /datum/attack_style))
+		attack_style = GLOB.attack_styles[attack_style]
+
 	. = ..()
 
 	// Handle adding item associated actions
@@ -240,9 +261,6 @@
 		add_item_action(path)
 
 	actions_types = null
-
-	if(ispath(attack_style, /datum/attack_style))
-		attack_style = GLOB.attack_styles[attack_style]
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE

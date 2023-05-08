@@ -329,22 +329,32 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
 
-// Returns for attack style [finalize_attack].
+// Returns for attack style [finalize_attack] and, by extension, [melee_attack_chain].
 /// Fairly obvious, attack hit SOMETHING, go to hitsound / success
 #define ATTACK_STYLE_HIT (1<<0)
 /// Fairly obvious, attack missed entirely
-/// Somewhat implied if you return null / none
 #define ATTACK_STYLE_MISSED (1<<1)
 /// Attack was blocked, doesn't go to the next turf but will proceed to either Hit or Miss
 #define ATTACK_STYLE_BLOCKED (1<<2)
 /// Cancels the attack entirely, doesn't go to the next turf, doesn't play any sound.
 /// Do not pass go, do not collect $200.
 #define ATTACK_STYLE_CANCEL (1<<3)
+/// Do nothing but let consumers know the attack chain actually happened
 #define ATTACK_STYLE_SKIPPED (1<<4)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living
 #define GET_ASSAILANT(some_movable) (isliving(some_movable) ? some_movable : get(some_movable, /mob/living))
+
+/// Checks if the passed mob is currently manually blocking attacks
+#define IS_BLOCKING(mob) (mob.has_status_effect(/datum/status_effect/blocking))
+
+/// Multiplier applied when blocking with any item by default
+#define DEFAULT_ITEM_DEFENSE_MULTIPLIER 3
+
+/// Multiplier applied when blocking without an item or weapon
+/// (Don't try to block an esword with your hands)
+#define BARE_HAND_DEFENSE_MULTIPLIER 4
 
 // Defines for combo attack component
 /// LMB Attack

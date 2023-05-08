@@ -155,6 +155,7 @@
 	if(clicked_on in DirectAccess())
 		if(clicked_with_what)
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
+
 		else
 			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
@@ -186,8 +187,9 @@
 		var/close_enough = CanReach(clicked_on, clicked_with_what)
 		// Handle non-combat uses of attacking, IE using a screwdriver on a wall
 		if(close_enough && !ismob(clicked_on))
-			if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
-				return
+			changeNext_move(CLICK_CD_MELEE)
+			clicked_with_what.melee_attack_chain(src, clicked_on, params)
+			return
 
 		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
 		// Determine if we should skip using special attack styles or not
@@ -197,6 +199,12 @@
 		if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
 			var/mob/living/living_clicked = clicked_on
 			skip_attack_style ||= length(living_clicked.surgeries)
+
+		/*
+		else if(!combat_mode)
+			// Don't swing if not in combat mode
+			skip_attack_style = TRUE
+		*/
 
 		if(!skip_attack_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
