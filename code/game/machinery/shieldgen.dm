@@ -558,10 +558,9 @@
 /obj/machinery/modular_shield_gen
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "shieldoff" //temporary icon
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "gen_no_power_closed" //temporary icon
 	density = TRUE
-	opacity = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
