@@ -187,6 +187,12 @@
 ///From open: (forced)
 #define COMSIG_CLOSET_POST_OPEN "closet_post_open"
 
+///From close
+#define COMSIG_CLOSET_PRE_CLOSE "closet_pre_close"
+	#define BLOCK_CLOSE (1<<1)
+///From close
+#define COMSIG_CLOSET_POST_CLOSE "closet_post_close"
+
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
 
