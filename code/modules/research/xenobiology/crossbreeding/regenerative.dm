@@ -213,7 +213,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/gold
 	colour = "gold"
-	effect_desc = "Fully heals the target and produces a random coin. But no mythril coins, as it's to magical for something magical already."
+	effect_desc = "Fully heals the target and produces a random coin."
 
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
 	var/newcoin = get_random_coin()
