@@ -366,6 +366,7 @@
 		/obj/item/reagent_containers/blood = 1,
 		/obj/item/bodybag = 2,
 		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
 	)
 	generate_items_inside(items_inside,src)
 
