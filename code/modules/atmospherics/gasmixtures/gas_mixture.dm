@@ -270,7 +270,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		other.assert_gas(gas_id)
 		//math is under the assumption temperatures are equal
 		// we check for either volume being zero, as this will cause division by zero runtimes.
-		// they can have zero volume due to one not having the gas, and then we assert it initializing it with zero moles.
 		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
 			. = TRUE
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
