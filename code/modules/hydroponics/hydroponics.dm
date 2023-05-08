@@ -885,8 +885,8 @@
  */
 /obj/machinery/hydroponics/proc/plantdies()
 	set_plant_health(0, update_icon = FALSE, forced = TRUE)
-	med_hud_set_health()
 	set_plant_status(HYDROTRAY_PLANT_DEAD)
+	med_hud_set_health()
 	med_hud_set_status()
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
