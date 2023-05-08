@@ -219,7 +219,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	to_chat(user, span_userdanger("The acid on \the [source] burns your hand!"))
-	INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
 	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
