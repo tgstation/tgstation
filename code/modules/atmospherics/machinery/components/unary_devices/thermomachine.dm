@@ -223,6 +223,7 @@
 		to_chat(user, span_notice("The anomaly core fits perfectly!"))
 		has_anomaly_core = TRUE
 		qdel(pyro)
+
 	else
 		to_chat(user, span_notice("There is already a anomaly core slotted in."))
 
@@ -388,6 +389,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous
 	allows_cooling = FALSE
 	has_anomaly_core = TRUE
+	name = "Anomalous temperature control unit"
+	desc = "Heats gas in connected pipes."
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
