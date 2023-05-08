@@ -18,6 +18,10 @@
 /obj/structure/fireplace,
 /turf/open/floor/carpet,
 /area/ruin/powered)
+"e" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered)
 "f" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -25,6 +29,10 @@
 	desc = "Truly, a marvel of modern engineering."
 	},
 /turf/open/floor/wood/tile,
+/area/ruin/powered)
+"g" = (
+/obj/structure/table,
+/turf/open/floor/iron/white,
 /area/ruin/powered)
 "i" = (
 /turf/template_noop,
@@ -42,6 +50,15 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
+"l" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
 "n" = (
 /turf/closed/mineral/snowmountain/icemoon,
 /area/icemoon/underground/explored)
@@ -55,6 +72,12 @@
 /area/ruin/powered)
 "p" = (
 /turf/template_noop,
+/area/ruin/powered)
+"q" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/ruin/powered)
 "r" = (
 /turf/open/floor/wood,
@@ -115,9 +138,32 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/powered)
+"G" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"H" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
 "I" = (
 /obj/item/chair/wood/wings,
 /turf/open/floor/carpet,
+/area/ruin/powered)
+"J" = (
+/obj/structure/closet/crate/secure/freezer/commsagent,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"K" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
 /area/ruin/powered)
 "L" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -125,11 +171,25 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)
+"M" = (
+/obj/item/storage/photo_album/listeningstation,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
 "N" = (
 /turf/open/floor/wood/tile,
 /area/ruin/powered)
+"O" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
 "P" = (
 /turf/open/floor/iron/white,
+/area/ruin/powered)
+"Q" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/ruin/powered)
 "S" = (
 /turf/open/floor/iron,
@@ -138,11 +198,21 @@
 /obj/item/chair/stool/bar,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
+"U" = (
+/obj/structure/closet/secure_closet/freezer/empty/open,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
 "V" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "W" = (
 /turf/open/floor/carpet,
+/area/ruin/powered)
+"Y" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/ruin/powered)
 "Z" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -434,9 +504,9 @@ N
 N
 N
 t
-P
-P
-P
+U
+g
+g
 t
 a
 a
@@ -502,7 +572,7 @@ t
 f
 t
 t
-P
+J
 P
 P
 t
@@ -532,12 +602,12 @@ a
 a
 t
 t
-r
-r
-r
+l
+G
+Y
 E
 P
-P
+M
 P
 t
 a
@@ -564,10 +634,10 @@ a
 a
 a
 a
-t
+e
 y
 W
-r
+q
 r
 L
 w
@@ -598,14 +668,14 @@ a
 a
 a
 a
-t
+e
 d
 W
+q
 r
 r
 r
-r
-r
+K
 t
 p
 p
@@ -632,14 +702,14 @@ a
 a
 a
 a
-t
+e
 W
 I
+q
 r
 r
 r
-r
-r
+O
 p
 p
 p
@@ -668,12 +738,12 @@ a
 t
 t
 t
+H
+Y
 r
 r
 r
-r
-r
-r
+Q
 t
 p
 p
