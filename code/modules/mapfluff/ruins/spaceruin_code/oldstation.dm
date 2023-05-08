@@ -2,8 +2,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation
 	name = "Cryo Awakening Report"
-	default_raw_text = "<h1>**Cryo Awakening Report**</h1> \
-		Catastrophic damage sustained to station. Powernet exhausted to reawaken crew.<br><br> \
+	default_raw_text = "Catastrophic damage sustained to station. Powernet exhausted to reawaken crew.<br><br> \
 		Immediate Objectives: \
 		<ol> \
 		<li>Activate emergency power generator.</li> \
@@ -12,8 +11,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	default_raw_text = "<H1>Damage Report</h1><br><br> \
-		<h2>WARNING</h2> \
+	default_raw_text = "<h2>WARNING</h2> \
 		<ul> \
 		<li>Shields down. Space carp invasion imminent.</li> \
 		<li>Unknown force overtaken AI satellite and occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.</li> \
@@ -30,7 +28,7 @@
 		<li>Locate arms at Charlie Station Security.</li> \
 		<li>Move at a sufficient distance from the windows to avoid encounters with Space Carp.</li> \
 		<li>Reestablish station powernet via Charlie Station Engineering solar array.</li> \
-		<li>Restore life support systems: atmospherics, gravity, hydroponics.</li> \
+		<li>Restore life support systems: atmospherics, artificial gravity, hydroponics.</li> \
 		<li>Avoid Delta Station until arrival of Nanotrasen Special Response Team.</li> \
 		</ol>"
 
