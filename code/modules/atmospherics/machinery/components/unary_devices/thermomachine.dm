@@ -223,6 +223,7 @@
 		to_chat(user, span_notice("The anomaly core fits perfectly!"))
 		has_anomaly_core = TRUE
 		qdel(pyro)
+		RefreshParts()
 	else
 		to_chat(user, span_notice("There is already a anomaly core slotted in."))
 
