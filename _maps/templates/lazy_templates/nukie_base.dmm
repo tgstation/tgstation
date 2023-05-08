@@ -142,6 +142,17 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"bQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/centcom/syndicate_mothership/expansion_bombthreat)
 "bT" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
@@ -441,17 +452,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
-"fE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1
-	},
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/unlocked,
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/centcom/syndicate_mothership/expansion_bombthreat)
 "fH" = (
 /obj/structure/sign/poster/contraband/gorlex_recruitment{
 	pixel_x = -32
@@ -780,6 +780,10 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
+"jo" = (
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "jq" = (
 /obj/structure/dresser,
 /obj/structure/noticeboard/directional/north,
@@ -2042,10 +2046,6 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
-"xc" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/closed/indestructible/syndicate,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "xe" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
@@ -4567,9 +4567,9 @@ Ox
 sU
 sU
 sU
-sU
-sU
-sU
+Ox
+Ox
+Ox
 Ox
 Ox
 Ox
@@ -4670,9 +4670,9 @@ sU
 Ox
 Ox
 Ox
-Ox
-Ox
-Ox
+xu
+xu
+xu
 xu
 xu
 xu
@@ -4773,7 +4773,7 @@ Ox
 xu
 xu
 xu
-xc
+jo
 xu
 RT
 fk
@@ -5797,7 +5797,7 @@ yp
 zJ
 VF
 If
-fE
+bQ
 lC
 yb
 Uq

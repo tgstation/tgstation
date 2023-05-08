@@ -10,7 +10,7 @@
 		/obj/item/assembly/signaler = 4,
 		/obj/item/computer_disk/ordnance = 4,
 		/obj/item/stock_parts/capacitor = 3,
-		/obj/item/stock_parts/manipulator = 3,
+		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
