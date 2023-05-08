@@ -252,7 +252,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 //Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
 	if(!volume || !other.volume) // how did we even get here?
-		
+		return FALSE
 	. = FALSE
 	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		. = TRUE
