@@ -2827,6 +2827,13 @@
 
 /datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
+
+	//Stream cancelled due to ants in your fire alarm.
+	if(istype(exposed_obj,/obj/machinery/firealarm))
+		var/obj/machinery/firealarm/alarm = exposed_obj
+		alarm.ants_remaining = round(reac_volume)
+		alarm.ant_trigger()
+
 	var/turf/open/my_turf = exposed_obj.loc // No dumping ants on an object in a storage slot
 	if(!istype(my_turf)) //Are we actually in an open turf?
 		return
