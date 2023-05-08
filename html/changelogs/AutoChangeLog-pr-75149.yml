@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - image: "Stock parts have been resprited."
+  - code_imp: "Manipulators have been renamed to servo motors, all related types have been repathed to match."
