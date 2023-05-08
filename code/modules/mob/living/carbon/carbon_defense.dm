@@ -57,7 +57,7 @@
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
-	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
+	if(affecting && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 		if(P.catastropic_dismemberment)
 			apply_damage(P.damage, P.damtype, BODY_ZONE_CHEST, wound_bonus = P.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
@@ -616,7 +616,7 @@
 /obj/item/hand_item/self_grasp
 	name = "self-grasp"
 	desc = "Sometimes all you can do is slow the bleeding."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "nothing"
 	slowdown = 0.5
 	item_flags = DROPDEL | ABSTRACT | NOBLUDGEON | SLOWS_WHILE_IN_HAND | HAND_ITEM
@@ -678,7 +678,7 @@
 
 	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-	if (!(picked_user_part?.bodytype & BODYTYPE_ROBOTIC))
+	if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
 		changed_something = TRUE
 		new_part = new new_part()
 		new_part.replace_limb(src, special = TRUE)
@@ -696,7 +696,7 @@
 /mob/living/carbon/proc/init_bioscrambler_lists()
 	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
 	for (var/obj/item/bodypart/part as anything in body_parts)
-		if (!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && !(initial(part.bodytype) & BODYTYPE_ROBOTIC))
+		if (!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && BODYTYPE_CAN_BE_BIOSCRAMBLED(initial(part.bodytype)))
 			continue
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts

@@ -441,13 +441,6 @@
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
-"cB" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "cC" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable,
@@ -482,13 +475,6 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
-"cO" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/left/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "cP" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -505,23 +491,8 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
-"cT" = (
-/obj/structure/window/reinforced,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "cV" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
-"cW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cX" = (
@@ -711,13 +682,6 @@
 "dM" = (
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
-"dO" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/northblock)
 "dP" = (
 /obj/item/stack/rods,
 /turf/open/floor/iron,
@@ -782,13 +746,6 @@
 "ej" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
-"ek" = (
-/obj/structure/window{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/mining_drone,
-/turf/open/floor/plating,
-/area/awaymission/caves/listeningpost)
 "el" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/gun/energy/laser/captain/scattershot,
@@ -813,14 +770,6 @@
 /area/awaymission/caves/northblock)
 "er" = (
 /obj/structure/chair/stool/directional/south,
-/turf/open/floor/plating,
-/area/awaymission/caves/listeningpost)
-"es" = (
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window,
-/mob/living/simple_animal/hostile/mining_drone,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "et" = (
@@ -1258,6 +1207,12 @@
 /obj/effect/baseturf_helper/asteroid/basalt,
 /turf/closed/wall,
 /area/awaymission/caves/northblock)
+"he" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/south,
+/mob/living/simple_animal/hostile/mining_drone,
+/turf/open/floor/plating,
+/area/awaymission/caves/listeningpost)
 "hq" = (
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1285,6 +1240,11 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
+"ix" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/left/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/research)
 "jH" = (
 /obj/structure/spawner/mining/basilisk,
 /turf/open/misc/asteroid/basalt{
@@ -1387,6 +1347,15 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
+"pL" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/research)
 "qD" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid/basalt{
@@ -1669,15 +1638,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"CB" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
 "Ds" = (
 /obj/item/pickaxe/rusted{
 	pixel_x = 5
@@ -1772,6 +1732,11 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
+"IH" = (
+/obj/structure/window/spawner/directional/west,
+/mob/living/simple_animal/hostile/mining_drone,
+/turf/open/floor/plating,
+/area/awaymission/caves/listeningpost)
 "IN" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating{
@@ -1796,6 +1761,11 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
+"JP" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/plating,
+/area/awaymission/caves/research)
 "Kq" = (
 /obj/structure/sign/departments/exam_room/directional/north,
 /turf/open/floor/iron,
@@ -1887,15 +1857,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
-"OJ" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "OX" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Go through.";
@@ -1912,12 +1873,30 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
+"Qe" = (
+/mob/living/basic/bat{
+	desc = "A rare breed of bat which roosts deep in caves.";
+	name = "Cave Bat"
+	},
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "Rm" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
+"Rt" = (
+/mob/living/basic/bat{
+	desc = "A rare breed of bat which roosts deep in caves.";
+	name = "Cave Bat"
+	},
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
 "Ry" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
@@ -1974,6 +1953,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
+"Wx" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/research)
 "WB" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin,
@@ -1981,6 +1964,13 @@
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
+"Xa" = (
+/mob/living/basic/bat{
+	desc = "A rare breed of bat which roosts deep in caves.";
+	name = "Cave Bat"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/northblock)
 "Xs" = (
 /mob/living/basic/giant_spider/hunter,
 /turf/open/misc/asteroid/basalt{
@@ -6334,7 +6324,7 @@ du
 dA
 bn
 dI
-dO
+Xa
 dP
 dI
 pc
@@ -9662,11 +9652,11 @@ bL
 bL
 ch
 cs
-cB
+JP
 cN
 cS
-cW
-cB
+Wx
+JP
 cg
 bL
 bL
@@ -9920,8 +9910,8 @@ cg
 cg
 ct
 cC
-cO
-cT
+ix
+pL
 cX
 db
 cg
@@ -12228,7 +12218,7 @@ bL
 bL
 BK
 BK
-OJ
+Qe
 BK
 BK
 BK
@@ -12238,7 +12228,7 @@ cx
 BK
 BK
 BK
-OJ
+Qe
 BK
 BK
 bL
@@ -12762,8 +12752,8 @@ BK
 BK
 bL
 eF
-ek
-es
+IH
+he
 ew
 eC
 eF
@@ -13255,7 +13245,7 @@ bL
 bL
 bL
 BK
-OJ
+Qe
 BK
 BK
 BK
@@ -13520,7 +13510,7 @@ cx
 cx
 BK
 BK
-OJ
+Qe
 BK
 BK
 BK
@@ -55939,7 +55929,7 @@ oI
 oI
 oI
 oI
-CB
+Rt
 oI
 oI
 oI
@@ -64425,7 +64415,7 @@ bK
 oI
 oI
 oI
-CB
+Rt
 oI
 oI
 oI
@@ -64662,7 +64652,7 @@ bK
 oI
 oI
 oI
-CB
+Rt
 oI
 oI
 oI
@@ -65187,7 +65177,7 @@ oI
 oI
 oI
 hT
-CB
+Rt
 oI
 bK
 bK

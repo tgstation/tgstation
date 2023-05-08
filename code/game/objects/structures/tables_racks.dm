@@ -22,6 +22,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -30,7 +31,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_BITMASK
@@ -293,7 +294,7 @@
 		else
 			for(var/i in custom_materials)
 				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
@@ -376,6 +377,10 @@
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
 
+/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 /*
  * Glass tables
  */
@@ -385,7 +390,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
-	custom_materials = list(/datum/material/glass = 2000)
+	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/glass
 	smoothing_groups = SMOOTH_GROUP_GLASS_TABLES
 	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
@@ -461,7 +466,7 @@
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
+	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
@@ -655,7 +660,7 @@
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
-	custom_materials = list(/datum/material/glass = 2000, /datum/material/iron = 2000)
+	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/rglass
 	max_integrity = 150
 
@@ -665,7 +670,7 @@
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000, /datum/material/iron = 2000)
+	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
@@ -674,7 +679,7 @@
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
-	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
+	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/titaniumglass
 	max_integrity = 250
 
@@ -684,7 +689,7 @@
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
-	custom_materials = list(/datum/material/alloy/plastitaniumglass = 2000)
+	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
@@ -704,7 +709,7 @@
 	can_buckle = 1
 	buckle_lying = NO_BUCKLE_LYING
 	buckle_requires_restraints = TRUE
-	custom_materials = list(/datum/material/silver = 2000)
+	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
@@ -773,7 +778,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -855,11 +860,11 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)

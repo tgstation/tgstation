@@ -1,3 +1,5 @@
+#define VERY_LATE_ARRIVAL_TOAST_PROB 20
+
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = INIT_ORDER_JOBS
@@ -551,6 +553,8 @@ SUBSYSTEM_DEF(job)
 		var/mob/living/carbon/human/wageslave = equipping
 		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
+			equipping.equip_to_slot_or_del(new /obj/item/food/griddle_toast(equipping), ITEM_SLOT_MASK)
 
 	job.after_spawn(equipping, player_client)
 
@@ -1006,7 +1010,7 @@ SUBSYSTEM_DEF(job)
 	if(!id_safe_code)
 		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
 
-	var/paper = new /obj/item/folder/biscuit/confidental/spare_id_safe_code()
+	var/paper = new /obj/item/folder/biscuit/confidential/spare_id_safe_code()
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
 		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
@@ -1032,7 +1036,7 @@ SUBSYSTEM_DEF(job)
 
 /// Send a drop pod containing a piece of paper with the spare ID safe code to loc
 /datum/controller/subsystem/job/proc/send_spare_id_safe_code(loc)
-	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/folder/biscuit/confidental/emergency_spare_id_safe_code())
+	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code())
 	safe_code_timer_id = null
 	safe_code_request_loc = null
 
@@ -1091,3 +1095,5 @@ SUBSYSTEM_DEF(job)
 		return JOB_UNAVAILABLE_GENERIC
 
 	return JOB_AVAILABLE
+
+#undef VERY_LATE_ARRIVAL_TOAST_PROB

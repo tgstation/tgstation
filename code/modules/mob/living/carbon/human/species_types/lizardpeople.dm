@@ -39,7 +39,7 @@
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
 	// Lizards are coldblooded and can stand a greater temperature range than humans
-	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
 	ass_image = 'icons/ass/asslizard.png'
@@ -66,7 +66,7 @@
 	return ..()
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)

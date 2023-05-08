@@ -81,12 +81,13 @@
 /obj/item/ritual_totem
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
+	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	//made out of a single sheet of wood
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/ritual_totem/Initialize(mapload)

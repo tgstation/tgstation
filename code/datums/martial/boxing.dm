@@ -33,23 +33,22 @@
 	id = MARTIALART_BOXING
 	pacifist_style = TRUE
 
-/datum/martial_art/boxing/disarm_act(mob/living/A, mob/living/D)
-	to_chat(A, span_warning("Can't disarm while boxing!"))
+/datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	return MARTIAL_ATTACK_FAIL
 
-/datum/martial_art/boxing/grab_act(mob/living/A, mob/living/D)
-	to_chat(A, span_warning("Can't grab while boxing!"))
+/datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
+	defender.balloon_alert(attacker, "can't grab while boxing!")
 	return MARTIAL_ATTACK_FAIL
 
-/datum/martial_art/boxing/harm_act(mob/living/A, mob/living/D)
+/datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	var/datum/attack_style/unarmed/give_them_the_heat = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/boxing]
-	if(give_them_the_heat.process_attack(A, null, D) & ATTACK_STYLE_HIT)
+	if(give_them_the_heat.process_attack(attacker, null, defender) & ATTACK_STYLE_HIT)
 		return MARTIAL_ATTACK_SUCCESS
 
 	return MARTIAL_ATTACK_FAIL
 
 /datum/martial_art/boxing/can_use(mob/living/owner)
-	if (!ishuman(owner))
+	if(!ishuman(owner))
 		return FALSE
 	return ..()
 

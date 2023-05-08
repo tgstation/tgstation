@@ -36,4 +36,4 @@
 		if(admin_client.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(admin_client, request_url, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "music_request", 1, "Music Request") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "music_request", 1, "Music Request") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

@@ -87,11 +87,11 @@
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
 	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
-	for(var/obj/item/I in user)
-		if(I != src)
-			user.dropItemToGround(I)
-	for(var/turf/T in RANGE_TURFS(1, user))
-		new /obj/effect/temp_visual/hierophant/blast/visual(T, user, TRUE)
+	for(var/obj/item/user_item in user)
+		if(user_item != src)
+			user.dropItemToGround(user_item)
+	for(var/turf/blast_turf in RANGE_TURFS(1, user))
+		new /obj/effect/temp_visual/hierophant/blast/visual(blast_turf, user, TRUE)
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
@@ -121,14 +121,15 @@
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
 			if(do_after(user, 50, target = user) && !beacon)
-				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
-				beacon = new/obj/effect/hierophant(T)
+				var/turf/user_turf = get_turf(user)
+				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
+				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
+				beacon = new/obj/effect/hierophant(user_turf)
 				user.update_mob_action_buttons()
 				user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), \
 				"[span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!")]\n\
 				[span_notice("You can remove the beacon to place it again by striking it with the club.")]")
+				update_appearance(UPDATE_ICON_STATE)
 		else
 			to_chat(user, span_warning("You need to be on solid ground to detach the beacon!"))
 		return
@@ -146,20 +147,20 @@
 	user.update_mob_action_buttons()
 	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."))
 	beacon.icon_state = "hierophant_tele_on"
-	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
-	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
-		var/turf/T = get_turf(beacon)
+		var/turf/destination = get_turf(beacon)
 		var/turf/source = get_turf(user)
-		if(T.is_blocked_turf(TRUE))
+		if(destination.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
 			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
@@ -168,27 +169,27 @@
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
-		if(T.is_blocked_turf(TRUE))
+		if(destination.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
 			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon].", LOG_GAME)
-		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
-		for(var/t in RANGE_TURFS(1, T))
-			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/t in RANGE_TURFS(1, source))
-			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/mob/living/L in range(1, source))
-			INVOKE_ASYNC(src, PROC_REF(teleport_mob), source, L, T, user)
+		for(var/turf_near_beacon in RANGE_TURFS(1, destination))
+			new /obj/effect/temp_visual/hierophant/blast/visual(turf_near_beacon, user, TRUE)
+		for(var/turf_near_source in RANGE_TURFS(1, source))
+			new /obj/effect/temp_visual/hierophant/blast/visual(turf_near_source, user, TRUE)
+		for(var/mob/living/mob_to_teleport in range(1, source))
+			INVOKE_ASYNC(src, PROC_REF(teleport_mob), source, mob_to_teleport, destination, user)
 		sleep(0.6 SECONDS) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
-		qdel(TE1)
-		qdel(TE2)
+		qdel(user_telegraph)
+		qdel(beacon_telegraph)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
@@ -219,7 +220,7 @@
 	if(user != teleporting && success)
 		log_combat(user, teleporting, "teleported", null, "from [AREACOORD(source)]")
 
-/obj/item/hierophant_club/pickup(mob/living/user)
+/obj/item/hierophant_club/equipped(mob/user)
 	. = ..()
 	blink.Grant(user, src)
 	user.update_icons()
@@ -283,10 +284,10 @@
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
 
-/obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
+/obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
-	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
+	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
 			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
@@ -592,10 +593,10 @@
 	. = ..()
 	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
 
-/mob/living/simple_animal/soulscythe/Life(delta_time, times_fired)
+/mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!stat)
-		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * delta_time))
+		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * seconds_per_tick))
 
 /obj/projectile/soulscythe
 	name = "soulslash"
@@ -618,6 +619,7 @@
 /obj/item/melee/ghost_sword
 	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "spectral"
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

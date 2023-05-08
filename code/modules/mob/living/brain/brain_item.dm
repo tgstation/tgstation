@@ -270,7 +270,7 @@
 		owner.mind.set_current(null)
 	return ..()
 
-/obj/item/organ/internal/brain/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/on_life(seconds_per_tick, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
@@ -372,6 +372,14 @@
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
+
+/obj/item/organ/internal/brain/golem
+	name = "crystalline matrix"
+	desc = "This collection of sparkling gems somehow allows a golem to think."
+	icon_state = "adamantine_resonator"
+	color = COLOR_GOLEM_GRAY
+	status = ORGAN_MINERAL
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

@@ -345,3 +345,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living
 #define GET_ASSAILANT(some_movable) (isliving(some_movable) ? some_movable : get(some_movable, /mob/living))
+
+// Defines for combo attack component
+/// LMB Attack
+#define LEFT_ATTACK "Left Attack"
+/// RMB Attack
+#define RIGHT_ATTACK "Right Attack"
+/// Steps for the combo
+#define COMBO_STEPS "steps"
+/// The proc the combo calls
+#define COMBO_PROC "proc"

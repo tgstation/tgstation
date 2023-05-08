@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	base_icon_state = "coil"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = 75)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75)
 
 	/// The currently connected circuit
 	var/obj/item/integrated_circuit/attached_circuit
@@ -32,7 +32,7 @@
 // Look, I'm not happy about this either, but moving an object doesn't call Moved if it's inside something else.
 // There's good reason for this, but there's no element or similar yet to track it as far as I know.
 // SSobj runs infrequently, this is only ran while there's an attached circuit, its performance cost is negligible.
-/obj/item/usb_cable/process(delta_time)
+/obj/item/usb_cable/process(seconds_per_tick)
 	if (!check_in_range())
 		return PROCESS_KILL
 

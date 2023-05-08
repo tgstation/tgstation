@@ -1,0 +1,2499 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"am" = (
+/obj/effect/mob_spawn/corpse/human/doctor,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"aF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"aI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"aY" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"bk" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/cup/glass/flask,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"bE" = (
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"bU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/zombie,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"bV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"bW" = (
+/turf/template_noop,
+/area/template_noop)
+"bZ" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"cj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"ck" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"cF" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"cJ" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/structure/shipping_container/interdyne,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"cK" = (
+/obj/structure/shipping_container/interdyne,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"dk" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"dC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"dI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"dR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"dU" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/space/has_grav/interdyne)
+"eg" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/pizzabox/pineapple,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"eh" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/glass/bottle/molotov,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"ej" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/gibspawner/generic,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"et" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"eE" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"eI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"eJ" = (
+/mob/living/simple_animal/hostile/zombie,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"eL" = (
+/obj/item/infuser_book,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"eQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"fj" = (
+/obj/effect/gibspawner/generic,
+/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"fs" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/toy/plush/whiny_plushie,
+/obj/machinery/button/door{
+	id = "interdyne_vault";
+	name = "secret button"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"fu" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"fx" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"fS" = (
+/obj/machinery/vending/medical/syndicate_access,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ga" = (
+/obj/effect/mob_spawn/corpse/human/geneticist,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"gi" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/rack,
+/obj/effect/spawner/random/exotic/tool,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"gV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"gY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"hc" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"he" = (
+/obj/structure/fluff{
+	desc = "Ew, I think I see a hairball.";
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/machinery/shower/directional/east,
+/obj/item/soap/syndie,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/interdyne)
+"hi" = (
+/obj/structure/sign/departments/chemistry,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"hG" = (
+/obj/structure/table/wood,
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"iv" = (
+/obj/machinery/dna_infuser,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"iN" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"iR" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"jA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"jF" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/interdyne)
+"jI" = (
+/obj/structure/dresser,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kg" = (
+/obj/item/toy/plush/beeplushie{
+	desc = "How did this get here?";
+	name = "Secret bee plushie"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kk" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kp" = (
+/obj/structure/cable,
+/obj/item/paper/fluff/ruins/interdyne/note_2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kz" = (
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/interdyne)
+"kA" = (
+/obj/structure/cable,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"kH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kL" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kN" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"kV" = (
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"li" = (
+/obj/machinery/door/poddoor{
+	id = "interdyne_vault"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"lQ" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ma" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 1
+	},
+/obj/item/pizzabox,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"mc" = (
+/obj/machinery/oven,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"me" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"mf" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"mi" = (
+/obj/structure/chair/office/tactical,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"mj" = (
+/obj/machinery/door/airlock/medical,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"mp" = (
+/obj/effect/mob_spawn/corpse/human/zombie,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"mx" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"mD" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"mQ" = (
+/obj/item/paper/fluff/junkmail_generic,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"nm" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"nw" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/obj/item/storage/bag/mail,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"nA" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"nU" = (
+/obj/structure/rack,
+/obj/item/storage/medkit/brute,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"ot" = (
+/obj/effect/mob_spawn/corpse/human/doctor,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ox" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"oJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"oO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"pb" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/syringes,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"pp" = (
+/obj/effect/gibspawner/human,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"py" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"pE" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Chief Researcher's Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"pI" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"pR" = (
+/obj/item/paper/fluff/ruins/interdyne/note_1,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"qa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"qj" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/paper/fluff/junkmail_redpill,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"qt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/maintenance{
+	name = "Restroom"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"qS" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/beakers,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"qW" = (
+/obj/machinery/computer/terminal,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"ri" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
+	pixel_y = 32
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"rr" = (
+/obj/structure/cable,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"rC" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"rL" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"rQ" = (
+/obj/item/reagent_containers/cup/bottle,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"rW" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/desk_bell,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"si" = (
+/obj/machinery/air_sensor{
+	chamber_id = "interdyne_atmos"
+	},
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/interdyne)
+"sD" = (
+/obj/item/paper/fluff/ruins/interdyne/note_5,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"sJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"tg" = (
+/obj/effect/gibspawner/human,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"tm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "interdyne_atmos";
+	dir = 1;
+	pipe_color = "#0000FF"
+	},
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/interdyne)
+"tx" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ua" = (
+/obj/structure/mirror/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ub" = (
+/obj/effect/mob_spawn/corpse/human/monkey,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"uy" = (
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"uS" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"vd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"vg" = (
+/obj/effect/gibspawner/generic,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"vK" = (
+/obj/structure/chair/office/tactical,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"vU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"wx" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet/black{
+	dir = 1
+	},
+/obj/item/toy/plush/narplush,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"wE" = (
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"wF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"wJ" = (
+/obj/machinery/door/airlock/science/glass,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"wY" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"xb" = (
+/obj/structure/closet/wardrobe/white/medical,
+/obj/item/clothing/suit/toggle/labcoat/interdyne,
+/obj/item/clothing/under/syndicate/scrubs,
+/obj/item/clothing/head/beret/medical,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"xf" = (
+/obj/item/paper/fluff/ruins/interdyne/pizza_note,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"xu" = (
+/obj/machinery/griddle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"yb" = (
+/obj/structure/cable,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"yt" = (
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"yN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"zx" = (
+/obj/structure/flora/rock/icy/style_3,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/interdyne)
+"zX" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ai" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Am" = (
+/obj/structure/table/wood,
+/obj/item/pizzabox/margherita,
+/obj/item/food/pizzaslice/arnold,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Aw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"AC" = (
+/obj/structure/closet/secure_closet/chemical,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"AF" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"AN" = (
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"AV" = (
+/obj/effect/gibspawner/generic,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Bf" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Bj" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Bx" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/paper/fluff/ruins/interdyne/note_3,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"By" = (
+/mob/living/simple_animal/hostile/zombie,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"BR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"BW" = (
+/obj/structure/safe,
+/obj/item/documents/syndicate,
+/obj/machinery/light/blacklight/directional/north,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"CP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/book/granter/sign_language,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"CW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"DA" = (
+/mob/living/simple_animal/hostile/zombie,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"DH" = (
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/interdyne)
+"DL" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"DP" = (
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Eh" = (
+/obj/item/mail/junkmail,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ei" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ej" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Eq" = (
+/obj/effect/mob_spawn/corpse/human/doctor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"EM" = (
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Fe" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Fw" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/cable,
+/obj/machinery/jukebox,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"FC" = (
+/mob/living/simple_animal/hostile/zombie,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Go" = (
+/obj/machinery/chem_master,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Gp" = (
+/obj/machinery/chem_master,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"GK" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"GY" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"HF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"HP" = (
+/obj/item/pizzabox,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"HQ" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Ie" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"IL" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/interdyne)
+"Jm" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Jo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Js" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"JC" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"JD" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"JH" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"JM" = (
+/obj/machinery/computer/arcade{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"JR" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/paper/fluff/ruins/interdyne/reception,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Kg" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Kv" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Kz" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid1"
+	},
+/area/ruin/space/has_grav/interdyne)
+"KA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"KP" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid8"
+	},
+/area/ruin/space/has_grav/interdyne)
+"KW" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Lb" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Lx" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid12"
+	},
+/area/ruin/space/has_grav/interdyne)
+"LB" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"LE" = (
+/obj/structure/closet/crate/mail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/paper/fluff/junkmail_generic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Me" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/interdyne)
+"Mi" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/paper/fluff/ruins/interdyne/note_4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"MA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"MB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/blacklight/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"MY" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Nb" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Nl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Nr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"NG" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"NV" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/interdyne)
+"Og" = (
+/obj/structure/cable,
+/obj/effect/mob_spawn/corpse/human/monkey,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Oo" = (
+/obj/structure/sink/directional/south,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/interdyne)
+"OD" = (
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"OR" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("interdyne_atmos"="Air Supply");
+	dir = 4
+	},
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"OW" = (
+/obj/machinery/power/smes/engineering{
+	input_available = 100000;
+	output_level = 40000
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"PB" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"PD" = (
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"PF" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"PP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/gibspawner/generic,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"PX" = (
+/obj/item/kirbyplants/random,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Qw" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"QC" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"QD" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"QR" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"QZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Rg" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Rh" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Rn" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav/interdyne)
+"Ro" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"RF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"RG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"RR" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/barricade/wooden/crude,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Sd" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Sy" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Sz" = (
+/obj/structure/chair/office/tactical,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"SE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"SK" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Te" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"TC" = (
+/obj/structure/closet/wardrobe/chemistry_white,
+/obj/item/storage/bag/chemistry,
+/obj/item/storage/bag/chemistry,
+/obj/item/clothing/suit/toggle/labcoat/interdyne,
+/obj/item/clothing/suit/toggle/labcoat/interdyne,
+/obj/item/clothing/under/syndicate/scrubs,
+/obj/item/clothing/under/syndicate/scrubs,
+/obj/item/clothing/head/beret/medical,
+/obj/item/clothing/head/beret/medical,
+/obj/item/clothing/shoes/jackboots,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ub" = (
+/obj/structure/rack,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Ul" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/chameleon/broken,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Un" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"UN" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/interdyne)
+"US" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Vi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Vp" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/chameleon,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"VC" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"VN" = (
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"VR" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Wa" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/corp/left,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"Wc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Wv" = (
+/obj/item/bedsheet/syndie/double{
+	dir = 4
+	},
+/obj/structure/bed/double{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ww" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"WM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"WU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Xh" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"XD" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"XS" = (
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"XT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/pizzabox,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ye" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Yi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Yo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ys" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/interdyne)
+"Yv" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/has_grav/interdyne)
+"YB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/structure/rack,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"Zi" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Zu" = (
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"ZT" = (
+/obj/structure/cable,
+/obj/machinery/light/blacklight/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+
+(1,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+Me
+Rn
+Me
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Me
+Me
+Me
+Me
+Me
+Me
+Me
+Rn
+Me
+Me
+Me
+Me
+bW
+bW
+bW
+"}
+(2,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+Me
+Me
+Me
+KP
+Me
+Rn
+Rn
+Rn
+Yv
+Zi
+Zi
+Yv
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+bW
+bW
+bW
+"}
+(3,1,1) = {"
+bW
+bW
+bW
+Me
+Lx
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Zi
+wx
+jI
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Yv
+Rn
+Lx
+Me
+bW
+"}
+(4,1,1) = {"
+bW
+bW
+bW
+bW
+zx
+Rn
+Yv
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+QD
+hG
+Zi
+QD
+Zi
+ma
+Am
+Zi
+jI
+kL
+Zi
+Wv
+ua
+jI
+Zi
+Rn
+Rn
+Lx
+Me
+"}
+(5,1,1) = {"
+bW
+bW
+bW
+Me
+Me
+Me
+mf
+iR
+Rh
+aY
+aY
+Lb
+VN
+Zi
+QD
+QD
+JC
+fu
+Zi
+xf
+XT
+Zi
+QD
+Ww
+Zi
+QD
+QD
+Bf
+Zi
+Rn
+Rn
+Rn
+Me
+"}
+(6,1,1) = {"
+bW
+bW
+bW
+bW
+Lx
+Rn
+Zi
+ri
+aY
+Lb
+vU
+aY
+QZ
+Zi
+Zi
+Zi
+KA
+yb
+Zi
+HP
+jI
+KA
+bE
+CP
+KA
+bE
+dR
+Bf
+Zi
+Rn
+Rn
+Rn
+Lx
+"}
+(7,1,1) = {"
+bW
+bW
+bW
+bW
+Me
+Rn
+Zi
+QR
+mD
+rW
+sJ
+Un
+fx
+Zi
+he
+NV
+Zi
+fu
+Zi
+JC
+Zi
+Zi
+JC
+Zi
+Zi
+QD
+dR
+QD
+Zi
+Rn
+Rn
+Rn
+Me
+"}
+(8,1,1) = {"
+bW
+bW
+bW
+zx
+Rn
+Rn
+Zi
+qW
+mi
+JR
+aY
+Lb
+QC
+Zi
+Oo
+DH
+qt
+fu
+Js
+KW
+MB
+gV
+Ej
+fu
+pE
+fu
+rC
+QD
+Zi
+Rn
+Rn
+Rn
+Kz
+"}
+(9,1,1) = {"
+bW
+bW
+bW
+Kz
+Rn
+Rn
+Zi
+Kv
+am
+mD
+Rh
+aY
+VN
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+eI
+ZT
+Zi
+fs
+Mi
+bk
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(10,1,1) = {"
+bW
+bW
+bW
+Rn
+Rn
+Rn
+Zi
+kN
+iR
+iR
+PX
+iR
+iR
+Zi
+dU
+dU
+dU
+dU
+dU
+dU
+dU
+Zi
+KA
+NG
+Zi
+Zi
+Zi
+Zi
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(11,1,1) = {"
+bW
+bW
+bW
+Me
+Rn
+Rn
+Yv
+Zi
+Zi
+Zi
+Zi
+Zi
+RR
+Zi
+dU
+gi
+Ye
+Ub
+EM
+Jm
+dU
+Zi
+cF
+US
+KA
+yN
+fS
+AN
+Zi
+Rn
+Me
+bW
+bW
+"}
+(12,1,1) = {"
+bW
+bW
+bW
+Lx
+Rn
+Rn
+Zi
+QD
+aF
+QD
+QD
+aF
+fu
+Zi
+dU
+Ul
+oJ
+nU
+EM
+JH
+dU
+Zi
+fj
+Ei
+Zi
+RG
+fu
+AF
+Zi
+jF
+bW
+bW
+bW
+"}
+(13,1,1) = {"
+bW
+bW
+bW
+Me
+Rn
+Rn
+Zi
+LE
+dR
+Eh
+et
+uy
+nw
+Zi
+dU
+Vp
+EM
+YB
+oJ
+me
+dU
+Zi
+Eq
+Nb
+Zi
+gV
+bV
+QD
+Zi
+Rn
+Me
+Lx
+bW
+"}
+(14,1,1) = {"
+bW
+Rn
+Rn
+Rn
+Rn
+Rn
+Zi
+GY
+Qw
+QD
+Zu
+bV
+ak
+Zi
+dU
+Fe
+wE
+XD
+wE
+wE
+li
+fu
+eJ
+WU
+KA
+gV
+vd
+xb
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(15,1,1) = {"
+bW
+bW
+Rn
+Rn
+Rn
+Rn
+Zi
+nm
+QD
+vd
+Rg
+Xh
+qj
+Zi
+dU
+rQ
+EM
+OW
+iN
+EM
+dU
+Zi
+Yi
+US
+NG
+BR
+SE
+kH
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(16,1,1) = {"
+bW
+bW
+bW
+Rn
+Rn
+Rn
+Zi
+eE
+Ie
+SE
+pR
+dR
+ck
+Zi
+dU
+kV
+sD
+IL
+UN
+IL
+dU
+Zi
+AV
+Nb
+Zi
+fu
+QD
+xb
+Zi
+Rn
+Rn
+zx
+bW
+"}
+(17,1,1) = {"
+bW
+bW
+bW
+Me
+Rn
+Rn
+Zi
+fu
+rr
+Nb
+Bj
+HF
+oO
+Zi
+dU
+BW
+EM
+IL
+ox
+uS
+dU
+Zi
+zX
+lQ
+Zi
+nA
+QD
+rL
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(18,1,1) = {"
+bW
+bW
+bW
+Me
+Rn
+Rn
+Zi
+QD
+cK
+QD
+QD
+mx
+oO
+Zi
+dU
+dU
+dU
+dU
+dU
+dU
+dU
+Zi
+jA
+oO
+Zi
+py
+kk
+PD
+Zi
+Rn
+Rn
+Me
+bW
+"}
+(19,1,1) = {"
+bW
+bW
+bW
+Rn
+Rn
+Rn
+Zi
+QD
+QD
+QD
+nm
+nm
+Ro
+Yv
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+SK
+Zi
+Zi
+Zi
+Zi
+Yv
+Yv
+Rn
+Rn
+bW
+"}
+(20,1,1) = {"
+bW
+bW
+bW
+Me
+Rn
+Rn
+Zi
+QD
+QD
+QD
+tx
+gY
+tg
+JD
+oO
+jA
+jA
+dk
+jA
+jA
+Zi
+Fw
+cj
+qa
+JM
+Zi
+OR
+IL
+si
+Zi
+Rn
+Rn
+bW
+"}
+(21,1,1) = {"
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Zi
+QD
+cJ
+mQ
+QD
+vd
+Te
+Zi
+LB
+Nb
+Sy
+oO
+Yo
+oO
+SK
+qa
+dI
+Nl
+JM
+Zi
+dC
+Ys
+tm
+Zi
+Rn
+KP
+bW
+"}
+(22,1,1) = {"
+bW
+Rn
+Rn
+Rn
+Rn
+Rn
+Zi
+GY
+QD
+pp
+uy
+Wc
+SE
+Zi
+mj
+Zi
+Zi
+wJ
+Zi
+Zi
+Yv
+aY
+Nr
+Jo
+OD
+GK
+Ai
+IL
+kz
+Zi
+Rn
+Rn
+bW
+"}
+(23,1,1) = {"
+bW
+bW
+Me
+Me
+Rn
+Rn
+Zi
+kg
+QD
+aF
+QD
+Eh
+Zi
+Zi
+oO
+Yv
+WM
+US
+QD
+PF
+Zi
+CW
+Bx
+vg
+Aw
+Yv
+Zi
+Yv
+Zi
+Yv
+Rn
+Rn
+bW
+"}
+(24,1,1) = {"
+bW
+bW
+KP
+Rn
+Rn
+Rn
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+hi
+bE
+kp
+Zi
+fu
+Og
+bV
+VR
+Zi
+MA
+eg
+By
+Vi
+kA
+VC
+Zi
+Rn
+Rn
+Rn
+Rn
+bW
+"}
+(25,1,1) = {"
+bW
+Me
+Me
+Rn
+Rn
+Rn
+Zi
+TC
+QD
+QD
+QD
+RF
+Yi
+oO
+mp
+Zi
+fu
+Nb
+DA
+ga
+Zi
+Wa
+eh
+Nr
+eQ
+aY
+HQ
+Zi
+Rn
+Rn
+Rn
+Me
+bW
+"}
+(26,1,1) = {"
+bW
+Me
+Rn
+Rn
+Rn
+Rn
+Zi
+DL
+FC
+ot
+Sd
+wF
+PP
+bU
+bZ
+Zi
+ub
+ej
+aI
+QD
+Zi
+XS
+iR
+aY
+Vi
+DP
+yt
+Zi
+Rn
+Rn
+Rn
+Me
+bW
+"}
+(27,1,1) = {"
+bW
+Me
+Me
+Rn
+Rn
+Rn
+Yv
+Zi
+QD
+Sz
+qS
+qS
+vK
+fu
+QD
+Zi
+bE
+eL
+hc
+PF
+Zi
+Kg
+iR
+iR
+MY
+Yv
+Zi
+Yv
+Rn
+Rn
+Rn
+Me
+bW
+"}
+(28,1,1) = {"
+bW
+bW
+Kz
+Rn
+Rn
+Rn
+Rn
+Zi
+Gp
+pI
+pb
+pb
+wY
+Go
+AC
+Zi
+iv
+Zi
+Zi
+Zi
+Yv
+Yv
+mc
+xu
+PB
+Zi
+Rn
+Rn
+Rn
+Rn
+Me
+bW
+bW
+"}
+(29,1,1) = {"
+bW
+bW
+Me
+Me
+Rn
+Rn
+Rn
+Yv
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Yv
+Rn
+Rn
+Rn
+Yv
+Zi
+Zi
+Zi
+Yv
+Rn
+Rn
+Rn
+Rn
+Me
+bW
+bW
+"}
+(30,1,1) = {"
+bW
+bW
+bW
+Me
+KP
+Me
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Me
+bW
+bW
+"}
+(31,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+bW
+Rn
+Me
+Me
+Rn
+Rn
+Rn
+Me
+Rn
+Lx
+Kz
+Rn
+zx
+Me
+Me
+Rn
+Rn
+Rn
+Rn
+Me
+Me
+Me
+KP
+Me
+Me
+Lx
+bW
+bW
+"}
+(32,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+Rn
+Rn
+Rn
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+Lx
+Me
+Rn
+Rn
+Rn
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+"}
+(33,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+Rn
+Rn
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+"}

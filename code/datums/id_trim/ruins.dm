@@ -122,12 +122,6 @@
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
 
-/datum/id_trim/pirate/psykers
-	assignment = "Psyker-gang Member"
-
-/datum/id_trim/pirate/captain/psykers
-	assignment = "Psyker-gang Leader"
-
 //Trims for Dangerous Research, used in ``dangerous_research.dm``
 /datum/id_trim/away/dangerous_research
 	assignment = "Researcher"
@@ -155,3 +149,16 @@
 	trim_state = "trim_securityofficer"
 	department_color = COLOR_CARGO_BROWN
 	access = list(ACCESS_AWAY_SUPPLY, ACCESS_AWAY_SEC)
+
+//Trims for the outlet ruin
+/datum/id_trim/away/the_outlet
+	assignment = "Krazy Cashier"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/datum/id_trim/away/the_outlet/angry_assistant_manager
+	assignment = "Angry Assistant Manager"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
+
+/datum/id_trim/away/the_outlet/mad_manager
+	assignment = "The Mad Manager"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL, ACCESS_AWAY_SEC)

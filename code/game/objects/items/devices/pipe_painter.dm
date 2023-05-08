@@ -8,7 +8,7 @@
 	attack_style = null
 	var/paint_color = "grey"
 
-	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	. = ..()

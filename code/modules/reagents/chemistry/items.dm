@@ -232,6 +232,7 @@
 	update_icon()
 
 /obj/item/burner/extinguish()
+	. = ..()
 	set_lit(FALSE)
 
 /obj/item/burner/attack_self(mob/living/user)

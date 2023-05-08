@@ -319,6 +319,7 @@
 		bare_would_bonus = attacking_item.bare_wound_bonus,
 		sharpness = attacking_item.get_sharpness(),
 		attack_direction = get_dir(user, src),
+		attacking_item = attacking_item,
 	)
 
 	was_attacked_effects(attacking_item, user, affecting, damage, armor_block)
