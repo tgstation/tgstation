@@ -33751,6 +33751,8 @@
 /area/station/engineering/atmos)
 "jak" = (
 /obj/effect/turf_decal/tile/red/half,
+/obj/item/paper/fluff/genpop_instructions,
+/obj/structure/table,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "jas" = (
@@ -50359,7 +50361,7 @@
 /area/station/ai_monitored/security/armory)
 "nkw" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/computer/bank_machine{
+/obj/machinery/computer/accounting{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
