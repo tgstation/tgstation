@@ -381,6 +381,8 @@ Difficulty: Hard
 
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
+	set waitfor = FALSE
+
 	playsound(original,'sound/machines/airlockopen.ogg', 200, TRUE)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
