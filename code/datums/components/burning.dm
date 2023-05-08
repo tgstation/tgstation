@@ -18,10 +18,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!atom_parent.uses_integrity)
 		stack_trace("Tried to add /datum/component/burning to an atom ([atom_parent.type]) that does not use atom_integrity!")
 		return COMPONENT_INCOMPATIBLE
+
 	// only flammable atoms should have this component, but it's not really an error if we try to apply this to a non flammable one
 	if(!(atom_parent.resistance_flags & FLAMMABLE) || (atom_parent.resistance_flags & FIRE_PROOF))
 		qdel(src)
 		return
+
 	src.fire_overlay = fire_overlay
 	if(fire_particles)
 		// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
@@ -30,12 +32,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /datum/component/burning/Destroy(force, silent)
 	STOP_PROCESSING(SSburning, src)
+	fire_overlay = null
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
 	return ..()
 
 /datum/component/burning/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ATOM_EXTINGUISH, PROC_REF(on_extinguish))
 	var/atom/atom_parent = parent
@@ -43,7 +47,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	atom_parent.update_appearance()
 
 /datum/component/burning/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
+	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_UPDATE_OVERLAYS,
+		COMSIG_ATOM_EXTINGUISH))
 	var/atom/atom_parent = parent
 	if(!QDELETED(atom_parent))
 		atom_parent.resistance_flags &= ~ON_FIRE
@@ -62,6 +70,37 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SIGNAL_HANDLER
 
 	examine_list += span_danger("[source.p_theyre(TRUE)] burning!")
+
+/// Handles searing the hand of anyone who tries to touch this without protection.
+/datum/component/burning/proc/on_attack_hand(atom/source, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
+	// attack_hand() behavior should only apply to items, for now
+	if(!isitem(source))
+		return NONE
+
+	var/can_handle_hot = FALSE
+	if(!istype(user))
+		can_handle_hot = TRUE
+	else if(user.gloves && (user.gloves.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE))
+		can_handle_hot = TRUE
+	else if(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+		can_handle_hot = TRUE
+
+	if(can_handle_hot)
+		source.extinguish()
+		to_chat(user, span_notice("You put out the fire on [source]."))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	var/obj/item/bodypart/affecting = user.get_bodypart(!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	if(!affecting?.receive_damage(burn = 5))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	to_chat(user, span_userdanger("You burn your hand on [source]!"))
+	user.emote("scream", intentional = FALSE)
+	playsound(source, SFX_SEAR, 50, TRUE)
+	user.update_damage_overlays()
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Maintains the burning overlay on the parent atom
 /datum/component/burning/proc/on_update_overlays(atom/source, list/overlays)

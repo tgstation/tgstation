@@ -890,7 +890,7 @@
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
-		. = 'sound/weapons/sear.ogg'
+		. = SFX_SEAR
 	else
 		. = SFX_DESECRATION
 
