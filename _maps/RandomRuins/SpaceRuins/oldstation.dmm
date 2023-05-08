@@ -5796,6 +5796,8 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/away_general_access,
 /turf/open/floor/iron/white/textured_edge,
 /area/ruin/space/ancientstation/delta/biolab)
 "Ef" = (
@@ -8402,10 +8404,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/crumpled,
 /obj/item/ph_booklet,
-/obj/machinery/airalarm/directional/south,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

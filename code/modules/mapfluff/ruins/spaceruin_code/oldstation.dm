@@ -18,7 +18,7 @@
 		</ul> \
 		<h2>Status</h2> \
 		<ol> \
-		<li><b>Alpha Station</b> - Destroyed</li> \
+		<li><b>Alpha Station</b> - Destroyed.</li> \
 		<li><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics and Engine Core, partially destroyed.</li> \
 		<li><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.</li> \
 		<li><b>Delta Station</b> - Intact.</li> \
