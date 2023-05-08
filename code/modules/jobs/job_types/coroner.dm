@@ -53,6 +53,7 @@
 	belt = /obj/item/modular_computer/pda/coroner
 	ears = /obj/item/radio/headset/headset_srvmed
 	gloves = /obj/item/clothing/gloves/latex/coroner
+	head = /obj/item/clothing/head/utility/surgerycap/black
 	l_pocket = /obj/item/clipboard //good for storing autopsy reports and taking notes
 	r_pocket = /obj/item/reagent_containers/dropper
 	mask = /obj/item/clothing/mask/surgical
