@@ -48,9 +48,10 @@
 			if(ACCESS_NUKIE_RANK)
 				amount *= 2
 
-	if(max_round_coins <= amount)
-		amount = max_round_coins
-	max_round_coins -= amount
+	if(respects_roundcap)
+		if(max_round_coins <= amount)
+			amount = max_round_coins
+		max_round_coins -= amount
 
 	amount = round(amount, 1)
 	metacoins += amount
