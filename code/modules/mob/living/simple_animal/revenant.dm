@@ -246,9 +246,12 @@
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 	visible_message(span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"))
 	icon_state = "revenant_draining"
-	for(var/i = alpha, i > 0, i -= 10)
-		stoplag()
-		alpha = i
+
+	var/datum/effect_system/spark_spread/quantum/sparks = new
+	sparks.set_up(5, FALSE, src)
+	sparks.autocleanup = TRUE
+	sparks.start()
+	
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/R = new(get_turf(src))
