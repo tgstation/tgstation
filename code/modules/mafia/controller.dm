@@ -151,7 +151,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			var/datum/mafia_role/new_role = new rtype(src)
 			all_roles += new_role
 			living_roles += new_role
-			current_setup_text += "[new_role.name] x[setup_list[new_role.type]]"
+		var/datum/mafia_role/role_type = rtype
+		current_setup_text += "[initial(role_type.name)] x[setup_list[role_type]]"
 	var/list/spawnpoints = landmarks.Copy()
 	for(var/datum/mafia_role/role as anything in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
@@ -668,6 +669,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			if("nuke")
 				qdel(src)
 			if("next_phase")
+				if(phase == MAFIA_PHASE_SETUP)
+					return
 				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
 				if(!timer.spent)
 					var/datum/callback/tc = timer.callBack
@@ -694,6 +697,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
+					if(!chosen_role_name)
+						return
 					switch(chosen_role_name)
 						if("CANCEL")
 							done = TRUE
