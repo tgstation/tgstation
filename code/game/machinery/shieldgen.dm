@@ -565,7 +565,7 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
 	///Multipliar on stats at the cost of heat generation and volatility
-	var/overclocked = FALSE
+	var/overloaded = FALSE
 
 	///Doesnt actually control it, just tells us if its running or not
 	var/active = FALSE
