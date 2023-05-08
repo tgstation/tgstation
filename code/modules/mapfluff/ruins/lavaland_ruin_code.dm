@@ -39,8 +39,6 @@
 	var/required_stacks = 10
 	/// Type of shell to create
 	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
-	/// Whether or not the golem will be enslaved to the person who finishes the shell
-	var/has_owner = FALSE
 
 /obj/item/golem_shell/attackby(obj/item/potential_food, mob/user, params)
 	. = ..()
@@ -60,11 +58,10 @@
 	if(!stack_food.use(required_stacks))
 		balloon_alert(user, "not enough minerals!")
 		return
-	new shell_type(get_turf(src), /* creator = */ (has_owner) ? user : null, /* made_of = */ stack_type)
+	new shell_type(get_turf(src), /* creator = */ user, /* made_of = */ stack_type)
 	qdel(src)
 
 ///made with xenobiology, the golem obeys its creator
 /obj/item/golem_shell/servant
 	name = "incomplete servant golem shell"
 	shell_type = /obj/effect/mob_spawn/ghost_role/human/golem/servant
-	has_owner = TRUE
