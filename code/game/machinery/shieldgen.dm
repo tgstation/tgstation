@@ -655,7 +655,8 @@
 
 /obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user,  W))
+	if(default_deconstruction_screwdriver(user,"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
+	 "gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  W))
 		return
 
 	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
@@ -860,7 +861,7 @@
 	return exposed_temperature > (T0C + heat_resistance)
 
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	shield_generator.shield_drain(round(air.return_volume() / 400))
+	shield_generator.shield_drain(round(air.return_volume() / 400))//this determines how much damage we take per mole from hot atmos (tweak if necessary)
 
 
 //How the shield loses strength
