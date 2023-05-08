@@ -47,29 +47,24 @@
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
 
-	///When someone interacts with the simple animal.
-	///Help-intent verb in present continuous tense.
+	// Melbert todo : figure these the fuck out
+	// These are used when someone help clicks on us. See [unarmed_help.dm]
+	/// Help-intent verb in present continuous tense.
 	var/response_help_continuous = "pokes"
-	///Help-intent verb in present simple tense.
+	/// Help-intent verb in present simple tense.
 	var/response_help_simple = "poke"
-	///Disarm-intent verb in present continuous tense.
-	var/response_disarm_continuous = "shoves"
-	///Disarm-intent verb in present simple tense.
-	var/response_disarm_simple = "shove"
-	///Harm-intent verb in present continuous tense.
-	var/response_harm_continuous = "hits"
-	///Harm-intent verb in present simple tense.
-	var/response_harm_simple = "hit"
 
-	///Basic mob's own attacks verbs,
-	///Attacking verb in present continuous tense.
-	var/attack_verb_continuous = "attacks"
-	///Attacking verb in present simple tense.
-	var/attack_verb_simple = "attack"
-	///Attacking, but without damage, verb in present continuous tense.
-	var/friendly_verb_continuous = "nuzzles"
-	///Attacking, but without damage, verb in present simple tense.
-	var/friendly_verb_simple = "nuzzle"
+	// These are used when someone disarms us. See [unarmed_utility.dm]
+	/// Disarm-intent verb in present continuous tense.
+	var/response_disarm_continuous = "shoves"
+	/// Disarm-intent verb in present simple tense.
+	var/response_disarm_simple = "shove"
+
+	// These are used when someone unarmed smacks us. See [unarmed_damage.dm]
+	/// Harm-intent verb in present continuous tense.
+	var/response_harm_continuous = "hits"
+	/// Harm-intent verb in present simple tense.
+	var/response_harm_simple = "hit"
 
 	////////THIS SECTION COULD BE ITS OWN ELEMENT
 	///Icon to use

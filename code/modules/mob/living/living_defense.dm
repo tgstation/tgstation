@@ -250,7 +250,7 @@
 	user.set_pull_offsets(src, grab_state)
 	return TRUE
 
-
+/*
 /mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
@@ -272,7 +272,9 @@
 						span_userdanger("\The [M.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, span_danger("You glomp [src]!"))
 		return TRUE
+*/
 
+/*
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	user.face_atom(src)
@@ -294,6 +296,7 @@
 	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
 	log_combat(user, src, "attacked")
 	return TRUE
+*/
 
 /*
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -358,12 +361,14 @@
 							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_warning("Your bite misses [src]!"))
 	else
+			// melbert todo : soulcode
 		visible_message(span_notice("[L.name] rubs its head against [src]."), \
 						span_notice("[L.name] rubs its head against you."), null, null, L)
 		to_chat(L, span_notice("You rub your head against [src]."))
 		return FALSE
 	return FALSE
 */
+/*
 /mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -376,11 +381,12 @@
 		user.do_attack_animation(src)
 		return TRUE
 	else
+			// melbert todo : soulcode
 		visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
 						span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
 		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
 		return FALSE
-
+*/
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE

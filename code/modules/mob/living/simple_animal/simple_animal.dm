@@ -37,20 +37,27 @@
 	///When set to 1 this stops the animal from moving when someone is pulling it.
 	var/stop_automated_movement_when_pulled = 1
 
-	///When someone interacts with the simple animal.
-	///Help-intent verb in present continuous tense.
+	// Melbert todo : figure these the fuck out
+	// These are used when someone help clicks on us. See [unarmed_help.dm]
+	/// Help-intent verb in present continuous tense.
 	var/response_help_continuous = "pokes"
-	///Help-intent verb in present simple tense.
+	/// Help-intent verb in present simple tense.
 	var/response_help_simple = "poke"
-	///Disarm-intent verb in present continuous tense.
+
+	// These are used when someone disarms us. See [unarmed_utility.dm]
+	/// Disarm-intent verb in present continuous tense.
 	var/response_disarm_continuous = "shoves"
-	///Disarm-intent verb in present simple tense.
+	/// Disarm-intent verb in present simple tense.
 	var/response_disarm_simple = "shove"
-	///Harm-intent verb in present continuous tense.
+
+	// These are used when someone unarmed smacks us. See [unarmed_damage.dm]
+	/// Harm-intent verb in present continuous tense.
 	var/response_harm_continuous = "hits"
-	///Harm-intent verb in present simple tense.
+	/// Harm-intent verb in present simple tense.
 	var/response_harm_simple = "hit"
-	var/harm_intent_damage = 3
+
+	// var/harm_intent_damage = 3
+
 	///Minimum force required to deal any damage.
 	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
@@ -93,18 +100,12 @@
 	var/melee_damage_type = BRUTE
 	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	///Attacking verb in present continuous tense.
-	var/attack_verb_continuous = "attacks"
-	///Attacking verb in present simple tense.
-	var/attack_verb_simple = "attack"
+
 	/// Sound played when the critter attacks.
 	var/attack_sound
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
-	///Attacking, but without damage, verb in present continuous tense.
-	var/friendly_verb_continuous = "nuzzles"
-	///Attacking, but without damage, verb in present simple tense.
-	var/friendly_verb_simple = "nuzzle"
+
 	///Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
 

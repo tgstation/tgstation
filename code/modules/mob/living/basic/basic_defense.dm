@@ -30,6 +30,7 @@
 	return TRUE
 	*/
 
+/*
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
@@ -42,8 +43,9 @@
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+*/
 
-
+/*
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	. = ..()
 	if(!.)
@@ -62,6 +64,7 @@
 	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	attack_threshold_check(damage)
 	log_combat(user, src, "attacked")
+*/
 
 /*
 /mob/living/basic/attack_larva(mob/living/carbon/alien/larva/attacking_larva, list/modifiers)

@@ -7,9 +7,16 @@
 	/// Type damage this attack does.
 	var/attack_type = BRUTE
 	/// The verb used for an unarmed attack when using this limb, "punch".
-	var/unarmed_attack_verb = "bump"
-
+	var/default_attack_verb = "bump"
+	///
 	var/deaf_miss_phrase = "a swoosh"
+	/// Amount of bonus stamina damage to apply in addition to the main attack type
+	var/bonus_stamina_damage_modifier = 1.5
+	/// Flat added modifier to miss chance
+	var/miss_chance_modifier = 0
+
+	// Melbert todo: maybe put these back on the limbs
+
 	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
 	/// Highest possible punch damage this bodypart can give.
@@ -21,25 +28,30 @@
 	var/wound_bonus = 0
 	/// Armor penetration from the attack
 	var/attack_penetration = 0
-	/// Amount of bonus stamina damage to apply in addition to the main attack type
-	var/bonus_stamina_damage_modifier = 1.5
-
-	var/miss_chance_modifier = 0
 
 /datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked)
 	return rand(unarmed_damage_low, unarmed_damage_high)
 
+/datum/attack_style/unarmed/generic_damage/proc/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+	if(damage == 0 && attacker.friendly_verb_simple)
+		return attacker.friendly_verb_simple
+	if(attacker.attack_verb_simple)
+		return attacker.attack_verb_simple
+
+	return default_attack_verb
+
 /datum/attack_style/unarmed/generic_damage/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/damage = select_damage(attacker, smacked)
-	if(smacked.check_block(attacker, damage, "[attacker]'s [unarmed_attack_verb]", UNARMED_ATTACK, attack_penetration))
+	var/damage = max(0, select_damage(attacker, smacked))
+	var/attack_verb = select_attack_verb(attacker, smacked, damage)
+	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration))
 		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s [unarmed_attack_verb]!"),
-			span_userdanger("You block [attacker]'s [unarmed_attack_verb]!"),
+			span_warning("[smacked] blocks [attacker]'s [attack_verb]!"),
+			span_userdanger("You block [attacker]'s [attack_verb]!"),
 			span_hear("You hear [deaf_miss_phrase]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_warning("[smacked] blocks your [unarmed_attack_verb]!"))
+		to_chat(attacker, span_warning("[smacked] blocks your [attack_verb]!"))
 		return ATTACK_STYLE_BLOCKED
 
 	// Todo : move this out and into its own style?
@@ -65,33 +77,34 @@
 
 	if(damage <= 0 || (iscarbon(smacked) && !istype(affecting)) || prob(miss_chance))
 		smacked.visible_message(
-			span_danger("[attacker]'s [unarmed_attack_verb] misses [smacked]!"),
-			span_danger("You avoid [attacker]'s [unarmed_attack_verb]!"),
+			span_danger("[attacker]'s [attack_verb] misses [smacked]!"),
+			span_danger("You avoid [attacker]'s [attack_verb]!"),
 			span_hear("You hear [deaf_miss_phrase]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_warning("Your [unarmed_attack_verb] misses [smacked]!"))
-		log_combat(attacker, smacked, "missed unarmed attack ([unarmed_attack_verb])")
+		to_chat(attacker, span_warning("Your [attack_verb] misses [smacked]!"))
+		log_combat(attacker, smacked, "missed unarmed attack ([attack_verb])")
 		return ATTACK_STYLE_MISSED
 
 	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration))
 
+	// melbert todo : probably sounds silly
 	smacked.visible_message(
-		span_danger("[attacker] [unarmed_attack_verb]ed [smacked]!"),
-		span_userdanger("You're [unarmed_attack_verb]ed by [attacker]!"),
+		span_danger("[attacker] [attack_verb]ed [smacked]!"),
+		span_userdanger("You're [attack_verb]ed by [attacker]!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = attacker,
 	)
-	to_chat(attacker, span_danger("You [unarmed_attack_verb] [smacked]!"))
+	to_chat(attacker, span_danger("You [default_attack_verb] [smacked]!"))
 
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
 	actually_apply_damage(attacker, smacked, damage, affecting, armor_block)
 
-	var/additional_logging = "([unarmed_attack_verb])"
+	var/additional_logging = "([default_attack_verb])"
 	if(damage >= 9 && ishuman(smacked))
 		var/mob/living/carbon/human/human_smacked = smacked
 		human_smacked.force_say()
@@ -125,7 +138,7 @@
 		smacked.apply_damage(damage * bonus_stamina_damage_modifier, attack_type, affecting, armor_block, attack_direction = direction)
 
 /datum/attack_style/unarmed/generic_damage/punch
-	unarmed_attack_verb = "punch" // The classic punch, wonderfully classic and completely random
+	default_attack_verb = "punch" // The classic punch, wonderfully classic and completely random
 	unarmed_damage_low = 1
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
@@ -139,13 +152,13 @@
 	successful_hit_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	attack_type = BURN // bish buzz
-	unarmed_attack_verb = "burn"
+	default_attack_verb = "burn"
 
 /datum/attack_style/unarmed/generic_damage/punch/claw
 	successful_hit_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_verb = "slash"
+	default_attack_verb = "slash"
 
 /datum/attack_style/unarmed/generic_damage/punch/mushroom
 	unarmed_damage_low = 6
@@ -154,7 +167,7 @@
 
 /datum/attack_style/unarmed/generic_damage/snail
 	attack_effect = ATTACK_EFFECT_DISARM
-	unarmed_attack_verb = "slap"
+	default_attack_verb = "slap"
 	unarmed_damage_low = 0.2
 	unarmed_damage_high = 0.5 //snails are soft and squishy
 	unarmed_stun_threshold = 8
@@ -163,9 +176,9 @@
 	successful_hit_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'
 	attack_effect = ATTACK_EFFECT_BITE
-	unarmed_attack_verb = "bite"
+	default_attack_verb = "bite"
 	deaf_miss_phrase = "jaws snapping shut"
-	unarmed_damage_low = 1 // Yeah, biting is pretty weak, blame the monkey super-nerf
+	unarmed_damage_low = 1
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	miss_chance_modifier = 25
@@ -207,18 +220,19 @@
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = -1
 	wound_bonus = 10
-	unarmed_attack_verb = "smash"
+	default_attack_verb = "smash"
+
+/datum/attack_style/unarmed/generic_damage/hulk/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+	return pick(default_attack_verb, "pummel", "slam")
 
 /datum/attack_style/unarmed/generic_damage/hulk/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	// Me hulk, me mutate global singleton, me no care
-	unarmed_attack_verb = pick("smash", "pummel", "slam")
 	. = ..()
 	if(. & ATTACK_STYLE_HIT)
 		smacked.hulk_smashed(attacker)
 
 /datum/attack_style/unarmed/generic_damage/kick
 	attack_effect = ATTACK_EFFECT_KICK
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	default_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
@@ -244,24 +258,56 @@
 /datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked)
 	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
 
+/datum/attack_style/unarmed/generic_damage/mob_attack/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+	. = ..()
+	if(. != default_attack_verb)
+		return
+
+	if(isanimal(attacker))
+		var/mob/living/simple_animal/animal = attacker
+		return animal.attack_verb_simple
+
+	if(isbasicmob(attacker))
+		var/mob/living/basic/animal = attacker
+		return animal.attack_verb_simple
+
 /datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	if(isanimal(attacker))
 		var/mob/living/simple_animal/animal = attacker
 		if(animal.attack_vis_effect)
 			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
+		return
 
 	if(isbasicmob(attacker))
 		var/mob/living/basic/animal = attacker
 		if(animal.attack_vis_effect)
 			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
+		return
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/xeno
 	successful_hit_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	unarmed_attack_verb = "slash"
+	default_attack_verb = "slash"
 	miss_chance_modifier = 10
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/select_damage(mob/living/attacker, mob/living/smacked)
 	if(isalien(smacked))
-		return 1
+		return 1 // Aliens do 1 damage to each other
+	return ..()
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/xeno/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+	if(isalien(smacked))
+		return "caresses"
+	return ..()
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/glomp
+	default_attack_verb = "glomp"
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/glomp/execute_attack(mob/living/simple_animal/slime/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	if(istype(attacker) && attacker.buckled)
+		// can't attack while eating!
+		if(attacker in smacked.buckled_mobs)
+			attacker.Feedstop()
+		return
+
 	return ..()

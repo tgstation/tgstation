@@ -125,9 +125,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
+/mob/living/carbon/attack_hand(mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
+		. = TRUE // melbert todo : why does this not return?
+
 	for(var/datum/disease/our_disease as anything in user.diseases)
 		if(our_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(our_disease)
@@ -148,9 +149,33 @@
 		if(wounds.try_handling(user))
 			return TRUE
 
-	help_shake_act(user)
-	return FALSE
+	if(iscarbon(user))
+		help_shake_act(user)
 
+	// Melbert todo
+	// animal disarm verb, harm verb, and harm verb w/ 0 damage handling is absent
+
+	else if(isanimal(user))
+		var/mob/living/simple_animal/animal = user
+		visible_message(
+			span_notice("[user] [animal.friendly_verb_continuous] [src]!"), \
+			span_notice("[user] [animal.friendly_verb_continuous] you!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user,
+		)
+		to_chat(user, span_notice("You [animal.friendly_verb_simple] [src]!"))
+
+	else if(isbasicmob(user))
+		var/mob/living/basic/animal = user
+		visible_message(
+			span_notice("[user] [animal.friendly_verb_continuous] [src]!"), \
+			span_notice("[user] [animal.friendly_verb_continuous] you!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user,
+		)
+		to_chat(user, span_notice("You [animal.friendly_verb_simple] [src]!"))
+
+	return FALSE
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 

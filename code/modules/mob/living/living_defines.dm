@@ -41,11 +41,20 @@
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
-	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
-	/// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
+	// These vars relate to this mob dealing damage via unarmed melee attacks.
+	// They are used if your mob has the attack style [/datum/attack_style/unarmed/generic_damage/mob_attack]
+	/// Lower bound of damage done by unarmed melee attacks.
 	var/melee_damage_lower = 0
-	/// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
+	/// Upper bound of damage done by unarmed melee attacks. P
 	var/melee_damage_upper = 0
+	/// Attacking verb in present continuous tense.
+	var/attack_verb_continuous = "attacks"
+	/// Attacking verb in present simple tense.
+	var/attack_verb_simple = "attack"
+	/// If you are attacking, but deal zero damage (or helping), you will use this verb instead, verb in present continuous tense.
+	var/friendly_verb_continuous = "nuzzles"
+	/// If you are attacking, but deal zero damage (or helping), you will use this verb instead, verb in present simple tense.
+	var/friendly_verb_simple = "nuzzle"
 
 	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
 	var/living_flags = NONE
