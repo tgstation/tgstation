@@ -40,6 +40,18 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				"rank" = rank,
 				)
 			continue
+		if(job.department_for_prefs && !(/datum/job_department/command in job.departments_list))
+			var/datum/job_department/department = departments_by_type[job.department_for_prefs]
+			if(!department)
+				stack_trace("get_manifest() failed to get job department for [job.department_for_prefs] of [job.type]")
+				continue
+			var/list/entry = list(
+				"name" = name,
+				"rank" = rank,
+				)
+			var/list/department_list = manifest_out[department.department_name]
+			department_list[++department_list.len] = entry
+			continue
 		for(var/department_type as anything in job.departments_list)
 			var/datum/job_department/department = departments_by_type[department_type]
 			if(!department)
