@@ -16,7 +16,7 @@
 /area/ruin/powered)
 "d" = (
 /obj/structure/fireplace,
-/turf/open/floor/wood,
+/turf/open/floor/carpet,
 /area/ruin/powered)
 "f" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -83,6 +83,19 @@
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered)
+"w" = (
+/obj/effect/turf_decal/siding/wideplating/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"y" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
 "A" = (
 /obj/item/taperecorder/empty,
 /obj/structure/closet/crate/maint,
@@ -91,6 +104,10 @@
 "C" = (
 /turf/open/genturf,
 /area/icemoon/underground/explored)
+"E" = (
+/obj/effect/turf_decal/siding/wideplating/light,
+/turf/open/floor/wood,
+/area/ruin/powered)
 "F" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -98,8 +115,21 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/powered)
+"I" = (
+/obj/item/chair/wood/wings,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"L" = (
+/obj/effect/turf_decal/siding/wideplating/light/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
 "N" = (
 /turf/open/floor/wood/tile,
+/area/ruin/powered)
+"P" = (
+/turf/open/floor/iron/white,
 /area/ruin/powered)
 "S" = (
 /turf/open/floor/iron,
@@ -110,6 +140,9 @@
 /area/ruin/powered)
 "V" = (
 /turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"W" = (
+/turf/open/floor/carpet,
 /area/ruin/powered)
 "Z" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -401,9 +434,9 @@ N
 N
 N
 t
-r
-r
-r
+P
+P
+P
 t
 a
 a
@@ -435,9 +468,9 @@ N
 N
 v
 t
-r
-r
-r
+P
+P
+P
 t
 a
 a
@@ -466,12 +499,12 @@ a
 a
 t
 t
+f
 t
 t
-t
-r
-r
-r
+P
+P
+P
 t
 a
 a
@@ -502,10 +535,10 @@ t
 r
 r
 r
-r
-r
-r
-r
+E
+P
+P
+P
 t
 a
 a
@@ -532,13 +565,13 @@ a
 a
 a
 t
+y
+W
 r
 r
-r
-r
-r
-r
-r
+L
+w
+w
 t
 t
 t
@@ -567,7 +600,7 @@ a
 a
 t
 d
-r
+W
 r
 r
 r
@@ -600,8 +633,8 @@ a
 a
 a
 t
-r
-r
+W
+I
 r
 r
 r
