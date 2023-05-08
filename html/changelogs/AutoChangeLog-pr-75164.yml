@@ -1,7 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes:
-  - rscadd: "good tgui dropdowns"
-  - rscdel: "tgui dropdown suck"
-  - qol: "tgui dropdowns suck less"
-  - balance: "buffed tgui dropdowns"

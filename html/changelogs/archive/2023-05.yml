@@ -249,3 +249,44 @@
       in transit.
   - qol: The Ice Box pharmacy and Med Sec Outpost blast doors have been replaced with
       shutters.
+2023-05-08:
+  Helg2:
+  - bugfix: deleted unused airlock helper from syn-c brutus.
+  Jacquerel with new icons mostly by INFRARED_BARON:
+  - balance: Golems have been reworked into a hunger-based species who gain temporary
+      transformations when eating different kinds of mineral.
+  - rscdel: The previous golem subtypes no longer exist.
+  LT3:
+  - qol: Ghosts will now get a notification when someone is about to be hit by the
+      tram
+  Melbert:
+  - bugfix: Fixed Prosthetic Quirk not removing the limb before giving the prosthetic
+  - rscdel: You can't get an Elite Syndie Modsuit (or combat defib, or dart pistol)
+      from Space Ruins
+  Profakos:
+  - refactor: converts the request console to tgui
+  Rex9001:
+  - bugfix: Fixes the orm board in the golem ship being the wrong subtype
+  Rhials:
+  - bugfix: The psyker shuttle now has a suit for the psyker seer.
+  Thunder12345:
+  - image: Holy arrows are now 15% less holy (You can no longer click on the 2-pixel
+      hole in the arrowhead and unintentionally click the object below the arrow instead.)
+  - bugfix: The chaplain's divine bow can now be renamed like all other null rod variants.
+  YehnBeep:
+  - bugfix: The All-American Diner no longer requires a bunker ID card for most rooms
+      nor requires accesses to use the jukebox.
+  - bugfix: The All-American Diner's external airlocks now all work together.
+  actioninja:
+  - rscadd: good tgui dropdowns
+  - rscdel: tgui dropdown suck
+  - qol: tgui dropdowns suck less
+  - balance: buffed tgui dropdowns
+  larentoun:
+  - code_imp: Adds default multiplicative movespeed for basic mobs, to make them editable
+      in config
+  - config: Default multiplicative movespeed for basic mobs in example config
+  - bugfix: Stamina damage and healing now correctly applies movement slowdown
+  the-og-gear:
+  - bugfix: Paint cans have become limited use as intended by the gods of code
+  - bugfix: Clown borgs get unlimited paint, as a treat.
