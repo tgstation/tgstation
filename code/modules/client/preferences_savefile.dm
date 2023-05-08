@@ -137,7 +137,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					<span class='warningplain'><b>There are new <a href='?src=[REF(src)];open_keybindings=1'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
-		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
+		to_chat(parent, span_userdanger("[conflicted.category]: [conflicted.full_name] needs to be updated right fucking now or so help me, I will turn this space shuttle around."))
 
 /datum/preferences/proc/load_path(ckey, filename="preferences.json")
 	if(!ckey || !load_and_save)
