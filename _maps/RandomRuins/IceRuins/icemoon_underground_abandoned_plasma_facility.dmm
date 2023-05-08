@@ -661,9 +661,7 @@
 	},
 /area/ruin/plasma_facility/commons)
 "kA" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
@@ -1129,9 +1127,7 @@
 /area/ruin/plasma_facility/commons)
 "rS" = (
 /obj/effect/turf_decal/bot/left,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -1148,9 +1144,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -1760,9 +1754,7 @@
 "FD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,

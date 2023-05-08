@@ -49,9 +49,7 @@
 "cZ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)

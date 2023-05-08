@@ -31128,9 +31128,7 @@
 /area/station/maintenance/floor1/port/aft)
 "ioM" = (
 /obj/effect/spawner/random/maintenance/two,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
@@ -34626,9 +34624,7 @@
 /turf/open/floor/iron/kitchen/herringbone,
 /area/station/service/kitchen/diner)
 "jnv" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
@@ -44792,9 +44788,7 @@
 /area/station/commons/fitness/recreation)
 "lRc" = (
 /obj/item/reagent_containers/dropper,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
@@ -66779,9 +66773,7 @@
 "rBB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/entertainment/drugs,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
 "rBC" = (
@@ -74980,9 +74972,7 @@
 /area/station/science/cytology)
 "tSf" = (
 /obj/effect/spawner/random/maintenance/two,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/mop,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -83030,9 +83020,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
 "wcR" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/tool,

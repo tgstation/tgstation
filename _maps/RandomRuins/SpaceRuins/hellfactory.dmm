@@ -103,9 +103,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "at" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/plating,

@@ -1917,9 +1917,7 @@
 /area/shuttle/abandoned/cargo)
 "Ps" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -1927,9 +1925,7 @@
 "Pt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

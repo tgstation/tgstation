@@ -616,9 +616,7 @@
 /area/shuttle/escape/luxury)
 "Av" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/vomit/old,
@@ -832,9 +830,7 @@
 /area/shuttle/escape/luxury)
 "In" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/oil,

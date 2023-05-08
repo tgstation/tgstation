@@ -242,9 +242,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
