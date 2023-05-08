@@ -16,8 +16,6 @@
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle,
-		/obj/item/plate/small,
-		/obj/item/plate/large,
 		/obj/item/plate,
 		/obj/item/plate_shard)
 	var/static/list/disposable_items = list(/obj/item/trash/waffles,
