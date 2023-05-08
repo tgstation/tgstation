@@ -266,11 +266,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return;
     }
 
-    const opts = this.getOptionsValues();
-    const endIndex = opts.length - 1;
+    const options = this.getOptionsValues();
+    const endIndex = options.length - 1;
     const previousIndex = selectedIndex === 0 ? endIndex : selectedIndex - 1;
 
-    this.setSelected(opts[previousIndex]);
+    this.setSelected(options[previousIndex]);
   }
 
   toNext(): void {
@@ -280,11 +280,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return;
     }
 
-    const opts = this.getOptionsValues();
-    const endIndex = opts.length - 1;
+    const options = this.getOptionsValues();
+    const endIndex = options.length - 1;
     const nextIndex = selectedIndex === endIndex ? 0 : selectedIndex + 1;
 
-    this.setSelected(opts[nextIndex]);
+    this.setSelected(options[nextIndex]);
   }
 
   render() {
