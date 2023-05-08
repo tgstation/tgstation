@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - refactor: "converts the request console to tgui"

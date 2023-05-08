@@ -1,4 +1,0 @@
-author: "Rex9001"
-delete-after: True
-changes:
-  - bugfix: "Fixes the orm board in the golem ship being the wrong subtype"

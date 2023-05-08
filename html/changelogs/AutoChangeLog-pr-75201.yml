@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Stamina damage and healing now correctly applies movement slowdown"
