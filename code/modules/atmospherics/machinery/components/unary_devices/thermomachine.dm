@@ -32,8 +32,8 @@
 	var/interactive = TRUE // So mapmakers can disable interaction.
 	/// If a thermomachine can lower the temperature of gasses
 	var/allows_cooling = TRUE
-	/// If a thermomachine has a pyroclastic anomaly core
-	var/has_pyro_anomaly_core = FALSE
+	/// The pyroclastic anomaly core inside a Thermomachine
+	var/pyro_anomaly_core = null
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
@@ -102,7 +102,7 @@
 		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
-	if(has_pyro_anomaly_core)
+	if(pyro_anomaly_core)
 		max_temperature += 1500
 
 
@@ -150,7 +150,7 @@
 	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
 	. += span_notice(" -[EXAMINE_HINT("AltClick")] to cycle between temperaure ranges.")
 	. += span_notice(" -[EXAMINE_HINT("CtrlClick")] to toggle on/off.")
-	if(has_pyro_anomaly_core)
+	if(pyro_anomaly_core)
 		. += span_notice(" -There is a pyroclastic anomaly core slotted into the back of the machine, it pumps massive amounts of heat into the machine.")
 	else
 		. += span_notice(" -There seems to be a slot for something in the back, what could it be?")
@@ -222,13 +222,13 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/assembly/signaler/anomaly/pyro, mob/living/user, params)
-	if(has_pyro_anomaly_core || !allows_cooling)
+	if(pyro_anomaly_core || !allows_cooling)
 		balloon_alert(user, "already an anomaly core!")
 		return
 	else
 		balloon_alert(user, "inserted anomaly core")
-		has_pyro_anomaly_core = TRUE
-		qdel(pyro)
+		pyro.forceMove(src)
+		pyro_anomaly_core = pyro
 		RefreshParts()
 		return
 
@@ -393,7 +393,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous
 	allows_cooling = FALSE
-	has_pyro_anomaly_core = TRUE
+	pyro_anomaly_core = TRUE
 	name = "Anomalous temperature control unit"
 	desc = "Heats gas in connected pipes."
 
