@@ -99,7 +99,7 @@
 
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
-				if(!isForbiddenTurretGun(I))
+				if(!isforbiddenturretgun(I))
 					var/obj/item/gun/energy/E = I
 					if(!user.transferItemToLoc(E, src))
 						return
