@@ -124,7 +124,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(hotkeytobind == "Unbound")
+				if(classickeytobind == "Unbound")
 					addedbind = TRUE
 				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
