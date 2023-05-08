@@ -59,6 +59,7 @@
 
 /**
  * Puts the player in their body and keeps track of their previous one to put them back in later.
+ * Adds the playing_mafia trait so people examining them will know why they're currently lacking a soul.
  */
 /datum/mafia_role/proc/put_player_in_body(client/player)
 	if(player.mob.mind && player.mob.mind.current)
@@ -69,11 +70,17 @@
 
 /**
  * Sends the player back into their body
+ * Ghostize the body to get the observer. If you get nothing, they died in-game and is a ghost,
+ * so get the body's ghost instead.
+ * Once we have the ghost, we set their mind to their old mind, then set the current
+ * If the player is alive again, we'll shove them back in.
  */
 /datum/mafia_role/proc/send_back_to_body()
 	if(old_mind && !QDELETED(old_mind) && old_body && !QDELETED(old_body))
 		REMOVE_TRAIT(old_body, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
 		var/mob/dead/observer/ghost = body.ghostize()
+		if(!ghost)
+			ghost = body.get_ghost()
 		ghost.mind = old_mind
 		old_mind.set_current(old_body)
 		if(old_body.stat != DEAD)

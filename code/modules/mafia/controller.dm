@@ -336,7 +336,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	var/victory_message
 
-	if((living_mafia.len + living_town.len) <= 1)
+	if(!(living_mafia.len + living_town.len))
 		victory_message = "Draw!</span>" //this is in-case no neutrals won, but there's no town/mafia left.
 		for(var/datum/mafia_role/solo as anything in neutral_killers)
 			victory_message = "[uppertext(solo.name)] VICTORY!</span>"
@@ -697,8 +697,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
 					switch(chosen_role_name)
 						if("CANCEL")
+							done = TRUE
 							return
 						if("FINISH")
+							done = TRUE
 							break
 						else
 							var/found_path = rolelist_dict[chosen_role_name]
