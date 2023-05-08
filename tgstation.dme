@@ -833,6 +833,7 @@
 #include "code\datums\atmosphere\_atmosphere.dm"
 #include "code\datums\atmosphere\planetary.dm"
 #include "code\datums\attack_style\_attack_style.dm"
+#include "code\datums\attack_style\_blocking.dm"
 #include "code\datums\attack_style\unarmed_damage.dm"
 #include "code\datums\attack_style\unarmed_help.dm"
 #include "code\datums\attack_style\unarmed_utility.dm"
