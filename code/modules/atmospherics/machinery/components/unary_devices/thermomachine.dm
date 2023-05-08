@@ -218,12 +218,11 @@
 	use_power(power_usage)
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/anomaly_act(mob/living/user, obj/item/assembly/signaler/anomaly/pyro)
+/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/assembly/signaler/anomaly/pyro, mob/living/user, params)
 	if(!has_anomaly_core && allows_cooling)
 		to_chat(user, span_notice("The anomaly core fits perfectly!"))
 		has_anomaly_core = TRUE
 		qdel(pyro)
-
 	else
 		to_chat(user, span_notice("There is already a anomaly core slotted in."))
 
