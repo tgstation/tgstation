@@ -30,6 +30,7 @@
 	var/target_temperature = T20C
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
+	var/allows_cooling = TRUE // Non anomalous thermomachines are always allowed to cool
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
@@ -197,6 +198,10 @@
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - port.temperature
+
+	// Checking if the thermomachine is anomalous
+	if(!allows_cooling && temperature_target_delta < 0)
+		return
 
 	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
 
@@ -377,29 +382,6 @@
 	min_temperature = 293
 	max_temperature = calculated_bin_rating * 2500
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
-
-/obj/machinery/atmospherics/components/unary/thermomachine/anomalous/process_atmos_heating() //See parent process_atmos_heating for comments
-	var/datum/gas_mixture/port = airs[1]
-
-	if(!port.total_moles())
-		return
-
-	var/port_capacity = port.heat_capacity()
-
-	var/temperature_target_delta = target_temperature - port.temperature
-
-	if(temperature_target_delta < 0)
-		return
-
-	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
-
-	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
-
-	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
-
-	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
-
-	use_power(power_usage)
 
 
 #undef THERMOMACHINE_POWER_CONVERSION
