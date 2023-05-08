@@ -237,11 +237,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     }
   }
 
-  getOptionValue(option) {
+  getOptionValue(option): string {
     return typeof option === 'string' ? option : option.value;
   }
 
-  getOptionsValues() {
+  getOptionsValues(): string[] {
     const { options = [] } = this.props;
 
     return options.map((option) => {
@@ -249,90 +249,43 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     });
   }
 
-  getSelectedIndex() {
+  getSelectedIndex(): number {
     const selected = this.state.selected
       ? this.state.selected
       : this.props.selected;
     const { options = [] } = this.props;
 
-    let selectedIndex;
-    options.forEach((option, index) => {
-      let value = this.getOptionValue(option);
-
-      if (value === selected) {
-        selectedIndex = index;
-      }
+    return options.findIndex((option) => {
+      return this.getOptionValue(option) === selected;
     });
-
-    return selectedIndex;
   }
 
-  hasSwitchToPrevious() {
+  toPrevious(): void {
     const selectedIndex = this.getSelectedIndex();
 
-    if (selectedIndex === undefined) {
-      return false;
-    }
-
-    const previousIndex = parseInt(selectedIndex, 10) - 1;
-    const opts = this.getOptionsValues();
-
-    const previous = opts[previousIndex];
-
-    return previous !== undefined;
-  }
-
-  switchToPrevious() {
-    const selectedIndex = this.getSelectedIndex();
-
-    if (selectedIndex === undefined) {
+    if (selectedIndex < 0) {
       return;
     }
 
-    const previousIndex = parseInt(selectedIndex, 10) - 1;
     const opts = this.getOptionsValues();
+    const endIndex = opts.length - 1;
+    const previousIndex = selectedIndex === 0 ? endIndex : selectedIndex - 1;
 
-    const previous = opts[previousIndex];
-
-    if (previous === undefined) {
-      return;
-    }
-
-    this.setSelected(previous);
+    this.setSelected(opts[previousIndex]);
   }
 
-  hasSwitchToNext() {
+  toNext(): void {
     const selectedIndex = this.getSelectedIndex();
 
-    if (selectedIndex === undefined) {
-      return false;
-    }
-
-    const nextIndex = parseInt(selectedIndex, 10) + 1;
-    const opts = this.getOptionsValues();
-
-    const next = opts[nextIndex];
-
-    return next !== undefined;
-  }
-
-  switchToNext() {
-    const selectedIndex = this.getSelectedIndex();
-
-    if (selectedIndex === undefined) {
+    if (selectedIndex < 0) {
       return;
     }
 
-    const nextIndex = parseInt(selectedIndex, 10) + 1;
     const opts = this.getOptionsValues();
+    const endIndex = opts.length - 1;
+    const nextIndex = selectedIndex === endIndex ? 0 : selectedIndex + 1;
 
-    const next = opts[nextIndex];
-
-    if (next === undefined) {
-      return;
-    }
-
-    this.setSelected(next);
+    this.setSelected(opts[nextIndex]);
   }
 
   render() {
@@ -409,13 +362,13 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
               <Button
                 height={'100%'}
                 icon="chevron-left"
-                disabled={disabled || !this.hasSwitchToPrevious()}
+                disabled={disabled}
                 onClick={() => {
-                  if (disabled || !this.hasSwitchToPrevious()) {
+                  if (disabled) {
                     return;
                   }
 
-                  this.switchToPrevious();
+                  this.toPrevious();
                 }}
               />
             </Stack.Item>
@@ -423,13 +376,13 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
               <Button
                 height={'100%'}
                 icon="chevron-right"
-                disabled={disabled || !this.hasSwitchToNext()}
+                disabled={disabled}
                 onClick={() => {
-                  if (disabled || !this.hasSwitchToNext()) {
+                  if (disabled) {
                     return;
                   }
 
-                  this.switchToNext();
+                  this.toNext();
                 }}
               />
             </Stack.Item>
