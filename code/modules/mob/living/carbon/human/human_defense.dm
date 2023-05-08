@@ -291,7 +291,7 @@
 							"<span class='userdanger'>[user] shoves you with great force!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, user)
 			to_chat(user, "<span class='danger'>You shove [src] with great force!</span>")
 		else
-			Paralyze(10 SECONDS)
+			Paralyze(5 SECONDS)
 			playsound(loc, 'sound/weapons/punch3.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[user] slams [src] into the floor!</span>", \
 							"<span class='userdanger'>[user] slams you into the ground!</span>", "<span class='hear'>You hear something slam loudly onto the floor!</span>", null, user)
