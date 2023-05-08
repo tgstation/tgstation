@@ -87,6 +87,7 @@
 /turf/open/floor/holofloor/beach/water
 	name = "water"
 	desc = "Gives the impression you can walk on water. Chaplains love it."
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "water"
 	bullet_sizzle = TRUE
 
