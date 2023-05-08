@@ -241,14 +241,6 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     return typeof option === 'string' ? option : option.value;
   }
 
-  getOptionsValues(): string[] {
-    const { options = [] } = this.props;
-
-    return options.map((option) => {
-      return this.getOptionValue(option);
-    });
-  }
-
   getSelectedIndex(): number {
     const selected = this.state.selected || this.props.selected;
     const { options = [] } = this.props;
@@ -265,11 +257,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return;
     }
 
-    const options = this.getOptionsValues();
-    const endIndex = options.length - 1;
+    const endIndex = this.props.options.length - 1;
     const previousIndex = selectedIndex === 0 ? endIndex : selectedIndex - 1;
 
-    this.setSelected(options[previousIndex]);
+    this.setSelected(this.getOptionValue(this.props.options[previousIndex]));
   }
 
   toNext(): void {
@@ -279,11 +270,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return;
     }
 
-    const options = this.getOptionsValues();
-    const endIndex = options.length - 1;
+    const endIndex = this.props.options.length - 1;
     const nextIndex = selectedIndex === endIndex ? 0 : selectedIndex + 1;
 
-    this.setSelected(options[nextIndex]);
+    this.setSelected(this.getOptionValue(this.props.options[nextIndex]));
   }
 
   render() {
