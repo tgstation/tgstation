@@ -53,8 +53,8 @@
 	belt = /obj/item/modular_computer/pda/coroner
 	ears = /obj/item/radio/headset/headset_srvmed
 	gloves = /obj/item/clothing/gloves/latex/coroner
-	l_pocket = /obj/item/clipboard //white crayon is in coroner's kit now, and this is good for storing autopsy reports and taking notes
-	r_pocket = /obj/item/reagent_containers/dropper //feels more convenient here than in the coroner's kit
+	l_pocket = /obj/item/clipboard //good for storing autopsy reports and taking notes
+	r_pocket = /obj/item/reagent_containers/dropper
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/toggle/labcoat/coroner
