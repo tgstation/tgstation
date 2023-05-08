@@ -47,6 +47,7 @@
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
+		notify_ghosts("[owner] has developed spontaneous appendicitis!", source = owner, action = NOTIFY_ORBIT, header = "Whoa, Sick!")
 
 /obj/item/organ/internal/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner

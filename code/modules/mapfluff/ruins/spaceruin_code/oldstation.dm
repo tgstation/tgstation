@@ -208,18 +208,6 @@
 		return
 	open_machine()
 
-/obj/effect/spawner/structure/window/reinforced/damaged
-	name = "damaged reinforced window spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/damaged)
-
-/obj/structure/window/reinforced/fulltile/damaged
-	var/integrity_min_factor = 0.2
-	var/integrity_max_factor = 0.8
-
-/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
-	. = ..()
-	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
-
 /obj/item/petri_dish/oldstation
 	name = "molly's biopsy"
 	desc = "You can see a moldy piece of sandwich inside the dish. Maybe it helped to preserve the bacteria for that long."

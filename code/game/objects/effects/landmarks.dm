@@ -35,8 +35,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/used = FALSE
 
 /obj/effect/landmark/start/proc/after_round_start()
+	// We'd like to keep these around for unit tests, so we can check that they exist.
+#ifndef UNIT_TESTS
 	if(delete_after_roundstart)
 		qdel(src)
+#endif
 
 /obj/effect/landmark/start/Initialize(mapload)
 	. = ..()
@@ -149,6 +152,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/start/coroner
+	name = "Coroner"
+	icon_state = "Coroner"
 
 /obj/effect/landmark/start/paramedic
 	name = "Paramedic"

@@ -343,344 +343,131 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 
-///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
 /obj/item/bodypart/head/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_head"
 	biological_state = BIO_INORGANIC
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 
+/obj/item/bodypart/head/golem/Initialize(mapload)
+	worn_ears_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_EARS,
+		offset_x = list("north" = 1, "south" = -1, "east" = 1, "west" = -1),
+		offset_y = list("south" = 1),
+	)
+	worn_glasses_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_GLASSES,
+		offset_x = list("north" = 1, "south" = -1, "east" = 1, "west" = -1),
+	)
+	worn_head_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HEAD,
+		offset_x = list("north" = 1, "south" = -1, "east" = 1, "west" = -1),
+		offset_y = list("south" = 1),
+	)
+	worn_face_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_FACE,
+		offset_x = list("north" = 1, "south" = -1, "east" = 1, "west" = -1),
+	)
+	return ..()
+
 /obj/item/bodypart/chest/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_chest"
 	biological_state = BIO_INORGANIC
+	acceptable_bodytype = BODYTYPE_GOLEM
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
-	is_dimorphic = TRUE
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
-/obj/item/bodypart/arm/left/golem
-	biological_state = BIO_INORGANIC
-	limb_id = SPECIES_GOLEM
-	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-	unarmed_damage_low = 5 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
-	unarmed_damage_high = 14
-	unarmed_stun_threshold = 11
+/obj/item/bodypart/chest/golem/Initialize(mapload)
+	worn_belt_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_BELT,
+		offset_x = list("north" = 1, "south" = -1, "east" = 1, "west" = -1),
+	)
+	return ..()
 
-/obj/item/bodypart/arm/right/golem
+/obj/item/bodypart/arm/left/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_l_arm"
 	biological_state = BIO_INORGANIC
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
 
-/obj/item/bodypart/leg/left/golem
+/obj/item/bodypart/arm/left/golem/Initialize(mapload)
+	held_hand_offset =  new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = -1, "south" = 2, "east" = 0, "west" = -3),
+		offset_y = list("south" = -2),
+	)
+	return ..()
+
+/obj/item/bodypart/arm/right/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_r_arm"
 	biological_state = BIO_INORGANIC
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
+	dmg_overlay_type = null
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	unarmed_damage_low = 5
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 11
+
+/obj/item/bodypart/arm/right/golem/Initialize(mapload)
+	held_hand_offset =  new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = 2, "south" = -2, "east" = 3, "west" = 0),
+		offset_y = list("south" = -2),
+	)
+	return ..()
+
+/obj/item/bodypart/leg/left/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_l_leg"
+	biological_state = BIO_INORGANIC
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
+	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
+	icon = 'icons/mob/species/golems.dmi'
+	icon_static = 'icons/mob/species/golems.dmi'
+	icon_state = "golem_r_leg"
 	biological_state = BIO_INORGANIC
+	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
+	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
-
-///CULT GOLEM
-/obj/item/bodypart/head/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/right/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/golem/cult
-	limb_id = SPECIES_GOLEM_CULT
-	should_draw_greyscale = FALSE
-
-///CLOTH GOLEM
-/obj/item/bodypart/head/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	should_draw_greyscale = FALSE
-	unarmed_damage_low = 4
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
-
-/obj/item/bodypart/arm/right/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	should_draw_greyscale = FALSE
-	unarmed_damage_low = 4
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
-
-/obj/item/bodypart/leg/left/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	should_draw_greyscale = FALSE
-	unarmed_damage_low = 6
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 12
-
-/obj/item/bodypart/leg/right/golem/cloth
-	limb_id = SPECIES_GOLEM_CLOTH
-	should_draw_greyscale = FALSE
-	unarmed_damage_low = 6
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 12
-
-///CARDBOARD GOLEM
-/obj/item/bodypart/head/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	is_dimorphic = TRUE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	should_draw_greyscale = FALSE
-	unarmed_attack_verb = "whip"
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 4
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
-
-/obj/item/bodypart/arm/right/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	should_draw_greyscale = FALSE
-	unarmed_attack_verb = "whip"
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 4
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
-
-/obj/item/bodypart/leg/left/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	should_draw_greyscale = FALSE
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 6
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 12
-
-/obj/item/bodypart/leg/right/golem/cardboard
-	limb_id = SPECIES_GOLEM_CARDBOARD
-	should_draw_greyscale = FALSE
-	unarmed_attack_sound = 'sound/weapons/whip.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 6
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 12
-
-///DURATHREAD GOLEM
-/obj/item/bodypart/head/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/right/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/golem/durathread
-	limb_id = SPECIES_GOLEM_DURATHREAD
-	should_draw_greyscale = FALSE
-
-///BONE GOLEM
-/obj/item/bodypart/head/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/right/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/golem/bone
-	biological_state = BIO_BONE
-	limb_id = SPECIES_GOLEM_BONE
-	should_draw_greyscale = FALSE
-
-///SNOW GOLEM
-/obj/item/bodypart/head/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	is_dimorphic = TRUE //WHO MADE SNOW BREASTS?
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/left/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/arm/right/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/left/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/golem/snow
-	limb_id = SPECIES_GOLEM_SNOW
-	should_draw_greyscale = FALSE
-
-///URANIUM GOLEM
-/obj/item/bodypart/arm/left/golem/uranium
-	attack_type = BURN
-	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
-	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
-
-/obj/item/bodypart/arm/right/golem/uranium
-	attack_type = BURN
-	unarmed_attack_verb = "burn"
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
-	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
-
-/obj/item/bodypart/leg/left/golem/uranium
-	attack_type = BURN
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
-	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
-
-/obj/item/bodypart/leg/right/golem/uranium
-	attack_type = BURN
-	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
-	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
-
-///PLASTEEL GOLEM
-/obj/item/bodypart/arm/left/golem/plasteel
-	unarmed_attack_verb = "smash"
-	unarmed_attack_effect = ATTACK_EFFECT_SMASH
-	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
-	unarmed_damage_low = 12
-	unarmed_damage_high = 21
-	unarmed_stun_threshold = 18
-
-/obj/item/bodypart/arm/right/golem/plasteel
-	unarmed_attack_verb = "smash"
-	unarmed_attack_effect = ATTACK_EFFECT_SMASH
-	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 12
-	unarmed_damage_high = 21
-	unarmed_stun_threshold = 18
-
-
-/obj/item/bodypart/leg/left/golem/plasteel
-	unarmed_attack_effect = ATTACK_EFFECT_SMASH
-	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 32
-	unarmed_stun_threshold = 18
-
-/obj/item/bodypart/leg/right/golem/plasteel
-	unarmed_attack_effect = ATTACK_EFFECT_SMASH
-	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 32
-	unarmed_stun_threshold = 18
-
-///BANANIUM GOLEM
-/obj/item/bodypart/arm/left/golem/bananium
-	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
-	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2 //Harmless and can't stun
-
-/obj/item/bodypart/arm/right/golem/bananium
-	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
-	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
-
-/obj/item/bodypart/leg/right/golem/bananium
-	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
-	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
-
-/obj/item/bodypart/leg/left/golem/bananium
-	unarmed_attack_verb = "honk"
-	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
-	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
