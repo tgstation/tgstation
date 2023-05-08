@@ -3022,6 +3022,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "ml" = (
@@ -3598,6 +3599,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "oq" = (
@@ -5040,6 +5042,7 @@
 /obj/machinery/door/window/right/directional/east{
 	req_access = list("away_general")
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "xT" = (
@@ -6132,7 +6135,7 @@
 /obj/machinery/door/airlock/science{
 	name = "Biolab"
 	},
-/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -8353,6 +8356,7 @@
 	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "Yp" = (
