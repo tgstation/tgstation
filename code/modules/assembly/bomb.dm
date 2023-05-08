@@ -77,9 +77,9 @@
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	sleep(1 SECONDS)
-	if(QDELETED(src))
-		return
+	addtimer(CALLBACK(src, PROC_REF(post_receive_signal_delay)), 1 SECONDS)
+
+/obj/item/onetankbomb/proc/post_receive_signal_delay()
 	if(status)
 		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
