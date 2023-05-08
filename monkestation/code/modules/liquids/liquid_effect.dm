@@ -78,34 +78,34 @@
 			QUEUE_SMOOTH(src)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 		if(LIQUID_STATE_ANKLES)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_bottom")
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_top")
-			overlay.plane = GAME_PLANE
+			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_bottom", offset_spokesman = src)
+			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_top", offset_spokesman = src)
+			overlay.plane = GAME_PLANE_UPPER
 			overlay.layer = ABOVE_MOB_LAYER
 			underlay.plane = GAME_PLANE
-			underlay.layer = 2.85
+			underlay.layer = GATEWAY_UNDERLAY_LAYER
 			add_overlay(overlay)
 			add_overlay(underlay)
 		if(LIQUID_STATE_WAIST)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_bottom")
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_top")
-			overlay.plane = GAME_PLANE
+			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_bottom", offset_spokesman = src)
+			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_top", offset_spokesman = src)
+			overlay.plane = GAME_PLANE_UPPER
 			overlay.layer = ABOVE_MOB_LAYER
 			underlay.plane = GAME_PLANE
-			underlay.layer = 2.85
+			underlay.layer = GATEWAY_UNDERLAY_LAYER
 			add_overlay(overlay)
 			add_overlay(underlay)
 		if(LIQUID_STATE_SHOULDERS)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_bottom")
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_top")
-			overlay.plane = GAME_PLANE
+			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_bottom", offset_spokesman = src)
+			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_top", offset_spokesman = src)
+			overlay.plane = GAME_PLANE_UPPER
 			overlay.layer = ABOVE_MOB_LAYER
 			underlay.plane = GAME_PLANE
-			underlay.layer = 2.85
+			underlay.layer = GATEWAY_UNDERLAY_LAYER
 			add_overlay(overlay)
 			add_overlay(underlay)
 		if(LIQUID_STATE_FULLTILE)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage4_bottom")
+			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage4_bottom", offset_spokesman = src)
 			overlay.plane = GAME_PLANE
 			overlay.layer = ABOVE_MOB_LAYER
 			add_overlay(overlay)
