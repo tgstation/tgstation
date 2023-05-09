@@ -159,5 +159,5 @@
 	of other passengers, and unforeseen circumstances such as foul play or mechanical issues.<br><br>\
 	By entering the tram, guideway, or crossings you agree Nanotrasen is not liable for any injuries, damages, or losses that may occur. If you do not agree to these terms, please do not use the tram.<br>"
 	icon_state = "commission_tram"
-	custom_materials = list(/datum/material/titanium = 2000)
+	custom_materials = list(/datum/material/titanium =SHEET_MATERIAL_AMOUNT)
 	plane = FLOOR_PLANE

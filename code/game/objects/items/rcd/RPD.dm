@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass=SHEET_MATERIAL_AMOUNT*18.75)
 	armor_type = /datum/armor/item_pipe_dispenser
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI

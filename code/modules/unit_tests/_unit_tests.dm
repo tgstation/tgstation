@@ -70,7 +70,12 @@
 #else
 #define TEST_OUTPUT_GREEN(text) (text)
 #endif
-
+/// Change color to yellow on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
+#define TEST_OUTPUT_YELLOW(text) "\x1B\x5B1;33m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_YELLOW(text) (text)
+#endif
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
@@ -114,6 +119,7 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "emoting.dm"
+#include "explosion_action.dm"
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
@@ -141,6 +147,7 @@
 #include "lungs.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
@@ -182,6 +189,7 @@
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "required_map_items.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"

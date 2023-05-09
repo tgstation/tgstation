@@ -372,11 +372,11 @@
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
 	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
-		return
+		return FALSE
 
 	. = ..()
-	if (!severity || QDELETED(src))
-		return
+	if (!. || !severity || QDELETED(src))
+		return FALSE
 	var/brute_loss = 0
 	var/burn_loss = 0
 	var/bomb_armor = getarmor(null, BOMB)
@@ -398,7 +398,7 @@
 							SSexplosions.low_mov_atom += thing
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib()
-				return
+				return TRUE
 			else
 				brute_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
@@ -453,6 +453,8 @@
 				max_limb_loss--
 				if(!max_limb_loss)
 					break
+
+	return TRUE
 
 
 /mob/living/carbon/human/blob_act(obj/structure/blob/B)

@@ -9,7 +9,7 @@
 	worn_icon_state = "ammobox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 30000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*15)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
