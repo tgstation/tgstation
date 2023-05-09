@@ -17,7 +17,7 @@
 	///The cooldown for sending escape alerts.
 	COOLDOWN_DECLARE(alert_cooldown)
 	///The number of addiction points to remove per process.
-	var/addiction_purge_amount = 15
+	var/addiction_purge_amount = 20
 	///The lowest volume we can purge reagents down to.
 	var/chemical_purge_amount = 3
 
@@ -42,7 +42,7 @@
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		purge_rating += micro_laser.tier
 
-	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 3
+	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 10
 	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 3
 
 /obj/machinery/purger/attackby(obj/item/attacking_item, mob/user, params)
