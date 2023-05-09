@@ -1072,3 +1072,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
+
+//This atom temporarily has its processing paused. Example: It's currently stored in a Hilbert Storage Container / technically in bluespace and shouldn't be functional till it's back outside.
+#define TRAIT_PROCESSING_PAUSED "processing_paused"

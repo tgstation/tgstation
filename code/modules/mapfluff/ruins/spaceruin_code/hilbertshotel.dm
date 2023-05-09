@@ -452,6 +452,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/obj/item/hilbertshotel/parentSphere
 
 /obj/item/abstracthotelstorage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(ismachinery(arrived) && (arrived.datum_flags & DF_ISPROCESSING))
+		ADD_TRAIT(arrived, TRAIT_PROCESSING_PAUSED, REF(src))
+		var/obj/machinery/arrived_machine = arrived
+		arrived_machine.end_processing()
+
 	. = ..()
 	if(ismob(arrived))
 		var/mob/M = arrived
@@ -462,6 +467,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(ismob(gone))
 		var/mob/M = gone
 		M.notransform = FALSE
+
+	if(ismachinery(gone) && HAS_TRAIT_FROM(gone, TRAIT_PROCESSING_PAUSED, REF(src)))
+		REMOVE_TRAIT(gone, TRAIT_PROCESSING_PAUSED, REF(src))
+		if(HAS_TRAIT(gone, TRAIT_PROCESSING_PAUSED))
+			return
+		var/obj/machinery/exited_machine = gone
+		exited_machine.begin_processing()
 
 //Space Ruin stuff
 /area/ruin/space/has_grav/powered/hilbertresearchfacility
