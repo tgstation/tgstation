@@ -1,5 +1,5 @@
 /**
- * ## death gasses element!
+ * ## death gases element!
  *
  * Bespoke element that spawns one type of gas when a mob is killed
  */

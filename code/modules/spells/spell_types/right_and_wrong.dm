@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		else
 			message_admins("Summon Ghosts was triggered!")
 			log_game("Summon Ghosts was triggered!")
-		ghost_event.runEvent()
+		ghost_event.run_event(event_cause = "a wizard's incantation")
 	else
 		stack_trace("Unable to run summon ghosts, due to being unable to locate the associated event.")
 		if(user)

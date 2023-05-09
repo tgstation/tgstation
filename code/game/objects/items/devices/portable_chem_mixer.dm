@@ -37,6 +37,8 @@
 	if(severity > EXPLODE_LIGHT)
 		return ..()
 
+	return FALSE
+
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
 	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I
@@ -90,6 +92,7 @@
 	if (!atom_storage.locked)
 		update_contents()
 	if (atom_storage.locked)
+		atom_storage.hide_contents(usr)
 		replace_beaker(user)
 	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
@@ -207,7 +210,7 @@
 			var/reagent_name = params["reagent"]
 			var/datum/reagent/reagent = GLOB.name2reagent[reagent_name]
 			var/entry = dispensable_reagents[reagent]
-			if(beaker)
+			if(beaker && beaker.loc == src)
 				var/datum/reagents/R = beaker.reagents
 				var/actual = min(amount, 1000, R.maximum_volume - R.total_volume)
 				// todo: add check if we have enough reagent left

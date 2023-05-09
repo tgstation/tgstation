@@ -855,10 +855,8 @@
 	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/clone_victim = find_original()
-	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
-
+	var/mob/living/carbon/human/clone = clone_victim.make_full_human_copy(pick(possible_spawns))
 	player_mind.transfer_to(clone)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 
 	var/datum/antagonist/paradox_clone/new_datum = player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
 	new_datum.original_ref = WEAKREF(clone_victim.mind)

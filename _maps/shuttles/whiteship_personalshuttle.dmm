@@ -169,6 +169,13 @@
 "cM" = (
 /turf/template_noop,
 /area/template_noop)
+"cV" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "cY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
@@ -312,6 +319,23 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/engine)
+"kQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"lS" = (
+/obj/machinery/light_switch/directional/north{
+	pixel_y = 23
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
 "mj" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1;
@@ -362,21 +386,6 @@
 	port_direction = 2;
 	preferred_direction = 2
 	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"rs" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/medical/medkit,
-/obj/structure/table,
-/obj/effect/spawner/random/medical/minor_healing,
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/bridge)
-"sl" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "sw" = (
@@ -436,6 +445,15 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
+"Gf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
 "Io" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -449,6 +467,14 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
+"IE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/medical/medkit,
+/obj/structure/table,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
 "Jv" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/suit_storage_unit/spaceruin{
@@ -456,36 +482,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
-"JD" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_y = 23
-	},
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 30
-	},
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/bridge)
 "Ki" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
-"NT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -28
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/engine)
 "NX" = (
 /obj/structure/cable,
 /obj/machinery/button/door/directional/north{
@@ -529,12 +531,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
-"Zz" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/bridge)
 
 (1,1,1) = {"
 cM
@@ -554,7 +550,7 @@ cM
 (2,1,1) = {"
 cM
 Tj
-sl
+cV
 aY
 bE
 ci
@@ -569,7 +565,7 @@ cM
 (3,1,1) = {"
 cM
 Tj
-sl
+cV
 bq
 dc
 ci
@@ -601,12 +597,12 @@ cl
 by
 cl
 NX
-NT
+Gf
 da
 ci
-JD
+lS
 do
-Zz
+kQ
 cH
 mj
 dx
@@ -636,7 +632,7 @@ bG
 ci
 Ki
 dq
-rs
+IE
 UC
 fh
 dx
@@ -659,7 +655,7 @@ dy
 (9,1,1) = {"
 cM
 cL
-sl
+cV
 de
 ce
 ci
@@ -674,7 +670,7 @@ cM
 (10,1,1) = {"
 cM
 cL
-sl
+cV
 aq
 df
 ci

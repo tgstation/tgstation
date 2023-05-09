@@ -2,12 +2,6 @@
 "an" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
-"at" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/tank_dispenser/oxygen,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/abandoned)
 "bs" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
@@ -27,20 +21,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
-"cf" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/ash,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -130,6 +110,26 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
+"gs" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "whiteship_bridgewindows";
+	name = "Bridge Window Blastdoor Controls";
+	pixel_y = -1
+	},
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Exterior Window Blastdoor Control";
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "gw" = (
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/construct/proteon/hostile,
@@ -207,6 +207,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/crew)
+"lv" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/abandoned/bar)
 "lP" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -264,6 +272,13 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned)
+"nQ" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "oU" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
@@ -276,6 +291,16 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/bar)
+"pK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/money_medium,
+/obj/effect/spawner/random/entertainment/cigar,
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "qh" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -289,6 +314,12 @@
 "qA" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/engine)
+"qE" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/bookcase/random,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/abandoned)
 "qO" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/trash/garbage,
@@ -319,13 +350,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
-"sg" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
 "sm" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/entertainment/money_small,
@@ -343,19 +367,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned)
-"us" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/spawner/random/trash/garbage,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/abandoned/medbay)
 "vE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
@@ -425,17 +436,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
-"zG" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
-/obj/structure/table,
-/obj/effect/spawner/random/entertainment/money_medium,
-/obj/effect/spawner/random/entertainment/cigar,
-/obj/effect/turf_decal/tile/dark_blue/half,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "AX" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -460,6 +460,12 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
+"Bw" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/abandoned)
 "BH" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -488,15 +494,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
-"EB" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
 "EJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -560,6 +557,13 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned)
+"HH" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "HU" = (
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/construct/juggernaut/hostile,
@@ -572,14 +576,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
-"Iu" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/structure/bookcase/random,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/abandoned)
 "IH" = (
 /obj/structure/cable,
 /mob/living/simple_animal/hostile/construct/proteon/hostile,
@@ -610,6 +606,20 @@
 /obj/effect/spawner/random/structure/barricade,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/bar)
+"Kv" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/light/small/broken/directional/west,
+/obj/machinery/button/door/directional/west{
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "whiteship_westbolt"
+	},
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/abandoned)
 "KJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -642,26 +652,6 @@
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"Nz" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "whiteship_bridgewindows";
-	name = "Bridge Window Blastdoor Controls";
-	pixel_y = -1
-	},
-/obj/machinery/button/door{
-	id = "whiteship_windows";
-	name = "Exterior Window Blastdoor Control";
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/tile/dark_blue/half{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "NG" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
@@ -720,6 +710,20 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
+"Qo" = (
+/obj/structure/table,
+/obj/machinery/door/window,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire{
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/abandoned/medbay)
 "Qp" = (
 /obj/machinery/vending/medical{
 	req_access = null
@@ -770,22 +774,26 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
-"SW" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/suit_storage_unit/spaceruin{
-	desc = "An industrial suit storage device carrying retro space suits. Neat!"
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/abandoned/bar)
 "Ta" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
+"TO" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "Ua" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -795,20 +803,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
-"Vx" = (
-/obj/structure/table,
-/obj/machinery/door/window,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/fire{
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/toxin{
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/medical/minor_healing,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/abandoned/medbay)
 "VI" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
@@ -878,33 +872,29 @@
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned)
-"YA" = (
+"Yt" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/spawner/random/trash/garbage,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/abandoned/medbay)
+"YM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/crew)
-"YL" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/light/small/broken/directional/west,
-/obj/machinery/button/door/directional/west{
-	name = "Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4;
-	id = "whiteship_westbolt"
-	},
-/obj/machinery/suit_storage_unit/spaceruin{
-	desc = "An industrial suit storage device carrying retro space suits. Neat!"
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/abandoned)
 "ZB" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -967,13 +957,13 @@ Bf
 (4,1,1) = {"
 Bf
 DE
-Vx
+Qo
 an
 ne
 hg
-at
+Bw
 cv
-YL
+Kv
 NI
 ZB
 Cv
@@ -987,14 +977,14 @@ ck
 Qp
 lP
 NM
-us
+Yt
 JN
 KJ
 Hd
 Fr
 iL
 ji
-Iu
+qE
 EJ
 Bf
 "}
@@ -1018,7 +1008,7 @@ Bf
 (7,1,1) = {"
 Wb
 Wb
-SW
+lv
 KS
 NG
 cV
@@ -1040,7 +1030,7 @@ SE
 oU
 WX
 Br
-cf
+TO
 Lt
 Bl
 Sb
@@ -1056,12 +1046,12 @@ Wb
 qO
 RG
 cV
-Nz
+gs
 yY
-zG
+pK
 cV
 VX
-YA
+YM
 xT
 vQ
 xT
@@ -1124,7 +1114,7 @@ qA
 Gl
 Gt
 bs
-EB
+HH
 Wr
 iV
 bs
@@ -1138,15 +1128,15 @@ Bf
 Bf
 qA
 qA
-sg
-sg
-sg
-sg
+nQ
+nQ
+nQ
+nQ
 qA
-sg
-sg
-sg
-sg
+nQ
+nQ
+nQ
+nQ
 qA
 qA
 Bf

@@ -22,16 +22,6 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"af" = (
-/obj/structure/closet/crate/trashcart/filled,
-/obj/effect/turf_decal/siding/dark{
-	dir = 9
-	},
-/obj/item/trash/cheesie,
-/obj/item/trash/ready_donk,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/white/small,
-/area/ruin/space/has_grav/dangerous_research/dorms)
 "ak" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -85,6 +75,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"aU" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "aW" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
@@ -104,11 +99,6 @@
 /obj/structure/table,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"bb" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
-/area/ruin/space)
 "bl" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -116,22 +106,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"bm" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
 "bu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"bE" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/dangerous_research/maint)
 "bO" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -250,11 +233,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
-"do" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
-/area/ruin/space)
 "dw" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -536,6 +514,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"gV" = (
+/turf/open/misc/asteroid/airless,
+/area/space)
 "gY" = (
 /obj/structure/flora/grass/brown/style_2,
 /turf/open/misc/sandy_dirt,
@@ -603,6 +584,12 @@
 	},
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"ij" = (
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "ip" = (
 /obj/machinery/computer/operating,
 /obj/machinery/light/very_dim/directional/north,
@@ -625,6 +612,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"iA" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("asrc_a"="Air Supply A")
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/dangerous_research/maint)
 "iD" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -787,11 +783,6 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"jO" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid9"
-	},
-/area/ruin/space)
 "jR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/dangerous_research/maint)
@@ -825,6 +816,14 @@
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"kI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/dangerous_research/maint)
 "kP" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -856,6 +855,11 @@
 	},
 /obj/effect/turf_decal/trimline/purple/line,
 /turf/open/floor/iron/white,
+/area/ruin/space/has_grav/dangerous_research/medical)
+"lm" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "lp" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -917,12 +921,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bookcase/random,
 /turf/open/floor/wood/parquet,
-/area/ruin/space/has_grav/dangerous_research/dorms)
-"mw" = (
-/obj/machinery/washing_machine,
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "mG" = (
 /obj/structure/table,
@@ -999,13 +997,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
-"nI" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/turf_decal/tile/neutral/half,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/dangerous_research/lab)
 "nS" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/sign/clock/directional/east,
@@ -1125,6 +1116,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"pe" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid12"
+	},
+/area/space)
 "pi" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
 	pixel_x = -32
@@ -1168,11 +1164,6 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"pH" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid6"
-	},
-/area/ruin/space)
 "pO" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
@@ -1296,6 +1287,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"qV" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/item/trash/cheesie,
+/obj/item/trash/ready_donk,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/white/small,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "rb" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
@@ -1397,6 +1398,18 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"rH" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid9"
+	},
+/area/space)
+"rJ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
+/turf/open/misc/asteroid/airless,
+/area/space)
 "rO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1422,6 +1435,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"sd" = (
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/misc/asteroid/airless,
+/area/space)
 "sh" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 8
@@ -1439,12 +1456,22 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"st" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid2"
+	},
+/area/space)
 "sv" = (
 /obj/structure/chair/office,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
+"sx" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid5"
+	},
+/area/space)
 "sG" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -1525,6 +1552,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
+"tw" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
 "tz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/work_for_a_future{
@@ -1639,9 +1670,6 @@
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"us" = (
-/turf/closed/wall,
-/area/ruin/space)
 "uB" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
@@ -1663,11 +1691,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
-"uI" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/purple,
-/turf/open/space/basic,
-/area/ruin/space)
 "uP" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -1698,10 +1721,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"vv" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/dangerous_research/lab)
 "vz" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/chair/sofa/bench/left{
@@ -1714,6 +1733,30 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"vI" = (
+/obj/structure/flora/rock/icy/style_3,
+/turf/open/misc/asteroid/airless,
+/area/space)
+"vM" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/dangerous_research/lab)
+"vO" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid1"
+	},
+/area/space)
+"vR" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/purple,
+/turf/template_noop,
+/area/template_noop)
+"vY" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid/airless,
+/area/space)
 "wf" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1878,14 +1921,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
-"yt" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/dangerous_research/maint)
 "yO" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /turf/open/floor/plating/rust,
@@ -2005,15 +2040,6 @@
 	},
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"zR" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
-/area/ruin/space)
-"zY" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space)
 "zZ" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -2052,6 +2078,11 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"Ap" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid8"
+	},
+/area/space)
 "Aq" = (
 /obj/machinery/atmospherics/components/binary/valve/on/layer4{
 	dir = 4;
@@ -2136,9 +2167,6 @@
 /obj/effect/decal/cleanable/blood/bubblegum,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Bg" = (
-/turf/closed/mineral/random,
-/area/ruin/space)
 "Bm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2168,6 +2196,9 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
+"BA" = (
+/turf/template_noop,
+/area/template_noop)
 "BE" = (
 /obj/effect/turf_decal/stripes/asteroid,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -2241,6 +2272,11 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
+"Cr" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid10"
+	},
+/area/space)
 "Cs" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -2250,14 +2286,6 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"Cx" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/dangerous_research/maint)
 "CD" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 8
@@ -2279,11 +2307,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
-"CI" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid2"
-	},
-/area/ruin/space)
 "CL" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 4
@@ -2341,15 +2364,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
-"Dn" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_b"="Air Supply B");
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/dangerous_research/maint)
 "Ds" = (
 /obj/item/shard,
 /turf/open/floor/plating/rust,
@@ -2380,13 +2394,6 @@
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"DL" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1
-	},
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "DX" = (
 /obj/structure/sign/poster/official/moth_piping{
 	pixel_y = 32
@@ -2410,21 +2417,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"En" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/warm/directional/north,
-/turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/dangerous_research/dorms)
-"Ep" = (
-/obj/structure/lattice,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
-"Ey" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/ruin/space)
 "EA" = (
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -2469,10 +2461,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"Fq" = (
-/obj/structure/flora/rock/icy/style_2,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "Fw" = (
 /obj/structure/door_assembly/door_assembly_vault,
 /obj/effect/turf_decal/stripes/full,
@@ -2487,17 +2475,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Fx" = (
-/obj/structure/table,
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/item/clothing/suit/toggle/labcoat/science,
-/obj/effect/mapping_helpers/atom_injector/element_injector{
-	element_type = /datum/element/decal/blood;
-	target_type = /obj/item/clothing
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/dangerous_research/dorms)
 "FA" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -2509,6 +2486,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"FD" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/asteroid/airless,
+/area/space)
 "FG" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2599,6 +2580,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
+"Gr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/dangerous_research/lab)
 "Gs" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 4
@@ -2642,16 +2628,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"HD" = (
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/dangerous_research/medical)
 "HF" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -2673,6 +2649,19 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"HT" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/dangerous_research)
 "Ij" = (
 /obj/structure/table/glass,
 /obj/item/pai_card,
@@ -2693,19 +2682,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Is" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1
+"Iu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/dark/corner,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/dangerous_research)
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/dangerous_research/maint)
 "IC" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -2738,10 +2722,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Jh" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/dangerous_research/medical)
 "JA" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 1
@@ -2764,6 +2744,14 @@
 /obj/machinery/light/small/red/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/maint)
+"JN" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "JS" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 8
@@ -2779,6 +2767,19 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/dangerous_research)
+"Kb" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
 "Ki" = (
@@ -2811,6 +2812,17 @@
 /obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
+"KO" = (
+/obj/structure/table,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/item/clothing/suit/toggle/labcoat/science,
+/obj/effect/mapping_helpers/atom_injector/element_injector{
+	element_type = /datum/element/decal/blood;
+	target_type = /obj/item/clothing
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "KP" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/diagonal_edge,
@@ -2846,10 +2858,9 @@
 /obj/structure/bed/roller,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Lc" = (
-/obj/structure/flora/rock/pile/icy,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
+"Li" = (
+/turf/closed/mineral/random,
+/area/space)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -3069,9 +3080,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"On" = (
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "Oo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3089,10 +3097,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
-"Oy" = (
-/obj/structure/flora/rock/icy/style_random,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "OB" = (
 /obj/structure/table,
 /obj/structure/microscope,
@@ -3142,19 +3146,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
-"Pi" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/broken/directional/west,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/dangerous_research)
 "Pk" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
@@ -3185,6 +3176,15 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"Pq" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("asrc_b"="Air Supply B");
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/dangerous_research/maint)
 "Pu" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3265,14 +3265,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"Qt" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/dangerous_research/lab)
-"Qv" = (
-/turf/open/space/basic,
-/area/template_noop)
 "Qy" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3282,11 +3274,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
-"QA" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid1"
-	},
-/area/ruin/space)
 "QE" = (
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket,
@@ -3302,6 +3289,11 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"QI" = (
+/turf/open/misc/asteroid/airless{
+	icon_state = "asteroid6"
+	},
+/area/space)
 "QK" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/very_dim/directional/east,
@@ -3390,11 +3382,6 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/dangerous_research/dorms)
-"RA" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
-/area/ruin/space)
 "RB" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/tile/dark_red/half{
@@ -3543,11 +3530,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
-"TQ" = (
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/machinery/computer/arcade/battle,
-/turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/dangerous_research/dorms)
 "TV" = (
 /obj/machinery/light/broken/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3566,6 +3548,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"Ug" = (
+/turf/closed/wall,
+/area/space)
 "Uk" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3627,6 +3612,13 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/misc/sandy_dirt,
 /area/ruin/space/has_grav/dangerous_research)
+"UW" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/space/has_grav/dangerous_research/dorms)
 "Va" = (
 /obj/structure/table,
 /obj/structure/desk_bell{
@@ -3666,18 +3658,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
-"Vw" = (
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/dangerous_research/dorms)
-"VD" = (
-/obj/structure/flora/rock/icy/style_3,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "VL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -3814,6 +3794,17 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
+"XI" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/dangerous_research/maint)
 "XO" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
@@ -3854,6 +3845,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
+"Yr" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/away_general_access,
+/obj/effect/turf_decal/tile/neutral/half,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/dangerous_research/lab)
 "YA" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3881,6 +3879,16 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"YY" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/away_general_access,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/dangerous_research/medical)
 "YZ" = (
 /mob/living/simple_animal/hostile/heretic_summon/rust_spirit{
 	AIStatus = 1;
@@ -3909,6 +3917,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/dangerous_research/dorms)
+"Zz" = (
+/obj/structure/flora/rock/icy/style_random,
+/turf/open/misc/asteroid/airless,
+/area/space)
 "ZF" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -3923,107 +3935,98 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
-"ZR" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_a"="Air Supply A")
-	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/dangerous_research/maint)
 
 (1,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (2,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-jO
-On
-On
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+rH
+gV
+gV
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (3,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+Li
 Tc
 Um
 Um
@@ -4034,38 +4037,38 @@ Tc
 Tc
 Tc
 Tc
-Bg
-Qv
-Qv
-On
-RA
-Qv
-Qv
-Qv
-Qv
-On
-On
-Bg
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+BA
+BA
+gV
+Ap
+BA
+BA
+BA
+BA
+gV
+gV
+Li
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (4,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+Li
 Tc
 No
 Kk
@@ -4076,38 +4079,38 @@ cp
 fn
 gF
 Tc
-Bg
-On
-QA
-Bg
-Bg
-On
-Qv
-Qv
-On
-On
-pH
-Bg
-On
-On
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Qv
-Qv
-Qv
+Li
+gV
+vO
+Li
+Li
+gV
+BA
+BA
+gV
+gV
+QI
+Li
+gV
+gV
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+BA
+BA
+BA
 "}
 (5,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
 Tc
 qv
 cv
@@ -4118,38 +4121,38 @@ qE
 sG
 ql
 Tc
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-On
-On
-On
-On
-Lc
-On
-zR
-Qv
-QA
-Bg
-Bg
-Bg
-Bg
-Qv
-Qv
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+Li
+gV
+gV
+gV
+gV
+FD
+gV
+pe
+BA
+vO
+Li
+Li
+Li
+Li
+BA
+BA
 "}
 (6,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
+BA
+BA
+BA
+BA
+BA
+Li
 Tc
 nl
 cl
@@ -4160,8 +4163,8 @@ gH
 DY
 qp
 Tc
-Bg
-Bg
+Li
+Li
 ts
 ts
 ts
@@ -4169,29 +4172,29 @@ ts
 ts
 ts
 ts
-Bg
-Bg
-bb
-Bg
-On
-On
-On
-On
-On
-On
-Bg
-Bg
-Bg
-Qv
-Qv
+Li
+Li
+sx
+Li
+gV
+gV
+gV
+gV
+gV
+gV
+Li
+Li
+Li
+BA
+BA
 "}
 (7,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
 Tc
 TW
 iD
@@ -4202,8 +4205,8 @@ iR
 SS
 rc
 Tc
-Bg
-Bg
+Li
+Li
 ts
 ae
 Sj
@@ -4217,25 +4220,25 @@ ts
 ts
 ts
 ts
-On
-On
-On
-Bg
-Bg
-Bg
-Bg
-Bg
-Qv
+gV
+gV
+gV
+Li
+Li
+Li
+Li
+Li
+BA
 "}
 (8,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+Li
 Tc
-nI
+Yr
 Dt
 aW
 nx
@@ -4259,20 +4262,20 @@ rl
 EU
 mu
 ts
-On
-On
-On
-Bg
-Bg
-Bg
-Bg
-Bg
-Qv
+gV
+gV
+gV
+Li
+Li
+Li
+Li
+Li
+BA
 "}
 (9,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 Tc
 Tc
@@ -4301,20 +4304,20 @@ NX
 Zw
 Fa
 ts
-VD
-pH
-bb
-Bg
-Bg
-Bg
-Bg
-Bg
-Qv
+vI
+QI
+sx
+Li
+Li
+Li
+Li
+Li
+BA
 "}
 (10,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 Yh
 rF
@@ -4333,7 +4336,7 @@ jk
 tk
 Lk
 OL
-Vw
+JN
 pa
 aD
 Hx
@@ -4343,20 +4346,20 @@ Zw
 Pn
 gt
 ts
-On
-On
-do
-On
-Bg
-Bg
-Bg
-Qv
-Qv
+gV
+gV
+Cr
+gV
+Li
+Li
+Li
+BA
+BA
 "}
 (11,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 eq
 QE
@@ -4373,10 +4376,10 @@ jp
 ts
 ts
 ts
-TQ
+aU
 OL
 Rt
-af
+qV
 ts
 ts
 ts
@@ -4385,20 +4388,20 @@ qc
 ts
 ts
 ts
-Bg
-On
-On
-On
-us
-Bg
-Bg
-Qv
-Qv
+Li
+gV
+gV
+gV
+Ug
+Li
+Li
+BA
+BA
 "}
 (12,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 hS
 BY
@@ -4426,21 +4429,21 @@ TE
 Nr
 qB
 ts
-Bg
-CI
-On
-Qv
-RA
-Ep
-Oy
-Bg
-Qv
-Qv
+Li
+st
+gV
+BA
+Ap
+vY
+Zz
+Li
+BA
+BA
 "}
 (13,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 tq
 La
@@ -4457,7 +4460,7 @@ Qe
 bP
 Rx
 ts
-En
+UW
 AO
 Rt
 HF
@@ -4468,21 +4471,21 @@ Ij
 Ny
 ot
 dl
-On
-On
-us
-uI
-Ey
-Ey
-Ey
-Ey
-uI
-Qv
+gV
+gV
+Ug
+vR
+bm
+bm
+bm
+bm
+vR
+BA
 "}
 (14,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 fH
 nY
@@ -4499,10 +4502,10 @@ jp
 ts
 ts
 ts
-mw
+ij
 PJ
 Rt
-Fx
+KO
 ts
 Bm
 OC
@@ -4510,21 +4513,21 @@ Fi
 PP
 ji
 dl
-On
-pH
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+gV
+QI
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (15,1,1) = {"
-Qv
-Bg
-Bg
+BA
+Li
+Li
 Tc
 Tc
 Tc
@@ -4552,24 +4555,24 @@ Gn
 xZ
 eQ
 ts
-Bg
-Bg
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+Li
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (16,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+Li
 Tc
 jB
 qR
@@ -4595,23 +4598,23 @@ ts
 ts
 ts
 pk
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (17,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+Li
 Tc
 fJ
 jH
@@ -4628,7 +4631,7 @@ jp
 MO
 Av
 Xr
-Pi
+Kb
 Av
 Av
 db
@@ -4637,23 +4640,23 @@ gY
 UT
 Nz
 pk
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (18,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
 Tc
 ci
 Gb
@@ -4681,21 +4684,21 @@ Cq
 Bq
 Bq
 pk
-Ey
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+bm
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (19,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-CI
-Bg
+BA
+BA
+BA
+BA
+st
+Li
 Tc
 jF
 dI
@@ -4723,21 +4726,21 @@ MD
 zc
 CG
 Xk
-zY
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+tw
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (20,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-On
-Bg
+BA
+BA
+BA
+BA
+gV
+Li
 Tc
 FG
 XX
@@ -4765,29 +4768,29 @@ fO
 Bq
 Bq
 pk
-Ey
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+bm
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (21,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
 Tc
 Tc
 Tc
 Tc
-Qt
+vM
 Kt
 iU
-vv
+Gr
 Tc
 fx
 fx
@@ -4805,25 +4808,25 @@ wJ
 Ni
 tv
 Bq
-zY
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+tw
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (22,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
 Rf
 Yb
 Sv
@@ -4849,23 +4852,23 @@ Mr
 Bq
 Bq
 pk
-Ey
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+bm
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (23,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+Li
+Li
+Li
 Rf
 mG
 mV
@@ -4891,23 +4894,23 @@ MD
 jh
 Gs
 OM
-zY
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+tw
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (24,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+Li
+Li
+Li
 Rf
 ip
 Wt
@@ -4933,23 +4936,23 @@ dX
 Bq
 Bq
 pk
-Ey
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+bm
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (25,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+Li
+Li
+Li
 Rf
 ET
 Zc
@@ -4957,7 +4960,7 @@ PM
 Ki
 Zn
 IC
-Jh
+lm
 wV
 kz
 Zv
@@ -4967,31 +4970,31 @@ VP
 uR
 MT
 aa
-Is
+HT
 pk
 pk
 pk
 pk
 pk
-Bg
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (26,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
 Rf
 FM
 JF
@@ -5014,26 +5017,26 @@ ey
 dm
 AU
 pk
-Bg
-Bg
-CI
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Li
+Li
+st
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (27,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
 Zv
 xd
 zi
@@ -5056,26 +5059,26 @@ xN
 xN
 xN
 Bq
-pH
-On
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+QI
+gV
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (28,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
 Zv
 GZ
 GZ
@@ -5098,28 +5101,28 @@ YA
 mX
 lq
 Bq
-On
-On
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+gV
+gV
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (29,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-nB
-nB
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
+Li
 GZ
 GZ
 nB
@@ -5140,34 +5143,34 @@ wS
 MJ
 tX
 Bq
-VD
-On
-us
-uI
-Ey
-Ep
-Ep
-Ey
-uI
-Qv
+vI
+gV
+Ug
+vR
+bm
+vY
+vY
+bm
+vR
+BA
 "}
 (30,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-nB
-nB
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
 xK
 xd
 xd
 pP
 qs
-Jh
+lm
 aI
 FA
 df
@@ -5182,28 +5185,28 @@ Op
 LL
 vz
 Bq
-zR
-On
-On
-Qv
-On
-Ep
-On
-On
-Qv
-Qv
+pe
+gV
+gV
+BA
+gV
+vY
+gV
+gV
+BA
+BA
 "}
 (31,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-nB
-nB
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
 Zv
 Zv
 iw
@@ -5224,29 +5227,29 @@ nS
 xN
 xN
 pk
-Bg
-Bg
-On
-On
-Bg
-us
-Bg
-On
-Qv
-Qv
+Li
+Li
+gV
+gV
+Li
+Ug
+Li
+gV
+BA
+BA
 "}
 (32,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
+Li
 Rf
 mg
 LC
@@ -5267,28 +5270,28 @@ Cl
 Cl
 Cl
 jR
-On
-On
-bb
-Bg
-Bg
-On
-Qv
-Qv
-Qv
+gV
+gV
+sx
+Li
+Li
+gV
+BA
+BA
+BA
 "}
 (33,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
 Rf
 mo
 Ba
@@ -5306,31 +5309,31 @@ Vf
 Cl
 Cl
 pu
-Cx
+kI
 Qy
 jR
-On
-Bg
-Bg
-On
-Lc
-On
-Qv
-Qv
-Qv
+gV
+Li
+Li
+gV
+FD
+gV
+BA
+BA
+BA
 "}
 (34,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+Li
+Li
 Rf
 nZ
 tQ
@@ -5351,31 +5354,31 @@ OK
 xW
 XB
 gl
-DL
-Qv
-Qv
-Qv
-On
-Qv
-Qv
-Qv
-Qv
+rJ
+BA
+BA
+BA
+gV
+BA
+BA
+BA
+BA
 "}
 (35,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-bb
-Qv
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+BA
+sx
+BA
+BA
+Li
+Li
+Li
+Li
 Rf
 oa
-HD
+YY
 aY
 qM
 jL
@@ -5385,36 +5388,36 @@ js
 Ag
 dC
 jR
-bE
+XI
 go
-ZR
+iA
 Aq
-yt
+Iu
 MU
-Dn
+Pq
 jR
-On
-RA
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+gV
+Ap
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (36,1,1) = {"
-Qv
-Qv
-Qv
-Bg
-Bg
-On
-Qv
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+BA
+Li
+Li
+gV
+BA
+Li
+Li
+Li
+Li
 Rf
 Rf
 jR
@@ -5435,41 +5438,41 @@ jR
 CR
 Vj
 jR
-On
-On
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+gV
+gV
+gV
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (37,1,1) = {"
-Qv
-Qv
-Bg
-Bg
-Bg
-On
-On
-do
-Bg
-Bg
-Bg
-Bg
-Bg
+BA
+BA
+Li
+Li
+Li
+gV
+gV
+Cr
+Li
+Li
+Li
+Li
+Li
 jR
 LH
 Ik
 HO
 wf
 jR
-Bg
-Bg
-Bg
-Bg
-Bg
+Li
+Li
+Li
+Li
+Li
 jR
 dZ
 Xb
@@ -5477,41 +5480,41 @@ jR
 rA
 kc
 jR
-do
-Bg
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+Cr
+Li
+Li
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (38,1,1) = {"
-Qv
-Qv
-Qv
-zR
-pH
-Qv
-Qv
-Bg
-On
-On
-CI
-Bg
-Bg
+BA
+BA
+BA
+pe
+QI
+BA
+BA
+Li
+gV
+gV
+st
+Li
+Li
 jR
 LH
 Ik
 JI
 gr
 jR
-Bg
-Bg
-On
-do
-On
+Li
+Li
+gV
+Cr
+gV
 jR
 jR
 jR
@@ -5519,181 +5522,181 @@ jR
 jR
 jR
 jR
-On
-Bg
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+gV
+Li
+gV
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (39,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-On
-On
-zR
-Bg
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+Li
+gV
+gV
+pe
+Li
 jR
 jR
 jR
 jR
 jR
 jR
-Bg
-On
-jO
-On
-Fq
-On
-RA
-Bg
-Bg
-Bg
-Bg
-Bg
-Bg
-RA
-On
-QA
-Bg
-Qv
-Qv
-Qv
-Qv
+Li
+gV
+rH
+gV
+sd
+gV
+Ap
+Li
+Li
+Li
+Li
+Li
+Li
+Ap
+gV
+vO
+Li
+BA
+BA
+BA
+BA
 "}
 (40,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-On
-On
-Qv
-Qv
-do
-Bg
-Bg
-On
-CI
-Bg
-Bg
-Bg
-QA
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Bg
-Bg
-Qv
-zR
-On
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+gV
+gV
+BA
+BA
+Cr
+Li
+Li
+gV
+st
+Li
+Li
+Li
+vO
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+Li
+Li
+BA
+pe
+gV
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (41,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-bb
-On
-Bg
-Bg
-Bg
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+sx
+gV
+Li
+Li
+Li
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}
 (42,1,1) = {"
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
-Qv
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
+BA
 "}

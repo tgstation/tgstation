@@ -2211,9 +2211,6 @@
 /obj/structure/sign/directions/supply/directional/north{
 	pixel_y = 40
 	},
-/obj/machinery/camera/autoname/directional/east{
-	network = list("mine")
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
@@ -2221,6 +2218,7 @@
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/mine/lounge)
 "mJ" = (
@@ -4308,11 +4306,11 @@
 /area/lavaland/surface/outdoors)
 "zn" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/red/corner,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/mine/lounge)
 "zq" = (
@@ -5040,12 +5038,12 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "EL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/edge,
 /area/mine/living_quarters)
 "EM" = (
@@ -6597,7 +6595,6 @@
 /area/mine/laborcamp/security)
 "OE" = (
 /obj/structure/tank_holder/extinguisher,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/arrow_ccw{
 	dir = 4
 	},
@@ -6610,6 +6607,7 @@
 /obj/effect/turf_decal/trimline/red/filled/mid_joiner{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/textured_edge{
 	dir = 8
 	},
@@ -7759,7 +7757,6 @@
 /obj/structure/closet/secure_closet/engineering_welding{
 	req_access = list("mining_station")
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
@@ -40219,7 +40216,7 @@ iu
 tc
 xi
 iu
-EL
+Up
 Cf
 NE
 In
@@ -40733,7 +40730,7 @@ iu
 iu
 iu
 iu
-Uf
+EL
 iZ
 iu
 gE

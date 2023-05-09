@@ -10,7 +10,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/misc/beach/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/misc/beach/sand
 	gender = PLURAL

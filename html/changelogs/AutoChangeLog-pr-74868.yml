@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "traitor objective posters will no longer be able to spawn from general random poster spawners."

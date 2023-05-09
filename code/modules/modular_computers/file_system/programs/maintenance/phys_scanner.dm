@@ -18,9 +18,11 @@
 	var/mob/living/carbon/carbon = tapped_atom
 	carbon.visible_message(span_notice("[user] analyzes [tapped_atom]'s vitals."))
 	last_record = healthscan(user, carbon, 1, tochat = FALSE)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, computer)
+	if(active_ui)
+		active_ui.send_full_update(force = TRUE)
 
-/datum/computer_file/program/maintenance/phys_scanner/ui_data(mob/user)
+/datum/computer_file/program/maintenance/phys_scanner/ui_static_data(mob/user)
 	var/list/data = list()
-
 	data["last_record"] = last_record
 	return data

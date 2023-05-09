@@ -3,6 +3,7 @@
 	name = "item"
 	icon = 'icons/obj/objects.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -442,7 +443,7 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/ui_act(action, list/params)
+/obj/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	return ..()
 
@@ -879,6 +880,8 @@
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
+	if(resistance_flags & ON_FIRE)
+		return max(heat, BURNING_ITEM_MINIMUM_TEMPERATURE)
 	return heat
 
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.

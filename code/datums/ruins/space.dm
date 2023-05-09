@@ -64,7 +64,6 @@
 	name = "Survivalist Bunker"
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
-	ignore = TRUE
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
@@ -468,6 +467,12 @@
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
 	ignore = FALSE // Need to talk to mapper
 
+/datum/map_template/ruin/space/prison_shuttle
+	id = "prison_shuttle"
+	suffix = "prison_shuttle.dmm"
+	name = "Crashed Prisoner Shuttle"
+	description = "A prisoner transport shuttle that had crashed into a stray asteroid long ago."
+
 /datum/map_template/ruin/space/botanical_haven
 	id = "botanical_haven"
 	suffix = "botanical_haven.dmm"
@@ -514,6 +519,13 @@
 	suffix = "transit_booth.dmm"
 	name = "Transit Booth"
 	description = "Make sure to check out the duty-free store!"
+	ignore = TRUE
+
+/datum/map_template/ruin/space/space_phonebooth
+	id = "Space_phonebooth"
+	suffix = "phonebooth.dmm"
+	name = "Space Phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads."
 	ignore = TRUE
 
 /datum/map_template/ruin/space/the_outlet

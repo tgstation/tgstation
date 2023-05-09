@@ -17,7 +17,7 @@
 #define TOOL_BONESET "bonesetter"
 #define TOOL_KNIFE "knife"
 #define TOOL_BLOODFILTER "bloodfilter"
-#define TOOL_ROLLINGPIN "rollingpin"
+#define TOOL_ROLLINGPIN "rolling pin"
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
 

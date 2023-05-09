@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/item/stack/rods,
+/obj/machinery/button/door/directional/east{
+	id = "mothership_right"
+	},
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "aB" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -19,13 +26,6 @@
 /area/shuttle/ruin/cyborg_mothership)
 "bE" = (
 /mob/living/simple_animal/bot/cleanbot,
-/turf/open/floor/iron/showroomfloor,
-/area/shuttle/ruin/cyborg_mothership)
-"cB" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/obj/machinery/light/floor/broken,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "cU" = (
@@ -89,15 +89,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"gQ" = (
-/obj/structure/table,
-/obj/effect/turf_decal/bot,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/razor,
-/obj/structure/mirror/directional/west,
-/turf/open/floor/iron/dark,
 /area/shuttle/ruin/cyborg_mothership)
 "hs" = (
 /obj/machinery/computer/operating{
@@ -175,6 +166,20 @@
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
+"lq" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/structure/closet/crate/preopen,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/rods/fifty,
+/turf/open/floor/plating/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "lv" = (
 /obj/structure/cable,
 /obj/machinery/conveyor{
@@ -182,10 +187,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"ma" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "mc" = (
 /obj/machinery/door/airlock/hatch,
@@ -204,12 +205,14 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"mC" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4
-	},
+"mv" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/obj/structure/spacevine,
+/obj/machinery/shieldgen{
+	anchored = 1;
+	req_access = null
+	},
+/turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "mN" = (
 /obj/machinery/conveyor{
@@ -225,22 +228,6 @@
 "no" = (
 /obj/item/stack/sheet/mineral/titanium,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"nM" = (
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/rods/fifty,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "oe" = (
@@ -324,13 +311,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"qo" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/iron/showroomfloor,
-/area/shuttle/ruin/cyborg_mothership)
 "qV" = (
 /obj/structure/spacevine,
 /obj/machinery/conveyor{
@@ -339,6 +319,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
+/area/shuttle/ruin/cyborg_mothership)
+"re" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
 /area/shuttle/ruin/cyborg_mothership)
 "ry" = (
 /obj/machinery/mecha_part_fabricator/maint{
@@ -360,6 +345,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"sn" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/machinery/light/floor/broken,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/ruin/cyborg_mothership)
 "so" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -380,19 +372,21 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"tg" = (
+/obj/machinery/space_heater{
+	anchored = 1
+	},
+/obj/machinery/camera/directional/west,
+/obj/item/pipe_dispenser,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/shuttle/ruin/cyborg_mothership)
 "tr" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/conveyor_switch/oneway{
 	id = "mothership_main"
-	},
-/turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
-"tM" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/spacevine,
-/obj/machinery/shieldgen{
-	anchored = 1;
-	req_access = null
 	},
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
@@ -403,22 +397,27 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"uk" = (
+/obj/structure/table,
+/obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/razor,
+/obj/structure/mirror/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/ruin/cyborg_mothership)
 "uK" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"vb" = (
-/obj/structure/table/optable,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/cyborg_mothership)
-"vk" = (
-/obj/machinery/button/door/directional/west{
-	id = "mothership_left"
+"uN" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/shieldgen{
+	anchored = 1;
+	req_access = null
 	},
-/obj/structure/cable,
-/turf/open/floor/circuit/airless,
+/turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "vy" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/cyborg_mothership{
@@ -506,6 +505,18 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"yT" = (
+/obj/machinery/camera/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
+	environ = 0;
+	equipment = 0;
+	lighting = 0
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "zn" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/spacevine,
@@ -538,14 +549,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
-"Ap" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/shieldgen{
-	anchored = 1;
-	req_access = null
-	},
-/turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
 "BD" = (
 /obj/structure/cable,
 /obj/machinery/power/solar,
@@ -573,6 +576,10 @@
 /obj/item/ai_module/core/full/overlord,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"DO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "Em" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -599,6 +606,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
+"ET" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/ruin/cyborg_mothership)
 "Fe" = (
 /mob/living/simple_animal/bot/hygienebot,
 /obj/machinery/camera/directional/south,
@@ -618,6 +632,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
+"Gq" = (
+/obj/machinery/button/door/directional/west{
+	id = "mothership_left"
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/airless,
+/area/shuttle/ruin/cyborg_mothership)
 "Hg" = (
 /obj/machinery/conveyor{
 	id = "Recycler"
@@ -630,19 +651,6 @@
 /obj/item/circuitboard/aicore,
 /obj/structure/cable,
 /turf/open/floor/circuit/green/airless,
-/area/shuttle/ruin/cyborg_mothership)
-"HM" = (
-/obj/machinery/space_heater{
-	anchored = 1
-	},
-/obj/machinery/camera/directional/west,
-/obj/item/pipe_dispenser,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/item/wrench,
-/turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
 "IS" = (
 /obj/structure/lattice,
@@ -751,6 +759,13 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
+"Pa" = (
+/obj/machinery/mineral/ore_redemption/offstation{
+	input_dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/shuttle/ruin/cyborg_mothership)
 "Pf" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/crate/solarpanel_small,
@@ -767,13 +782,6 @@
 /obj/structure/lattice,
 /obj/machinery/camera/directional/east,
 /turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
-"QH" = (
-/obj/item/stack/rods,
-/obj/machinery/button/door/directional/east{
-	id = "mothership_right"
-	},
-/turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Rv" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -852,18 +860,6 @@
 "Vb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/shuttle/ruin/cyborg_mothership)
-"Vi" = (
-/obj/machinery/camera/directional/south,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	environ = 0;
-	equipment = 0;
-	lighting = 0
-	},
-/obj/effect/mapping_helpers/apc/unlocked,
-/obj/machinery/light/cold/no_nightlight/directional/south,
-/turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "VC" = (
 /obj/structure/cable,
@@ -1015,7 +1011,7 @@ hR
 hR
 hR
 hR
-tM
+mv
 oe
 oe
 oe
@@ -1054,7 +1050,7 @@ of
 oe
 BD
 oe
-Ap
+uN
 hR
 hR
 hR
@@ -1165,13 +1161,13 @@ kz
 zZ
 zZ
 mN
-gQ
+uk
 Oq
 zZ
 kz
 kz
 zZ
-vk
+Gq
 ww
 UL
 Uq
@@ -1190,10 +1186,10 @@ yF
 fB
 zZ
 Ey
-qo
+ET
 Fe
 yF
-HM
+tg
 yF
 yg
 HK
@@ -1225,7 +1221,7 @@ ks
 TZ
 zZ
 uK
-Vi
+yT
 zZ
 VU
 tr
@@ -1240,7 +1236,7 @@ yF
 pY
 zZ
 Ey
-cB
+sn
 bE
 yF
 hB
@@ -1265,21 +1261,21 @@ kz
 zZ
 zZ
 mN
-vb
+re
 hs
 zZ
 kz
 Em
 no
-QH
+ao
 pz
 Uq
-ma
+DO
 zZ
 kz
 hR
 hR
-mC
+Pa
 of
 OY
 Vb
@@ -1404,7 +1400,7 @@ MZ
 BD
 oe
 oe
-tM
+mv
 hR
 hR
 hR
@@ -1415,7 +1411,7 @@ hR
 hR
 hR
 hR
-Ap
+uN
 oe
 oe
 oe
@@ -1445,7 +1441,7 @@ hR
 hR
 hR
 hR
-nM
+lq
 YC
 yd
 KR

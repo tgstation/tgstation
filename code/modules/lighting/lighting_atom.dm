@@ -1,7 +1,5 @@
 
 // The proc you should always use to set the light of this atom.
-// Nonesensical value for l_color default, so we can detect if it gets set to null.
-#define NONSENSICAL_VALUE -99999
 #warn lemnon todo, reorder
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on, l_angle, l_dir)
 	// We null everything but l_dir, because we don't want to allow for modifications while frozen
@@ -37,8 +35,6 @@
 		set_light_on(l_on)
 
 	update_light()
-
-#undef NONSENSICAL_VALUE
 
 /// Will update the light (duh).
 /// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
@@ -159,7 +155,7 @@
 
 /// Setter for the light direction of this atom
 /atom/proc/set_light_dir(new_value)
-	// No frozen check here because we allow direction changes in a freeze 
+	// No frozen check here because we allow direction changes in a freeze
 	if(new_value == light_dir)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_DIR, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)

@@ -60,7 +60,7 @@
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
-	return FLOOR(id_card.registered_account.mining_points, 1)
+	return round(id_card.registered_account.mining_points)
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()

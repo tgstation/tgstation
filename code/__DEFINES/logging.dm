@@ -72,6 +72,7 @@
 // Log categories
 #define LOG_CATEGORY_NOT_FOUND "invalid_category"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target_zone_switch"
+#define LOG_CATEGORY_SILO "silo"
 
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B

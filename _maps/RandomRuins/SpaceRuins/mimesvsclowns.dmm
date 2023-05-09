@@ -13,6 +13,11 @@
 /obj/item/grown/bananapeel,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"eu" = (
+/obj/machinery/computer/old,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "gu" = (
 /obj/structure/door_assembly/door_assembly_grunge,
 /turf/open/floor/iron/checker/airless,
@@ -23,17 +28,6 @@
 "gZ" = (
 /turf/closed/mineral,
 /area/ruin)
-"hG" = (
-/obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/open{
-	opened = 1
-	},
-/obj/item/food/burger/mime,
-/obj/item/food/burger/mime,
-/obj/item/food/pie/mimetart,
-/obj/item/food/pie/mimetart,
-/turf/open/floor/plating/airless,
-/area/ruin)
 "hT" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/tank_dispenser,
@@ -43,6 +37,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"kW" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/template_noop,
+/area/ruin)
 "lS" = (
 /obj/structure/door_assembly,
 /turf/open/floor/iron/checker/airless,
@@ -50,6 +51,18 @@
 "mB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/airless,
+/area/ruin)
+"nx" = (
+/obj/machinery/light/small/broken/directional/east,
+/obj/structure/closet/preopen,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/head/frenchberet,
+/obj/item/clothing/head/frenchberet,
+/obj/item/storage/backpack/mime,
+/turf/open/floor/iron/checker/airless,
 /area/ruin)
 "of" = (
 /obj/item/storage/toolbox/syndicate,
@@ -59,19 +72,14 @@
 /obj/machinery/door/airlock/grunge,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"ox" = (
-/obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet{
-	opened = 1
-	},
-/obj/item/clothing/mask/gas/mime,
-/obj/item/clothing/mask/gas/mime,
-/obj/item/clothing/under/rank/civilian/mime,
-/obj/item/clothing/under/rank/civilian/mime,
-/obj/item/clothing/head/frenchberet,
-/obj/item/clothing/head/frenchberet,
-/obj/item/storage/backpack/mime,
-/turf/open/floor/iron/checker/airless,
+"qr" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
+/obj/item/food/burger/mime,
+/obj/item/food/burger/mime,
+/obj/item/food/pie/mimetart,
+/obj/item/food/pie/mimetart,
+/turf/open/floor/plating/airless,
 /area/ruin)
 "rn" = (
 /obj/machinery/computer/old{
@@ -220,12 +228,6 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"Kx" = (
-/obj/machinery/computer/old{
-	dir = 4
-	},
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "KI" = (
 /obj/structure/sign/poster/contraband/microwave,
 /turf/closed/wall,
@@ -252,24 +254,13 @@
 /obj/structure/sign/poster/contraband/masked_men,
 /turf/closed/wall,
 /area/ruin)
-"Qh" = (
-/obj/machinery/computer/old,
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "Sc" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"Vj" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced/damaged,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/template_noop,
-/area/ruin)
-"WY" = (
+"St" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
@@ -280,6 +271,12 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/light/small/broken/directional/south,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"XH" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "YF" = (
@@ -399,9 +396,9 @@ GF
 Jz
 Jz
 vs
-Kx
+XH
 Jz
-Qh
+eu
 gV
 gZ
 Fx
@@ -419,11 +416,11 @@ ED
 iP
 lS
 ve
-WY
+St
 KI
-hG
+qr
 iP
-Vj
+kW
 Fx
 Fx
 Fx
@@ -502,7 +499,7 @@ iP
 dI
 Jz
 YF
-ox
+nx
 gZ
 Fx
 Fx

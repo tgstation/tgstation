@@ -2,6 +2,12 @@
 "aA" = (
 /turf/template_noop,
 /area/template_noop)
+"be" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "bs" = (
 /obj/machinery/button/door{
 	id = "lavalandsyndi_mistake";
@@ -73,31 +79,6 @@
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"gX" = (
-/obj/machinery/airalarm/directional/north{
-	req_access = list("syndicate")
-	},
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/manipulator/femto,
-/obj/item/stock_parts/manipulator/femto,
-/obj/item/stock_parts/manipulator/femto,
-/obj/item/stock_parts/manipulator/femto,
-/obj/item/stock_parts/manipulator/femto,
-/obj/item/stock_parts/manipulator/femto,
-/obj/structure/rack,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "hJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -125,12 +106,6 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/ruin/syndicate_lava_base/testlab)
-"ls" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/mapping_helpers/apc/syndicate_access,
-/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "lR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -175,13 +150,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"qh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "qY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -189,6 +157,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"rA" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "rT" = (
 /obj/effect/turf_decal/stripes/line,
@@ -206,14 +182,6 @@
 "sa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/testlab)
-"sc" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "uG" = (
 /obj/item/storage/toolbox/syndicate,
@@ -277,13 +245,6 @@
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"HC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/directional/south{
-	req_access = list("syndicate")
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "It" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -292,6 +253,30 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/testlab)
+"Jd" = (
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/servo/femto,
+/obj/item/stock_parts/servo/femto,
+/obj/item/stock_parts/servo/femto,
+/obj/item/stock_parts/servo/femto,
+/obj/item/stock_parts/servo/femto,
+/obj/item/stock_parts/servo/femto,
+/obj/structure/rack,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "JO" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
@@ -329,6 +314,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
+"Wu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "XN" = (
 /obj/machinery/atmospherics/components/tank/nitrogen,
 /obj/effect/turf_decal/stripes/line{
@@ -355,6 +347,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"Zz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "ZR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -403,14 +401,14 @@ XN
 uG
 em
 kE
-qh
+Wu
 aA
 aA
 "}
 (4,1,1) = {"
 em
 em
-gX
+Jd
 Lc
 Lc
 hJ
@@ -418,7 +416,7 @@ kE
 kE
 eq
 kE
-HC
+Zz
 aA
 aA
 "}
@@ -449,7 +447,7 @@ kP
 IG
 kE
 xI
-ls
+be
 aA
 "}
 (7,1,1) = {"
@@ -464,7 +462,7 @@ rT
 IG
 Vp
 ef
-sc
+rA
 on
 "}
 (8,1,1) = {"

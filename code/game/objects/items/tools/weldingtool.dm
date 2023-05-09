@@ -32,7 +32,7 @@
 	toolspeed = 1
 	wound_bonus = 10
 	bare_wound_bonus = 15
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE
 	/// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -338,7 +338,7 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/glass=60)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -365,7 +365,7 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	change_icons = FALSE
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
@@ -380,7 +380,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	toolspeed = 0.1
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	change_icons = FALSE
@@ -396,7 +396,7 @@
 	icon_state = "upindwelder"
 	inhand_icon_state = "upindwelder"
 	max_fuel = 80
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -404,7 +404,7 @@
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
+	custom_materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2)
 	change_icons = FALSE
 	can_off_process = TRUE
 	light_range = 1

@@ -48,10 +48,9 @@ Possible to do for anyone motivated enough:
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE
-	/// associative lazylist of the form: list(mob calling us = hologram representing that mob).
-	/// this is only populated for holopads answering calls from another holopad
+	/// associative lazylist of the form: list(owner of a hologram = hologram representing that owner).
 	var/list/masters
-	/// Holoray-mob link
+	/// Holoray-owner link
 	var/list/holorays
 	/// To prevent request spam. ~Carn
 	var/last_request = 0
@@ -137,8 +136,6 @@ Possible to do for anyone motivated enough:
 	if(!loc)
 		return
 	// move any relevant holograms, basically non-AI, and rays with the pad
-	if(replay_holo)
-		replay_holo.abstract_move(loc)
 	for(var/mob/living/user as anything in holorays)
 		var/obj/effect/overlay/holoray/ray = holorays[user]
 		ray.abstract_move(loc)
@@ -149,7 +146,7 @@ Possible to do for anyone motivated enough:
 		non_call_masters -= holocall.user
 		// moving the eye moves the holo which updates the ray too
 		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - old_loc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - old_loc.y), 1, world.maxy), z))
-	for(var/mob/living/holo_master as anything in non_call_masters)
+	for(var/datum/holo_master as anything in non_call_masters)
 		var/obj/effect/holo = masters[holo_master]
 		update_holoray(holo_master, holo.loc)
 
@@ -398,7 +395,7 @@ Possible to do for anyone motivated enough:
 				new_turf = get_turf(src)
 			else
 				new_turf = get_step(src, GLOB.cardinals[offset])
-			replay_holo.forceMove(new_turf)
+			move_hologram(disk.record, new_turf)
 			return TRUE
 		if("hang_up")
 			if(outgoing_call)
@@ -491,7 +488,7 @@ Possible to do for anyone motivated enough:
 //everything in here can start processing if need be once first set and stop processing after being unset
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
-		for(var/mob/living/master as anything in masters)
+		for(var/datum/master as anything in masters)
 			if(!is_operational || !validate_user(master))
 				clear_holo(master)
 
@@ -548,6 +545,7 @@ Possible to do for anyone motivated enough:
 		SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 		hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
+		set_holo(user, hologram)
 
 		set_holo(user, hologram)
 		visible_message(span_notice("A holographic image of [user] flickers to life before your eyes!"))
@@ -599,20 +597,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
 
-/obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
-	LAZYSET(masters, user, h)
-	LAZYSET(holorays, user, new /obj/effect/overlay/holoray(loc))
+/obj/machinery/holopad/proc/set_holo(datum/owner, obj/effect/overlay/holo_pad_hologram/h)
+	LAZYSET(masters, owner, h)
+	LAZYSET(holorays, owner, new /obj/effect/overlay/holoray(loc))
 	set_can_hear_flags(CAN_HEAR_MASTERS)
-	var/mob/living/silicon/ai/AI = user
+	var/mob/living/silicon/ai/AI = owner
 	if(istype(AI))
 		AI.current = src
 	SetLightsAndPower()
-	update_holoray(user, get_turf(loc))
+	update_holoray(owner, get_turf(loc))
 	return TRUE
 
-/obj/machinery/holopad/proc/clear_holo(mob/living/user)
-	qdel(masters[user]) // Get rid of user's hologram
-	unset_holo(user)
+/obj/machinery/holopad/proc/clear_holo(datum/owner)
+	qdel(masters[owner]) // Get rid of owner's hologram
+	unset_holo(owner)
 	return TRUE
 
 /**
@@ -643,7 +641,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 //Try to transfer hologram to another pad that can project on T
-/obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T,mob/holo_owner)
+/obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T, datum/holo_owner)
 	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 	if(!h || h.HC) //Holocalls can't change source.
 		return FALSE
@@ -659,8 +657,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			return TRUE
 	return FALSE
 
-/obj/machinery/holopad/proc/validate_user(mob/living/user)
-	if(QDELETED(user) || user.incapacitated() || !user.client)
+/obj/machinery/holopad/proc/validate_user(datum/owner)
+	if(QDELETED(owner))
+		return FALSE
+	if(!isliving(owner))
+		return TRUE
+	var/mob/living/user = owner
+	if(user.incapacitated() || !user.client)
 		return FALSE
 	return TRUE
 
@@ -672,13 +675,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	else
 		return FALSE
 
-/obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
-	if(!LAZYLEN(masters) || !masters[user])
+/obj/machinery/holopad/proc/move_hologram(datum/owner, turf/new_turf)
+	if(!LAZYLEN(masters) || !masters[owner])
 		return TRUE
-	var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
+	var/obj/effect/overlay/holo_pad_hologram/holo = masters[owner]
 	var/transfered = FALSE
 	if(!validate_location(new_turf))
-		if(!transfer_to_nearby_pad(new_turf,user))
+		if(!transfer_to_nearby_pad(new_turf, owner))
 			return FALSE
 		else
 			transfered = TRUE
@@ -686,13 +689,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holo.abstract_move(new_turf)
 	SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
 	if(!transfered)
-		update_holoray(user,new_turf)
+		update_holoray(owner, new_turf)
 	return TRUE
 
 
-/obj/machinery/holopad/proc/update_holoray(mob/living/user, turf/new_turf)
-	var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
-	var/obj/effect/overlay/holoray/ray = holorays[user]
+/obj/machinery/holopad/proc/update_holoray(datum/holo_owner, turf/new_turf)
+	var/obj/effect/overlay/holo_pad_hologram/holo = masters[holo_owner]
+	var/obj/effect/overlay/holoray/ray = holorays[holo_owner]
 	var/disty = holo.y - ray.y
 	var/distx = holo.x - ray.x
 	var/newangle
@@ -717,7 +720,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/setup_replay_holo(datum/holorecord/record)
 	var/obj/effect/overlay/holo_pad_hologram/hologram = new(loc)//Spawn a blank effect at the location.
-	hologram.add_overlay(record.caller_image)
+	var/image/work_off = record.caller_image
+	hologram.icon = work_off.icon
+	hologram.icon_state = work_off.icon_state
+	hologram.copy_overlays(work_off, TRUE)
 	hologram.makeHologram()
 
 	var/datum/language_holder/holder = hologram.get_language_holder()
@@ -727,6 +733,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 	hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
+	set_holo(record, hologram)
+
 	visible_message(span_notice("A holographic image of [record.caller_name] flickers to life before your eyes!"))
 	return hologram
 
@@ -741,6 +749,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(replay_mode)
 		replay_mode = FALSE
 		offset = FALSE
+		clear_holo(disk.record)
 		QDEL_NULL(replay_holo)
 		SetLightsAndPower()
 
@@ -809,8 +818,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_PRESET)
 			var/preset_type = entry[2]
 			var/datum/preset_holoimage/H = new preset_type
-			replay_holo.cut_overlays()
-			replay_holo.add_overlay(H.build_image())
+			var/image/work_off = H.build_image()
+			replay_holo.icon = work_off.icon
+			replay_holo.icon_state = work_off.icon_state
+			replay_holo.copy_overlays(work_off, TRUE)
 		if(HOLORECORD_RENAME)
 			replay_holo.name = entry[2] + " (Hologram)"
 	.(entry_number+1)

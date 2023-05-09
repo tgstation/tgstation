@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	flash_protect = FLASH_PROTECTION_WELDER
-	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	tint = 2
 	armor_type = /datum/armor/gas_welding
 	actions_types = list(/datum/action/item_action/toggle)
@@ -208,7 +208,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
-	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
 	var/list/clownmask_designs = list()
 
@@ -252,7 +251,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
@@ -354,14 +352,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	inhand_icon_state = null
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.25)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.25)
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
-	species_exception = list(/datum/species/golem/wood)
 	var/list/tikimask_designs = list()
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)

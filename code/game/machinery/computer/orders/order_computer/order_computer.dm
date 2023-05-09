@@ -77,19 +77,13 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * card - The ID card we retrive these points from
  */
 /obj/machinery/computer/order_console/proc/retrive_points(obj/item/card/id/id_card)
-	return FLOOR(id_card.registered_account?.account_balance, 1)
+	return round(id_card.registered_account?.account_balance)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
 	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
-	if(!isliving(user))
-		return data
-	var/mob/living/living_user = user
-	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-	if(id_card)
-		data["points"] = retrive_points(id_card)
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
@@ -97,6 +91,11 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"name" = item.name,
 			"amt" = grocery_list[item],
 		))
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+		if(id_card)
+			data["points"] = retrive_points(id_card)
 
 	return data
 
@@ -120,7 +119,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"desc" = item.desc,
 			"cat" = item.category_index,
 			"ref" = REF(item),
-			"cost" = FLOOR(item.cost_per_order * cargo_cost_multiplier, 1),
+			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
 		))
 	return data
@@ -209,11 +208,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * returns TRUE if we can afford, FALSE otherwise.
  */
 /obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, express = FALSE)
-	var/final_cost = get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier)
-	var/failure_message = !express ? "Sorry, but you do not have enough [credit_type]." : " Remember, Express upcharges the cost!"
+	var/final_cost = round(get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier))
 	if(subtract_points(final_cost, card))
 		return TRUE
-	say(failure_message)
+	say("Sorry, but you do not have enough [credit_type].")
 	return FALSE
 
 /**

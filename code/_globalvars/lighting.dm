@@ -106,6 +106,12 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 	name = "Dim Bar"
 	id = "dim_bar"
 	category = "Bar"
+	path_to_read = /obj/machinery/light/dim
+
+/datum/light_template/read_light/very_dim_bar
+	name = "Very Dim Bar"
+	id = "very_dim_bar"
+	category = "Bar"
 	path_to_read = /obj/machinery/light/very_dim
 
 /datum/light_template/read_light/standard_bulb

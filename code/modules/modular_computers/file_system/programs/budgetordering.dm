@@ -121,18 +121,31 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	data["cart"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-		data["cart"] += list(list(
-			"cost_type" = SO.cost_type,
-			"object" = SO.pack.name,
-			"cost" = SO.pack.get_cost(),
-			"id" = SO.id,
-			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account), //paid by requester
-			"dep_order" = !!SO.department_destination,
-			"can_be_cancelled" = SO.can_be_cancelled,
+	var/cart_list = list()
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		if(cart_list[order.pack.name])
+			cart_list[order.pack.name][1]["amount"]++
+			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
+			if(order.department_destination)
+				cart_list[order.pack.name][1]["dep_order"]++
+			if(!isnull(order.paying_account))
+				cart_list[order.pack.name][1]["paid"]++
+			continue
+
+		cart_list[order.pack.name] = list(list(
+			"cost_type" = order.cost_type,
+			"object" = order.pack.name,
+			"cost" = order.get_final_cost(),
+			"id" = order.id,
+			"amount" = 1,
+			"orderer" = order.orderer,
+			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
+			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"can_be_cancelled" = order.can_be_cancelled,
 		))
+	data["cart"] = list()
+	for(var/item_id in cart_list)
+		data["cart"] += cart_list[item_id]
 
 	data["requests"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.request_list)
@@ -147,9 +160,6 @@
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())

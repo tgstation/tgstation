@@ -17,12 +17,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MAFIA_ON_KILL, PROC_REF(nightkill_immunity))
 
-/datum/mafia_role/traitor/check_total_victory(alive_town, alive_mafia) //serial killers just want teams dead, they cannot be stopped by killing roles anyways
-	return alive_town + alive_mafia <= 1
-
-/datum/mafia_role/traitor/block_team_victory(alive_town, alive_mafia) //no team can win until they're dead
-	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
-
 /datum/mafia_role/traitor/proc/nightkill_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
@@ -44,12 +38,6 @@
 	winner_award = /datum/award/achievement/mafia/nightmare
 
 	role_unique_actions = list(/datum/mafia_ability/flicker_rampage)
-
-/datum/mafia_role/nightmare/check_total_victory(alive_town, alive_mafia) //nightmares just want teams dead
-	return alive_town + alive_mafia <= 1
-
-/datum/mafia_role/nightmare/block_team_victory(alive_town, alive_mafia) //no team can win until they're dead
-	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
 
 /datum/mafia_role/nightmare/special_reveal_equip()
 	body.set_species(/datum/species/shadow)
