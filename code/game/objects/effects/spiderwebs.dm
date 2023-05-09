@@ -80,6 +80,10 @@
 	sealed = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 
+/obj/structure/spider/stickyweb/sealed/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE
 	var/mob/living/allowed_mob
