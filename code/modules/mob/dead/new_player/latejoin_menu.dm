@@ -67,6 +67,9 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		departments[department.department_name] = department_data
 
 		for(var/datum/job/job_datum as anything in department.department_jobs)
+			if(job_datum.department_for_prefs && job_datum.department_for_prefs != department.type && !(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+				continue
+
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, latejoin = TRUE)
 
 			var/list/job_data = list(
@@ -101,6 +104,9 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		departments[department.department_name] = department_data
 
 		for(var/datum/job/job_datum as anything in department.department_jobs)
+			if(job_datum.department_for_prefs && job_datum.department_for_prefs != department.type && !(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+				continue
+
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
 				"description" = job_datum.description,
