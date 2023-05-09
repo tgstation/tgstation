@@ -1,11 +1,11 @@
 GLOBAL_LIST_INIT(high_threat_antags, list(
 	/datum/antagonist/cult,
 	/datum/antagonist/rev/head,
+	/datum/antagonist/wizard,
 ))
 
 GLOBAL_LIST_INIT(medium_threat_antags, list(
 	/datum/antagonist/ninja,
-	/datum/antagonist/wizard,
 	/datum/antagonist/heretic,
 ))
 
