@@ -302,7 +302,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	switch(round(shown_threat))
-		if(0 to 19)
+		if(0)
+			. += "Advisory Level: <b>White Dwarf</b></center><BR>"
+			. += "Your sector's advisory level is White Dwarf. Our surveillors have ruled out any and all potential risks known in our database, ruling out the loss of our assets in the Spinward Sector. We advise a lower level of security, alongside distributing ressources on potential profit."
+		if(1 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
 			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
 				show_core_territory = !show_core_territory
