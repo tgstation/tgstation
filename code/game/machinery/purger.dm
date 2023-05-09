@@ -11,13 +11,13 @@
 	opacity = FALSE
 	processing_flags = START_PROCESSING_MANUALLY //We only process when we have an occupant.
 	///Our soundloop, for when the machine is running.
-	var/datum/looping_sound/microwave/soundloop
+	var/datum/looping_sound/tape_recorder_hiss/soundloop
 	///Is our machine currently running?
 	var/purging = FALSE
 	///The cooldown for sending escape alerts.
 	COOLDOWN_DECLARE(alert_cooldown)
 	///The number of addiction points to remove per process.
-	var/addiction_purge_amount = 3
+	var/addiction_purge_amount = 15
 	///The lowest volume we can purge reagents down to.
 	var/chemical_purge_amount = 3
 
@@ -58,7 +58,7 @@
 /obj/machinery/purger/interact(mob/user)
 	if(state_open)
 		close_machine()
-	else if(!purging || obj_flags & EMAGGED)
+	else
 		open_machine()
 
 /obj/machinery/purger/close_machine(mob/user, density_to_set = TRUE)
@@ -92,6 +92,21 @@
 /obj/machinery/purger/process()
 	var/mob/living/mob_occupant = occupant
 	if(istype(mob_occupant))
+		if(obj_flags & EMAGGED) //If we're emagged, we worsen addictions, poison our user, and release a large cloud of acid.
+			for(var/datum/addiction/addiction in mob_occupant.mind?.addiction_points)
+				mob_occupant.mind.add_addiction_points(addiction, addiction_purge_amount)
+				if(prob(20))
+					to_chat(mob_occupant, span_alert("You feel your [addiction] cravings worsen..."))
+
+			if(mob_occupant.reagents)
+				mob_occupant.reagents.add_reagent(/datum/reagent/toxin/amanitin, 1)
+				var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
+				smoke_holder.attach(src)
+				smoke_holder.set_up(3, holder = src, location = src, silent = TRUE)
+				smoke_holder.chemholder.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+				smoke_holder.start()
+			return
+
 		for(var/datum/addiction in mob_occupant.mind?.active_addictions)
 			mob_occupant.mind.remove_addiction_points(addiction, addiction_purge_amount)
 
