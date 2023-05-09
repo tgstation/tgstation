@@ -1,3 +1,5 @@
+#define PURGE_LIMIT 5
+
 /obj/machinery/purger
 	name = "Purge-O-Matic 3000"
 	desc = "Purges both the mind and body of chemical afflictions, through the harnessed power of an anomaly."
@@ -7,6 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/purger
 	density = TRUE
 	opacity = FALSE
+	processing_flags = START_PROCESSING_MANUALLY //We only process when we have an occupant.
 	///Our soundloop, for when the machine is running.
 	var/datum/looping_sound/microwave/soundloop
 	///Is our machine currently running?
@@ -16,7 +19,7 @@
 	///The number of addiction points to remove per process.
 	var/addiction_purge_amount = 3
 	///The lowest volume we can purge reagents down to.
-	var/chemical_purge_floor = 20
+	var/chemical_purge_amount = 5
 
 /obj/machinery/purger/Initialize(mapload)
 	. = ..()
@@ -30,16 +33,17 @@
 
 /obj/machinery/purger/RefreshParts()
 	. = ..()
-	var/purge_rating = 0
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		purge_rating += micro_laser.tier
 
 	var/addiction_rating = 0
 	for(var/datum/stock_part/scanning_module/scanner_module in component_parts)
 		addiction_rating += scanner_module.tier
 
-	chemical_purge_floor = initial(chemical_purge_floor) - purge_rating * 4 //Minimum floor of 4 reagents at full upgrades
+	var/purge_rating = 0
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		purge_rating += micro_laser.tier
+
 	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 3
+	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 5
 
 /obj/machinery/purger/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -96,7 +100,7 @@
 			smoke_holder.attach(src)
 			smoke_holder.set_up(1, holder = src, location = src, silent = TRUE)
 			for(var/datum/reagent/reagent_to_purge in mob_occupant.reagents.reagent_list)
-				var/amount_to_purge = clamp(reagent_to_purge.volume - chemical_purge_floor, 0, 10)
+				var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, chemical_purge_amount)
 				mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
 			smoke_holder.start()
 
@@ -139,8 +143,6 @@
 
 	if(occupant)
 		icon_state += "_occupied"
-		if(occupant.reagents && !length(occupant.reagents.reagent_list))
-			icon_state += "_stopped"
 	return ..()
 
 /obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
@@ -153,3 +155,5 @@
 	. = ..()
 	if(powered())
 		. += "ready"
+
+#undef PURGE_LIMIT
