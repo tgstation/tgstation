@@ -1,0 +1,7 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "high luminosity eyes light overlays now follow the user correctly"
+  - qol: "high luminosity eyes now have a tgui menu so you no longer have to go through the color picker every time you want to change the range. they also have a new setting that lets you change the color of your eyes independently of the light color. You can now have cybernetic heterochromia if you want"
+  - bugfix: "directional flashlights when picked up will now always update their cast light direction correctly no matter what dir you are facing"
+  - refactor: "refactors high luminosity eye code to better make use of the atom lighting system, adding a new light type 'MOVABLE_LIGHT_BEAM'"

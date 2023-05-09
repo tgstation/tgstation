@@ -234,6 +234,7 @@
 	minimal_access = list(
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CREMATORIUM,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
@@ -358,6 +359,7 @@
 	subdepartment_color = COLOR_MAGENTA
 	sechud_icon_state = SECHUD_CLOWN
 	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
 		)
@@ -404,11 +406,11 @@
 	sechud_icon_state = SECHUD_CORONER
 	minimal_access = list(
 		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
 		ACCESS_MORGUE_SECURE,
 		ACCESS_SERVICE,
 		ACCESS_SURGERY,
-		ACCESS_MINERAL_STOREROOM,
 	)
 	extra_access = list(
 		ACCESS_PSYCHOLOGY,
@@ -431,6 +433,7 @@
 	minimal_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_LIBRARY,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINING_STATION,
 		ACCESS_SERVICE,
 		)
@@ -647,6 +650,7 @@
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_COURT,
 		ACCESS_LAWYER,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		)
 	extra_access = list()
@@ -689,6 +693,7 @@
 	subdepartment_color = COLOR_WHITE
 	sechud_icon_state = SECHUD_MIME
 	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
 		)
@@ -780,6 +785,7 @@
 	sechud_icon_state = SECHUD_PSYCHOLOGIST
 	minimal_access = list(
 		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_PSYCHOLOGY,
 		ACCESS_SERVICE,
 	)
