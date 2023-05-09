@@ -33,6 +33,11 @@
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
 	return TRUE
 
+/datum/material/glass/on_applied(atom/source, amount, material_flags)
+	. = ..()
+	if(isobj(source))
+		source.AddComponent(/datum/component/shatters_when_thrown, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
+
 /*
 Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
 Unless you know what you're doing, only use the first three numbers. They're in RGB order.
