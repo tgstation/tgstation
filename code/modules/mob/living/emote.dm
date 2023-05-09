@@ -230,6 +230,16 @@
 	message = "jumps!"
 	hands_use_check = TRUE
 
+/datum/emote/living/jump/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	animate(user, pixel_y = user.pixel_y + 4, time = 0.1 SECONDS)
+	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
+
+/datum/emote/living/jump/get_sound(mob/living/user)
+	return 'sound/effects/stealthoff.ogg'
+
 /datum/emote/living/kiss
 	key = "kiss"
 	key_third_person = "kisses"
