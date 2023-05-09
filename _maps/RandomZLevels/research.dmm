@@ -926,12 +926,10 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "ex" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/cryo)
+/obj/effect/turf_decal/siding/yellow,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/awaymission/research/interior/dorm)
 "ez" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -1116,12 +1114,10 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "fi" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior/cryo)
+/area/awaymission/research/interior)
 "fk" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -1157,11 +1153,10 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "ft" = (
-/obj/machinery/light/directional/north,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior/security)
+/area/awaymission/research/interior)
 "fu" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -1535,12 +1530,10 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "hv" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior/cryo)
+/area/awaymission/research/interior)
 "hy" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/cable,
@@ -2235,7 +2228,6 @@
 /area/awaymission/research/interior/medbay)
 "ky" = (
 /obj/structure/table,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -2312,6 +2304,8 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kR" = (
@@ -2326,7 +2320,6 @@
 /area/awaymission/research/interior/dorm)
 "kV" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
@@ -2377,6 +2370,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "ld" = (
@@ -2428,8 +2422,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lo" = (
@@ -2523,6 +2515,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lG" = (
@@ -2889,13 +2882,10 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mU" = (
-/obj/structure/sign/warning/vacuum/directional/south,
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior/escapepods)
+/area/awaymission/research/interior)
 "mV" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -2968,8 +2958,8 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
 "oc" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "ok" = (
@@ -3083,8 +3073,8 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "si" = (
@@ -3383,8 +3373,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Dl" = (
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "Do" = (
@@ -3493,8 +3483,8 @@
 /area/awaymission/research/interior/engineering)
 "FZ" = (
 /obj/machinery/computer/scan_consolenew,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "Ge" = (
@@ -3672,7 +3662,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
@@ -3715,6 +3704,13 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
+"MI" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/awaymission/research/interior)
 "Nf" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
@@ -3846,10 +3842,12 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "QC" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior)
+/area/awaymission/research/interior/escapepods)
 "QI" = (
 /obj/effect/gibspawner/human,
 /obj/item/stack/cable_coil{
@@ -3936,13 +3934,15 @@
 "TW" = (
 /obj/item/ammo_casing/c9mm,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "Ub" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
-/area/awaymission/research/interior)
+/area/awaymission/research/interior/security)
 "Uf" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -36880,7 +36880,7 @@ KK
 qP
 KK
 ea
-ex
+gQ
 ff
 fF
 HD
@@ -37400,7 +37400,7 @@ fD
 HD
 gS
 fg
-hv
+fD
 ea
 KK
 qP
@@ -38705,7 +38705,7 @@ jn
 jF
 jF
 jF
-kc
+ex
 iX
 iX
 iX
@@ -38716,7 +38716,7 @@ mb
 mh
 mw
 mw
-mC
+mw
 mI
 mw
 mw
@@ -38937,11 +38937,11 @@ aH
 dR
 ea
 eD
-fi
+ff
 fJ
 TW
 gU
-fi
+ff
 fF
 ea
 bD
@@ -38962,7 +38962,7 @@ jn
 jF
 jF
 jF
-lz
+kc
 iX
 lS
 jC
@@ -39453,7 +39453,7 @@ ec
 eE
 cp
 fL
-OF
+mU
 gV
 cp
 bD
@@ -39710,7 +39710,7 @@ ed
 eF
 cp
 fL
-oc
+OF
 gV
 cp
 bD
@@ -40007,7 +40007,7 @@ mP
 OH
 OH
 OH
-mU
+mW
 mb
 aa
 aa
@@ -40224,7 +40224,7 @@ rB
 pW
 cp
 fL
-Dl
+OF
 gV
 cp
 bD
@@ -40481,7 +40481,7 @@ eg
 bD
 cp
 fL
-OF
+Dl
 gV
 cp
 bD
@@ -40515,7 +40515,7 @@ mb
 mi
 OH
 OH
-mG
+QC
 mb
 mQ
 OH
@@ -40774,7 +40774,7 @@ OH
 OH
 mG
 mb
-mQ
+mj
 OH
 OH
 OH
@@ -41283,7 +41283,7 @@ bD
 bD
 bD
 mb
-ml
+mi
 OH
 OH
 mF
@@ -42301,10 +42301,10 @@ HS
 kv
 it
 ia
-iE
 ia
 ia
 ia
+MI
 ia
 ia
 ia
@@ -42575,7 +42575,7 @@ mx
 mx
 mx
 mx
-mA
+mx
 mx
 mX
 mb
@@ -43067,7 +43067,7 @@ aH
 aO
 cp
 js
-ut
+hv
 ke
 cp
 bD
@@ -43324,7 +43324,7 @@ aH
 aO
 cp
 js
-ry
+ut
 ke
 cp
 bD
@@ -43565,7 +43565,7 @@ aH
 aH
 cp
 fT
-Nf
+ft
 hc
 cp
 aH
@@ -43822,7 +43822,7 @@ aO
 aO
 aP
 fT
-Fx
+Nf
 hc
 aP
 bD
@@ -43838,7 +43838,7 @@ aH
 aO
 cp
 js
-Ub
+ut
 ke
 cp
 bD
@@ -44095,7 +44095,7 @@ aH
 aO
 cp
 js
-ut
+fi
 ke
 cp
 bD
@@ -44336,7 +44336,7 @@ aH
 aO
 cp
 fT
-QC
+Nf
 hc
 cp
 bD
@@ -44593,7 +44593,7 @@ aH
 aO
 cp
 fT
-Nf
+oc
 hc
 cp
 bD
@@ -46133,7 +46133,7 @@ do
 do
 do
 do
-fr
+Ub
 QQ
 QQ
 QQ
@@ -47161,7 +47161,7 @@ do
 do
 do
 do
-ft
+fr
 Or
 Or
 QQ
