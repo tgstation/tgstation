@@ -16,12 +16,15 @@ type Data = {
   range: number;
 };
 
+enum ToUpdate {
+  LightColor,
+  LeftEye,
+  RightEye,
+}
+
 const LightColorDisplay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { lightColor } = data;
-  const Light = {
-    color: 0,
-  };
   return (
     <Section title="Color">
       <LabeledList>
@@ -29,12 +32,16 @@ const LightColorDisplay = (props, context) => {
           <ColorBox color={lightColor} />{' '}
           <Button
             icon="palette"
-            onClick={() => act('pick_color', { to_update: Light.color })}
+            onClick={() =>
+              act('pick_color', { to_update: ToUpdate.LightColor })
+            }
             tooltip="Brings up a color pick window to change the light color."
           />
           <Button
             icon="dice"
-            onClick={() => act('random_color', { to_update: Light.color })}
+            onClick={() =>
+              act('random_color', { to_update: ToUpdate.LightColor })
+            }
             tooltip="Randomizes the light color."
           />
           <Input
@@ -42,7 +49,10 @@ const LightColorDisplay = (props, context) => {
             width={6}
             maxLength={7}
             onChange={(_, value) =>
-              act('enter_color', { new_color: value, to_update: Light.color })
+              act('enter_color', {
+                new_color: value,
+                to_update: ToUpdate.LightColor,
+              })
             }
           />
         </LabeledList.Item>
@@ -91,10 +101,6 @@ const RangeDisplay = (props, context) => {
 const EyeColorDisplay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { eyeColor } = data;
-  const Eye = {
-    Left: 1,
-    Right: 2,
-  };
   return (
     <Section title="Eye Color">
       <LabeledList>
@@ -113,12 +119,14 @@ const EyeColorDisplay = (props, context) => {
             <ColorBox color={eyeColor.left} />{' '}
             <Button
               icon="palette"
-              onClick={() => act('pick_color', { to_update: Eye.Left })}
+              onClick={() => act('pick_color', { to_update: ToUpdate.LeftEye })}
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
-              onClick={() => act('random_color', { to_update: Eye.Left })}
+              onClick={() =>
+                act('random_color', { to_update: ToUpdate.LeftEye })
+              }
               tooltip="Randomizes the light color."
             />
             <Input
@@ -126,7 +134,10 @@ const EyeColorDisplay = (props, context) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act('enter_color', { new_color: value, to_update: Eye.Left })
+                act('enter_color', {
+                  new_color: value,
+                  to_update: ToUpdate.LeftEye,
+                })
               }
             />
           </LabeledList.Item>
@@ -134,12 +145,16 @@ const EyeColorDisplay = (props, context) => {
             <ColorBox color={eyeColor.right} />{' '}
             <Button
               icon="palette"
-              onClick={() => act('pick_color', { to_update: Eye.Right })}
+              onClick={() =>
+                act('pick_color', { to_update: ToUpdate.RightEye })
+              }
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
-              onClick={() => act('random_color', { to_update: Eye.Right })}
+              onClick={() =>
+                act('random_color', { to_update: ToUpdate.RightEye })
+              }
               tooltip="Randomizes the light color."
             />
             <Input
@@ -147,7 +162,10 @@ const EyeColorDisplay = (props, context) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act('enter_color', { new_color: value, to_update: Eye.Right })
+                act('enter_color', {
+                  new_color: value,
+                  to_update: ToUpdate.RightEye,
+                })
               }
             />
           </LabeledList.Item>
