@@ -30,8 +30,6 @@
 	var/target_temperature = T20C
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
-	/// If a thermomachine can lower the temperature of gasses
-	var/allows_cooling = TRUE
 	/// The pyroclastic anomaly core inside a Thermomachine
 	var/pyro_anomaly_core = null
 	var/base_heating = 140
@@ -154,7 +152,7 @@
 		. += span_notice(" -There is a pyroclastic anomaly core slotted into the back of the machine, it pumps massive amounts of heat into the machine.")
 	else
 		. += span_notice(" -There seems to be a slot for something in the back, what could it be?")
-	if(!allows_cooling)
+	if(istype(src, /obj/machinery/atmospherics/components/unary/thermomachine/anomalous))
 		. += span_notice(" -This machine has been configured to only produce heat and cannot cool gas down")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
@@ -206,7 +204,7 @@
 	var/temperature_target_delta = target_temperature - port.temperature
 
 	// Checking if the thermomachine is anomalous
-	if(!allows_cooling && temperature_target_delta < 0)
+	if(istype(src, /obj/machinery/atmospherics/components/unary/thermomachine/anomalous) && temperature_target_delta < 0)
 		return
 
 	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
@@ -223,7 +221,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/assembly/signaler/anomaly/pyro))
-		if(pyro_anomaly_core || !allows_cooling)
+		if(pyro_anomaly_core)
 			balloon_alert(user, "already an anomaly core!")
 		else
 			balloon_alert(user, "inserted [W.name]")
@@ -393,7 +391,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous
 	name = "Anomalous temperature control unit"
 	desc = "Heats gas in connected pipes."
-	allows_cooling = FALSE
 	pyro_anomaly_core = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
