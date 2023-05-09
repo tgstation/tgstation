@@ -33,9 +33,9 @@
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
 	return TRUE
 
-/datum/material/glass/on_applied(atom/source, amount, material_flags)
+/datum/material/glass/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(isobj(source))
+	if(!isstack(source))
 		source.AddComponent(/datum/component/shatters_when_thrown, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
 
 /datum/material/glass/on_removed(atom/source, amount, material_flags)
