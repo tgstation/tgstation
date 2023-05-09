@@ -1,0 +1,11 @@
+# These aren't going to be a perfect 1:1, adjust your maps accordingly
+
+/turf/open/water/beach/biodome : /turf/open/water/beach{@OLD}
+
+/turf/open/misc/beach/coastline_b : /turf/open/misc/beach/coast{@OLD}
+/turf/open/misc/beach/coastline_t : /turf/open/misc/beach/sand{@OLD}
+
+/turf/open/misc/beach/coastline_t/sandwater_inner : /turf/open/misc/beach/coast/corner{@OLD}
+
+/turf/open/floor/holofloor/beach/coast_t : /turf/open/floor/holofloor/beach/coast{@OLD}
+/turf/open/floor/holofloor/beach/coast_b : /turf/open/floor/holofloor/beach/water{@OLD}

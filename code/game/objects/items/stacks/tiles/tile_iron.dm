@@ -12,8 +12,8 @@
 	armor_type = /datum/armor/tile_iron
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	cost = 125
-	source = /datum/robot_energy_storage/iron
+	cost = SMALL_MATERIAL_AMOUNT * 5
+	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/tile/iron
 	tile_reskin_types = list(
 		/obj/item/stack/tile/iron,
