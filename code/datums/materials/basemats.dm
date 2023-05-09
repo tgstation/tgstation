@@ -38,6 +38,11 @@
 	if(isobj(source))
 		source.AddComponent(/datum/component/shatters_when_thrown, shard_type, round(amount / SHEET_MATERIAL_AMOUNT), SFX_SHATTER)
 
+/datum/material/glass/on_removed(atom/source, amount, material_flags)
+	. = ..()
+
+	qdel(source.GetComponent(/datum/component/shatters_when_thrown))
+
 /*
 Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
 Unless you know what you're doing, only use the first three numbers. They're in RGB order.
