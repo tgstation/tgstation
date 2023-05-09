@@ -456,6 +456,7 @@
 "hT" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/space_heater,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "iS" = (
@@ -894,6 +895,8 @@
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/broken/directional/south,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "Sw" = (
