@@ -1,5 +1,5 @@
 ///How much do we purge reagents down to (purge speed slows as it approaches this value, eventually stopping)
-#define PURGE_LIMIT 10
+#define PURGE_LIMIT 5
 
 /obj/machinery/purger
 	name = "Purge-O-Matic 3000"
@@ -13,6 +13,8 @@
 	var/datum/looping_sound/microwave/soundloop
 	///Is our machine currently running?
 	var/purging = FALSE
+	///The cooldown for sending escape alerts.
+	COOLDOWN_DECLARE(alert_cooldown)
 
 /obj/machinery/purger/Initialize(mapload)
 	. = ..()
@@ -64,33 +66,29 @@
 ///Purged chems are released as a very small gas cloud.
 /obj/machinery/purger/process()
 	var/mob/living/mob_occupant = occupant
-	if(mob_occupant)
+	if(istype(mob_occupant))
 		for(var/datum/addiction in mob_occupant.mind?.active_addictions)
 			mob_occupant.mind.remove_addiction_points(addiction, 10)
 
-		if(occupant.reagents)
+		if(occupant.reagents && length(occupant.reagents.reagent_list))
+			var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
+			smoke_holder.attach(src)
+			smoke_holder.set_up(1, holder = src, location = src, silent = TRUE)
 			for(var/datum/reagent/reagent_to_purge in mob_occupant.reagents.reagent_list)
-				var/amount_to_purge = min(reagent_to_purge.volume - PURGE_LIMIT, 30)
-				var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
-				occupant.reagents.trans_to(smoke_holder, amount_to_purge)
-				smoke_holder.attach(src)
-				smoke_holder.set_up(4, holder = src, location = src, silent = TRUE)
-				smoke_holder.start()
+				var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, 30)
+				mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
+			smoke_holder.start()
 
 /obj/machinery/purger/container_resist_act(mob/living/user)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_notice("The door seems to be stuck!"))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+			span_notice("You begin trying to force the door open."), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src))
+		if(do_after(user, 30 SECONDS, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
-			free_exit = TRUE
-			user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-				span_notice("You successfully break out of [src]!"))
 			open_machine()
 		return
 	open_machine()
@@ -101,10 +99,10 @@
 	to_chat(user, span_notice("You quietly disable the safeties on the [src]!"))
 	obj_flags |= EMAGGED
 
-/obj/machinery/hypnochair/relaymove(mob/living/user, direction)
-	if()
-		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+/obj/machinery/purger/relaymove(mob/living/user, direction)
+	if(COOLDOWN_FINISHED(src, alert_cooldown) && obj_flags & EMAGGED)
+		to_chat(user, span_warning("The door seems to be stuck!"))
+		COOLDOWN_START(src, alert_cooldown, 10 SECONDS)
 
 /obj/machinery/purger/proc/stop()
 	purging = FALSE
