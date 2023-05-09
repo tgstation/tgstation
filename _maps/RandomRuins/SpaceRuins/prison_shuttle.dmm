@@ -38,11 +38,19 @@
 "j" = (
 /turf/open/floor/carpet/red/airless,
 /area/ruin/space/prison_shuttle)
+"k" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
 "m" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"o" = (
+/obj/machinery/light/small/broken/directional/south,
+/turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "p" = (
 /obj/structure/filingcabinet,
@@ -68,7 +76,6 @@
 /area/ruin/space/prison_shuttle)
 "u" = (
 /obj/structure/closet/secure_closet/security,
-/obj/machinery/light/broken/directional/north,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "w" = (
@@ -77,10 +84,6 @@
 /area/ruin/space/prison_shuttle)
 "x" = (
 /turf/open/floor/mineral/titanium/tiled/airless,
-/area/ruin/space/prison_shuttle)
-"y" = (
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/plating/airless,
 /area/ruin/space/prison_shuttle)
 "z" = (
 /obj/machinery/door/airlock/security,
@@ -112,11 +115,6 @@
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/spawner/random/contraband/prison,
 /obj/effect/spawner/random/contraband/prison,
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/ruin/space/prison_shuttle)
-"J" = (
-/obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
 "L" = (
@@ -163,9 +161,6 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
@@ -176,10 +171,8 @@
 /area/ruin/space/prison_shuttle)
 "U" = (
 /obj/effect/spawner/random/contraband/narcotics,
-/obj/machinery/light/broken{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "V" = (
@@ -256,7 +249,7 @@ p
 h
 w
 x
-B
+o
 h
 M
 S
@@ -313,7 +306,7 @@ E
 t
 x
 B
-x
+k
 h
 P
 U
@@ -330,9 +323,9 @@ Y
 c
 c
 h
-y
+B
 x
-J
+x
 h
 h
 h
