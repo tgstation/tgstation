@@ -12,7 +12,7 @@
 	processing_flags = START_PROCESSING_MANUALLY //We only process when we have an occupant.
 	///Our soundloop, for when the machine is running.
 	var/datum/looping_sound/tape_recorder_hiss/soundloop
-	///Is our machine currently running?
+	///Is our machine currently closed with an occupant
 	var/purging = FALSE
 	///The cooldown for sending escape alerts.
 	COOLDOWN_DECLARE(alert_cooldown)
@@ -45,13 +45,11 @@
 	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 3
 	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 3
 
-/obj/machinery/purger/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+/obj/machinery/purger/attackby(obj/item/attacking_item, mob/user, params)
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		update_appearance()
 		return
-	if(default_pry_open(I))
-		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -59,14 +57,16 @@
 	if(state_open)
 		close_machine()
 	else
-		open_machine()
+		if(!(obj_flags & EMAGGED) && powered())
+			open_machine()
+		else
+			to_chat(user, span_warning("The door seems to be stuck. Find something to pry it open with!"))
 
 /obj/machinery/purger/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
 	..()
-	playsound(src, 'sound/machines/click.ogg', 50)
 	if(occupant)
 		if(!iscarbon(occupant))
 			occupant.forceMove(drop_location())
@@ -120,7 +120,7 @@
 			smoke_holder.start()
 
 /obj/machinery/purger/container_resist_act(mob/living/user)
-	if(obj_flags & EMAGGED || !powered(ignore_use_power = TRUE))
+	if(obj_flags & EMAGGED || !powered())
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
@@ -132,6 +132,15 @@
 			open_machine()
 		return
 	open_machine()
+
+/obj/machinery/purger/crowbar_act(mob/living/user, obj/item/tool)
+	if((obj_flags & EMAGGED || !powered()) && purging)
+		to_chat(user, span_warning("You begin prying at the [src] door..."))
+		if(do_after(user, 5 SECONDS, target = src))
+			if(!user || user.stat != CONSCIOUS || state_open)
+				return
+			open_machine()
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/purger/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -160,15 +169,15 @@
 		icon_state += "_occupied"
 	return ..()
 
+/obj/machinery/purger/update_overlays()
+	. = ..()
+	if(powered())
+		. += "ready_blue"
+
 /obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
 	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	close_machine(target)
-
-/obj/machinery/purger/update_overlays()
-	. = ..()
-	if(powered())
-		. += "ready_blue"
 
 #undef PURGE_LIMIT
