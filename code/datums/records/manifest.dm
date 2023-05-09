@@ -41,7 +41,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				)
 			continue
 		for(var/department_type as anything in job.departments_list)
-			if(job.department_for_prefs && job.department_for_prefs != department_type && department_type != /datum/job_department/command)
+			if(job.department_for_prefs && job.department_for_prefs != department_type && !(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
 			var/datum/job_department/department = departments_by_type[department_type]
 			if(!department)
