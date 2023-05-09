@@ -109,7 +109,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	if(obstructed_by_other_web())
+	if(obstructed_by_other_solid_web())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
@@ -148,7 +148,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	if(obstructed_by_other_web())
+	if(obstructed_by_other_web_passage())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
@@ -187,7 +187,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	if(obstructed_by_other_web())
+	if(obstructed_by_other_sticky_web())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
@@ -225,7 +225,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "invalid location!")
 		return FALSE
-	if(obstructed_by_other_web())
+	if(obstructed_by_other_web_spikes())
 		if (feedback)
 			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
