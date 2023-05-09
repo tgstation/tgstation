@@ -464,6 +464,17 @@
 	key_third_person = "twitches"
 	message = "twitches violently."
 
+/datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(user, pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+
 /datum/emote/living/twitch_s
 	key = "twitch_s"
 	message = "twitches."
