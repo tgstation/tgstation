@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	var/choice = tgui_input_list(usr, "Please choose a loadout item to award", "Loadout Choice", subtypesof(/datum/store_item) - typesof(/datum/store_item/roundstart))
 	if(!choice)
 		return
+	reload_global_stored_codes()
 	var/string = generate_code_string()
 
 	var/json_file = file(CODE_STORAGE_PATH)
@@ -129,6 +130,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	if(!amount)
 		return
 
+	reload_global_stored_codes()
 	var/list/generated_codes = list()
 	for(var/num in 1 to amount)
 		if(choice == "Coins")

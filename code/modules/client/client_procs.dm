@@ -732,15 +732,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	query_log_connection.Execute()
 	qdel(query_log_connection)
 
-
-	if(CONFIG_GET(flag/minimum_account_age))
-		var/minimum_age = CONFIG_GET(number/minimum_age)
-		if(account_age < minimum_age)
-			to_chat_immediate(src, "Sorry the server is currently only allowing accounts above the age of [minimum_age] days old to connect.")
-			qdel(src)
-			return
-
-
 	SSserver_maint.UpdateHubStatus()
 
 	if(new_player)
