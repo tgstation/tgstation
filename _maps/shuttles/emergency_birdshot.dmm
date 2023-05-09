@@ -13,7 +13,6 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "aJ" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -56,7 +55,6 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "cK" = (
-/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -201,6 +199,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "kj" = (
@@ -606,7 +605,6 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "Cv" = (
-/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -619,7 +617,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "DH" = (
@@ -674,7 +671,6 @@
 	pixel_x = 15;
 	pixel_y = -9
 	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "Hn" = (
@@ -743,7 +739,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ju" = (
@@ -772,7 +767,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape/brig)
 "Lx" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -805,6 +799,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "MW" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"Oi" = (
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Oq" = (
@@ -883,6 +881,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "TP" = (
@@ -1246,7 +1245,7 @@ nQ
 (9,1,1) = {"
 rZ
 BH
-MW
+Oi
 GJ
 rZ
 nQ
