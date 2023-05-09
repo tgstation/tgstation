@@ -867,7 +867,7 @@
 	taste_description = "magnets"
 	harmful = TRUE
 	ph = 0.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	/// The amount of damage a single unit of this will heal
 	var/healing_per_reagent_unit = 5
 	/// The ratio of the excess reagent used to contribute to excess healing
@@ -1152,7 +1152,7 @@
 	reagent_state = LIQUID
 	color = "#A4D8D8"
 	ph = 8.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.losebreath >= 5)
