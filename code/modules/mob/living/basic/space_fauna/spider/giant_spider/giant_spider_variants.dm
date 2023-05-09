@@ -151,16 +151,16 @@
 
 /mob/living/basic/giant_spider/tangle/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
-	var/datum/action/cooldown/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 
@@ -258,16 +258,16 @@
 
 /mob/living/basic/giant_spider/midwife/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
-	var/datum/action/cooldown/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 	var/datum/action/cooldown/wrap/wrapping = new(src)

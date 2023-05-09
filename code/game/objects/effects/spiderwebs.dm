@@ -161,17 +161,6 @@
 		A.forceMove(T)
 	return ..()
 
-/obj/structure/spider/spikes
-	name = "web spikes"
-	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
-	icon_state = "webspikes1"
-	max_integrity = 40
-
-/obj/structure/spider/spikes/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
-
 /obj/structure/spider/sticky
 	name = "sticky web"
 	icon = 'icons/effects/effects.dmi'
@@ -189,3 +178,14 @@
 		if(prob(100))
 			balloon_alert(mover, "stuck in web!")
 			return FALSE
+
+/obj/structure/spider/spikes
+	name = "web spikes"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "webspikes1"
+	max_integrity = 40
+
+/obj/structure/spider/spikes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
