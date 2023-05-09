@@ -10,6 +10,10 @@
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
 
+#define ALARM_COMPLETE 2
+#define ALARM_UNWIRED 1
+#define ALARM_NO_CIRCUIT 0
+
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
@@ -31,12 +35,14 @@
 	luminosity = 1
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
-	///Buildstate for contruction steps. 2 = complete, 1 = no wires, 0 = circuit gone
-	var/buildstage = 2
+	///Buildstate for contruction steps.
+	var/buildstage = ALARM_COMPLETE
 	///Our home area, set in Init. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` for var or list checks.
 	var/area/my_area = null
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
+	///Are there ants in the alarm?
+	var/ants_remaining = 0
 
 /datum/armor/machinery_firealarm
 	fire = 90
@@ -45,7 +51,7 @@
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
 	if(building)
-		buildstage = 0
+		buildstage = ALARM_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
 		name = "[get_area_name(src)] [initial(name)]"
@@ -277,8 +283,25 @@
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
 
+/**
+ * Randomly toggles the fire alarm on and off until all of the ants wander off.
+ */
+/obj/machinery/firealarm/proc/ant_trigger()
+	if(!ants_remaining)
+		return
+
+	//Negative ants do not exist. Yet.
+	ants_remaining = max(ants_remaining - 1 , 0)
+
+	if(my_area.fire)
+		reset()
+	else
+		alarm()
+
+	addtimer(CALLBACK(src, PROC_REF(ant_trigger)), rand(2,6) SECONDS)
+
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
-	if(buildstage != 2)
+	if(buildstage != ALARM_COMPLETE)
 		return
 	. = ..()
 	add_fingerprint(user)
@@ -288,7 +311,7 @@
 	alarm(user)
 
 /obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
-	if(buildstage != 2)
+	if(buildstage != ALARM_COMPLETE)
 		return ..()
 	add_fingerprint(user)
 	reset(user)
@@ -309,7 +332,7 @@
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)
 	add_fingerprint(user)
 
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
+	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == ALARM_COMPLETE)
 		tool.play_tool_sound(src)
 		toggle_panel_open()
 		to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
@@ -332,12 +355,12 @@
 			return
 
 		switch(buildstage)
-			if(2)
+			if(ALARM_COMPLETE)
 				if(tool.tool_behaviour == TOOL_MULTITOOL)
 					toggle_fire_detect(user)
 					return
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
-					buildstage = 1
+					buildstage = ALARM_UNWIRED
 					tool.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, span_notice("You cut the wires from \the [src]."))
@@ -351,14 +374,14 @@
 						alarm()
 					return
 
-			if(1)
+			if(ALARM_UNWIRED)
 				if(istype(tool, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = tool
 					if(coil.get_amount() < 5)
 						to_chat(user, span_warning("You need more cable for this!"))
 					else
 						coil.use(5)
-						buildstage = 2
+						buildstage = ALARM_COMPLETE
 						to_chat(user, span_notice("You wire \the [src]."))
 						update_appearance()
 					return
@@ -367,21 +390,21 @@
 					user.visible_message(span_notice("[user.name] removes the electronics from [src.name]."), \
 										span_notice("You start prying out the circuit..."))
 					if(tool.use_tool(src, user, 20, volume=50))
-						if(buildstage == 1)
+						if(buildstage == ALARM_UNWIRED)
 							if(machine_stat & BROKEN)
 								to_chat(user, span_notice("You remove the destroyed circuit."))
 								set_machine_stat(machine_stat & ~BROKEN)
 							else
 								to_chat(user, span_notice("You pry out the circuit."))
 								new /obj/item/electronics/firealarm(user.loc)
-							buildstage = 0
+							buildstage = ALARM_NO_CIRCUIT
 							update_appearance()
 					return
-			if(0)
+			if(ALARM_NO_CIRCUIT)
 				if(istype(tool, /obj/item/electronics/firealarm))
 					to_chat(user, span_notice("You insert the circuit."))
 					qdel(tool)
-					buildstage = 1
+					buildstage = ALARM_UNWIRED
 					update_appearance()
 					return
 
@@ -391,7 +414,7 @@
 						return
 					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
-					buildstage = 1
+					buildstage = ALARM_UNWIRED
 					update_appearance()
 					return
 
@@ -406,7 +429,7 @@
 	return ..()
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == ALARM_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -415,7 +438,7 @@
 		if(RCD_WALLFRAME)
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
-			buildstage = 1
+			buildstage = ALARM_UNWIRED
 			update_appearance()
 			return TRUE
 	return FALSE
@@ -423,7 +446,7 @@
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != 0)
+		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != ALARM_NO_CIRCUIT)
 			if(prob(33))
 				alarm()
 
@@ -433,7 +456,7 @@
 	return ..()
 
 /obj/machinery/firealarm/atom_break(damage_flag)
-	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+	if(buildstage == ALARM_NO_CIRCUIT) //can't break the electronics if there isn't any inside.
 		return
 	return ..()
 
@@ -461,6 +484,8 @@
 			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
+	if(ants_remaining)
+		. += "It's covered in ants!"
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
@@ -570,3 +595,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 	if(COMPONENT_TRIGGERED_BY(reset_trigger, port))
 		attached_alarm?.reset()
+
+#undef ALARM_COMPLETE
+#undef ALARM_UNWIRED
+#undef ALARM_NO_CIRCUIT
