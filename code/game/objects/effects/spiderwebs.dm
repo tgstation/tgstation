@@ -112,9 +112,6 @@
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
 
-/obj/structure/spider/solid/Initialize(mapload)
-	. = ..()
-
 /obj/structure/spider/passage
 	name = "web passage"
 	icon = 'icons/effects/effects.dmi'
@@ -122,7 +119,7 @@
 	icon_state = "webpassage"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	max_integrity = 40
+	max_integrity = 45
 	alpha = 200
 	plane = GAME_PLANE_UPPER
 
