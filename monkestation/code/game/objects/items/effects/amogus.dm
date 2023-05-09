@@ -8,4 +8,5 @@
 		return FALSE
 	granter.apply_large_displacement_icon(/obj/effect/distortion/large/amogus)
 	granter.AddElement(/datum/element/waddling)
+	granter.can_be_held = TRUE
 	. = ..()
