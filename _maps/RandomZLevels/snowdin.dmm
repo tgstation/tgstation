@@ -376,7 +376,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -3796,6 +3795,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -4963,6 +4963,7 @@
 	pixel_x = -1;
 	pixel_y = 1
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "or" = (
@@ -5343,7 +5344,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
@@ -9517,11 +9517,6 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
-"Ii" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/awaymission/snowdin/post/mining_main/mechbay)
 "Ij" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/recharge_floor,
@@ -9548,10 +9543,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/awaymission/snowdin/post/mining_main/mechbay)
-"Ip" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Ir" = (
@@ -12208,13 +12199,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
-"Wm" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/snowdin/post)
 "Wp" = (
 /obj/structure/statue/snow/snowman{
 	anchored = 1;
@@ -12643,7 +12627,6 @@
 /area/awaymission/snowdin/cave/cavern)
 "YP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -21333,7 +21316,7 @@ hg
 hN
 it
 jn
-Wm
+nJ
 jR
 jR
 mc
@@ -28464,7 +28447,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Zy
 dX
 dX
@@ -28721,7 +28704,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 FP
 te
 dX
@@ -28731,10 +28714,10 @@ TI
 dX
 te
 Gf
-tq
-tq
-tq
-tq
+ku
+ku
+ku
+ku
 ae
 ae
 ae
@@ -28978,7 +28961,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Fn
 Gw
 Fx
@@ -28991,7 +28974,7 @@ Fy
 GS
 Ho
 Ho
-tq
+ku
 ae
 ae
 ae
@@ -29235,7 +29218,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Fo
 Fx
 te
@@ -29248,7 +29231,7 @@ Gt
 GT
 Hp
 Ho
-tq
+ku
 ae
 ae
 ae
@@ -29492,7 +29475,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Fp
 Fx
 te
@@ -29502,10 +29485,10 @@ Zy
 dX
 te
 WV
-tq
-tq
-tq
-tq
+ku
+ku
+ku
+ku
 ae
 ae
 ae
@@ -29749,7 +29732,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 WA
 Fx
 te
@@ -30006,7 +29989,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Fn
 Fu
 Fy
@@ -30016,10 +29999,10 @@ Zy
 dX
 te
 WV
-tq
-tq
-tq
-tq
+ku
+ku
+ku
+ku
 ae
 ae
 ae
@@ -30263,8 +30246,8 @@ ae
 ae
 ae
 ae
-tq
-tq
+ku
+ku
 Fp
 Fx
 te
@@ -30276,7 +30259,7 @@ Gw
 GS
 Ho
 Ho
-tq
+ku
 ae
 ae
 ae
@@ -30521,7 +30504,7 @@ ae
 ae
 ae
 ae
-tq
+ku
 Fp
 RS
 Fx
@@ -30533,7 +30516,7 @@ Fu
 GT
 Hp
 Ho
-tq
+ku
 ae
 ae
 ae
@@ -30778,19 +30761,19 @@ ae
 ae
 ae
 ae
-tq
-tq
-tq
+ku
+ku
+ku
 Zy
 dX
 Zy
 dX
 te
 Gf
-tq
-tq
-tq
-tq
+ku
+ku
+ku
+ku
 ae
 ae
 ae
@@ -60602,7 +60585,7 @@ GI
 Hc
 Hg
 YZ
-Ii
+Im
 GN
 wM
 wL
@@ -62658,7 +62641,7 @@ HR
 Hi
 Hh
 HS
-Ip
+Hh
 GN
 wD
 Jf
