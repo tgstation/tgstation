@@ -11,6 +11,10 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.shard_type = shard_type
+	src.number_of_shards = number_of_shards
+	src.shattering_sound = shattering_sound
+
 /datum/component/shatters_when_thrown/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 	RegisterSignal(parent, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
@@ -56,5 +60,5 @@
 		var/obj/item/shard = new(shard_type)
 		shard.pixel_x = rand(-4, 4)
 		shard.pixel_y = rand(-4, 4)
-	parent.playsound(scatter_turf, shattering_sound, 60, TRUE)
+	playsound(scatter_turf, shattering_sound, 60, TRUE)
 	qdel(parent)
