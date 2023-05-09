@@ -96,10 +96,10 @@
 	webbing_time = 5 SECONDS
 
 /datum/action/cooldown/lay_web/solid_web/obstructed_by_other_web()
-    return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/solid_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-    new /obj/structure/spider/solid(target_turf)
+	new /obj/structure/spider/solid(target_turf)
 
 /datum/action/cooldown/lay_web/web_passage
 	name = "Spin Web Passage"
@@ -113,10 +113,10 @@
 	webbing_time = 4 SECONDS
 
 /datum/action/cooldown/lay_web/web_passage/obstructed_by_other_web()
-    return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-    new /obj/structure/spider/passage(target_turf)
+	new /obj/structure/spider/passage(target_turf)
 
 
 /datum/action/cooldown/lay_web/sticky_web
@@ -131,10 +131,10 @@
 	webbing_time = 3 SECONDS
 
 /datum/action/cooldown/lay_web/sticky_web/obstructed_by_other_web()
-    return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/sticky_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-    new /obj/structure/spider/sticky(target_turf)
+	new /obj/structure/spider/sticky(target_turf)
 
 /datum/action/cooldown/lay_web/web_spikes
 	name = "Spin Web Spikes"
@@ -149,7 +149,7 @@
 	webbing_time = 3 SECONDS
 
 /datum/action/cooldown/lay_web/web_spikes/obstructed_by_other_web()
-    return !!(locate(/obj/structure/spider/spikes) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/spikes) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/web_spikes/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-    new /obj/structure/spider/spikes(target_turf)
+	new /obj/structure/spider/spikes(target_turf)
