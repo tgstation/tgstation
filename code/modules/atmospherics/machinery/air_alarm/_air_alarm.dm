@@ -1,3 +1,5 @@
+#define AIRALARM_WARNING_COOLDOWN (10 SECONDS)
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -57,6 +59,11 @@
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
+	///Warning message spoken by air alarms
+	var/warning_message = ""
+
+	///Cooldown on sending warning messages
+	COOLDOWN_DECLARE(warning_cooldown)
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -106,6 +113,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	GLOB.air_alarms += src
 	update_appearance()
+
+/obj/machinery/airalarm/process()
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+
+	speak(warning_message)
+	COOLDOWN_START(src, warning_cooldown, AIRALARM_WARNING_COOLDOWN)
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
@@ -494,6 +508,26 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
+		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low pressure and temperature detected."
+			return
+		if(pressure <= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High pressure and temperature detected."
+			return
+		if(pressure <= WARNING_LOW_PRESSURE)
+			warning_message = "Danger! Low pressure detected."
+			return
+		if(pressure >= WARNING_HIGH_PRESSURE)
+			warning_message = "Danger! High pressure detected."
+			return
+		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low temperature detected."
+			return
+		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High temperature detected."
+			return
+		warning_message = "Danger! Atmospheric issue detected."
+
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 
@@ -501,6 +535,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		update_appearance()
 
 	selected_mode.replace(my_area, pressure)
+
+/*
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+
+	speak(warning_message)
+	COOLDOWN_START(src, warning_cooldown, AIRALARM_WARNING_COOLDOWN)
+	*/
 
 /obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
@@ -513,6 +555,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
+
+/obj/machinery/airalarm/proc/speak(warning_message)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+	if(!warning_message)
+		return
+
+	say(warning_message)
 
 /// Used for unlocked air alarm helper, which unlocks the air alarm.
 /obj/machinery/airalarm/proc/unlock()
@@ -557,3 +607,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+#undef AIRALARM_WARNING_COOLDOWN
