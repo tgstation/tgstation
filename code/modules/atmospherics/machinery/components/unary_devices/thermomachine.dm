@@ -31,7 +31,7 @@
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
 	/// The pyroclastic anomaly core inside a Thermomachine
-	var/pyro_anomaly_core = null
+	var/obj/item/assembly/signaler/anomaly/pyro/pyro_anomaly_core
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
@@ -152,8 +152,6 @@
 		. += span_notice(" -There is a pyroclastic anomaly core slotted into the back of the machine, it pumps massive amounts of heat into the machine.")
 	else
 		. += span_notice(" -There seems to be a slot for something in the back, what could it be?")
-	if(istype(src, /obj/machinery/atmospherics/components/unary/thermomachine/anomalous))
-		. += span_notice(" -This machine has been configured to only produce heat and cannot cool gas down")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(in_range(user, src) || isobserver(user))
@@ -228,6 +226,7 @@
 			W.forceMove(src)
 			pyro_anomaly_core = W
 			RefreshParts()
+	. = ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
@@ -392,6 +391,10 @@
 	name = "Anomalous temperature control unit"
 	desc = "Heats gas in connected pipes."
 	pyro_anomaly_core = TRUE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/anomalous/examine(mob/user)
+	. = ..()
+	. += span_notice(" -This machine has been configured to only produce heat and cannot cool gas down")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
