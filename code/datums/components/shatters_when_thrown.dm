@@ -35,15 +35,18 @@
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	var/scatter_turf = get_turf(hit_atom)
 
+	var/is_a_plate
+	var/obj/item/plate/obj_parent_plate_edition
+
 	if(istype(parent, /obj/item/plate))
-		var/obj/item/plate/obj_parent = parent
-		var/is_a_plate = TRUE
-	else
-		var/obj/obj_parent = parent
+		obj_parent_plate_edition = parent
+		is_a_plate = TRUE
+
+	var/obj/obj_parent = parent
 
 	for(var/obj/item/scattered_item as anything in obj_parent.contents)
 		if(is_a_plate)
-			obj_parent.ItemRemovedFromPlate(scattered_item)
+			obj_parent_plate_edition.ItemRemovedFromPlate(scattered_item)
 		scattered_item.forceMove(scatter_turf)
 		var/list/scatter_vector = scatter_gen.Rand()
 		scattered_item.pixel_x = scatter_vector[1]
