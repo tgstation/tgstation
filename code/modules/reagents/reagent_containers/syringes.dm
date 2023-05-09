@@ -145,7 +145,7 @@
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
-	update_reagent_overlay()
+	. += update_reagent_overlay()
 
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
