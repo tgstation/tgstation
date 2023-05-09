@@ -1851,10 +1851,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"OE" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "OX" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Go through.";
@@ -9394,7 +9390,7 @@ bL
 ch
 cr
 cA
-OE
+cr
 cR
 cV
 cr
