@@ -97,6 +97,28 @@
 	/// How long it takes to lay a web
 	webbing_time = 5 SECONDS
 
+/datum/action/cooldown/lay_web/solid_web/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
+		return FALSE
+	if(!isturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "invalid location!")
+		return FALSE
+	if(obstructed_by_other_web())
+		if (feedback)
+			owner.balloon_alert(owner, "already webbed!")
+		return FALSE
+	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/solid_web/proc/obstructed_by_other_solid_web()
+	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
+
 /datum/action/cooldown/lay_web/solid_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/solid(target_turf)
 
@@ -112,6 +134,29 @@
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
 	webbing_time = 4 SECONDS
+
+
+/datum/action/cooldown/lay_web/web_passage/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
+		return FALSE
+	if(!isturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "invalid location!")
+		return FALSE
+	if(obstructed_by_other_web())
+		if (feedback)
+			owner.balloon_alert(owner, "already webbed!")
+		return FALSE
+	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/web_passage/proc/obstructed_by_other_web_passage()
+	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
 
 /datum/action/cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/passage(target_turf)
@@ -129,6 +174,29 @@
 	/// How long it takes to lay a web
 	webbing_time = 3 SECONDS
 
+
+/datum/action/cooldown/lay_web/sticky_web/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
+		return FALSE
+	if(!isturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "invalid location!")
+		return FALSE
+	if(obstructed_by_other_web())
+		if (feedback)
+			owner.balloon_alert(owner, "already webbed!")
+		return FALSE
+	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/sticky_web/proc/obstructed_by_other_sticky_web()
+	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
+
 /datum/action/cooldown/lay_web/sticky_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/sticky(target_turf)
 
@@ -145,5 +213,28 @@
 	/// How long it takes to lay a web
 	webbing_time = 3 SECONDS
 
+/datum/action/cooldown/lay_web/web_spikes/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
+		if (feedback)
+			owner.balloon_alert(owner, "busy!")
+		return FALSE
+	if(!isturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "invalid location!")
+		return FALSE
+	if(obstructed_by_other_web())
+		if (feedback)
+			owner.balloon_alert(owner, "already webbed!")
+		return FALSE
+	return TRUE
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/web_spikes/proc/obstructed_by_other_web_spikes()
+	return !!(locate(/obj/structure/spider/spikes) in get_turf(owner))
+
+	return !!(locate(/obj/structure/spider/stickyweb) in get_turf(owner))
 /datum/action/cooldown/lay_web/web_spikes/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/spikes(target_turf)
