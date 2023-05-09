@@ -56,6 +56,9 @@
 			return
 		to_chat(occupant, span_notice("You enter [src]."))
 		update_appearance()
+		purging = TRUE
+		soundloop.start()
+		START_PROCESSING(SSobj, src)
 
 /obj/machinery/purger/open_machine(mob/user, density_to_set = FALSE)
 	playsound(src, 'sound/machines/click.ogg', 50)
@@ -84,7 +87,7 @@
 			smoke_holder.start()
 
 /obj/machinery/purger/container_resist_act(mob/living/user)
-	if(obj_flags & EMAGGED) // !powered(ignore_use_power = TRUE) add this too maybe
+	if(obj_flags & EMAGGED || !powered(ignore_use_power = TRUE))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
@@ -122,6 +125,8 @@
 
 	if(occupant)
 		icon_state += "_occupied"
+		if(occupant.reagents && !length(occupant.reagents.reagent_list))
+			icon_state += "_stopped"
 	return ..()
 
 /obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
@@ -129,5 +134,10 @@
 		return
 
 	close_machine(target)
+
+/obj/machinery/implantchair/update_overlays()
+	. = ..()
+	if(powered())
+		. += "ready"
 
 #undef PURGE_LIMIT
