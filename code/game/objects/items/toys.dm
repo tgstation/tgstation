@@ -1145,6 +1145,11 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/coroner
+	name = "\improper Coroner action figure"
+	icon_state = "coroner"
+	toysay = "Get the damn Revenant outta here!"
+
 /obj/item/toy/figure/paramedic
 	name = "\improper Paramedic action figure"
 	icon_state = "paramedic"

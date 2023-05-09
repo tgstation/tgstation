@@ -105,6 +105,8 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
+	return FALSE
+
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		return 1

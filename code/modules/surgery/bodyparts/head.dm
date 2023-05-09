@@ -67,6 +67,17 @@
 	var/lip_style
 	var/lip_color = "white"
 
+	/// Offset to apply to equipment worn on the ears
+	var/datum/worn_feature_offset/worn_ears_offset
+	/// Offset to apply to equipment worn on the eyes
+	var/datum/worn_feature_offset/worn_glasses_offset
+	/// Offset to apply to equipment worn on the mouth
+	var/datum/worn_feature_offset/worn_mask_offset
+	/// Offset to apply to equipment worn on the head
+	var/datum/worn_feature_offset/worn_head_offset
+	/// Offset to apply to overlays placed on the face
+	var/datum/worn_feature_offset/worn_face_offset
+
 	var/stored_lipstick_trait
 	///The image for hair
 	var/mutable_appearance/hair_overlay
@@ -77,13 +88,18 @@
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
 
-
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
 	QDEL_NULL(brain)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
 	QDEL_NULL(tongue)
+
+	QDEL_NULL(worn_ears_offset)
+	QDEL_NULL(worn_glasses_offset)
+	QDEL_NULL(worn_mask_offset)
+	QDEL_NULL(worn_head_offset)
+	QDEL_NULL(worn_face_offset)
 	return ..()
 
 /obj/item/bodypart/head/handle_atom_del(atom/head_atom)
@@ -200,22 +216,14 @@
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
 
-			if(!eyes)
-				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+			if(!eyes && !(NOEYEHOLES in species_flags_list) && !(NOEYESPRITES in species_flags_list))
+				var/image/no_eyes = image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+				worn_glasses_offset?.apply_offset(no_eyes)
+				. += no_eyes
 
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
-				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
-				if(bodytype & BODYTYPE_ALIEN)
-					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
-					debrain_overlay.icon_state = "debrained_alien"
-				else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
-					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
-					debrain_overlay.icon_state = "debrained_larva"
-				else if(!(TRAIT_NOBLOOD in species_flags_list))
-					debrain_overlay.icon = 'icons/mob/species/human/human_face.dmi'
-					debrain_overlay.icon_state = "debrained"
-				. += debrain_overlay
+				. += get_debrain_overlay(can_rotate = FALSE)
 			else
 				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[hair_style]
 				if(sprite2 && (HAIR in species_flags_list))
@@ -232,7 +240,7 @@
 			. += lips_overlay
 
 		// eyes
-		if(eyes) // This is a bit of copy/paste code from eyes.dm:generate_body_overlay
+		if(eyes && eyes.eye_icon_state && !(NOEYESPRITES in species_flags_list)) // This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 			var/image/eye_left = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
 			var/image/eye_right = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
 			if(eyes.eye_color_left)
@@ -249,13 +257,36 @@
 				. += facial_gradient_overlay
 
 		if(show_debrained)
-			. += mutable_appearance('icons/mob/species/human/human_face.dmi', "debrained", HAIR_LAYER)
+			. += get_debrain_overlay(can_rotate = TRUE)
 
 		else if(!hair_hidden && hair_overlay && (HAIR in species_flags_list))
 			hair_overlay.alpha = hair_alpha
 			. += hair_overlay
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
+
+/// Returns an appropriate debrained icon state
+/obj/item/bodypart/head/proc/get_debrain_overlay(can_rotate = TRUE)
+	var/debrain_icon = 'icons/mob/species/human/human_face.dmi'
+	var/debrain_icon_state = "debrained"
+	if(bodytype & BODYTYPE_ALIEN)
+		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon_state = "debrained_alien"
+	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
+		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon_state = "debrained_larva"
+	else if(bodytype & BODYTYPE_GOLEM)
+		debrain_icon = 'icons/mob/species/golems.dmi'
+		debrain_icon_state = "debrained"
+	else if((TRAIT_NOBLOOD in species_flags_list))
+		return null
+
+	var/image/debrain_overlay
+	if (can_rotate)
+		debrain_overlay = mutable_appearance(debrain_icon, debrain_icon_state, HAIR_LAYER)
+	else
+		debrain_overlay = image(debrain_icon, debrain_icon_state, -HAIR_LAYER, SOUTH)
+	return debrain_overlay
 
 /mob/living/proc/set_haircolor(hex_string, override)
 	return

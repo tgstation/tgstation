@@ -1,3 +1,18 @@
+///The cooldown between messages when attempting to break out of a morgue tray.
+#define BREAKOUT_COOLDOWN (5 SECONDS)
+///The amount of time it takes to break out of a morgue tray.
+#define BREAKDOWN_TIME (60 SECONDS)
+
+/obj/item/paper/guides/jobs/medical/morgue
+	name = "morgue memo"
+	default_raw_text = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys \
+		meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure \
+		to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR>\
+		<font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a \
+		corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue \
+		system detects the body may be able to be brought back to life.</font></font><BR><font size='2'>I don't know how that works, \
+		but keep it away from the kitchen and go yell at the coroner.</font><BR><BR>- CentCom medical inspector"
+
 /* Morgue stuff
  * Contains:
  * Morgue
@@ -22,16 +37,28 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	anchored = TRUE
 	max_integrity = 400
 	pass_flags_self = LETPASSTHROW | PASSSTRUCTURE
-	var/obj/structure/tray/connected = null
-	var/locked = FALSE
 	dir = SOUTH
-	var/message_cooldown
-	var/breakout_time = 600
+
+	///The morgue tray this container will open/close to put/take things in/out.
+	var/obj/structure/tray/connected
+	///Boolean on whether we're locked and will not allow the tray to be opened.
+	var/locked = FALSE
+	///Cooldown between breakout msesages.
+	COOLDOWN_DECLARE(breakout_message_cooldown)
 
 /obj/structure/bodycontainer/Initialize(mapload)
 	. = ..()
+	if(connected)
+		connected = new connected(src)
+		connected.connected = src
 	GLOB.bodycontainers += src
 	toggle_organ_decay(src)
+	register_context()
+
+/obj/structure/bodycontainer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!locked)
+		context[SCREENTIP_CONTEXT_LMB] = "Open/Close"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
@@ -42,24 +69,17 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/on_log(login)
 	..()
-	update_appearance()
-
-/obj/structure/bodycontainer/Exited(atom/movable/gone, direction)
-	. = ..()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
 		return
 	if(locked)
-		if(message_cooldown <= world.time)
-			message_cooldown = world.time + 50
+		if(COOLDOWN_FINISHED(src, breakout_message_cooldown))
+			COOLDOWN_START(src, breakout_message_cooldown, BREAKOUT_COOLDOWN)
 			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	open()
-
-/obj/structure/bodycontainer/attack_paw(mob/user, list/modifiers)
-	return attack_hand(user, modifiers)
 
 /obj/structure/bodycontainer/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -77,31 +97,17 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		close()
 	add_fingerprint(user)
 
+/obj/structure/bodycontainer/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /obj/structure/bodycontainer/attack_robot(mob/user)
 	if(!user.Adjacent(src))
 		return
 	return attack_hand(user)
 
-/obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
-	add_fingerprint(user)
-	if(istype(P, /obj/item/pen))
-		if(!user.can_write(P))
-			return
-		var/t = tgui_input_text(user, "What would you like the label to be?", text("[]", name), null)
-		if (user.get_active_held_item() != P)
-			return
-		if(!user.can_perform_action(src))
-			return
-		if (t)
-			name = text("[]- '[]'", initial(name), t)
-		else
-			name = initial(name)
-	else
-		return ..()
-
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron (loc, 5)
+		new /obj/item/stack/sheet/iron(loc, 5)
 	toggle_organ_decay(src)
 	qdel(src)
 
@@ -112,18 +118,25 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
-		span_notice("You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_notice("You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(BREAKDOWN_TIME)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
-	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
-			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
-		open()
+	if(!do_after(user, BREAKDOWN_TIME, target = src))
+		return
+	if(!user || user.stat != CONSCIOUS || user.loc != src)
+		return
+	user.visible_message(
+		span_warning("[user] successfully broke out of [src]!"),
+		span_notice("You successfully break out of [src]!"),
+	)
+	open()
+
+/obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/structure/bodycontainer/proc/open()
 	toggle_organ_decay(src)
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
 	if (connected)
@@ -137,9 +150,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
-			if(ismob(AM))
-				if(!isliving(AM))
-					continue
+			if(isliving(AM))
 				var/mob/living/living_mob = AM
 				if(living_mob.incorporeal_move)
 					continue
@@ -149,17 +160,18 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	toggle_organ_decay(src)
 	update_appearance()
 
-/obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
-	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
+	desc = "Used to keep bodies in until someone fetches them. Includes a high-tech alert system."
 	icon_state = "morgue1"
+	base_icon_state = "morgue"
 	dir = EAST
+
+	connected = /obj/structure/tray/m_tray
+
 	/// Whether or not this morgue beeps to alert parameds of revivable corpses.
 	var/beeper = TRUE
 	/// The minimum time between beeps.
@@ -167,10 +179,31 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// The cooldown to prevent this from spamming beeps.
 	COOLDOWN_DECLARE(next_beep)
 
-/obj/structure/bodycontainer/morgue/Initialize(mapload)
+/obj/structure/bodycontainer/morgue/beeper_off
+	name = "secure morgue"
+	desc = "Used to keep bodies in until someone fetches them. Starts with their beeper off."
+	beeper = FALSE
+
+/obj/structure/bodycontainer/morgue/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	connected = new/obj/structure/tray/m_tray(src)
-	connected.connected = src
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[beeper ? "disable beeper" : "enable beeper"]"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/structure/closet/body_bag))
+		return
+	var/obj/structure/closet/body_bag/arrived_bag = arrived
+	if(!arrived_bag.tag_name)
+		return
+	name = "[initial(name)] - ([arrived_bag.tag_name])"
+	update_appearance(UPDATE_ICON)
+
+/obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/structure/closet/body_bag))
+		name = initial(name)
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
@@ -178,7 +211,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(!user.can_perform_action(src, (ALLOW_SILICON_REACH|ALLOW_RESTING)))
 		return
 	beeper = !beeper
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
@@ -209,10 +242,12 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	icon_state = "morgue2" // Dead, brainded mob.
 	return ..()
 
+/obj/structure/bodycontainer/morgue/update_overlays()
+	. = ..()
+	underlays.Cut()
 
-/obj/item/paper/guides/jobs/medical/morgue
-	name = "morgue memo"
-	default_raw_text = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be brought back to life.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- CentCom medical inspector"
+	if(name != initial(name))
+		. += "[base_icon_state]_label"
 
 /*
  * Crematorium
@@ -224,21 +259,22 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "crema1"
 	base_icon_state = "crema"
 	dir = SOUTH
+
+	connected = /obj/structure/tray/c_tray
+
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
 	GLOB.crematoriums += src
-	connected = new /obj/structure/tray/c_tray(src)
-	connected.connected = src
-
-/obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
-	to_chat(user, span_warning("[src] is locked against you."))
-	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	GLOB.crematoriums -= src
 	return ..()
+
+/obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
+	to_chat(user, span_warning("[src] is locked against you."))
+	return
 
 /obj/structure/bodycontainer/crematorium/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.shuttle_id]_[id]"
@@ -322,10 +358,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = TRUE
-	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	max_integrity = 350
+
+	///The bodycontainer we are a tray to.
+	var/obj/structure/bodycontainer/connected
 
 /obj/structure/tray/Destroy()
 	if(connected)
@@ -348,11 +386,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	. = ..()
 	if(.)
 		return
-	if (src.connected)
+	if (connected)
 		connected.close()
-		add_fingerprint(user)
 	else
 		to_chat(user, span_warning("That's not connected to anything!"))
+	add_fingerprint(user)
 
 /obj/structure/tray/attackby(obj/P, mob/user, params)
 	if(!istype(P, /obj/item/riding_offhand))
@@ -409,3 +447,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		return
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
+
+#undef BREAKOUT_COOLDOWN
+#undef BREAKDOWN_TIME

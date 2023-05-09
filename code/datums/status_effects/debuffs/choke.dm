@@ -216,7 +216,7 @@
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		if(chest)
-			chest.force_wound_upwards(/datum/wound/blunt/severe)
+			chest.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "human force to the chest")
 	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
@@ -282,7 +282,7 @@
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * seconds_per_tick)
+			head.receive_damage(0, 2 * seconds_per_tick, damage_source = "choking")
 		owner.adjustStaminaLoss(2 * seconds_per_tick)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)

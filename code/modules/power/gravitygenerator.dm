@@ -36,6 +36,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE) // Very sturdy.
 		set_broken()
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))

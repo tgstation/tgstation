@@ -254,6 +254,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
+	return TRUE
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()

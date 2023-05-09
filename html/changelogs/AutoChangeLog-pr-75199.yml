@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "Indusrial Gold and Regenerative Gold extracts now spawn random coins and not just list of 6 coins. But no mythril as it has miserable chance to have summoning effect which have even more miserable chance to spawn something dangerous and not just mice."
+  - rscadd: "Chococoin now has a chance to spawn wherever the coins are used to spawn (wallets, greed ruins, deltastation bar)"
