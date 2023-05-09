@@ -41,7 +41,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				)
 			continue
 		for(var/department_type as anything in job.departments_list)
-			//Only show the job for its main department or the command department
+			//Jobs under multiple departments should only be displayed if this is their first department or the command department
 			if(job_datum.departments_list[1] != department.type && !(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
 			var/datum/job_department/department = departments_by_type[department_type]
