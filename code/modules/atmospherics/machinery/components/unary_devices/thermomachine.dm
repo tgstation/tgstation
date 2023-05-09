@@ -103,7 +103,7 @@
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 	if(pyro_anomaly_core)
-		max_temperature += 1500
+		max_temperature += T1500K
 
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
@@ -221,16 +221,15 @@
 	use_power(power_usage)
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/assembly/signaler/anomaly/pyro, mob/living/user, params)
-	if(pyro_anomaly_core || !allows_cooling)
-		balloon_alert(user, "already an anomaly core!")
-		return
-	else
-		balloon_alert(user, "inserted anomaly core")
-		pyro.forceMove(src)
-		pyro_anomaly_core = pyro
-		RefreshParts()
-		return
+/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/assembly/signaler/anomaly/pyro))
+		if(pyro_anomaly_core || !allows_cooling)
+			balloon_alert(user, "already an anomaly core!")
+		else
+			balloon_alert(user, "inserted [W.name]")
+			W.forceMove(src)
+			pyro_anomaly_core = W
+			RefreshParts()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
@@ -392,16 +391,16 @@
 	icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous
-	allows_cooling = FALSE
-	pyro_anomaly_core = TRUE
 	name = "Anomalous temperature control unit"
 	desc = "Heats gas in connected pipes."
+	allows_cooling = FALSE
+	pyro_anomaly_core = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/thermomachine_refresh_parts()
 	var/calculated_bin_rating = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.tier
-	min_temperature = 293
+	min_temperature = T0C
 	max_temperature = calculated_bin_rating * 2500
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
 
