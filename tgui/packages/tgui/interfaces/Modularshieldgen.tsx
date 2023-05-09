@@ -9,7 +9,7 @@ type Modularshieldgendata = {
   current_regeneration: number;
   max_radius: number;
   current_radius: number;
-  status: Boolean;
+  active: Boolean;
   recovering: Boolean;
   exterior_only: Boolean;
 };
@@ -24,8 +24,9 @@ export const Modularshieldgen = (props, context) => {
     max_radius,
     current_radius,
     current_strength,
-    status,
+    active,
     exterior_only,
+    recovering,
   } = data;
 
   return (
@@ -33,7 +34,9 @@ export const Modularshieldgen = (props, context) => {
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
-            <Section title={'Shield Strength'}>
+            <Section
+              title={'Shield Strength'}
+              color={recovering ? 'red' : 'white'}>
               <ProgressBar
                 title="Shield Strength"
                 value={current_strength}
@@ -74,7 +77,6 @@ export const Modularshieldgen = (props, context) => {
               <Section>
                 <ProgressBar
                   height={'20px'}
-                  disabled={status}
                   title="Shield radius"
                   value={current_radius}
                   minValue={0}
@@ -92,6 +94,7 @@ export const Modularshieldgen = (props, context) => {
                 <Section vertical>
                   <NumberInput
                     title={'Set Radius'}
+                    disabled={active}
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
@@ -107,26 +110,20 @@ export const Modularshieldgen = (props, context) => {
                     }
                   />
                   <Button
-                    selected={status}
-                    content={status ? 'On' : 'Off'}
+                    disabled={recovering}
+                    selected={active}
+                    content={active ? 'On' : 'Off'}
                     icon="power-off"
                     onClick={() => act('toggle_shields')}
                   />
                   <Button
+                    disabled={active}
                     onClick={() => act('toggle_exterior')}
                     content={
-                      !exterior_only ? 'External only' : 'Internal & External'
+                      exterior_only ? 'External only' : 'Internal & External'
                     }
                   />
                 </Section>
-                <Button
-                  onClick={() => act('toggle_shields')}
-                  content="Toggle Shields"
-                />
-                <Button
-                  onClick={() => act('toggle_exterior')}
-                  content={exterior_only}
-                />
               </Section>
             </Section>
           </Stack.Item>

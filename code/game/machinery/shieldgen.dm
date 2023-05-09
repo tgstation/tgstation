@@ -721,9 +721,9 @@
 	data["max_regeneration"] = max_regeneration
 	data["current_regeneration"] = current_regeneration
 	data["current_strength"] = stored_strength
-	data["status"] = active
+	data["active"] = active
 	data["recovering"] = recovering
-	data["exterioronly"] = exterior_only
+	data["exterior_only"] = exterior_only
 	return data
 
 /obj/machinery/modular_shield_gen/ui_act(action, params)
@@ -747,18 +747,19 @@
 	if(!(active))
 		if(recovering)
 			current_regeneration = max_regeneration * 0.2
+			return
 		current_regeneration = max_regeneration
 		return
-	current_regeneration = max_regeneration / (1 + radius/max_radius)//this is how we encourage space efficiency and using higher tier parts
+	current_regeneration = (max_regeneration / (1 + radius/max_radius)) * (0.5 * !(exterior_only))
 
 
 /obj/machinery/modular_shield_gen/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	START_PROCESSING(SSobj, src)
 	if (stored_strength < 5)
+		recovering = TRUE
 		deactivate_shields()
 		stored_strength = 0
-		recovering = TRUE
 		update_appearance()
 		return
 
@@ -775,6 +776,9 @@
 		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
 
+
+
+//Start of other machines
 /obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
