@@ -64,6 +64,7 @@
 	name = "Survivalist Bunker"
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
+	ignore = TRUE
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
@@ -472,6 +473,7 @@
 	suffix = "prison_shuttle.dmm"
 	name = "Crashed Prisoner Shuttle"
 	description = "A prisoner transport shuttle that had crashed into a stray asteroid long ago."
+	ignore = TRUE
 
 /datum/map_template/ruin/space/botanical_haven
 	id = "botanical_haven"
@@ -506,6 +508,7 @@
 	suffix = "allamericandiner.dmm"
 	name = "The All-American Diner"
 	description = "A mothballed \"Restaurant\" station of the popular \"The All-American Diner\" franchise."
+	ignore = TRUE
 
 /datum/map_template/ruin/space/mimesvclowns
 	id = "mimesvclowns"
