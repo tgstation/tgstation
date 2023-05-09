@@ -108,5 +108,4 @@
 		return ..()
 	if(owner_ref?.resolve())
 		forced_name =  "Golem ([rand(1,999)])"
-		return ..()
 	return ..()
