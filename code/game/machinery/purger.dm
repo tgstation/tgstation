@@ -175,8 +175,12 @@
 		. += "ready_blue"
 
 /obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user) || !powered())
 		return
+
+	if(do_after(user, 3 SECONDS, target = src))
+		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target))
+			return
 
 	close_machine(target)
 
