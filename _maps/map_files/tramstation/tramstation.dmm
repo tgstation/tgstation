@@ -18351,7 +18351,6 @@
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "ffk" = (
@@ -55984,6 +55983,7 @@
 /area/station/maintenance/tram/right)
 "sVy" = (
 /obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "sVz" = (
@@ -185469,7 +185469,7 @@ bZA
 dVM
 mYB
 njC
-njC
+aoh
 sVy
 vTD
 lxi
