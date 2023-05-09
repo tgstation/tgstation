@@ -4,11 +4,12 @@
 /obj/machinery/purger
 	name = "Purge-O-Matic 3000"
 	desc = "Purges both the mind and body of chemical afflictions, through the harnessed power of an anomaly."
-	icon = 'icons/obj/machines/fat_sucker.dmi'
-	icon_state = "fat"
+	icon = 'icons/obj/machines/implantchair.dmi'
+	icon_state = "implantchair"
+	base_icon_state = "implantchair"
 	circuit = /obj/item/circuitboard/machine/purger
-	state_open = FALSE
 	density = TRUE
+	opacity = FALSE
 	///Our soundloop, for when the machine is running.
 	var/datum/looping_sound/microwave/soundloop
 	///Is our machine currently running?
@@ -59,7 +60,10 @@
 /obj/machinery/purger/open_machine(mob/user, density_to_set = FALSE)
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(purging)
-		stop()
+		purging = FALSE
+		soundloop.stop()
+		STOP_PROCESSING(SSobj, src)
+
 	..()
 
 ///Reduces addiction points, purges chems until there are only 10 reagents left.
@@ -80,7 +84,7 @@
 			smoke_holder.start()
 
 /obj/machinery/purger/container_resist_act(mob/living/user)
-	if(obj_flags & EMAGGED)
+	if(obj_flags & EMAGGED) // !powered(ignore_use_power = TRUE) add this too maybe
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
@@ -104,8 +108,26 @@
 		to_chat(user, span_warning("The door seems to be stuck!"))
 		COOLDOWN_START(src, alert_cooldown, 10 SECONDS)
 
-/obj/machinery/purger/proc/stop()
-	purging = FALSE
-	soundloop.stop()
+/obj/machinery/purger/update_icon_state()
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state += "_unpowered"
+		if((machine_stat & MAINT) || panel_open)
+			icon_state += "_maintenance"
+		return ..()
+
+	if((machine_stat & MAINT) || panel_open)
+		icon_state += "_maintenance"
+		return ..()
+
+	if(occupant)
+		icon_state += "_occupied"
+	return ..()
+
+/obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+		return
+
+	close_machine(target)
 
 #undef PURGE_LIMIT
