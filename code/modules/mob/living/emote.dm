@@ -439,6 +439,16 @@
 	key_third_person = "sways"
 	message = "sways around dizzily."
 
+/datum/emote/living/sway/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	animate(user, pixel_x = user.pixel_x + 1, time = 0.4 SECONDS)
+	for(var/i = 0, i < 2, i++)
+		animate(pixel_x = user.pixel_x - 3, time = 1.0 SECONDS)
+		animate(pixel_x = user.pixel_x + 3, time = 1.0 SECONDS)
+	animate(pixel_x = user.pixel_x - 1, time = 0.4 SECONDS)
+
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
