@@ -33,10 +33,10 @@
 /datum/component/grillable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_PARENT_EXAMINE,
+		COMSIG_ITEM_GRILL_TURNED_ON,
+		COMSIG_ITEM_GRILL_TURNED_OFF,
 		COMSIG_ITEM_GRILL_PROCESS,
 		COMSIG_ITEM_GRILL_PLACED,
-		COMSIG_ITEM_GRILL_PLACED_ON,
-		COMSIG_ITEM_GRILL_PLACED_OFF,
 	))
 
 // Inherit the new values passed to the component
