@@ -1149,8 +1149,8 @@
 	icon = FA_ICON_CLOUD_SHOWERS_HEAVY
 	value = -8
 	mob_trait = TRAIT_CURSED
-	gain_text = span_danger("You feel like you're going to have a bad day.")
-	lose_text = span_notice("You feel like you're going to have a good day.")
+	gain_text = span_danger("You feel like you're going to have a bad time.")
+	lose_text = span_notice("You feel like you're going to have a good time!")
 	medical_record_text = "Patient is cursed with bad luck."
 	hardcore_value = 8
 
