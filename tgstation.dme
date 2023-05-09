@@ -5296,6 +5296,7 @@
 #include "monkestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "monkestation\code\game\objects\items\devices\scanners.dm"
 #include "monkestation\code\game\objects\items\effects\_effects.dm"
+#include "monkestation\code\game\objects\items\effects\amogus.dm"
 #include "monkestation\code\game\objects\items\effects\honk_platinum.dm"
 #include "monkestation\code\game\objects\items\effects\nugget.dm"
 #include "monkestation\code\game\objects\items\effects\washing_machine.dm"
