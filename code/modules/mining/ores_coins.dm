@@ -609,7 +609,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	if(istype(target_atom, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You put insert the [src] into the airlock."))
+		to_chat(user, span_warning("You insert [src] into the airlock."))
 		target_airlock.emag_act(user, src)
 		qdel(src)
 
