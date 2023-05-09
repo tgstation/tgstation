@@ -36,7 +36,7 @@
 	var/scatter_turf = get_turf(hit_atom)
 
 	var/is_a_plate
-	var/obj/item/plate/obj_parent_plate_edition
+	var/obj/item/plate/obj_parent_plate_edition // We gotta be special with plates because I'm fairly sure the universe falls apart if we don't do this
 
 	if(istype(parent, /obj/item/plate))
 		obj_parent_plate_edition = parent
