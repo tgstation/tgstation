@@ -51,6 +51,8 @@ https://freesound.org/s/431740/ (CC 0)
 chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
 https://freesound.org/people/kyles/sounds/453256/
 
+clock.mp3 is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
+https://freesound.org/people/Tetrisrocker/sounds/458627/
+
 ark_activation.ogg is taken from ScottFerguson1's "Cucko Clock edited version", which is licensed under CC Attribution 3.0
 https://freesound.org/people/ScottFerguson1/sounds/132846/
-

@@ -46,6 +46,11 @@
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
 
+/datum/looping_sound/clock
+	mid_sounds = list('sound/ambience/ticking_clock.ogg' = 1)
+	mid_length = 40
+	volume = 50
+	ignore_walls = FALSE
 
 /datum/looping_sound/grill
 	mid_sounds = list('sound/machines/grill/grillsizzle.ogg' = 1)

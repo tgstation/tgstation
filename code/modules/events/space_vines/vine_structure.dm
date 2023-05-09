@@ -183,6 +183,8 @@
 	if(!index && prob(34 * severity))
 		qdel(src)
 
+	return TRUE
+
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (always_atmos_process || exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
 
