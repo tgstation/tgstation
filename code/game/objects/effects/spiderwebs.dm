@@ -124,7 +124,7 @@
 	icon_state = "webpassage"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	max_integrity = 45
+	max_integrity = 40
 	alpha = 200
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
