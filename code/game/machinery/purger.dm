@@ -19,7 +19,7 @@
 	///The number of addiction points to remove per process.
 	var/addiction_purge_amount = 3
 	///The lowest volume we can purge reagents down to.
-	var/chemical_purge_amount = 5
+	var/chemical_purge_amount = 3
 
 /obj/machinery/purger/Initialize(mapload)
 	. = ..()
@@ -43,7 +43,7 @@
 		purge_rating += micro_laser.tier
 
 	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 3
-	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 5
+	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 3
 
 /obj/machinery/purger/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -154,6 +154,6 @@
 /obj/machinery/purger/update_overlays()
 	. = ..()
 	if(powered())
-		. += "ready"
+		. += "ready_blue"
 
 #undef PURGE_LIMIT
