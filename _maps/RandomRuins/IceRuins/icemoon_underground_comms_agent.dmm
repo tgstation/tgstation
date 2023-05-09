@@ -7,16 +7,8 @@
 "bt" = (
 /obj/item/taperecorder/empty,
 /obj/structure/closet/crate/maint,
+/obj/item/pickaxe,
 /turf/open/floor/wood/parquet,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
-"by" = (
-/obj/effect/turf_decal/siding/wideplating/light{
-	dir = 8
-	},
-/obj/structure/table,
-/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -33,9 +25,15 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"du" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet,
+"do" = (
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"ds" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -47,33 +45,30 @@
 	name = "\improper Listening Post"
 	})
 "eE" = (
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "eT" = (
-/turf/open/floor/iron/white,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
-"fD" = (
-/turf/open/floor/carpet,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
-"fO" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/turf/open/floor/iron/white/diagonal,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
-"hj" = (
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"fk" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/syndicate{
+	pixel_y = 3
+	},
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"ge" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -108,22 +103,24 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"jo" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/door/airlock/centcom{
-	name = "Storage Room";
-	desc = "It opens and closes"
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
 "kD" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"kL" = (
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"lb" = (
+/turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -135,20 +132,8 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"mT" = (
-/obj/structure/fluff/empty_sleeper/syndicate{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
 "nc" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/door/airlock/centcom{
-	name = "Bedroom";
-	desc = "It opens and closes"
-	},
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -161,6 +146,22 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"od" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"pl" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/centcom{
+	name = "Syndicate Secure Airlock System";
+	desc = "Truly, a marvel of modern engineering."
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "qE" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/effect/spawner/random/food_or_drink/seed,
@@ -168,7 +169,14 @@
 /obj/item/seeds/tower,
 /obj/item/seeds/potato,
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/seeds/coffee/robusta,
 /turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"rA" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -180,6 +188,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood/parquet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"sJ" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -209,30 +225,32 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"uq" = (
-/obj/structure/sign/warning/explosives/alt/directional/north,
-/obj/machinery/syndicatebomb/self_destruct{
-	anchored = 1
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 2;
-	req_access = list("syndicate");
-	name = "Self Destruct Option"
-	},
-/obj/machinery/light/small/red/directional/north,
-/turf/open/floor/circuit/red,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"wh" = (
-/obj/structure/curtain,
+"vV" = (
+/obj/structure/toilet{
+	dir = 4
+	},
 /turf/open/floor/iron/white/diagonal,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"wh" = (
+/obj/structure/curtain{
+	open = 0
+	},
+/obj/item/soap/syndie,
+/turf/open/floor/iron/white/diagonal,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"wj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -282,6 +300,14 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"yG" = (
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "yR" = (
 /obj/structure/table,
 /turf/open/floor/carpet,
@@ -301,16 +327,66 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Ac" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Ae" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
 "BD" = (
 /obj/structure/closet/cabinet,
 /obj/item/bedsheet/syndie,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots/ice_boots/eva{
+	pixel_x = -1;
+	pixel_y = 4
+	},
 /turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"BQ" = (
+/obj/effect/turf_decal/siding/wideplating/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"BZ" = (
+/obj/structure/rack,
+/obj/item/clothing/head/utility/welding,
+/obj/item/weldingtool/largetank/empty,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"CL" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"CW" = (
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "DH" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/table,
+/obj/item/reagent_containers/cup/maunamug{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -320,6 +396,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -337,12 +414,16 @@
 	})
 "FL" = (
 /obj/structure/table/wood,
+/obj/item/crowbar/red,
+/obj/item/multitool,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "Gp" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/empty_sleeper/syndicate{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -351,6 +432,17 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"GI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/iron/white,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -367,11 +459,38 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"IJ" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/storage/fancy/egg_box,
+/obj/item/reagent_containers/condiment/milk,
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "JD" = (
 /turf/open/genturf,
 /area/icemoon/underground/explored)
+"Kv" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma/thirty{
+	amount = 5
+	},
+/obj/item/stack/sheet/glass{
+	amount = 20
+	},
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/leather{
+	amount = 10
+	},
+/obj/item/reagent_containers/condiment/enzyme,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "KG" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -387,11 +506,14 @@
 /area/ruin/powered)
 "Mj" = (
 /obj/structure/fireplace,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "Ml" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -409,20 +531,33 @@
 "MH" = (
 /turf/closed/mineral/snowmountain/icemoon,
 /area/icemoon/underground/explored)
+"MM" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Ng" = (
 /obj/item/chair/wood/wings,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/black,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "NJ" = (
-/turf/closed/wall/r_wall,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Oy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cultivator/rake,
+/turf/open/floor/plating/snowed,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "Pj" = (
 /obj/structure/bed/maint,
-/obj/item/bedsheet/syndie,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -443,6 +578,7 @@
 	})
 "QT" = (
 /obj/structure/table,
+/obj/item/food/pizzaslice/moldy,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -468,9 +604,8 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"UI" = (
-/obj/structure/bed/maint,
-/turf/open/floor/wood/tile,
+"VN" = (
+/turf/open/floor/carpet,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -483,20 +618,30 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"XU" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+"WL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"XZ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/waterbottle/empty{
-	pixel_y = 3;
-	pixel_x = 5
+"WU" = (
+/obj/structure/sign/warning/explosives/alt/directional/north,
+/obj/machinery/syndicatebomb/self_destruct{
+	anchored = 1
 	},
-/turf/open/floor/iron/white,
+/obj/machinery/door/window/brigdoor{
+	dir = 2;
+	req_access = list("syndicate");
+	name = "Self Destruct Option"
+	},
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/circuit/red,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"XU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -510,7 +655,13 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"YX" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "YZ" = (
+/obj/structure/table,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -534,15 +685,16 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/crate/bin,
+/obj/item/storage/bag/trash,
+/obj/effect/spawner/random/trash/bin,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "ZE" = (
 /obj/structure/sink/directional/east,
-/obj/item/soap/syndie,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -965,11 +1117,11 @@ EL
 EL
 EL
 EL
-NJ
-NJ
-NJ
-NJ
-NJ
+YX
+YX
+YX
+YX
+YX
 EL
 EL
 EL
@@ -1009,14 +1161,14 @@ EL
 LP
 LP
 LP
-NJ
+YX
 nL
 ZE
-fO
-NJ
-NJ
-NJ
-NJ
+vV
+YX
+YX
+YX
+YX
 EL
 EL
 EL
@@ -1049,8 +1201,8 @@ EL
 EL
 EL
 EL
-NJ
-NJ
+YX
+YX
 BD
 FL
 YI
@@ -1058,10 +1210,10 @@ YI
 wh
 YI
 YI
-eE
-eE
-NJ
-EL
+Ac
+od
+YX
+Ae
 EL
 EL
 EL
@@ -1093,19 +1245,19 @@ EL
 EL
 EL
 EL
-NJ
-Pj
+YX
+ds
 Tn
 Tn
 YI
 wn
-Gp
+WL
 eT
 YI
-eE
-eE
+rA
 NJ
-EL
+fk
+Ae
 EL
 EL
 EL
@@ -1137,19 +1289,19 @@ EL
 EL
 EL
 il
-NJ
-UI
+YX
+Pj
 Tn
 Fm
 YI
-XZ
+GI
+WL
 Gp
-hj
 YI
-eE
-eE
+ge
 NJ
-EL
+Kv
+Ae
 EL
 EL
 EL
@@ -1181,19 +1333,19 @@ EL
 EL
 il
 il
-NJ
+YX
 YI
 nc
 YI
 YI
 xs
-eT
-mT
+do
+IJ
 YI
-eE
-eE
+BZ
 NJ
-EL
+CL
+Ae
 EL
 EL
 EL
@@ -1224,20 +1376,20 @@ EL
 EL
 il
 il
-NJ
-NJ
+YX
+YX
 Zt
 Ze
 mb
 vK
-eT
-eT
-eT
-jo
-eE
-eE
+do
+do
+do
+MM
 NJ
-EL
+NJ
+CW
+Ae
 EL
 EL
 EL
@@ -1270,18 +1422,18 @@ il
 il
 XU
 DT
-Ml
+lb
 QG
 xD
 ij
 hW
-by
+BQ
 YI
 YI
 YI
 YI
-NJ
-EL
+YX
+Ae
 EL
 EL
 EL
@@ -1317,14 +1469,14 @@ Mj
 Ml
 QG
 QT
-YZ
-YZ
+eE
+eE
 DH
 YI
+yG
+sJ
 Tn
-Tn
-Tn
-NJ
+YX
 EL
 EL
 EL
@@ -1360,15 +1512,15 @@ XU
 KG
 Ng
 QG
-QT
 YZ
-YZ
+eE
+eE
 Gq
+pl
 Tn
 Tn
 Tn
-Tn
-NJ
+YX
 EL
 EL
 EL
@@ -1399,12 +1551,12 @@ EL
 EL
 il
 il
-NJ
-NJ
-NJ
+YX
+YX
+YX
 zG
 mb
-YZ
+eE
 up
 in
 kD
@@ -1412,7 +1564,7 @@ YI
 YI
 Tn
 Tn
-NJ
+YX
 EL
 EL
 EL
@@ -1443,20 +1595,20 @@ EL
 EL
 il
 il
-NJ
+YX
 bt
-NJ
+YX
 Mz
-NJ
-NJ
+YX
+YX
 dP
 tu
-YZ
+eE
 YI
-uq
+WU
 Tn
 Tn
-NJ
+YX
 EL
 EL
 EL
@@ -1487,20 +1639,20 @@ il
 il
 il
 il
-NJ
+YX
 YA
-fD
-du
+VN
+wj
 KM
-NJ
-NJ
-NJ
-eE
+YX
+YX
+YX
+kL
 YI
 YI
 YI
-NJ
-NJ
+YX
+YX
 EL
 EL
 EL
@@ -1531,19 +1683,19 @@ il
 il
 il
 il
-NJ
+YX
 sc
-fD
+VN
 Uw
 KM
 Wm
 hl
-NJ
+YX
 ud
 ud
 ud
 qE
-NJ
+YX
 EL
 EL
 EL
@@ -1575,19 +1727,19 @@ il
 il
 il
 il
-NJ
+YX
 YA
 xz
 yR
 YA
-NJ
+YX
 bk
-NJ
-ud
+YX
+Oy
 zJ
 cI
 zJ
-NJ
+YX
 MH
 MH
 EL
@@ -1619,19 +1771,19 @@ EL
 il
 il
 il
-NJ
-NJ
+YX
+YX
 Uv
 GQ
 YA
-NJ
+YX
 bk
-NJ
+YX
 xi
 zJ
 zJ
 zJ
-NJ
+YX
 MH
 MH
 EL
@@ -1664,14 +1816,14 @@ EL
 EL
 il
 il
-NJ
-NJ
-NJ
-NJ
-NJ
+YX
+YX
+YX
+YX
+YX
 yD
-NJ
-NJ
+YX
+YX
 xi
 xi
 PR
@@ -1716,8 +1868,8 @@ MH
 JD
 MH
 LP
-NJ
-NJ
+YX
+YX
 PR
 MH
 MH
