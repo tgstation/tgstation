@@ -9,8 +9,9 @@ type Modularshieldgendata = {
   current_regeneration: number;
   max_radius: number;
   current_radius: number;
-  active: Boolean;
+  status: Boolean;
   recovering: Boolean;
+  exterior_only: Boolean;
 };
 
 export const Modularshieldgen = (props, context) => {
@@ -23,7 +24,8 @@ export const Modularshieldgen = (props, context) => {
     max_radius,
     current_radius,
     current_strength,
-    active,
+    status,
+    exterior_only,
   } = data;
 
   return (
@@ -72,6 +74,7 @@ export const Modularshieldgen = (props, context) => {
               <Section>
                 <ProgressBar
                   height={'20px'}
+                  disabled={status}
                   title="Shield radius"
                   value={current_radius}
                   minValue={0}
@@ -103,10 +106,26 @@ export const Modularshieldgen = (props, context) => {
                       })
                     }
                   />
+                  <Button
+                    selected={status}
+                    content={status ? 'On' : 'Off'}
+                    icon="power-off"
+                    onClick={() => act('toggle_shields')}
+                  />
+                  <Button
+                    onClick={() => act('toggle_exterior')}
+                    content={
+                      !exterior_only ? 'External only' : 'Internal & External'
+                    }
+                  />
                 </Section>
                 <Button
-                  onClick={() => act('activate')}
+                  onClick={() => act('toggle_shields')}
                   content="Toggle Shields"
+                />
+                <Button
+                  onClick={() => act('toggle_exterior')}
+                  content={exterior_only}
                 />
               </Section>
             </Section>

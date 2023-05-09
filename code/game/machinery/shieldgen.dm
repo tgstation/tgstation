@@ -564,8 +564,6 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
-	///Multipliar on stats at the cost of heat generation and volatility
-	var/overloaded = FALSE
 
 	///Doesnt actually control it, just tells us if its running or not
 	var/active = FALSE
@@ -725,6 +723,7 @@
 	data["current_strength"] = stored_strength
 	data["status"] = active
 	data["recovering"] = recovering
+	data["exterioronly"] = exterior_only
 	return data
 
 /obj/machinery/modular_shield_gen/ui_act(action, params)
@@ -736,8 +735,12 @@
 			if (active)
 				return
 			radius = max(1,(text2num(params["new_radius"])))
-		if ("activate")
+		if ("toggle_shields")
 			toggle_shields()
+			return
+		if ("toggle_exterior")
+			exterior_only = !(exterior_only)
+			return
 
 /obj/machinery/modular_shield_gen/proc/calculate_regeneration()
 
