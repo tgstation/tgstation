@@ -1448,7 +1448,8 @@
 	name = "Purge-O-Matic 3000"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/purger
-	req_components = list(/datum/stock_part/micro_laser = 3,
+	req_components = list(/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/scanning_module = 1,
 		/obj/item/reagent_containers/syringe = 2,
 		/obj/item/assembly/signaler/anomaly/bioscrambler = 1
 		)

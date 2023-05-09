@@ -1,6 +1,3 @@
-///How much do we purge reagents down to (purge speed slows as it approaches this value, eventually stopping)
-#define PURGE_LIMIT 5
-
 /obj/machinery/purger
 	name = "Purge-O-Matic 3000"
 	desc = "Purges both the mind and body of chemical afflictions, through the harnessed power of an anomaly."
@@ -16,6 +13,10 @@
 	var/purging = FALSE
 	///The cooldown for sending escape alerts.
 	COOLDOWN_DECLARE(alert_cooldown)
+	///The number of addiction points to remove per process.
+	var/addiction_purge_amount = 3
+	///The lowest volume we can purge reagents down to.
+	var/chemical_purge_floor = 20
 
 /obj/machinery/purger/Initialize(mapload)
 	. = ..()
@@ -26,6 +27,19 @@
 /obj/machinery/purger/Destroy()
 	QDEL_NULL(soundloop)
 	. = ..()
+
+/obj/machinery/purger/RefreshParts()
+	. = ..()
+	var/purge_rating = 0
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		purge_rating += micro_laser.tier
+
+	var/addiction_rating = 0
+	for(var/datum/stock_part/scanning_module/scanner_module in component_parts)
+		addiction_rating += scanner_module.tier
+
+	chemical_purge_floor = initial(chemical_purge_floor) - purge_rating * 4 //Minimum floor of 4 reagents at full upgrades
+	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 3
 
 /obj/machinery/purger/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -69,20 +83,20 @@
 
 	..()
 
-///Reduces addiction points, purges chems until there are only 10 reagents left.
-///Purged chems are released as a very small gas cloud.
+///Reduces addiction points, purges chems until there are only a floor of reagents are left.
+///Purged chems are released as a very small gas cloud. Parts can lower the purge floor amount.
 /obj/machinery/purger/process()
 	var/mob/living/mob_occupant = occupant
 	if(istype(mob_occupant))
 		for(var/datum/addiction in mob_occupant.mind?.active_addictions)
-			mob_occupant.mind.remove_addiction_points(addiction, 10)
+			mob_occupant.mind.remove_addiction_points(addiction, addiction_purge_amount)
 
 		if(occupant.reagents && length(occupant.reagents.reagent_list))
 			var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
 			smoke_holder.attach(src)
 			smoke_holder.set_up(1, holder = src, location = src, silent = TRUE)
 			for(var/datum/reagent/reagent_to_purge in mob_occupant.reagents.reagent_list)
-				var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, 30)
+				var/amount_to_purge = clamp(reagent_to_purge.volume - chemical_purge_floor, 0, 10)
 				mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
 			smoke_holder.start()
 
@@ -135,9 +149,7 @@
 
 	close_machine(target)
 
-/obj/machinery/implantchair/update_overlays()
+/obj/machinery/purger/update_overlays()
 	. = ..()
 	if(powered())
 		. += "ready"
-
-#undef PURGE_LIMIT
