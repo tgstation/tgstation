@@ -10,16 +10,12 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
-"g" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/mineral/titanium,
+"h" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "i" = (
 /obj/structure/closet/wardrobe/black,
-/obj/machinery/light/dim/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "n" = (
@@ -47,7 +43,6 @@
 /area/shuttle/arrival)
 "r" = (
 /obj/effect/spawner/random/entertainment/arcade,
-/obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "u" = (
@@ -63,6 +58,10 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
+"w" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "B" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -70,11 +69,6 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"I" = (
-/obj/structure/closet/wardrobe/black,
-/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "J" = (
@@ -89,20 +83,16 @@
 /obj/item/clothing/mask/breath,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
+"L" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
 "M" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/arrival)
-"O" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/dim/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "P" = (
@@ -167,7 +157,7 @@ V
 q
 r
 J
-B
+h
 J
 M
 q
@@ -194,7 +184,7 @@ Q
 Q
 U
 B
-O
+U
 B
 U
 Q
@@ -211,9 +201,9 @@ V
 (9,1,1) = {"
 a
 Q
-B
+L
 q
-B
+w
 Q
 a
 "}
@@ -230,7 +220,7 @@ V
 Q
 U
 B
-g
+U
 B
 U
 Q
@@ -248,14 +238,14 @@ Q
 F
 B
 B
-B
+h
 B
 B
 F
 "}
 (14,1,1) = {"
 q
-I
+i
 K
 P
 K
