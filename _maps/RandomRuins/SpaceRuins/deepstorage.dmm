@@ -915,6 +915,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "eP" = (
@@ -1660,10 +1661,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"rQ" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/light,
-/area/ruin/space/has_grav/deepstorage/hydroponics)
 "sa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 4
@@ -1827,12 +1824,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"vN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "vY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2069,12 +2060,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"Cu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage/airlock)
 "CH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -2138,10 +2123,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
-"EB" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "EP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden{
 	dir = 4
@@ -2192,7 +2173,6 @@
 	},
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/pill_bottle/multiver,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "HK" = (
@@ -2307,12 +2287,6 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"Ky" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "Lb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2706,15 +2680,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
-"Yq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "YJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2733,6 +2698,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "Zj" = (
@@ -3611,7 +3577,7 @@ sw
 Lj
 Jf
 DT
-Yq
+ll
 cS
 cS
 dB
@@ -3664,10 +3630,10 @@ bG
 hU
 cj
 Xv
-Yq
-Yq
 ll
-Yq
+ll
+ll
+ll
 en
 eD
 eD
@@ -3873,8 +3839,8 @@ Zx
 cn
 Gr
 Ct
-Yq
-Yq
+ll
+ll
 xE
 ep
 eG
@@ -3978,7 +3944,7 @@ cp
 cp
 cp
 cp
-EB
+fT
 YJ
 eq
 eI
@@ -4035,7 +4001,7 @@ vZ
 TS
 Ph
 HZ
-Cu
+fi
 TN
 eq
 fp
@@ -4231,12 +4197,12 @@ at
 aC
 aO
 be
-vN
+BM
 bP
 YS
 BM
 BM
-Ky
+BM
 BM
 BM
 cE
@@ -4646,7 +4612,7 @@ ab
 ab
 ab
 aQ
-rQ
+bS
 qZ
 bS
 cg
