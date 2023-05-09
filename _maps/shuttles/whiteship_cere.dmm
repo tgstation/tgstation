@@ -138,8 +138,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -156,8 +155,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /obj/item/pickaxe,
@@ -192,8 +190,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /obj/item/storage/bag/ore,
@@ -270,8 +267,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "spare equipment crate"
 	},
 /obj/machinery/light/directional/south,

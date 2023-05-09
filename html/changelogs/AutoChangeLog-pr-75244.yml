@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "new hotkeys unbound by default (like emotes) no longer scream at you when added"

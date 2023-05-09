@@ -68,7 +68,7 @@
 		"light_replacer",
 		"light_tube",
 		"mechfab",
-		"micro_mani",
+		"micro_servo",
 		"miniature_power_cell",
 		"newscaster_frame",
 		"oven_tray",
@@ -575,7 +575,7 @@
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
-		"nano_mani",
+		"nano_servo",
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -647,7 +647,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list(
-		"pico_mani",
+		"pico_servo",
 		"super_matter_bin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
@@ -710,7 +710,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
-		"femto_mani",
+		"femto_servo",
 		"quantum_keycard",
 		"swapper",
 		"triphasic_scanning",
