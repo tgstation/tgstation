@@ -105,7 +105,12 @@
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED
+	/// How many variants of shard there are
+	var/variants = 5
 
 /obj/item/plate_shard/Initialize(mapload)
 	. = ..()
+
 	AddComponent(/datum/component/caltrop, min_damage = force)
+
+	icon_state = "[base_icon_state][pick(1,variants)]"
