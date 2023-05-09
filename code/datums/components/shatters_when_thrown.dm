@@ -57,8 +57,8 @@
 		scattered_item.pixel_y = scatter_vector[2]
 
 	for(var/iteration in 1 to number_of_shards)
-		var/obj/item/shard = new(shard_type)
-		shard.pixel_x = rand(-4, 4)
-		shard.pixel_y = rand(-4, 4)
+		var/obj/item/shard = new shard_type(obj_parent)
+		shard.pixel_x = rand(-6, 6)
+		shard.pixel_y = rand(-6, 6)
 	playsound(scatter_turf, shattering_sound, 60, TRUE)
 	qdel(parent)
