@@ -1,68 +1,148 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bk" = (
 /turf/open/floor/iron,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "bt" = (
 /obj/item/taperecorder/empty,
 /obj/structure/closet/crate/maint,
 /turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"by" = (
+/obj/effect/turf_decal/siding/wideplating/light{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "ci" = (
 /turf/template_noop,
 /area/icemoon/underground/explored)
 "cI" = (
 /obj/structure/water_source/puddle,
+/obj/item/reagent_containers/cup/glass/waterbottle/large/empty{
+	pixel_x = 5;
+	pixel_y = -6
+	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"du" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "dP" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "eE" = (
-/turf/open/floor/wood,
-/area/ruin/powered)
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "eT" = (
-/obj/structure/table,
 /turf/open/floor/iron/white,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"fD" = (
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"fO" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"hj" = (
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "hW" = (
 /obj/effect/turf_decal/siding/wideplating/light{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "ij" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "il" = (
 /turf/closed/mineral/snowmountain/icemoon,
 /area/template_noop)
 "in" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"jo" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/centcom{
+	name = "Storage Room";
+	desc = "It opens and closes"
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "kD" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "mb" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"mT" = (
+/obj/structure/fluff/empty_sleeper/syndicate{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "nc" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -70,18 +150,28 @@
 	desc = "It opens and closes"
 	},
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "nL" = (
-/obj/machinery/shower/directional/south,
-/obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
 /turf/open/floor/iron/white/diagonal,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "qE" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/reagent_containers/cup/glass/waterbottle/large/empty,
+/obj/effect/spawner/random/food_or_drink/seed,
+/obj/item/seeds/corn,
+/obj/item/seeds/tower,
+/obj/item/seeds/potato,
+/obj/item/storage/bag/plants/portaseeder,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "sc" = (
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = 35
@@ -90,7 +180,9 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "tu" = (
 /obj/structure/table,
 /obj/item/lighter/skull{
@@ -102,50 +194,84 @@
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/powered)
+/turf/open/floor/plating/snowed,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "up" = (
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"uq" = (
+/obj/structure/sign/warning/explosives/alt/directional/north,
+/obj/machinery/syndicatebomb/self_destruct{
+	anchored = 1
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 2;
+	req_access = list("syndicate");
+	name = "Self Destruct Option"
+	},
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/circuit/red,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "wh" = (
-/obj/structure/curtain{
-	open = 0
-	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/curtain,
 /turf/open/floor/iron/white/diagonal,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "wn" = (
 /obj/structure/closet/secure_closet/freezer/empty/open,
 /obj/item/storage/medkit/regular,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "xi" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "xs" = (
 /obj/structure/closet/crate/secure/freezer/commsagent,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "xz" = (
 /obj/item/chair/stool/bar,
-/turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "xD" = (
 /obj/structure/table,
 /obj/item/storage/photo_album/icemoonlisteningstation{
 	pixel_x = 10
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "yD" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -153,37 +279,51 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/iron,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "yR" = (
 /obj/structure/table,
-/turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "zG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "zJ" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "BD" = (
-/obj/structure/fluff/empty_sleeper/syndicate{
-	dir = 4
-	},
+/obj/structure/closet/cabinet,
+/obj/item/bedsheet/syndie,
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "DH" = (
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/table,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "DT" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/turf/open/floor/carpet,
-/area/ruin/powered)
+/turf/open/floor/carpet/black,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "EL" = (
 /turf/template_noop,
 /area/template_noop)
@@ -192,21 +332,28 @@
 	use_power = 0
 	},
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "FL" = (
-/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon{
-	dir = 4
-	},
+/obj/structure/table/wood,
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Gp" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Gq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "GQ" = (
 /obj/structure/table,
 /obj/item/camera{
@@ -216,29 +363,39 @@
 /obj/item/paper/pamphlet/centcom/visitor_info{
 	pixel_x = -5
 	},
-/turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "JD" = (
 /turf/open/genturf,
 /area/icemoon/underground/explored)
 "KG" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/carpet,
-/area/ruin/powered)
+/turf/open/floor/carpet/black,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "KM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "LP" = (
 /turf/closed/wall/r_wall,
 /area/ruin/powered)
 "Mj" = (
 /obj/structure/fireplace,
-/turf/open/floor/carpet,
-/area/ruin/powered)
+/turf/open/floor/carpet/black,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Ml" = (
-/turf/open/floor/carpet,
-/area/ruin/powered)
+/turf/open/floor/carpet/black,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Mz" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -246,76 +403,118 @@
 	desc = "Truly, a marvel of modern engineering."
 	},
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "MH" = (
 /turf/closed/mineral/snowmountain/icemoon,
 /area/icemoon/underground/explored)
 "Ng" = (
 /obj/item/chair/wood/wings,
-/turf/open/floor/carpet,
-/area/ruin/powered)
+/turf/open/floor/carpet/black,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "NJ" = (
-/turf/open/floor/wood/tile,
-/area/ruin/powered)
+/turf/closed/wall/r_wall,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Pj" = (
 /obj/structure/bed/maint,
 /obj/item/bedsheet/syndie,
 /turf/open/floor/wood/tile,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "PR" = (
 /obj/structure/girder/reinforced,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "QG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "QT" = (
 /obj/structure/table,
-/obj/item/tank/internals/plasmaman/belt/empty{
-	pixel_y = -90;
-	pixel_x = 67
-	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Tn" = (
-/turf/template_noop,
-/area/ruin/powered)
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Uv" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Uw" = (
 /obj/structure/table,
 /obj/structure/desk_bell{
 	pixel_y = -1;
 	pixel_x = -8
 	},
-/turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"UI" = (
+/obj/structure/bed/maint,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Wm" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "ssyndicate_comms_base"
 	},
 /turf/open/floor/iron,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "XU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"XZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "YA" = (
 /turf/open/floor/wood/parquet,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "YI" = (
 /turf/closed/wall,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "YZ" = (
-/obj/structure/table,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Ze" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -324,7 +523,9 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "Zt" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -333,14 +534,19 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "ZE" = (
 /obj/structure/sink/directional/east,
 /obj/item/soap/syndie,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/diagonal,
-/area/ruin/powered)
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 
 (1,1,1) = {"
 EL
@@ -759,11 +965,11 @@ EL
 EL
 EL
 EL
-LP
-LP
-LP
-LP
-EL
+NJ
+NJ
+NJ
+NJ
+NJ
 EL
 EL
 EL
@@ -803,14 +1009,14 @@ EL
 LP
 LP
 LP
-LP
+NJ
 nL
 ZE
-LP
-EL
-EL
-EL
-EL
+fO
+NJ
+NJ
+NJ
+NJ
 EL
 EL
 EL
@@ -843,18 +1049,18 @@ EL
 EL
 EL
 EL
-LP
-LP
+NJ
+NJ
 BD
 FL
-LP
-LP
+YI
+YI
 wh
-LP
-LP
-EL
-EL
-EL
+YI
+YI
+eE
+eE
+NJ
 EL
 EL
 EL
@@ -887,18 +1093,18 @@ EL
 EL
 EL
 EL
-LP
+NJ
 Pj
-NJ
-NJ
+Tn
+Tn
 YI
 wn
 Gp
 eT
-LP
-EL
-EL
-EL
+YI
+eE
+eE
+NJ
 EL
 EL
 EL
@@ -931,18 +1137,18 @@ EL
 EL
 EL
 il
-LP
-Pj
 NJ
+UI
+Tn
 Fm
 YI
+XZ
 Gp
-Gp
-Gp
-LP
-EL
-EL
-EL
+hj
+YI
+eE
+eE
+NJ
 EL
 EL
 EL
@@ -975,18 +1181,18 @@ EL
 EL
 il
 il
-LP
+NJ
 YI
 nc
 YI
 YI
 xs
-Gp
-Gp
-LP
-EL
-EL
-EL
+eT
+mT
+YI
+eE
+eE
+NJ
 EL
 EL
 EL
@@ -1018,19 +1224,19 @@ EL
 EL
 il
 il
-LP
-LP
+NJ
+NJ
 Zt
 Ze
 mb
 vK
-Gp
-Gp
-Gp
-LP
-EL
-EL
-EL
+eT
+eT
+eT
+jo
+eE
+eE
+NJ
 EL
 EL
 EL
@@ -1069,12 +1275,12 @@ QG
 xD
 ij
 hW
-hW
+by
 YI
-LP
-LP
-LP
-LP
+YI
+YI
+YI
+NJ
 EL
 EL
 EL
@@ -1111,14 +1317,14 @@ Mj
 Ml
 QG
 QT
-eE
-eE
+YZ
+YZ
 DH
 YI
 Tn
 Tn
 Tn
-LP
+NJ
 EL
 EL
 EL
@@ -1154,15 +1360,15 @@ XU
 KG
 Ng
 QG
+QT
 YZ
-eE
-eE
+YZ
 Gq
 Tn
 Tn
 Tn
 Tn
-LP
+NJ
 EL
 EL
 EL
@@ -1193,20 +1399,20 @@ EL
 EL
 il
 il
-LP
-LP
-LP
+NJ
+NJ
+NJ
 zG
 mb
-eE
+YZ
 up
 in
 kD
 YI
+YI
 Tn
 Tn
-Tn
-LP
+NJ
 EL
 EL
 EL
@@ -1237,20 +1443,20 @@ EL
 EL
 il
 il
-LP
+NJ
 bt
-LP
+NJ
 Mz
-LP
-LP
+NJ
+NJ
 dP
 tu
 YZ
 YI
+uq
 Tn
 Tn
-Tn
-LP
+NJ
 EL
 EL
 EL
@@ -1281,20 +1487,20 @@ il
 il
 il
 il
-LP
+NJ
 YA
-YA
+fD
+du
 KM
-KM
-LP
-LP
-LP
+NJ
+NJ
+NJ
 eE
 YI
 YI
 YI
-LP
-LP
+NJ
+NJ
 EL
 EL
 EL
@@ -1325,19 +1531,19 @@ il
 il
 il
 il
-LP
+NJ
 sc
-YA
+fD
 Uw
 KM
 Wm
 hl
-LP
+NJ
 ud
 ud
 ud
 qE
-LP
+NJ
 EL
 EL
 EL
@@ -1369,19 +1575,19 @@ il
 il
 il
 il
-LP
+NJ
 YA
 xz
 yR
 YA
-LP
+NJ
 bk
-LP
+NJ
 ud
 zJ
 cI
 zJ
-LP
+NJ
 MH
 MH
 EL
@@ -1413,19 +1619,19 @@ EL
 il
 il
 il
-LP
-LP
+NJ
+NJ
 Uv
 GQ
 YA
-LP
+NJ
 bk
-LP
+NJ
 xi
 zJ
 zJ
 zJ
-LP
+NJ
 MH
 MH
 EL
@@ -1458,14 +1664,14 @@ EL
 EL
 il
 il
-LP
-LP
-LP
-LP
-LP
+NJ
+NJ
+NJ
+NJ
+NJ
 yD
-LP
-LP
+NJ
+NJ
 xi
 xi
 PR
@@ -1510,8 +1716,8 @@ MH
 JD
 MH
 LP
-LP
-LP
+NJ
+NJ
 PR
 MH
 MH
