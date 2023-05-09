@@ -111,6 +111,11 @@
 	density = TRUE
 	max_integrity = 60
 	plane = GAME_PLANE_UPPER
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/spider/solid/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/passage
 	name = "web passage"
@@ -122,6 +127,11 @@
 	max_integrity = 45
 	alpha = 200
 	plane = GAME_PLANE_UPPER
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/spider/passage/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/cocoon
 	name = "cocoon"
