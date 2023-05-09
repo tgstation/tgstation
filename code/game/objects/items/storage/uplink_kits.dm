@@ -693,49 +693,49 @@
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if(!. || !isliving(target) || !(target.mind))
+	if(!. || !ishuman(target) || !(target.mind))
 		return FALSE
-	var/mob/living/living_target = target
+	var/mob/living/carbon/human/human_target = target
 
-	if(IS_NUKE_OP(target)) // this wont proc due to ..() but i guess its good as a just-in-case?
-		if(target == user)
+	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
+		if(human_target == user)
 			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
-			target.Stun(10 SECONDS)
-			target.reagents.add_reagent(/datum/reagent/toxin, 10)
+			human_target.Stun(10 SECONDS)
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 10)
 			return FALSE
 		else
-			to_chat(user, span_notice("You finish implanting [target], but you don't really notice a difference. Huh."))
-			to_chat(target, span_userdanger("Nothing seems to really happen, but you start to feel a little ill.."))
-			target.reagents.add_reagent(/datum/reagent/toxin, 2)
+			to_chat(user, span_notice("You finish implanting [human_target], but you don't really notice a difference. Huh."))
+			to_chat(human_target, span_userdanger("Nothing seems to really happen, but you start to feel a little ill.."))
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
 	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
 	var/allowed = FALSE
-	for(var/datum/antagonist/antag_datum as anything in living_target.mind.antag_datums)
+	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
 		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
 			allowed = TRUE
 
 	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
-		to_chat(living_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
-		target.reagents.add_reagent(/datum/reagent/toxin, 15)
+		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
+		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
 
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
 	nuke_datum.nukeop_outfit = null
-	living_target.mind?.add_antag_datum(nuke_datum)
-	living_target.faction |= ROLE_SYNDICATE
-	to_chat(target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
-	to_chat(target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
+	human_target.mind?.add_antag_datum(nuke_datum)
+	human_target.faction |= ROLE_SYNDICATE
+	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
+	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
 	return TRUE
 
 /obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE
-	var/mob/living/living_target = target
-	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
-	living_target.faction -= ROLE_SYNDICATE
+	var/mob/living/human_target = target
+	human_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
+	human_target.faction -= ROLE_SYNDICATE
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
