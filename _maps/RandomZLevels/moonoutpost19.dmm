@@ -126,12 +126,6 @@
 "aL" = (
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
-"aN" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "aO" = (
 /obj/structure/displaycase{
 	desc = "A display case for prized possessions. It hasn't been cleaned in a while.";
@@ -148,12 +142,6 @@
 	calibrated = 0
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
-"aR" = (
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -299,7 +287,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bA" = (
-/obj/machinery/light/directional/west,
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -4590,7 +4577,6 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "yf" = (
-/obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east{
 	req_access = "150"
 	},
@@ -4649,6 +4635,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -7393,6 +7380,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -42406,7 +42394,7 @@ ac
 at
 JA
 aF
-aN
+aA
 aV
 yv
 bq
@@ -43434,7 +43422,7 @@ ac
 at
 Hh
 aB
-aR
+aA
 aZ
 Pt
 bu
