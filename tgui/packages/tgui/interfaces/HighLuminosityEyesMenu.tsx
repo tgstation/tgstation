@@ -10,16 +10,18 @@ type EyeColorData = {
   right: string;
 };
 
-type HighLuminosityEyesMenuData = {
+type Data = {
   eyeColor: EyeColorData;
   lightColor: string;
   range: number;
 };
 
 const LightColorDisplay = (props, context) => {
-  const { act, data } = useBackend<HighLuminosityEyesMenuData>(context);
+  const { act, data } = useBackend<Data>(context);
   const { lightColor } = data;
-  const light = 0;
+  const Light = {
+    color: 0,
+  };
   return (
     <Section title="Color">
       <LabeledList>
@@ -27,12 +29,12 @@ const LightColorDisplay = (props, context) => {
           <ColorBox color={lightColor} />{' '}
           <Button
             icon="palette"
-            onClick={() => act('pick_color', { to_update: light })}
+            onClick={() => act('pick_color', { to_update: Light.color })}
             tooltip="Brings up a color pick window to change the light color."
           />
           <Button
             icon="dice"
-            onClick={() => act('random_color', { to_update: light })}
+            onClick={() => act('random_color', { to_update: Light.color })}
             tooltip="Randomizes the light color."
           />
           <Input
@@ -40,7 +42,7 @@ const LightColorDisplay = (props, context) => {
             width={6}
             maxLength={7}
             onChange={(_, value) =>
-              act('enter_color', { new_color: value, to_update: light })
+              act('enter_color', { new_color: value, to_update: Light.color })
             }
           />
         </LabeledList.Item>
@@ -50,7 +52,7 @@ const LightColorDisplay = (props, context) => {
 };
 
 const RangeDisplay = (props, context) => {
-  const { act, data } = useBackend<HighLuminosityEyesMenuData>(context);
+  const { act, data } = useBackend<Data>(context);
   const { range } = data;
   return (
     <Section title="Range">
@@ -87,10 +89,12 @@ const RangeDisplay = (props, context) => {
 };
 
 const EyeColorDisplay = (props, context) => {
-  const { act, data } = useBackend<HighLuminosityEyesMenuData>(context);
+  const { act, data } = useBackend<Data>(context);
   const { eyeColor } = data;
-  const left = 1;
-  const right = 2;
+  const Eye = {
+    Left: 1,
+    Right: 2,
+  };
   return (
     <Section title="Eye Color">
       <LabeledList>
@@ -109,12 +113,12 @@ const EyeColorDisplay = (props, context) => {
             <ColorBox color={eyeColor.left} />{' '}
             <Button
               icon="palette"
-              onClick={() => act('pick_color', { to_update: left })}
+              onClick={() => act('pick_color', { to_update: Eye.Left })}
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
-              onClick={() => act('random_color', { to_update: left })}
+              onClick={() => act('random_color', { to_update: Eye.Left })}
               tooltip="Randomizes the light color."
             />
             <Input
@@ -122,7 +126,7 @@ const EyeColorDisplay = (props, context) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act('enter_color', { new_color: value, to_update: left })
+                act('enter_color', { new_color: value, to_update: Eye.Left })
               }
             />
           </LabeledList.Item>
@@ -130,12 +134,12 @@ const EyeColorDisplay = (props, context) => {
             <ColorBox color={eyeColor.right} />{' '}
             <Button
               icon="palette"
-              onClick={() => act('pick_color', { to_update: right })}
+              onClick={() => act('pick_color', { to_update: Eye.Right })}
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
-              onClick={() => act('random_color', { to_update: right })}
+              onClick={() => act('random_color', { to_update: Eye.Right })}
               tooltip="Randomizes the light color."
             />
             <Input
@@ -143,7 +147,7 @@ const EyeColorDisplay = (props, context) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act('enter_color', { new_color: value, to_update: right })
+                act('enter_color', { new_color: value, to_update: Eye.Right })
               }
             />
           </LabeledList.Item>
@@ -154,18 +158,18 @@ const EyeColorDisplay = (props, context) => {
 };
 
 export const HighLuminosityEyesMenu = (props, context) => {
-  const { act, data } = useBackend<HighLuminosityEyesMenuData>(context);
+  const { act, data } = useBackend<Data>(context);
   const { eyeColor } = data;
   return (
     <Window
       title="High Luminosity Eyes"
       width={262}
       height={eyeColor.hasOwner ? (eyeColor.mode ? 259 : 324) : 188}>
-      <Window.Content scrollable>
+      <Section fill scrollable>
         <LightColorDisplay />
         <RangeDisplay />
         {!!eyeColor.hasOwner && <EyeColorDisplay />}
-      </Window.Content>
+      </Section>
     </Window>
   );
 };
