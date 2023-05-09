@@ -746,11 +746,15 @@
 
 	if(!(active))
 		if(recovering)
-			current_regeneration = max_regeneration * 0.2
+			current_regeneration = max_regeneration * 0.25
 			return
 		current_regeneration = max_regeneration
 		return
-	current_regeneration = (max_regeneration / (1 + radius/max_radius)) * (0.5 * !(exterior_only))
+
+	current_regeneration = (max_regeneration / (1 + radius/max_radius))
+
+	if(!exterior_only)
+		current_regeneration *=0.5
 
 
 /obj/machinery/modular_shield_gen/proc/shield_drain(damage_amount)
