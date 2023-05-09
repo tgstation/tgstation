@@ -576,7 +576,7 @@
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
-	loc = new_loc
+	change_loc(new_loc)
 	Moved(old_loc, direction, TRUE, momentum_change = FALSE)
 
 ////////////////////////////////////////
@@ -632,7 +632,7 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
-	loc = newloc
+	change_loc(newloc)
 
 	. = TRUE
 
@@ -750,7 +750,6 @@
 					pulling.move_from_pull(src, target_turf, glide_size)
 			check_pulling()
 
-
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
 	if(glide_size_override)
@@ -777,31 +776,21 @@
 	moving_from_pull = null
 
 /**
- * Called after a successful Move(). By this point, we've already moved.
- * Arguments:
- * * old_loc is the location prior to the move. Can be null to indicate nullspace.
- * * movement_dir is the direction the movement took place. Can be NONE if it was some sort of teleport.
- * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
- * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
- * * momentum_change represents whether this movement is due to a "new" force if TRUE or an already "existing" force if FALSE
- **/
-/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+ * changes src's loc to new_loc, and calls relevant update procs and sends signals for that.
+ * should be called in all movement procs to update loc! dont do so at your own peril!
+ */
+/atom/movable/proc/change_loc(atom/new_loc)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving && momentum_change)
-		newtonian_move(movement_dir)
-	// If we ain't moving diagonally right now, update our parallax
-	// We don't do this all the time because diag movements should trigger one call to this, not two
-	// Waste of cpu time, and it fucks the animate
-	if (!moving_diagonally && client_mobs_in_contents)
-		update_parallax_contents()
+	var/atom/old_loc = loc
+	loc = new_loc
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_CHANGED, old_loc)
 
 	if(old_loc)
-		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src, movement_dir)
+		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src)
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_ABSTRACT_ENTERED, src, old_loc, old_locs)
+		SEND_SIGNAL(loc, COMSIG_ATOM_ABSTRACT_ENTERED, src, old_loc)
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
@@ -823,6 +812,28 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+/**
+ * Called after a successful Move(). By this point, we've already moved.
+ * Arguments:
+ * * old_loc is the location prior to the move. Can be null to indicate nullspace.
+ * * movement_dir is the direction the movement took place. Can be NONE if it was some sort of teleport.
+ * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
+ * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
+ * * momentum_change represents whether this movement is due to a "new" force if TRUE or an already "existing" force if FALSE
+ **/
+/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (!inertia_moving && momentum_change)
+		newtonian_move(movement_dir)
+	// If we ain't moving diagonally right now, update our parallax
+	// We don't do this all the time because diag movements should trigger one call to this, not two
+	// Waste of cpu time, and it fucks the animate
+	if (!moving_diagonally && client_mobs_in_contents)
+		update_parallax_contents()
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	return TRUE
 
@@ -1076,7 +1087,7 @@
 
 		moving_diagonally = 0
 
-		loc = destination
+		change_loc(destination)
 
 		if(!same_loc)
 			if(is_multi_tile && isturf(destination))
@@ -1114,7 +1125,7 @@
 		. = TRUE
 
 		if (oldloc)
-			loc = null
+			change_loc(null)
 			var/area/old_area = get_area(oldloc)
 			if(is_multi_tile && isturf(oldloc))
 				for(var/atom/old_loc as anything in locs)
