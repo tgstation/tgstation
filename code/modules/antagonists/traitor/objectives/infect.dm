@@ -8,7 +8,7 @@
 	name = "Infect %TARGET% the %JOB TITLE%"
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
-	abstract_type = /datum/traitor_objective/target_player/infect
+	abstract_type = /datum/traitor_objective/target_player
 
 	progression_minimum = 20 MINUTES
 
