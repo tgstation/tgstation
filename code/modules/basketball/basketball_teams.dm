@@ -106,3 +106,15 @@
 	shoes = /obj/item/clothing/shoes/winterboots
 	head = /obj/item/clothing/head/costume/ushanka
 	gloves = /obj/item/clothing/gloves/color/brown
+
+/datum/outfit/basketball/ash_walker
+	name = "Basketball Ash Walker"
+	head = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
+	back = /obj/item/spear/bonespear
+
+/datum/outfit/basketball/beach_bums
+	name = "Basketball Beach Bums"
+	uniform = /obj/item/clothing/under/shorts/red
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/sandal
