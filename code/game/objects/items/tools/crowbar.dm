@@ -102,6 +102,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+	/// Used on Initialize, how much time to cut cable restraints and zipties.
+	var/snap_time_weak_handcuffs = null
+	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	var/snap_time_strong_handcuffs = null
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -115,6 +119,11 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/obj/item/crowbar/power/proc/pre_snapping()
+	if(tool_behaviour == TOOL_CROWBAR)
+		return FALSE
+	return TRUE
+
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -124,6 +133,10 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
+	if(tool_behaviour == TOOL_CROWBAR)
+		RemoveElement(/datum/element/cuffsnapping)
+	else // this breaks! causes runtime when sswitcihng
+		AddElement(/datum/element/cuffsnapping, snap_time_weak = snap_time_weak_handcuffs, snap_time_strong = snap_time_strong_handcuffs)
 	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
 	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -154,14 +167,6 @@
 				target_bodypart.drop_limb()
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return BRUTELOSS
-
-/obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
-	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
-		qdel(attacked_carbon.handcuffed)
-		return
-
-	return ..()
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
