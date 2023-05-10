@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Outfit changes will now properly change your ID trim if wearing a non-ID item in your ID slot."
