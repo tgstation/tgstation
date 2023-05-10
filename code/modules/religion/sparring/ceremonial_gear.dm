@@ -13,7 +13,7 @@
 	greyscale_colors = "#FFFFFF"
 
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron blade.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron blade.
 	force = 2 //20
 	throwforce = 1 //10
 	wound_bonus = CANT_WOUND // bad for sparring

@@ -1,4 +1,0 @@
-author: "Fikou, Zonespace, Arcane for voicing"
-delete-after: True
-changes:
-  - rscadd: "The mining vendor now has a style meter. This meter gauges your style points and uses them to improve your ore yield."

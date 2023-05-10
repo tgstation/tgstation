@@ -241,3 +241,39 @@
 	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/death_sandwich
+	name = "death sandwich"
+	desc = "Eat it right, or you die!"
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "death_sandwich"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 14,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
+	foodtypes = GRAIN | MEAT
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
+
+///Override for checkliked callback
+/obj/item/food/death_sandwich/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+
+///Eat it right, or you die.
+/obj/item/food/death_sandwich/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	/// Closest thing to a mullet we have
+	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
+		return FOOD_LIKED
+	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
+	balloon_alert(consumer, "ate it wrong!")
+	consumer.ForceContractDisease(new/datum/disease/death_sandwich_poisoning())
+
+/obj/item/food/death_sandwich/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
+	qdel(src)
+	user.gib(TRUE, TRUE, TRUE)
+	return MANUAL_SUICIDE

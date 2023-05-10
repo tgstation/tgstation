@@ -165,10 +165,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "nA" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -254,10 +252,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "ES" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "GU" = (
@@ -363,10 +359,8 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "Li" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/airalarm/syndicate{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)

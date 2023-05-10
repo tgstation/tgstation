@@ -113,7 +113,7 @@
 			return
 		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * damage_mod)
+		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
 		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
 		if(!permanent)
 			qdel(src)
