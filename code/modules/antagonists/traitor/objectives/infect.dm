@@ -56,7 +56,6 @@
 		succeed_objective()
 		return
 
-
 /datum/traitor_objective/target_player/infect/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
 	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
