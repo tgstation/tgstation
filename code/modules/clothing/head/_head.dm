@@ -85,7 +85,7 @@
 			if(selected_hat.worn_icon)
 				head_icon = selected_hat.icon
 			var/mutable_appearance/hat_adding = selected_hat.build_worn_icon(HEAD_LAYER, head_icon, FALSE, FALSE)
-			hat_adding.pixel_y = (standing.pixel_y + (current_hat * 4) - 1)
+			hat_adding.pixel_y = ((current_hat * 4) - 1)
 			hat_adding.pixel_x = (rand(-1, 1))
 			current_hat++
 			. += hat_adding
