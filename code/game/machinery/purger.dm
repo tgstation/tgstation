@@ -1,5 +1,20 @@
 #define PURGE_LIMIT 5
 
+/**
+ * # Purger (Purge-O-Matic 3000)
+ *
+ * A device that purges chemicals from a user, reduces addiction points, and slowly heals liver damage.
+ *
+ * While an occupant is inside, reagents are removed from their reagent holder and released in small reagent gas clouds.
+ * The occupant's mind will have any addiction points reduced, and if a liver is present it will be slowly healed.
+ *
+ * If unpowered/emagged shut, the door must be opened with a crowbar (or the occupant resisting out).
+ *
+ * When emagged, will lock in the next occupant, and the machine will release an acid cloud (which WILL eventually destroy the machine if not stopped).
+ * Also injects the occupant with amanitin, and worsens any addictions they already have.
+ *
+ */
+
 /obj/machinery/purger
 	name = "Purge-O-Matic 3000"
 	desc = "Purges both the mind and body of chemical afflictions, through the harnessed power of an anomaly."
@@ -103,10 +118,16 @@
 						mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
 				smoke_holder.start() //Releases an empty, white cloud when "done".
 
+			var/obj/item/organ/internal/liver/target_liver = mob_occupant.get_organ_slot(ORGAN_SLOT_LIVER)
+			if(target_liver)
+				mob_occupant.adjustOrganLoss(ORGAN_SLOT_LIVER, -1) //Very slow, probably would be better to just get an operation done.
+				if(prob(15) && target_liver.damage < 50)
+					to_chat(mob_occupant, span_green("You feel the pain in your gut fading..."))
+
 			return
 
-		//If we're emagged, we worsen addictions, poison our user, and release a large cloud of acid.
-		for(var/datum/addiction/addiction in mob_occupant.mind?.addiction_points)
+		//If we're emagged, we worsen active addictions, poison our user, and release a large cloud of acid.
+		for(var/datum/addiction/addiction in mob_occupant.mind?.active_addictions)
 			mob_occupant.mind.add_addiction_points(addiction, addiction_purge_amount)
 			if(prob(20))
 				to_chat(mob_occupant, span_alert("You feel your [addiction] cravings worsen..."))
