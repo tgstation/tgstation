@@ -352,23 +352,25 @@
 	export_types = list(/mob/living/carbon/human)
 
 /datum/export/pirate/ransom/find_loot()
-	var/list/head_minds = SSjob.get_living_heads()
+	var/list/head_minds = SSjob.get_all_heads()
 	var/list/head_mobs = list()
-	for(var/datum/mind/M as anything in head_minds)
-		head_mobs += M.current
+	for(var/datum/mind/mind as anything in head_minds)
+		head_mobs += mind.current
 	if(head_mobs.len)
 		return pick(head_mobs)
 
 /datum/export/pirate/ransom/get_cost(atom/movable/AM)
-	var/mob/living/carbon/human/H = AM
-	if(H.stat != CONSCIOUS || !H.mind) //mint condition only
+	var/mob/living/carbon/human/hostage = AM
+	if(!hostage.mind || (FACTION_PIRATE in hostage.faction))
 		return 0
-	else if(FACTION_PIRATE in H.faction) //can't ransom your fellow pirates to CentCom!
-		return 0
-	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-		return 3000
-	else
-		return 1000
+	var/ransom_value = 500
+	if(hostage.stat == CONSCIOUS)
+		ransom_value *= 2
+	if(hostage.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		ransom_value *= 2
+	if(hostage.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		ransom_value *= 5
+	return ransom_value
 
 /datum/export/pirate/parrot
 	cost = 2000
