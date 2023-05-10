@@ -52049,7 +52049,7 @@
 "sEx" = (
 /obj/machinery/button/door/directional/east{
 	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters";
+	name = "Kitchen Counter Shutters Control";
 	req_access = list("kitchen")
 	},
 /obj/structure/table,
