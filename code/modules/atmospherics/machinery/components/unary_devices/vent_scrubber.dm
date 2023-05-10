@@ -98,16 +98,7 @@
 			filter_types |= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
@@ -122,16 +113,7 @@
 			filter_types -= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas
-
-	if(isopenturf(our_turf))
-		turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 // WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
@@ -148,17 +130,7 @@
 			else
 				filter_types |= translated_gas
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()

@@ -153,18 +153,6 @@
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	if(!is_operational)
-		return FALSE
-	if(!nodes[1])
-		on = FALSE
-	if(!on || welded)
-		return FALSE
-	var/turf/open/us = loc
-	if(!istype(us))
-		return FALSE
-	return TRUE
-
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	if(!is_operational)
 		return
