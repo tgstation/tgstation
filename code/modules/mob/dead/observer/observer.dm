@@ -11,6 +11,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	plane = GHOST_PLANE
 	stat = DEAD
 	density = FALSE
+	appearance_flags = KEEP_TOGETHER
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	invisibility = INVISIBILITY_OBSERVER
