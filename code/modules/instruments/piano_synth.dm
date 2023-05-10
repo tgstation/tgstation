@@ -32,7 +32,7 @@
 
 /obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(update_icon_for_playing_music))
 	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(update_icon_for_playing_music))
 
