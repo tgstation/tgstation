@@ -92,13 +92,13 @@
 	owner_ref = WEAKREF(creator)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/give_directive(mob/living/new_spawn)
-	var/mob/living/real_owner = owner_ref.resolve()
+	var/mob/living/real_owner = owner_ref?.resolve()
 	if(QDELETED(real_owner))
 		new_spawn.log_message("possessed a servant golem shell with no owner.", LOG_GAME)
 		log_admin("[key_name(new_spawn)] possessed a servant golem shell with no owner.")
 		return // Guess you're free now
-	if(!new_spawn.mind)
-		stack_trace("[type] created a golem without a mind.")
+	if(isnull(new_spawn.mind))
+		CRASH("[type] created a golem without a mind.")
 
 	new_spawn.mind.enslave_mind_to_creator(real_owner)
 	to_chat(new_spawn, span_userdanger("Serve [real_owner], and assist [real_owner.p_them()] in completing [real_owner.p_their()] goals at any cost."))
