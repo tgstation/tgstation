@@ -54,10 +54,16 @@
 	name = "Huh"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "teleport"
-	duration = 80
+	duration = 8 SECONDS
 
 /obj/effect/temp_visual/teleport_abductor/Initialize(mapload)
 	. = ..()
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,loc)
 	S.start()
+
+/obj/effect/temp_visual/teleport_golem
+	name = "bluespace silhouette"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "teleport"
+	duration = 6 SECONDS

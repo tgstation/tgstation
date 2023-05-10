@@ -102,8 +102,8 @@
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		T += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		T += servo.tier
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 	// Adjust the build time of any item currently being built.

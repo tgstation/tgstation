@@ -37,8 +37,7 @@
 	cost = CARGO_CRATE_VALUE * 2.5
 	contains = list(
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/storage/box/bodybags = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 	crate_name = "autopsy kit crate"
 

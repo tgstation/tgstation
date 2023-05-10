@@ -373,6 +373,14 @@
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
 
+/obj/item/organ/internal/brain/golem
+	name = "crystalline matrix"
+	desc = "This collection of sparkling gems somehow allows a golem to think."
+	icon_state = "adamantine_resonator"
+	color = COLOR_GOLEM_GRAY
+	status = ORGAN_MINERAL
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
 /obj/item/organ/internal/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
