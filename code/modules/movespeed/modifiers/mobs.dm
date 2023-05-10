@@ -95,7 +95,7 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/hunter_web
-	multiplicative_slowdown = 0.4
+	multiplicative_slowdown = 0.2
 
 /datum/movespeed_modifier/duct_spider_web
 	multiplicative_slowdown = 1
