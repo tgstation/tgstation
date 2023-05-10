@@ -15,7 +15,8 @@ SUBSYSTEM_DEF(tts)
 	init_order = INIT_ORDER_TTS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
-	/// Queued HTTP requests that have yet to be sent
+	/// Queued HTTP requests that have yet to be sent. TTS requests are handled as lists rather than datums.
+	/// It could be worth refactoring TTS messages to be datums instead to reduce complexity.
 	var/list/queued_tts_messages = list()
 
 	/// HTTP requests currently in progress but not being processed yet
