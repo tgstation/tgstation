@@ -70,6 +70,9 @@
 				to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
 		else
 			to_chat(user, span_warning("The guillotine is already fully repaired!"))
+		return TRUE
+
+	return ..()
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()

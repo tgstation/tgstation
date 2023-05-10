@@ -400,8 +400,6 @@
 	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
 ///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"

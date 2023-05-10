@@ -74,17 +74,17 @@
 		balloon_alert(user, "[A.name] is too big!")
 		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
-		if(syringes.len < max_syringes)
-			if(!user.transferItemToLoc(A, src))
-				return FALSE
-			balloon_alert(user, "[A.name] loaded")
-			syringes += A
-			recharge_newshot()
-			update_appearance()
-			playsound(loc, load_sound, 40)
-			return TRUE
-		else
+		if(syringes.len >= max_syringes)
 			balloon_alert(user, "it's already full!")
+			return FALSE
+		if(!user.transferItemToLoc(A, src))
+			return FALSE
+		balloon_alert(user, "[A.name] loaded")
+		syringes += A
+		recharge_newshot()
+		update_appearance()
+		playsound(loc, load_sound, 40)
+		return TRUE
 	return FALSE
 
 /obj/item/gun/syringe/update_overlays()
@@ -155,19 +155,20 @@
 		var/obj/item/dnainjector/D = A
 		if(D.used)
 			balloon_alert(user, "[D.name] is used up!")
-			return
-		if(syringes.len < max_syringes)
-			if(!user.transferItemToLoc(D, src))
-				return FALSE
-			balloon_alert(user, "[D.name] loaded")
-			syringes += D
-			recharge_newshot()
-			update_appearance()
-			playsound(loc, load_sound, 40)
-			return TRUE
-		else
+			return FALSE
+		if(syringes.len >= max_syringes)
 			balloon_alert(user, "it's already full!")
-	return FALSE
+			return FALSE
+		if(!user.transferItemToLoc(D, src))
+			return FALSE
+		balloon_alert(user, "[D.name] loaded")
+		syringes += D
+		recharge_newshot()
+		update_appearance()
+		playsound(loc, load_sound, 40)
+		return TRUE
+
+	return FALSE // can't call parent becuase cringe handling of parent syringe gun code
 
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"

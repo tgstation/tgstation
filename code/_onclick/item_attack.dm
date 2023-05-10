@@ -11,15 +11,17 @@
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
-		return TRUE
+		return ATTACK_HIT
 
+	// Pre attack will return TRUE or FALSE
+	// TRUE -> Cancel attack chain, FALSE -> Keep it going
 	var/pre_attack_result
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
 				pre_attack_result = pre_attack(target, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_SKIPPED // Return TRUE
+				return ATTACK_CANCELLED // Same as TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -28,16 +30,17 @@
 		pre_attack_result = pre_attack(target, user, params)
 
 	if(pre_attack_result)
-		return ATTACK_STYLE_SKIPPED // Return TRUE
+		return ATTACK_CANCELLED // Same as TRUE
 
+	// [target]/attackby calls either [src]/attack (if target is a mob) or [src]/attack_atom (if target is not a mob)
+	// Both in turn call end up calling [src]/attacked_by on success
 	var/attackby_result
-
 	if (is_right_clicking)
 		switch (target.attackby_secondary(src, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
 				attackby_result = target.attackby(src, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_SKIPPED // Return TRUE
+				return ATTACK_CANCELLED // Same as TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -45,19 +48,17 @@
 	else
 		attackby_result = target.attackby(src, user, params)
 
-	if (attackby_result)
-		return attackby_result // Return TRUE
-
-	if(QDELETED(src) || QDELETED(target))
-		attack_qdeleted(target, user, TRUE, params)
-		return ATTACK_STYLE_SKIPPED // Return TRUE
+	// Attackby will return an attack flag depending on the result
+	// Only proceeds to afterattack if the attack hit something
+	if (!(attackby_result & ATTACK_HIT))
+		return attackby_result
 
 	if (is_right_clicking)
 		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
 
 		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return ATTACK_STYLE_SKIPPED // Return TRUE
+			return ATTACK_CANCELLED // Same as TRUE
 
 	var/afterattack_result = afterattack(target, user, TRUE, params)
 
@@ -89,8 +90,12 @@
  * * params - click params such as alt/shift etc
  *
  * See: [/obj/item/proc/melee_attack_chain]
+ *
+ * Return TRUE to stop the rest of the attack chain.
+ * Return FALSE to continue the attack chain (continue to attackby, which calls attack).
  */
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
@@ -104,8 +109,13 @@
  * * params - click params such as alt/shift etc
  *
  * See: [/obj/item/proc/melee_attack_chain]
+ *
+ * Return [SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN] to stop the rest of the attack chain.
+ * Return [SECONDARY_ATTACK_CALL_NORMAL] to call [/obj/item/proc/pre_attack].
+ * Return [SECONDARY_ATTACK_CONTINUE_CHAIN] to continue the attack chain (continue to attackby, which calls attack).
  */
 /obj/item/proc/pre_attack_secondary(atom/target, mob/living/user, params)
+	SHOULD_CALL_PARENT(TRUE)
 	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, params)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
@@ -127,9 +137,10 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby(obj/item/attacking_item, mob/user, params)
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
-		return TRUE
-	return FALSE
+		return ATTACK_CANCEL  // Same as TRUE
+	return NONE // melbert todo : go over this proc
 
 /**
  * Called on an object being right-clicked on by an item
@@ -153,7 +164,8 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!(obj_flags & CAN_BE_HIT))
 		return
@@ -161,8 +173,10 @@
 	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
+
 	user.changeNext_move(attacking_item.attack_speed)
 	return attacking_item.attack(src, user, params)
 
@@ -171,10 +185,7 @@
 
 	// Normal attackby updates click cooldown, so we have to make up for it
 	if (result != SECONDARY_ATTACK_CALL_NORMAL)
-		if(weapon.secondary_attack_speed)
-			user.changeNext_move(weapon.secondary_attack_speed)
-		else
-			user.changeNext_move(weapon.attack_speed)
+		user.changeNext_move(weapon.secondary_attack_speed || weapon.attack_speed)
 
 	return result
 
@@ -189,18 +200,18 @@
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_CANCEL
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SKIPPED
 
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SKIPPED
 
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SKIPPED
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
@@ -234,12 +245,13 @@
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return
+		return ATTACK_CANCELLED
 	if(item_flags & NOBLUDGEON)
-		return
+		return NONE
 	user.changeNext_move(attack_speed)
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
+	return ATTACK_HIT
 
 /**
  * Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
@@ -253,13 +265,14 @@
 		CRASH("attacked_by() was called on an object that doesnt use integrity!")
 
 	if(!attacking_item.force)
-		return
+		return ATTACK_MISSED
 
 	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
+	return ATTACK_HIT
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
@@ -277,7 +290,7 @@
 	else
 		// note: this check does not include damage from multipliers, like physiology
 		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration))
-			return ATTACK_STYLE_BLOCKED
+			return ATTACK_BLOCKED
 
 		var/zone_hit_chance = 80
 		if(body_position == LYING_DOWN)
@@ -288,7 +301,7 @@
 	var/hit_zone = parse_zone(affecting?.body_zone) || "body"
 	send_item_attack_message(attacking_item, user, hit_zone, affecting)
 	if(damage <= 0)
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SKIPPED
 
 	var/armor_block = min(ARMOR_MAX_BLOCK, run_armor_check(
 		def_zone = affecting,
@@ -328,7 +341,7 @@
 	if(damage_type == BRUTE && prob(33))
 		add_blood_from_being_attacked(attacking_item, user, affecting)
 
-	return ATTACK_STYLE_HIT
+	return ATTACK_HIT
 
 /**
  * Effects ran when this mob is attacked with an item by another mob, from [attacked_by].
@@ -486,14 +499,14 @@
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_BLOCKED
 
 	return ..()
 
 /mob/living/basic/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_BLOCKED
 
 	return ..()
 
@@ -535,11 +548,6 @@
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return SECONDARY_ATTACK_CALL_NORMAL
-
-/// Called if the target gets deleted by our attack
-/obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)

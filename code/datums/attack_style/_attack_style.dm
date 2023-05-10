@@ -126,20 +126,20 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			if(total_hit >= hits_per_turf_allowed)
 				break
 
-		if(attack_flag & ATTACK_STYLE_CANCEL)
-			return ATTACK_STYLE_CANCEL
-		if(attack_flag & ATTACK_STYLE_BLOCKED)
+		if(attack_flag & ATTACK_CANCELLED)
+			return ATTACK_CANCELLED
+		if(attack_flag & ATTACK_BLOCKED)
 			break
 
 	if(total_total_hit <= 0)
 		// counts as a miss if we don't hit anyone, duh
-		attack_flag |= ATTACK_STYLE_MISSED
+		attack_flag |= ATTACK_MISSED
 
-	if(attack_flag & ATTACK_STYLE_HIT)
+	if(attack_flag & ATTACK_HIT)
 		if(successful_hit_sound)
 			playsound(attacker, successful_hit_sound, hit_volume, TRUE)
 
-	else if(attack_flag & ATTACK_STYLE_MISSED)
+	else if(attack_flag & ATTACK_MISSED)
 		if(miss_sound)
 			playsound(attacker, miss_sound, miss_volume, TRUE)
 
@@ -191,18 +191,18 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/melee_result = weapon.melee_attack_chain(attacker, smacked)
 	switch(melee_result)
 		if(TRUE)
-			return ATTACK_STYLE_HIT
+			return ATTACK_HIT
 		if(FALSE)
-			return ATTACK_STYLE_MISSED
+			return ATTACK_MISSED
 		if(null)
 			stack_trace("Melee attack chain returned null, update it.")
-			return ATTACK_STYLE_MISSED
+			return ATTACK_MISSED
 		else
 			stack_trace("Melee attack chain returned unknown value ([melee_result]), update it.")
-			return ATTACK_STYLE_MISSED
+			return ATTACK_MISSED
 
 	// obj/item.+attack\(
-	// Convert to bitflags, ATTACK_STYLE_HIT / ATTACK_STYLE_BLOCKED
+	// Convert to bitflags, ATTACK_HIT / ATTACK_BLOCKED
 	// Attack chain current
 	// Click -> item Melee attack chain -> item tool act -> item pre attack -> mob attackby -> item attack -> mob attacked by -> item attack qdeleted -> item after attack
 

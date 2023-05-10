@@ -137,6 +137,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 /obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	. = ..()
+	if(.)
+		return
+
 	if(istype(O, /obj/item/stack/arcadeticket))
 		var/obj/item/stack/arcadeticket/T = O
 		var/amount = T.get_amount()

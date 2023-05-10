@@ -77,3 +77,6 @@
 			forgedseal = C.crayon_color
 			to_chat(user, span_notice("You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?"))
 			update_appearance()
+		return TRUE
+
+	return ..()

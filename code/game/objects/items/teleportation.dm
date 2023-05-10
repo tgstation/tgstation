@@ -152,6 +152,10 @@
 	. = ..()
 
 /obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	var/portal_location = last_portal_location
 
 	if (isweakref(portal_location))
