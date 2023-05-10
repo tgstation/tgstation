@@ -175,6 +175,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
 
+	// admin stuff
+	muted = savefile.get_entry("muted", muted)
+
 	// OOC commendations
 	hearted_until = savefile.get_entry("hearted_until", hearted_until)
 	if(hearted_until > world.realtime)
@@ -258,6 +261,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.set_entry("muted", muted)
 	savefile.save()
 	return TRUE
 
