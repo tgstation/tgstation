@@ -10,19 +10,21 @@
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
-		/obj/item/trash/tray,
+		/obj/item/broken_bottle,
+		/obj/item/kitchen/fork,
+		/obj/item/plate,
+		/obj/item/plate_shard,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
-		/obj/item/kitchen/fork,
 		/obj/item/shard,
-		/obj/item/broken_bottle,
-		/obj/item/plate,
-		/obj/item/plate_shard)
-	var/static/list/disposable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
-		/obj/item/shard,
+	)
+	var/static/list/disposable_items = list(/obj/item/trash/waffles,
+		/obj/item/broken_bottle,
 		/obj/item/plate_shard,
-		/obj/item/broken_bottle)
+		/obj/item/shard,
+		/obj/item/trash/tray,
+	)
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
