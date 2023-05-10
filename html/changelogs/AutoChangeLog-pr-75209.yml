@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Bluespace sender and vendor should display colors correctly now"
-  - bugfix: "Gas filter should show labels properly now"
-  - bugfix: "Nitrium now has its own gas color in the UI"

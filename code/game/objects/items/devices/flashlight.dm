@@ -202,6 +202,7 @@
 /obj/item/flashlight/equipped(mob/user, slot, initial)
 	. = ..()
 	setDir(initial(dir))
+	SEND_SIGNAL(user, COMSIG_ATOM_DIR_CHANGE, user.dir, user.dir) // This is dumb, but if we don't do this then the lighting overlay may be facing the wrong direction depending on how it is picked up
 
 /// for directional sprites - so when we drop the flashlight, it drops facing the same way the user is facing
 /obj/item/flashlight/dropped(mob/user, silent = FALSE)
@@ -832,6 +833,11 @@
 	human emit the smallest amount of light possible. Thanks for reading :)"
 	light_range = 1
 	light_power = 0.07
+
+/obj/item/flashlight/eyelight/glow
+	light_system = MOVABLE_LIGHT_BEAM
+	light_range = 4
+	light_power = 2
 
 #undef FAILURE
 #undef SUCCESS
