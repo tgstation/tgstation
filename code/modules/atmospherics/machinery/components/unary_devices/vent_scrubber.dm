@@ -179,14 +179,14 @@
 		investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
 
 	src.scrubbing = scrubbing
-	update_appearance(UPDATE_ICON)
 	atmos_conditions_changed()
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
 	src.widenet = widenet
-	update_appearance(UPDATE_ICON)
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
