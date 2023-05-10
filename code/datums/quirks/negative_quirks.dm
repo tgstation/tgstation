@@ -893,7 +893,7 @@
 	name = "Chronic Illness"
 	desc = "You have a chronic illness that requires constant medication to keep under control."
 	icon = FA_ICON_DISEASE
-	value = -12
+	value = 0
 	gain_text = span_danger("You feel a bit off today.")
 	lose_text = span_notice("You feel a bit better today.")
 	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
