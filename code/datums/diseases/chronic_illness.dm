@@ -20,6 +20,8 @@
 		return
 
 	switch(stage)
+		if(1)
+			carrier = FALSE // Go fuck yourself
 		if(2)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel dizzy."))
@@ -97,8 +99,6 @@
 					span_userdanger("You feel a horrible pain as your heart is replaced with one from another dimension!"))
 					var/obj/item/organ/internal/heart/cursed/cheart = new /obj/item/organ/internal/heart/cursed()
 					cheart.replace_into(affected_mob)
-					playsound(target, 'sound/hallucinations/far_noise.ogg', 50, 1)
+					playsound(affected_mob, 'sound/hallucinations/far_noise.ogg', 50, 1)
 					stage = 3
-
-
 

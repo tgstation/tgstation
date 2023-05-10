@@ -12,7 +12,7 @@
 
 	progression_minimum = 20 MINUTES
 
-	progression_reward = list(4 MINUTES, 8 MINUTES)
+	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = list(1, 2)
 
 
