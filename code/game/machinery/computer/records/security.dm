@@ -188,6 +188,10 @@
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
 
+			//Updates sec huds
+			for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
+				human.sec_hud_set_security_status()
+
 			return TRUE
 
 	return FALSE
@@ -215,6 +219,10 @@
 		target.crimes += new_crime
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
 		target.wanted_status = WANTED_ARREST
+
+		//Updates sec huds
+		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
+			human.sec_hud_set_security_status()
 
 		return TRUE
 
