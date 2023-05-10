@@ -215,19 +215,13 @@
 //Ruin of Crashed Ship
 
 /area/ruin/space/has_grav/crashedship/aft
-	name = "\improper Crashed Ship's Aft"
+	name = "\improper Crashed Aft"
 
 /area/ruin/space/has_grav/crashedship/midship
-	name = "\improper Crashed Ship's Midship"
+	name = "\improper Crashed Midship"
 
 /area/ruin/space/has_grav/crashedship/fore
-	name = "\improper Crashed Ship's Fore"
-
-/area/ruin/space/has_grav/crashedship/big_asteroid
-	name = "\improper Asteroid"
-
-/area/ruin/space/has_grav/crashedship/small_asteroid
-	name = "\improper Asteroid"
+	name = "\improper Crashed Fore"
 
 //Ruin of ancient Space Station (OldStation)
 

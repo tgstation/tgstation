@@ -3866,7 +3866,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Re" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)

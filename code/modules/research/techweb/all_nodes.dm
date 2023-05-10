@@ -68,7 +68,7 @@
 		"light_replacer",
 		"light_tube",
 		"mechfab",
-		"micro_servo",
+		"micro_mani",
 		"miniature_power_cell",
 		"newscaster_frame",
 		"oven_tray",
@@ -410,7 +410,6 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list(
-		"autopsyscanner",
 		"crewpinpointer",
 		"defibrillator_compact",
 		"harvester",
@@ -575,7 +574,7 @@
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
-		"nano_servo",
+		"nano_mani",
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -646,7 +645,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list(
-		"pico_servo",
+		"pico_mani",
 		"super_matter_bin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
@@ -709,7 +708,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
-		"femto_servo",
+		"femto_mani",
 		"quantum_keycard",
 		"swapper",
 		"triphasic_scanning",
@@ -944,7 +943,7 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
-
+		
 /datum/techweb_node/cyborg_upg_serv
 	id = "cyborg_upg_serv"
 	display_name = "Cyborg Upgrades: Service"

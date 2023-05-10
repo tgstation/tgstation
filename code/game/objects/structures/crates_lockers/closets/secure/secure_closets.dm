@@ -7,7 +7,6 @@
 	armor_type = /datum/armor/closet_secure_closet
 	secure = TRUE
 	damage_deflection = 20
-	material_drop_amount = 5
 
 /datum/armor/closet_secure_closet
 	melee = 30

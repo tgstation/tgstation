@@ -80,8 +80,8 @@
 	. = ..()
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		max_seeds = initial(max_seeds) * matter_bin.tier
-	for(var/datum/stock_part/servo/servo in component_parts)
-		seed_multiplier = initial(seed_multiplier) * servo.tier
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		seed_multiplier = initial(seed_multiplier) * manipulator.tier
 
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()

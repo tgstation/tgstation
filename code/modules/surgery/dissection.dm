@@ -30,10 +30,14 @@
 	return TRUE
 
 /datum/surgery_step/dissection
-	name = "dissect (autopsy scanner)"
+	name = "dissect (scalpel)"
 	time = 16 SECONDS
 	implements = list(
-		/obj/item/autopsy_scanner = 100,
+		TOOL_SCALPEL = 100,
+		/obj/item/melee/energy/sword = 75,
+		/obj/item/knife = 65,
+		/obj/item/shard = 45,
+		/obj/item = 30,
 	)
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)

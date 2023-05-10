@@ -23,10 +23,7 @@
 
 /datum/computer_file/Destroy(force)
 	if(computer)
-		if(src == computer.active_program)
-			computer.active_program = null
-		if(src in computer.idle_threads)
-			computer.idle_threads.Remove(src)
+		computer.remove_file(src)
 		computer = null
 	if(disk_host)
 		disk_host.remove_file(src)
@@ -90,8 +87,8 @@
  * Arguments:
  * * background - Whether the app is running in the background.
  */
-/datum/computer_file/program/proc/event_powerfailure()
-	kill_program()
+/datum/computer_file/program/proc/event_powerfailure(background)
+	kill_program(forced = TRUE)
 
 /**
  * Called when a computer program is crashing due to any required connection being shut off.
@@ -99,7 +96,7 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_networkfailure(background)
-	kill_program()
+	kill_program(forced = TRUE)
 	if(background)
 		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
 	else

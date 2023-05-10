@@ -25,7 +25,9 @@
 /area/ruin)
 "hG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/preopen,
+/obj/structure/closet/secure_closet/freezer/fridge/open{
+	opened = 1
+	},
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
 /obj/item/food/pie/mimetart,
@@ -59,7 +61,9 @@
 /area/ruin)
 "ox" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet/preopen,
+/obj/structure/closet{
+	opened = 1
+	},
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,

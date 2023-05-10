@@ -60,7 +60,6 @@
 		/obj/item/coin/adamantine = 2,
 		/obj/item/coin/mythril = 2,
 		/obj/item/coin/runite = 2,
-		/obj/item/food/chococoin = 2,
 		/obj/item/coin/twoheaded = 1,
 		/obj/item/coin/antagtoken = 1,
 	)

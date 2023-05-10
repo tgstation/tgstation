@@ -128,7 +128,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(null, src)
+			em_block = new(src, render_target)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -165,8 +165,6 @@
 			AddComponent(/datum/component/overlay_lighting)
 		if(MOVABLE_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
-		if(MOVABLE_LIGHT_BEAM)
-			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
@@ -201,7 +199,7 @@
 		move_packet = null
 
 	if(spatial_grid_key)
-		SSspatial_grid.force_remove_from_grid(src)
+		SSspatial_grid.force_remove_from_cell(src)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
@@ -233,16 +231,15 @@
 	// This saves several hundred milliseconds of init time.
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-			if(em_block)
-				SET_PLANE(em_block, EMISSIVE_PLANE, src)
-			else if(!QDELETED(src))
+			if(!em_block && !QDELETED(src))
 				render_target = ref(src)
-				em_block = new(null, src)
+				em_block = new(src, render_target)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
 	// EMISSIVE_BLOCK_GENERIC == 0
 	else
 		return fast_emissive_blocker(src)
+
 
 /// Generates a space underlay for a turf
 /// This provides proper lighting support alongside just looking nice
@@ -253,7 +250,7 @@
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
 	if(!generate_for.render_target)
 		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)

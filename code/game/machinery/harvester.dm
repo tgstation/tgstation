@@ -192,7 +192,6 @@
 /obj/machinery/harvester/Exited(atom/movable/gone, direction)
 	if (!state_open && gone == occupant)
 		container_resist_act(gone)
-	return ..()
 
 /obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)

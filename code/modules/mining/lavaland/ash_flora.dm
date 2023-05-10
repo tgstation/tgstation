@@ -26,7 +26,7 @@
 	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon_state
 
-/obj/structure/flora/ash/harvest(user, product_amount_multiplier)
+/obj/structure/flora/ash/harvest(user)
 	if(!..())
 		return FALSE
 	icon_state = "[base_icon_state]p"

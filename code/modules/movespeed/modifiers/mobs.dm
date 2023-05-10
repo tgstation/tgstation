@@ -13,9 +13,6 @@
 /datum/movespeed_modifier/hunger
 	variable = TRUE
 
-/datum/movespeed_modifier/golem_hunger
-	variable = TRUE
-
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 

@@ -4,10 +4,8 @@
 	name = "necropolis chest"
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
-	base_icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	can_install_electronics = FALSE
-	paint_jobs = null
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
@@ -78,16 +76,10 @@
 	qdel(item)
 	to_chat(user, span_notice("You disable the magic lock, revealing the loot."))
 
-/obj/structure/closet/crate/necropolis/tendril/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
+/obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
+	if(!spawned_loot)
 		return FALSE
-
-	if(!broken && !force && !spawned_loot)
-		balloon_alert(user, "its locked!")
-		return FALSE
-
-	return TRUE
+	return ..()
 
 //Megafauna chests
 

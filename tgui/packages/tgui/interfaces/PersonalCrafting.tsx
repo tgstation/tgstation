@@ -26,7 +26,6 @@ const TYPE_ICONS = {
   [Food.Pineapple]: 'apple-alt',
   [Food.Raw]: 'drumstick-bite',
   [Food.Seafood]: 'fish',
-  [Food.Stone]: 'gem',
   [Food.Sugar]: 'candy-cane',
   [Food.Toxic]: 'biohazard',
   [Food.Vegetables]: 'carrot',

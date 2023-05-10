@@ -133,52 +133,52 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 //Maipulators
-/datum/design/micro_servo
-	name = "Micro Servo"
+/datum/design/micro_mani
+	name = "Micro Manipulator"
 	desc = "A stock part used in the construction of various devices."
-	id = "micro_servo"
+	id = "micro_mani"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/stock_parts/servo
+	build_path = /obj/item/stock_parts/manipulator
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/nano_servo
-	name = "Nano Servo"
+/datum/design/nano_mani
+	name = "Nano Manipulator"
 	desc = "A stock part used in the construction of various devices."
-	id = "nano_servo"
+	id = "nano_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
-	build_path = /obj/item/stock_parts/servo/nano
+	build_path = /obj/item/stock_parts/manipulator/nano
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/pico_servo
-	name = "Pico Servo"
+/datum/design/pico_mani
+	name = "Pico Manipulator"
 	desc = "A stock part used in the construction of various devices."
-	id = "pico_servo"
+	id = "pico_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
-	build_path = /obj/item/stock_parts/servo/pico
+	build_path = /obj/item/stock_parts/manipulator/pico
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
 	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/femto_servo
-	name = "Femto Servo"
+/datum/design/femto_mani
+	name = "Femto Manipulator"
 	desc = "A stock part used in the construction of various devices."
-	id = "femto_servo"
+	id = "femto_mani"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/diamond = 30, /datum/material/titanium = 30)
-	build_path = /obj/item/stock_parts/servo/femto
+	build_path = /obj/item/stock_parts/manipulator/femto
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
 	)

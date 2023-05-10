@@ -1,0 +1,4 @@
+author: "RealityOverseer"
+delete-after: True
+changes:
+  - bugfix: "fixed unrefined ectoplasm anomaly cores not appearing as unrefined"

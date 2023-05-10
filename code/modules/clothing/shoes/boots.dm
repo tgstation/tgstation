@@ -121,6 +121,7 @@
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
+	species_exception = list(/datum/species/golem/uranium)
 
 /datum/armor/shoes_workboots
 	bio = 80

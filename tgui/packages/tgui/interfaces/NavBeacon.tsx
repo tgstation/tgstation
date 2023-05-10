@@ -25,7 +25,7 @@ export type DisabledProps = {
 };
 
 export type NavBeaconStaticControl = {
-  direction_options: string[];
+  direction_options: String[];
   has_codes: BooleanLike;
 };
 

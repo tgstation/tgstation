@@ -1,7 +1,7 @@
 /turf/open/misc/beach
 	name = "beach"
 	desc = "Sandy."
-	icon = 'icons/turf/sand.dmi'
+	icon = 'icons/misc/beach.dmi'
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
@@ -20,33 +20,33 @@
 	base_icon_state = "sand"
 	baseturfs = /turf/open/misc/beach/sand
 
-/turf/open/misc/beach/sand/Initialize(mapload)
-	. = ..()
-	if(prob(15))
-		icon_state = "sand[rand(1,4)]"
-
-/turf/open/misc/beach/coast
+/turf/open/misc/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
-	icon = 'icons/turf/beach.dmi'
-	icon_state = "beach"
-	base_icon_state = "beach"
-	footstep = FOOTSTEP_WATER
-	barefootstep = FOOTSTEP_WATER
-	clawfootstep = FOOTSTEP_WATER
-	heavyfootstep = FOOTSTEP_WATER
+	icon_state = "sandwater_t"
+	base_icon_state = "sandwater_t"
+	baseturfs = /turf/open/misc/beach/coastline_t
 
-/turf/open/misc/beach/coast/break_tile()
+/turf/open/misc/beach/sand/coastline_t/break_tile()
 	. = ..()
-	icon_state = "beach"
+	icon_state = "sandwater_t"
 
-/turf/open/misc/beach/coast/corner
-	icon_state = "beach-corner"
-	base_icon_state = "beach-corner"
+/turf/open/misc/beach/coastline_t/sandwater_inner
+	icon_state = "sandwater_inner"
 
-/turf/open/misc/beach/coast/corner/break_tile()
+/turf/open/misc/beach/coastline_b //need to make this water subtype.
+	name = "coastline"
+	icon_state = "sandwater_b"
+	base_icon_state = "sandwater_b"
+	baseturfs = /turf/open/misc/beach/coastline_b
+	footstep = FOOTSTEP_LAVA
+	barefootstep = FOOTSTEP_LAVA
+	clawfootstep = FOOTSTEP_LAVA
+	heavyfootstep = FOOTSTEP_LAVA
+
+/turf/open/misc/beach/sand/coastline_b/break_tile()
 	. = ..()
-	icon_state = "beach-corner"
+	icon_state = "sandwater_b"
 
 /turf/open/misc/sandy_dirt
 	gender = PLURAL

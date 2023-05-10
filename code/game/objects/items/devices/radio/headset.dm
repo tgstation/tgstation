@@ -211,10 +211,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot = /obj/item/encryptionkey/headset_srvsec
 
 /obj/item/radio/headset/headset_srvmed
-	name = "service medical headset"
+	name = "psychology headset"
 	desc = "A headset allowing the wearer to communicate with medbay and service."
-	icon_state = "srv_headset"
-	worn_icon_state = "srv_headset"
+	icon_state = "med_headset"
+	worn_icon_state = "med_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvmed
 
 /obj/item/radio/headset/headset_com

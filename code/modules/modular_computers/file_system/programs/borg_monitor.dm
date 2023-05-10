@@ -19,7 +19,7 @@
 	DL_source = null
 	return ..()
 
-/datum/computer_file/program/borg_monitor/kill_program()
+/datum/computer_file/program/borg_monitor/kill_program(forced = FALSE)
 	loglist = null //Not everything is saved if you close an app
 	DL_source = null
 	DL_progress = 0

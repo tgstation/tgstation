@@ -20,7 +20,6 @@ export enum Food {
   Pineapple = 'PINEAPPLE',
   Raw = 'RAW',
   Seafood = 'SEAFOOD',
-  Stone = 'STONE',
   Sugar = 'SUGAR',
   Toxic = 'TOXIC',
   Vegetables = 'VEGETABLES',

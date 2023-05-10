@@ -482,10 +482,10 @@
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_warning("You feel your body rapidly hardening..."))
+			to_chat(user, span_warning("You feel your body rapidly crystallizing..."))
 			if(do_after(user, 120, target = user))
 				to_chat(user, span_warning("You feel solid."))
-				user.set_species(/datum/species/golem)
+				user.set_species(pick(/datum/species/golem/adamantine))
 				return
 			to_chat(user, span_notice("You stop feeding [src], and your body returns to its slimelike state."))
 

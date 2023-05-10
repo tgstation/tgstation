@@ -9,7 +9,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bJ" = (
-/turf/open/floor/holofloor/beach{
+/turf/open/floor/holofloor/beach/coast_t{
 	dir = 4
 	},
 /area/shuttle/escape/luxury)
@@ -104,8 +104,8 @@
 /area/shuttle/escape)
 "gG" = (
 /obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	dir = 4;
-	id = "gimmemoney"
+	id = "gimmemoney";
+	dir = 4
 	},
 /turf/closed/indestructible/opsglass{
 	desc = "A durable looking window made of an alloy of of plasma and titanium.";
@@ -569,9 +569,9 @@
 /area/shuttle/escape)
 "yB" = (
 /obj/structure/chair/stool/bar{
+	name = "buckleable bar stool";
 	can_buckle = 1;
-	dir = 1;
-	name = "buckleable bar stool"
+	dir = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
@@ -608,15 +608,17 @@
 /area/shuttle/escape/luxury)
 "zM" = (
 /obj/structure/chair/stool/bar{
+	name = "buckleable bar stool";
 	can_buckle = 1;
-	dir = 8;
-	name = "buckleable bar stool"
+	dir = 8
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "Av" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/vomit/old,
@@ -768,9 +770,7 @@
 /area/shuttle/escape/luxury)
 "FC" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/holofloor/beach/coast{
-	dir = 4
-	},
+/turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "FD" = (
 /obj/item/food/cherrycupcake{
@@ -832,7 +832,9 @@
 /area/shuttle/escape/luxury)
 "In" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/oil,
@@ -899,9 +901,7 @@
 /area/shuttle/escape/luxury)
 "Lc" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/holofloor/beach/coast{
-	dir = 4
-	},
+/turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "Li" = (
 /obj/structure/window/spawner/directional/north,
@@ -966,11 +966,6 @@
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"Om" = (
-/turf/open/floor/holofloor/beach/coast{
-	dir = 4
-	},
 /area/shuttle/escape/luxury)
 "Ow" = (
 /obj/effect/decal/cleanable/oil/slippery,
@@ -1798,8 +1793,8 @@ WF
 vL
 Ex
 FC
-Om
-Om
+YV
+YV
 Lc
 Ex
 Ex

@@ -111,7 +111,7 @@ const PressureIndicator = (props, context) => {
   const {
     currentStatus: { icon, color },
   } = props;
-  let spin = icon === 'fan';
+  let spin = icon === 'fan' ? 1 : 0;
 
   return (
     <Box color={color}>

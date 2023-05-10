@@ -126,7 +126,7 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program()
+			kill_program()
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
@@ -134,17 +134,26 @@
 		if("PC_minimize")
 			if(!active_program)
 				return
-			active_program.background_program()
+			//header programs can't be minimized.
+			if(active_program.header_program)
+				kill_program()
+				return TRUE
+
+			idle_threads.Add(active_program)
+			active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
+
+			active_program = null
+			update_appearance()
 			return TRUE
 
 		if("PC_killprogram")
 			var/prog = params["name"]
 			var/datum/computer_file/program/killed_program = find_file_by_name(prog)
 
-			if(!istype(killed_program))
+			if(!istype(killed_program) || killed_program.program_state == PROGRAM_STATE_KILLED)
 				return
 
-			killed_program.kill_program()
+			killed_program.kill_program(forced = TRUE)
 			to_chat(usr, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
 			return TRUE
 

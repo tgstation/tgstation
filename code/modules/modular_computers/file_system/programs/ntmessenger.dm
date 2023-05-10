@@ -3,6 +3,7 @@
 	filedesc = "Direct Messenger"
 	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "command"
+	program_state = PROGRAM_STATE_BACKGROUND
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
@@ -413,7 +414,7 @@
 		if(!computer.turn_on(usr, open_ui = FALSE))
 			return
 	if(computer.active_program != src)
-		if(!computer.open_program(usr, src, open_ui = FALSE))
+		if(!computer.open_program(usr, src))
 			return
 	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])

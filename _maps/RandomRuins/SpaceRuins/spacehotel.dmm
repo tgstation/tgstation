@@ -309,6 +309,11 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/dock)
+"db" = (
+/turf/open/misc/beach/coastline_b{
+	dir = 8
+	},
+/area/ruin/space/has_grav/hotel/pool)
 "dd" = (
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
@@ -2710,7 +2715,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "CG" = (
-/turf/open/misc/beach/coast{
+/turf/open/misc/beach/coastline_t{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)
@@ -2800,7 +2805,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "DK" = (
-/turf/open/water/beach,
+/turf/open/misc/beach/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
 "DO" = (
 /obj/effect/turf_decal/loading_area,
@@ -3148,7 +3153,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "HI" = (
 /obj/machinery/light/directional/west,
-/turf/open/water/beach,
+/turf/open/misc/beach/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
 "HP" = (
 /obj/structure/table/wood/fancy/red,
@@ -6641,11 +6646,11 @@ MQ
 JY
 ma
 JC
-DK
-DK
-DK
-DK
-DK
+db
+db
+db
+db
+db
 xP
 ma
 JY
@@ -6714,11 +6719,11 @@ Iw
 Vq
 Si
 QP
-DK
-DK
-DK
-DK
-DK
+db
+db
+db
+db
+db
 nJ
 mL
 JY
@@ -6787,11 +6792,11 @@ JY
 JY
 Fi
 QP
-DK
-DK
-DK
-DK
-DK
+db
+db
+db
+db
+db
 nJ
 qg
 JY
@@ -6860,11 +6865,11 @@ yV
 JY
 wW
 Cu
-DK
-DK
-DK
-DK
-DK
+db
+db
+db
+db
+db
 Qc
 dN
 JY

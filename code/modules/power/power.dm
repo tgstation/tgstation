@@ -176,7 +176,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(machine_stat & BROKEN)
-		update_appearance()
 		return
 	var/initial_stat = machine_stat
 	if(powered(power_channel))

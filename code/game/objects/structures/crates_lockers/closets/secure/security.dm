@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/captains
 	name = "captain's locker"
-	icon_state = "cap"
 	req_access = list(ACCESS_CAPTAIN)
+	icon_state = "cap"
 
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
@@ -23,8 +23,8 @@
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
-	icon_state = "hop"
 	req_access = list(ACCESS_HOP)
+	icon_state = "hop"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
@@ -47,8 +47,8 @@
 
 /obj/structure/closet/secure_closet/hos
 	name = "head of security's locker"
-	icon_state = "hos"
 	req_access = list(ACCESS_HOS)
+	icon_state = "hos"
 
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
@@ -75,8 +75,8 @@
 
 /obj/structure/closet/secure_closet/warden
 	name = "warden's locker"
-	icon_state = "warden"
 	req_access = list(ACCESS_ARMORY)
+	icon_state = "warden"
 
 /obj/structure/closet/secure_closet/warden/PopulateContents()
 	..()
@@ -101,8 +101,8 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
-	icon_state = "sec"
 	req_access = list(ACCESS_BRIG)
+	icon_state = "sec"
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	..()
@@ -150,13 +150,13 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
+	req_access = list(ACCESS_DETECTIVE)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	door_anim_time = 0 // no animation
 	open_sound = 'sound/machines/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
-	req_access = list(ACCESS_DETECTIVE)
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
@@ -183,54 +183,62 @@
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
-	anchored = TRUE
 	req_one_access = list(ACCESS_BRIG)
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/genpop
 	name = "genpop storage locker"
 	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
-	access_choices = FALSE
-	paint_jobs = null
+
+	///Reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id_ref = null
+
+/obj/structure/closet/secure_closet/brig/genpop/Destroy()
+	assigned_id_ref = null
+	return ..()
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
 
-/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, params)
-	if(!secure || !istype(user_id))
-		return ..()
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/used_id, mob/user, params)
+	. = ..()
+	if(!istype(used_id, /obj/item/card/id/advanced/prisoner))
+		return
 
-	if(isnull(id_card))
+	if(!assigned_id_ref)
 		say("Prisoner ID linked to locker.")
-		id_card = WEAKREF(user_id)
-		name = "genpop storage locker - [user_id.registered_name]"
-
-/obj/structure/closet/secure_closet/brig/genpop/proc/clear_access()
-	say("Authorized ID detected. Unlocking locker and resetting ID.")
-	locked = FALSE
-	id_card = null
-	name = initial(name)
-	update_appearance()
+		assigned_id_ref = WEAKREF(used_id)
+		name = "genpop storage locker - [used_id.registered_name]"
+		return
+	var/obj/item/card/id/advanced/prisoner/registered_id = assigned_id_ref.resolve()
+	if(used_id == registered_id)
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
 
 /obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
-	if(!secure || !istype(used_id))
-		return ..()
+	. = ..()
 
 	var/list/id_access = used_id.GetAccess()
-	if(!isnull(id_card) && (ACCESS_BRIG in id_access))
-		clear_access()
-
+	if(assigned_id_ref && (ACCESS_BRIG in id_access))
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "secure evidence closet"
-	req_one_access = list(ACCESS_ARMORY, ACCESS_DETECTIVE)
+	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
-
 	new /obj/item/clothing/under/rank/prisoner( src )
 	new /obj/item/clothing/under/rank/prisoner/skirt( src )
 	new /obj/item/clothing/shoes/sneakers/orange( src )
@@ -257,14 +265,14 @@
 	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/contraband/heads
+	anchored = TRUE
 	name = "contraband locker"
 	req_access = list(ACCESS_COMMAND)
-	anchored = TRUE
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
-	icon_state = "armory"
 	req_access = list(ACCESS_ARMORY)
+	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
 	..()
@@ -283,8 +291,8 @@
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
-	icon_state = "armory"
 	req_access = list(ACCESS_ARMORY)
+	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory2/PopulateContents()
 	..()
@@ -296,8 +304,8 @@
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
-	icon_state = "armory"
 	req_access = list(ACCESS_ARMORY)
+	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory3/PopulateContents()
 	..()
@@ -312,8 +320,8 @@
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
-	icon_state = "tac"
 	req_access = list(ACCESS_ARMORY)
+	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/tac/PopulateContents()
 	..()
@@ -324,8 +332,8 @@
 
 /obj/structure/closet/secure_closet/labor_camp_security
 	name = "labor camp security locker"
-	icon_state = "sec"
 	req_access = list(ACCESS_SECURITY)
+	icon_state = "sec"
 
 /obj/structure/closet/secure_closet/labor_camp_security/PopulateContents()
 	..()

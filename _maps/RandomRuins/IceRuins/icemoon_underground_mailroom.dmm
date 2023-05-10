@@ -104,7 +104,9 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "jm" = (
-/obj/structure/closet/crate/mail/preopen,
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -163,7 +165,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "oU" = (
-/obj/structure/closet/crate/mail/preopen,
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -313,7 +317,9 @@
 	},
 /area/ruin/powered/mailroom)
 "Jd" = (
-/obj/structure/closet/crate/mail/preopen,
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -407,7 +413,9 @@
 /turf/open/misc/grass,
 /area/ruin/powered/mailroom)
 "Qb" = (
-/obj/structure/closet/crate/mail/preopen,
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -486,7 +494,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
-/obj/structure/closet/crate/mail/preopen,
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,

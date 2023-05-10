@@ -165,7 +165,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aN" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -634,7 +636,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cH" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -961,7 +965,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dY" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -1014,7 +1020,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ek" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/stack/sheet/cardboard/fifty,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -1040,7 +1048,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eq" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1096,7 +1106,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eB" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/exotic/technology,

@@ -25,7 +25,6 @@
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
-		/obj/item/food/chococoin,
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/implanter,
