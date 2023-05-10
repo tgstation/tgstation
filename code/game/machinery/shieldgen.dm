@@ -564,35 +564,32 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
-
 	///Doesnt actually control it, just tells us if its running or not
 	var/active = FALSE
 
-	///Determins if we can turn it on or not
+	///Determins if we can turn it on or not, no longer recovering when back to max strength
 	var/recovering = TRUE
 
-
 	///Determins max health of the shield
-	var/max_strength = 50
+	var/max_strength = 40
 
 	///Current health of shield
 	var/stored_strength = 0 //starts at 0 to prevent rebuild abuse
 
 	///Shield Regeneration when at 100% efficiency
-	var/max_regeneration = 5
+	var/max_regeneration = 3
 
 	///The regeneration that the shield can support
-	var/current_regeneration = 5
+	var/current_regeneration
 
 	///Determins the max radius the shield can support
 	var/max_radius = 3
 
-	///Current radius the shield is set to
+	///Current radius the shield is set to, minimum 3
 	var/radius = 3
 
 	///Determins if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
-
 
 	///The list of shields that are ours
 	var/list/deployed_shields = null
@@ -603,16 +600,14 @@
 	///The list of machines that are connected to and boosting us
 	var/list/obj/machinery/modular_shield/module/connected_modules = null
 
-
 	///Regeneration gained from machines connected to us
-	var/regen_boost
+	var/regen_boost = 0
 
 	///Max Radius gained from machines connected to us
-	var/radius_boost
+	var/radius_boost = 0
 
 	///Max Strength gained from machines connected to us
-	var/strength_boost
-
+	var/max_strength_boost = 0
 
 	///Regeneration gained from our own parts
 	var/innate_regen
@@ -626,9 +621,9 @@
 /obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
 
-	max_regeneration = 3
-	max_radius = 3
-	max_strength = 50
+	innate_regen = 3
+	innate_radius = 3
+	innate_strength = 40
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		innate_strength += new_capacitor.tier * 10
@@ -640,6 +635,8 @@
 		innate_radius += new_laser.tier
 
 	calculate_regeneration()
+	calculate_max_strength()
+	calculate_radius()
 
 
 /obj/machinery/modular_shield_gen/Initialize(mapload)
@@ -697,11 +694,11 @@
 	activate_shields()
 
 
-
+//generating the shield, to-do heavily optimize, we dont need or want to generate the shield all at once.
 /obj/machinery/modular_shield_gen/proc/activate_shields()
 	active = TRUE
 
-	//please god yell at me for this i dont know if its the right way to do this
+
 	var/list/inside_shield = circle_range_turfs(src, radius - 1) //in the future we might want to apply an effect to the turfs inside the shield
 	if (exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
@@ -710,6 +707,7 @@
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
 		calculate_regeneration()
+		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
 
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
@@ -727,10 +725,12 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
+
 /obj/machinery/modular_shield_gen/update_icon_state()
 	icon_state = "gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open) ? "open" : "closed"]"
 	return ..()
 
+//ui stuff
 /obj/machinery/modular_shield_gen/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -767,21 +767,40 @@
 		if ("toggle_exterior")
 			exterior_only = !(exterior_only)
 			return
-		if ("sync_machines")
-			calculate_boost()
 
-obj/machinery/modular_shield_gen/proc/calculate_boost()
+//calculations for the shield`s core stats
+/obj/machinery/modular_shield_gen/proc/calculate_boost()
 
 	regen_boost = 0
-	for charger in connected_machines
-		regen_boost += charger.manipulator.tier
+	for (var/obj/machinery/modular_shield/module/charger/new_charger in connected_modules)
+		regen_boost += new_charger.charge_boost
+
 	calculate_regeneration()
 
+	max_strength_boost = 0
+	for (var/obj/machinery/modular_shield/module/well/new_well in connected_modules)
+		max_strength_boost += new_well.strength_boost
+
+	calculate_max_strength()
+
+	radius_boost = 0
+	for (var/obj/machinery/modular_shield/module/relay/new_relay in connected_modules)
+		radius_boost += new_relay.range_boost
+
+	calculate_radius()
+
+/obj/machinery/modular_shield_gen/proc/calculate_radius()
+
+	max_radius = innate_radius + radius_boost
+
+/obj/machinery/modular_shield_gen/proc/calculate_max_strength()
+
+	max_strength = innate_strength + max_strength_boost
 
 
 /obj/machinery/modular_shield_gen/proc/calculate_regeneration()
 
-	max_regeneration = innate_regeneration + regen_boost
+	max_regeneration = innate_regen + regen_boost
 
 	if(!(active))
 		if(recovering)
@@ -828,7 +847,7 @@ obj/machinery/modular_shield_gen/proc/calculate_boost()
 	desc = "This is filler for testing"
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
-
+	density = TRUE
 	dir = SOUTH
 	var/obj/machinery/modular_shield_gen/shield_generator
 	var/turf/connected_turf
@@ -840,28 +859,49 @@ obj/machinery/modular_shield_gen/proc/calculate_boost()
 
 /obj/machinery/modular_shield/module/Destroy()
 
-	shield_generator.connected_machines -= (src)
+	shield_generator.connected_modules -= (src)
 	return ..()
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
 		return
 
+
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		try_connect(user)
+		return
+
 	if(default_change_direction_wrench(user, I))
-		shield_generator.connected_machines -= (src)
+		shield_generator.connected_modules -= (src)
+		shield_generator.calculate_boost()
 		shield_generator = null
 		connected_turf = get_step(loc, dir)
-		try_connect()
 		return
 
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
-/obj/machinery/modular_shield/module/proc/try_connect()
+/obj/machinery/modular_shield/module/setDir(new_dir)
+	. = ..()
+	connected_turf = get_step(loc, dir)
+
+/obj/machinery/modular_shield/module/proc/try_connect(user)
+
+	if(shield_generator)
+		balloon_alert(user, "already connected")
+		return
 
 	shield_generator = (locate(/obj/machinery/modular_shield_gen) in connected_turf)
-	shield_generator.connected_machines += (src)
+
+	if(shield_generator)
+
+		shield_generator.connected_modules += (src)
+		shield_generator.calculate_boost()
+		balloon_alert(user, "connected directly to generator")
+		return
+
+	balloon_alert(user, "failed to connect to a generator or node")
 
 
 
@@ -882,12 +922,30 @@ obj/machinery/modular_shield_gen/proc/calculate_boost()
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
+	///Amount of regeneration this machine grants the connected generator
+	var/charge_boost
+
+/obj/machinery/modular_shield/module/charger/RefreshParts()
+	. = ..()
+	charge_boost = 0
+	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
+		charge_boost += new_manipulator.tier
+
 /obj/machinery/modular_shield/module/relay
 
 	name = "Modular Shield Relay"
 	desc = "It helps the shield generator project farther out"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
+
+	///Amount of max range this machine grants the connected generator
+	var/range_boost
+
+/obj/machinery/modular_shield/module/relay/RefreshParts()
+	. = ..()
+	range_boost = 0
+	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
+		range_boost += new_laser.tier
 
 /obj/machinery/modular_shield/module/well
 
@@ -896,12 +954,20 @@ obj/machinery/modular_shield_gen/proc/calculate_boost()
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
+	///Amount of max strength this machine grants the connected generator
+	var/strength_boost
+
+/obj/machinery/modular_shield/module/well/RefreshParts()
+	. = ..()
+	strength_boost = 0
+	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
+		strength_boost += new_capacitor.tier * 10
+
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
-	var/heat_resistance = 400
 	//our parent
 	var/obj/machinery/modular_shield_gen/shield_generator
 
@@ -911,18 +977,17 @@ obj/machinery/modular_shield_gen/proc/calculate_boost()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > (T0C + heat_resistance)
+	return exposed_temperature > (T0C + 400) //doesnt start taking damage from high temps until 400kelvin, might raise or lower
 
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	shield_generator.shield_drain(round(air.return_volume() / 400))//this determines how much damage we take per mole from hot atmos (tweak if necessary)
+	shield_generator.shield_drain(round(air.return_volume() / 400))//400 int determines how much damage the shield takes from hot atmos (higher value = less damage)
 
 
 //How the shield loses strength
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		shield_generator.shield_drain(damage_amount)
+		shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
 
-/obj/structure/emergency_shield/emp_act(severity)
-. = ..()
-	shield_generator.shield_drain(40 / severity) //Light is 2 heavy is 1
+/obj/structure/emergency_shield/modular/emp_act(severity)
+	shield_generator.shield_drain(10 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the 10 if not enough damage
