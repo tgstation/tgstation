@@ -1,5 +1,5 @@
 /datum/traitor_objective_category/infect
-	name = "Assassination/Kidnap"
+	name = "Infect with Disease"
 	objectives = list(
 		/datum/traitor_objective/target_player/infect = 1,
 	)
