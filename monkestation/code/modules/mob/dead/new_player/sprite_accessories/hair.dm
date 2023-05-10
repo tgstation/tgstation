@@ -6,12 +6,14 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Bigger Afro"
 	icon_state = "big_afro"
+	vertical_offset = 3
 
 /datum/sprite_accessory/hair/gigafro
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "GigAfro"
 	icon_state = "giga_fro"
 	locked = TRUE
+	vertical_offset = 24
 
 /datum/sprite_accessory/hair/butters
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
@@ -33,18 +35,21 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Polnareff"
 	icon_state = "polnareff"
+	vertical_offset = 3
 
 /datum/sprite_accessory/hair/poooooooooolnareff
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Poooooooooolnareff"
 	icon_state = "poooooooooolnareff"
 	locked = TRUE
+	vertical_offset = 19
 
 /datum/sprite_accessory/hair/gigapomp
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Gigapompadour"
 	icon_state = "gigapomp"
 	locked = TRUE
+	vertical_offset = 5
 
 /datum/sprite_accessory/hair/shrinepriestess
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
