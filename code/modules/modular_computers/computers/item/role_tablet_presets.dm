@@ -328,10 +328,7 @@
 
 /// Return true if our wearer is in a position to slip someone
 /obj/item/modular_computer/pda/clown/proc/try_slip(mob/living/slipper, mob/living/slippee)
-	if(slipper.body_position != LYING_DOWN || slipper.buckled)
-		return FALSE
-	var/obj/item/shoes = slipper.get_item_by_slot(ITEM_SLOT_FEET)
-	if(!istype(shoes, /obj/item/clothing/shoes/clown_shoes))
+	if(!istype(slipper.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/clown_shoes))
 		to_chat(slipper,span_warning("[src] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy..."))
 		return FALSE
 	return TRUE
