@@ -1190,7 +1190,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser/ultra,
-/obj/item/stock_parts/manipulator/pico,
+/obj/item/stock_parts/servo/pico,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fs" = (
