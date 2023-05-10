@@ -127,14 +127,17 @@
 /**
  * Run when you update the conditions in which an /atom might want to start reacting to its turf's air
  */
- /atom/proc/atmos_conditions_changed()
+/atom/proc/atmos_conditions_changed()
 	return
-		
+
 /atom/movable/atmos_conditions_changed()
 	var/turf/open/open_loc = loc
-	if (!isopenturf(open_loc)))
+	if (!isopenturf(open_loc))
 		return
-	check_atmos_process(open_loc, open_loc.air, open_loc.air.temperature)
+	var/datum/gas_mixture/turf_gas = open_loc.air
+	if (isnull(turf_gas))
+		return
+	check_atmos_process(open_loc, turf_gas, open_loc.air.temperature)
 
 /turf/open/atmos_conditions_changed()
 	check_atmos_process(src, air, air.temperature)
