@@ -69,15 +69,11 @@
 	..()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(occupant)
-		if(!iscarbon(occupant))
-			occupant.forceMove(drop_location())
-			set_occupant(null)
-			return
 		to_chat(occupant, span_notice("You enter [src]."))
-		update_appearance()
-		purging = TRUE
 		soundloop.start()
+		purging = TRUE
 		START_PROCESSING(SSobj, src)
+		update_appearance(UPDATE_OVERLAYS) //Call again to adjust the screen.
 
 /obj/machinery/purger/open_machine(mob/user, density_to_set = FALSE)
 	playsound(src, 'sound/machines/click.ogg', 50)
