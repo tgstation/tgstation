@@ -41956,7 +41956,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
-/obj/item,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "liL" = (
