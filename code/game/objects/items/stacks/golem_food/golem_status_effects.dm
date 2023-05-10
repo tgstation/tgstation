@@ -407,7 +407,16 @@
 		return
 	owner.AddElement(/datum/element/waddling)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
-	slipperiness = owner.AddComponent(/datum/component/slippery, knockdown = 12 SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
+	slipperiness = owner.AddComponent(\
+		/datum/component/slippery,\
+		knockdown = 12 SECONDS,\
+		lube_flags = NO_SLIP_WHEN_WALKING,\
+		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
+	)
+
+/// Only slip people when we're down on the ground
+/datum/status_effect/golem/bananium/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	return owner.body_position == LYING_DOWN
 
 /datum/status_effect/golem/bananium/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
