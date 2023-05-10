@@ -68,7 +68,8 @@
 	obj_damage = 10
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 0
+	poison_per_bite = 10
+	poison_type =/datum/reagent/peaceborg/confuse
 	speed = 2.8
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
