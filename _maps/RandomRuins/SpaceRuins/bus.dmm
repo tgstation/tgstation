@@ -265,7 +265,7 @@
 /area/ruin/space)
 "Ds" = (
 /obj/item/stack/rods/fifty,
-/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/servo/femto,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "ER" = (
