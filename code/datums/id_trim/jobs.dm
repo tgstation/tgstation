@@ -784,6 +784,7 @@
 		ACCESS_SERVICE,
 	)
 	extra_access = list(
+		ACCESS_MORGUE,
 		ACCESS_MORGUE_SECURE,
 	)
 	template_access = list(
