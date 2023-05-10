@@ -71,6 +71,11 @@
 	make_sparkle.overlay_fullscreen("bluespace_flash", /atom/movable/screen/fullscreen/bluespace_sparkle, 1)
 	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF(/mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
 
+/obj/effect/anomaly/bluespace/stabilize(anchor, has_core)
+	. = ..()
+
+	teleport_range = 0 //bumping already teleports, so this just prevents people from being teleported when they don't expect it when interacting with stable bsanoms
+
 ///Bigger, meaner, immortal bluespace anomaly
 /obj/effect/anomaly/bluespace/big
 	immortal = TRUE

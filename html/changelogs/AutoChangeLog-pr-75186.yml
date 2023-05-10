@@ -1,5 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - code_imp: "Adds default multiplicative movespeed for basic mobs, to make them editable in config"
-  - config: "Default multiplicative movespeed for basic mobs in example config"

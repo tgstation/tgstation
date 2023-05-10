@@ -133,9 +133,6 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
-	if(length(bodypart_traits))
-		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
-
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
@@ -327,6 +324,7 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -366,9 +364,6 @@
 	update_bodypart_damage_state()
 	if(can_be_disabled)
 		update_disabled()
-
-	if(length(bodypart_traits))
-		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
