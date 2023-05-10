@@ -281,7 +281,7 @@
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
+		export_item_and_contents(AM, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
 
 	status_report = "Sold: "
 	var/value = 0

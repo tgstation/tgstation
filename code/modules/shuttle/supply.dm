@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			if(AM.anchored)
 				continue
-			export_item_and_contents(AM, export_categories, dry_run = FALSE, external_report = ex)
+			export_item_and_contents(AM, apply_elastic = TRUE, dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
 		ex.exported_atoms += "." //ugh
