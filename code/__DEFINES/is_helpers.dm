@@ -269,12 +269,6 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/spellbook,
 	/obj/item/storage/book)))
 
-#define isforbiddenturretgun(O) (is_type_in_typecache(O, GLOB.forbidden_turret_guns))
-
-// Gun types that cause bugs or exploits if installed in a turret
-GLOBAL_LIST_INIT(forbidden_turret_guns, typecacheof(list(
-	/obj/item/gun/energy/dueling)))
-
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))
 #define is_assistant_job(job_type) (istype(job_type, /datum/job/assistant))
