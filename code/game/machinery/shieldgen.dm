@@ -571,6 +571,7 @@
 	///Determins if we can turn it on or not
 	var/recovering = TRUE
 
+
 	///Determins max health of the shield
 	var/max_strength = 50
 
@@ -592,14 +593,35 @@
 	///Determins if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
 
+
 	///The list of shields that are ours
 	var/list/deployed_shields = null
 
 	///The list of turfs that are within the shield
 	var/list/inside_shield = null
 
-	///The list of machines that are boosting us
-	var/list/connected_machines = null
+	///The list of machines that are connected to and boosting us
+	var/list/obj/machinery/modular_shield/module/connected_modules = null
+
+
+	///Regeneration gained from machines connected to us
+	var/regen_boost
+
+	///Max Radius gained from machines connected to us
+	var/radius_boost
+
+	///Max Strength gained from machines connected to us
+	var/strength_boost
+
+
+	///Regeneration gained from our own parts
+	var/innate_regen
+
+	///Max radius gained from our own parts
+	var/innate_radius
+
+	///Max strength gained from our own parts
+	var/innate_strength
 
 /obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
@@ -609,13 +631,13 @@
 	max_strength = 50
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		max_strength += new_capacitor.tier * 10
+		innate_strength += new_capacitor.tier * 10
 
 	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		max_regeneration += new_manipulator.tier
+		innate_regen += new_manipulator.tier
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		max_radius += new_laser.tier
+		innate_radius += new_laser.tier
 
 	calculate_regeneration()
 
@@ -623,7 +645,7 @@
 /obj/machinery/modular_shield_gen/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
-	connected_machines = list()
+	connected_modules = list()
 	wires = new /datum/wires/modular_shield_gen(src)
 	if(mapload && active && anchored)
 		activate_shields()
@@ -674,6 +696,8 @@
 		return
 	activate_shields()
 
+
+
 /obj/machinery/modular_shield_gen/proc/activate_shields()
 	active = TRUE
 
@@ -695,6 +719,8 @@
 			deployed_shields += deploying_shield
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+
+
 
 /obj/machinery/modular_shield_gen/Destroy()
 	QDEL_LIST(deployed_shields)
@@ -741,8 +767,21 @@
 		if ("toggle_exterior")
 			exterior_only = !(exterior_only)
 			return
+		if ("sync_machines")
+			calculate_boost()
+
+obj/machinery/modular_shield_gen/proc/calculate_boost()
+
+	regen_boost = 0
+	for charger in connected_machines
+		regen_boost += charger.manipulator.tier
+	calculate_regeneration()
+
+
 
 /obj/machinery/modular_shield_gen/proc/calculate_regeneration()
+
+	max_regeneration = innate_regeneration + regen_boost
 
 	if(!(active))
 		if(recovering)
@@ -809,6 +848,8 @@
 		return
 
 	if(default_change_direction_wrench(user, I))
+		shield_generator.connected_machines -= (src)
+		shield_generator = null
 		connected_turf = get_step(loc, dir)
 		try_connect()
 		return
@@ -819,7 +860,8 @@
 
 /obj/machinery/modular_shield/module/proc/try_connect()
 
-	(locate(/obj/machinery/modular_shield_gen) in connected_turf).connected_machines += (src)
+	shield_generator = (locate(/obj/machinery/modular_shield_gen) in connected_turf)
+	shield_generator.connected_machines += (src)
 
 
 
@@ -880,3 +922,7 @@
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
 		shield_generator.shield_drain(damage_amount)
+
+/obj/structure/emergency_shield/emp_act(severity)
+. = ..()
+	shield_generator.shield_drain(40 / severity) //Light is 2 heavy is 1
