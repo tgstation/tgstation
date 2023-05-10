@@ -70,24 +70,24 @@
 	gender = PLURAL
 	name = "sand"
 	desc = "This is better than a vacation, since you're still getting paid."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/turf/sand.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
-/turf/open/floor/holofloor/beach/coast_t
+/turf/open/floor/holofloor/beach/coast
 	gender = NEUTER
 	name = "coastline"
-	icon_state = "sandwater_t"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "beach"
 
-/turf/open/floor/holofloor/beach/coast_b
-	gender = NEUTER
-	name = "coastline"
-	icon_state = "sandwater_b"
+/turf/open/floor/holofloor/beach/coast/corner
+	icon_state = "beach-corner"
 
 /turf/open/floor/holofloor/beach/water
 	name = "water"
 	desc = "Gives the impression you can walk on water. Chaplains love it."
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "water"
 	bullet_sizzle = TRUE
 

@@ -3800,6 +3800,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\the_Outlet.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\TheDerelict.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\waystation.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\whiteship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\mapping\access_helpers.dm"
 #include "code\modules\mapping\mail_sorting_helpers.dm"
