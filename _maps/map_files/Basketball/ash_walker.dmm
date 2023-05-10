@@ -379,6 +379,7 @@
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
+/obj/effect/landmark/basketball/team_spawn/referee,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "xe" = (

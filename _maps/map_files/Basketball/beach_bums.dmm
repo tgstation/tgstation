@@ -55,6 +55,10 @@
 	name = "deep ocean water"
 	},
 /area/centcom/basketball)
+"cX" = (
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/misc/beach/sand,
+/area/centcom/basketball)
 "dg" = (
 /obj/structure/fence{
 	dir = 8
@@ -1068,7 +1072,7 @@ Kf
 ao
 lD
 wN
-IM
+cX
 UL
 af
 IM
