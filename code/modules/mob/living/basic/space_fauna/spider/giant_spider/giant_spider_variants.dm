@@ -10,8 +10,8 @@
 	icon_living = "ambush"
 	icon_dead = "ambush_dead"
 	gender = FEMALE
-	maxHealth = 80
-	health = 80
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	speed = 5
