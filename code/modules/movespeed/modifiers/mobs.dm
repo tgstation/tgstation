@@ -109,9 +109,6 @@
 /datum/movespeed_modifier/midwife_web
 	multiplicative_slowdown = 1.2
 
-/datum/movespeed_modifier/guard_web
-	multiplicative_slowdown = 2
-
 /datum/movespeed_modifier/ambush_web
 	multiplicative_slowdown = 5
 
