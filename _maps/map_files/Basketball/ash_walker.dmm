@@ -91,17 +91,16 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "fj" = (
-/obj/structure/ash_walker_eggshell,
+/obj/effect/decal/remains/human,
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "fu" = (
 /obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/lava/smooth/lava_land_surface,
+/obj/structure/stone_tile/block,
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "fT" = (
 /obj/structure/stone_tile/block{
@@ -129,6 +128,13 @@
 /area/centcom/basketball)
 "hZ" = (
 /obj/item/storage/bag/plants/portaseeder,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "ie" = (
@@ -146,13 +152,11 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "iB" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
 /obj/item/spear,
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "jb" = (
@@ -213,11 +217,20 @@
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "lD" = (
 /obj/structure/fence{
 	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
@@ -276,7 +289,6 @@
 	dir = 8
 	},
 /obj/structure/stone_tile,
-/obj/effect/decal/cleanable/blood,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "pV" = (
@@ -297,6 +309,10 @@
 /area/centcom/basketball)
 "ro" = (
 /obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
@@ -316,9 +332,10 @@
 /area/centcom/basketball)
 "rU" = (
 /obj/structure/stone_tile/cracked{
-	dir = 8
+	dir = 1
 	},
-/obj/structure/stone_tile/block{
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
@@ -326,19 +343,15 @@
 "sb" = (
 /turf/closed/indestructible/riveted/boss,
 /area/centcom/basketball)
+"sA" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/basalt/safe,
+/area/centcom/basketball)
 "un" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/lava/smooth/lava_land_surface,
+/turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "uH" = (
-/obj/structure/stone_tile,
 /obj/structure/stone_tile{
 	dir = 8
 	},
@@ -370,6 +383,9 @@
 /area/centcom/basketball)
 "xe" = (
 /obj/item/flashlight/flare/torch,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "xG" = (
@@ -379,16 +395,7 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "xI" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/slab/burnt,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "yk" = (
@@ -405,13 +412,13 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "yK" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile,
 /obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
+/obj/structure/stone_tile,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "yO" = (
@@ -455,15 +462,11 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "zZ" = (
+/obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
-	dir = 4
+	dir = 1
 	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "Aj" = (
@@ -484,8 +487,8 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "AA" = (
-/obj/structure/stone_tile{
-	dir = 4
+/obj/structure/stone_tile/cracked{
+	dir = 1
 	},
 /obj/structure/stone_tile,
 /turf/open/lava/smooth/lava_land_surface,
@@ -508,10 +511,7 @@
 /area/centcom/basketball)
 "BW" = (
 /obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Ct" = (
 /obj/structure/stone_tile/block{
@@ -550,19 +550,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
-"CU" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/centcom/basketball)
 "Dc" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -580,13 +567,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
-"Dt" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/centcom/basketball)
 "DN" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -601,8 +581,14 @@
 /turf/open/floor/fakepit,
 /area/centcom/basketball)
 "DV" = (
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
 	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
@@ -641,37 +627,26 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "FS" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
 /obj/structure/stone_tile{
-	dir = 8
+	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Gh" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/effect/decal/cleanable/blood,
-/turf/open/lava/smooth/lava_land_surface,
-/area/centcom/basketball)
-"Ho" = (
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile/block{
 	dir = 1
 	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile,
-/turf/open/lava/smooth/lava_land_surface,
+/turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "Hu" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/basketball)
 "Hx" = (
 /obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
@@ -681,6 +656,12 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Ih" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
 /obj/structure/stone_tile/cracked,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
@@ -688,17 +669,25 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
+/obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Jb" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/structure/stone_tile,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "JX" = (
@@ -718,6 +707,16 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "Lu" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Lx" = (
@@ -749,10 +748,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "MN" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
+/obj/structure/stone_tile/surrounding,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "MR" = (
@@ -768,7 +764,13 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Nc" = (
-/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/burnt,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Nt" = (
@@ -776,6 +778,7 @@
 /area/centcom/basketball)
 "Nw" = (
 /obj/item/cultivator/rake,
+/obj/structure/stone_tile/surrounding/cracked,
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "NX" = (
@@ -820,9 +823,6 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
@@ -850,12 +850,13 @@
 /area/centcom/basketball)
 "Rl" = (
 /obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Ry" = (
 /obj/structure/stone_tile/center,
@@ -910,9 +911,11 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "Vc" = (
-/obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block{
-	dir = 1
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
@@ -921,9 +924,11 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "Vm" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
@@ -1007,6 +1012,10 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
 /turf/open/lava/smooth/lava_land_surface,
 /area/centcom/basketball)
 "Yl" = (
@@ -1025,18 +1034,19 @@
 /turf/open/misc/basalt/safe,
 /area/centcom/basketball)
 "YI" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood,
-/turf/open/lava/smooth/lava_land_surface,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "YX" = (
-/obj/structure/lavaland/ash_walker,
+/obj/structure/lavaland/ash_walker_fake,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/centcom/basketball)
 "Zc" = (
@@ -1191,13 +1201,13 @@ Eb
 Cw
 Ql
 ku
-fj
+sA
 Ql
 vo
 Cv
 vo
 Ql
-fj
+sA
 ku
 Ql
 Ql
@@ -1270,14 +1280,14 @@ Cw
 Cw
 Cw
 Cw
-Lu
+Uv
 lD
-Lu
-Lu
-Lu
-Lu
-Lu
-Lu
+kv
+kv
+lh
+kv
+ao
+kv
 Lu
 lD
 ao
@@ -1293,25 +1303,25 @@ Hu
 Hu
 BM
 Cw
-CU
+MN
 ro
-Lu
-Lu
-Lu
+AA
+rU
+MN
 ku
 Ql
 OS
 MR
 xI
 VM
-kv
+yK
 Ql
 ku
 MN
-DV
+Vc
 iB
 Jb
-Vm
+MN
 Oj
 sb
 Hu
@@ -1321,10 +1331,10 @@ Hu
 BM
 Ry
 at
-rU
+dg
 zZ
-MR
-zZ
+Dc
+at
 ku
 Ql
 NX
@@ -1349,12 +1359,12 @@ Zc
 Se
 Uv
 BW
+YI
+Dc
 Uv
-Dt
-Rl
 ku
 Ql
-YI
+xI
 Tc
 YX
 nE
@@ -1365,7 +1375,7 @@ wN
 Tc
 UL
 af
-Gh
+NX
 Oj
 Nt
 Hu
@@ -1375,10 +1385,10 @@ Hu
 BM
 yk
 bA
-bA
+dg
 fu
-bA
-fu
+Dc
+Rl
 ku
 Ql
 pV
@@ -1386,7 +1396,7 @@ mW
 dC
 BD
 oR
-Ql
+un
 ku
 IM
 Di
@@ -1401,25 +1411,25 @@ Hu
 Hu
 BM
 jq
-CU
+MN
 Ih
-Lu
-Lu
+Vm
 DV
+MN
 ku
 Ql
 Hx
 ld
-yK
+Kf
 ao
 uH
 Ql
 ku
-un
-Ho
+MN
+Lu
 Vc
 lh
-AA
+MN
 Oj
 sb
 Hu
@@ -1432,15 +1442,15 @@ Cw
 Cw
 ru
 Cw
-Lu
+Uv
 lD
+kv
+lh
+kv
 Lu
-Lu
-Lu
-Lu
-Lu
-Lu
-Lu
+NX
+kv
+ao
 lD
 VM
 VM
@@ -1524,7 +1534,7 @@ Ql
 fj
 ku
 Ql
-Ql
+Gh
 nv
 nv
 Oj
