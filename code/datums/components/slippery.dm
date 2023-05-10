@@ -65,6 +65,7 @@
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
 		on_slip_callback = component.on_slip_callback
+		can_slip_callback = component.on_slip_callback
 		paralyze = component.paralyze_time
 		force_drop = component.force_drop_items
 		slot_whitelist = component.slot_whitelist
@@ -74,6 +75,7 @@
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
 	src.on_slip_callback = on_slip_callback
+	src.can_slip_callback = can_slip_callback
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 /*
