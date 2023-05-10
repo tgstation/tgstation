@@ -52,9 +52,9 @@
 	if(injected != target)
 		fail_objective()
 		return
-	for(var/thing in target.diseases)
-		if(thing == /datum/disease/chronic_illness)
-			succeed_objective() //your target please
+	if(injected == target)
+		succeed_objective()
+		return
 
 
 /datum/traitor_objective/target_player/infect/generate_objective(datum/mind/generating_for, list/possible_duplicates)

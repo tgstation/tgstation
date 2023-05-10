@@ -23474,7 +23474,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hzB" = (

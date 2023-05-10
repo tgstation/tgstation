@@ -85362,7 +85362,6 @@
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wJB" = (

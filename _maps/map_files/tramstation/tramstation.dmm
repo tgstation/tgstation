@@ -51196,7 +51196,6 @@
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rko" = (
