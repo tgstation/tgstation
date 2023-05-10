@@ -99,17 +99,16 @@
 
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
-				if(I.gun_flags & TURRET_INCOMPATIBLE)
+				var/obj/item/gun/energy/E = I
+				if(E.gun_flags & TURRET_INCOMPATIBLE)
 					to_chat(user, span_notice("You don't think it would be right to add [I] to the turret"))
 					return
-				else
-					var/obj/item/gun/energy/E = I
-					if(!user.transferItemToLoc(E, src))
-						return
-					installed_gun = E
-					to_chat(user, span_notice("You add [I] to the turret."))
-					build_step = PTURRET_GUN_EQUIPPED
+				if(!user.transferItemToLoc(E, src))
 					return
+				installed_gun = E
+				to_chat(user, span_notice("You add [I] to the turret."))
+				build_step = PTURRET_GUN_EQUIPPED
+				return
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You remove the turret's metal armor bolts."))
