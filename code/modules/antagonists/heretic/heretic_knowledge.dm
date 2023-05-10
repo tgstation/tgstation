@@ -703,6 +703,7 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	notify_ghosts("[user] has completed an ascension ritual!", source = user, action = NOTIFY_ORBIT, header = "A Heretic is Ascending!")
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
