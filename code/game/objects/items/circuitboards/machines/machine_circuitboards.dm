@@ -164,7 +164,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/modular_shield_gen
 	req_components = list(
-		/datum/stock_part/manipulator =	1,
+		/datum/stock_part/servo =	1,
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/sheet/plasteel = 3)
@@ -200,7 +200,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/modular_shield/module/charger
 	req_components = list(
-		/datum/stock_part/manipulator = 3,
+		/datum/stock_part/servo = 3,
 		/obj/item/stack/sheet/plasteel = 2)
 
 /obj/item/circuitboard/machine/cell_charger

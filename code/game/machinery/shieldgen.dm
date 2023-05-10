@@ -628,8 +628,8 @@
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		innate_strength += new_capacitor.tier * 10
 
-	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		innate_regen += new_manipulator.tier
+	for(var/datum/stock_part/servo/new_servo in component_parts)
+		innate_regen += new_servo.tier
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		innate_radius += new_laser.tier
@@ -793,9 +793,9 @@
 
 	max_radius = innate_radius + radius_boost
 
-	if(current_radius > max_radius)//the generator can no longer function at this capacity
-		disable_shields()
-		current_radius = max_radius
+	if(radius > max_radius)//the generator can no longer function at this capacity
+		deactivate_shields()
+		radius = max_radius
 /obj/machinery/modular_shield_gen/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
@@ -931,8 +931,8 @@
 /obj/machinery/modular_shield/module/charger/RefreshParts()
 	. = ..()
 	charge_boost = 0
-	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
-		charge_boost += new_manipulator.tier
+	for(var/datum/stock_part/servo/new_servo in component_parts)
+		charge_boost += new_servo.tier
 
 /obj/machinery/modular_shield/module/relay
 
