@@ -330,6 +330,12 @@ Security HUDs! Basic mode shows only the job.
 
 	set_hud_image_active(WANTED_HUD)
 
+//Utility function
+
+/proc/update_all_security_huds()
+	for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
+		human.sec_hud_set_security_status()
+
 /***********************************************
 Diagnostic HUDs!
 ************************************************/
