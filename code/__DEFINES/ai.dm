@@ -313,7 +313,3 @@
 //Festivus AI keys
 /// Key where we store the charging apc ability
 #define BB_FESTIVE_APC "BB_festive_apc"
-
-//COMSIGs used for AI behaviors and subtrees
-///Tells the AI to "wake up", this isn't related to the speed at which it's ai_controller ticks but rather changes the behaviors and blackboard variables
-#define COMSIG_BASIC_AI_WAKE_UP "comsig_basic_ai_wake_up"

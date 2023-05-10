@@ -256,7 +256,6 @@
 #include "code\__DEFINES\dcs\signals\signals_action.dm"
 #include "code\__DEFINES\dcs\signals\signals_admin.dm"
 #include "code\__DEFINES\dcs\signals\signals_adventure.dm"
-#include "code\__DEFINES\dcs\signals\signals_ai_behavior.dm"
 #include "code\__DEFINES\dcs\signals\signals_ai_controller.dm"
 #include "code\__DEFINES\dcs\signals\signals_ai_subtree.dm"
 #include "code\__DEFINES\dcs\signals\signals_area.dm"
