@@ -10,14 +10,14 @@
 	/// If TRUE, we will always have the noslip trait no matter whether they're on or off
 	var/always_noslip = FALSE
 	/// How many materials we consume per banana created
-	var/material_per_banana = 100
+	var/material_per_banana =SMALL_MATERIAL_AMOUNT
 	/// Typepath of created banana
 	var/banana_type = /obj/item/grown/bananapeel/specialpeel
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_FEET)
-	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * MINERAL_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(on_step))
 	if(always_noslip)

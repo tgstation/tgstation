@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "A TGC flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "coin_nanotrasen"
-	custom_materials = list(/datum/material/plastic = 400)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*5)
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
 	override_material_worth = TRUE

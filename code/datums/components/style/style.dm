@@ -121,6 +121,7 @@
 			/obj/projectile/kinetic,\
 			/obj/projectile/bileworm_acid,\
 			/obj/projectile/herald,\
+			/obj/projectile/kiss,\
 			)\
 		)
 	)
