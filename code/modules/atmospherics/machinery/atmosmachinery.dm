@@ -132,12 +132,12 @@
 
 /atom/movable/atmos_conditions_changed()
 	var/turf/open/open_loc = loc
-	if (!isopenturf(open_loc))
+	if(!isopenturf(open_loc))
 		return
 	var/datum/gas_mixture/turf_gas = open_loc.air
-	if (isnull(turf_gas))
+	if(isnull(turf_gas))
 		return
-	check_atmos_process(open_loc, turf_gas, open_loc.air.temperature)
+	check_atmos_process(open_loc, turf_gas, turf_gas.temperature)
 
 /turf/open/atmos_conditions_changed()
 	if(isnull(air))
