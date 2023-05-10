@@ -125,18 +125,19 @@
 	//return QDEL_HINT_FINDREFERENCE
 
 /**
- * start atmos processing based off the air on its turf. used mostly by vents & scrubbers
+ * Run when you update the conditions in which an /atom might want to start reacting to its turf's air
  */
-/obj/machinery/atmospherics/proc/try_turf_atmos_process()
-	var/turf/open/turf = get_turf(src)
-	if (!istype(turf))
+ /atom/proc/atmos_conditions_changed()
+	return
+		
+/atom/movable/atmos_conditions_changed()
+	var/turf/open/open_loc = loc
+	if (!isopenturf(open_loc)))
 		return
+	check_atmos_process(open_loc, open_loc.air, open_loc.air.temperature)
 
-	var/datum/gas_mixture/turf_gas = turf.air
-	if (isnull(turf_gas))
-		return
-
-	check_atmos_process(turf, turf_gas, turf_gas.temperature)
+/turf/open/atmos_conditions_changed()
+	check_atmos_process(src, air, air.temperature)
 
 /**
  * Called by the machinery disconnect(), custom for each type
