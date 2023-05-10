@@ -101,4 +101,3 @@
 					cheart.replace_into(affected_mob)
 					playsound(affected_mob, 'sound/hallucinations/far_noise.ogg', 50, 1)
 					stage = 3
-
