@@ -469,13 +469,9 @@
 	if(!.)
 		return
 	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	for(var/i = 0, i < 2, i++)
-		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(time = 0.2 SECONDS)
-	for(var/i = 0, i < 2, i++)
-		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
 	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
 
 /datum/emote/living/twitch_s
@@ -487,9 +483,6 @@
 	if(!.)
 		return
 	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	for(var/i = 0, i < 2, i++)
-		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
 	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
 
 /datum/emote/living/wave
