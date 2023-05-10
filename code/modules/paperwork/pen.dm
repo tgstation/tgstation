@@ -188,7 +188,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Description")
-			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
+			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 280)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.can_perform_action(O))
 				return

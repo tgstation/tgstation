@@ -55,6 +55,7 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
         )}
         onSetValue={handleSetValue}
         value={value}
+        buttons
       />
     );
   },

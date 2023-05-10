@@ -53,7 +53,7 @@
 "an" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -1018,7 +1018,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
 "oD" = (
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/item/stock_parts/scanning_module{
 	pixel_x = -11
 	},
@@ -3879,7 +3879,7 @@
 /obj/item/stock_parts/capacitor{
 	pixel_y = 4
 	},
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
 "DM" = (
@@ -5589,7 +5589,7 @@
 /area/ruin/space/ks13/command/bridge_hall)
 "Nc" = (
 /obj/structure/frame/machine,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = -5
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -5605,7 +5605,7 @@
 /area/ruin/space/ks13/engineering/atmos)
 "Nh" = (
 /obj/structure/table,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = 3
 	},
 /obj/item/stock_parts/matter_bin{
@@ -5764,7 +5764,7 @@
 "NZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = -8;
 	pixel_y = 7
 	},
@@ -7490,7 +7490,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "WF" = (
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
