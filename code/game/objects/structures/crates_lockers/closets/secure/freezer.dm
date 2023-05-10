@@ -1,11 +1,25 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	base_icon_state = "freezer"
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
+	paint_jobs = null
+
+/obj/structure/closet/secure_closet/freezer/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	toggle_organ_decay(src)
+	return TRUE
+
+/obj/structure/closet/secure_closet/freezer/after_close(mob/living/user)
+	. = ..()
+	toggle_organ_decay(src)
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	toggle_organ_decay(src)
@@ -15,17 +29,6 @@
 	. = ..()
 	toggle_organ_decay(src)
 
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
-	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
-		return FALSE
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..()) //if we actually closed the locker
-		toggle_organ_decay(src)
-		return TRUE
-
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
 		return ..()
@@ -33,26 +36,10 @@
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 	return FALSE
 
-/obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
-	new /obj/item/stack/sheet/iron(drop_location(), 1)
-	new /obj/item/assembly/igniter/condenser(drop_location())
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/welder_act(mob/living/user, obj/item/tool)
+/obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/assembly/igniter/condenser(drop_location())
 	. = ..()
-
-	if(!opened)
-		balloon_alert(user, "open it first!")
-		return TRUE
-
-	if(!tool.use_tool(src, user, 40, volume=50))
-		return TRUE
-
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/assembly/igniter/condenser(drop_location())
-	qdel(src)
-
-	return TRUE
 
 /obj/structure/closet/secure_closet/freezer/empty
 	name = "freezer"
@@ -98,8 +85,8 @@
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = list()
 	locked = FALSE
+	req_access = list()
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge
 	name = "refrigerator"
@@ -124,6 +111,11 @@
 /obj/structure/closet/secure_closet/freezer/fridge/open
 	req_access = null
 	locked = FALSE
+
+/obj/structure/closet/secure_closet/freezer/fridge/preopen
+	req_access = null
+	locked = FALSE
+	opened = TRUE
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
