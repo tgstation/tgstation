@@ -140,6 +140,8 @@
 	check_atmos_process(open_loc, turf_gas, open_loc.air.temperature)
 
 /turf/open/atmos_conditions_changed()
+	if(isnull(air))
+		return
 	check_atmos_process(src, air, air.temperature)
 
 /**
