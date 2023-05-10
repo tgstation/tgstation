@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - bugfix: "Chuuni wizards no longer get robeless casting issues."
