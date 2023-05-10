@@ -52959,6 +52959,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "thc" = (

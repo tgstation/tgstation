@@ -35,3 +35,5 @@
 #define DISEASE_SEVERITY_DANGEROUS "Dangerous"
 /// Diseases that can quickly kill an unprepared victim (fungal tb, gbs)
 #define DISEASE_SEVERITY_BIOHAZARD "BIOHAZARD"
+/// Diseases that are uncurable (hms)
+#define DISEASE_SEVERITY_UNCURABLE "Uncurable"

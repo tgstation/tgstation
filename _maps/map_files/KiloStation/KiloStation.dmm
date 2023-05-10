@@ -30649,6 +30649,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "jVA" = (

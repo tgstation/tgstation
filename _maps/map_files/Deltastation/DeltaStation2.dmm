@@ -70591,6 +70591,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/storage/pill_bottle/sansufentanyl,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "rJJ" = (

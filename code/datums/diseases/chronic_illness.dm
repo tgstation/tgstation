@@ -12,7 +12,7 @@
 	agent = "Quantum Entanglement"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timesteam correction technology."
-	severity = DISEASE_SEVERITY_HARMFUL
+	severity = DISEASE_SEVERITY_UNCURABLE
 
 /datum/disease/chronic_illness/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -31,7 +31,7 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a very sharp pain in your chest!"))
 				if(prob(45))
-					affected_mob.vomit(20)
+					affected_mob.vomit(20,TRUE)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]"))
 				affected_mob.adjustStaminaLoss(70, FALSE)

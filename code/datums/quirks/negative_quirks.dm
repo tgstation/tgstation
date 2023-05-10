@@ -893,11 +893,11 @@
 	name = "Chronic Illness"
 	desc = "You have a chronic illness that requires constant medication to keep under control."
 	icon = FA_ICON_DISEASE
-	value = 8
+	value = -12
 	gain_text = span_danger("You feel a bit off today.")
 	lose_text = span_notice("You feel a bit better today.")
 	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
-	hardcore_value = 10
+	hardcore_value = 12
 	mail_goodies = list(/obj/item/storage/pill_bottle/sansufentanyl)
 
 /datum/quirk/item_quirk/chronic_illness/add_unique(client/client_source)

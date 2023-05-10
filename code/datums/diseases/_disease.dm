@@ -195,6 +195,8 @@
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)
 	switch(severity)
+		if(DISEASE_SEVERITY_UNCURABLE)
+			return 0
 		if(DISEASE_SEVERITY_POSITIVE)
 			return 1
 		if(DISEASE_SEVERITY_NONTHREAT)
