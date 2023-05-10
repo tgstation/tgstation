@@ -180,7 +180,7 @@
 
 	src.scrubbing = scrubbing
 	update_appearance(UPDATE_ICON)
-	try_turf_atmos_process()
+	atmos_conditions_changed()
 	update_power_usage()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
