@@ -57,7 +57,7 @@
 	if(state_open)
 		close_machine()
 	else
-		if(!(obj_flags & EMAGGED) && powered())
+		if(!occupant || (!(obj_flags & EMAGGED) && powered()))
 			open_machine()
 		else
 			to_chat(user, span_warning("The door seems to be stuck. Find something to pry it open with!"))
@@ -88,12 +88,12 @@
 
 	..()
 
-///Reduces addiction points, purges chems until there are only a floor of reagents are left.
+///Reduces addiction points, purges chems until the volume reaches PURGE_LIMIT reagents left.
 ///Purged chems are released as a very small gas cloud. Parts can lower the purge floor amount.
 /obj/machinery/purger/process()
 	var/mob/living/mob_occupant = occupant
 	if(istype(mob_occupant))
-		if(!obj_flags & EMAGGED)
+		if(!(obj_flags & EMAGGED))
 			for(var/datum/addiction in mob_occupant.mind?.active_addictions)
 				mob_occupant.mind.remove_addiction_points(addiction, addiction_purge_amount)
 
@@ -102,9 +102,10 @@
 				smoke_holder.attach(src)
 				smoke_holder.set_up(1, holder = src, location = src, silent = TRUE)
 				for(var/datum/reagent/reagent_to_purge in mob_occupant.reagents.reagent_list)
-					var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, chemical_purge_amount)
-					mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
-				smoke_holder.start()
+					if(reagent_to_purge.volume > PURGE_LIMIT)
+						var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, chemical_purge_amount)
+						mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
+				smoke_holder.start() //Releases an empty, white cloud when "done".
 
 			return
 
@@ -114,13 +115,13 @@
 			if(prob(20))
 				to_chat(mob_occupant, span_alert("You feel your [addiction] cravings worsen..."))
 
-			if(mob_occupant.reagents)
-				mob_occupant.reagents.add_reagent(/datum/reagent/toxin/amanitin, 1)
-				var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
-				smoke_holder.attach(src)
-				smoke_holder.set_up(3, holder = src, location = src, silent = TRUE)
-				smoke_holder.chemholder.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
-				smoke_holder.start()
+		if(mob_occupant.reagents)
+			mob_occupant.reagents.add_reagent(/datum/reagent/toxin/amanitin, 1)
+			var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke_holder = new()
+			smoke_holder.attach(src)
+			smoke_holder.set_up(3, holder = src, location = src, silent = TRUE)
+			smoke_holder.chemholder.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+			smoke_holder.start()
 
 /obj/machinery/purger/container_resist_act(mob/living/user)
 	if(obj_flags & EMAGGED || !powered())
@@ -175,7 +176,13 @@
 /obj/machinery/purger/update_overlays()
 	. = ..()
 	if(powered())
-		. += "ready_blue"
+		if(purging)
+			if(obj_flags & EMAGGED)
+				. += "alert_red"
+			else
+				. += "purging_blue"
+		else
+			. += "ready_blue"
 
 /obj/machinery/purger/MouseDrop_T(mob/target, mob/user)
 	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user) || !powered())
