@@ -352,3 +352,43 @@
   - bugfix: Bluespace sender and vendor should display colors correctly now
   - bugfix: Gas filter should show labels properly now
   - bugfix: Nitrium now has its own gas color in the UI
+2023-05-10:
+  Addust:
+  - rscadd: The Cerestation whiteship no longer has soul, but it does have solar sails!
+      I'd call that a fair trade.
+  DaydreamIQ:
+  - rscadd: Ruins are now available in the region around the Northstar, Curators are
+      now no longer jobless!
+  Helg2:
+  - rscadd: Indusrial Gold and Regenerative Gold extracts now spawn random coins and
+      not just list of 6 coins. But no mythril as it has miserable chance to have
+      summoning effect which have even more miserable chance to spawn something dangerous
+      and not just mice.
+  - rscadd: Chococoin now has a chance to spawn wherever the coins are used to spawn
+      (wallets, greed ruins, deltastation bar)
+  JohnFulpWillard:
+  - balance: Default Syndicate and Russian gunners now fire every 2.5 seconds instead
+      of every 0.2
+  KoJIT2009:
+  - qol: Added switch buttons to few dropdown in character preferences
+  Melbert:
+  - bugfix: Fixes a runtime with plasmaman clown suit lube spray
+  Singul0:
+  - bugfix: The console for the solar panels of AIsat solars tramstation are now actually
+      connected together
+  Tattle, Flashkirby:
+  - sound: increased the volume of the water step noises
+  - image: ported over bay's water sprites
+  Zergspower:
+  - qol: Space Ruin Whiteship - Total redesign with some loot tweaks
+  vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents
+  - bugfix: high luminosity eyes light overlays now follow the user correctly
+  - qol: high luminosity eyes now have a tgui menu so you no longer have to go through
+      the color picker every time you want to change the range. they also have a new
+      setting that lets you change the color of your eyes independently of the light
+      color. You can now have cybernetic heterochromia if you want
+  - bugfix: directional flashlights when picked up will now always update their cast
+      light direction correctly no matter what dir you are facing
+  - refactor: refactors high luminosity eye code to better make use of the atom lighting
+      system, adding a new light type 'MOVABLE_LIGHT_BEAM'
