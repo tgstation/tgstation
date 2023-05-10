@@ -113,7 +113,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
-	projectile_parry = WEAKREF(AddComponent(\
+	projectile_parry = WEAKREF(parent.AddComponent(\
 		/datum/component/projectile_parry,\
 		list(\
 			/obj/projectile/colossus,\
@@ -121,6 +121,7 @@
 			/obj/projectile/kinetic,\
 			/obj/projectile/bileworm_acid,\
 			/obj/projectile/herald,\
+			/obj/projectile/kiss,\
 			)\
 		)
 	)
@@ -226,7 +227,7 @@
 /datum/component/style/proc/update_meter(new_rank, go_back)
 	if(!isnull(go_back))
 		animate(meter_image.get_filter("meter_mask"), time = 0 SECONDS, flags = ANIMATION_END_NOW, x = go_back)
-	animate(meter_image.get_filter("meter_mask"), time = 1 SECONDS, x = (rank > new_rank ? 0 : (rank < new_rank ? 100 : (style_points % 100) + 1)))
+	animate(meter_image.get_filter("meter_mask"), time = 1 SECONDS, x = (rank > new_rank ? 0 : ((rank < new_rank) || (style_points >= 500) ? 100 : (style_points % 100) + 1)))
 	if(!isnull(new_rank) && new_rank != rank && !timerid)
 		timerid = addtimer(CALLBACK(src, PROC_REF(update_screen), new_rank), 1 SECONDS)
 
@@ -422,6 +423,9 @@
 
 /datum/component/style/proc/on_crusher_detonate(datum/source, mob/living/target, obj/item/kinetic_crusher/crusher, backstabbed)
 	SIGNAL_HANDLER
+
+	if(target.stat == DEAD)
+		return
 
 	var/has_brimdemon_trophy = locate(/obj/item/crusher_trophy/brimdemon_fang) in crusher.trophies
 

@@ -2,6 +2,8 @@
 	name = "armory closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
+	armor_type = /datum/armor/closet_syndicate
+	paint_jobs = null
 
 /datum/armor/closet_syndicate
 	melee = 70

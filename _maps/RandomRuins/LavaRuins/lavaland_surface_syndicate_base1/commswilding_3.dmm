@@ -114,10 +114,6 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "z" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
@@ -128,6 +124,8 @@
 	pixel_y = 13
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
 "A" = (

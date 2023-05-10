@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "the anomaly refinery will no longer let you insert cores of insufficient quality to refine"

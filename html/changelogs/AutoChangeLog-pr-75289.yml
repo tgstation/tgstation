@@ -1,0 +1,5 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "[Ruins] If you explode the deep storage ruin, you won't see space. You'll see asteroids!"
+  - bugfix: "[Ruins] The entire thing should blow up into asteroid turf now, instead of previously one pocket of space forming (lol?)."

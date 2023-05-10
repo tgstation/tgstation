@@ -66,7 +66,7 @@
 	name = "surgical medkit"
 	icon_state = "medkit_surgery"
 	inhand_icon_state = "medkit"
-	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
+	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
 
 /obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
@@ -317,6 +317,56 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/coroner
+	name = "compact coroner's medkit"
+	desc = "A smaller medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	icon = 'icons/obj/storage/medkit.dmi'
+	icon_state = "compact_coronerkit"
+	inhand_icon_state = "coronerkit"
+	var/max_slots = 6
+	var/max_total_storage = 6
+
+/obj/item/storage/medkit/coroner/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //lowering this so it can't hold the autopsy scanner
+	atom_storage.max_slots = max_slots
+	atom_storage.max_total_storage = max_total_storage
+
+/obj/item/storage/medkit/coroner/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/reagent_containers/blood = 1,
+		/obj/item/bodybag = 2,
+		/obj/item/reagent_containers/syringe = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/coroner/large
+	name = "coroner's medkit"
+	desc = "A medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	icon = 'icons/obj/storage/medkit.dmi'
+	icon_state = "coronerkit"
+	inhand_icon_state = "coronerkit"
+	max_slots = 12
+	max_total_storage = 24
+
+/obj/item/storage/medkit/coroner/large/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/toy/crayon/white = 1,
+		/obj/item/reagent_containers/blood = 1,
+		/obj/item/bodybag = 2,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
 	)
 	generate_items_inside(items_inside,src)
 

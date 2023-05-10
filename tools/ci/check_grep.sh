@@ -79,7 +79,12 @@ fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
@@ -166,6 +171,11 @@ if $grep -ni 'nanotransen' $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
     st=1
 fi;
+if $grep 'NanoTrasen' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
+    st=1
+fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
@@ -188,10 +198,18 @@ do
 done
 
 part "updatepaths validity"
-lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
-if [ $lines -gt 0 ]; then
+missing_txt_lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
+if [ $missing_txt_lines -gt 0 ]; then
     echo
     echo -e "${RED}ERROR: Found an UpdatePaths File that doesn't end in .txt! Please add the proper file extension!${NC}"
+    st=1
+fi;
+
+number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | wc -l)
+valid_number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | $grep -P "\d+_(.+)" | wc -l)
+if [ $valid_number_prefix_lines -ne $number_prefix_lines ]; then
+    echo
+    echo -e "${RED}ERROR: Detected an UpdatePaths File that doesn't start with the PR number! Please add the proper number prefix!${NC}"
     st=1
 fi;
 

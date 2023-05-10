@@ -1,5 +1,5 @@
 /obj/item/food/meat
-	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 4)
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
 	var/subjectname = ""
