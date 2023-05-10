@@ -793,6 +793,9 @@
 
 	max_radius = innate_radius + radius_boost
 
+	if(current_radius > max_radius)//the generator can no longer function at this capacity
+		disable_shields()
+		current_radius = max_radius
 /obj/machinery/modular_shield_gen/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
