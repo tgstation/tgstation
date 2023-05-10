@@ -38,7 +38,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -79,7 +79,7 @@
 	desc = "An adorable stuffed toy that resembles a very determined seafaring lizardperson. To ten thousand leagues and below, little guy.";
 	name = "Drinks-The-Salt"
 	},
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "eQ" = (
 /obj/structure/moisture_trap{
@@ -136,7 +136,7 @@
 	dir = 8
 	},
 /obj/item/fishing_rod,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -226,14 +226,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "kX" = (
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "lW" = (
 /turf/open/chasm,
 /area/shuttle/escape)
 "mD" = (
 /obj/item/toy/beach_ball/branded,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "nz" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -335,8 +335,8 @@
 	pixel_y = 3
 	},
 /obj/item/fishing_hook{
-	pixel_y = 3;
-	layer = 5
+	layer = 5;
+	pixel_y = 3
 	},
 /obj/item/bait_can/worm{
 	pixel_x = -5;
@@ -397,7 +397,7 @@
 /area/shuttle/escape)
 "ut" = (
 /obj/machinery/light/directional/south,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "vH" = (
 /obj/structure/table/wood,
@@ -406,7 +406,7 @@
 "vV" = (
 /obj/machinery/light/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/shuttle/escape)
 "wq" = (
 /obj/machinery/light/directional/east,
@@ -618,8 +618,8 @@
 "IM" = (
 /obj/structure/table/wood,
 /obj/item/fishing_hook{
-	pixel_y = 3;
-	layer = 5
+	layer = 5;
+	pixel_y = 3
 	},
 /obj/item/fishing_line{
 	layer = 4;
@@ -646,8 +646,8 @@
 "Ju" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box{
-	pixel_y = 3;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/mineral/plastitanium/red,
@@ -860,7 +860,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/shuttle/escape)

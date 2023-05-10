@@ -88,6 +88,11 @@
 #define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
 ///The limb is from a xenomorph.
 #define BODYTYPE_ALIEN (1<<7)
+///The limb is from a golem
+#define BODYTYPE_GOLEM (1<<8)
+
+#define BODYTYPE_BIOSCRAMBLE_COMPATIBLE (BODYTYPE_HUMANOID | BODYTYPE_MONKEY | BODYTYPE_ALIEN)
+#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_ROBOTIC) && (bodytype & BODYTYPE_BIOSCRAMBLE_COMPATIBLE))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -420,6 +425,7 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 17 //youngest a character can be
