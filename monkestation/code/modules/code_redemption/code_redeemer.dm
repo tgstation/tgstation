@@ -15,7 +15,7 @@
 		//we attempt to reload because something may have generated it out of game.
 		reload_global_stored_codes()
 	if(!(code in GLOB.stored_codes))
-		message_admins("[usr] has attempted to redeem a code and failed.") //fail safe to see if someone is trying to iterate over all codes
+		message_admins("[usr.ckey] has attempted to redeem a code and failed.") //fail safe to see if someone is trying to iterate over all codes
 		return
 
 	var/path = GLOB.stored_codes[code]
