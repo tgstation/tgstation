@@ -1047,3 +1047,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/purger
+	name = "Purge-O-Matic 3000 Board"
+	desc = "The circuit board for an experimental chemical purging device."
+	id = "purger"
+	build_path = /obj/item/circuitboard/machine/purger
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
