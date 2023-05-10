@@ -6,7 +6,9 @@
 
 /obj/structure/closet/secure_closet/personal/Initialize(mapload)
 	. = ..()
-	var/static/list/choices = list("Personal")
+	var/static/list/choices
+	if(isnull(choices))
+		choices = list("Personal")
 	access_choices = choices
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()

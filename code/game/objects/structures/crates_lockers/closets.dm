@@ -89,7 +89,9 @@
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
-	var/static/list/closet_paint_jobs = list(
+	var/static/list/closet_paint_jobs
+	if(isnull(closet_paint_jobs))
+		closet_paint_jobs = list(
 		"Cargo" = list("icon_state" = "qm"),
 		"Engineering" = list("icon_state" = "ce"),
 		"Engineering Secure" = list("icon_state" = "eng_secure"),
@@ -107,9 +109,15 @@
 	if(paint_jobs)
 		paint_jobs = closet_paint_jobs
 
+	var/static/list/card_reader_choices
+	if(isnull(card_reader_choices))
+		card_reader_choices = list(
+			"Personal",
+			"Departmental",
+			"None"
+			)
 	if(access_choices)
-		var/static/list/choices = list("Personal", "Departmental", "None")
-		access_choices = choices
+		access_choices = card_reader_choices
 
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
@@ -819,7 +827,7 @@
 	else if(!user.combat_mode)
 		var/item_is_id = weapon.GetID()
 		if(!item_is_id)
-			return
+			return FALSE
 		if((item_is_id || !toggle(user)) && !opened)
 			togglelock(user)
 	else
