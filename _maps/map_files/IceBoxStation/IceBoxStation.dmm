@@ -23330,12 +23330,12 @@
 "huJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
-/obj/item/tank/internals/emergency_oxygen/empty,
-/obj/item/tank/internals/emergency_oxygen/empty{
-	pixel_y = 5
+/obj/item/bodybag/environmental,
+/obj/item/bodybag/environmental,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_y = 3
 	},
-/obj/item/bodybag/environmental,
-/obj/item/bodybag/environmental,
 /turf/open/floor/iron,
 /area/station/service/chapel)
 "huN" = (
