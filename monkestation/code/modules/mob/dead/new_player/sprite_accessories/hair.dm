@@ -13,7 +13,7 @@
 	name = "GigAfro"
 	icon_state = "giga_fro"
 	locked = TRUE
-	vertical_offset = 24
+	vertical_offset = 21
 
 /datum/sprite_accessory/hair/butters
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
@@ -49,7 +49,7 @@
 	name = "Gigapompadour"
 	icon_state = "gigapomp"
 	locked = TRUE
-	vertical_offset = 5
+	vertical_offset = 8
 
 /datum/sprite_accessory/hair/shrinepriestess
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'

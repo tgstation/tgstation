@@ -73,7 +73,7 @@
 
 ///Adjust stamina by an amount.
 /datum/stamina_container/proc/adjust(amt as num, forced)
-	if(!amt || !COOLDOWN_FINISHED(src, stamina_grace_period))
+	if((!amt || !COOLDOWN_FINISHED(src, stamina_grace_period)) && !forced)
 		return
 	///Our parent might want to fuck with these numbers
 	var/modify = parent.pre_stamina_change(amt, forced)

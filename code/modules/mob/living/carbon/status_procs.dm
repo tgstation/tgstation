@@ -41,6 +41,7 @@
 	REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	filters -= FILTER_STAMINACRIT
 	stamina.adjust_grace_period(0.5 SECONDS)
+	stamina.current = (stamina.maximum * STAMINA_STUN_THRESHOLD_MODIFIER) + 10
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
