@@ -70,6 +70,14 @@
 		else
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
+
+	if(!(flags_inv & HIDEHAIR))
+		if(ishuman(usr))
+			var/mob/living/carbon/human/user = usr
+			var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[user.hairstyle]
+			if(hair_style.vertical_offset)
+				standing.pixel_y = hair_style.vertical_offset
+
 	if(contents)
 		var/current_hat = 1
 		for(var/obj/item/clothing/head/selected_hat in contents)
@@ -77,7 +85,7 @@
 			if(selected_hat.worn_icon)
 				head_icon = selected_hat.icon
 			var/mutable_appearance/hat_adding = selected_hat.build_worn_icon(HEAD_LAYER, head_icon, FALSE, FALSE)
-			hat_adding.pixel_y = ((current_hat * 4) - 1)
+			hat_adding.pixel_y = (standing.pixel_y + (current_hat * 4) - 1)
 			hat_adding.pixel_x = (rand(-1, 1))
 			current_hat++
 			. += hat_adding

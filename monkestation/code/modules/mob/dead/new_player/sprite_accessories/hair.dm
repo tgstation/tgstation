@@ -1,3 +1,7 @@
+/datum/sprite_accessory/hair
+	///how many pixels up we need to shift worn items that don't hide hats
+	var/vertical_offset = 0
+
 /datum/sprite_accessory/hair/afro3
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Bigger Afro"
@@ -23,6 +27,7 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Marge"
 	icon_state = "marge"
+	vertical_offset = 16
 
 /datum/sprite_accessory/hair/polnareff
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
