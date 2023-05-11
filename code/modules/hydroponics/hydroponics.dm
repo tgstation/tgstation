@@ -167,8 +167,8 @@
 	var/tmp_capacity = 0
 	for (var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		tmp_capacity += matter_bin.tier
-	for (var/datum/stock_part/manipulator/manipulator in component_parts)
-		rating = manipulator.tier
+	for (var/datum/stock_part/servo/servo in component_parts)
+		rating = servo.tier
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri

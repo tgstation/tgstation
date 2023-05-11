@@ -29,15 +29,10 @@
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
 	else if(check_access(accessor.get_active_held_item()))
 		return TRUE
-	//if they are wearing a card that has access, that works
-	else if(ishuman(accessor))
-		var/mob/living/carbon/human/human_accessor = accessor
-		if(check_access(human_accessor.wear_id))
-			return TRUE
-	//if they have a hacky abstract animal ID with the required access, let them in i guess...
-	else if(isanimal(accessor))
-		var/mob/living/simple_animal/animal = accessor
-		if(check_access(animal.access_card))
+	//if they are carying a card that has access, that works
+	else if(isliving(accessor))
+		var/mob/living/being = accessor
+		if(check_access(being.get_idcard(TRUE)))
 			return TRUE
 	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
 		var/obj/item/mmi/brain_mmi = accessor.loc
