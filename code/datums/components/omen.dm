@@ -214,9 +214,9 @@
 /datum/component/omen/bible/RegisterWithParent()
 	. = ..()
 	var/mob/living/living_parent = parent
-	living_parent.add_filter("omen", 2, list("type" = "outline", "color" = COLOR_DARK_RED, "alpha" = 0, "size" = 1))
+	living_parent.add_filter("omen", 2, list("type" = "drop_shadow", "color" = COLOR_DARK_RED, "alpha" = 0, "size" = 2))
 	var/filter = living_parent.get_filter("omen")
-	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(filter, alpha = 255, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 
 /datum/component/omen/bible/UnregisterFromParent()
