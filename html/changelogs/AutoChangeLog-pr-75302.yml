@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bunch of log spam related to null.can_use() when AIs move their cameras around with toggle camera lights enabled Honk."
