@@ -334,6 +334,12 @@
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "A train but in space, choo choo!"
 
+/datum/map_template/shuttle/emergency/birdshot
+	suffix = "birdshot"
+	name = "Birdshot Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 2
+	description = "We pulled this one out of Mothball just for you!"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -541,8 +547,13 @@
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
-	name = "NT Construction Vessel"
-	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
+	name = "NT Heavy Salvage Vessel"
+	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
+
+/datum/map_template/shuttle/whiteship/birdshot
+	suffix = "birdshot"
+	name = "NT Patrol Bee"
+	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an agressive and deadly Gelatinous Cube"
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
@@ -595,6 +606,10 @@
 /datum/map_template/shuttle/cargo/pubby
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
+
+/datum/map_template/shuttle/cargo/birdshot
+	suffix = "birdshot"
+	name = "supply shuttle (Birdshot)"
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
@@ -653,6 +668,10 @@
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
+
+/datum/map_template/shuttle/arrival/birdshot
+	suffix = "birdshot"
+	name = "arrival shuttle (Birdshot)"
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
@@ -764,10 +783,6 @@
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
 
-/datum/map_template/shuttle/pirate/psykers
-	suffix = "psyker"
-	name = "pirate ship (Psyker-gang)"
-
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"
@@ -779,6 +794,10 @@
 /datum/map_template/shuttle/hunter/bounty
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
+
+/datum/map_template/shuttle/hunter/psyker
+	suffix = "psyker"
+	name = "Psyker Fortune-Telling Ship"
 
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"

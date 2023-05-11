@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
 	var/mode = SCANNER_VERBOSE
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
@@ -253,6 +253,9 @@
 					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
+		for(var/obj/item/bodypart/limb as anything in carbontarget.bodyparts)
+			for(var/obj/item/embed as anything in limb.embedded_objects)
+				render_list += "<span class='alert ml-1'>Embedded object: [embed] located in \the [limb.plaintext_zone]</span>\n"
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target

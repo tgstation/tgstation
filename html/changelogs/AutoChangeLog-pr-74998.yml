@@ -1,0 +1,8 @@
+author: "DrDiasyl aka DrTuxedo#0931"
+delete-after: True
+changes:
+  - qol: "Now blocking an attack will play a sound and display a spark effect, giving back feedback"
+  - sound: "parry.ogg was updated to a better-sounding version"
+  - sound: "shieldbash.ogg no longer has noise and unnecessary silence"
+  - sound: "New block_shield.ogg and block_blade.ogg for shields and energy swords"
+  - code_imp: "Cultists items no longer have their own code for playing parrying sounds"

@@ -6,7 +6,7 @@
 	icon_state = "blshell"
 	worn_icon_state = "shell"
 	caliber = CALIBER_SHOTGUN
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	projectile_type = /obj/projectile/bullet/shotgun_slug
 
 /obj/item/ammo_casing/shotgun/executioner
@@ -25,7 +25,7 @@
 	name = "beanbag slug"
 	desc = "A weak beanbag slug for riot control."
 	icon_state = "bshell"
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag
 
 /obj/item/ammo_casing/shotgun/incendiary
@@ -52,7 +52,7 @@
 	desc = "A stunning taser slug."
 	icon_state = "stunshell"
 	projectile_type = /obj/projectile/bullet/shotgun_stunslug
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 
 /obj/item/ammo_casing/shotgun/meteorslug
 	name = "meteorslug shell"
@@ -92,7 +92,7 @@
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
 	variance = 20
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
 /obj/item/ammo_casing/shotgun/incapacitate
 	name = "custom incapacitating shot"
@@ -101,14 +101,14 @@
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_incapacitate
 	pellets = 12//double the pellets, but half the stun power of each, which makes this best for just dumping right in someone's face.
 	variance = 25
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	pellets = 10
 	variance = 25
 
