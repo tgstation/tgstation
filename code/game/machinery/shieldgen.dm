@@ -673,7 +673,7 @@
 /obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user,"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
-	 "gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  W))
+		"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  W))
 		return
 
 	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
@@ -727,9 +727,9 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
-
 /obj/machinery/modular_shield_gen/update_icon_state()
-	icon_state =("gen_[!(machine_stat & NOPOWER)?"[recovering ?"recovering_":"ready_"]":"no_power_"][(panel_open)?"open":"closed"]")
+
+	icon_state = ("gen_[!(machine_stat & NOPOWER)?"[recovering ?"recovering_":"ready_"]":"no_power_"][(panel_open)?"open":"closed"]")
 	return ..()
 
 //ui stuff
