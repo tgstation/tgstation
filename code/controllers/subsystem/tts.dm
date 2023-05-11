@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(tts)
 
 	/// Queued HTTP requests that have yet to be sent. TTS requests are handled as lists rather than datums.
 	/// It could be worth refactoring TTS messages to be datums instead to reduce complexity.
-	var/list/queued_tts_messages = list()
+	var/datum/heap/queued_tts_messages
 
 	/// HTTP requests currently in progress but not being processed yet
 	var/list/in_process_tts_messages = list()
@@ -55,13 +55,17 @@ SUBSYSTEM_DEF(tts)
 	return ..()
 
 /datum/controller/subsystem/tts/stat_entry(msg)
-	msg = "Active:[length(in_process_tts_messages)]|Standby:[length(queued_tts_messages)]|Avg:[average_tts_messages_time]"
+	msg = "Active:[length(in_process_tts_messages)]|Standby:[length(queued_tts_messages.L)]|Avg:[average_tts_messages_time]"
 	return ..()
+
+/proc/cmp_word_length_asc(list/a, list/b)
+	return length(b[MESSAGE_INDEX]) - length(a[MESSAGE_INDEX])
 
 /datum/controller/subsystem/tts/Initialize()
 	if(!CONFIG_GET(string/tts_http_url))
 		return SS_INIT_NO_NEED
 
+	queued_tts_messages = new(GLOBAL_PROC_REF(cmp_word_length_asc))
 	var/datum/http_request/request = new()
 	var/list/headers = list()
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
@@ -125,9 +129,8 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	if(!resumed)
-		while(length(in_process_tts_messages) < max_concurrent_requests && queued_tts_messages.len > 0)
-			var/list/entry = queued_tts_messages[queued_tts_messages.len]
-			queued_tts_messages.len--
+		while(length(in_process_tts_messages) < max_concurrent_requests && length(queued_tts_messages.L) > 0)
+			var/list/entry = queued_tts_messages.pop()
 			handle_request(entry)
 		current_processing_tts_messages = in_process_tts_messages.Copy()
 
@@ -155,9 +158,6 @@ SUBSYSTEM_DEF(tts)
 			play_tts(target["target"], new_sound, target["language"], target["local"], target["range"])
 		if(MC_TICK_CHECK)
 			return
-
-/proc/cmp_word_length_asc(list/a, list/b)
-	return length(b[MESSAGE_INDEX]) - length(a[MESSAGE_INDEX])
 
 #define ADD_TARGET_TO_STRUCT(tts_struct, target, language, local, range) ##tts_struct[TARGET_INDEX] += list(list("target" = ##target, "language" = ##language, "local" = ##local, "range" = ##range))
 
@@ -209,10 +209,8 @@ SUBSYSTEM_DEF(tts)
 	if(length(in_process_tts_messages) < max_concurrent_requests)
 		request.begin_async()
 		in_process_tts_messages += list(data)
-		sortTim(in_process_tts_messages, GLOBAL_PROC_REF(cmp_word_length_asc))
 	else
-		queued_tts_messages += list(data)
-		sortTim(queued_tts_messages, GLOBAL_PROC_REF(cmp_word_length_asc))
+		queued_tts_messages.insert(list(data))
 
 #undef ADD_TARGET_TO_STRUCT
 
