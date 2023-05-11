@@ -536,14 +536,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	selected_mode.replace(my_area, pressure)
 
-/*
-	if(!COOLDOWN_FINISHED(src, warning_cooldown))
-		return
-
-	speak(warning_message)
-	COOLDOWN_START(src, warning_cooldown, AIRALARM_WARNING_COOLDOWN)
-	*/
-
 /obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
 	if(!new_mode)
