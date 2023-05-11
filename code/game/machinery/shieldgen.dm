@@ -870,9 +870,10 @@
 
 /obj/machinery/modular_shield/module/Destroy()
 	. = ..()
-
-	shield_generator.connected_modules -= (src)
-	connected_node.connected_through_us -= (src)
+	if(shield_generator)
+		shield_generator.connected_modules -= (src)
+	if(connected_node)
+		connected_node.connected_through_us -= (src)
 	return ..()
 
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
@@ -956,7 +957,8 @@
 	. = ..()
 
 	disconnect_connected_through_us()
-	shield_generator.calculate_boost()
+	if(shield_generator)
+		shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
