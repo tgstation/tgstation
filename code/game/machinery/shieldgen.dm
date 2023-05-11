@@ -916,9 +916,12 @@
 	if(shield_generator)
 
 		shield_generator.connected_modules += (src)
-		shield_generator.calculate_boost()
 		balloon_alert(user, "connected directly to generator")
 		update_appearance()
+		if(istype(src, /obj/machinery/modular_shield/module/node))
+			var/obj/machinery/modular_shield/module/node/connected_node = src
+			connected_node.connect_connected_through_us()
+		shield_generator.calculate_boost()
 		return
 
 	connected_node	= (locate(/obj/machinery/modular_shield/module/node) in connected_turf)
@@ -929,9 +932,12 @@
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
 			shield_generator.connected_modules += (src)
-			shield_generator.calculate_boost()
 			balloon_alert(user, "connected to generator through node")
 			update_appearance()
+			if(istype(src, /obj/machinery/modular_shield/module/node))
+				var/obj/machinery/modular_shield/module/node/connected_node = src
+				connected_node.connect_connected_through_us()
+			shield_generator.calculate_boost()
 			return
 		balloon_alert(user, "connected to node but no path to generator")
 		return
@@ -953,12 +959,28 @@
 	. = ..()
 	connected_through_us = list()
 
+/obj/machinery/modular_shield/module/node/setDir(new_dir)
+	. = ..()
+
+	disconnect_connected_through_us()
+
 /obj/machinery/modular_shield/module/node/Destroy()
 	. = ..()
 
 	disconnect_connected_through_us()
 	if(shield_generator)
 		shield_generator.calculate_boost()
+
+/obj/machinery/modular_shield/module/node/proc/connect_connected_through_us()
+
+	if(shield_generator)
+		for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
+			shield_generator.connected_modules += connected
+			connected.shield_generator = shield_generator
+			if(istype(connected, /obj/machinery/modular_shield/module/node))
+				var/obj/machinery/modular_shield/module/node/connected_node = connected
+				connected_node.connect_connected_through_us()
+			connected.update_appearance()
 
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
