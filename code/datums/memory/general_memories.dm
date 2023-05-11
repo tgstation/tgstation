@@ -939,3 +939,24 @@
 
 /datum/memory/witnessed_gods_wrath/get_moods()
 	return list("[protagonist_name] [mood_verb] as they get annihilated by [antagonist_name].")
+
+/datum/memory/witnessed_gods_wrath/get_happy_moods()
+	return list(
+		"cackles hysterically",
+		"laughs maniacally",
+		"grins widely",
+	)
+
+/datum/memory/witnessed_gods_wrath/get_neutral_moods()
+	return list(
+		"appears concerned",
+		"reconsider their life decisions",
+		"has a blank expression",
+	)
+
+/datum/memory/witnessed_gods_wrath/get_sad_moods()
+	return list(
+		"appears dejected",
+		"is filled with regret",
+		"wince in despair"
+	)
