@@ -729,7 +729,7 @@
 
 
 /obj/machinery/modular_shield_gen/update_icon_state()
-	icon_state = "gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open) ? "open" : "closed"]"
+	icon_state =("gen_[!(machine_stat & NOPOWER)?"[recovering ?"recovering_":"ready_"]":"no_power_"][(panel_open)?"open":"closed"]")
 	return ..()
 
 //ui stuff
