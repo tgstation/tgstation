@@ -18866,7 +18866,8 @@
 /area/station/medical/chemistry)
 "eVY" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8
+	dir = 8;
+	volume_rate = 200
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 8
