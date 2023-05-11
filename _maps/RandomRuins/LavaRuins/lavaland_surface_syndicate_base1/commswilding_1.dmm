@@ -116,12 +116,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "A" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "C" = (

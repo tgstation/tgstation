@@ -84,12 +84,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
-	if(!isliving(user))
-		return data
-	var/mob/living/living_user = user
-	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-	if(id_card)
-		data["points"] = retrive_points(id_card)
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
@@ -97,6 +91,11 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"name" = item.name,
 			"amt" = grocery_list[item],
 		))
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+		if(id_card)
+			data["points"] = retrive_points(id_card)
 
 	return data
 

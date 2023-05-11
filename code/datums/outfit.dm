@@ -198,11 +198,15 @@
 		EQUIP_OUTFIT_ITEM(id, ITEM_SLOT_ID)
 	if(!visualsOnly && id_trim && user.wear_id)
 		var/obj/item/card/id/id_card = user.wear_id
-		id_card.registered_age = user.age
-		if(id_trim)
-			if(!SSid_access.apply_trim_to_card(id_card, id_trim))
-				WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
-			user.sec_hud_set_ID()
+		if(!istype(id_card)) //If an ID wasn't found in their ID slot, it's probably something holding their ID like a wallet or PDA
+			id_card = locate() in user.wear_id
+
+		if(istype(id_card)) //Make sure that we actually found an ID to modify, otherwise this runtimes and cancels equipping the outfit
+			id_card.registered_age = user.age
+			if(id_trim)
+				if(!SSid_access.apply_trim_to_card(id_card, id_trim))
+					WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
+				user.sec_hud_set_ID()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)

@@ -84,7 +84,7 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
-/turf/open/floor/holofloor/beach/coast_t,
+/turf/open/floor/holofloor/beach/coast,
 /area/ruin/space/has_grav/powered/aesthetic)
 "v" = (
 /obj/item/statuebust,
@@ -101,7 +101,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "y" = (
-/turf/open/floor/holofloor/beach/coast_b,
+/turf/open/floor/holofloor/beach/water,
 /area/ruin/space/has_grav/powered/aesthetic)
 "z" = (
 /obj/structure/fans/tiny,

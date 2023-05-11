@@ -98,7 +98,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid5"
 	},
-/area/ruin/space)
+/area/space)
 "bl" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -233,7 +233,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid10"
 	},
-/area/ruin/space)
+/area/space)
 "dw" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -770,7 +770,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid9"
 	},
-/area/ruin/space)
+/area/space)
 "jR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/dangerous_research/maint)
@@ -1154,7 +1154,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid6"
 	},
-/area/ruin/space)
+/area/space)
 "pO" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
@@ -1637,7 +1637,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "us" = (
 /turf/closed/wall,
-/area/ruin/space)
+/area/space)
 "uB" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
@@ -1662,8 +1662,8 @@
 "uI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/purple,
-/turf/open/space/basic,
-/area/ruin/space)
+/turf/template_noop,
+/area/template_noop)
 "uP" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -1695,7 +1695,8 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "vv" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "vz" = (
@@ -2027,11 +2028,11 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid12"
 	},
-/area/ruin/space)
+/area/space)
 "zY" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space)
+/turf/template_noop,
+/area/template_noop)
 "zZ" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -2156,7 +2157,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Bg" = (
 /turf/closed/mineral/random,
-/area/ruin/space)
+/area/space)
 "Bm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2277,7 +2278,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "CB" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_b" = "Air Supply B");
+	atmos_chambers = list("asrc_b"="Air Supply B");
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2309,7 +2310,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid2"
 	},
-/area/ruin/space)
+/area/space)
 "CL" = (
 /obj/effect/turf_decal/stripes/asteroid{
 	dir = 4
@@ -2403,7 +2404,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "DX" = (
 /obj/structure/sign/poster/official/moth_piping{
 	pixel_y = 32
@@ -2430,11 +2431,11 @@
 "Ep" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "Ey" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/ruin/space)
+/turf/template_noop,
+/area/template_noop)
 "EA" = (
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -2482,7 +2483,7 @@
 "Fq" = (
 /obj/structure/flora/rock/icy/style_2,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "Fw" = (
 /obj/structure/door_assembly/door_assembly_vault,
 /obj/effect/turf_decal/stripes/full,
@@ -2728,7 +2729,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Jh" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "JA" = (
@@ -2846,7 +2848,7 @@
 "Lc" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -3061,7 +3063,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Ob" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_a" = "Air Supply A")
+	atmos_chambers = list("asrc_a"="Air Supply A")
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -3077,7 +3079,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "On" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "Oo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3098,7 +3100,7 @@
 "Oy" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "OB" = (
 /obj/structure/table,
 /obj/structure/microscope,
@@ -3265,12 +3267,13 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "Qt" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Qv" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Qy" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -3285,7 +3288,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid1"
 	},
-/area/ruin/space)
+/area/space)
 "QE" = (
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket,
@@ -3393,7 +3396,7 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid8"
 	},
-/area/ruin/space)
+/area/space)
 "RB" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/tile/dark_red/half{
@@ -3663,7 +3666,7 @@
 "VD" = (
 /obj/structure/flora/rock/icy/style_3,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
+/area/space)
 "VL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -5123,8 +5126,8 @@ Bg
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 GZ
 GZ
 nB
@@ -5165,8 +5168,8 @@ Qv
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 xK
 xd
 xd
@@ -5207,8 +5210,8 @@ Qv
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 Zv
 Zv
 iw

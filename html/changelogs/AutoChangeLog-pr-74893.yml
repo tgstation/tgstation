@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "rewords \"Total Cost\" to just \"Total\" so text does not overflow to the next line and improves readability"
-  - qol: "just one failure message if you don't have enough credits for cargo/express mode to keep it consistent"
-  - refactor: "rounds the total cost of your produce console order so you don't have decimal values left in your bank account"

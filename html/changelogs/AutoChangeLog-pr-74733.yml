@@ -1,4 +1,0 @@
-author: "Dawnseer"
-delete-after: True
-changes:
-  - bugfix: "Anti-glow actually bringing some darkness instead of just a light glow."

@@ -25,7 +25,7 @@
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_admin_headset_message(mob/M in GLOB.mob_list)
 	set category = "Admin.Events"
@@ -71,7 +71,7 @@
 	target.balloon_alert(target, "you hear a voice")
 	to_chat(target, span_hear("You hear something crackle in your [human_recipient ? "ears" : "radio receiver"] for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_admin_world_narrate()
 	set category = "Admin.Events"
@@ -87,7 +87,7 @@
 	to_chat(world, "[msg]", confidential = TRUE)
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
 	message_admins(span_adminnotice("[key_name_admin(usr)] Sent a global narrate"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_admin_local_narrate(atom/A)
 	set category = "Admin.Events"
@@ -108,7 +108,7 @@
 
 	log_admin("LocalNarrate: [key_name(usr)] at [AREACOORD(A)]: [msg]")
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(usr)] at [ADMIN_VERBOSEJMP(A)]:</b> [msg]<BR>"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Local Narrate") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
 	set category = "Admin.Events"
@@ -133,7 +133,7 @@
 	msg = span_adminnotice("<b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR>")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Direct Narrate") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Admin.Events"
@@ -156,7 +156,7 @@
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()
 	set category = "Admin.Events"
@@ -177,7 +177,7 @@
 			SSshuttle.emergency.mode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.request()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
 	return
@@ -197,7 +197,7 @@
 		return
 
 	SSshuttle.emergency.cancel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Cancel Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Cancel Shuttle") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] admin-recalled the emergency shuttle."))
 
@@ -294,7 +294,7 @@
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(N)].")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/admin_change_sec_level()
 	set category = "Admin.Events"
@@ -313,7 +313,7 @@
 
 	log_admin("[key_name(usr)] changed the security level to [level]")
 	message_admins("[key_name_admin(usr)] changed the security level to [level]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/run_weather()
 	set category = "Admin.Events"
@@ -390,7 +390,7 @@
 
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
 	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/remove_mob_ability()
 	set category = "Admin.Events"
@@ -420,7 +420,7 @@
 
 	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/command_report_footnote()
 	set category = "Admin.Events"

@@ -282,6 +282,16 @@
 	weight_multiplier = 1.5
 	max_occurrences_modifier = 2
 
+/datum/station_trait/random_event_weight_modifier/dust_storms
+	name = "Dust Stormfront"
+	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
+	trait_type = STATION_TRAIT_NEGATIVE
+	trait_flags = NONE
+	weight = 2
+	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
+	weight_multiplier = 2
+	max_occurrences_modifier = 3
+
 /datum/station_trait/cramped_escape_pods
 	name = "Cramped Escape Pods"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -291,7 +301,6 @@
 	trait_to_give = STATION_TRAIT_SMALLER_PODS
 	blacklist = list(/datum/station_trait/luxury_escape_pods)
 
-///A special trait, used only for when a revolution was won in the previous round. See /obj/effect/mapping_helpers/revolution_trash for more information.
 /datum/station_trait/revolutionary_trashing
 	name = "Post-Revolutionary Fervor"
 	show_in_report = TRUE

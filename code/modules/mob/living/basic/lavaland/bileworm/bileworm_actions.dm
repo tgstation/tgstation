@@ -15,7 +15,7 @@
 		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
 		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
 			//this is a valid reason to give up on a target
-			burrower.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
+			burrower.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))

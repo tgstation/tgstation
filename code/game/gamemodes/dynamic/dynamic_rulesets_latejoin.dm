@@ -216,3 +216,35 @@
 	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
 
 	return TRUE
+
+/// Ruleset for latejoin changelings
+/datum/dynamic_ruleset/latejoin/stowaway_changeling
+	name = "Stowaway Changeling"
+	antag_datum = /datum/antagonist/changeling
+	antag_flag = ROLE_STOWAWAY_CHANGELING
+	antag_flag_override = ROLE_CHANGELING
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 2
+	cost = 12
+	requirements = list(101,101,40,40,20,20,10,10,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/stowaway_changeling/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	picked_mob.mind.add_antag_datum(antag_datum)
+	return TRUE

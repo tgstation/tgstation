@@ -159,6 +159,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
+/// Allows you to mine with your bare hands
+#define TRAIT_FIST_MINING "fist_mining"
 #define TRAIT_DUMB "dumb"
 /// Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
@@ -218,6 +220,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOHUNGER "no_hunger"
 ///This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+///This carbon doesn't show an overlay when they have no brain
+#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOMETABOLISM "no_metabolism"
 // Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
@@ -428,6 +432,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 
+/// Trait which prevents you from becoming overweight
+#define TRAIT_NOFAT "cant_get_fat"
+
+/// Trait which allows you to eat rocks
+#define TRAIT_ROCK_EATER "rock_eater"
+/// Trait which allows you to gain bonuses from consuming rocks
+#define TRAIT_ROCK_METAMORPHIC "rock_metamorphic"
+
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
 /// This atom is a secluded location, which is counted as out of bounds.
@@ -465,6 +477,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// If applied to a mob, nearby dogs will have a small chance to nonharmfully harass said mob
 #define TRAIT_HATED_BY_DOGS "hated_by_dogs"
+/// Mobs with this trait will not be immobilized when held up
+#define TRAIT_NOFEAR_HOLDUPS "no_fear_holdup"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -825,6 +839,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
+#define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind
@@ -1000,6 +1015,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// radiation processing as if this wasn't already irradiated.
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
 #define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"
+
+/// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
+#define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
 
 // Traits to heal for
 

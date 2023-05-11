@@ -44,7 +44,7 @@
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	create_reagents(10)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
@@ -303,7 +303,7 @@
 	desc = "<i>\"Surviving the encounter with the \
 		horrible thing, I realized immediately what I \
 		had to do: sell marketable toys of it. \
-		\"</i><br>- Chief Engineer Ship Chafer"
+		\"</i><br>- Chief Engineer Miles O'Brien"
 	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "dark_matter_s1"
 
@@ -322,7 +322,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
 	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
 	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
 	var/bullets = 7
@@ -377,7 +377,7 @@
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon_state()
@@ -748,7 +748,7 @@
 	icon_state = "demonomicon"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
-	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
+	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite wisdom?", "Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
@@ -1145,6 +1145,11 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/coroner
+	name = "\improper Coroner action figure"
+	icon_state = "coroner"
+	toysay = "Get the damn Revenant outta here!"
+
 /obj/item/toy/figure/paramedic
 	name = "\improper Paramedic action figure"
 	icon_state = "paramedic"
@@ -1299,20 +1304,42 @@
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/eldritch.dmi'
+	base_icon_state = "book"
 	icon_state = "book"
+	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
 	attack_verb_simple = list("sacrifice", "transmute", "grasp", "curse")
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
+	/// id for timer
+	var/timer_id
 
-/obj/item/toy/eldritch_book/attack_self(mob/user)
-	book_open = !book_open
-	update_appearance()
+/obj/item/toy/eldritch_book/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
 
-/obj/item/toy/eldritch_book/update_icon_state()
-	icon_state = book_open ? "book_open" : "book"
-	return ..()
+	if(book_open)
+		close_animation()
+	else
+		open_animation()
+
+/// Plays a little animation that shows the book opening and closing.
+/obj/item/toy/eldritch_book/proc/open_animation()
+	icon_state = "[base_icon_state]_open"
+	flick("[base_icon_state]_opening", src)
+	book_open = TRUE
+
+	timer_id = addtimer(CALLBACK(src, PROC_REF(close_animation)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+
+/// Plays a closing animation and resets the icon state.
+/obj/item/toy/eldritch_book/proc/close_animation()
+	icon_state = base_icon_state
+	flick("[base_icon_state]_closing", src)
+	book_open = FALSE
+
+	deltimer(timer_id)
 
 /*
  * Fake tear
