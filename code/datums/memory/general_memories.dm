@@ -917,7 +917,7 @@
 
 /// Saw someone play Russian Roulette.
 /datum/memory/witnessed_gods_wrath
-	memory_flags = MEMORY_CHECK_BLINDNESS
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS
 	story_value = STORY_VALUE_AMAZING
 
 /datum/memory/witnessed_gods_wrath/New(
