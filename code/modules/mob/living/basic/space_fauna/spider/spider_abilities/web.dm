@@ -100,11 +100,7 @@
 /datum/action/cooldown/lay_web/web_passage
 	name = "Spin Web Passage"
 	desc = "Spin a web passage to hide the nest from prey view."
-	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "lay_web_passage"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	webbing_time = 4 SECONDS
 
