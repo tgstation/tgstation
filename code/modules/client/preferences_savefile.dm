@@ -165,6 +165,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
+	load_from_database()
 	apply_all_client_preferences()
 
 	//general preferences
@@ -263,6 +264,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("favorite_outfits", favorite_outfits)
 	savefile.set_entry("muted", muted)
 	savefile.save()
+	save_to_database()
+
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
