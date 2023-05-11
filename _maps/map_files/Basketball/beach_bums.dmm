@@ -181,7 +181,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "lD" = (
 /obj/structure/fence{
@@ -259,7 +259,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "vo" = (
 /turf/open/misc/beach/coastline_b{
@@ -359,7 +359,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "Ct" = (
 /obj/structure/fence,
@@ -460,7 +460,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "IM" = (
 /turf/open/misc/beach/sand,
@@ -480,7 +480,7 @@
 "Kf" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "Kh" = (
 /obj/structure/fluff/beach_umbrella/science,
@@ -513,7 +513,7 @@
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "MR" = (
-/obj/structure/bonfire/prelit,
+/obj/structure/bonfire/dense,
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "Nc" = (
@@ -535,7 +535,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "Oj" = (
 /obj/structure/table,
@@ -585,7 +585,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 9
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "Ql" = (
 /obj/item/toy/plush/carpplushie,
@@ -738,12 +738,16 @@
 /obj/structure/fluff/beach_umbrella,
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
+"Yx" = (
+/obj/item/toy/basketball,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/centcom/basketball)
 "YI" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/vault/sandstone,
 /area/centcom/basketball)
 "YX" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -1066,7 +1070,7 @@ lD
 ao
 NX
 nE
-nE
+Yx
 nE
 Kf
 ao
