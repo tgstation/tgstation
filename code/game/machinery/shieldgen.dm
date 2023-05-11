@@ -963,9 +963,8 @@
 	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
 		if(shield_generator)
 			shield_generator.connected_modules -= connected
-			if(connected == /obj/machinery/modular_shield/module/node)
-				var/obj/machinery/modular_shield/module/node/node = connected
-				node.disconnect_connected_through_us()
+			var/obj/machinery/modular_shield/module/node/node = connected
+			node.disconnect_connected_through_us()
 			connected.shield_generator = null
 			connected.update_appearance()
 
