@@ -87,11 +87,7 @@
 /datum/action/cooldown/lay_web/solid_web
 	name = "Spin Solid Web"
 	desc = "Spin a web to slow down potential prey."
-	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "lay_solid_web"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	webbing_time = 5 SECONDS
 
