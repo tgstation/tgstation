@@ -1007,6 +1007,17 @@
 		togglelock(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/**
+ * returns TRUE if the closet is allowed to unlock
+ * * user: the player trying to unlock this closet
+ * * player_id: the id of the player trying to unlock this closet
+ * * registered_id: the id registered to this closet, null if no one registered
+ */
+/obj/structure/closet/proc/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
+	if(isnull(registered_id))
+		return allowed(user)
+	return player_id == registered_id
+
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(!secure || broken)
 		return
@@ -1014,7 +1025,7 @@
 	if(locked) //only apply checks while unlocking else allow anyone to lock it
 		var/error_msg = ""
 		if(!isnull(id_card))
-			var/obj/item/card/id/advanced/prisoner/registered_id = id_card.resolve()
+			var/obj/item/card/id/registered_id = id_card.resolve()
 			if(!registered_id) //id was deleted at some point. make this closet public access again
 				name = initial(name)
 				desc = initial(desc)
@@ -1023,9 +1034,9 @@
 				req_one_access = null
 				togglelock(user, silent)
 				return
-			if(registered_id !=  user.get_idcard())
+			if(!can_unlock(user, user.get_idcard(), registered_id))
 				error_msg = "not your locker!"
-		else if(!allowed(user)) //allow anyone to lock the closet for safe keeping but apply checks only when unlocking
+		else if(!can_unlock(user, user.get_idcard()))
 			error_msg = "access denied!"
 		if(error_msg)
 			if(!silent)
@@ -1038,7 +1049,6 @@
 	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
 				span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 	update_appearance()
-
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
