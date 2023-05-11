@@ -224,3 +224,213 @@
   - rscadd: Added wedding cakes
   tralezab:
   - balance: Tonguespike is better, chemspike deals slightly less damage
+2023-05-07:
+  Cheshify:
+  - bugfix: The North Star's cargo shuttle has working conveyors.
+  - bugfix: The North Star has had a slew of missing and improperly done content added
+      and reworked, see the PR for more!
+  JohnFulpWillard:
+  - bugfix: Tablets' minimize apps feature works again.
+  JohnFulpWillard, sprites by McRamon, tattax, and Lamb:
+  - rscadd: The Coroner, a new Medical role revolving around dead corpses and autopsies.
+  - rscadd: The Coroner's Autopsy Scanner, used for discovering the cause for someone's
+      death, listing their wounds, the causes of them, their reagents, and diseases
+      (including stealth ones!)
+  - qol: Morgue Trays are now named after the bodybags inside of them.
+  - balance: The morgue now has 'Secure' morgue trays which by default don't beep.
+  - balance: Security Medical area and Robotics no longer have their own morgue trays.
+  - balance: Dissected bodies now have faster surgery speed. Autopsies also count
+      as dissections, however they're mutually exclusive.
+  Jolly:
+  - bugfix: The area icon for the evidence room should be visible in the map editor
+      again.
+  Shadow-Quill:
+  - qol: Shuttles will no longer show their current destination as a choice while
+      in transit.
+  - qol: The Ice Box pharmacy and Med Sec Outpost blast doors have been replaced with
+      shutters.
+2023-05-08:
+  Helg2:
+  - bugfix: deleted unused airlock helper from syn-c brutus.
+  Jacquerel with new icons mostly by INFRARED_BARON:
+  - balance: Golems have been reworked into a hunger-based species who gain temporary
+      transformations when eating different kinds of mineral.
+  - rscdel: The previous golem subtypes no longer exist.
+  LT3:
+  - qol: Ghosts will now get a notification when someone is about to be hit by the
+      tram
+  Melbert:
+  - bugfix: Fixed Prosthetic Quirk not removing the limb before giving the prosthetic
+  - rscdel: You can't get an Elite Syndie Modsuit (or combat defib, or dart pistol)
+      from Space Ruins
+  Profakos:
+  - refactor: converts the request console to tgui
+  Rex9001:
+  - bugfix: Fixes the orm board in the golem ship being the wrong subtype
+  Rhials:
+  - bugfix: The psyker shuttle now has a suit for the psyker seer.
+  Thunder12345:
+  - image: Holy arrows are now 15% less holy (You can no longer click on the 2-pixel
+      hole in the arrowhead and unintentionally click the object below the arrow instead.)
+  - bugfix: The chaplain's divine bow can now be renamed like all other null rod variants.
+  YehnBeep:
+  - bugfix: The All-American Diner no longer requires a bunker ID card for most rooms
+      nor requires accesses to use the jukebox.
+  - bugfix: The All-American Diner's external airlocks now all work together.
+  actioninja:
+  - rscadd: good tgui dropdowns
+  - rscdel: tgui dropdown suck
+  - qol: tgui dropdowns suck less
+  - balance: buffed tgui dropdowns
+  larentoun:
+  - code_imp: Adds default multiplicative movespeed for basic mobs, to make them editable
+      in config
+  - config: Default multiplicative movespeed for basic mobs in example config
+  - bugfix: Stamina damage and healing now correctly applies movement slowdown
+  the-og-gear:
+  - bugfix: Paint cans have become limited use as intended by the gods of code
+  - bugfix: Clown borgs get unlimited paint, as a treat.
+2023-05-09:
+  '@Krysonism, @Imaginos16, @MTandi, @san7890':
+  - image: updated smart fridge sprites for all variants
+  - bugfix: smart fridges no longer overlap with walls, but they can be welded down
+      to a floor and mapspawn welded
+  CoiledLamb:
+  - rscadd: adds coroner's jumpsuit and jumpskirt to the mortidrobe
+  - rscadd: black scrub cap to the mortidrobe
+  - rscadd: adds coroner medkit, and it's compact variant, for storing coroner job
+      gear
+  - qol: coroners now spawn with a coroner's medkit, and some of their starting job
+      gear has been placed inside of it
+  - qol: the autopsy cargo crate now includes a compact coroner's medkit
+  - qol: coroners get their own flavor of pda, that matches their job colors
+  - image: fixed weird transparency on the autopsy scanner sprite
+  - image: fixed weird shading on the black scrubs object
+  - spellcheck: fixed a punctuation error in the surgical medkit description
+  DaydreamIQ:
+  - bugfix: Northstar HoP can no longer commit fraud
+  - qol: Northstar brig now has genpop instructions
+  Fikou:
+  - bugfix: new hotkeys unbound by default (like emotes) no longer scream at you when
+      added
+  - bugfix: adds orm access to the chaplain, curator, clown, mime, lawyer, and psychologist
+  Helg2:
+  - qol: Deleted unnecessary text from description of supply pod beacon.
+  MTandi:
+  - image: added single tank bomb guide contraband poster
+  ReinaCoder:
+  - image: The Mosin and Prime Nagants have been resprited.
+  Rhials:
+  - bugfix: Ghosts mobs are now temperature immune.
+  SyncIt21:
+  - bugfix: runtime when toggling engineering meson scanners
+  - rscadd: Access secured closets. Personal closets can have their access overwritten
+      by an new id in it's unlocked state
+  - rscadd: Access secured freezers.
+  - rscadd: Access secured suit storage units.
+  - bugfix: Suit storage unit not having access restrictions.
+  - bugfix: airlock electronics not properly getting removed after screwing them out
+      from round start lockers
+  - bugfix: round spawned open crates run timing when closed
+  - bugfix: open crates hiding stuff in plain sight
+  - bugfix: open closets/crates sucking up contents during late initialize causing
+      them appear empty & open
+  Thunder12345:
+  - image: Stock parts have been resprited.
+  - code_imp: Manipulators have been renamed to servo motors, all related types have
+      been repathed to match.
+  Time-Green:
+  - bugfix: Loose limbs will not duplicate organs anymore
+  - qol: Stable bluespace anomalies in the anomaly ruin will only teleport you on
+      touch, not being near them
+  Wallem:
+  - balance: Buffs the Active Sonar module for modsuits with a shorter cooldown &
+      moving pings.
+  Xander3359:
+  - bugfix: Organ harvester board drops on deconstruct.
+  jlsnow301:
+  - bugfix: Bluespace sender and vendor should display colors correctly now
+  - bugfix: Gas filter should show labels properly now
+  - bugfix: Nitrium now has its own gas color in the UI
+2023-05-10:
+  Addust:
+  - rscadd: The Cerestation whiteship no longer has soul, but it does have solar sails!
+      I'd call that a fair trade.
+  DaydreamIQ:
+  - rscadd: Ruins are now available in the region around the Northstar, Curators are
+      now no longer jobless!
+  Helg2:
+  - rscadd: Indusrial Gold and Regenerative Gold extracts now spawn random coins and
+      not just list of 6 coins. But no mythril as it has miserable chance to have
+      summoning effect which have even more miserable chance to spawn something dangerous
+      and not just mice.
+  - rscadd: Chococoin now has a chance to spawn wherever the coins are used to spawn
+      (wallets, greed ruins, deltastation bar)
+  JohnFulpWillard:
+  - balance: Default Syndicate and Russian gunners now fire every 2.5 seconds instead
+      of every 0.2
+  KoJIT2009:
+  - qol: Added switch buttons to few dropdown in character preferences
+  Melbert:
+  - bugfix: Fixes a runtime with plasmaman clown suit lube spray
+  Singul0:
+  - bugfix: The console for the solar panels of AIsat solars tramstation are now actually
+      connected together
+  Tattle, Flashkirby:
+  - sound: increased the volume of the water step noises
+  - image: ported over bay's water sprites
+  Zergspower:
+  - qol: Space Ruin Whiteship - Total redesign with some loot tweaks
+  vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents
+  - bugfix: high luminosity eyes light overlays now follow the user correctly
+  - qol: high luminosity eyes now have a tgui menu so you no longer have to go through
+      the color picker every time you want to change the range. they also have a new
+      setting that lets you change the color of your eyes independently of the light
+      color. You can now have cybernetic heterochromia if you want
+  - bugfix: directional flashlights when picked up will now always update their cast
+      light direction correctly no matter what dir you are facing
+  - refactor: refactors high luminosity eye code to better make use of the atom lighting
+      system, adding a new light type 'MOVABLE_LIGHT_BEAM'
+2023-05-11:
+  BlueMemesauce:
+  - bugfix: Fixes not being able to rebuild the MortiDrobe (Coroner Wardrobe)
+  - bugfix: For the purposes of the crew manifest, Coroner is now considered a medical
+      job rather than both service and medical.
+  - qol: The ghost verb no longer says you are unable to succumb to death if you're
+      pressing it while conscious
+  CoiledLamb:
+  - bugfix: the mortidrobe restock is now orderable from cargo, in the medical wardrobe
+      supply crate.
+  - spellcheck: fixes typo in autopsy kit crate name
+  Hatterhat:
+  - rscadd: 'Items flagged with UNIQUE_RENAME (read: the items that let you rename/re-desc
+      them with a pen, like food, or the det''s revolver, or the proto-kinetic crusher)
+      now allow you to enter up to 280 characters of description for them. Please
+      re-desc your items responsibly.'
+  Jolly:
+  - bugfix: '[Ruins] Pod Crash now uses the ruins-specific space turf. This doesn''t
+      change anything visually, but ships can land here and not have their areas viciously
+      rip off.'
+  - bugfix: '[Ruins] If you explode the deep storage ruin, you won''t see space. You''ll
+      see asteroids!'
+  - bugfix: '[Ruins] The entire thing should blow up into asteroid turf now, instead
+      of previously one pocket of space forming (lol?).'
+  - bugfix: '[Ruins] In the crashed ship ruin, other ruins should be able to spawn
+      more organically close to it.'
+  - bugfix: '[Ruins] In the SAME ruin, area defines were added to the asteroids. Don''t
+      get lost now!'
+  MTandi:
+  - image: New sprite for syringes
+  - balance: 25 bottles of saltpetre can now be bought in hacked NutriMax
+  Rhials:
+  - bugfix: Outfit changes will now properly change your ID trim if wearing a non-ID
+      item in your ID slot.
+  - balance: The Occupational Corruption Device (now the "Organic Capital Disturbance"
+      virus) now triggers directly from the uplink, rather than spawning a remote.
+  - balance: The OCD now has a very small progression requirement behind it.
+  ShizCalev:
+  - bugfix: Fixed a bunch of log spam related to null.can_use() when AIs move their
+      cameras around with toggle camera lights enabled Honk.
+  tralezab:
+  - bugfix: Chuuni wizards no longer get robeless casting issues.
