@@ -7,7 +7,8 @@
 		<ol> \
 		<li>Activate emergency power generator.</li> \
 		<li>Lift station lockdown on the bridge.</li> \
-		<li>Locate the 'Damage Report' on the bridge for a detailed situation report.</li>"
+		<li>Locate the 'Damage Report' on the bridge for a detailed situation report.</li> \
+		</ol>"
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
