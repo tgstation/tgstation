@@ -83,22 +83,29 @@
 		kill_foam()
 		return
 
+	if(ismob(loc))
+		stack_trace("A foam effect ([type]) was created within a mob! (Actual location: [loc] ([loc.type]))")
+		qdel(src)
+		return
+
 	var/fraction = (ds_seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
-	var/turf/location = loc
-	for(var/obj/object in location)
-		if(object == src)
-			continue
-		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
-			continue
-		reagents.expose(object, VAPOR, fraction)
+
+	if(isturf(loc))
+		var/turf/turf_location = loc
+		for(var/obj/object in turf_location)
+			if(object == src)
+				continue
+			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+				continue
+			reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
-	for(var/mob/living/foamer in location)
+	for(var/mob/living/foamer in loc)
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
-	reagents.expose(location, VAPOR, fraction)
+	reagents.expose(loc, VAPOR, fraction)
 
 /**
  * Applies the effect of this foam to a mob.
