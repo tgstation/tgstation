@@ -103,19 +103,34 @@
 	data["surgeries"] = all_surgeries
 
 	//If there's no patient just hop to it yeah?
-	if(!table || !sbed)
+	if(!table && !sbed)
 		data["patient"] = null
 		return data
 
-	data["table"] = table
-	data["patient"] = list()
+	//data["table"] = table
+	//data["patient"] = list()
+    
+	if (table)
+		data["table"] = table
+        
+		if(!table.patient)
+			data["patient"] = list()
+		return data
+	else if(sbed)
+		data["table"] = sbed
+		data["patient"] = list()
+		return data
+	else
+		data["patient"] = null
+		return data
+    
+    
+    
 	if(!table.patient)
 		return data
 	else
 		if(sbed)
 			data["table"] = sbed
-			data["patient"] = list()
-			return data
 			data["patient"] = list()
 		else
 			data["patient"] = null
