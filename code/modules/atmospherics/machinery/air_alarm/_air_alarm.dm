@@ -58,9 +58,9 @@
 	var/tlv_no_checks = FALSE
 
 	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
-	var/connected_sensor
+	var/obj/machinery/air_sensor/connected_sensor
 	/// Used to link air alarm to air sensor via map helpers
-	var/air_sensor_chamber_id
+	var/air_sensor_chamber_id = ""
 
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
@@ -161,10 +161,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	.= ..()
 
-	if (!istype(multi_tool))
-		return .
-
-	if (locked)
+	if (!istype(multi_tool) || locked)
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
@@ -198,7 +195,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["dangerLevel"] = danger_level
 	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
 	data["fireAlarm"] = my_area.fire
-	data["sensor"] = connected_sensor ? 1 : 0
+	data["sensor"] = !!connected_sensor
 
 	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
