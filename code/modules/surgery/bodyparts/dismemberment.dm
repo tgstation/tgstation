@@ -328,9 +328,7 @@
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
-		if(held_index > new_limb_owner.hand_bodyparts.len)
-			new_limb_owner.hand_bodyparts.len = held_index
-		new_limb_owner.on_added_hand(held_index, src)
+		new_limb_owner.on_added_hand(src, held_index)
 		if(new_limb_owner.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
