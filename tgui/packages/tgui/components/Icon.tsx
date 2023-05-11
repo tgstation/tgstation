@@ -29,15 +29,15 @@ export const Icon = (props: IconProps) => {
 
   if (size) {
     if (!style) {
-      style = {};
+      rest.style = {};
     }
-    style['font-size'] = size * 100 + '%';
+    rest.style['font-size'] = size * 100 + '%';
   }
   if (rotation) {
     if (!style) {
-      style = {};
+      rest.style = {};
     }
-    style['transform'] = `rotate(${rotation}deg)`;
+    rest.style['transform'] = `rotate(${rotation}deg)`;
   }
 
   const boxProps = computeBoxProps(rest);
