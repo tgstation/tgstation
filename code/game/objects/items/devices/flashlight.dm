@@ -452,7 +452,7 @@
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /**
  * Just checks the wax level of the candle for displaying the correct sprite.

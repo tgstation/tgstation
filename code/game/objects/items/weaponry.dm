@@ -414,7 +414,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, \
 	speed = 7 SECONDS, \
 	effectiveness = 100, \
@@ -984,7 +984,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/highfrequencyblade/update_icon_state()
 	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"

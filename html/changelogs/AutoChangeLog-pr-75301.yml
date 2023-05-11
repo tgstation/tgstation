@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Lighting inside of a Hilbert Hotel storage room no longer constantly fails to update, clearing up some log spam and getting back some free lag."
