@@ -41,7 +41,7 @@
 /datum/material/glass/on_removed(atom/source, amount, material_flags)
 	. = ..()
 
-	source.RemoveElement(/datum/element/shatters_when_thrown)
+	source.RemoveElement(/datum/element/shatters_when_thrown, shard_type)
 
 /*
 Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
