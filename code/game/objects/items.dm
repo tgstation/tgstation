@@ -177,6 +177,8 @@
 
 	///Chance of blocking incoming attack
 	var/block_chance = 0
+	///Effect of blocking
+	var/block_effect = /obj/effect/temp_visual/block
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -639,6 +641,8 @@
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		var/owner_turf = get_turf(owner)
+		new block_effect(owner_turf, COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
