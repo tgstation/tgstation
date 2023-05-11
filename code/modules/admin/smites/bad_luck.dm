@@ -14,8 +14,8 @@
 
 /datum/smite/bad_luck/effect(client/user, mob/living/target)
 	. = ..()
+	//just replace any existing omen, no problem
 	target.AddComponent(/datum/component/omen/smite, permanent = permanent)
-
 	if(silent)
 		return
 	to_chat(target, span_warning("You get a bad feeling..."))

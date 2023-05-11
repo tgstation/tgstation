@@ -23,16 +23,16 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
-	..()
-	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(loc)
-	B.name = "The Holy book of the Geometer"
-	B.deity_name = "Narsie"
-	B.icon_state = "melted"
-	B.inhand_icon_state = "melted"
-	B.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
-	B.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
-	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
-	new /obj/item/pen(B)
+	. = ..()
+	var/obj/item/book/hollow/bible/bibbel = new /obj/item/book/hollow/bible/booze(loc)
+	bibbel.name = "The Holy book of the Geometer"
+	bibbel.deity_name = "Narsie"
+	bibbel.icon_state = "melted"
+	bibbel.inhand_icon_state = "melted"
+	bibbel.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	bibbel.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(bibbel)
+	new /obj/item/pen(bibbel)
 	return INITIALIZE_HINT_QDEL
 
 /*

@@ -17,11 +17,17 @@
 	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(vessel)
+/datum/component/omen/Initialize(vessel, permanent, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.vessel = vessel
+	if(vessel)
+		src.vessel = vessel
+	src.permanent = permanent
+	if(!isnull(luck_mod))
+		src.luck_mod = luck_mod
+	if(!isnull(damage_mod))
+		src.damage_mod = damage_mod
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
@@ -124,6 +130,9 @@
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
+	if(permanent)
+		return
+
 	if (!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
@@ -132,6 +141,9 @@
 /// Severe deaths. Normally lifts the curse.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
+
+	if(permanent)
+		return
 
 	qdel(src)
 
@@ -150,12 +162,6 @@
 /datum/component/omen/smite/Initialize(vessel, permanent)
 	. = ..()
 	src.permanent = permanent
-
-/datum/component/omen/smite/check_bless(mob/living/our_guy, category)
-	if(!permanent)
-		return ..()
-
-	return
 
 /datum/component/omen/smite/check_death(mob/living/our_guy)
 	if(!permanent)
