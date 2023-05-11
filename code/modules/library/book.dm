@@ -179,8 +179,10 @@
 		return FALSE
 	if(!((carving_item.sharpness & SHARP_EDGED) && (carving_item.tool_behaviour != TOOL_KNIFE) && (carving_item.tool_behaviour != TOOL_WIRECUTTER)))
 		return FALSE
-	to_chat(user, span_notice("You begin to carve out [book_data.title] with \the [carving_item]..."))
+	//i hate balloon alerts i hate them so god damn much
+	balloon_alert(user, "carving out...")
 	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
 		return FALSE
 	carve_out(carving_item, user)
 	return TRUE
@@ -188,7 +190,8 @@
 /// Called when the book gets carved successfully
 /obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
 	if(user)
-		to_chat(user, span_notice("You carve out the pages from [book_data.title]! You didn't want to read it anyway."))
+		balloon_alert(user, "carved out")
+		playsound(src, 'sound/effects/cloth_rip.ogg', 75, TRUE)
 	carved = TRUE
 	create_storage(1)
 	return TRUE
