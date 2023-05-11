@@ -188,7 +188,7 @@
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
 
-			update_all_security_huds()
+			update_matching_security_huds(target.name)
 
 			return TRUE
 
@@ -218,7 +218,7 @@
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
 		target.wanted_status = WANTED_ARREST
 
-		update_all_security_huds()
+		update_matching_security_huds(target.name)
 
 		return TRUE
 
@@ -296,6 +296,7 @@
 		target.wanted_status = WANTED_DISCHARGED
 		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
+		update_matching_security_huds(target.name)
 	return TRUE
 
 /// Finishes printing, resets the printer.
