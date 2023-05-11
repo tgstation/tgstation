@@ -400,6 +400,7 @@
 		"medipen_refiller",
 		"pandemic",
 		"soda_dispenser",
+		"purger",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	required_experiments = list(/datum/experiment/dissection/human)
@@ -422,7 +423,6 @@
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
-		"purger",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/dissection/nonhuman)
