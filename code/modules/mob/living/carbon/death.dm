@@ -11,7 +11,7 @@
 
 	. = ..()
 
-	if(!gibbed && !QDELING(src))
+	if(!gibbed && !QDELING(src)) //double check they didn't start getting deleted in ..()
 		attach_rot()
 
 	for(var/T in get_traumas())
