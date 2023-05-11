@@ -38,7 +38,7 @@
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
-	)
+)
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
 	src.force_drop_items = force_drop
@@ -60,7 +60,16 @@
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
 
-/datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/on_slip_callback, paralyze, force_drop = FALSE, slot_whitelist)
+/datum/component/slippery/InheritComponent(
+	datum/component/slippery/component,
+	i_am_original, knockdown,
+	lube_flags = NONE,
+	datum/callback/on_slip_callback,
+	paralyze,
+	force_drop = FALSE,
+	slot_whitelist,
+	datum/callback/can_slip_callback,
+)
 	if(component)
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
