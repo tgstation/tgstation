@@ -64,15 +64,24 @@
 /obj/effect/mine/proc/can_trigger(atom/movable/on_who)
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
+
+	if(isdead(on_who) || iscameramob(on_who)) //no ghosts.
+		return FALSE
+
+	var/is_incorpreal_mob
+	if(isliving(on_who))
+		var/mob/living/living_mob = on_who
+		is_incorpreal_mob = living_mob.incorporeal_move
+
+	if(is_incorpreal_mob || on_who.movement_type & FLYING)
+		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
+
 	return TRUE
 
 /obj/effect/mine/proc/on_entered(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 
 	if(!can_trigger(arrived))
-		return
-	// Flying = can't step on a mine
-	if(arrived.movement_type & FLYING)
 		return
 	// Someone already on it
 	if(foot_on_mine?.resolve())
