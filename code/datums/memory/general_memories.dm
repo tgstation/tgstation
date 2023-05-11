@@ -928,7 +928,7 @@
 )
 
 /datum/memory/witnessed_gods_wrath/get_names()
-	return list("[protagonist_name] suffering the wrath of [antagonist_name].")
+	return list("[protagonist_name] suffers the wrath of [antagonist_name].")
 
 /datum/memory/witnessed_gods_wrath/get_starts()
 	return list(
