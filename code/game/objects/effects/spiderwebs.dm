@@ -120,7 +120,7 @@
 /obj/structure/spider/passage
 	name = "web passage"
 	icon = 'icons/effects/effects.dmi'
-	desc = "messy connection of webs blocking the other side but not solid enough to prevent passage."
+	desc = "A messy connection of webs blocking the other side, but not solid enough to prevent passage."
 	icon_state = "webpassage"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
