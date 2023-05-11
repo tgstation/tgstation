@@ -836,6 +836,7 @@
 	if(stored_strength == max_strength)
 		if (recovering)
 			recovering = FALSE
+			calculate_regeneration()
 			update_appearance()
 		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
@@ -941,7 +942,7 @@
 
 	name = "Modular Shield Node"
 	desc = "A waist high mess of humming pipes and wires that extend the network"
-
+	color = "#d9ff00"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
@@ -955,15 +956,24 @@
 	. = ..()
 
 	disconnect_connected_through_us()
+	shield_generator.calculate_boost()
 
-	return ..()
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
+	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
+		if(shield_generator)
+			shield_generator.connected_modules -= connected
+			if(connected == /obj/machinery/modular_shield/module/node)
+				var/obj/machinery/modular_shield/module/node/node = connected
+				node.disconnect_connected_through_us()
+			connected.shield_generator = null
+			connected.update_appearance()
 
 /obj/machinery/modular_shield/module/charger
 
 	name = "Modular Shield Charger"
 	desc = "A machine that somehow fabricates hardlight using electronics"
+	color = "#15ff00"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
@@ -980,6 +990,7 @@
 
 	name = "Modular Shield Relay"
 	desc = "It helps the shield generator project farther out"
+	color = "#e100ff"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
@@ -996,6 +1007,7 @@
 
 	name = "Modular Shield Well"
 	desc = "A device used to hold more energy for the modular shield generator"
+	color = "#0400ff"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
@@ -1008,6 +1020,9 @@
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		strength_boost += new_capacitor.tier * 10
 
+
+
+//The shield itself
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
