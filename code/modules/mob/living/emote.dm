@@ -443,11 +443,11 @@
 	. = ..()
 	if(!.)
 		return
-	animate(user, pixel_x = user.pixel_x + 1, time = 0.4 SECONDS)
+	animate(user, pixel_x = user.pixel_x + 2, time = 0.5 SECONDS)
 	for(var/i in 1 to 2)
-		animate(pixel_x = user.pixel_x - 3, time = 1.0 SECONDS)
-		animate(pixel_x = user.pixel_x + 3, time = 1.0 SECONDS)
-	animate(pixel_x = user.pixel_x - 1, time = 0.4 SECONDS)
+		animate(pixel_x = user.pixel_x - 4, time = 1.0 SECONDS)
+		animate(pixel_x = user.pixel_x + 4, time = 1.0 SECONDS)
+	animate(pixel_x = user.pixel_x - 2, time = 0.5 SECONDS)
 
 /datum/emote/living/tilt
 	key = "tilt"
