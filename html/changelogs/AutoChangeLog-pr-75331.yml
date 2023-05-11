@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "closets & crates can be wrapped with wrapping paper again"
+  - refactor: "closet & crate paint jobs static list vars, access_choices static list var are initialized only once during init"

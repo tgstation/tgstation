@@ -783,7 +783,7 @@
 	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
 			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+				if (!camera || !camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
