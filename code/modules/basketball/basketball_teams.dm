@@ -111,10 +111,14 @@
 	name = "Basketball Ash Walker"
 	head = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
-	back = /obj/item/spear/bonespear
+	back = /obj/item/spear
+	shoes = null
 
 /datum/outfit/basketball/beach_bums
 	name = "Basketball Beach Bums"
+	undershirt = /datum/sprite_accessory/undershirt/nude
+	underwear = /datum/sprite_accessory/underwear/nude
+	socks = /datum/sprite_accessory/socks/nude
 	uniform = /obj/item/clothing/under/shorts/red
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sandal
