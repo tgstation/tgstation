@@ -221,3 +221,5 @@
 
 /datum/component/omen/bible/UnregisterFromParent()
 	. = ..()
+	var/mob/living/living_parent = parent
+	living.remove_filter("omen")

@@ -269,9 +269,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
 			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "purified")
-			var/unholy2clean = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
+			var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
-			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
+			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
 		if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
 			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "converted")
