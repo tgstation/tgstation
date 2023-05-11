@@ -19,7 +19,7 @@
 	. = ..()
 
 	if(fragile)
-		AddComponent(/datum/component/shatters_when_thrown)
+		AddElement(/datum/element/shatters_when_thrown)
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
