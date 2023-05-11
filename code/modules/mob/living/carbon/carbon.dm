@@ -998,7 +998,7 @@
 /// Cleans up references to an arm when it is dismembered or deleted
 /mob/living/carbon/proc/on_lost_hand(obj/item/bodypart/arm/lost_hand)
 	SIGNAL_HANDLER
-	hand_bodyparts -= lost_hand
+	hand_bodyparts[lost_hand.held_index] = null
 	UnregisterSignal(lost_hand, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED))
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
