@@ -20,9 +20,8 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/machinery/airalarm/directional/north{
-	req_access = list("syndicate")
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "d" = (

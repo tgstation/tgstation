@@ -162,7 +162,7 @@
 /area/ruin/powered/beach)
 "cP" = (
 /obj/structure/flora/bush/stalky/style_random,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "cV" = (
 /obj/structure/closet/secure_closet/freezer/meat{
@@ -335,7 +335,7 @@
 "iH" = (
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "jc" = (
 /obj/structure/table/wood,
@@ -457,7 +457,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "pz" = (
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
@@ -614,12 +614,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
-"tG" = (
-/turf/open/misc/beach/coastline_t/sandwater_inner,
-/area/ruin/powered/beach)
-"tO" = (
-/turf/open/misc/beach/coastline_t,
-/area/ruin/powered/beach)
 "tQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
@@ -680,9 +674,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/beach/coastline_b{
-	dir = 9
-	},
+/turf/open/misc/beach/coast/corner,
 /area/ruin/powered/beach)
 "xA" = (
 /obj/machinery/light/directional/east,
@@ -713,11 +705,11 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "yT" = (
-/turf/open/misc/beach/coastline_b,
+/turf/open/misc/beach/coast,
 /area/ruin/powered/beach)
 "yY" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/beach/coastline_b{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/ruin/powered/beach)
@@ -878,7 +870,7 @@
 /area/ruin/powered/beach)
 "Eu" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/water/beach/biodome,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "EE" = (
 /obj/structure/dresser,
@@ -886,7 +878,7 @@
 /area/ruin/powered/beach)
 "EL" = (
 /obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_b{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/ruin/powered/beach)
@@ -1053,8 +1045,8 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_b{
-	dir = 10
+/turf/open/misc/beach/coast/corner{
+	dir = 8
 	},
 /area/ruin/powered/beach)
 "Jr" = (
@@ -1071,7 +1063,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/beach/coastline_b{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/ruin/powered/beach)
@@ -1096,8 +1088,8 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "Ld" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 5
+/turf/open/misc/beach/coast/corner{
+	dir = 1
 	},
 /area/ruin/powered/beach)
 "Lm" = (
@@ -1235,12 +1227,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ro" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/ruin/powered/beach)
 "Rx" = (
-/turf/open/misc/beach/coastline_b{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/ruin/powered/beach)
@@ -1428,8 +1420,8 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "WV" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 6
+/turf/open/misc/beach/coast/corner{
+	dir = 4
 	},
 /area/ruin/powered/beach)
 "Xa" = (
@@ -1437,7 +1429,7 @@
 /mob/living/simple_animal/chicken{
 	name = "Chicken Joe"
 	},
-/turf/open/misc/beach/coastline_t,
+/turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Xt" = (
 /obj/machinery/door/airlock/sandstone{
@@ -1805,7 +1797,7 @@ VI
 VI
 VI
 VI
-tG
+VI
 Iv
 lq
 lq
@@ -1837,7 +1829,7 @@ VI
 hN
 SH
 VI
-tO
+VI
 xn
 JA
 JA
@@ -1869,7 +1861,7 @@ VI
 bC
 Ti
 VI
-tO
+VI
 yT
 cP
 pz
@@ -1901,7 +1893,7 @@ VI
 XM
 VI
 rz
-tO
+VI
 yT
 pz
 pz
@@ -1933,7 +1925,7 @@ VI
 Jr
 Jr
 VI
-tO
+VI
 yT
 pz
 pz
@@ -1965,7 +1957,7 @@ VI
 FO
 VI
 VI
-tO
+VI
 yT
 pz
 pz
@@ -1997,7 +1989,7 @@ VI
 Bn
 Zj
 VI
-tO
+VI
 yT
 cP
 pz
@@ -2029,7 +2021,7 @@ ks
 xA
 VI
 VI
-tO
+VI
 yT
 pz
 pz
@@ -2061,7 +2053,7 @@ Ao
 bG
 bL
 VI
-tO
+VI
 yT
 pz
 Eu
@@ -2125,7 +2117,7 @@ VI
 VI
 VI
 wc
-tO
+VI
 Ld
 yY
 Rx

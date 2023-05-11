@@ -16,9 +16,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	. = ..()
 	if(building)
 		opened = TRUE
-		icon_state = "extinguisher_empty"
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
+	update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -63,7 +63,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
 		stored_extinguisher = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, params)
 	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
@@ -83,7 +83,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 				return
 			stored_extinguisher = used_item
 			user.balloon_alert(user, "extinguisher stored")
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 			return TRUE
 		else
 			toggle_cabinet(user)
@@ -106,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 	else
 		toggle_cabinet(user)
 
@@ -124,7 +124,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = null
 		opened = TRUE
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return
 	toggle_cabinet(user)
 
@@ -138,19 +138,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/update_icon_state()
+	icon_state = "extinguisher"
+
+	if(isnull(stored_extinguisher))
+		icon_state += ""
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
+		icon_state += "_mini"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/advanced))
+		icon_state += "_advanced"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/crafted))
+		icon_state += "_crafted"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher))
+		icon_state += "_default"
+
 	if(!opened)
-		icon_state = "extinguisher_closed"
-		return ..()
-	if(!stored_extinguisher)
-		icon_state = "extinguisher_empty"
-		return ..()
-	if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
-		icon_state = "extinguisher_mini"
-		return ..()
-	icon_state = "extinguisher_full"
+		icon_state += "_closed"
+
 	return ..()
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
@@ -161,7 +167,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)

@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "The airlocks on the hug relaxation shuttle now align up properly"
