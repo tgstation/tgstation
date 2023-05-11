@@ -1,4 +1,4 @@
-/datum/action/cooldown/web_sneak
+/datum/action/cooldown/sneak/spider
 	name = "Sneak"
 	desc = "Blend into the webs to stalk your prey."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -9,14 +9,14 @@
 	/// The alpha we go to when sneaking.
 	var/sneak_alpha = 75
 
-/datum/action/cooldown/web_sneak/Remove(mob/living/remove_from)
+/datum/action/cooldown/sneak/spider/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
 		remove_from.alpha = initial(remove_from.alpha)
 		REMOVE_TRAIT(remove_from, TRAIT_SNEAK, name)
 
 	return ..()
 
-/datum/action/cooldown/web_sneak/Activate(atom/target)
+/datum/action/cooldown/sneak/spider/Activate(atom/target)
 	if(HAS_TRAIT(owner, TRAIT_SNEAK))
 		// It's safest to go to the initial alpha of the mob.
 		// Otherwise we get permanent invisbility exploits.
