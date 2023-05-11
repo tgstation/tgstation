@@ -23,6 +23,7 @@ CREATE TABLE `muted` (
 	`admin` VARCHAR(32) NOT NULL,
 	`datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`deleted` BOOLEAN NOT NULL DEFAULT FALSE,
+	`deleted_datetime` DATETIME,
 	PRIMARY KEY (`id`));
 ```
 

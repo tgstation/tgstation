@@ -9,6 +9,9 @@
 	/// All unique ckeys that have persistent mutes.
 	var/list/ckey_cache
 
+	/// List of ckeys being polled
+	var/list/polling_ckeys
+
 /// This is better than using keys in a list.
 /datum/persistent_mute_holder
 	var/id
@@ -18,8 +21,13 @@
 	var/admin
 	var/datetime
 	var/deleted
+	var/deleted_datetime
 
 /datum/persistent_mute_manager/New()
+	user_cache = list()
+	ckey_cache = list()
+	polling_ckeys = list()
+
 	poll_ckey_cache()
 	return ..()
 
@@ -55,6 +63,23 @@
 	ckey_cache = ckeys
 	return TRUE
 
+/datum/persistent_mute_manager/proc/poll_ckey_mutes(ckey)
+	polling_ckeys |= ckey
+
+	var/found_mutes = get_all_persistent_mutes_for(ckey, FALSE)
+	if(isnull(found_mutes))
+		polling_ckeys -= ckey
+		return FALSE
+
+	var/list/mutes = list()
+	for(var/datum/persistent_mute_holder/mute_info as anything in found_mutes)
+		mutes += mute_info
+	user_cache[ckey] = mutes
+
+	polling_ckeys -= ckey
+	SStgui.update_uis(src)
+	return TRUE
+
 /datum/persistent_mute_manager/ui_state(mob/user)
 	return GLOB.admin_state
 
@@ -74,17 +99,19 @@
 				"admin" = mute_holder.admin,
 				"datetime" = mute_holder.datetime,
 				"deleted" = mute_holder.deleted,
+				"deleted_datetime" = mute_holder.deleted_datetime,
 				))
 		mutes[ckey] = mute_data
 	data["mutes"] = mutes
-
+	data["polling_ckeys"] = polling_ckeys
+	data["whoami"] = user.ckey
 	return data
 
 /datum/persistent_mute_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(isnull(ui))
 		ui = new(user, src, "PersistentMuteManager")
-		ui.set_autoupdate(FALSE)
+		ui.set_autoupdate(TRUE)
 		ui.open()
 
 /datum/persistent_mute_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -105,6 +132,12 @@
 				to_chat(usr, span_alertwarning("Failed to poll ckey cache."))
 			return TRUE
 
+		if("poll-ckey")
+			ASYNC
+				if(!poll_ckey_mutes(params["ckey"], params["active_only"] || TRUE))
+					to_chat(usr, span_alertwarning("Failed to poll ckey."))
+			return TRUE
+
 		if("delete")
 			if(isnull(mute_information))
 				to_chat(usr, span_alertwarning("Failed to find mute information."))
@@ -115,6 +148,10 @@
 				return TRUE
 
 			to_chat(usr, span_adminnotice("Removed persistent mute."))
+			ASYNC
+				if(!poll_ckey_mutes(params["ckey"], params["active_only"] || TRUE))
+					to_chat(usr, span_alertwarning("Failed to poll ckey."))
+
 			return TRUE
 
 		if("edit")
@@ -130,11 +167,15 @@
 /datum/persistent_mute_manager/proc/get_all_persistent_mutes_for(ckey, active_only = TRUE)
 	var/list/mutes = list()
 	var/datum/db_query/mute_flags_query = SSdbcore.NewQuery({"
-		SELECT id, muted_flag, reason, admin, datetime, deleted FROM [format_table_name("muted")]
+		SELECT id, muted_flag, reason, admin, datetime, deleted, deleted_datetime FROM [format_table_name("muted")]
 		WHERE ckey = :ckey
 		[active_only ? "AND deleted = 0" : ""]
 	"}, list("ckey" = ckey))
-	mute_flags_query.Execute()
+
+	if(!mute_flags_query.Execute())
+		qdel(mute_flags_query)
+		return null
+
 	while(mute_flags_query.NextRow())
 		var/datum/persistent_mute_holder/mute_info = new
 		mute_info.ckey = ckey
@@ -144,6 +185,7 @@
 		mute_info.admin = mute_flags_query.item[4]
 		mute_info.datetime = mute_flags_query.item[5]
 		mute_info.deleted = mute_flags_query.item[6]
+		mute_info.deleted_datetime = mute_flags_query.item[7]
 		mutes += mute_info
 
 	qdel(mute_flags_query)
@@ -166,6 +208,7 @@
 	var/datum/db_query/mute_flags_query = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("muted")]
 		SET deleted = 1
+		SET deleted_datetime = NOW()
 		WHERE id = :id
 	"}, list("id" = id))
 	mute_flags_query.Execute()
