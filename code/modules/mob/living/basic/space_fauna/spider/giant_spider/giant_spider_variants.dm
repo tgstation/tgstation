@@ -24,7 +24,7 @@
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/ambush_web)
 
-	var/datum/action/cooldown/web_sneak/sneak_web = new(src)
+	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
 
 /**
