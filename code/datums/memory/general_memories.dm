@@ -950,7 +950,7 @@
 /datum/memory/witnessed_gods_wrath/get_neutral_moods()
 	return list(
 		"appears concerned",
-		"reconsider their life decisions",
+		"reconsiders their life decisions",
 		"has a blank expression",
 	)
 
@@ -958,5 +958,5 @@
 	return list(
 		"appears dejected",
 		"is filled with regret",
-		"wince in despair"
+		"winces in despair"
 	)
