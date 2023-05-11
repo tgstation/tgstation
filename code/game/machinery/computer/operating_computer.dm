@@ -3,12 +3,13 @@
 
 /obj/machinery/computer/operating
 	name = "operating computer"
-	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures. Automatically syncs to operating tables within its line of sight for surgical tech advancement."
+	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures. Automatically syncs to operating tables/stasis bed within its line of sight for surgical tech advancement."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
 
 	var/obj/structure/table/optable/table
+	var/obj/machinery/stasis/sbed
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
@@ -37,6 +38,10 @@
 		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table && table.computer == src)
 			table.computer = null
+		else
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
+			if(sbed && sbed.op_computer == src)
+				sbed.op_computer = null
 	QDEL_NULL(experiment_handler)
 	return ..()
 
@@ -71,6 +76,11 @@
 		if(table)
 			table.computer = src
 			break
+		else
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
+			if(sbed)
+				sbed.op_computer = src
+				break
 
 /obj/machinery/computer/operating/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -93,7 +103,7 @@
 	data["surgeries"] = all_surgeries
 
 	//If there's no patient just hop to it yeah?
-	if(!table)
+	if(!table || !sbed)
 		data["patient"] = null
 		return data
 
@@ -101,6 +111,15 @@
 	data["patient"] = list()
 	if(!table.patient)
 		return data
+	else
+		if(sbed)
+			data["table"] = sbed
+			data["patient"] = list()
+			return data
+			data["patient"] = list()
+		else
+			data["patient"] = null
+			return data
 	var/mob/living/carbon/patient = table.patient
 
 	switch(patient.stat)
