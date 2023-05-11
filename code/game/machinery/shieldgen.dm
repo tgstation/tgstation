@@ -987,7 +987,8 @@
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		charge_boost += new_servo.tier
 
-	shield_generator.calculate_boost()
+	if(shield_generator)
+		shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/relay
 
@@ -1006,7 +1007,8 @@
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		range_boost += new_laser.tier * 0.5
 
-	shield_generator.calculate_boost()
+	if(shield_generator)
+		shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/well
 
@@ -1025,7 +1027,8 @@
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		strength_boost += new_capacitor.tier * 10
 
-	shield_generator.calculate_boost()
+	if(shield_generator)
+		shield_generator.calculate_boost()
 
 
 //The shield itself
@@ -1046,14 +1049,23 @@
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
 
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
+	if(shield_generator)
+		shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
+		return
+	qdel(src)
 
 
 //How the shield loses strength
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
+		if(shield_generator)
+			shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
+			return
+		qdel(src)
 
 /obj/structure/emergency_shield/modular/emp_act(severity)
-	shield_generator.shield_drain(10 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the 10 if not enough damage
+	if(shield_generator)
+		shield_generator.shield_drain(10 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the 10 if not enough damage
+		return
+	qdel(src)
