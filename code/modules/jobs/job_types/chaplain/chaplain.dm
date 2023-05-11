@@ -90,7 +90,7 @@
 					bibbel.deity_name = "Twenty Ten-Sided Dice"
 			human_spawned.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
 		if("servicianism", "partying")
-			B.desc = "Happy, Full, Clean. Live it and give it."
+			bibbel.desc = "Happy, Full, Clean. Live it and give it."
 		if("weeaboo","kawaii")
 			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
 			bibbel.deity_name = "Anime"

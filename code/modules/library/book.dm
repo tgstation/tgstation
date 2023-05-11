@@ -93,6 +93,8 @@
 	var/due_date = 0
 	/// false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/unique = FALSE
+	/// whether or not we have been carved out
+	var/carved = FALSE
 
 	/// Specific window size for the book, i.e: "1920x1080", Size x Width
 	var/window_size = null

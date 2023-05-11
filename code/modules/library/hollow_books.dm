@@ -7,5 +7,5 @@
 	carve_out()
 	PopulateContents()
 
-/obj/item/book/hollow/PopulateContents()
+/obj/item/book/hollow/proc/PopulateContents()
 	return
