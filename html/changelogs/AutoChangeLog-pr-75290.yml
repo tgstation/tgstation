@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[Ruins] Pod Crash now uses the ruins-specific space turf. This doesn't change anything visually, but ships can land here and not have their areas viciously rip off."
