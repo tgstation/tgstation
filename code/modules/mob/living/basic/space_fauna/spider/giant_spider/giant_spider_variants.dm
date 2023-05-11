@@ -147,6 +147,7 @@
 	obj_damage = 40
 	web_speed = 0.25
 	speed = 4
+	player_speed_modifier = -3.1
 	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
 
