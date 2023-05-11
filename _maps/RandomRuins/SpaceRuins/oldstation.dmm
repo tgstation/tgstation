@@ -819,14 +819,13 @@
 /area/ruin/space/ancientstation/delta/hall)
 "dg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/science{
-	name = "Artificial Program Core Room"
-	},
+/obj/machinery/door/airlock/highsecurity,
 /obj/machinery/door/firedoor,
 /obj/structure/alien/weeds,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "dh" = (
@@ -1210,6 +1209,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/autolathe,
 /obj/machinery/duct,
+/obj/machinery/button/door/directional/south{
+	name = "Research Shutters Control";
+	id = "oldstation_rnd"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eF" = (
@@ -3151,15 +3154,12 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mN" = (
-/obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/internals/oxygen,
-/obj/item/tank/internals/oxygen,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/tank_holder/oxygen/yellow,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mO" = (
@@ -3440,9 +3440,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "nV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/science{
-	name = "Artificial Program Core Room"
-	},
+/obj/machinery/door/airlock/highsecurity,
 /obj/machinery/door/firedoor,
 /obj/structure/alien/weeds,
 /obj/structure/cable,
@@ -3450,6 +3448,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "nW" = (
@@ -3807,6 +3806,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"pA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "pF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -3933,6 +3937,16 @@
 /obj/item/stock_parts/cell/high/empty,
 /obj/item/stock_parts/capacitor,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "qy" = (
@@ -5907,11 +5921,17 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/away_general_access,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
+"FJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor{
+	id = "oldstation_rnd_external"
+	},
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "FK" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron{
@@ -7058,6 +7078,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"NP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor{
+	id = "oldstation_rnd_external"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "NU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured_half,
@@ -7105,7 +7132,6 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Or" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -7390,6 +7416,11 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/biolab)
+"Qc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/biolab)
 "Qh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7546,6 +7577,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/away_general_access,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Rt" = (
@@ -7918,7 +7951,6 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Uo" = (
@@ -7957,8 +7989,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/south{
-	name = "Research Shutters Control";
-	id = "oldstation_rnd"
+	name = "External Lockdown Control";
+	id = "oldstation_rnd_external"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -13662,9 +13694,9 @@ aa
 aa
 aa
 bE
-Tv
+pA
 xx
-Tv
+pA
 bE
 bE
 zL
@@ -13926,7 +13958,7 @@ aa
 aa
 aa
 aa
-bE
+NP
 FR
 cA
 dw
@@ -13945,7 +13977,7 @@ dw
 cD
 jr
 od
-Gz
+NP
 aa
 aa
 aa
@@ -13992,7 +14024,7 @@ aa
 aa
 aa
 aa
-bE
+NP
 Au
 EX
 dx
@@ -14011,7 +14043,7 @@ UD
 JT
 xs
 cD
-Gz
+NP
 aa
 aa
 aa
@@ -14320,8 +14352,8 @@ ad
 ad
 ad
 ad
-bE
-bE
+FJ
+FJ
 bE
 QA
 ub
@@ -14518,8 +14550,8 @@ ad
 ad
 ad
 ad
-bE
-bE
+NP
+NP
 Gz
 yL
 Ao
@@ -14850,7 +14882,7 @@ ai
 ad
 aa
 aa
-Gz
+NP
 En
 PJ
 NY
@@ -14869,7 +14901,7 @@ QR
 nX
 ZJ
 cD
-bE
+NP
 aa
 aa
 aa
@@ -14916,7 +14948,7 @@ Ty
 ad
 aa
 aa
-bE
+NP
 ou
 En
 jx
@@ -14935,7 +14967,7 @@ nW
 nY
 Yh
 od
-bE
+NP
 aa
 aa
 aa
@@ -15387,7 +15419,7 @@ pF
 NG
 GX
 NG
-pF
+Qc
 GX
 GX
 NG
