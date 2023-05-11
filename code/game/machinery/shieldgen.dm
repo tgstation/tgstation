@@ -796,6 +796,7 @@
 	if(radius > max_radius)//the generator can no longer function at this capacity
 		deactivate_shields()
 		radius = max_radius
+
 /obj/machinery/modular_shield_gen/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
@@ -847,12 +848,16 @@
 /obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
-	desc = "This is filler for testing"
+	desc = "This is filler for testing you shouldn`t see this"
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
 	dir = SOUTH
+
 	var/obj/machinery/modular_shield_gen/shield_generator
+
+	var/obj/machinery/modular_shield/module/node/connected_node
+
 	var/turf/connected_turf
 
 /obj/machinery/modular_shield/module/Initialize(mapload)
@@ -861,23 +866,30 @@
 	connected_turf = get_step(loc, dir)
 
 /obj/machinery/modular_shield/module/Destroy()
+	. = ..()
 
 	shield_generator.connected_modules -= (src)
+	connected_node.connected_through_us -= (src)
 	return ..()
+
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
 		return
 
-
+//rather than automatically checking for connections its probably alot less expensive to just make the players manually multi tool sync each part
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		try_connect(user)
 		return
 
 	if(default_change_direction_wrench(user, I))
-		shield_generator.connected_modules -= (src)
-		shield_generator.calculate_boost()
-		shield_generator = null
+		if(shield_generator)
+			shield_generator.connected_modules -= (src)
+			connected_node.connected_through_us -= (src)
+			shield_generator.calculate_boost()
+			shield_generator = null
+			connected_node = null
+			update_appearance()
 		connected_turf = get_step(loc, dir)
 		return
 
@@ -902,9 +914,24 @@
 		shield_generator.connected_modules += (src)
 		shield_generator.calculate_boost()
 		balloon_alert(user, "connected directly to generator")
+		update_appearance()
 		return
 
-	balloon_alert(user, "failed to connect to a generator or node")
+	connected_node	= (locate(/obj/machinery/modular_shield/module/node) in connected_turf)
+
+	if(connected_node)
+
+		connected_node.connected_through_us += (src)
+		shield_generator = connected_node.shield_generator
+		if(shield_generator)
+			shield_generator.connected_modules += (src)
+			shield_generator.calculate_boost()
+			balloon_alert(user, "connected to generator through node")
+			update_appearance()
+			return
+		balloon_alert(user, "connected to node but no path to generator")
+		return
+	balloon_alert(user, "failed to detect powered generator or node")
 
 
 
@@ -917,6 +944,19 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
 	var/list/connected_through_us
+
+/obj/machinery/modular_shield_gen/Initialize(mapload)
+	. = ..()
+	connected_through_us = list()
+
+/obj/machinery/modular_shield/module/Destroy()
+	. = ..()
+
+	disconnect_connected_through_us()
+
+	return ..()
+/obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
+
 
 /obj/machinery/modular_shield/module/charger
 
@@ -980,10 +1020,10 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > (T0C + 400) //doesnt start taking damage from high temps until 400kelvin, might raise or lower
+	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
 
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	shield_generator.shield_drain(round(air.return_volume() / 400))//400 int determines how much damage the shield takes from hot atmos (higher value = less damage)
+	shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
 
 
 //How the shield loses strength
