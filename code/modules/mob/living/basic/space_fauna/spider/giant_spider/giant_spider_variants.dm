@@ -165,8 +165,17 @@
 	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
-
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tangle_web)
+
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = maxHealth * 0.5,\
+		heal_burn = maxHealth * 0.5,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
 
 /**
  * ### Tarantula
