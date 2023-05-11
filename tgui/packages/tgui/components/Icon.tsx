@@ -28,13 +28,13 @@ export const Icon = (props: IconProps) => {
   const { name, size, spin, className, rotation, ...rest } = restlet;
 
   if (size) {
-    if (!style) {
+    if (!rest.style) {
       rest.style = {};
     }
     rest.style['font-size'] = size * 100 + '%';
   }
   if (rotation) {
-    if (!style) {
+    if (!rest.style) {
       rest.style = {};
     }
     rest.style['transform'] = `rotate(${rotation}deg)`;
