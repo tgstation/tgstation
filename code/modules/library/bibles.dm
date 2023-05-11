@@ -102,6 +102,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		//DOUBLE CURSED?! Just straight up gib the guy.
 		if(existing_omen)
 			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
+			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
+			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
 			user.gib()
 		else
 			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))

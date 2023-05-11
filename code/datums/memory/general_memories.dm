@@ -914,3 +914,28 @@
 		"[protagonist_name]'s mind sets itself on a singular, violent purpose as they're flashed by [antagonist_name]: Kill the heads.",
 		"[antagonist_name] lifts an odd device to [protagonist_name]'s eyes and flashes him, imprinting murderous instructions.",
 	)
+
+/// Saw someone play Russian Roulette.
+/datum/memory/witnessed_gods_wrath
+	memory_flags = MEMORY_CHECK_BLINDNESS
+	story_value = STORY_VALUE_AMAZING
+
+/datum/memory/witnessed_gods_wrath/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+)
+
+/datum/memory/witnessed_gods_wrath/get_names()
+	return list("[protagonist_name] suffering the wrath of [antagonist_name].")
+
+/datum/memory/witnessed_gods_wrath/get_starts()
+	return list(
+		"[protagonist_name] burns [deuteragonist_name], and [antagonist_name] turns [protagonist_name] into a fine red mist.",
+		"[antagonist_name] explodes [protagonist_name] into a million pieces for defiling [deuteragonist_name].",
+		"[protagonist_name] angers [antagonist_name] by defiling [deuteragonist_name], and gets obliterated.",
+	)
+
+/datum/memory/witnessed_gods_wrath/get_moods()
+	return list("[protagonist_name] [mood_verb] as they get annihilated by [antagonist_name].")
