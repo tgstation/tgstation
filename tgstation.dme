@@ -92,7 +92,6 @@
 #include "code\__DEFINES\exosuit_fab.dm"
 #include "code\__DEFINES\experisci.dm"
 #include "code\__DEFINES\explosions.dm"
-#include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\external_organs.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\firealarm.dm"
