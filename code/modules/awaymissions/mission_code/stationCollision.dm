@@ -24,15 +24,15 @@
 
 /obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
 	. = ..()
-	var/obj/item/book/bible/bibbel = new /obj/item/book/bible/booze(loc)
-	bibbel.name = "The Holy book of the Geometer"
-	bibbel.deity_name = "Narsie"
-	bibbel.icon_state = "melted"
-	bibbel.inhand_icon_state = "melted"
-	bibbel.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
-	bibbel.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
-	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(bibbel)
-	new /obj/item/pen(bibbel)
+	var/obj/item/book/bible/holy_bible = new /obj/item/book/bible/booze(loc)
+	holy_bible.name = "The Holy book of the Geometer"
+	holy_bible.deity_name = "Narsie"
+	holy_bible.icon_state = "melted"
+	holy_bible.inhand_icon_state = "melted"
+	holy_bible.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	holy_bible.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(holy_bible)
+	new /obj/item/pen(holy_bible)
 	return INITIALIZE_HINT_QDEL
 
 /*
