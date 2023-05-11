@@ -3932,9 +3932,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "qm" = (
-/obj/structure/closet/crate/engineering{
-	name = "radiation suit crate"
-	},
+/obj/structure/closet/crate/engineering,
 /obj/item/circuitboard/machine/smes,
 /obj/item/stock_parts/cell/high/empty,
 /obj/item/stock_parts/cell/high/empty,
@@ -4779,7 +4777,7 @@
 /obj/machinery/shower/directional/west{
 	has_water_reclaimer = 0
 	},
-/turf/open/floor/catwalk_floor/flat_white,
+/turf/open/floor/vault,
 /area/ruin/space/ancientstation/delta/biolab)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
