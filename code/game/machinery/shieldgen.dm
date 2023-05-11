@@ -564,7 +564,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
 
-	///Doesnt actually control it, just tells us if its running or not
+	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
 
 	///Determins if we can turn it on or not, no longer recovering when back to max strength
@@ -696,6 +696,8 @@
 
 //generating the shield, to-do heavily optimize, we dont need or want to generate the shield all at once.
 /obj/machinery/modular_shield_gen/proc/activate_shields()
+	if(active) //bug or did admin call proc on already active shield gen?
+		return
 	active = TRUE
 
 
@@ -945,11 +947,11 @@
 
 	var/list/connected_through_us
 
-/obj/machinery/modular_shield_gen/Initialize(mapload)
+/obj/machinery/modular_shield/module/node/Initialize(mapload)
 	. = ..()
 	connected_through_us = list()
 
-/obj/machinery/modular_shield/module/Destroy()
+/obj/machinery/modular_shield/module/node/Destroy()
 	. = ..()
 
 	disconnect_connected_through_us()
