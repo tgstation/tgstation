@@ -783,7 +783,7 @@
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE

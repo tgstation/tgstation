@@ -574,7 +574,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				"Forever alone :("\
 			)
 
-			send2adminchat("Server", "[cheesy_message] (No admins online)")
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
 	active_mousedown_item = null
