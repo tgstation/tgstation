@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	force_string = "holy"
 	unique = TRUE
 	var/mob/affecting = null
-	var/deity_name = "Christ"
+	var/deity_name = "Space Jesus"
 
 /obj/item/book/hollow/bible/Initialize(mapload)
 	. = ..()
