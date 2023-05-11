@@ -355,7 +355,7 @@
 	if(!.)
 		return
 	animate(user, pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-	for(var/i = 0, i < (SHIVER_LOOP_DURATION / (0.2 SECONDS)), i++) //desired total duration divided by the iteration duration to give the necessary iteration count
+	for(var/i in 1 to SHIVER_LOOP_DURATION / (0.2 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
 		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
 		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
 	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
@@ -444,7 +444,7 @@
 	if(!.)
 		return
 	animate(user, pixel_x = user.pixel_x + 1, time = 0.4 SECONDS)
-	for(var/i = 0, i < 2, i++)
+	for(var/i in 1 to 2)
 		animate(pixel_x = user.pixel_x - 3, time = 1.0 SECONDS)
 		animate(pixel_x = user.pixel_x + 3, time = 1.0 SECONDS)
 	animate(pixel_x = user.pixel_x - 1, time = 0.4 SECONDS)
@@ -465,7 +465,7 @@
 	if(!.)
 		return
 	animate(user, pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
-	for(var/i = 0, i < (TREMBLE_LOOP_DURATION / (0.4 SECONDS)), i++) //desired total duration divided by the iteration duration to give the necessary iteration count
+	for(var/i in 1 to TREMBLE_LOOP_DURATION / (0.4 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
 		animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
 		animate(pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
 	animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
