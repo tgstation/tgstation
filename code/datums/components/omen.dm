@@ -169,10 +169,6 @@
  */
 /datum/component/omen/smite
 
-/datum/component/omen/smite/Initialize(vessel, permanent)
-	. = ..()
-	src.permanent = permanent
-
 /datum/component/omen/smite/check_death(mob/living/our_guy)
 	if(!permanent)
 		return ..()
