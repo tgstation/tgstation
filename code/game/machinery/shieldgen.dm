@@ -632,7 +632,7 @@
 		innate_regen += new_servo.tier
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		innate_radius += new_laser.tier
+		innate_radius += new_laser.tier * 0.5
 
 	calculate_regeneration()
 	calculate_max_strength()
@@ -961,12 +961,12 @@
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
 	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
-		if(shield_generator)
-			shield_generator.connected_modules -= connected
-			var/obj/machinery/modular_shield/module/node/node = connected
-			node.disconnect_connected_through_us()
-			connected.shield_generator = null
-			connected.update_appearance()
+		shield_generator.connected_modules -= connected
+		if(istype(connected, /obj/machinery/modular_shield/module/node))
+			var/obj/machinery/modular_shield/module/node/connected_node = connected
+			connected_node.disconnect_connected_through_us()
+		connected.shield_generator = null
+		connected.update_appearance()
 
 /obj/machinery/modular_shield/module/charger
 
@@ -985,6 +985,8 @@
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		charge_boost += new_servo.tier
 
+	shield_generator.calculate_boost()
+
 /obj/machinery/modular_shield/module/relay
 
 	name = "Modular Shield Relay"
@@ -1000,7 +1002,9 @@
 	. = ..()
 	range_boost = 0
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		range_boost += new_laser.tier
+		range_boost += new_laser.tier * 0.5
+
+	shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/well
 
@@ -1019,6 +1023,7 @@
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		strength_boost += new_capacitor.tier * 10
 
+	shield_generator.calculate_boost()
 
 
 //The shield itself
