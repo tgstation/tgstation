@@ -61,4 +61,4 @@
 		shard.pixel_x = rand(-6, 6)
 		shard.pixel_y = rand(-6, 6)
 	playsound(scatter_turf, shattering_sound, 60, TRUE)
-	qdel(parent)
+	obj_parent.deconstruct(disassembled = FALSE)
