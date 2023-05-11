@@ -880,7 +880,7 @@
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = NONE
 
 /datum/reagent/medicine/strange_reagent/New()
 	. = ..()
