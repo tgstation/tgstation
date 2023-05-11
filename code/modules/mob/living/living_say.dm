@@ -203,9 +203,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
 		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
+		var/last_message = message
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
+		if(last_message != message)
+			tts_message = message
 		if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
 			message = uppertext(message)
+
 
 	if(!message)
 		if(succumbed)

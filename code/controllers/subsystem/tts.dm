@@ -3,10 +3,6 @@
 #define START_TIME_INDEX 3
 #define REQUEST_INDEX 4
 #define MESSAGE_INDEX 5
-#define EXTRA_TARGETS_INDEX 6
-#define LANGUAGE_INDEX 7
-#define LOCAL_INDEX 8
-#define MESSAGE_RANGE_INDEX 9
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
@@ -155,14 +151,15 @@ SUBSYSTEM_DEF(tts)
 			continue
 
 		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
-		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_message[LOCAL_INDEX], current_message[MESSAGE_RANGE_INDEX])
-		for(var/extra_target in current_message[EXTRA_TARGETS_INDEX])
-			play_tts(extra_target["target"], new_sound, current_message[LANGUAGE_INDEX], extra_target["local"], extra_target["range"])
+		for(var/target in current_message[TARGET_INDEX])
+			play_tts(target["target"], new_sound, target["language"], target["local"], target["range"])
 		if(MC_TICK_CHECK)
 			return
 
 /proc/cmp_word_length_asc(list/a, list/b)
 	return length(b[MESSAGE_INDEX]) - length(a[MESSAGE_INDEX])
+
+#define ADD_TARGET_TO_STRUCT(tts_struct, target, language, local, range) ##tts_struct[TARGET_INDEX] += list(list("target" = ##target, "language" = ##language, "local" = ##local, "range" = ##range))
 
 /datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE, message_range = 7)
 	if(!tts_enabled)
@@ -179,7 +176,7 @@ SUBSYSTEM_DEF(tts)
 	var/identifier = sha1(speaker + filter + shell_scrubbed_input)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
-		cached_voice[EXTRA_TARGETS_INDEX] += list(list("target" = target, "local" = local, "range" = message_range))
+		ADD_TARGET_TO_STRUCT(cached_voice, target, language, local, message_range)
 		return
 	else if(fexists("tmp/tts/[identifier].ogg"))
 		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
@@ -194,9 +191,10 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
+	// This'll probably be better off datumized in the future, but it's not necessary to do right now
 	var/list/data = list(
 		// TARGET_INDEX = 1
-		target,
+		list(),
 		// IDENTIFIER_INDEX = 2
 		identifier,
 		// START_TIME_INDEX = 3
@@ -205,15 +203,8 @@ SUBSYSTEM_DEF(tts)
 		request,
 		// MESSAGE_INDEX = 5
 		shell_scrubbed_input,
-		// EXTRA_TARGETS_INDEX = 6
-		list(),
-		// LANGUAGE_INDEX = 7
-		language,
-		// LOCAL_INDEX = 8
-		local,
-		// MESSAGE_RANGE_INDEX = 9
-		message_range
 	)
+	ADD_TARGET_TO_STRUCT(data, target, language, local, message_range)
 	cached_voices[identifier] = data
 	if(length(in_process_tts_messages) < max_concurrent_requests)
 		request.begin_async()
@@ -223,12 +214,10 @@ SUBSYSTEM_DEF(tts)
 		queued_tts_messages += list(data)
 		sortTim(queued_tts_messages, GLOBAL_PROC_REF(cmp_word_length_asc))
 
+#undef ADD_TARGET_TO_STRUCT
+
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
 #undef START_TIME_INDEX
 #undef REQUEST_INDEX
 #undef MESSAGE_INDEX
-#undef EXTRA_TARGETS_INDEX
-#undef LANGUAGE_INDEX
-#undef LOCAL_INDEX
-#undef MESSAGE_RANGE_INDEX
