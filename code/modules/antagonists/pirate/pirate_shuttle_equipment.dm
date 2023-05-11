@@ -364,7 +364,7 @@
 	if(!hostage.mind || (FACTION_PIRATE in hostage.faction))
 		return 0
 	var/ransom_value = 500
-	if(hostage.stat == CONSCIOUS)
+	if(!hostage.stat == DEAD)
 		ransom_value *= 2
 	if(hostage.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		ransom_value *= 2
