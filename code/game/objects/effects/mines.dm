@@ -65,15 +65,13 @@
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
 
-	if(isdead(on_who) || iscameramob(on_who)) //no ghosts.
-		return FALSE
+	var/mob/living/living_mob
+	if(ismob(on_who))
+		if(!isliving(on_who)) //no ghosties.
+			return FALSE
+		living_mob = on_who
 
-	var/is_incorpreal_mob
-	if(isliving(on_who))
-		var/mob/living/living_mob = on_who
-		is_incorpreal_mob = living_mob.incorporeal_move
-
-	if(is_incorpreal_mob || on_who.movement_type & FLYING)
+	if(living_mob?.incorporeal_move || on_who.movement_type & FLYING)
 		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
 
 	return TRUE
