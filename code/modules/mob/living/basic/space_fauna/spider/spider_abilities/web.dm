@@ -135,13 +135,8 @@
 /datum/action/cooldown/lay_web/web_spikes
 	name = "Spin Web Spikes"
 	desc = "Spin a spikes made out of web to stop intruders."
-	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "lay_web_spikes"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 40 SECONDS
-	/// How long it takes to lay a web
 	webbing_time = 3 SECONDS
 
 /datum/action/cooldown/lay_web/web_spikes/obstructed_by_other_web()
