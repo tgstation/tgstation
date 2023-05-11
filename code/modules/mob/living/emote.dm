@@ -238,7 +238,7 @@
 	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
 
 /datum/emote/living/jump/get_sound(mob/living/user)
-	return 'sound/effects/stealthoff.ogg'
+	return 'sound/weapons/thudswoosh.ogg'
 
 /datum/emote/living/kiss
 	key = "kiss"
