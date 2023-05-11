@@ -120,7 +120,7 @@
 
 			var/obj/item/organ/internal/liver/target_liver = mob_occupant.get_organ_slot(ORGAN_SLOT_LIVER)
 			if(target_liver)
-				mob_occupant.adjustOrganLoss(ORGAN_SLOT_LIVER, -1) //Very slow, probably would be better to just get an operation done.
+				mob_occupant.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)
 				if(prob(15) && target_liver.damage < 50)
 					to_chat(mob_occupant, span_green("You feel the pain in your gut fading..."))
 
