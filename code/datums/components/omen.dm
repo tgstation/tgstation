@@ -17,12 +17,13 @@
 	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(vessel, permanent, luck_mod, damage_mod)
+/datum/component/omen/Initialize(obj/vessel, permanent, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	if(vessel)
+	if(istype(vessel))
 		src.vessel = vessel
+		RegisterSignal(vesse, COMSIG_PARENT_QDELETING, PROC_REF(vessel_qdeleting))
 	src.permanent = permanent
 	if(!isnull(luck_mod))
 		src.luck_mod = luck_mod
@@ -35,6 +36,8 @@
 
 	if(vessel)
 		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
+		UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+		vessel.burn()
 		vessel = null
 
 	return ..()
@@ -59,8 +62,8 @@
 
 	if(!isliving(our_guy))
 		return
-	var/mob/living/living_guy = our_guy
 
+	var/mob/living/living_guy = our_guy
 	if(!prob(15 * luck_mod))
 		return
 
@@ -133,7 +136,7 @@
 	if(permanent)
 		return
 
-	if (!("blessing" in our_guy.mob_mood.mood_events))
+	if(!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
@@ -153,6 +156,13 @@
 
 	for(var/mob/witness in view(2, our_guy))
 		shake_camera(witness, 1 SECONDS, 2)
+
+/// Vessel got deleted, set it to null
+/datum/component/omen/proc/vessel_qdeleting(atom/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+	vessel = null
 
 /**
  * The smite omen. Permanent.
