@@ -7049,6 +7049,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "NK" = (
 /obj/machinery/shower/directional/south,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
 "NM" = (
@@ -7127,8 +7128,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "OC" = (
 /obj/machinery/duct,
-/obj/machinery/door/window/right/directional/south,
-/obj/item/soap/nanotrasen,
+/obj/structure/curtain,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
 "OM" = (
