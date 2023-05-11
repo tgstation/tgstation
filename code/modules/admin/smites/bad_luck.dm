@@ -14,7 +14,10 @@
 
 /datum/smite/bad_luck/effect(client/user, mob/living/target)
 	. = ..()
-	//just replace any existing omen, no problem
+	//if permanent, replace any existing omen
+	if(permanent)
+		var/existing_component = target.GetComponent(/datum/component/omen)
+		qdel(existing_component)
 	target.AddComponent(/datum/component/omen/smite, permanent = permanent)
 	if(silent)
 		return
