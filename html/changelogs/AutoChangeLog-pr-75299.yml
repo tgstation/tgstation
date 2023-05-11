@@ -1,5 +1,0 @@
-author: "CoiledLamb"
-delete-after: True
-changes:
-  - bugfix: "the mortidrobe restock is now orderable from cargo, in the medical wardrobe supply crate."
-  - spellcheck: "fixes typo in autopsy kit crate name"

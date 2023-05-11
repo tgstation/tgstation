@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "Items flagged with UNIQUE_RENAME (read: the items that let you rename/re-desc them with a pen, like food, or the det's revolver, or the proto-kinetic crusher) now allow you to enter up to 280 characters of description for them. Please re-desc your items responsibly."
