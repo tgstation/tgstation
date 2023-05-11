@@ -156,7 +156,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/giant_spider/midwife,
+		/mob/living/basic/spiderling/midwife,
 	)
 
 /**

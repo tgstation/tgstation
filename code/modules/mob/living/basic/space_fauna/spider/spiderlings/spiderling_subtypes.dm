@@ -73,7 +73,6 @@
 	icon_dead = "viper_spiderling_dead"
 	menu_description = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
 
-
 /// Will differentiate into the "tarantula" giant spider.
 /mob/living/basic/spiderling/tarantula
 	grow_as = /mob/living/basic/giant_spider/tarantula
