@@ -62,6 +62,9 @@
 	///Warning message spoken by air alarms
 	var/warning_message = ""
 
+	//Stops the air alarm from talking about their atmos problems.
+	var/speaker_enabled = TRUE
+
 	///Cooldown on sending warning messages
 	COOLDOWN_DECLARE(warning_cooldown)
 
@@ -550,6 +553,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/machinery/airalarm/proc/speak(warning_message)
 	if(machine_stat & (BROKEN|NOPOWER))
+		return
+	if(!speaker_enabled)
 		return
 	if(!warning_message)
 		return
