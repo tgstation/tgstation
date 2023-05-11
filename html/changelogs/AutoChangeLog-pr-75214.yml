@@ -1,5 +1,0 @@
-author: "DaydreamIQ"
-delete-after: True
-changes:
-  - bugfix: "Northstar HoP can no longer commit fraud"
-  - qol: "Northstar brig now has genpop instructions"

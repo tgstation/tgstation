@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - qol: "Stable bluespace anomalies in the anomaly ruin will only teleport you on touch, not being near them"
