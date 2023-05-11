@@ -41,7 +41,7 @@
 /obj/item/book/examine(mob/user)
 	. = ..()
 	if(carved)
-		. += "[src] has been hollowed out."
+		. += span_notice("[src] has been hollowed out.")
 
 /obj/item/book/ui_static_data(mob/user)
 	var/list/data = list()
