@@ -352,3 +352,85 @@
   - bugfix: Bluespace sender and vendor should display colors correctly now
   - bugfix: Gas filter should show labels properly now
   - bugfix: Nitrium now has its own gas color in the UI
+2023-05-10:
+  Addust:
+  - rscadd: The Cerestation whiteship no longer has soul, but it does have solar sails!
+      I'd call that a fair trade.
+  DaydreamIQ:
+  - rscadd: Ruins are now available in the region around the Northstar, Curators are
+      now no longer jobless!
+  Helg2:
+  - rscadd: Indusrial Gold and Regenerative Gold extracts now spawn random coins and
+      not just list of 6 coins. But no mythril as it has miserable chance to have
+      summoning effect which have even more miserable chance to spawn something dangerous
+      and not just mice.
+  - rscadd: Chococoin now has a chance to spawn wherever the coins are used to spawn
+      (wallets, greed ruins, deltastation bar)
+  JohnFulpWillard:
+  - balance: Default Syndicate and Russian gunners now fire every 2.5 seconds instead
+      of every 0.2
+  KoJIT2009:
+  - qol: Added switch buttons to few dropdown in character preferences
+  Melbert:
+  - bugfix: Fixes a runtime with plasmaman clown suit lube spray
+  Singul0:
+  - bugfix: The console for the solar panels of AIsat solars tramstation are now actually
+      connected together
+  Tattle, Flashkirby:
+  - sound: increased the volume of the water step noises
+  - image: ported over bay's water sprites
+  Zergspower:
+  - qol: Space Ruin Whiteship - Total redesign with some loot tweaks
+  vinylspiders:
+  - bugfix: fixes emissive blockers sometimes being put in an atom's contents
+  - bugfix: high luminosity eyes light overlays now follow the user correctly
+  - qol: high luminosity eyes now have a tgui menu so you no longer have to go through
+      the color picker every time you want to change the range. they also have a new
+      setting that lets you change the color of your eyes independently of the light
+      color. You can now have cybernetic heterochromia if you want
+  - bugfix: directional flashlights when picked up will now always update their cast
+      light direction correctly no matter what dir you are facing
+  - refactor: refactors high luminosity eye code to better make use of the atom lighting
+      system, adding a new light type 'MOVABLE_LIGHT_BEAM'
+2023-05-11:
+  BlueMemesauce:
+  - bugfix: Fixes not being able to rebuild the MortiDrobe (Coroner Wardrobe)
+  - bugfix: For the purposes of the crew manifest, Coroner is now considered a medical
+      job rather than both service and medical.
+  - qol: The ghost verb no longer says you are unable to succumb to death if you're
+      pressing it while conscious
+  CoiledLamb:
+  - bugfix: the mortidrobe restock is now orderable from cargo, in the medical wardrobe
+      supply crate.
+  - spellcheck: fixes typo in autopsy kit crate name
+  Hatterhat:
+  - rscadd: 'Items flagged with UNIQUE_RENAME (read: the items that let you rename/re-desc
+      them with a pen, like food, or the det''s revolver, or the proto-kinetic crusher)
+      now allow you to enter up to 280 characters of description for them. Please
+      re-desc your items responsibly.'
+  Jolly:
+  - bugfix: '[Ruins] Pod Crash now uses the ruins-specific space turf. This doesn''t
+      change anything visually, but ships can land here and not have their areas viciously
+      rip off.'
+  - bugfix: '[Ruins] If you explode the deep storage ruin, you won''t see space. You''ll
+      see asteroids!'
+  - bugfix: '[Ruins] The entire thing should blow up into asteroid turf now, instead
+      of previously one pocket of space forming (lol?).'
+  - bugfix: '[Ruins] In the crashed ship ruin, other ruins should be able to spawn
+      more organically close to it.'
+  - bugfix: '[Ruins] In the SAME ruin, area defines were added to the asteroids. Don''t
+      get lost now!'
+  MTandi:
+  - image: New sprite for syringes
+  - balance: 25 bottles of saltpetre can now be bought in hacked NutriMax
+  Rhials:
+  - bugfix: Outfit changes will now properly change your ID trim if wearing a non-ID
+      item in your ID slot.
+  - balance: The Occupational Corruption Device (now the "Organic Capital Disturbance"
+      virus) now triggers directly from the uplink, rather than spawning a remote.
+  - balance: The OCD now has a very small progression requirement behind it.
+  ShizCalev:
+  - bugfix: Fixed a bunch of log spam related to null.can_use() when AIs move their
+      cameras around with toggle camera lights enabled Honk.
+  tralezab:
+  - bugfix: Chuuni wizards no longer get robeless casting issues.

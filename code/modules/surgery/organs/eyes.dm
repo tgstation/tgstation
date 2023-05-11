@@ -50,26 +50,27 @@
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
 
-/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if(!.)
 		return
-	owner.cure_blind(NO_EYES)
+	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh()
+	refresh(eye_recipient, inserting = TRUE)
 
 /// Refreshes the visuals of the eyes
-/// If call_update is TRUE, we also will call udpate_body
-/obj/item/organ/internal/eyes/proc/refresh(call_update = TRUE)
+/// If call_update is TRUE, we also will call update_body
+/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
 
-	if(!ishuman(owner))
+	if(!ishuman(eye_owner))
 		return
 
-	var/mob/living/carbon/human/affected_human = owner
-	old_eye_color_left = affected_human.eye_color_left
-	old_eye_color_right = affected_human.eye_color_right
+	var/mob/living/carbon/human/affected_human = eye_owner
+	if(inserting) // we only want to be setting old_eye_color the one time
+		old_eye_color_left = affected_human.eye_color_left
+		old_eye_color_right = affected_human.eye_color_right
 	if(initial(eye_color_left))
 		affected_human.eye_color_left = eye_color_left
 	else
@@ -81,10 +82,10 @@
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
-		owner.add_fov_trait(type, native_fov)
+		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		owner.dna?.species?.handle_body(affected_human) //updates eye icon
+		affected_human.dna?.species?.handle_body(affected_human) //updates eye icon
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
@@ -361,7 +362,6 @@
 	eye.update_brightness(victim)
 	victim.become_blind(FLASHLIGHT_EYES)
 
-
 /obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
 	. = ..()
 	eye.on = FALSE
@@ -378,7 +378,11 @@
 /obj/item/organ/internal/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
+#define MATCH_LIGHT_COLOR 1
+#define USE_CUSTOM_COLOR 0
+#define UPDATE_LIGHT 0
+#define UPDATE_EYES_LEFT 1
+#define UPDATE_EYES_RIGHT 2
 
 /obj/item/organ/internal/eyes/robotic/glow
 	name = "High Luminosity Eyes"
@@ -386,196 +390,291 @@
 	eye_color_left = "000"
 	eye_color_right = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
-	var/current_color_string = "#ffffff"
-	var/active = FALSE
 	var/max_light_beam_distance = 5
-	var/light_beam_distance = 5
-	var/light_object_range = 2
-	var/light_object_power = 2
-	var/list/obj/effect/abstract/eye_lighting/eye_lighting
-	var/obj/effect/abstract/eye_lighting/on_mob
-	var/image/mob_overlay
-	var/datum/component/mobhook
+	var/obj/item/flashlight/eyelight/glow/eye
+	/// The overlay that is used when both eyes are set to match the light color
+	var/mutable_appearance/eyes_overlay
+	/// The overlay that is used when custom color selection is enabled, for the left eye
+	var/mutable_appearance/eyes_overlay_left
+	/// The overlay that is used when custom color selection is enabled, for the right eye
+	var/mutable_appearance/eyes_overlay_right
+	/// Whether or not to match the eye color to the light or use a custom selection
+	var/eye_color_mode = MATCH_LIGHT_COLOR
+	/// The selected color for the light beam itself
+	var/current_color_string = "#ffffff"
+	/// The custom selected eye color for the left eye. Defaults to the mob's natural eye color
+	var/current_left_color_string
+	/// The custom selected eye color for the right eye. Defaults to the mob's natural eye color
+	var/current_right_color_string
 
 /obj/item/organ/internal/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
-	mob_overlay = image('icons/mob/species/human/human_face.dmi', "eyes_glow_gs")
+	eye = new /obj/item/flashlight/eyelight/glow
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	terminate_effects()
 	. = ..()
+	deactivate(close_ui = TRUE)
+	QDEL_NULL(eye)
 
-/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	terminate_effects()
+/obj/item/organ/internal/eyes/robotic/glow/emp_act()
 	. = ..()
+	if(!eye.on || . & EMP_PROTECT_SELF)
+		return
+	deactivate(close_ui = TRUE)
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/terminate_effects()
-	if(owner && active)
-		deactivate()
-	active = FALSE
-	clear_visuals(TRUE)
-	STOP_PROCESSING(SSfastprocess, src)
+/// We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set
+/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
+	. = ..()
+	current_left_color_string = old_eye_color_left
+	current_right_color_string = old_eye_color_right
 
-/obj/item/organ/internal/eyes/robotic/glow/ui_action_click(owner, action)
+/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
+	. = ..()
+	deactivate(close_ui = TRUE)
+	eye.forceMove(eye_recipient)
+
+/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
+	deactivate(eye_owner, close_ui = TRUE)
+	QDEL_NULL(eyes_overlay)
+	QDEL_NULL(eyes_overlay_left)
+	QDEL_NULL(eyes_overlay_right)
+	eye.forceMove(src)
+	return ..()
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
+	return GLOB.default_state
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user)
+	if(!QDELETED(owner))
+		if(owner == user)
+			return min(
+				ui_status_user_is_abled(user, src),
+				ui_status_only_living(user),
+			)
+		else return UI_CLOSE
+	return ..()
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HighLuminosityEyesMenu")
+		ui.autoupdate = FALSE
+		ui.open()
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_data(mob/user)
+	var/list/data = list()
+
+	data["eyeColor"] = list(
+		mode = eye_color_mode,
+		hasOwner = owner ? TRUE : FALSE,
+		left = current_left_color_string,
+		right = current_right_color_string,
+	)
+	data["lightColor"] = current_color_string
+	data["range"] = eye.light_range
+
+	return data
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("set_range")
+			var/new_range = params["new_range"]
+			set_beam_range(new_range)
+			return TRUE
+		if("pick_color")
+			var/new_color = input(
+				usr,
+				"Choose eye color color:",
+				"High Luminosity Eyes Menu",
+				current_color_string
+			) as color|null
+			if(new_color)
+				var/to_update = params["to_update"]
+				set_beam_color(new_color, to_update)
+				return TRUE
+		if("enter_color")
+			var/new_color = lowertext(params["new_color"])
+			var/to_update = params["to_update"]
+			set_beam_color(new_color, to_update, sanitize = TRUE)
+			return TRUE
+		if("random_color")
+			var/to_update = params["to_update"]
+			randomize_color(to_update)
+			return TRUE
+		if("toggle_eye_color")
+			toggle_eye_color_mode()
+			return TRUE
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
 		toggle_active()
 	else if(istype(action, /datum/action/item_action/organ_action/use))
-		prompt_for_controls(owner)
+		ui_interact(user)
 
+/**
+ * Activates the light
+ *
+ * Turns on the attached flashlight object, updates the mob overlay to be added.
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/activate()
+	eye.on = TRUE
+	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
+		eye.set_light_on(TRUE)
+	update_mob_eyes_overlay()
+
+/**
+ * Deactivates the light
+ *
+ * Turns off the attached flashlight object, closes UIs, updates the mob overlay to be removed.
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob who the eyes belong to, for passing to update_mob_eyes_overlay
+ * * close_ui - whether or not to close the ui
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
+	if(close_ui)
+		SStgui.close_uis(src)
+	eye.on = FALSE
+	eye.set_light_on(FALSE)
+	update_mob_eyes_overlay(eye_owner)
+
+/**
+ * Randomizes the light color
+ *
+ * Picks a random color and sets the beam color to that
+ * Arguments:
+ * * to_update - whether we are setting the color for the light beam itself, or the individual eyes
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/randomize_color(to_update = UPDATE_LIGHT)
+	var/new_color = "#"
+	for(var/i in 1 to 3)
+		new_color += num2hex(rand(0, 255), 2)
+	set_beam_color(new_color, to_update)
+
+/**
+ * Setter function for the light's range
+ *
+ * Sets the light range of the attached flashlight object
+ * Includes some 'unique' logic to accomodate for some quirks of the lighting system
+ * Arguments:
+ * * new_range - the new range to set
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_range(new_range)
+	var/old_light_range = eye.light_range
+	if(old_light_range == 0 && new_range > 0 && eye.on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
+		eye.light_on = FALSE // this is stupid, but this has to be FALSE for set_light_on() to work.
+		eye.set_light_on(TRUE)
+	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
+
+/**
+ * Setter function for the light's color
+ *
+ * Sets the light color of the attached flashlight object. Sets the eye color vars of this eye organ as well and then updates the mob's eye color.
+ * Arguments:
+ * * newcolor - the new color hex string to set
+ * * to_update - whether we are setting the color for the light beam itself, or the individual eyes
+ * * sanitize - whether the hex string should be sanitized
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_color(newcolor, to_update = UPDATE_LIGHT, sanitize = FALSE)
+	var/newcolor_string
+	if(sanitize)
+		newcolor_string = sanitize_hexcolor(newcolor)
+	else
+		newcolor_string = newcolor
+	switch(to_update)
+		if(UPDATE_LIGHT)
+			current_color_string = newcolor_string
+			eye.set_light_color(newcolor_string)
+		if(UPDATE_EYES_LEFT)
+			current_left_color_string = newcolor_string
+		if(UPDATE_EYES_RIGHT)
+			current_right_color_string = newcolor_string
+
+	update_mob_eye_color()
+
+/**
+ * Toggle the attached flashlight object on or off
+ */
 /obj/item/organ/internal/eyes/robotic/glow/proc/toggle_active()
-	if(active)
+	if(eye.on)
 		deactivate()
 	else
 		activate()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
-	var/color = input(owner, "Select Color", "Select color", "#ffffff") as color|null
-	if(!color || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
+/**
+ * Toggles for the eye color mode
+ *
+ * Toggles the eye color mode on or off and then calls an update on the mob's eye color
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/toggle_eye_color_mode()
+	eye_color_mode = !eye_color_mode
+	update_mob_eye_color()
+
+/**
+ * Updates the mob eye color
+ *
+ * Updates the eye color to reflect on the mob's body if it's possible to do so
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob to update the eye color appearance of
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eye_color(mob/living/carbon/eye_owner = owner)
+	switch(eye_color_mode)
+		if(MATCH_LIGHT_COLOR)
+			eye_color_left = current_color_string
+			eye_color_right = current_color_string
+		if(USE_CUSTOM_COLOR)
+			eye_color_left = current_left_color_string
+			eye_color_right = current_right_color_string
+
+	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
-	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
-	var/old_active = active // Get old active because set_distance() -> clear_visuals()  will set it to FALSE.
-	set_distance(clamp(range, 0, max_light_beam_distance))
-	assume_rgb(color)
-	// Reactivate if eyes were already active for real time colour swapping!
-	if(old_active)
-		activate(FALSE)
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/assume_rgb(newcolor)
-	current_color_string = newcolor
-	eye_color_left = RGB2EYECOLORSTRING(current_color_string)
-	eye_color_right = eye_color_left
-	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
-		owner.dna.species.handle_body(owner)
+	eye_owner.dna.species.handle_body(eye_owner)
+	update_mob_eyes_overlay()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/cycle_mob_overlay()
-	remove_mob_overlay()
-	mob_overlay.color = current_color_string
-	add_mob_overlay()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/add_mob_overlay()
-	if(!QDELETED(owner))
-		owner.add_overlay(mob_overlay)
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/remove_mob_overlay()
-	if(!QDELETED(owner))
-		owner.cut_overlay(mob_overlay)
-
-/obj/item/organ/internal/eyes/robotic/glow/emp_act()
-	. = ..()
-	if(!active || . & EMP_PROTECT_SELF)
+/**
+ * Updates the emissive mob eye overlay
+ *
+ * When the light is on, the overlay(s) are added. When it is disabled, they are cut.
+ * Adds one or two overlays depending on what the eye_color_mode toggle is set to.
+ * Arguments:
+ * * mob/living/carbon/eye_owner - the mob to add the overlay to
+ */
+/obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eyes_overlay(mob/living/carbon/eye_owner = owner)
+	if(QDELETED(eye_owner))
 		return
-	deactivate(silent = TRUE)
 
-/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_owner)
-	. = ..()
-	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
+	if(!ishuman(eye_owner))
+		return
 
-/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
-	. = ..()
-	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
+	eye_owner.cut_overlay(eyes_overlay)
+	eye_owner.cut_overlay(eyes_overlay_left)
+	eye_owner.cut_overlay(eyes_overlay_right)
 
-/obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	QDEL_NULL(mobhook) // mobhook is not our component
-	return ..()
+	if(!eye.on)
+		return
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/activate(silent = FALSE)
-	start_visuals()
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] clicks and makes a whining noise, before shooting out a beam of light!"))
-	cycle_mob_overlay()
+	switch(eye_color_mode)
+		if(MATCH_LIGHT_COLOR)
+			eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay.color = current_color_string
+			eye_owner.add_overlay(eyes_overlay)
+		if(USE_CUSTOM_COLOR)
+			eyes_overlay_left = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs_left", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay_right = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs_right", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay_left.color = eye_color_left
+			eyes_overlay_right.color = eye_color_right
+			eye_owner.add_overlay(eyes_overlay_left)
+			eye_owner.add_overlay(eyes_overlay_right)
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(silent = FALSE)
-	clear_visuals()
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] shuts off!"))
-	remove_mob_overlay()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
-	SIGNAL_HANDLER
-	if(!active)
-		return // Don't update if we're not active!
-	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
-		regenerate_light_effects()
-	var/turf/scanfrom = get_turf(owner)
-	var/scandir = owner.dir
-	if (newdir && scandir != newdir) // COMSIG_ATOM_DIR_CHANGE happens before the dir change, but with a reference to the new direction.
-		scandir = newdir
-	if(!istype(scanfrom))
-		clear_visuals()
-	var/turf/scanning = scanfrom
-	var/stop = FALSE
-	on_mob.set_light_flags(on_mob.light_flags & ~LIGHT_ATTACHED)
-	on_mob.forceMove(scanning)
-	for(var/i in 1 to light_beam_distance)
-		scanning = get_step(scanning, scandir)
-		if(IS_OPAQUE_TURF(scanning))
-			stop = TRUE
-		var/obj/effect/abstract/eye_lighting/lighting = LAZYACCESS(eye_lighting, i)
-		if(stop)
-			lighting.forceMove(src)
-		else
-			lighting.forceMove(scanning)
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/clear_visuals(delete_everything = FALSE)
-	if(delete_everything)
-		QDEL_LIST(eye_lighting)
-		QDEL_NULL(on_mob)
-	else
-		for(var/obj/effect/abstract/eye_lighting/lighting as anything in eye_lighting)
-			lighting.forceMove(src)
-		if(!QDELETED(on_mob))
-			on_mob.set_light_flags(on_mob.light_flags | LIGHT_ATTACHED)
-			on_mob.forceMove(src)
-	active = FALSE
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/start_visuals()
-	if(!islist(eye_lighting))
-		eye_lighting = list()
-		regenerate_light_effects()
-	if((eye_lighting.len < light_beam_distance) || !on_mob)
-		regenerate_light_effects()
-	sync_light_effects()
-	active = TRUE
-	update_visuals()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/set_distance(dist)
-	light_beam_distance = dist
-	regenerate_light_effects()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/regenerate_light_effects()
-	clear_visuals(TRUE)
-	on_mob = new (src, light_object_range, light_object_power, current_color_string, LIGHT_ATTACHED)
-	for(var/i in 1 to light_beam_distance)
-		LAZYADD(eye_lighting, new /obj/effect/abstract/eye_lighting(src, light_object_range, light_object_power, current_color_string))
-	sync_light_effects()
-
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/sync_light_effects()
-	for(var/obj/effect/abstract/eye_lighting/eye_lighting as anything in eye_lighting)
-		eye_lighting.set_light_color(current_color_string)
-	on_mob?.set_light_color(current_color_string)
-
-
-/obj/effect/abstract/eye_lighting
-	light_system = MOVABLE_LIGHT
-	var/obj/item/organ/internal/eyes/robotic/glow/parent
-
-
-/obj/effect/abstract/eye_lighting/Initialize(mapload, light_object_range, light_object_power, current_color_string, light_flags)
-	. = ..()
-	parent = loc
-	if(!istype(parent))
-		stack_trace("/obj/effect/abstract/eye_lighting added to improper parent ([loc]). Deleting.")
-		return INITIALIZE_HINT_QDEL
-	if(!isnull(light_object_range))
-		set_light_range(light_object_range)
-	if(!isnull(light_object_power))
-		set_light_power(light_object_power)
-	if(!isnull(current_color_string))
-		set_light_color(current_color_string)
-	if(!isnull(light_flags))
-		set_light_flags(light_flags)
-
+#undef MATCH_LIGHT_COLOR
+#undef USE_CUSTOM_COLOR
+#undef UPDATE_LIGHT
+#undef UPDATE_EYES_LEFT
+#undef UPDATE_EYES_RIGHT
 
 /obj/item/organ/internal/eyes/moth
 	name = "moth eyes"
@@ -636,5 +735,3 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
-
-#undef RGB2EYECOLORSTRING

@@ -1,5 +1,0 @@
-author: "Tattle, Flashkirby"
-delete-after: True
-changes:
-  - sound: "increased the volume of the water step noises"
-  - image: "ported over bay's water sprites"
