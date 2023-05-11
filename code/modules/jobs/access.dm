@@ -32,6 +32,12 @@
 	//if they are carying a card that has access, that works
 	else if(isliving(accessor))
 		var/mob/living/being = accessor
+		//humans can carry wallets that combine accesses so check for those as well.
+		if(ishuman(accessor))
+			var/mob/living/carbon/human/human_accessor = being
+			if(check_access(human_accessor.wear_id))
+				return TRUE
+		//check for id carried in hands, inside PDA's etc.
 		if(check_access(being.get_idcard(TRUE)))
 			return TRUE
 	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
