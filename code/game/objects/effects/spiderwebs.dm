@@ -175,9 +175,8 @@
 	else if(isliving(mover))
 		if(istype(mover.pulledby, /mob/living/basic/spiderling))
 			return TRUE
-		if(prob(100))
-			balloon_alert(mover, "stuck in web!")
-			return FALSE
+		balloon_alert(mover, "stuck in web!")
+		return FALSE
 
 /obj/structure/spider/spikes
 	name = "web spikes"
