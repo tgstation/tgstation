@@ -34,13 +34,13 @@
 /datum/element/shatters_when_thrown/proc/on_z_impact(datum/source, turf/impacted_turf, levels)
 	SIGNAL_HANDLER
 
-	shatter(impacted_turf)
+	shatter(source, impacted_turf)
 
 /// Tells the parent to shatter if we are thrown and impact something
 /datum/element/shatters_when_thrown/proc/on_throw_impact(datum/source, atom/hit_atom)
 	SIGNAL_HANDLER
 
-	shatter(hit_atom)
+	shatter(source, hit_atom)
 
 /// Handles the actual shattering part, throwing shards of whatever is defined on the component everywhere
 /datum/element/shatters_when_thrown/proc/shatter(atom/movable/source, atom/hit_atom)
@@ -60,7 +60,7 @@
 	playsound(scatter_turf, shattering_sound, 60, TRUE)
 	if(isobj(source))
 		var/obj/obj_source = source
-		obj_source.deconstruct(disassembled = FALSE)
+		obj_source.deconstruct(FALSE)
 		return
 	else
 		qdel(source)
