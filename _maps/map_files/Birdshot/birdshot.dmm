@@ -4723,7 +4723,7 @@
 /area/station/command/heads_quarters/rd)
 "bIo" = (
 /obj/structure/table/wood,
-/obj/item/book/hollow/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/maintenance/starboard/greater)
@@ -24100,7 +24100,7 @@
 /area/station/maintenance/starboard/aft)
 "inT" = (
 /obj/structure/altar_of_gods,
-/obj/item/book/hollow/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "iot" = (
@@ -30523,7 +30523,7 @@
 /area/station/medical/medbay/central)
 "kqQ" = (
 /obj/structure/table/wood,
-/obj/item/book/hollow/bible,
+/obj/item/book/bible,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_edge{

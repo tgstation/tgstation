@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	"kojiki",
 ))
 
-/obj/item/book/hollow/bible
+/obj/item/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage/book.dmi'
@@ -78,11 +78,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
 
-/obj/item/book/hollow/bible/Initialize(mapload)
+/obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 
-/obj/item/book/hollow/bible/examine(mob/user)
+/obj/item/book/bible/examine(mob/user)
 	. = ..()
 	if(deity_name)
 		. += span_notice("This bible has been approved by [deity_name].")
@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		else
 			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
 
-/obj/item/book/hollow/bible/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy)
+/obj/item/book/bible/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy)
 	. = ..()
 	// no deity to cast a curse upon thee
 	if(!deity_name)
@@ -105,17 +105,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			user.gib()
 		else
 			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
-			user.AddComponent(/datum/component/omen)
+			user.AddComponent(/datum/component/omen/bible)
 
-/obj/item/book/hollow/bible/carve_out(obj/item/carving_item, mob/living/user)
+/obj/item/book/bible/carve_out(obj/item/carving_item, mob/living/user)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
-/obj/item/book/hollow/bible/suicide_act(mob/living/user)
+/obj/item/book/bible/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/book/hollow/bible/attack_self(mob/living/carbon/human/user)
+/obj/item/book/bible/attack_self(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
 	if(user?.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
  * Arguments:
  * * user The mob interacting with the menu
  */
-/obj/item/book/hollow/bible/proc/check_menu(mob/living/carbon/human/user)
+/obj/item/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
 	if(!istype(user) || !user.is_holding(src))
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return FALSE
 	return TRUE
 
-/obj/item/book/hollow/bible/proc/make_new_altar(atom/bible_smacked, mob/user)
+/obj/item/book/bible/proc/make_new_altar(atom/bible_smacked, mob/user)
 	var/new_altar_area = get_turf(bible_smacked)
 
 	balloon_alert(user, "unpacking bible...")
@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	new /obj/structure/altar_of_gods(new_altar_area)
 	qdel(src)
 
-/obj/item/book/hollow/bible/proc/bless(mob/living/blessed, mob/living/user)
+/obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
 	if(GLOB.religious_sect)
 		return GLOB.religious_sect.sect_bless(blessed,user)
 	if(!ishuman(blessed))
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/obj/item/book/hollow/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
+/obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
 		balloon_alert(user, "not dextrous enough!")
 		return
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, target_mob, "attacked", src)
 
-/obj/item/book/hollow/bible/afterattack(atom/bible_smacked, mob/user, proximity_flag, click_parameters)
+/obj/item/book/bible/afterattack(atom/bible_smacked, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
 		return
@@ -272,10 +272,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			var/unholy2clean = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
-		if(istype(bible_smacked, /obj/item/book/hollow/bible) && !istype(bible_smacked, /obj/item/book/hollow/bible/syndicate))
+		if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
 			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "converted")
-			var/obj/item/book/hollow/bible/other_bible = bible_smacked
+			var/obj/item/book/bible/other_bible = bible_smacked
 			other_bible.name = name
 			other_bible.icon_state = icon_state
 			other_bible.inhand_icon_state = inhand_icon_state
@@ -286,7 +286,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		var/obj/item/cult_bastard/sword = bible_smacked
 		bible_smacked.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 40, target = sword))
+		if(do_after(user, 4 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/stone in sword.contents)
 				stone.required_role = null
@@ -295,7 +295,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
-
 					shade.icon_state = "shade_holy"
 					shade.name = "Purified [shade.name]"
 				stone.release_shades(user)
@@ -304,13 +303,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
 			qdel(sword)
 
-/obj/item/book/hollow/bible/booze
+/obj/item/book/bible/booze
 	desc = "To be applied to the head repeatedly."
 
-/obj/item/book/hollow/bible/booze/PopulateContents()
+/obj/item/book/bible/booze/Initialize(mapload)
+	. = ..()
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
-/obj/item/book/hollow/bible/syndicate
+/obj/item/book/bible/syndicate
 	name = "Syndicate Tome"
 	desc = "A very ominous tome resembling a bible."
 	icon_state ="ebook"
@@ -327,7 +327,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/uses = 1
 	var/owner_name
 
-/obj/item/book/hollow/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
+/obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))
 		return
 	user.mind.holy_role = HOLY_ROLE_PRIEST
@@ -339,12 +339,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))
 	owner_name = user.real_name
 
-/obj/item/book/hollow/bible/syndicate/examine(mob/user)
+/obj/item/book/bible/syndicate/examine(mob/user)
 	. = ..()
 	if(owner_name)
 		. += span_warning("The name [owner_name] is written in blood inside the cover.")
 
-/obj/item/book/hollow/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
+/obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!user.combat_mode)
 		return ..()
 	return ..(target_mob, user, heal_mode = FALSE)

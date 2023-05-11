@@ -204,3 +204,20 @@
 	player.spawn_gibs()
 
 	return
+
+/**
+ * The bible omen.
+ * While it lasts, parent gets a cursed aura filter.
+ */
+/datum/component/omen/bible
+
+/datum/component/omen/bible/RegisterWithParent()
+	. = ..()
+	var/mob/living/living_parent = parent
+	living_parent.add_filter("omen", 2, list("type" = "outline", "color" = COLOR_DARK_RED, "alpha" = 0, "size" = 1))
+	var/filter = user.get_filter("omen")
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+
+/datum/component/omen/bible/UnregisterFromParent()
+	. = ..()

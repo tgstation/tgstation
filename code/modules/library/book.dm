@@ -180,7 +180,7 @@
 	if(!((carving_item.sharpness & SHARP_EDGED) && (carving_item.tool_behaviour != TOOL_KNIFE) && (carving_item.tool_behaviour != TOOL_WIRECUTTER)))
 		return FALSE
 	to_chat(user, span_notice("You begin to carve out [book_data.title] with \the [carving_item]..."))
-	if(!do_after(user, 30, target = src))
+	if(!do_after(user, 3 SECONDS, target = src))
 		return FALSE
 	carve_out(carving_item, user)
 	return TRUE

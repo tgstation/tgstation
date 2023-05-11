@@ -24,7 +24,7 @@
 
 /obj/effect/landmark/sc_bible_spawner/Initialize(mapload)
 	. = ..()
-	var/obj/item/book/hollow/bible/bibbel = new /obj/item/book/hollow/bible/booze(loc)
+	var/obj/item/book/bible/bibbel = new /obj/item/book/bible/booze(loc)
 	bibbel.name = "The Holy book of the Geometer"
 	bibbel.deity_name = "Narsie"
 	bibbel.icon_state = "melted"

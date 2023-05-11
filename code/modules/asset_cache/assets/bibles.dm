@@ -2,7 +2,7 @@
 	name = "bibles"
 
 /datum/asset/spritesheet/bibles/create_spritesheets()
-	var/obj/item/book/hollow/bible/holy_template = /obj/item/book/hollow/bible
+	var/obj/item/book/bible/holy_template = /obj/item/book/bible
 	InsertAll("display", initial(holy_template.icon))
 
 /datum/asset/spritesheet/bibles/ModifyInserted(icon/pre_asset)

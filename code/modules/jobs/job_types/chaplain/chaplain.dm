@@ -43,7 +43,7 @@
 	if(!ishuman(spawned))
 		return
 	var/mob/living/carbon/human/human_spawned = spawned
-	var/obj/item/book/hollow/bible/booze/bibbel = new
+	var/obj/item/book/bible/booze/bibbel = new
 	if(GLOB.religion)
 		if(human_spawned.mind)
 			human_spawned.mind.holy_role = HOLY_ROLE_PRIEST
