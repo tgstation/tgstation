@@ -53,6 +53,8 @@
 
 	/// The soundloop of elevator music
 	var/datum/looping_sound/local_forecast/elevator_music
+	/// Will the elevator music play?
+	var/elevator_music_toggle = TRUE
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
@@ -67,7 +69,8 @@
 	// this is just here for redundancy's sake.
 	. = INITIALIZE_HINT_LATELOAD
 
-	elevator_music = new(src, TRUE)
+	if(elevator_music_toggle)
+		elevator_music = new(src, TRUE)
 
 	maploaded = mapload
 	// Maploaded panels link in LateInitialize...
