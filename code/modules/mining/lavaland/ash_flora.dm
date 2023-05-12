@@ -135,7 +135,7 @@
 	base_icon_state = "fireblossom"
 	light_range = 2.1
 	light_power = 2.1
-	light_color = "#FFFF66"
+	light_color = COLOR_BIOLUMIBESCENCE_YELLOW
 	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
 	harvested_desc = "A few fire blossom stems, missing their flowers."
@@ -151,13 +151,13 @@
 	set_light_power(2.7)
 	set_light_range(1.5)
 	update_light()
-	. = ..()
+	return ..()
 
 /obj/structure/flora/ash/fireblossom/regrow()
 	set_light_power(initial(light_power))
 	set_light_range(initial(light_range))
 	update_light()
-	. = ..()
+	return ..()
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
