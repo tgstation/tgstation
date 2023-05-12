@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(tts)
 	if(!CONFIG_GET(string/tts_http_url))
 		return SS_INIT_NO_NEED
 
-	queued_tts_messages = new(GLOBAL_PROC_REF(cmp_word_length_asc))
+	queued_tts_messages = new /datum/heap(GLOBAL_PROC_REF(cmp_word_length_asc))
 	var/datum/http_request/request = new()
 	var/list/headers = list()
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
