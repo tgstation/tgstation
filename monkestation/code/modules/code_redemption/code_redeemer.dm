@@ -1,3 +1,4 @@
+GLOBAL_LIST_INIT(redeemed_codes, list())
 
 /client/verb/redeem_code()
 	set name = "Redeem Code"
@@ -11,6 +12,8 @@
 
 
 /proc/attempt_redeem(code)
+	if(code in GLOB.redeemed_codes)
+		tgui_alert(usr, "Sorry the code you've tried to redeem has already been redeemed", "Code Redemption", list("Close"))
 	if(!(code in GLOB.stored_codes))
 		//we attempt to reload because something may have generated it out of game.
 		reload_global_stored_codes()
@@ -50,6 +53,8 @@
 
 	collated_data["[code]"] = null
 	collated_data -= code
+
+	GLOB.redeemed_codes += code
 
 	var/payload = json_encode(collated_data)
 	fdel(json_file)
