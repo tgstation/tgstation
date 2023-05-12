@@ -430,7 +430,7 @@
 	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Mail Counterfeiting", list("Yes", "No"))
 	if(isnull(mail_armed))
 		return FALSE
-	if(!(src in user.contents))
+	if(loc != user)
 		return FALSE
 
 	if(mail_armed == "Yes")
