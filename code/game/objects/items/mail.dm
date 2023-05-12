@@ -122,8 +122,8 @@
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	if(contents.len)
-		user.put_in_hands(contents[1])
+	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
+		user.put_in_hands(stuff)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -140,6 +140,8 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
+	// PLEASE, IF YOU GONNA CHANGE HERE SOMETHING, CHECK FOR BUGS WITH TRAITOR MAILS!!
+
 	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
 	recipient_ref = WEAKREF(recipient)
 
@@ -332,3 +334,166 @@
 /obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	default_raw_text = pick(GLOB.junkmail_messages)
 	return ..()
+
+// =====================
+// Antag stuff down here
+// =====================
+
+/obj/item/mail/traitor
+	var/armed = FALSE
+	var/mob/madeby
+	goodie_count = 0
+
+/obj/item/mail/traitor/envelope
+	name = "envelope"
+	icon_state = "mail_large"
+	stamp_max = 2
+	stamp_offset_y = 5
+
+/obj/item/mail/traitor/attack_self(mob/user)
+	if(recipient_ref)
+		var/datum/mind/recipient = recipient_ref.resolve()
+		// If the recipient's mind has gone, then anyone can open their mail
+		// whether a mind can actually be qdel'd is an exercise for the reader
+		if(recipient && recipient != user?.mind)
+			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
+			return
+
+	to_chat(user, span_notice("You start to unwrap the package..."))
+	if(!do_after(user, 1.5 SECONDS, target = user))
+		return
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
+		if(user.put_in_hands(stuff) && armed)
+			log_bomber(user, "opened armed mail made by [madeby], activating", stuff)
+			stuff.attack_self(user)
+	qdel(src)
+
+/obj/item/mail/traitor/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(armed)
+		if(W.tool_behaviour == TOOL_MULTITOOL)
+			to_chat(user, span_notice("You start to disable something..."))
+			
+			if(do_after(user, 2 SECONDS, target = src))
+				to_chat(user, span_notice("You have disarmed some kind of device..."))
+				playsound(src, 'sound/machines/defib_ready.ogg', 50, TRUE)
+				armed = FALSE
+
+/obj/item/storage/mail_counterfeit_device
+	name = "mail counterfeit device"
+	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/device_syndie.dmi'
+	icon_state = "mail_counterfeit_device" // placeholder for now
+
+/obj/item/storage/mail_counterfeit_device/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 1
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
+	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Counterfeiting Mail", list("Mail", "Envelope"))
+	if(isnull(mail_type))
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+	mail_type = lowertext(mail_type)
+
+	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Counterfeiting Mail", list("Yes", "No"))
+	if(isnull(mail_armed))
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+
+	if(mail_armed == "Yes")
+		mail_armed = TRUE
+	else
+		mail_armed = FALSE
+
+	var/list/mail_recipients = list()
+	var/list/mail_recipients_input_list = list("0# Anyone")
+	var/iterator = 1
+	for(var/mob/living/carbon/human/human in GLOB.human_list)
+		// Skip everyone who is not part of the crew...
+		if(isnull(human.mind))
+			continue
+		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		mail_recipients += human.mind
+		mail_recipients_input_list += "[iterator]# [human.name]"
+		iterator++
+	
+	var/recipient = tgui_input_list(user, "Choose a recipient", "Counterfeiting Mail", mail_recipients_input_list)
+	if(isnull(recipient))
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+	
+	
+	var/index = text2num(copytext(recipient, 1, findtext(recipient, "#")))
+	if(index == 0)
+		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank to get a default one.", "Counterfeiting Mail")
+		if(!reject_bad_text(mail_name, ascii_only = FALSE))
+			mail_name = mail_type
+		if(!(src in user.contents))
+			return FALSE
+		
+		
+		var/obj/item/mail/traitor/shady_mail
+		if(mail_type == "mail")
+			shady_mail = new /obj/item/mail/traitor()
+		else
+			shady_mail = new /obj/item/mail/traitor/envelope()
+		
+		atom_storage.hide_contents(user)
+		user.temporarilyRemoveItemFromInventory(src, TRUE)
+		shady_mail.contents += contents
+		shady_mail.name = mail_name
+		shady_mail.armed = mail_armed
+		shady_mail.madeby = user
+		user.put_in_hands(shady_mail)
+	else
+		if(!(src in user.contents))
+			return FALSE
+
+		var/obj/item/mail/traitor/shady_mail
+		if(mail_type == "mail")
+			shady_mail = new /obj/item/mail/traitor()
+		else
+			shady_mail = new /obj/item/mail/traitor/envelope()
+		
+		atom_storage.hide_contents(user)
+		user.temporarilyRemoveItemFromInventory(src, TRUE)
+		shady_mail.contents += contents
+		shady_mail.armed = mail_armed
+		shady_mail.madeby = user
+		shady_mail.initialize_for_recipient(mail_recipients[index])
+		user.put_in_hands(shady_mail)
+	qdel(src)
+
+// =======================
+// Admin stuff down here
+// for events or shitspawn
+// purposes.
+// =======================
+
+/obj/item/storage/mail_counterfeit_device/advanced
+	name = "advanced mail counterfeit device"
+
+/obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
+	. = ..()
+	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standart backpack."
+	create_storage(max_slots = 21, max_total_storage = 21)
+	atom_storage.allow_big_nesting = TRUE
+
+/obj/item/storage/mail_counterfeit_device/bluespace
+	name = "bluespace mail counterfeit device"
+
+/obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
+	. = ..()
+	desc += " This model is the most advanced and capable of performing crazy bluespace compressions, making mail's storage space comparable to bluespace backpack."
+	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30)
+	atom_storage.allow_big_nesting = TRUE
