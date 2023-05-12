@@ -93,4 +93,4 @@
  * * message - The message to be sent
  */
 /datum/action/command_spiders/communication_spiders/format_message(mob/living/user, message)
-    return span_spiderscout("<b>Report from [user]:</b> [message]")
+	return span_spiderscout("<b>Report from [user]:</b> [message]")
