@@ -54,7 +54,7 @@
 
 /**
  * ### Spider Scout
- * A subtype of the giant spider which is faster, has phermone detection, but less health and damage.
+ * A subtype of the giant spider which is faster, has thermal vision, but less health and damage.
  * This spider is only slightly faster than a human.
  */
 /mob/living/basic/giant_spider/scout
