@@ -872,6 +872,7 @@
 	. = ..()
 	if(shield_generator)
 		shield_generator.connected_modules -= (src)
+		shield_generator.calculate_boost()
 	if(connected_node)
 		connected_node.connected_through_us -= (src)
 	return ..()
@@ -896,11 +897,12 @@
 	if(default_change_direction_wrench(user, I))
 		if(shield_generator)
 			shield_generator.connected_modules -= (src)
-			connected_node.connected_through_us -= (src)
 			shield_generator.calculate_boost()
 			shield_generator = null
-			connected_node = null
 			update_icon_state()
+		if(connected_node)
+			connected_node.connected_through_us -= (src)
+			connected_node = null
 		connected_turf = get_step(loc, dir)
 		return
 
@@ -914,8 +916,8 @@
 
 /obj/machinery/modular_shield/module/proc/try_connect(user)
 
-	if(shield_generator)
-		balloon_alert(user, "already connected")
+	if(shield_generator || connected_node)
+		balloon_alert(user, "already connected to something")
 		return
 
 	shield_generator = (locate(/obj/machinery/modular_shield_gen) in connected_turf)
@@ -979,6 +981,7 @@
 
 	disconnect_connected_through_us()
 	if(shield_generator)
+		shield_generator.connected_modules -= (src)
 		shield_generator.calculate_boost()
 		shield_generator = null
 		update_icon_state()
@@ -987,6 +990,8 @@
 	. = ..()
 
 	disconnect_connected_through_us()
+	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
+		connected.connected_node = null
 	if(shield_generator)
 		shield_generator.calculate_boost()
 
