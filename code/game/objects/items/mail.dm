@@ -383,7 +383,7 @@
 		return .
 	if(armed)
 		if(user.mind == madeby)
-			balloon_alert(user, "You easily start to disable armed [src]...")
+			balloon_alert(user, "disarming trap...")
 			
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
