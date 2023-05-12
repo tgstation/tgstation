@@ -75181,7 +75181,7 @@
 	},
 /area/station/engineering/atmos/mix)
 "sPZ" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -79002,7 +79002,7 @@
 /turf/open/floor/iron,
 /area/station/security/range)
 "tNE" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/commons/fitness/recreation)
