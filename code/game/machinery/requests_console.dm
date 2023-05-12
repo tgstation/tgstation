@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			if(!(announcement_authenticated || isAdminGhostAI(usr)))
 				return
 
-			var/message = reject_bad_text(params["message"])
+			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				return
@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("quick_reply")
 			var/recipient = params["reply_recipient"]
 
-			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"))
+			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"), ascii_only = FALSE)
 
 			if(!reply_message)
 				has_mail_send_error = TRUE
@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/priority = params["priority"]
 			if(!priority)
 				return
-			var/message = reject_bad_text(params["message"])
+			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				has_mail_send_error = TRUE
