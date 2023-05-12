@@ -1,0 +1,4 @@
+author: "BlueMemesauce"
+delete-after: True
+changes:
+  - bugfix: "fixed exploration drones discarding loot when there was 1 space left"
