@@ -65,10 +65,12 @@
 
 /datum/persistent_mute_manager/proc/poll_ckey_mutes(ckey)
 	polling_ckeys |= ckey
+	SStgui.update_uis(src)
 
-	var/found_mutes = get_all_persistent_mutes_for(ckey, FALSE)
+	var/found_mutes = get_all_persistent_mutes_for(ckey)
 	if(isnull(found_mutes))
 		polling_ckeys -= ckey
+		SStgui.update_uis(src)
 		return FALSE
 
 	var/list/mutes = list()
@@ -134,7 +136,7 @@
 
 		if("poll-ckey")
 			ASYNC
-				if(!poll_ckey_mutes(params["ckey"], params["active_only"] || TRUE))
+				if(!poll_ckey_mutes(params["ckey"]))
 					to_chat(usr, span_alertwarning("Failed to poll ckey."))
 			return TRUE
 
@@ -149,27 +151,59 @@
 
 			to_chat(usr, span_adminnotice("Removed persistent mute."))
 			ASYNC
-				if(!poll_ckey_mutes(params["ckey"], params["active_only"] || TRUE))
+				if(!poll_ckey_mutes(params["ckey"]))
 					to_chat(usr, span_alertwarning("Failed to poll ckey."))
 
 			return TRUE
 
 		if("edit")
-			return
+			if(isnull(mute_information))
+				to_chat(usr, span_alertwarning("Failed to find mute information."))
+				return TRUE
+
+			var/edit_successful = edit_persistent_mute_for(
+				mute_information.ckey,
+				mute_information.id,
+				params["muted_flag"],
+				params["reason"],
+				)
+			if(!edit_successful)
+				to_chat(usr, span_alertwarning("Failed to edit persistent mute."))
+				return TRUE
+
+			to_chat(usr, span_adminnotice("Edited persistent mute."))
+			ASYNC
+				if(!poll_ckey_mutes(params["ckey"]))
+					to_chat(usr, span_alertwarning("Failed to poll ckey."))
+			return TRUE
 
 		if("add")
-			return
+			if(!isnull(mute_information))
+				to_chat(usr, span_alertwarning("Mute already exists?"))
+				return TRUE
+
+			add_persistent_mute_for(
+				params["ckey"],
+				params["muted_flag"],
+				params["reason"],
+				params["admin"],
+				)
+			to_chat(usr, span_adminnotice("Added persistent mute."))
+
+			ASYNC
+				if(!poll_ckey_mutes(params["ckey"]))
+					to_chat(usr, span_alertwarning("Failed to poll ckey."))
+			return TRUE
 
 		else
 			stack_trace("unhandled pmm action: [action]")
 			return
 
-/datum/persistent_mute_manager/proc/get_all_persistent_mutes_for(ckey, active_only = TRUE)
+/datum/persistent_mute_manager/proc/get_all_persistent_mutes_for(ckey)
 	var/list/mutes = list()
 	var/datum/db_query/mute_flags_query = SSdbcore.NewQuery({"
 		SELECT id, muted_flag, reason, admin, datetime, deleted, deleted_datetime FROM [format_table_name("muted")]
 		WHERE ckey = :ckey
-		[active_only ? "AND deleted = 0" : ""]
 	"}, list("ckey" = ckey))
 
 	if(!mute_flags_query.Execute())
@@ -198,6 +232,7 @@
 		if(mute_info.id == id)
 			existing_mute = mute_info
 			break
+
 	if(!existing_mute)
 		return FALSE
 	if(existing_mute.muted_flag != expected_flag)
@@ -218,6 +253,11 @@
 	var/client/target = GLOB.directory[ckey]
 	if(target)
 		target.prefs.load_mutes_from_database()
+		if(!(target.prefs.muted & expected_flag)) // you can be muted from something for different reasons.
+			to_chat(target, span_admin("You are no longer muted from [mute_flags_to_string(expected_flag)]."))
+	message_admins(span_admin("A mute for [ckey] has been revoked by [admin]. Type: [mute_flags_to_string(expected_flag)] | ID: [id]"))
+	log_admin("mute-persistent: revoked - \[[ckey]\] - \[[expected_flag]\] | ID-\[[id]\]")
+
 	return TRUE
 
 /datum/persistent_mute_manager/proc/add_persistent_mute_for(ckey, muted_flag, reason, admin)
@@ -231,11 +271,60 @@
 		"admin" = admin,
 	))
 	mute_flags_query.Execute()
+	var/inserted_id = mute_flags_query.last_insert_id
 	qdel(mute_flags_query)
 
 	var/client/target = GLOB.directory[ckey]
 	if(target)
 		target.prefs.load_mutes_from_database()
+		to_chat(target, span_admin("You have been muted from [mute_flags_to_string(muted_flag)] by [admin] for '[reason]'"))
+	message_admins(span_admin("A mute for [ckey] has been added by [admin]. Type: [mute_flags_to_string(expected_flag)] | ID: [id]"))
+	log_admin("mute-persistent: added - \[[ckey]\] - \[[muted_flag]\] | ID-\[[inserted_id]\]")
+
+	return get_mute_by_id(inserted_id, FALSE)
+
+/datum/persistent_mute_manager/proc/edit_persistent_mute_for(ckey, id, new_flag, new_reason)
+	var/datum/persistent_mute_holder/existing = get_mute_by_id(id)
+	if(isnull(existing))
+		return FALSE
+	if(existing.ckey != ckey)
+		return FALSE
+	if(existing.deleted)
+		return FALSE
+
+	var/changing_flag = existing.muted_flag != new_flag
+	var/changing_reason = existing.reason != new_reason
+	if(!changing_flag && !changing_reason)
+		return FALSE
+
+	var/datum/db_query/mute_flags_query = SSdbcore.NewQuery({"
+		UPDATE [format_table_name("muted")]
+		SET muted_flag = :muted_flag, reason = :reason
+		WHERE id = :id
+	"}, list(
+		"id" = id,
+		"muted_flag" = new_flag,
+		"reason" = new_reason,
+	))
+
+	if(!mute_flags_query.Execute())
+		qdel(mute_flags_query)
+		return FALSE
+	qdel(mute_flags_query)
+
+	var/client/target = GLOB.directory[ckey]
+	if(target)
+		target.prefs.load_mutes_from_database()
+		to_chat(target, span_admin("One of your persistent mutes has been edited by [admin]. ID: [id]"))
+
+	log_admin("mute-persistent: edited - \[[ckey]\] | ID-\[[id]\] | \[[existing.muted_flag]\] -> \[[new_flag]\] | \[[existing.reason]\] -> \[[new_reason]\]")
+	message_admins("A persistent mute for [ckey] has been edited by [admin]. ID: [id]")
+	if(changing_flag)
+		message_admins("Type: [mute_flags_to_string(existing.muted_flag)] -> [mute_flags_to_string(new_flag)]")
+	if(changing_reason)
+		message_admins("Reason: [existing.reason] -> [new_reason]")
+
+	return TRUE
 
 /datum/persistent_mute_manager/proc/get_mute_by_id(id, from_cache = TRUE)
 	if(from_cache)
