@@ -380,7 +380,7 @@
 	if(armed == FALSE || user.get_inactive_held_item() != src)
 		. = ..()
 	else
-		if(user.mind == made_by.resolve)
+		if(user.mind == made_by.resolve())
 			balloon_alert(user, "disarming trap...")
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
