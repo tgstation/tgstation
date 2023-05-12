@@ -440,7 +440,7 @@ const ViewMuteMenu = (props: ViewMuteProps, context: any) => {
       <Stack vertical>
         {mutes
           ?.sort((a, b) => {
-            return a.id - b.id;
+            return b.id - a.id;
           })
           .map((mute) => {
             if (active_only && mute.deleted) {
