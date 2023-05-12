@@ -277,7 +277,7 @@ const AddMuteMenu = (props: AddMuteProps, context: any) => {
   const { act } = useBackend(context);
 
   return (
-    <Section title={`Add Mute - [${ckey}]`}>
+    <Section title={`${props.isEdit ? 'Edit' : 'Add'} Mute - [${ckey}]`}>
       <Stack vertical>
         <Stack.Item>
           <Input
