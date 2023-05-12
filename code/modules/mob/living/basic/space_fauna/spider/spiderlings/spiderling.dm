@@ -24,8 +24,8 @@
 	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
 
 	// we have _some_ bite
-	melee_damage_lower = 2
-	melee_damage_upper = 4
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 
 	health = 5 // very low.
 	maxHealth = 5
