@@ -179,7 +179,7 @@
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
 	var/datum/wound/blunt/critical/critical_wound_type = /datum/wound/blunt/critical
-	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
+	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10), attacking_item = src)
 	target.visible_message(
 		span_danger("[src] pierces through [target]'s skull, horribly mutilating their eyes!"),
 		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),
@@ -205,6 +205,7 @@
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
+	notify_ghosts("[target] has just had their eyes snatched!", source = target, action = NOTIFY_ORBIT, header = "Ouch!")
 	target.emote("scream")
 	if(prob(20))
 		target.emote("cry")

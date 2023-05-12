@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Mapping: Added broken machine map helper"
-  - qol: "Mapping: Replaced damaged window spawner with a universal helper"

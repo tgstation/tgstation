@@ -30,7 +30,7 @@
 	examine_text += span_info("Alt-click to eject the intelliCard.")
 	return examine_text
 
-/datum/computer_file/program/ai_restorer/kill_program(forced)
+/datum/computer_file/program/ai_restorer/kill_program()
 	try_eject(forced = TRUE)
 	return ..()
 

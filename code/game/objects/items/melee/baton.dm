@@ -280,7 +280,7 @@
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	if(stun_animation)
