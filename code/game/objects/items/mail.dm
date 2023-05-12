@@ -423,7 +423,7 @@
 	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
-	if(!(src in user.contents))
+	if(loc != user)
 		return FALSE
 	mail_type = lowertext(mail_type)
 
