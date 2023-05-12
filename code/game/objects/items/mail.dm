@@ -355,7 +355,7 @@
 
 /obj/item/mail/traitor
 	var/armed = FALSE
-	var/datum/mind/made_by
+	var/datum/weakref/made_by
 	// If somehow mind will disappear, admins will still have info about creator
 	var/made_by_cached_name
 	var/made_by_cached_ckey
@@ -380,7 +380,7 @@
 	if(armed == FALSE || user.get_inactive_held_item() != src)
 		. = ..()
 	else
-		if(user.mind == made_by)
+		if(user.mind == made_by.resolve)
 			balloon_alert(user, "disarming trap...")
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
@@ -490,7 +490,7 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
 	shady_mail.armed = mail_armed
-	shady_mail.made_by = user.mind
+	shady_mail.made_by = WEAKREF(user.mind)
 	user.put_in_hands(shady_mail)
 	qdel(src)
 

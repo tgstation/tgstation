@@ -5,6 +5,6 @@
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	person.mind = allocate(/datum/mind)
 	var/obj/item/mail/traitor/test_mail = allocate(/obj/item/mail/traitor)
-	person.mind.assigned_role = JOB_CAPTAIN
+	person.mind.set_assigned_role(SSjob.GetJobType(/datum/job/captain))
 	test_mail.initialize_for_recipient(person.mind)
 	TEST_ASSERT(test_mail.contents.len == 0, "/obj/item/mail/traitor should not have item after initialize_for_recipient proc!")
