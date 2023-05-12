@@ -173,11 +173,12 @@
 	. = ..()
 	if(isspider(mover))
 		return TRUE
-	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/basic/spiderling))
-			return TRUE
-		balloon_alert(mover, "stuck in web!")
-		return FALSE
+	if(!isliving(mover))
+		return
+	if(isspider(mover.pulledby))
+		return TRUE
+	balloon_alert(mover, "stuck in web!")
+	return FALSE
 
 /obj/structure/spider/spikes
 	name = "web spikes"
