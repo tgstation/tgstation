@@ -183,10 +183,15 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/attackby(obj/item/O, mob/user, params)
+	. = ..()
+	if(.)
+		return
+
 	if(istype(O, /obj/item/clothing/under/costume/maid) || istype(O, /obj/item/clothing/under/rank/civilian/janitor/maid))
 		if(do_after(user, 5 SECONDS, src))
 			maidify()
 			qdel(O)
+		return TRUE
 
 /mob/living/carbon/alien/adult/royal/queen/proc/maidify()
 	name = "alien queen maid"
