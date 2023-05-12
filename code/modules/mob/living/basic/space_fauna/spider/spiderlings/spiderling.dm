@@ -25,7 +25,7 @@
 
 	// we have _some_ bite
 	melee_damage_lower = 1
-	melee_damage_upper = 1
+	melee_damage_upper = 2
 
 	health = 5 // very low.
 	maxHealth = 5
