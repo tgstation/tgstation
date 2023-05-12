@@ -150,11 +150,13 @@
 /obj/structure/flora/ash/fireblossom/after_harvest()
 	set_light_power(2.7)
 	set_light_range(1.5)
+	update_light()
 	. = ..()
 
 /obj/structure/flora/ash/fireblossom/regrow()
 	set_light_power(initial(light_power))
 	set_light_range(initial(light_range))
+	update_light()
 	. = ..()
 
 ///Snow flora to exist on icebox.
