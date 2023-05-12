@@ -31,7 +31,7 @@
 	crate_name = "medipen crate"
 
 /datum/supply_pack/medical/coroner_crate
-	name = "Autospy Kit"
+	name = "Autopsy Kit"
 	desc = "Contains an autopsy scanner, when you lose your own and really \
 		need to complete your dissection experiments."
 	cost = CARGO_CRATE_VALUE * 2.5
