@@ -7,7 +7,7 @@
 // MUTE_ALL
 
 /proc/mute_flags_to_string(flags)
-	if(flags & MUTE_ALL)
+	if(flags == MUTE_ALL)
 		return "EVERYTHING"
 
 	var/mutes = ""
@@ -178,7 +178,7 @@
 
 			to_chat(usr, span_adminnotice("Removed persistent mute."))
 			ASYNC
-				if(!poll_ckey_mutes(params["ckey"]))
+				if(!poll_ckey_mutes(mute_information.ckey))
 					to_chat(usr, span_alertwarning("Failed to poll ckey."))
 
 			return TRUE

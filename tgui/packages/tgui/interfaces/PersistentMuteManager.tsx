@@ -194,6 +194,7 @@ export const PersistentMuteManager = (_: any, context: any) => {
             reason={editing_mute?.reason}
             muted_flags={editing_mute?.muted_flag}
             id={editing_mute?.id}
+            setActiveView={set_active_view}
             cancelEdit={() => {
               set_active_view(ActiveView.view_mutes);
               set_editing_mute(undefined);
@@ -289,6 +290,7 @@ type AddMuteProps = {
   reason?: string;
   muted_flags?: number;
   id?: number;
+  setActiveView: (view: ActiveView) => void;
   cancelEdit?: () => void;
 };
 
@@ -354,6 +356,7 @@ const AddMuteMenu = (props: AddMuteProps, context: any) => {
                   muted_flag: muted_flag,
                   admin: whoami,
                 });
+                props.setActiveView(ActiveView.view_mutes);
               }}
             />
           )}
@@ -468,7 +471,7 @@ const ViewMuteMenu = (props: ViewMuteProps, context: any) => {
         />
       }>
       <Stack vertical>
-        {mutes.map((mute) => {
+        {mutes?.map((mute) => {
           if (active_only && mute.deleted) {
             return null;
           }
