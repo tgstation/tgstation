@@ -167,7 +167,6 @@
 	desc = "Extremely soft and sticky silk."
 	icon_state = "verystickyweb"
 	max_integrity = 20
-	melee_cooldown_time = 0
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -186,7 +185,6 @@
 	desc = "hardened silk formed into small yet deadly spikes."
 	icon_state = "webspikes1"
 	max_integrity = 40
-	melee_cooldown_time = 0
 
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
