@@ -186,6 +186,7 @@
 	if(istype(O, /obj/item/clothing/under/costume/maid) || istype(O, /obj/item/clothing/under/rank/civilian/janitor/maid))
 		if(do_after(user, 5 SECONDS, src))
 			maidify()
+			qdel(O)
 
 /mob/living/carbon/alien/adult/royal/queen/proc/maidify()
 	name = "alien queen maid"
@@ -193,3 +194,4 @@
 	icon_state = "alienqmaid"
 	caste = "qmaid"
 	update_icons()
+	update_desc()
