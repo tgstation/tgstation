@@ -28,17 +28,18 @@ export const Icon = (props: IconProps) => {
   const { name, size, spin, className, rotation, ...rest } = restlet;
 
   if (size) {
-    if (!rest.style) {
-      rest.style = {};
+    if (!style) {
+      style = {};
     }
-    rest.style['font-size'] = size * 100 + '%';
+    style['font-size'] = size * 100 + '%';
   }
   if (rotation) {
-    if (!rest.style) {
-      rest.style = {};
+    if (!style) {
+      style = {};
     }
-    rest.style['transform'] = `rotate(${rotation}deg)`;
+    style['transform'] = `rotate(${rotation}deg)`;
   }
+  rest.style = style;
 
   const boxProps = computeBoxProps(rest);
 
