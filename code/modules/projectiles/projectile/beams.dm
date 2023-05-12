@@ -24,14 +24,15 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
-	wound_bonus = -30
+	wound_bonus = -20
+	damage = 25
 	bare_wound_bonus = 40
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
-	damage = 25
+	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)

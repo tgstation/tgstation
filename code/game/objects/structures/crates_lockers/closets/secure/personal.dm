@@ -1,13 +1,23 @@
 /obj/structure/closet/secure_closet/personal
-	desc = "It's a secure locker for personnel. The first person to open this closet gains control."
+	desc = "It's a secure locker for personnel. The first person to swipe their ID gains control."
 	name = "personal closet"
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	card_reader_installed = TRUE
 
 /obj/structure/closet/secure_closet/personal/Initialize(mapload)
 	. = ..()
-	var/static/list/choices = list("Personal")
+	var/static/list/choices
+	if(isnull(choices))
+		choices = list("Personal")
 	access_choices = choices
+
+/obj/structure/closet/secure_closet/personal/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
+	if(isnull(registered_id)) //first time anyone can unlock
+		return TRUE
+	else
+		if(allowed(user)) //players with ACCESS_ALL_PERSONAL_LOCKERS can override your ID
+			return TRUE
+		return player_id == registered_id
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
