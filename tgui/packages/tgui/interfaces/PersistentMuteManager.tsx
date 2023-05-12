@@ -173,7 +173,7 @@ export const PersistentMuteManager = (_: any, context: any) => {
             muted_flags={editing_mute?.muted_flag}
             id={editing_mute?.id}
             setActiveView={set_active_view}
-            cancelEdit={() => {
+            resetView={() => {
               set_active_view(ActiveView.view_mutes);
               set_editing_mute(undefined);
             }}
@@ -258,7 +258,7 @@ type AddMuteProps = {
   muted_flags?: number;
   id?: number;
   setActiveView: (view: ActiveView) => void;
-  cancelEdit?: () => void;
+  resetView?: () => void;
 };
 
 const AddMuteMenu = (props: AddMuteProps, context: any) => {
@@ -297,11 +297,17 @@ const AddMuteMenu = (props: AddMuteProps, context: any) => {
               <Button
                 content="Cancel"
                 onClick={() => {
-                  props.cancelEdit?.();
+                  props.resetView?.();
                 }}
               />
               <Button
                 content="Save"
+                disabled={
+                  reason === '' ||
+                  muted_flag === MuteTypes.MUTE_NONE ||
+                  reason === props.reason ||
+                  muted_flag === props.muted_flags
+                }
                 onClick={() => {
                   act('edit', {
                     id: props.id,
@@ -309,13 +315,14 @@ const AddMuteMenu = (props: AddMuteProps, context: any) => {
                     muted_flag: muted_flag,
                     admin: whoami,
                   });
-                  props.cancelEdit?.();
+                  props.resetView?.();
                 }}
               />
             </>
           ) : (
             <Button
               content="Add"
+              disabled={reason === '' || muted_flag === MuteTypes.MUTE_NONE}
               onClick={() => {
                 act('add', {
                   ckey: ckey,
