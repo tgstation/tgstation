@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Free golem shells printed from the free golem ruin are no longer enslaved to whoever finished constructing them."

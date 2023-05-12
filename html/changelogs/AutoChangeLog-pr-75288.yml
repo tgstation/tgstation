@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[Ruins] In the crashed ship ruin, other ruins should be able to spawn more organically close to it."
-  - bugfix: "[Ruins] In the SAME ruin, area defines were added to the asteroids. Don't get lost now!"
