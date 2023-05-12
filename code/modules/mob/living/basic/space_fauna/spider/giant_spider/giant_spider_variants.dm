@@ -73,7 +73,7 @@
 	speed = 2.8
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
-	menu_description = "Fast spider variant specializing in scouting and alerting of prey ,with the ability to travel in vents."
+	menu_description = "Fast spider variant specializing in scouting and alerting of prey, with the ability to travel in vents."
 
 /mob/living/basic/giant_spider/scout/Initialize(mapload)
 	. = ..()
