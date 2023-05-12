@@ -366,7 +366,7 @@
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
-			log_bomber(user, "opened armed mail made by [madeby], activating", stuff)
+			log_bomber(user, "opened armed mail made by [madeby] ([madeby.ckey]), activating", stuff)
 			stuff.attack_self(user)
 	qdel(src)
 
@@ -395,14 +395,14 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
-	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Counterfeiting Mail", list("Mail", "Envelope"))
+	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
 	if(!(src in user.contents))
 		return FALSE
 	mail_type = lowertext(mail_type)
 
-	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Counterfeiting Mail", list("Yes", "No"))
+	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Mail Counterfeiting", list("Yes", "No"))
 	if(isnull(mail_armed))
 		return FALSE
 	if(!(src in user.contents))
@@ -426,7 +426,7 @@
 		mail_recipients_input_list += "[iterator]# [human.name]"
 		iterator++
 	
-	var/recipient = tgui_input_list(user, "Choose a recipient", "Counterfeiting Mail", mail_recipients_input_list)
+	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_input_list)
 	if(isnull(recipient))
 		return FALSE
 	if(!(src in user.contents))
@@ -435,7 +435,7 @@
 	
 	var/index = text2num(copytext(recipient, 1, findtext(recipient, "#")))
 	if(index == 0)
-		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank to get a default one.", "Counterfeiting Mail")
+		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank to get a default one.", "Mail Counterfeiting")
 		if(!reject_bad_text(mail_name, ascii_only = FALSE))
 			mail_name = mail_type
 		if(!(src in user.contents))
