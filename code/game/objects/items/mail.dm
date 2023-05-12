@@ -110,14 +110,13 @@
 			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
-	. = FALSE // FALSE - means this proc was not stopped by return statement.
 	if(user.get_inactive_held_item() == src)
-		if(src.vars["armed"] == null || src.vars["armed"] == FALSE)
-			balloon_alert(user, "Nothing to disable!")
-			return TRUE
+		balloon_alert(user, "Nothing to disable!")
+		return TRUE
 	else
 		to_chat(user, span_notice("You must hold it, if you want to try disable any kind of device that might be inside!"))
-		return TRUE
+		return FALSE
+	
 
 /obj/item/mail/attack_self(mob/user)
 	if(!unwrap(user))
@@ -356,10 +355,10 @@
 
 /obj/item/mail/traitor
 	var/armed = FALSE
-	var/datum/mind/madeby
+	var/datum/mind/made_by
 	// If somehow mind will disappear, admins will still have info about creator
-	var/madeby_cached_name
-	var/madeby_cached_ckey
+	var/made_by_cached_name
+	var/made_by_cached_ckey
 	goodie_count = 0
 
 /obj/item/mail/traitor/envelope
@@ -373,16 +372,15 @@
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
-			log_bomber(user, "opened armed mail made by [madeby_cached_name] ([madeby_cached_ckey]), activating", stuff)
+			log_bomber(user, "opened armed mail made by [made_by_cached_name] ([made_by_cached_ckey]), activating", stuff)
 			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item/mail/traitor, attack_self), user)
 	qdel(src)
 
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(. != FALSE) // FALSE - means this proc was not stopped by return statement.
-		return .
-	if(armed)
-		if(user.mind == madeby)
+	if(armed == FALSE || user.get_inactive_held_item() == src)
+		. = ..()
+	else
+		if(user.mind == made_by)
 			balloon_alert(user, "You easily start to disable armed [src]...")
 			
 			if(!do_after(user, 2 SECONDS, target = src))
@@ -404,7 +402,7 @@
 				return TRUE
 			else
 				after_unwrap(user)
-				return FALSE
+				return TRUE
 
 /obj/item/storage/mail_counterfeit_device
 	name = "mail counterfeit device"
@@ -474,8 +472,8 @@
 	else
 		shady_mail = new /obj/item/mail/traitor/envelope()
 	
-	shady_mail.madeby_cached_ckey = user.ckey
-	shady_mail.madeby_cached_name = user.mind.name
+	shady_mail.made_by_cached_ckey = user.ckey
+	shady_mail.made_by_cached_name = user.mind.name
 
 	if(index == 1)
 		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank or close the window to get a default one.", "Mail Counterfeiting")
@@ -493,7 +491,7 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
 	shady_mail.armed = mail_armed
-	shady_mail.madeby = user.mind
+	shady_mail.made_by = user.mind
 	user.put_in_hands(shady_mail)
 	qdel(src)
 
