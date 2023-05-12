@@ -107,25 +107,46 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
+
+/obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
+	. = FALSE // FALSE - means this proc was not stopped by return statement.
+	if(user.get_inactive_held_item() == src)
+		if(src.vars["armed"] == null || src.vars["armed"] == FALSE)
+			balloon_alert(user, "Nothing to disable!")
+			return TRUE
+	else
+		to_chat(user, span_notice("You must hold it, if you want to try disable any kind of device that might be inside!"))
+		return TRUE
 
 /obj/item/mail/attack_self(mob/user)
+	if(!unwrap(user))
+		return FALSE
+	after_unwrap(user)
+
+/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
 		// If the recipient's mind has gone, then anyone can open their mail
 		// whether a mind can actually be qdel'd is an exercise for the reader
 		if(recipient && recipient != user?.mind)
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
-			return
+			return FALSE
 
-	to_chat(user, span_notice("You start to unwrap the package..."))
+	balloon_alert(user, "You start to unwrap the package...")
 	if(!do_after(user, 1.5 SECONDS, target = user))
-		return
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
+		return FALSE
+	return TRUE
+
+// proc that goes after unwrapping a mail.
+/obj/item/mail/proc/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
 		user.put_in_hands(stuff)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
+
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
@@ -140,8 +161,6 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	// PLEASE, IF YOU GONNA CHANGE HERE SOMETHING, CHECK FOR BUGS WITH TRAITOR MAILS!!
-
 	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
 	recipient_ref = WEAKREF(recipient)
 
@@ -335,13 +354,12 @@
 	default_raw_text = pick(GLOB.junkmail_messages)
 	return ..()
 
-// =====================
-// Antag stuff down here
-// =====================
-
 /obj/item/mail/traitor
 	var/armed = FALSE
-	var/mob/madeby
+	var/datum/mind/madeby
+	// If somehow mind will disappear, admins will still have info about creator
+	var/madeby_cached_name
+	var/madeby_cached_ckey
 	goodie_count = 0
 
 /obj/item/mail/traitor/envelope
@@ -350,43 +368,50 @@
 	stamp_max = 2
 	stamp_offset_y = 5
 
-/obj/item/mail/traitor/attack_self(mob/user)
-	if(recipient_ref)
-		var/datum/mind/recipient = recipient_ref.resolve()
-		// If the recipient's mind has gone, then anyone can open their mail
-		// whether a mind can actually be qdel'd is an exercise for the reader
-		if(recipient && recipient != user?.mind)
-			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
-			return
-
-	to_chat(user, span_notice("You start to unwrap the package..."))
-	if(!do_after(user, 1.5 SECONDS, target = user))
-		return
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+/obj/item/mail/traitor/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
-			log_bomber(user, "opened armed mail made by [madeby] ([madeby.ckey]), activating", stuff)
-			stuff.attack_self(user)
+			log_bomber(user, "opened armed mail made by [madeby_cached_name] ([madeby_cached_ckey]), activating", stuff)
+			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item/mail/traitor, attack_self), user)
 	qdel(src)
 
-/obj/item/mail/traitor/attackby(obj/item/W, mob/user, params)
+/obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if(. != FALSE) // FALSE - means this proc was not stopped by return statement.
+		return .
 	if(armed)
-		if(W.tool_behaviour == TOOL_MULTITOOL)
-			to_chat(user, span_notice("You start to disable something..."))
+		if(user.mind == madeby)
+			balloon_alert(user, "You easily start to disable armed [src]...")
 			
-			if(do_after(user, 2 SECONDS, target = src))
-				to_chat(user, span_notice("You have disarmed some kind of device..."))
-				playsound(src, 'sound/machines/defib_ready.ogg', 50, TRUE)
+			if(!do_after(user, 2 SECONDS, target = src))
+				return FALSE
+			balloon_alert(user, "You have disarmed the [src].")
+			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+			armed = FALSE
+			return TRUE
+		else
+			balloon_alert(user, "You start to disable something...")
+			
+			if(!do_after(user, 2 SECONDS, target = src))
+				after_unwrap(user)
+				return FALSE
+			if(prob(50))
+				balloon_alert(user, "You have disarmed some kind of device...")
+				playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 				armed = FALSE
+				return TRUE
+			else
+				after_unwrap(user)
+				return FALSE
 
 /obj/item/storage/mail_counterfeit_device
 	name = "mail counterfeit device"
 	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/device_syndie.dmi'
-	icon_state = "mail_counterfeit_device" // placeholder for now
+	icon_state = "mail_counterfeit_device"
 
 /obj/item/storage/mail_counterfeit_device/Initialize(mapload)
 	. = ..()
@@ -413,18 +438,26 @@
 	else
 		mail_armed = FALSE
 
-	var/list/mail_recipients = list()
-	var/list/mail_recipients_input_list = list("0# Anyone")
-	var/iterator = 1
-	for(var/mob/living/carbon/human/human in GLOB.human_list)
-		// Skip everyone who is not part of the crew...
-		if(isnull(human.mind))
+	var/list/mail_recipients = list("*Anyone*")
+	var/list/mail_recipients_input_list = list("*Anyone*")
+	var/list/recipients_dupes = list()
+	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
+		if(isnull(person.mind_ref))
 			continue
-		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
-			continue
-		mail_recipients += human.mind
-		mail_recipients_input_list += "[iterator]# [human.name]"
-		iterator++
+		mail_recipients += person.mind_ref
+
+		// This whole code-hell i had to make just remove iterators from the options names.
+		if(recipients_dupes[person.name] == null)
+			if(mail_recipients_input_list.Find(person.name))
+				recipients_dupes[person.name] = 1
+				mail_recipients_input_list += "[person.name] (1)"
+			else
+				mail_recipients_input_list += "[person.name]"
+		else
+			recipients_dupes[person.name] += 1
+			var/i = recipients_dupes[person.name]
+			mail_recipients_input_list += "[person.name] ([i])"
+		
 	
 	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_input_list)
 	if(isnull(recipient))
@@ -433,53 +466,38 @@
 		return FALSE
 	
 	
-	var/index = text2num(copytext(recipient, 1, findtext(recipient, "#")))
-	if(index == 0)
-		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank to get a default one.", "Mail Counterfeiting")
-		if(!reject_bad_text(mail_name, ascii_only = FALSE))
-			mail_name = mail_type
-		if(!(src in user.contents))
-			return FALSE
-		
-		
-		var/obj/item/mail/traitor/shady_mail
-		if(mail_type == "mail")
-			shady_mail = new /obj/item/mail/traitor()
-		else
-			shady_mail = new /obj/item/mail/traitor/envelope()
-		
-		atom_storage.hide_contents(user)
-		user.temporarilyRemoveItemFromInventory(src, TRUE)
-		shady_mail.contents += contents
-		shady_mail.name = mail_name
-		shady_mail.armed = mail_armed
-		shady_mail.madeby = user
-		user.put_in_hands(shady_mail)
+	var/index = mail_recipients_input_list.Find(recipient)
+	
+	var/obj/item/mail/traitor/shady_mail
+	if(mail_type == "mail")
+		shady_mail = new /obj/item/mail/traitor()
 	else
+		shady_mail = new /obj/item/mail/traitor/envelope()
+	
+	shady_mail.madeby_cached_ckey = user.ckey
+	shady_mail.madeby_cached_name = user.mind.name
+
+	if(index == 1)
+		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank or close the window to get a default one.", "Mail Counterfeiting")
 		if(!(src in user.contents))
 			return FALSE
-
-		var/obj/item/mail/traitor/shady_mail
-		if(mail_type == "mail")
-			shady_mail = new /obj/item/mail/traitor()
+		if(reject_bad_text(mail_name, ascii_only = FALSE))
+			shady_mail.name = mail_name
 		else
-			shady_mail = new /obj/item/mail/traitor/envelope()
+			shady_mail.name = mail_type
 		
-		atom_storage.hide_contents(user)
-		user.temporarilyRemoveItemFromInventory(src, TRUE)
-		shady_mail.contents += contents
-		shady_mail.armed = mail_armed
-		shady_mail.madeby = user
+	else
 		shady_mail.initialize_for_recipient(mail_recipients[index])
-		user.put_in_hands(shady_mail)
+
+	atom_storage.hide_contents(user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	shady_mail.contents += contents
+	shady_mail.armed = mail_armed
+	shady_mail.madeby = user.mind
+	user.put_in_hands(shady_mail)
 	qdel(src)
 
-// =======================
-// Admin stuff down here
-// for events or shitspawn
-// purposes.
-// =======================
-
+/// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/advanced
 	name = "advanced mail counterfeit device"
 
@@ -489,6 +507,7 @@
 	create_storage(max_slots = 21, max_total_storage = 21)
 	atom_storage.allow_big_nesting = TRUE
 
+/// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/bluespace
 	name = "bluespace mail counterfeit device"
 
