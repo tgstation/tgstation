@@ -387,7 +387,7 @@
 			
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
-			balloon_alert(user, "You have disarmed the [src].")
+			balloon_alert(user, "disarmed")
 			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 			armed = FALSE
 			return TRUE
