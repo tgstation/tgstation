@@ -1,3 +1,30 @@
+// MUTE_IC
+// MUTE_OOC
+// MUTE_PRAY
+// MUTE_ADMINHELP
+// MUTE_DEADCHAT
+// MUTE_INTERNET_REQUEST
+// MUTE_ALL
+
+/proc/mute_flags_to_string(flags)
+	if(flags & MUTE_ALL)
+		return "EVERYTHING"
+
+	var/mutes = ""
+	if(flags & MUTE_IC)
+		mutes += "IC "
+	if(flags & MUTE_OOC)
+		mutes += "OOC "
+	if(flags & MUTE_PRAY)
+		mutes += "PRAY "
+	if(flags & MUTE_ADMINHELP)
+		mutes += "ADMINHELP "
+	if(flags & MUTE_DEADCHAT)
+		mutes += "DEADCHAT "
+	if(flags & MUTE_INTERNET_REQUEST)
+		mutes += "INTERNET_REQUEST "
+	return trim_right(mutes)
+
 /**
  * Wrapper for persistent mute management.
  */
@@ -255,7 +282,7 @@
 		target.prefs.load_mutes_from_database()
 		if(!(target.prefs.muted & expected_flag)) // you can be muted from something for different reasons.
 			to_chat(target, span_admin("You are no longer muted from [mute_flags_to_string(expected_flag)]."))
-	message_admins(span_admin("A mute for [ckey] has been revoked by [admin]. Type: [mute_flags_to_string(expected_flag)] | ID: [id]"))
+	message_admins(span_admin("A mute for [ckey] has been revoked by [key_name_admin(usr)]. Type: [mute_flags_to_string(expected_flag)] | ID: [id]"))
 	log_admin("mute-persistent: revoked - \[[ckey]\] - \[[expected_flag]\] | ID-\[[id]\]")
 
 	return TRUE
@@ -278,7 +305,7 @@
 	if(target)
 		target.prefs.load_mutes_from_database()
 		to_chat(target, span_admin("You have been muted from [mute_flags_to_string(muted_flag)] by [admin] for '[reason]'"))
-	message_admins(span_admin("A mute for [ckey] has been added by [admin]. Type: [mute_flags_to_string(expected_flag)] | ID: [id]"))
+	message_admins(span_admin("A mute for [ckey] has been added by [admin]. Type: [mute_flags_to_string(muted_flag)] | ID: [inserted_id]"))
 	log_admin("mute-persistent: added - \[[ckey]\] - \[[muted_flag]\] | ID-\[[inserted_id]\]")
 
 	return get_mute_by_id(inserted_id, FALSE)
@@ -315,10 +342,10 @@
 	var/client/target = GLOB.directory[ckey]
 	if(target)
 		target.prefs.load_mutes_from_database()
-		to_chat(target, span_admin("One of your persistent mutes has been edited by [admin]. ID: [id]"))
+		to_chat(target, span_admin("One of your persistent mutes has been edited by [key_name(usr)]. ID: [id]"))
 
 	log_admin("mute-persistent: edited - \[[ckey]\] | ID-\[[id]\] | \[[existing.muted_flag]\] -> \[[new_flag]\] | \[[existing.reason]\] -> \[[new_reason]\]")
-	message_admins("A persistent mute for [ckey] has been edited by [admin]. ID: [id]")
+	message_admins("A persistent mute for [ckey] has been edited by [key_name_admin(usr)]. ID: [id]")
 	if(changing_flag)
 		message_admins("Type: [mute_flags_to_string(existing.muted_flag)] -> [mute_flags_to_string(new_flag)]")
 	if(changing_reason)
