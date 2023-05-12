@@ -1,6 +1,6 @@
 /**
  * ### Spider Ambush
- * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
+ * A subtype of the giant spider which is slower, stronger and able to sneak into its surroundings to pull pray aggressively.
  * This spider is only slightly slower than a human.
  */
 /mob/living/basic/giant_spider/ambush
