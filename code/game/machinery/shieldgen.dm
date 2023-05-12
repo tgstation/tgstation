@@ -878,9 +878,15 @@
 
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, I))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		panel_open = !(panel_open)
+		I.play_tool_sound(src, 50)
 		update_icon_state()
-		return
+		if(panel_open)
+			to_chat(user, span_notice("You open the maintenance hatch of [src]."))
+			return TRUE
+		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+		return TRUE
 
 //rather than automatically checking for connections its probably alot less expensive to just make the players manually multi tool sync each part
 	if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -949,9 +955,9 @@
 /obj/machinery/modular_shield/module/node
 
 	name = "Modular Shield Node"
-	desc = "A waist high mess of humming pipes and wires that extend the network"
+	desc = "A waist high mess of humming pipes and wires that extend the modular shield network"
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
-	icon_state = 'node_off_closed'
+	icon_state = "node_off_closed"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
