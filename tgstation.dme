@@ -1021,6 +1021,7 @@
 #include "code\datums\components\tattoo.dm"
 #include "code\datums\components\technointrovert.dm"
 #include "code\datums\components\technoshy.dm"
+#include "code\datums\components\temporary_body.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\tippable.dm"
