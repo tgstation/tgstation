@@ -104,7 +104,7 @@
 /obj/structure/spider/solid
 	name = "solid web"
 	icon = 'icons/effects/effects.dmi'
-	desc = "A solid thick wall of web, airtight enough to block air flow."
+	desc = "A solid wall of web, thick enough to block air flow."
 	icon_state = "solidweb"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
