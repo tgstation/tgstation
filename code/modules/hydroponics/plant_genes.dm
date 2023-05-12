@@ -354,7 +354,7 @@
 	trait_ids = GLOW_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The color of our bioluminescence.
-	var/glow_color = COLOR_BIOLUMINESCENCE_STANDART
+	var/glow_color = COLOR_BIOLUMINESCENCE_STANDARD
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/seed)
 	return 1.4 + seed.potency * rate
