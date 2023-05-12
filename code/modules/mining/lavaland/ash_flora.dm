@@ -135,7 +135,7 @@
 	base_icon_state = "fireblossom"
 	light_range = 2.1
 	light_power = 2.1
-	light_color = COLOR_BIOLUMIBESCENCE_YELLOW
+	light_color = COLOR_BIOLUMINESCENCE_YELLOW
 	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
 	harvested_desc = "A few fire blossom stems, missing their flowers."
