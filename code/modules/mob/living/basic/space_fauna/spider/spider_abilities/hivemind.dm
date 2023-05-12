@@ -81,9 +81,6 @@
 	desc = "Send a report to all living spiders."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "message"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS
 
 /**
  * Sends a message to all spiders from the target.
