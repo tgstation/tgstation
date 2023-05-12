@@ -127,8 +127,8 @@
  * ### Tangle Spider
  *
  * A subtype of the giant spider which specializes in support skills.
- * Nurses can place down webbing in a quarter of the time that other species can and can wrap other spiders' wounds, healing them.
- * Note that it cannot heal itself.
+ * Tangle spiders can place down webbing in a quarter of the time that other species plus has an expanded arsenal of traps and web structures to place to benefit the nest.
+ * Note that it can heal itself.
  */
 /mob/living/basic/giant_spider/tangle
 	name = "tangle spider"
