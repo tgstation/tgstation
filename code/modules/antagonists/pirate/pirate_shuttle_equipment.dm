@@ -6,7 +6,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = TRUE
-	/// Is the machine syphoning right now
+	/// Is the machine siphoning right now
 	var/active = FALSE
 	/// The amount of money stored in the machine
 	var/credits_stored = 0
