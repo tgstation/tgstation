@@ -4,11 +4,15 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/smartfridge.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
+	light_power = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	integrity_failure = 0.5
+	can_atmos_pass = ATMOS_PASS_NO
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
@@ -21,10 +25,16 @@
 	var/visible_contents = TRUE
 	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
 	var/has_emissive = TRUE
+	/// Whether the smartfridge is welded down to the floor disabling unwrenching
+	var/welded_down = FALSE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
 	create_reagents(100, NO_REACT)
+	air_update_turf(TRUE, TRUE)
+	register_context()
+	if(mapload && !istype(src, /obj/machinery/smartfridge/drying_rack))
+		welded_down = TRUE
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -34,6 +44,93 @@
 			for(var/i in 1 to amount)
 				load(new typekey(src))
 
+/obj/machinery/smartfridge/Move(atom/newloc, direct, glide_size_override, update_dir)
+	var/turf/old_loc = loc
+	. = ..()
+	move_update_air(old_loc)
+
+/obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
+	if(welded_down)
+		to_chat(user, span_warning("[src] is welded to the floor!"))
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/smartfridge/set_anchored(anchorvalue)
+	. = ..()
+	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
+		welded_down = FALSE
+	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, anchorvalue)
+
+/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/tool)
+	..()
+	if(istype(src, /obj/machinery/smartfridge/drying_rack))
+		return FALSE
+	if(welded_down)
+		if(!tool.tool_start_check(user, amount=1))
+			return TRUE
+		user.visible_message(
+			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("You start to cut [src] free from the floor..."),
+			span_hear("You hear welding."),
+		)
+		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+			return FALSE
+		welded_down = FALSE
+		to_chat(user, span_notice("You cut [src] free from the floor."))
+		return TRUE
+	if(!anchored)
+		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		return TRUE
+	if(!tool.tool_start_check(user, amount=1))
+		return TRUE
+	user.visible_message(
+		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("You start to weld [src] to the floor..."),
+		span_hear("You hear welding."),
+	)
+	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		balloon_alert(user, "cancelled!")
+		return FALSE
+	welded_down = TRUE
+	to_chat(user, span_notice("You weld [src] to the floor."))
+	return TRUE
+
+/obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(istype(src, /obj/machinery/smartfridge/drying_rack))
+		return FALSE
+	if(machine_stat & BROKEN)
+		if(!tool.tool_start_check(user, amount=0))
+			return FALSE
+		user.visible_message(
+			span_notice("[user] is repairing [src]."),
+			span_notice("You begin repairing [src]..."),
+			span_hear("You hear welding."),
+		)
+		if(tool.use_tool(src, user, delay=40, volume=50))
+			if(!(machine_stat & BROKEN))
+				return FALSE
+			balloon_alert(user, "repaired")
+			atom_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_icon()
+			return TRUE
+	else
+		balloon_alert(user, "no repair needed!")
+		return FALSE
+
+/obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/smartfridge/drying_rack))
+		if(welded_down)
+			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+		else if (!welded_down && anchored)
+			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+		if(machine_stat & BROKEN)
+			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
@@ -41,32 +138,66 @@
 
 /obj/machinery/smartfridge/examine(mob/user)
 	. = ..()
+
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
+	if(welded_down)
+		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+	else if(anchored)
+		. += span_info("It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.")
+	else
+		. += span_info("It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.")
+
+/obj/machinery/smartfridge/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & BROKEN)
+		set_light(0)
+		return
+	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
+
 /obj/machinery/smartfridge/update_icon_state()
-	if(machine_stat)
-		icon_state = "[initial(icon_state)]-off"
-		return ..()
-
-	if(!visible_contents)
-		icon_state = "[initial(icon_state)]"
-		return ..()
-
-	var/list/shown_contents = contents - component_parts
-	switch(shown_contents.len)
-		if(0)
-			icon_state = "[initial(icon_state)]"
-		if(1 to 25)
-			icon_state = "[initial(icon_state)]1"
-		if(26 to 75)
-			icon_state = "[initial(icon_state)]2"
-		if(76 to INFINITY)
-			icon_state = "[initial(icon_state)]3"
+	icon_state = "[initial(icon_state)]"
+	if(machine_stat & BROKEN)
+		icon_state += "-broken"
+	else if(!powered())
+		icon_state += "-off"
 	return ..()
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
+
+	var/list/shown_contents = contents - component_parts
+	if(visible_contents && shown_contents.len > 0)
+		var/contents_icon_state = "[initial(icon_state)]"
+		switch(base_build_path)
+			if(/obj/machinery/smartfridge/extract)
+				contents_icon_state += "-slime"
+			if(/obj/machinery/smartfridge/food)
+				contents_icon_state += "-food"
+			if(/obj/machinery/smartfridge/drinks)
+				contents_icon_state += "-drink"
+			if(/obj/machinery/smartfridge/organ)
+				contents_icon_state += "-organ"
+			if(/obj/machinery/smartfridge/petri)
+				contents_icon_state += "-petri"
+			if(/obj/machinery/smartfridge/chemistry)
+				contents_icon_state += "-chem"
+			if(/obj/machinery/smartfridge/chemistry/virology)
+				contents_icon_state += "-viro"
+			else
+				contents_icon_state += "-plant"
+		switch(shown_contents.len)
+			if(1 to 25)
+				contents_icon_state += "-1"
+			if(26 to 50)
+				contents_icon_state += "-2"
+			if(31 to INFINITY)
+				contents_icon_state += "-3"
+		. += mutable_appearance(icon, contents_icon_state)
+
+	. += mutable_appearance(icon, "[initial(icon_state)]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
+
 	if(!machine_stat && has_emissive)
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
@@ -76,22 +207,34 @@
 		power_change()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/machinery/smartfridge/atom_break(damage_flag)
+	playsound(src, SFX_SHATTER, 50, TRUE)
+	return ..()
+
 /*******************
 *   Item Adding
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
-		cut_overlays()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
+		else
+			cut_overlay("[initial(icon_state)]-panel")
 		SStgui.update_uis(src)
 		return
 
 	if(default_pry_open(O, close_after_pry = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(O))
+	if(!welded_down && default_deconstruction_crowbar(O))
 		SStgui.update_uis(src)
 		return
 
@@ -242,23 +385,6 @@
 
 	return FALSE
 
-/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(machine_stat & BROKEN)
-		if(!I.tool_start_check(user, amount=0))
-			return
-		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
-						"<span class='notice'>You begin repairing [src]...</span>", \
-						"<span class='hear'>You hear welding.</span>")
-		if(I.use_tool(src, user, 40, volume=50))
-			if(!(machine_stat & BROKEN))
-				return
-			to_chat(user, "<span class='notice'>You repair [src].</span>")
-			atom_integrity = max_integrity
-			set_machine_stat(machine_stat & ~BROKEN)
-			update_icon()
-	else
-		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------
@@ -273,6 +399,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	has_emissive = FALSE
+	can_atmos_pass = ATMOS_PASS_YES
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
@@ -544,7 +671,9 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
+	icon = 'icons/obj/vending.dmi'
 	pass_flags = PASSTABLE
+	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/disks
 

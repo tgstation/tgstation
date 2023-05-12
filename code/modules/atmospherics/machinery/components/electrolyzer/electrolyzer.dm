@@ -144,8 +144,8 @@
 	. = ..()
 	var/power = 0
 	var/cap = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power += servo.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
