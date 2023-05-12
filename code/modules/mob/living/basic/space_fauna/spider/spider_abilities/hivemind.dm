@@ -77,7 +77,7 @@
  */
 /datum/action/command_spiders/communication_spiders
 	name = "Communication"
-	desc = "Send a command to all living spiders."
+	desc = "Send a report to all living spiders."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "message"
 	background_icon_state = "bg_alien"
