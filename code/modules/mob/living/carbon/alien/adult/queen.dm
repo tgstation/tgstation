@@ -181,3 +181,15 @@
 	if(!silent)
 		to_chat(user, span_noticealien("You discard [src]."))
 	return ..()
+
+/mob/living/carbon/alien/adult/royal/queen/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/clothing/under/costume/maid) || istype(O, /obj/item/clothing/under/rank/civilian/janitor/maid))
+		if(do_after(user, 5 SECONDS, src))
+			maidify()
+
+/mob/living/carbon/alien/adult/royal/queen/proc/maidify()
+	name = "alien queen maid"
+	desc = "Lusty, Sexy"
+	icon_state = "alienqmaid"
+	caste = "qmaid"
+	update_icons()
