@@ -62,7 +62,8 @@
 
 /datum/component/slippery/InheritComponent(
 	datum/component/slippery/component,
-	i_am_original, knockdown,
+	i_am_original,
+	knockdown,
 	lube_flags = NONE,
 	datum/callback/on_slip_callback,
 	paralyze,
