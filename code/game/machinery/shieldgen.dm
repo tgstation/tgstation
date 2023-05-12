@@ -559,7 +559,7 @@
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
-	icon_state = "gen_recovering_closed" //temporary icon
+	icon_state = "gen_recovering_closed"
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_gen
@@ -828,7 +828,7 @@
 		recovering = TRUE
 		deactivate_shields()
 		stored_strength = 0
-		update_appearance()
+		update_icon_state()
 		return
 
 /obj/machinery/modular_shield_gen/process(seconds_per_tick)
@@ -837,7 +837,7 @@
 		if (recovering)
 			recovering = FALSE
 			calculate_regeneration()
-			update_appearance()
+			update_icon_state()
 		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
 		var/random_num = rand(1,deployed_shields.len)
@@ -878,7 +878,8 @@
 
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
+	if(default_deconstruction_screwdriver(user, I))
+		update_icon_state()
 		return
 
 //rather than automatically checking for connections its probably alot less expensive to just make the players manually multi tool sync each part
@@ -893,7 +894,7 @@
 			shield_generator.calculate_boost()
 			shield_generator = null
 			connected_node = null
-			update_appearance()
+			update_icon_state()
 		connected_turf = get_step(loc, dir)
 		return
 
@@ -917,7 +918,7 @@
 
 		shield_generator.connected_modules += (src)
 		balloon_alert(user, "connected directly to generator")
-		update_appearance()
+		update_icon_state()
 		if(istype(src, /obj/machinery/modular_shield/module/node))
 			var/obj/machinery/modular_shield/module/node/connected_node = src
 			connected_node.connect_connected_through_us()
@@ -933,7 +934,7 @@
 		if(shield_generator)
 			shield_generator.connected_modules += (src)
 			balloon_alert(user, "connected to generator through node")
-			update_appearance()
+			update_icon_state()
 			if(istype(src, /obj/machinery/modular_shield/module/node))
 				var/obj/machinery/modular_shield/module/node/connected_node = src
 				connected_node.connect_connected_through_us()
@@ -949,11 +950,19 @@
 
 	name = "Modular Shield Node"
 	desc = "A waist high mess of humming pipes and wires that extend the network"
-	color = "#d9ff00"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = 'node_off_closed'
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
 	var/list/connected_through_us
+
+/obj/machinery/modular_shield/module/node/update_icon_state()
+	. = ..()
+	if((!shield_generator) || (machine_stat & NOPOWER))
+		icon_state = "node_off_[panel_open ?"open":"closed"]"
+		return
+	icon_state = "node_on_[panel_open ?"open":"closed"]"
 
 /obj/machinery/modular_shield/module/node/Initialize(mapload)
 	. = ..()
@@ -980,7 +989,7 @@
 			if(istype(connected, /obj/machinery/modular_shield/module/node))
 				var/obj/machinery/modular_shield/module/node/connected_node = connected
 				connected_node.connect_connected_through_us()
-			connected.update_appearance()
+			connected.update_icon_state()
 
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
@@ -990,7 +999,7 @@
 			var/obj/machinery/modular_shield/module/node/connected_node = connected
 			connected_node.disconnect_connected_through_us()
 		connected.shield_generator = null
-		connected.update_appearance()
+		connected.update_icon_state()
 
 /obj/machinery/modular_shield/module/charger
 
