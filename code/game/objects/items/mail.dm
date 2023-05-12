@@ -134,7 +134,7 @@
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
 			return FALSE
 
-	balloon_alert(user, "You start to unwrap the package...")
+	balloon_alert(user, "unwrapping...")
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return FALSE
 	return TRUE
