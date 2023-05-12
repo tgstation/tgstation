@@ -10,6 +10,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	icon_dead = "spiderling_dead"
+	density = FALSE
 	faction = list(FACTION_SPIDER)
 	speed = 1
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
