@@ -15,7 +15,7 @@
 	end_sound = 'sound/ambience/music/local_forecast/local_forecast8.ogg'
 
 	volume = 20
-	falloff_exponent = 10
+	falloff_exponent = 5
 	falloff_distance = 3
 	vary = FALSE
 	ignore_walls = FALSE
