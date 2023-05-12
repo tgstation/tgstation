@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	worn_icon_state = "pinpointer_black"
 
 /obj/item/pinpointer/material_sniffer/scan_for_target()
-	if(target)
+	if(target || !GLOB.sniffable_sheets.len)
 		return
 	var/obj/item/stack/sheet/new_sheet_target
 	var/closest_distance = INFINITY

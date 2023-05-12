@@ -1,0 +1,4 @@
+author: "Vallat"
+delete-after: True
+changes:
+  - bugfix: "fixed griddle code so that the smoke over the grilling items appears only when the griddle is on"
