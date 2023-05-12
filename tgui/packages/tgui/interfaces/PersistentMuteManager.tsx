@@ -159,7 +159,6 @@ export const PersistentMuteManager = (_: any, context: any) => {
         {active_view === ActiveView.overview && (
           <Overview
             ckey_cache={ckey_cache}
-            mutes={mutes}
             target_ckey={target_ckey}
             set_target_ckey={set_target_ckey}
             set_active_view={set_active_view}
@@ -194,7 +193,6 @@ export const PersistentMuteManager = (_: any, context: any) => {
 
 type OverviewProps = {
   ckey_cache: string[];
-  mutes: Record<string, MuteData[]>;
   target_ckey: string;
   set_target_ckey: (ckey: string) => void;
   set_active_view: (view: ActiveView) => void;
@@ -440,19 +438,23 @@ const ViewMuteMenu = (props: ViewMuteProps, context: any) => {
         />
       }>
       <Stack vertical>
-        {mutes?.map((mute) => {
-          if (active_only && mute.deleted) {
-            return null;
-          }
-          return (
-            <>
-              <Stack.Item key={mute.id}>
-                <MuteDisplay mute={mute} edit_mute={props.edit_mute} />
-              </Stack.Item>
-              <Stack.Divider />
-            </>
-          );
-        })}
+        {mutes
+          ?.sort((a, b) => {
+            return a.id - b.id;
+          })
+          .map((mute) => {
+            if (active_only && mute.deleted) {
+              return null;
+            }
+            return (
+              <>
+                <Stack.Item key={mute.id}>
+                  <MuteDisplay mute={mute} edit_mute={props.edit_mute} />
+                </Stack.Item>
+                <Stack.Divider />
+              </>
+            );
+          })}
       </Stack>
     </Section>
   );
@@ -467,7 +469,10 @@ const MuteDisplay = (props: MuteDisplayProps, context: any) => {
   const mute = props.mute;
   const { act } = useBackend(context);
   return (
-    <Collapsible title={`${muteFlagToString(mute.muted_flag)} - ${mute.admin}`}>
+    <Collapsible
+      title={`${mute.id} - ${muteFlagToString(mute.muted_flag)} - ${
+        mute.admin
+      }`}>
       <Stack vertical>
         <Stack.Item>Reason: {mute.reason}</Stack.Item>
         <Stack.Item>Time: {mute.datetime}</Stack.Item>
