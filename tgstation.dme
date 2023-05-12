@@ -1308,6 +1308,7 @@
 #include "code\datums\looping_sounds\cyborg.dm"
 #include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\looping_sounds\machinery_sounds.dm"
+#include "code\datums\looping_sounds\music.dm"
 #include "code\datums\looping_sounds\weather.dm"
 #include "code\datums\mapgen\_MapGenerator.dm"
 #include "code\datums\mapgen\CaveGenerator.dm"

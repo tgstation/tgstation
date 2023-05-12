@@ -51,6 +51,9 @@
 	light_color = LIGHT_COLOR_DARK_BLUE
 	var/light_mask = "elev-light-mask"
 
+	/// The soundloop of elevator music
+	var/datum/looping_sound/local_forecast/elevator_music
+
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
 
@@ -63,6 +66,8 @@
 	// Machinery returns lateload by default via parent,
 	// this is just here for redundancy's sake.
 	. = INITIALIZE_HINT_LATELOAD
+
+	elevator_music = new(src, TRUE)
 
 	maploaded = mapload
 	// Maploaded panels link in LateInitialize...
@@ -112,7 +117,7 @@
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
-			continue			
+			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
