@@ -71,7 +71,7 @@
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "viper_spiderling"
 	icon_dead = "viper_spiderling_dead"
-	menu_description = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
+	menu_description = "Extremly Fast spider variant specializing in catching running prey and lethal toxin injection, but has less health and damage."
 
 /// Will differentiate into the "tarantula" giant spider.
 /mob/living/basic/spiderling/tarantula
