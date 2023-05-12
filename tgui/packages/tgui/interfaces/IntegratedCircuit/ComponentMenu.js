@@ -138,10 +138,6 @@ export class ComponentMenu extends Component {
                     You can hit this integrated circuit onto a component printer
                     to link it so that you&apos;re able to remotely create and
                     add components to this circuit.
-                    <br />
-                    <br />
-                    Close and re-open the integrated circuit interface once
-                    linked to fully complete the linking.
                   </NoticeBox>
                 </Stack.Item>
               )}
