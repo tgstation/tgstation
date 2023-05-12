@@ -77,11 +77,6 @@ export const PersistentMuteManager = (_: any, context: any) => {
     'active_view',
     ActiveView.overview
   );
-  const [sort_type, set_sort_type] = useLocalState<SortType>(
-    context,
-    'sort_type',
-    SortType.ckey
-  );
 
   if (target_ckey && data.polling_ckeys.includes(target_ckey)) {
     return (
@@ -159,21 +154,6 @@ export const PersistentMuteManager = (_: any, context: any) => {
                 target_ckey
               )}
             </Stack.Item>
-            <Stack.Item>
-              Sorting:&nbsp;
-              <Button
-                icon="sort-alpha-asc"
-                content="Ckey"
-                selected={sort_type === SortType.ckey}
-                onClick={() => set_sort_type(SortType.ckey)}
-              />
-              <Button
-                icon="sort-numeric-desc"
-                content="Amount"
-                selected={sort_type === SortType.amount}
-                onClick={() => set_sort_type(SortType.amount)}
-              />
-            </Stack.Item>
           </Stack>
         </Section>
         {active_view === ActiveView.overview && (
@@ -183,7 +163,6 @@ export const PersistentMuteManager = (_: any, context: any) => {
             target_ckey={target_ckey}
             set_target_ckey={set_target_ckey}
             set_active_view={set_active_view}
-            sort_type={sort_type}
           />
         )}
         {active_view === ActiveView.add_mute && (
@@ -219,7 +198,6 @@ type OverviewProps = {
   target_ckey: string;
   set_target_ckey: (ckey: string) => void;
   set_active_view: (view: ActiveView) => void;
-  sort_type: SortType;
 };
 
 const Overview = (props: OverviewProps, context: any) => {
@@ -251,23 +229,14 @@ const Overview = (props: OverviewProps, context: any) => {
       <Stack vertical>
         {props.ckey_cache
           .sort((a, b) => {
-            if (props.sort_type === SortType.ckey) {
-              return a.localeCompare(b);
-            }
-            const totalMutesA =
-              props.mutes[a]?.filter((mute) => !mute.deleted).length ?? 0;
-            const totalMutesB =
-              props.mutes[b]?.filter((mute) => !mute.deleted).length ?? 0;
-            return totalMutesB - totalMutesA;
+            return a.localeCompare(b);
           })
           .map((ckey) => {
-            const totalMutes =
-              props.mutes[ckey]?.filter((mute) => !mute.deleted).length ?? 0;
             return (
               <Stack.Item key={ckey}>
                 <Button
                   fluid
-                  content={`${ckey} - (${totalMutes})`}
+                  content={`${ckey}`}
                   onClick={() => {
                     props.set_target_ckey(ckey);
                     act('poll-ckey', { ckey: ckey });

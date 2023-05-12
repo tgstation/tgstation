@@ -88,6 +88,8 @@
 	qdel(mute_flags_query)
 
 	ckey_cache = ckeys
+	for(var/ckey in GLOB.directory)
+		ckey_cache |= ckey
 	return TRUE
 
 /datum/persistent_mute_manager/proc/poll_ckey_mutes(ckey)
