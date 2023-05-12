@@ -377,7 +377,7 @@
 	qdel(src)
 
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
-	if(armed == FALSE || user.get_inactive_held_item() == src)
+	if(armed == FALSE || user.get_inactive_held_item() != src)
 		. = ..()
 	else
 		if(user.mind == made_by)
