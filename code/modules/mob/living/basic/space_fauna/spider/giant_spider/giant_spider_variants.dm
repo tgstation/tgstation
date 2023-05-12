@@ -79,7 +79,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/communication_spiders/spiders_communication = new(src)
+	var/datum/action/command_spiders/communication_spiders/spiders_communication = new(src)
 	spiders_communication.Grant(src)
 
 /**
