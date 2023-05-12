@@ -1072,7 +1072,7 @@
 	if(shield_generator)
 		shield_generator.calculate_boost()
 
-/obj/machinery/modular_shield/module/node/update_icon_state()
+/obj/machinery/modular_shield/module/well/update_icon_state()
 	. = ..()
 	if((!shield_generator) || (machine_stat & NOPOWER))
 		icon_state = "well_off_[panel_open ?"open":"closed"]"
