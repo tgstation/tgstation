@@ -7,9 +7,9 @@
  */
 /datum/component/temporary_body
 	///The old mind we will be put back into when parent is being deleted.
-	var/datum/mind/old_mind
+	var/datum/weakref/old_mind_ref
 	///The old body we will be put back into when parent is being deleted.
-	var/mob/living/old_body
+	var/datum/weakref/old_body_ref
 
 	///A callback sent once parent's mind is returned to their old body.
 	var/datum/callback/body_return_callback
@@ -17,8 +17,8 @@
 /datum/component/temporary_body/Initialize(old_mind, old_body, body_return_callback)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.old_mind = old_mind
-	src.old_body = old_body
+	src.old_mind_ref = WEAKREF(old_mind)
+	src.old_body_ref = WEAKREF(old_body)
 	src.body_return_callback = body_return_callback
 
 /datum/component/temporary_body/RegisterWithParent()
@@ -34,7 +34,10 @@
  */
 /datum/component/temporary_body/proc/on_parent_destroy()
 	SIGNAL_HANDLER
-	if(QDELETED(old_mind) || QDELETED(old_body))
+	var/datum/mind/old_mind = old_mind_ref?.resolve()
+	var/mob/living/old_body = old_body_ref?.resolve()
+
+	if(!old_mind || !old_body)
 		return
 
 	var/mob/living/living_parent = parent
