@@ -99,7 +99,7 @@ export const PersistentMuteManager = (_: any, context: any) => {
   };
 
   return (
-    <Window title="Persistent Mute Manager" width={600}>
+    <Window title="Persistent Mute Manager" width={700} height={500}>
       <Window.Content>
         <Section
           title="Management"
