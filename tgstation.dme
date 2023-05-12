@@ -1914,7 +1914,6 @@
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\multitool.dm"
-#include "code\game\objects\items\devices\ocd.dm"
 #include "code\game\objects\items\devices\pipe_painter.dm"
 #include "code\game\objects\items\devices\polycircuit.dm"
 #include "code\game\objects\items\devices\portable_chem_mixer.dm"

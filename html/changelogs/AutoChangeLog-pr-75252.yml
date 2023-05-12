@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Drones can now access computers and air alarms by default, and the CE has the option to turn it off through the BotKeeper app (it used to be backwards)."
