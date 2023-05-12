@@ -8,9 +8,11 @@ export const handleComponentMount = function (this: Modal) {
     this.fields.maxLength = data.maxLength;
     this.fields.lightMode = !!data.lightMode;
   });
+
   Byond.subscribeTo('force', () => {
     this.events.onForce();
   });
+
   Byond.subscribeTo('open', (data) => {
     const channel = CHANNELS.indexOf(data.channel) || 0;
     this.setState({ buttonContent: CHANNELS[channel], channel });
@@ -19,5 +21,6 @@ export const handleComponentMount = function (this: Modal) {
     }, 1);
     windowOpen(CHANNELS[channel]);
   });
+
   windowLoad();
 };

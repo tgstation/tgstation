@@ -1,6 +1,8 @@
 import { RADIO_PREFIXES } from '../constants';
 import { Modal } from '../types';
 
+const channelRegex = /^:\w\s/;
+
 /**
  * Gets any channel prefixes from the chat bar
  * and changes to the corresponding radio subchannel.
@@ -10,24 +12,24 @@ import { Modal } from '../types';
  */
 export const handleRadioPrefix = function (this: Modal) {
   const { channel } = this.state;
-  const { radioPrefix, value } = this.fields;
-  if (channel > 1 || !value || value.length < 3) {
+  const { currentPrefix, currentValue: value } = this.fields;
+  if (channel > 1 || !value || value.length < 3 || !channelRegex.test(value)) {
     return;
   }
-  const nextPrefix = value?.slice(0, 3)?.toLowerCase();
-  if (!RADIO_PREFIXES[nextPrefix] || radioPrefix === nextPrefix) {
+
+  const prefix = value.slice(0, 3) as keyof typeof RADIO_PREFIXES;
+  if (!RADIO_PREFIXES[prefix] || prefix === currentPrefix) {
     return;
   }
-  this.fields.value = value?.slice(3);
-  // Binary is a "secret" channel
-  if (nextPrefix === ':b ') {
-    Byond.sendMessage('thinking', { mode: false });
-  } else if (radioPrefix === ':b ' && nextPrefix !== ':b ') {
-    Byond.sendMessage('thinking', { mode: true });
-  }
-  this.fields.radioPrefix = nextPrefix;
+
+  // Remove the prefix from the value
+  this.fields.currentValue = value.slice(3);
+  // We're thinking, but binary is a "secret" channel
+  Byond.sendMessage('thinking', { mode: prefix !== ':b ' });
+
+  this.fields.currentPrefix = prefix;
   this.setState({
-    buttonContent: RADIO_PREFIXES[nextPrefix]?.label,
+    buttonContent: RADIO_PREFIXES[prefix].label,
     channel: 0,
     edited: true,
   });

@@ -4,19 +4,18 @@ import { Modal } from '../types';
 
 /**  Adjusts window sized based on event.target.value */
 export const handleSetSize = function (this: Modal, value: number) {
-  const { size } = this.state;
-  if (value > LINE_LENGTHS.medium && size !== WINDOW_SIZES.large) {
-    this.setState({ size: WINDOW_SIZES.large });
-    windowSet(WINDOW_SIZES.large);
-  } else if (
-    value <= LINE_LENGTHS.medium &&
-    value > LINE_LENGTHS.small &&
-    size !== WINDOW_SIZES.medium
-  ) {
-    this.setState({ size: WINDOW_SIZES.medium });
-    windowSet(WINDOW_SIZES.medium);
-  } else if (value <= LINE_LENGTHS.small && size !== WINDOW_SIZES.small) {
-    this.setState({ size: WINDOW_SIZES.small });
-    windowSet(WINDOW_SIZES.small);
+  let newSize: WINDOW_SIZES;
+
+  if (value > LINE_LENGTHS.medium) {
+    newSize = WINDOW_SIZES.large;
+  } else if (value <= LINE_LENGTHS.medium && value > LINE_LENGTHS.small) {
+    newSize = WINDOW_SIZES.medium;
+  } else {
+    newSize = WINDOW_SIZES.small;
+  }
+
+  if (this.state.size !== newSize) {
+    this.setState({ size: newSize });
+    windowSet(newSize);
   }
 };

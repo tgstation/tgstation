@@ -13,14 +13,14 @@ import { handleRadioPrefix } from './radioPrefix';
 import { handleReset } from './reset';
 import { handleSetSize } from './setSize';
 import { handleViewHistory } from './viewHistory';
-import { Modal } from '../types';
+import { type Modal } from '../types';
 
 /**
  * Maps all TGUI say events with their associated handlers.
  *
  * return -- object: events
  */
-export const eventHandlerMap = (parent: Modal): Modal['events'] => {
+export const eventHandlerMap = (parent: Modal): Modal["events"] => {
   return {
     onArrowKeys: handleArrowKeys.bind(parent),
     onBackspaceDelete: handleBackspaceDelete.bind(parent),

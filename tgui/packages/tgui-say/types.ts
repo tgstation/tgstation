@@ -1,21 +1,22 @@
 import { RefObject } from 'inferno';
+import { RADIO_PREFIXES } from './constants';
 
 export type Modal = {
-  events: Events;
+  events: ModalEvents;
   fields: Fields;
   setState: (state: {}) => void;
   state: State;
   timers: Timers;
 };
 
-type Events = {
-  onArrowKeys: (direction: number, value: string) => void;
+type ModalEvents = {
+  onArrowKeys: (direction: number) => void;
   onBackspaceDelete: () => void;
   onClick: () => void;
   onEscape: () => void;
   onEnter: (event: KeyboardEvent, value: string) => void;
   onForce: () => void;
-  onKeyDown: (event: KeyboardEvent) => void;
+  onKeyDown: (event: KeyboardEvent, value: string) => void;
   onIncrementChannel: () => void;
   onInput: (event: InputEvent, value: string) => void;
   onComponentMount: () => void;
@@ -31,9 +32,9 @@ type Fields = {
   innerRef: RefObject<HTMLInputElement>;
   lightMode: boolean;
   maxLength: number;
-  radioPrefix: string;
+  currentPrefix: keyof typeof RADIO_PREFIXES | null;
   tempHistory: string;
-  value: string;
+  currentValue: string;
 };
 
 export type State = {
@@ -44,8 +45,8 @@ export type State = {
 };
 
 type Timers = {
-  channelDebounce: (ModeDebounce) => void;
-  forceDebounce: (ForceDebounce) => void;
+  channelDebounce: (cb: ModeDebounce) => void;
+  forceDebounce: (cb: ForceDebounce) => void;
   typingThrottle: () => void;
 };
 
@@ -54,7 +55,7 @@ type ModeDebounce = {
 };
 
 type ForceDebounce = {
-  channel: number;
+  channel: string;
   entry: string;
 };
 

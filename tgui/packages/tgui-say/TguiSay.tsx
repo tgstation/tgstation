@@ -1,10 +1,17 @@
 import { TextArea } from 'tgui/components';
-import { WINDOW_SIZES } from '../constants';
-import { Dragzone } from '../components/dragzone';
-import { eventHandlerMap } from '../handlers';
-import { getCss, getTheme, timers } from '../helpers';
+import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
+import { Dragzone } from './dragzone';
+import { eventHandlerMap } from './handlers';
+import { getCss, timers } from './helpers';
 import { Component, createRef } from 'inferno';
-import { Modal, State } from '../types';
+import { Modal } from './types';
+
+type State = {
+  buttonContent: string | number;
+  channel: number;
+  edited: boolean;
+  size: number;
+};
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, State> {
@@ -14,9 +21,9 @@ export class TguiSay extends Component<{}, State> {
     innerRef: createRef(),
     lightMode: false,
     maxLength: 1024,
-    radioPrefix: '',
+    currentPrefix: null,
     tempHistory: '',
-    value: '',
+    currentValue: '',
   };
   state: Modal['state'] = {
     buttonContent: '',
@@ -38,9 +45,18 @@ export class TguiSay extends Component<{}, State> {
 
   render() {
     const { onClick, onEnter, onEscape, onKeyDown, onInput } = this.events;
-    const { innerRef, lightMode, maxLength, radioPrefix, value } = this.fields;
+    const {
+      innerRef,
+      lightMode,
+      maxLength,
+      currentPrefix,
+      currentValue: value,
+    } = this.fields;
     const { buttonContent, channel, edited, size } = this.state;
-    const theme = getTheme(lightMode, radioPrefix, channel);
+    const theme =
+      (lightMode && 'lightMode') ||
+      (currentPrefix && RADIO_PREFIXES[currentPrefix]?.id) ||
+      CHANNELS[channel]?.toLowerCase();
 
     return (
       <div className={getCss('modal', theme, size)} $HasKeyedChildren>

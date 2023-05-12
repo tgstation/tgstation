@@ -1,4 +1,4 @@
-import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
+import { WINDOW_SIZES } from './constants';
 import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
 import { debounce, throttle } from 'common/timer';
@@ -74,20 +74,20 @@ const setClosed = () => {
 let savedMessages: string[] = [];
 
 /** Returns the chat history at specified index */
-export const getHistoryAt = (index: number): string =>
+export const getHistoryAt = (index: number) =>
   savedMessages[savedMessages.length - index];
 
 /**
  * The length of chat history.
  * I am absolutely being excessive, but whatever
  */
-export const getHistoryLength = (): number => savedMessages.length;
+export const getHistoryLength = () => savedMessages.length;
 
 /**
  * Stores entries in the chat history.
  * Deletes old entries if the list is too long.
  */
-export const storeChat = (message: string): void => {
+export const storeChat = (message: string) => {
   if (savedMessages.length === 5) {
     savedMessages.shift();
   }
@@ -108,44 +108,25 @@ export const getCss = (
   element: string,
   theme?: string,
   options?: string | number
-): string =>
+) =>
   classes([
     element,
     valueExists(theme) && `${element}-${theme}`,
     valueExists(options) && `${element}-${options}`,
   ]);
 
-/**
- * Returns a string that represents the css selector to use.
- * Light mode takes precedence over radioPrefixes,
- * radioPrefixes takes precedence over channel.
- *
- * Parameters:
- * lightMode - boolean. If true, returns the light mode selector.
- * radioPrefix - string. If not empty, returns the radio prefix selector.
- * channel - number. The channel to use.
- */
-export const getTheme = (
-  lightMode: boolean,
-  radioPrefix: string,
-  channel: number
-): string => {
-  return (
-    (lightMode && 'lightMode') ||
-    RADIO_PREFIXES[radioPrefix]?.id ||
-    CHANNELS[channel]?.toLowerCase()
-  );
-};
-
 /** Checks keycodes for alpha/numeric characters */
-export const isAlphanumeric = (keyCode: number): boolean =>
+export const isAlphanumeric = (keyCode: number) =>
   keyCode >= KEY_0 && keyCode <= KEY_Z;
 
 /** Timers: Prevents overloading the server, throttles messages */
 export const timers = {
-  channelDebounce: debounce((mode) => Byond.sendMessage('thinking', mode), 400),
+  channelDebounce: debounce(
+    (mode: string) => Byond.sendMessage('thinking', mode),
+    400
+  ),
   forceDebounce: debounce(
-    (entry) => Byond.sendMessage('force', entry),
+    (entry: string) => Byond.sendMessage('force', entry),
     1000,
     true
   ),
@@ -153,5 +134,5 @@ export const timers = {
 };
 
 /** Checks if a parameter is null or undefined. Returns bool */
-export const valueExists = (param: any): boolean =>
+export const valueExists = (param: any) =>
   param !== null && param !== undefined;

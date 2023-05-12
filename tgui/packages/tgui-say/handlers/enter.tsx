@@ -9,15 +9,18 @@ export const handleEnter = function (
   value: string
 ) {
   const { channel } = this.state;
-  const { maxLength, radioPrefix } = this.fields;
+  const { maxLength, currentPrefix } = this.fields;
+
   event.preventDefault();
-  if (value && value.length < maxLength) {
+
+  if (value?.length < maxLength) {
     storeChat(value);
     Byond.sendMessage('entry', {
       channel: CHANNELS[channel],
-      entry: channel === 0 ? radioPrefix + value : value,
+      entry: channel === 0 ? currentPrefix + value : value,
     });
   }
+
   this.events.onReset();
   windowClose();
 };
