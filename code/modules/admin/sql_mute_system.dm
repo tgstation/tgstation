@@ -269,8 +269,7 @@
 
 	var/datum/db_query/mute_flags_query = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("muted")]
-		SET deleted = 1
-		SET deleted_datetime = NOW()
+		SET deleted = 1, deleted_datetime = NOW()
 		WHERE id = :id
 	"}, list("id" = id))
 	mute_flags_query.Execute()
