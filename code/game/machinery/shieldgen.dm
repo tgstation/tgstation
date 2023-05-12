@@ -978,6 +978,9 @@
 	. = ..()
 
 	disconnect_connected_through_us()
+	if(shield_generator)
+		shield_generator.calculate_boost()
+		shield_generator = null
 
 /obj/machinery/modular_shield/module/node/Destroy()
 	. = ..()
