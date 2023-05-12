@@ -133,7 +133,7 @@
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
 			return FALSE
 
-	balloon_alert(user, "You start to unwrap the package...")
+	balloon_alert(user, "unwrapping...")
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return FALSE
 	return TRUE
@@ -381,22 +381,21 @@
 		. = ..()
 	else
 		if(user.mind == made_by)
-			balloon_alert(user, "You easily start to disable armed [src]...")
-			
+			balloon_alert(user, "disarming trap...")
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
-			balloon_alert(user, "You have disarmed the [src].")
+			balloon_alert(user, "disarmed")
 			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 			armed = FALSE
 			return TRUE
 		else
-			balloon_alert(user, "You start to disable something...")
+			balloon_alert(user, "tinkering with something...")
 			
 			if(!do_after(user, 2 SECONDS, target = src))
 				after_unwrap(user)
 				return FALSE
 			if(prob(50))
-				balloon_alert(user, "You have disarmed some kind of device...")
+				balloon_alert(user, "disarmed something...?")
 				playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 				armed = FALSE
 				return TRUE
@@ -421,14 +420,14 @@
 	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
-	if(!(src in user.contents))
+	if(loc != user)
 		return FALSE
 	mail_type = lowertext(mail_type)
 
 	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Mail Counterfeiting", list("Yes", "No"))
 	if(isnull(mail_armed))
 		return FALSE
-	if(!(src in user.contents))
+	if(loc != user)
 		return FALSE
 
 	if(mail_armed == "Yes")
