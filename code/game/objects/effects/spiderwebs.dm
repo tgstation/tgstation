@@ -164,7 +164,7 @@
 /obj/structure/spider/sticky
 	name = "sticky web"
 	icon = 'icons/effects/effects.dmi'
-	desc = "extremly sticky soft silk ."
+	desc = "Extremely soft and sticky silk."
 	icon_state = "verystickyweb"
 	max_integrity = 20
 	melee_cooldown_time = 0
