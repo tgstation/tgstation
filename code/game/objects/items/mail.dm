@@ -398,7 +398,7 @@
 				after_unwrap(user)
 				return FALSE
 			if(prob(50))
-				balloon_alert(user, "You have disarmed some kind of device...")
+				balloon_alert(user, "disarmed something...?")
 				playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 				armed = FALSE
 				return TRUE
