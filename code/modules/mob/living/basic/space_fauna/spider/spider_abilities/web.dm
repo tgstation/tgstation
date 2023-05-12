@@ -10,6 +10,7 @@
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
+	melee_cooldown_time = 0
 
 /datum/action/cooldown/lay_web/Grant(mob/grant_to)
 	. = ..()
