@@ -1046,7 +1046,7 @@
 	if(iscarbon(user))
 		add_fingerprint(user)
 	locked = !locked
-	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
 				span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 	update_appearance()
 
