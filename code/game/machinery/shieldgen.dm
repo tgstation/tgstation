@@ -1055,7 +1055,8 @@
 
 	name = "Modular Shield Well"
 	desc = "A device used to hold more energy for the modular shield generator"
-	color = "#0400ff"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "well_off_closed"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
@@ -1070,6 +1071,13 @@
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
+
+/obj/machinery/modular_shield/module/node/update_icon_state()
+	. = ..()
+	if((!shield_generator) || (machine_stat & NOPOWER))
+		icon_state = "well_off_[panel_open ?"open":"closed"]"
+		return
+	icon_state = "well_on_[panel_open ?"open":"closed"]"
 
 
 //The shield itself
