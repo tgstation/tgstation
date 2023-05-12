@@ -392,7 +392,7 @@
 			armed = FALSE
 			return TRUE
 		else
-			balloon_alert(user, "You start to disable something...")
+			balloon_alert(user, "tinkering with something...")
 			
 			if(!do_after(user, 2 SECONDS, target = src))
 				after_unwrap(user)
