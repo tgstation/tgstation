@@ -213,13 +213,13 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/carbon_parent = parent
 	if(spell.invocation_type == INVOCATION_EMOTE) // Mime spells are not cast with signs
-		return
+		return NONE // Run normal checks
 	else if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
 		if(feedback)
 			to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
 		return SPELL_INVOCATION_FAIL
 
-	return SPELL_INVOCATION_SUCCESS
+	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
