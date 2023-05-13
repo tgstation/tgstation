@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Headphones now properly update to display musical notes when a song starts & stops playing while worn!"

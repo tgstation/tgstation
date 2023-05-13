@@ -471,3 +471,46 @@
   oranges:
   - balance: increased laser damage, decreased energy cost and increased wound chance
   - balance: MECH RCD is no longer magic
+2023-05-13:
+  '@Xander3359 Sprites: Nebby#1467':
+  - image: Replaces the old patches with some new sprites
+  BlueMemesauce:
+  - bugfix: fixed exploration drones discarding loot when there was 1 space left
+  HWSensum:
+  - qol: Players now are able to use other languages for announcements via requests
+      console.
+  Jacquerel:
+  - bugfix: Free golem shells printed from the free golem ruin are no longer enslaved
+      to whoever finished constructing them.
+  JohnFulpWillard:
+  - bugfix: Psychologists have Morgue access on lowpop, on top of their existing Coroner
+      office access.
+  - balance: Drones can now access computers and air alarms by default, and the CE
+      has the option to turn it off through the BotKeeper app (it used to be backwards).
+  JupiterJaeden:
+  - bugfix: Setting arrest status with the records console now immediately updates
+      sechud visuals.
+  - bugfix: Ninja security record hacks now immediately update sechud visuals.
+  Melbert:
+  - bugfix: Applying fines via sechud apply correctly
+  - bugfix: Runtimes when deleting humans relating to gravity
+  - bugfix: Runtime from neutralizing "hollow" anomalies
+  ShizCalev:
+  - bugfix: Headphones now properly update to display musical notes when a song starts
+      & stops playing while worn!
+  - bugfix: Ghosts & camera mobs (ie blobs & AI's) will no longer set off landmines.
+  - bugfix: Jaunting mobs will now only set off landmines if they stepped on them
+      BEFORE jaunting.
+  - bugfix: Flying mobs will no longer detonate landmines that were not first stepped
+      on.
+  - bugfix: Armed cleanbots no longer break when they encounter a mindless human.
+  - bugfix: The materials sniffer now actually works!
+  SyncIt21:
+  - bugfix: runtime with smart fridge tooltip
+  Treachce:
+  - spellcheck: fixed grammar and a typo when deconstructing reinforced plating
+  Vallat:
+  - bugfix: fixed griddle code so that the smoke over the grilling items appears only
+      when the griddle is on
+  orthography:
+  - bugfix: replaces empty oxygen tanks in icebox chapel.
