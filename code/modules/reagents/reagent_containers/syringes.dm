@@ -145,6 +145,10 @@
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
+	. += update_reagent_overlay()
+
+/// Returns a list of overlays to add that relate to the reagents inside the syringe
+/obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
 		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
@@ -244,6 +248,9 @@
 	base_icon_state = "crude"
 	possible_transfer_amounts = list(1,5)
 	volume = 5
+
+/obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
+	return
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"
