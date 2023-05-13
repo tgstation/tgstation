@@ -17,7 +17,7 @@
 	surplus = 5
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
-	name = "Mail Counterfeit Kit"
+	name = "GLA Brand Mail Counterfeit Kit"
 	desc = "A box full of mail counterfeit devices. Devices that actually able to counterfeit NT's mail. Those devices also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also counterfieted mail might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs. \nNothing stops the mail."
 	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2

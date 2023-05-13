@@ -93,7 +93,7 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/stealthy_tools/mail_counterfeit
-	name = "Mail Counterfeit Device"
+	name = "GLA Brand Mail Counterfeit Device"
 	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
 	item = /obj/item/storage/mail_counterfeit_device
 	cost = 1

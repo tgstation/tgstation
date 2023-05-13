@@ -404,7 +404,7 @@
 				return TRUE
 
 /obj/item/storage/mail_counterfeit_device
-	name = "mail counterfeit device"
+	name = "GLA-2 mail counterfeit device"
 	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/device_syndie.dmi'
@@ -415,6 +415,14 @@
 	atom_storage.max_slots = 1
 	atom_storage.allow_big_nesting = TRUE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
+	. = ..()
+	var/list/msg = list()
+	msg += "[span_notice("<i>You notice the manufacture marking on the side of the device...</i>")]"
+	msg += "\t[span_info("Guerilla Letter Assembler")]"
+	msg += "\t[span_info("GLA Postal Service, right on schedule.")]"
+	return msg
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
 	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
@@ -496,7 +504,7 @@
 
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/advanced
-	name = "advanced mail counterfeit device"
+	name = "GLA-MACRO mail counterfeit device"
 
 /obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
 	. = ..()
@@ -506,7 +514,7 @@
 
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/bluespace
-	name = "bluespace mail counterfeit device"
+	name = "GLA-ULTRA mail counterfeit device"
 
 /obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
 	. = ..()
