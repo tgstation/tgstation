@@ -484,7 +484,7 @@
 	shady_mail.made_by_cached_name = user.mind.name
 
 	if(index == 1)
-		var/mail_name = tgui_input_text(user, "Enter mail title or leave it blank or close the window to get a default one.", "Mail Counterfeiting")
+		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting")
 		if(!(src in user.contents))
 			return FALSE
 		if(reject_bad_text(mail_name, ascii_only = FALSE))
