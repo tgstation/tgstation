@@ -111,7 +111,7 @@
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
-		balloon_alert(user, "Nothing to disable!")
+		balloon_alert(user, "nothing to disable!")
 		return TRUE
 	balloon_alert(user, "hold it!")
 	return FALSE
