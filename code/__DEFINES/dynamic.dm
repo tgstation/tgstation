@@ -28,6 +28,7 @@
 /// Max number of teams we can have for the abductor ruleset
 #define ABDUCTOR_MAX_TEAMS 4
 
+// Ruletype defines
 #define ROUNDSTART_RULESET "Roundstart"
 #define LATEJOIN_RULESET "Latejoin"
 #define MIDROUND_RULESET "Midround"
