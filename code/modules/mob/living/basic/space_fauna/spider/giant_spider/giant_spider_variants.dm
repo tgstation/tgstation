@@ -22,7 +22,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/ambush_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
@@ -50,7 +50,7 @@
 /mob/living/basic/giant_spider/hunter/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/hunter_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
 /**
  * ### Spider Scout
@@ -121,7 +121,7 @@
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/nurse_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 /**
  * ### Tangle Spider
@@ -165,7 +165,7 @@
 	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tangle_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = maxHealth * 0.5,\
@@ -208,7 +208,7 @@
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/giant_spider/tarantula/Destroy()
 	QDEL_NULL(charge)
@@ -296,7 +296,7 @@
 	var/datum/action/command_spiders/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/midwife_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 /**
  * ### Giant Ice Spider
@@ -502,6 +502,6 @@
 /mob/living/basic/giant_spider/maintenance/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/duct_spider_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/tiny_mob_hunter)
