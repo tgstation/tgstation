@@ -691,30 +691,25 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	var/was_forced = forced_injection
 	forced_injection = FALSE
-	var/list/possible_latejoin_rules = shuffle(latejoin_rules)
-	var/datum/dynamic_ruleset/latejoin/picked_rule
-	for (var/datum/dynamic_ruleset/latejoin/rule in possible_latejoin_rules)
+	var/list/possible_latejoin_rules = list()
+	for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 		if(!rule.weight)
 			continue
 		if(mid_round_budget < rule.cost)
 			continue
-
-		// No stacking : only one round-ender, unless threat level > stacking_limit.
-		if(threat_level < GLOB.dynamic_stacking_limit \
-			&& GLOB.dynamic_no_stacking \
-			&& (rule.flags & HIGH_IMPACT_RULESET) \
-			&& high_impact_ruleset_executed \
-		)
-			continue
-
 		if(!rule.acceptable(GLOB.alive_player_list.len, threat_level))
-			// The first found ruleset was not valid, so this guy failed to roll antag.
-			// We will not up the injection cooldown, instead we will let give the next guy a chance at a randomly selected latejoin.
-			return
+			continue
+		possible_latejoin_rules[rule] = rule.get_weight()
 
-		picked_rule = rule
+	log_dynamic("[newPlayer] was selected to roll for a latejoin ruleset \
+		from the following list: [english_list(possible_latejoin_rules, nothing_text = "No valid rulesets!")].")
+	if(!length(possible_latejoin_rules))
+		return
 
+	// You get one shot at becoming a latejoin antag, if it fails the next guy will try.
+	var/datum/dynamic_ruleset/latejoin/picked_rule = pick_ruleset(possible_latejoin_rules, max_allowed_attempts = 1)
 	if(isnull(picked_rule))
+		log_dynamic("No valid rulset was selected for [newPlayer]'s latejoin[was_forced ? "" : ", the next player will be checked instead"].")
 		return
 	if(was_forced)
 		log_dynamic("Forcing random [picked_rule.ruletype] ruleset [picked_rule].")
@@ -729,6 +724,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	ruleset.trim_candidates()
 	ruleset.load_templates()
 	if (!ruleset.ready(forced))
+		log_dynamic("[only_candidate] was selected to latejoin with the [ruleset] ruleset, \
+			but the ruleset failed to execute[length(ruleset.candidates) ? " as they were not a valid candiate":""].")
 		return FALSE
 	if (!ruleset.repeatable)
 		latejoin_rules = remove_from_list(latejoin_rules, ruleset.type)
@@ -737,6 +734,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(!forced)
 		var/latejoin_injection_cooldown_middle = 0.5 * (latejoin_delay_max + latejoin_delay_min)
 		latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
+		log_dynamic("A latejoin rulset triggered successfully, the next latejoin injection will happen at [latejoin_injection_cooldown] round time.")
+
 	return TRUE
 
 /// Apply configurations to rule.
