@@ -262,7 +262,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return
 		forced_latejoin_rule = added_rule
 		log_admin("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
-		message_admins("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
+		message_admins("[key_name(usr)] set [added_rule] to proc on the next valid latejoin.")
 	else if(href_list["clear_forced_latejoin"])
 		forced_latejoin_rule = null
 		log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
@@ -680,38 +680,64 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return
 
 	if (forced_latejoin_rule)
-		forced_latejoin_rule.candidates = list(newPlayer)
-		forced_latejoin_rule.trim_candidates()
-		forced_latejoin_rule.load_templates()
-		log_dynamic("Forcing ruleset [forced_latejoin_rule]")
-		if (forced_latejoin_rule.ready(TRUE))
-			if (!forced_latejoin_rule.repeatable)
-				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_midround_latejoin_rule), forced_latejoin_rule), forced_latejoin_rule.delay)
-		forced_latejoin_rule = null
+		log_dynamic("Forcing specific [forced_latejoin_rule.ruletype] ruleset [forced_latejoin_rule].")
+		if(!handle_executing_latejoin(forced_latejoin_rule, newPlayer, forced = TRUE))
+			message_admins("The forced latejoin ruleset [forced_latejoin_rule.name] couldn't be executed \
+				as the most recent latejoin did not fulfill the ruleset's requirements.")
+		return
 
-	else if (latejoin_injection_cooldown < world.time && (forced_injection || prob(latejoin_roll_chance)))
-		forced_injection = FALSE
+	if(latejoin_injection_cooldown >= world.time && !forced_injection && !prob(latejoin_roll_chance))
+		return
 
-		var/list/drafted_rules = list()
-		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
-			if (!rule.weight)
-				continue
-			if (rule.acceptable(GLOB.alive_player_list.len, threat_level) && mid_round_budget >= rule.cost)
-				// No stacking : only one round-ender, unless threat level > stacking_limit.
-				if (threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags & HIGH_IMPACT_RULESET && high_impact_ruleset_executed)
-						continue
+	var/was_forced = forced_injection
+	forced_injection = FALSE
+	var/list/possible_latejoin_rules = shuffle(latejoin_rules)
+	var/datum/dynamic_ruleset/latejoin/picked_rule
+	for (var/datum/dynamic_ruleset/latejoin/rule in possible_latejoin_rules)
+		if(!rule.weight)
+			continue
+		if(mid_round_budget < rule.cost)
+			continue
 
-				rule.candidates = list(newPlayer)
-				rule.trim_candidates()
-				rule.load_templates()
-				if (rule.ready())
-					drafted_rules[rule] = rule.get_weight()
+		// No stacking : only one round-ender, unless threat level > stacking_limit.
+		if(threat_level < GLOB.dynamic_stacking_limit \
+			&& GLOB.dynamic_no_stacking \
+			&& (rule.flags & HIGH_IMPACT_RULESET) \
+			&& high_impact_ruleset_executed \
+		)
+			continue
 
-		if (drafted_rules.len > 0 && pick_latejoin_rule(drafted_rules))
-			var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
-			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
+		if(!rule.acceptable(GLOB.alive_player_list.len, threat_level))
+			// The first found ruleset was not valid, so this guy failed to roll antag.
+			// We will not up the injection cooldown, instead we will let give the next guy a chance at a randomly selected latejoin.
+			return
+
+		picked_rule = rule
+
+	if(isnull(picked_rule))
+		return
+	if(was_forced)
+		log_dynamic("Forcing random [picked_rule.ruletype] ruleset [picked_rule].")
+	handle_executing_latejoin(picked_rule, newPlayer, forced = was_forced)
+
+/**
+ * This proc handles the execution of a latejoin ruleset, including removing it from latejoin rulesets if not repeatable,
+ * upping the injection cooldown, and starting a timer to execute the ruleset on delay.
+ */
+/datum/game_mode/dynamic/proc/handle_executing_latejoin(datum/dynamic_ruleset/ruleset, mob/living/carbon/human/only_candidate, forced = FALSE)
+	ruleset.candidates = list(only_candidate)
+	ruleset.trim_candidates()
+	ruleset.load_templates()
+	if (!ruleset.ready(forced))
+		return FALSE
+	if (!ruleset.repeatable)
+		latejoin_rules = remove_from_list(latejoin_rules, ruleset.type)
+	addtimer(CALLBACK(src, PROC_REF(execute_midround_latejoin_rule), ruleset), ruleset.delay)
+
+	if(!forced)
+		var/latejoin_injection_cooldown_middle = 0.5 * (latejoin_delay_max + latejoin_delay_min)
+		latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
+	return TRUE
 
 /// Apply configurations to rule.
 /datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)

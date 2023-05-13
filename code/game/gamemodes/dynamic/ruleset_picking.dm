@@ -84,12 +84,12 @@
 	spend_midround_budget(rule.cost, threat_log, "[worldtime2text()]: [rule.ruletype] [rule.name]")
 	rule.pre_execute(GLOB.alive_player_list.len)
 	if (rule.execute())
-		log_dynamic("Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
+		log_dynamic("Injected a [rule.ruletype] ruleset [rule.name].")
 		if(rule.flags & HIGH_IMPACT_RULESET)
 			high_impact_ruleset_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
-		if(rule.ruletype == "Latejoin")
+		if(rule.ruletype == LATEJOIN_RULESET)
 			var/mob/M = pick(rule.candidates)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 			log_dynamic("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
