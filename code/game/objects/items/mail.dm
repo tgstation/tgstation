@@ -420,7 +420,7 @@
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
 	var/list/msg = list()
-	msg += "[span_notice("<i>You notice the manufacture marking on the side of the device...</i>")]"
+	msg += span_notice("<i>You notice the manufacture marking on the side of the device...</i>")
 	msg += "\t[span_info("Guerilla Letter Assembler")]"
 	msg += "\t[span_info("GLA Postal Service, right on schedule.")]"
 	return msg
