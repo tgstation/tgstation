@@ -75,7 +75,7 @@
 	if(holder)
 		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
 	else
-		refreshBeam()
+		INVOKE_ASYNC(src, PROC_REF(refreshBeam))
 
 /obj/item/assembly/infra/process()
 	if(!on || !secured)
