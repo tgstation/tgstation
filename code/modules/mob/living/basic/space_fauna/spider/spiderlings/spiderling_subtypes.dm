@@ -63,6 +63,7 @@
 	icon_state = "midwife_spiderling"
 	icon_dead = "midwife_spiderling_dead"
 	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
+	gold_core_spawnable = NO_SPAWN
 
 /// Will differentiate into the "viper" giant spider.
 /mob/living/basic/spiderling/viper
@@ -72,6 +73,7 @@
 	icon_state = "viper_spiderling"
 	icon_dead = "viper_spiderling_dead"
 	menu_description = "Extremly Fast spider variant specializing in catching running prey and lethal toxin injection, but has less health and damage."
+	gold_core_spawnable = NO_SPAWN
 
 /// Will differentiate into the "tarantula" giant spider.
 /mob/living/basic/spiderling/tarantula
@@ -81,3 +83,4 @@
 	icon_state = "taratula_spiderling"
 	icon_dead = "tarantula_spiderling_dead"
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
+	gold_core_spawnable = NO_SPAWN
