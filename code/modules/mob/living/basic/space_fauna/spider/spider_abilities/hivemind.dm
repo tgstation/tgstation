@@ -58,6 +58,7 @@
  * * user - The spider sending the message
  * * message - The message to be sent
  */
+ /// send a message to all spiders
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
@@ -80,9 +81,6 @@
 	desc = "Send a report to all living spiders."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "message"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS
 
 /**
  * Sends a message to all spiders from the target.
