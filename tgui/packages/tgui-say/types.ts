@@ -1,68 +1,62 @@
 import { RefObject } from 'inferno';
 import { RADIO_PREFIXES } from './constants';
+import { ChannelIterator } from './handlers/incrementChannel';
+import { ChatHistory } from './handlers/arrowKeys';
 
 export type Modal = {
-  events: ModalEvents;
+  handlers: Handlers;
   fields: Fields;
   setState: (state: {}) => void;
   state: State;
   timers: Timers;
 };
 
-type ModalEvents = {
-  onArrowKeys: (direction: number) => void;
-  onBackspaceDelete: () => void;
-  onClick: () => void;
-  onEscape: () => void;
-  onEnter: (event: KeyboardEvent, value: string) => void;
-  onForce: () => void;
-  onKeyDown: (event: KeyboardEvent, value: string) => void;
-  onIncrementChannel: () => void;
-  onInput: (event: InputEvent, value: string) => void;
-  onComponentMount: () => void;
-  onComponentUpdate: () => void;
-  onRadioPrefix: () => void;
-  onReset: (channel?: number) => void;
-  onSetSize: (size: number) => void;
-  onViewHistory: () => void;
-};
-
 type Fields = {
-  historyCounter: number;
+  channelIterator: ChannelIterator;
+  chatHistory: ChatHistory;
   innerRef: RefObject<HTMLInputElement>;
   lightMode: boolean;
   maxLength: number;
   currentPrefix: keyof typeof RADIO_PREFIXES | null;
-  tempHistory: string;
   currentValue: string;
+};
+
+type Handlers = {
+  arrowKeys: (direction: 'ArrowUp' | 'ArrowDown') => void;
+  backspaceDelete: () => void;
+  click: () => void;
+  componentMount: () => void;
+  componentUpdate: () => void;
+  enter: (event: KeyboardEvent, value: string) => void;
+  escape: () => void;
+  forcesay: () => void;
+  incrementChannel: () => void;
+  input: (event: InputEvent, value: string) => void;
+  keyDown: (event: KeyboardEvent, value: string) => void;
+  radioPrefix: () => void;
+  reset: () => void;
+  setSize: (size: number) => void;
 };
 
 export type State = {
   buttonContent: string | number;
-  channel: number;
   edited: boolean;
   size: number;
 };
 
 type Timers = {
-  channelDebounce: (cb: ModeDebounce) => void;
-  forceDebounce: (cb: ForceDebounce) => void;
+  channelDebounce: (cb: ModeCallback) => void;
+  forceDebounce: (cb: ForceCallback) => void;
   typingThrottle: () => void;
 };
 
-type ModeDebounce = {
-  mode: boolean;
+// The message sent to byond
+type ModeCallback = {
+  visible: boolean;
 };
 
-type ForceDebounce = {
+// The message sent to byond
+type ForceCallback = {
   channel: string;
   entry: string;
-};
-
-export type DragzoneProps = {
-  theme: string;
-  top: boolean;
-  right: boolean;
-  bottom: boolean;
-  left: boolean;
 };

@@ -3,7 +3,10 @@ import { windowSet } from '../helpers';
 import { Modal } from '../types';
 
 /**  Adjusts window sized based on event.target.value */
-export const handleSetSize = function (this: Modal, value: number) {
+export const handleSetSize: Modal['handlers']['setSize'] = function (
+  this: Modal,
+  value
+) {
   let newSize: WINDOW_SIZES;
 
   if (value > LINE_LENGTHS.medium) {

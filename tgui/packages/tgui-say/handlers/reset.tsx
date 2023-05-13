@@ -1,5 +1,5 @@
-import { CHANNELS, WINDOW_SIZES } from '../constants';
-import { valueExists } from '../helpers';
+import { WINDOW_SIZES } from '../constants';
+
 import { Modal } from '../types';
 
 /**
@@ -8,14 +8,14 @@ import { Modal } from '../types';
  * Parameters:
  * channel - Optional. Sets the channel and thus the color scheme.
  */
-export const handleReset = function (this: Modal, channel?: number) {
-  this.fields.historyCounter = 0;
+export const handleReset: Modal['handlers']['reset'] = function (this: Modal) {
+  const { channelIterator } = this.fields;
+
   this.fields.currentPrefix = null;
-  this.fields.tempHistory = '';
   this.fields.currentValue = '';
+
   this.setState({
-    buttonContent: valueExists(channel) ? CHANNELS[channel!] : '',
-    channel: valueExists(channel) ? channel! : -1,
+    buttonContent: channelIterator.current(),
     edited: true,
     size: WINDOW_SIZES.small,
   });

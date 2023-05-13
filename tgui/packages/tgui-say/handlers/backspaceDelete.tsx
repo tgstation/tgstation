@@ -1,4 +1,3 @@
-import { CHANNELS } from '../constants';
 import { Modal } from '../types';
 
 /**
@@ -6,20 +5,22 @@ import { Modal } from '../types';
  * 2. Backspacing while empty resets any radio subchannels
  * 3. Ensures backspace and delete calculate window size
  */
-export const handleBackspaceDelete = function (this: Modal) {
-  const { buttonContent, channel } = this.state;
-  const { currentPrefix, currentValue: value } = this.fields;
+export const handleBackspaceDelete: Modal['handlers']['backspaceDelete'] =
+  function (this: Modal) {
+    const { buttonContent } = this.state;
+    const { channelIterator, currentPrefix, chatHistory, currentValue } =
+      this.fields;
 
-  // User is on a chat history message
-  if (typeof buttonContent === 'number') {
-    this.fields.historyCounter = 0;
-    this.setState({ buttonContent: CHANNELS[channel] });
-  }
+    // User is on a chat history message
+    if (typeof buttonContent === 'number') {
+      chatHistory.reroll();
+      this.setState({ buttonContent: channelIterator.current() });
+    }
 
-  if (!value?.length && currentPrefix) {
-    this.fields.currentPrefix = null;
-    this.setState({ buttonContent: CHANNELS[channel] });
-  }
+    if (!currentValue?.length && currentPrefix) {
+      this.fields.currentPrefix = null;
+      this.setState({ buttonContent: channelIterator.current() });
+    }
 
-  this.events.onSetSize(value?.length);
-};
+    this.handlers.setSize(currentValue?.length);
+  };

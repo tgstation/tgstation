@@ -1,62 +1,61 @@
 import { TextArea } from 'tgui/components';
-import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
+import { RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { Dragzone } from './dragzone';
 import { eventHandlerMap } from './handlers';
-import { getCss, timers } from './helpers';
+import { getCss } from './helpers';
 import { Component, createRef } from 'inferno';
-import { Modal } from './types';
-
-type State = {
-  buttonContent: string | number;
-  channel: number;
-  edited: boolean;
-  size: number;
-};
+import { Modal, State } from './types';
+import { ChannelIterator } from './handlers/incrementChannel';
+import { ChatHistory } from './handlers/arrowKeys';
+import { timers } from './timers';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, State> {
-  events: Modal['events'] = eventHandlerMap(this);
+  // Fields that do not cause a re-render
   fields: Modal['fields'] = {
-    historyCounter: 0,
+    channelIterator: new ChannelIterator(),
+    chatHistory: new ChatHistory(),
     innerRef: createRef(),
     lightMode: false,
     maxLength: 1024,
     currentPrefix: null,
-    tempHistory: '',
     currentValue: '',
   };
+  // All the event handlers
+  handlers: Modal['handlers'] = eventHandlerMap(this);
+  // Fields that cause a re-render
   state: Modal['state'] = {
     buttonContent: '',
-    channel: -1,
     edited: false,
     size: WINDOW_SIZES.small,
   };
   timers: Modal['timers'] = timers;
 
   componentDidMount() {
-    this.events.onComponentMount();
+    this.handlers.componentMount();
   }
 
   componentDidUpdate() {
     if (this.state.edited) {
-      this.events.onComponentUpdate();
+      this.handlers.componentUpdate();
     }
   }
 
   render() {
-    const { onClick, onEnter, onEscape, onKeyDown, onInput } = this.events;
     const {
-      innerRef,
-      lightMode,
-      maxLength,
-      currentPrefix,
-      currentValue: value,
-    } = this.fields;
-    const { buttonContent, channel, edited, size } = this.state;
+      click: onClick,
+      enter: onEnter,
+      escape: onEscape,
+      keyDown: onKeyDown,
+      input: onInput,
+    } = this.handlers;
+    const { innerRef, lightMode, maxLength, currentPrefix, currentValue } =
+      this.fields;
+    const { buttonContent, edited, size } = this.state;
     const theme =
       (lightMode && 'lightMode') ||
       (currentPrefix && RADIO_PREFIXES[currentPrefix]?.id) ||
-      CHANNELS[channel]?.toLowerCase();
+      this.fields.channelIterator.current().toLowerCase();
 
     return (
       <div className={getCss('modal', theme, size)} $HasKeyedChildren>
@@ -81,7 +80,7 @@ export class TguiSay extends Component<{}, State> {
             onInput={onInput}
             onKey={onKeyDown}
             selfClear
-            value={edited && value}
+            value={edited && currentValue}
           />
           <Dragzone theme={theme} right />
         </div>

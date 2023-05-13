@@ -10,27 +10,33 @@ const channelRegex = /^:\w\s/;
  * Exemptions: Channel is OOC, value is too short,
  * Not a valid radio pref, or value is already the radio pref.
  */
-export const handleRadioPrefix = function (this: Modal) {
-  const { channel } = this.state;
-  const { currentPrefix, currentValue: value } = this.fields;
-  if (channel > 1 || !value || value.length < 3 || !channelRegex.test(value)) {
+export const handleRadioPrefix: Modal['handlers']['radioPrefix'] = function (
+  this: Modal
+) {
+  const { channelIterator, currentPrefix, currentValue } = this.fields;
+
+  if (
+    !currentValue ||
+    !channelIterator.isSay() ||
+    currentValue.length < 3 ||
+    !channelRegex.test(currentValue)
+  ) {
     return;
   }
 
-  const prefix = value.slice(0, 3) as keyof typeof RADIO_PREFIXES;
+  const prefix = currentValue.slice(0, 3) as keyof typeof RADIO_PREFIXES;
   if (!RADIO_PREFIXES[prefix] || prefix === currentPrefix) {
     return;
   }
 
-  // Remove the prefix from the value
-  this.fields.currentValue = value.slice(3);
+  // Remove the prefix from the currentValue
+  this.fields.currentValue = currentValue.slice(3);
   // We're thinking, but binary is a "secret" channel
   Byond.sendMessage('thinking', { mode: prefix !== ':b ' });
 
   this.fields.currentPrefix = prefix;
   this.setState({
     buttonContent: RADIO_PREFIXES[prefix].label,
-    channel: 0,
     edited: true,
   });
 };

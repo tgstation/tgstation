@@ -1,20 +1,24 @@
-import { CHANNELS, WINDOW_SIZES } from '../constants';
+import { WINDOW_SIZES } from '../constants';
 import { windowSet } from '../helpers';
 import { Modal } from '../types';
 
 /** Sends the current input to byond and purges it */
-export const handleForce = function (this: Modal) {
-  const { channel, size } = this.state;
-  const { currentPrefix, currentValue: value } = this.fields;
+export const handleForceSay: Modal['handlers']['forcesay'] = function (
+  this: Modal
+) {
+  const { size } = this.state;
+  const { channelIterator, currentPrefix, currentValue } = this.fields;
 
-  if (!value || channel < 2) return;
+  if (!currentValue || !channelIterator.isVisible()) return;
 
   this.timers.forceDebounce({
-    channel: CHANNELS[channel],
-    entry: channel === 0 ? currentPrefix + value : value,
+    channel: channelIterator.current(),
+    entry: channelIterator.isSay()
+      ? currentPrefix + currentValue
+      : currentValue,
   });
 
-  this.events.onReset(channel);
+  this.handlers.reset();
 
   if (size !== WINDOW_SIZES.small) {
     windowSet();

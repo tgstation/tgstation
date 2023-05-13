@@ -1,7 +1,5 @@
 import { WINDOW_SIZES } from './constants';
-import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
-import { debounce, throttle } from 'common/timer';
 
 /**
  * Window functions
@@ -67,33 +65,6 @@ const setClosed = () => {
   });
 };
 
-/**
- * Chat history functions
- */
-/** Stores a list of chat messages entered as values */
-let savedMessages: string[] = [];
-
-/** Returns the chat history at specified index */
-export const getHistoryAt = (index: number) =>
-  savedMessages[savedMessages.length - index];
-
-/**
- * The length of chat history.
- * I am absolutely being excessive, but whatever
- */
-export const getHistoryLength = () => savedMessages.length;
-
-/**
- * Stores entries in the chat history.
- * Deletes old entries if the list is too long.
- */
-export const storeChat = (message: string) => {
-  if (savedMessages.length === 5) {
-    savedMessages.shift();
-  }
-  savedMessages.push(message);
-};
-
 /** Miscellaneous */
 
 /**
@@ -111,28 +82,6 @@ export const getCss = (
 ) =>
   classes([
     element,
-    valueExists(theme) && `${element}-${theme}`,
-    valueExists(options) && `${element}-${options}`,
+    theme ?? `${element}-${theme}`,
+    options ?? `${element}-${options}`,
   ]);
-
-/** Checks keycodes for alpha/numeric characters */
-export const isAlphanumeric = (keyCode: number) =>
-  keyCode >= KEY_0 && keyCode <= KEY_Z;
-
-/** Timers: Prevents overloading the server, throttles messages */
-export const timers = {
-  channelDebounce: debounce(
-    (mode: string) => Byond.sendMessage('thinking', mode),
-    400
-  ),
-  forceDebounce: debounce(
-    (entry: string) => Byond.sendMessage('force', entry),
-    1000,
-    true
-  ),
-  typingThrottle: throttle(() => Byond.sendMessage('typing'), 4000),
-};
-
-/** Checks if a parameter is null or undefined. Returns bool */
-export const valueExists = (param: any) =>
-  param !== null && param !== undefined;

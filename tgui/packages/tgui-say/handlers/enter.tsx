@@ -1,26 +1,25 @@
-import { CHANNELS } from '../constants';
-import { storeChat, windowClose } from '../helpers';
+import { windowClose } from '../helpers';
 import { Modal } from '../types';
 
 /** User presses enter. Closes if no value. */
-export const handleEnter = function (
+export const handleEnter: Modal['handlers']['enter'] = function (
   this: Modal,
-  event: KeyboardEvent,
-  value: string
+  event,
+  value
 ) {
-  const { channel } = this.state;
-  const { maxLength, currentPrefix } = this.fields;
+  const { chatHistory, channelIterator, maxLength, currentPrefix } =
+    this.fields;
 
   event.preventDefault();
 
   if (value?.length < maxLength) {
-    storeChat(value);
+    chatHistory.add(value);
     Byond.sendMessage('entry', {
-      channel: CHANNELS[channel],
-      entry: channel === 0 ? currentPrefix + value : value,
+      channel: channelIterator.current(),
+      entry: channelIterator.isSay() ? currentPrefix + value : value,
     });
   }
 
-  this.events.onReset();
+  this.handlers.reset();
   windowClose();
 };

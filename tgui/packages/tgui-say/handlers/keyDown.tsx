@@ -1,6 +1,7 @@
-import { KEY_BACKSPACE, KEY_DELETE, KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
-import { isAlphanumeric } from '../helpers';
+import { KEY } from 'common/keys';
 import { Modal } from '../types';
+
+const alphaRegex = /[a-zA-Z0-9]/;
 
 /**
  * Handles other key events.
@@ -9,39 +10,40 @@ import { Modal } from '../types';
  * BKSP/DEL - Resets history counter and checks window size.
  * TYPING - When users key, it tells byond that it's typing.
  */
-export const handleKeyDown = function (this: Modal, event: KeyboardEvent) {
-  const { channel } = this.state;
-  const { currentPrefix } = this.fields;
+export const handleKeyDown: Modal['handlers']['keyDown'] = function (
+  this: Modal,
+  event
+) {
+  const { currentPrefix, channelIterator } = this.fields;
 
-  if (!event.keyCode) {
+  if (!event.key) {
     return;
   }
 
-  switch (event.keyCode) {
-    case KEY_UP:
-    case KEY_DOWN:
+  switch (event.key) {
+    case KEY.Up:
+    case KEY.Down:
       event.preventDefault();
-      this.events.onArrowKeys(event.keyCode);
+      this.handlers.arrowKeys(event.key);
       break;
 
-    case KEY_TAB:
+    case KEY.Tab:
       event.preventDefault();
-      this.events.onIncrementChannel();
+      this.handlers.incrementChannel();
       break;
 
-    case KEY_DELETE:
-    case KEY_BACKSPACE:
-      this.events.onBackspaceDelete();
+    case KEY.Delete:
+    case KEY.Backspace:
+      this.handlers.backspaceDelete();
       break;
 
     default:
       if (
-        isAlphanumeric(event.keyCode) &&
-        channel !== 3 &&
+        alphaRegex.test(event.key) &&
+        channelIterator.isVisible() &&
         currentPrefix !== ':b '
       ) {
         this.timers.typingThrottle();
       }
-      break;
   }
 };
