@@ -32,6 +32,8 @@
 	var/interactive = TRUE // So mapmakers can disable interaction.
 	/// The pyroclastic anomaly core inside a Thermomachine
 	var/obj/item/assembly/signaler/anomaly/pyro/pyro_anomaly_core
+	/// If a thermomachine can lower the temperature of gasses
+	var/allows_cooling = TRUE
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/color_index = 1
@@ -202,7 +204,7 @@
 	var/temperature_target_delta = target_temperature - port.temperature
 
 	// Checking if the thermomachine is anomalous
-	if(istype(src, /obj/machinery/atmospherics/components/unary/thermomachine/anomalous) && temperature_target_delta < 0)
+	if(allows_cooling && temperature_target_delta < 0)
 		return
 
 	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
@@ -391,6 +393,7 @@
 	name = "Anomalous temperature control unit"
 	desc = "Heats gas in connected pipes."
 	pyro_anomaly_core = TRUE
+	allows_cooling = FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/anomalous/examine(mob/user)
 	. = ..()
