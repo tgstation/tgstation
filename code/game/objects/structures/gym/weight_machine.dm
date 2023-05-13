@@ -94,7 +94,7 @@
 	user.balloon_alert_to_viewers("[pick(more_weight)]")
 	START_PROCESSING(SSobj, src)
 	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
-		user.Stun(3 SECONDS)
+		user.Stun(2 SECONDS)
 		user.balloon_alert(user, pick(finished_message))
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		user.apply_status_effect(/datum/status_effect/exercised)
