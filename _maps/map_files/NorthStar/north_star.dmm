@@ -42106,7 +42106,9 @@
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
 	dir = 5
 	},
-/obj/machinery/flasher/directional/east,
+/obj/machinery/flasher/directional/east{
+	id = "hopflash"
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "lik" = (
@@ -66638,7 +66640,9 @@
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
 	dir = 9
 	},
-/obj/machinery/flasher/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "hopflash"
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "ryQ" = (
