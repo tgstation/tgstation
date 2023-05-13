@@ -495,7 +495,8 @@
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
-
+#define MINI_GUN_OUT "attach_gun"
+#define DRAIN_POWER "drain_power"
 /obj/item/mod/module/minigun
 	name = "MOD laser gatling gun module"
 	icon_state = "minigun_module"
@@ -511,6 +512,7 @@
 	var/overheat = 0
 	var/overheat_max = 30
 	var/heat_diffusion = 0.5
+	var/shot_cost = 0
 	var/obj/item/stock_parts/cell/minigun/battery
 /obj/item/mod/module/minigun/on_activation()
 	playsound(src, 'sound/weapons/gun/l6/l6_rack.ogg', 25)
@@ -519,11 +521,19 @@
 /obj/item/mod/module/minigun/Initialize(mapload)
 	. = ..()
 	battery = new(src)
+	RegisterSignal(src, MINI_GUN_OUT, PROC_REF(attach_gun))
+	RegisterSignal(src, DRAIN_POWER, PROC_REF(shot_power_use))
 	START_PROCESSING(SSobj, src)// Starts the processing so the heat can go down over time
 
 /obj/item/mod/module/minigun/proc/attach_gun(mob/user)
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 25)
 
+/obj/item/mod/module/minigun/proc/shot_power_use()// Each shot power cost depends on how hot the gun is
+	shot_cost = round(overheat / 2,1) 
+	if(shot_cost < 5)
+		drain_power(5)
+	else 
+		drain_power(shot_cost)
 
 /obj/item/mod/module/minigun/process(delta_time)
 	overheat = max(0, overheat - heat_diffusion * delta_time)

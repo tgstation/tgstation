@@ -115,7 +115,6 @@
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
-	var/obj/item/mod/module/minigun/modpack
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
 	if(istype(loc, /obj/item/minigunpack)) 
@@ -124,7 +123,6 @@
 		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 		return ..()
 	else if(istype(loc, /obj/item/mod/module/minigun))
-		modpack = loc
 		ammo_pack = loc
 		AddElement(/datum/element/update_icon_blocker)
 		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
@@ -153,8 +151,8 @@
 	if(istype(ammo_pack,/obj/item/minigunpack))
 		ammo_pack.attach_gun(user)
 	else if(istype(ammo_pack, /obj/item/mod/module/minigun))
-		modpack.attach_gun(user)
-	else
+		SEND_SIGNAL(ammo_pack, MINI_GUN_OUT)
+	else 
 		qdel(src)
 
 /obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -163,7 +161,7 @@
 		return
 	..()
 	if(istype(ammo_pack, /obj/item/mod/module/minigun))
-		modpack.drain_power(15)
+		SEND_SIGNAL(ammo_pack, DRAIN_POWER)
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
