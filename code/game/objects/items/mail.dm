@@ -113,9 +113,8 @@
 	if(user.get_inactive_held_item() == src)
 		balloon_alert(user, "Nothing to disable!")
 		return TRUE
-	else
-		to_chat(user, span_notice("You must hold it, if you want to try disable any kind of device that might be inside!"))
-		return FALSE
+	balloon_alert(user, "hold it!")
+	return FALSE
 	
 
 /obj/item/mail/attack_self(mob/user)
