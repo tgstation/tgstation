@@ -1,5 +1,6 @@
+import { Handlers } from '.';
 import { RADIO_PREFIXES } from '../constants';
-import { Modal } from '../types';
+import { TguiSay } from '../TguiSay';
 
 const channelRegex = /^:\w\s/;
 
@@ -10,10 +11,12 @@ const channelRegex = /^:\w\s/;
  * Exemptions: Channel is OOC, value is too short,
  * Not a valid radio pref, or value is already the radio pref.
  */
-export const handleRadioPrefix: Modal['handlers']['radioPrefix'] = function (
-  this: Modal
+export const handleRadioPrefix: Handlers['radioPrefix'] = function (
+  this: TguiSay
 ) {
-  const { channelIterator, currentPrefix, currentValue } = this.fields;
+  const { channelIterator, currentPrefix, innerRef } = this.fields;
+
+  const currentValue = innerRef.current?.value;
 
   if (
     !currentValue ||
@@ -29,14 +32,12 @@ export const handleRadioPrefix: Modal['handlers']['radioPrefix'] = function (
     return;
   }
 
-  // Remove the prefix from the currentValue
-  this.fields.currentValue = currentValue.slice(3);
   // We're thinking, but binary is a "secret" channel
   Byond.sendMessage('thinking', { mode: prefix !== ':b ' });
 
   this.fields.currentPrefix = prefix;
   this.setState({
-    buttonContent: RADIO_PREFIXES[prefix].label,
-    edited: true,
+    buttonContent: RADIO_PREFIXES[prefix],
+    value: currentValue.slice(3),
   });
 };

@@ -1,5 +1,6 @@
 import { KEY } from 'common/keys';
-import { Modal } from '../types';
+import { Handlers } from '.';
+import { TguiSay } from '../TguiSay';
 
 const alphaRegex = /[a-zA-Z0-9]/;
 
@@ -10,8 +11,8 @@ const alphaRegex = /[a-zA-Z0-9]/;
  * BKSP/DEL - Resets history counter and checks window size.
  * TYPING - When users key, it tells byond that it's typing.
  */
-export const handleKeyDown: Modal['handlers']['keyDown'] = function (
-  this: Modal,
+export const handleKeyDown: Handlers['keyDown'] = function (
+  this: TguiSay,
   event
 ) {
   const { currentPrefix, channelIterator } = this.fields;
@@ -43,7 +44,7 @@ export const handleKeyDown: Modal['handlers']['keyDown'] = function (
         channelIterator.isVisible() &&
         currentPrefix !== ':b '
       ) {
-        this.timers.typingThrottle();
+        this.timers.onTyping();
       }
   }
 };

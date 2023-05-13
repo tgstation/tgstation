@@ -1,11 +1,12 @@
+import { Handlers } from '.';
 import { LINE_LENGTHS, WINDOW_SIZES } from '../constants';
 import { windowSet } from '../helpers';
-import { Modal } from '../types';
+import { TguiSay } from '../TguiSay';
 
 /**  Adjusts window sized based on event.target.value */
-export const handleSetSize: Modal['handlers']['setSize'] = function (
-  this: Modal,
-  value
+export const handleSetSize: Handlers['setSize'] = function (
+  this: TguiSay,
+  value = 0
 ) {
   let newSize: WINDOW_SIZES;
 

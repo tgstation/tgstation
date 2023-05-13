@@ -1,90 +1,105 @@
-import { TextArea } from 'tgui/components';
-import { RADIO_PREFIXES, WINDOW_SIZES } from './constants';
-import { Dragzone } from './dragzone';
-import { eventHandlerMap } from './handlers';
+import { ChannelIterator } from './classes/ChannelIterator';
+import { ChatHistory } from './classes/ChatHistory';
+import { Component, createRef, RefObject } from 'inferno';
 import { getCss } from './helpers';
-import { Component, createRef } from 'inferno';
-import { Modal, State } from './types';
-import { ChannelIterator } from './handlers/incrementChannel';
-import { ChatHistory } from './handlers/arrowKeys';
+import { Handlers, mapEventHandlers } from './handlers';
+import { RADIO_PREFIXES, WINDOW_SIZES } from './constants';
+import { TextArea } from 'tgui/components';
 import { timers } from './timers';
+import { dragStartHandler } from 'tgui/drag';
+
+type State = {
+  buttonContent: string | number;
+  size: WINDOW_SIZES;
+  value: string;
+};
+
+type Fields = {
+  channelIterator: ChannelIterator;
+  chatHistory: ChatHistory;
+  innerRef: RefObject<HTMLTextAreaElement>;
+  lightMode: boolean;
+  maxLength: number;
+  currentPrefix: keyof typeof RADIO_PREFIXES | null;
+};
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, State> {
   // Fields that do not cause a re-render
-  fields: Modal['fields'] = {
+  fields: Fields = {
     channelIterator: new ChannelIterator(),
     chatHistory: new ChatHistory(),
     innerRef: createRef(),
     lightMode: false,
     maxLength: 1024,
     currentPrefix: null,
-    currentValue: '',
   };
   // All the event handlers
-  handlers: Modal['handlers'] = eventHandlerMap(this);
+  handlers: Handlers = mapEventHandlers(this);
   // Fields that cause a re-render
-  state: Modal['state'] = {
+  state: State = {
     buttonContent: '',
-    edited: false,
     size: WINDOW_SIZES.small,
+    value: '',
   };
-  timers: Modal['timers'] = timers;
+  timers = timers;
 
   componentDidMount() {
     this.handlers.componentMount();
   }
 
-  componentDidUpdate() {
-    if (this.state.edited) {
-      this.handlers.componentUpdate();
-    }
-  }
-
   render() {
-    const {
-      click: onClick,
-      enter: onEnter,
-      escape: onEscape,
-      keyDown: onKeyDown,
-      input: onInput,
-    } = this.handlers;
-    const { innerRef, lightMode, maxLength, currentPrefix, currentValue } =
+    const { channelIterator, lightMode, innerRef, maxLength, currentPrefix } =
       this.fields;
-    const { buttonContent, edited, size } = this.state;
+    const { enter, escape, keyDown, input, incrementChannel } = this.handlers;
+    const { buttonContent, size, value } = this.state;
+
     const theme =
       (lightMode && 'lightMode') ||
-      (currentPrefix && RADIO_PREFIXES[currentPrefix]?.id) ||
-      this.fields.channelIterator.current().toLowerCase();
+      (currentPrefix && RADIO_PREFIXES[currentPrefix]) ||
+      channelIterator.current();
 
     return (
-      <div className={getCss('modal', theme, size)} $HasKeyedChildren>
-        <Dragzone theme={theme} top />
-        <div className="modal__content" $HasKeyedChildren>
-          <Dragzone theme={theme} left />
-          {!!theme && (
+      <div className={getCss('window', theme, size)} $HasKeyedChildren>
+        <div
+          className={`dragzone-top-${theme}`}
+          onmousedown={dragStartHandler}
+        />
+        <div className="window__center" $HasKeyedChildren>
+          <div
+            className={`dragzone-left-${theme}`}
+            onmousedown={dragStartHandler}
+          />
+          <div className="content">
             <button
               className={getCss('button', theme)}
-              onclick={onClick}
+              onclick={incrementChannel}
               type="submit">
               {buttonContent}
             </button>
-          )}
-          <TextArea
-            className={getCss('textarea', theme)}
-            dontUseTabForIndent
-            innerRef={innerRef}
-            maxLength={maxLength}
-            onEnter={onEnter}
-            onEscape={onEscape}
-            onInput={onInput}
-            onKey={onKeyDown}
-            selfClear
-            value={edited && currentValue}
+
+            <TextArea
+              className={getCss('textarea', theme)}
+              dontUseTabForIndent
+              innerRef={innerRef}
+              maxLength={maxLength}
+              onEnter={enter}
+              onEscape={escape}
+              onInput={input}
+              onKey={keyDown}
+              selfClear
+              value={value}
+            />
+          </div>
+          <div
+            className={`dragzone-right-${theme}`}
+            onmousedown={dragStartHandler}
           />
-          <Dragzone theme={theme} right />
         </div>
-        <Dragzone theme={theme} bottom />
+        <div
+          className={`dragzone-bottom-${theme}`}
+          onmousedown={dragStartHandler}
+        />
       </div>
     );
   }

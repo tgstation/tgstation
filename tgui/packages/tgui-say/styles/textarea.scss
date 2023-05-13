@@ -4,10 +4,9 @@
   background-color: transparent;
   border: none;
   color: colors.$background;
-  flex-grow: 1;
+  flex: 1 1 auto;
   font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
-  margin-top: 2px;
 }
 
 .textarea-lightMode {

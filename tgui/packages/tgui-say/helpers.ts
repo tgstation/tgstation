@@ -82,6 +82,6 @@ export const getCss = (
 ) =>
   classes([
     element,
-    theme ?? `${element}-${theme}`,
-    options ?? `${element}-${options}`,
+    theme && `${element}-${theme}`,
+    options && `${element}-${options}`,
   ]);

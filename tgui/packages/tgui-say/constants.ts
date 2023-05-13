@@ -14,57 +14,19 @@ export enum LINE_LENGTHS {
 
 /**
  * Radio prefixes.
- * Contains the properties:
- * id - string. css class identifier.
- * label - string. button label.
+ * Displays the name in the left button, tags a css class.
  */
 export const RADIO_PREFIXES = {
-  ':a ': {
-    id: 'hive',
-    label: 'Hive',
-  },
-  ':b ': {
-    id: 'binary',
-    label: '0101',
-  },
-  ':c ': {
-    id: 'command',
-    label: 'Cmd',
-  },
-  ':e ': {
-    id: 'engi',
-    label: 'Engi',
-  },
-  ':m ': {
-    id: 'medical',
-    label: 'Med',
-  },
-  ':n ': {
-    id: 'science',
-    label: 'Sci',
-  },
-  ':o ': {
-    id: 'ai',
-    label: 'AI',
-  },
-  ':s ': {
-    id: 'security',
-    label: 'Sec',
-  },
-  ':t ': {
-    id: 'syndicate',
-    label: 'Syndi',
-  },
-  ':u ': {
-    id: 'supply',
-    label: 'Supp',
-  },
-  ':v ': {
-    id: 'service',
-    label: 'Svc',
-  },
-  ':y ': {
-    id: 'centcom',
-    label: 'CCom',
-  },
+  ':a ': 'Hive',
+  ':b ': 'Sili',
+  ':c ': 'Cmd',
+  ':e ': 'Engi',
+  ':m ': 'Med',
+  ':n ': 'Sci',
+  ':o ': 'AI',
+  ':s ': 'Sec',
+  ':t ': 'Synd',
+  ':u ': 'Supp',
+  ':v ': 'Svc',
+  ':y ': 'CCom',
 } as const;

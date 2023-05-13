@@ -1,18 +1,18 @@
 @use 'sass:color';
 @use './colors.scss';
 
+$borderSize: 2px;
+
 .dragzone-horizontal {
   color: transparent;
-  height: 5px;
-  width: 100%;
+  height: $borderSize;
+  flex: 1 1 auto;
 }
 
 .dragzone-vertical {
   color: transparent;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  width: 5px;
+  flex: 1 1 auto;
+  width: $borderSize;
 }
 
 @each $channel, $color in colors.$channel-map {
@@ -20,53 +20,49 @@
 
   .dragzone-bottom-#{$channel} {
     @extend .dragzone-horizontal;
-    border-left: 2px solid $darkened;
-    border-right: 2px solid $darkened;
+    border-left: $borderSize solid $darkened;
+    border-right: $borderSize solid $darkened;
   }
 
   .dragzone-left-#{$channel} {
     @extend .dragzone-vertical;
-    left: 0;
-    border-left: 2px solid $darkened;
+    border-left: $borderSize solid $darkened;
   }
 
   .dragzone-right-#{$channel} {
     @extend .dragzone-vertical;
-    right: 0;
-    border-right: 2px solid $darkened;
+    border-right: $borderSize solid $darkened;
   }
 
   .dragzone-top-#{$channel} {
     @extend .dragzone-horizontal;
-    border-left: 2px solid $darkened;
-    border-right: 2px solid $darkened;
-    border-top: 2px solid $darkened;
+    border-left: $borderSize solid $darkened;
+    border-right: $borderSize solid $darkened;
+    border-top: $borderSize solid $darkened;
   }
 }
 
 /** Lightmode static theme */
 .dragzone-bottom-lightMode {
   @extend .dragzone-horizontal;
-  border-left: 2px solid colors.$lightBorder;
-  border-right: 2px solid colors.$lightBorder;
-  border-bottom: 2px solid colors.$lightBorder;
+  border-left: $borderSize solid colors.$lightBorder;
+  border-right: $borderSize solid colors.$lightBorder;
+  border-bottom: $borderSize solid colors.$lightBorder;
 }
 
 .dragzone-left-lightMode {
   @extend .dragzone-vertical;
-  left: 0;
-  border-left: 2px solid colors.$lightBorder;
+  border-left: $borderSize solid colors.$lightBorder;
 }
 
 .dragzone-right-lightMode {
   @extend .dragzone-vertical;
-  right: 0;
-  border-right: 2px solid colors.$lightBorder;
+  border-right: $borderSize solid colors.$lightBorder;
 }
 
 .dragzone-top-lightMode {
   @extend .dragzone-horizontal;
-  border-left: 2px solid colors.$lightBorder;
-  border-right: 2px solid colors.$lightBorder;
-  border-top: 2px solid colors.$lightBorder;
+  border-left: $borderSize solid colors.$lightBorder;
+  border-right: $borderSize solid colors.$lightBorder;
+  border-top: $borderSize solid colors.$lightBorder;
 }

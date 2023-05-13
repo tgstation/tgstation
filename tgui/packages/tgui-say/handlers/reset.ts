@@ -1,6 +1,6 @@
+import { Handlers } from '.';
 import { WINDOW_SIZES } from '../constants';
-
-import { Modal } from '../types';
+import { TguiSay } from '../TguiSay';
 
 /**
  * Resets window to default parameters.
@@ -8,15 +8,16 @@ import { Modal } from '../types';
  * Parameters:
  * channel - Optional. Sets the channel and thus the color scheme.
  */
-export const handleReset: Modal['handlers']['reset'] = function (this: Modal) {
-  const { channelIterator } = this.fields;
+export const handleReset: Handlers['reset'] = function (this: TguiSay) {
+  const { channelIterator, chatHistory } = this.fields;
 
   this.fields.currentPrefix = null;
-  this.fields.currentValue = '';
+  channelIterator.reset();
+  chatHistory.reset();
 
   this.setState({
     buttonContent: channelIterator.current(),
-    edited: true,
     size: WINDOW_SIZES.small,
+    value: '',
   });
 };

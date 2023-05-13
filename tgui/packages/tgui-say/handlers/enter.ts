@@ -1,14 +1,16 @@
+import { Handlers } from '.';
 import { windowClose } from '../helpers';
-import { Modal } from '../types';
+import { TguiSay } from '../TguiSay';
 
 /** User presses enter. Closes if no value. */
-export const handleEnter: Modal['handlers']['enter'] = function (
-  this: Modal,
+export const handleEnter: Handlers['enter'] = function (
+  this: TguiSay,
   event,
   value
 ) {
   const { chatHistory, channelIterator, maxLength, currentPrefix } =
     this.fields;
+  const prefix = currentPrefix ?? '';
 
   event.preventDefault();
 
@@ -16,7 +18,7 @@ export const handleEnter: Modal['handlers']['enter'] = function (
     chatHistory.add(value);
     Byond.sendMessage('entry', {
       channel: channelIterator.current(),
-      entry: channelIterator.isSay() ? currentPrefix + value : value,
+      entry: channelIterator.isSay() ? prefix + value : value,
     });
   }
 

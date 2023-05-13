@@ -11,42 +11,42 @@
   }
 }
 
-.modal {
+.window {
   background-color: colors.$background;
   display: flex;
   flex-direction: column;
   max-width: 231px;
+  height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
-.modal-lightMode {
-  @extend .modal;
+.window__center {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.window-lightMode {
+  @extend .window;
   background-color: colors.$lightMode;
 }
 
-.modal__content {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  padding: 1px 0 1px 5px;
-}
-
 /** Window sizes */
-.modal-30 {
+.window-30 {
   height: 30px;
 }
 
-.modal-50 {
+.window-50 {
   height: 50px;
 }
 
-.modal-70 {
+.window-70 {
   height: 70px;
 }
 
 /** Creates an animated border for each channel */
 @each $channel, $color in colors.$channel-map {
-  .modal-#{$channel} {
+  .window-#{$channel} {
     &:after {
       animation: gradient 10s linear infinite;
       background: linear-gradient(
