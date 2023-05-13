@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/clown
+/mob/living/basic/chicken/clown
 	icon_suffix = "clown"
 
 	breed_name_female = "Henk"
@@ -18,7 +18,7 @@
 	food_reagents = list(/datum/reagent/water = 50)
 	icon_state = "clown"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/clown
+	layer_hen_type = /mob/living/basic/chicken/clown
 
 /obj/item/food/egg/clown/attack_self(mob/user)
 	. = ..()

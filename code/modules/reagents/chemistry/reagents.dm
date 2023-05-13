@@ -347,5 +347,5 @@ Primarily used in reagents/reaction_agents
 
 	return reagent_strings.Join(join_text)
 
-/datum/reagent/proc/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/proc/feed_interaction(mob/living/basic/chicken/target, volume)
 	return

@@ -169,7 +169,7 @@
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
 
-/datum/reagent/drug/methamphetamine/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/drug/methamphetamine/feed_interaction(mob/living/basic/chicken/target, volume)
 	.=..()
 	target.adjust_happiness(0.5*volume)
 

@@ -239,7 +239,7 @@
 		mytray.adjust_pestlevel(rand(1,2))
 
 
-/datum/reagent/consumable/sugar/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume)
 	.=..()
 	target.adjust_happiness(0.1*volume)
 
