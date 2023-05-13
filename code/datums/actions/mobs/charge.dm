@@ -177,6 +177,7 @@
 	var/shake_duration = 1 SECONDS
 	/// Intensity of shaking animation
 	var/shake_pixel_shift = 2
+	melee_cooldown_time = 0
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
 	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)
