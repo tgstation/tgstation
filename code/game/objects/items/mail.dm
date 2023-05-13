@@ -476,9 +476,9 @@
 	
 	var/obj/item/mail/traitor/shady_mail
 	if(mail_type == "mail")
-		shady_mail = new /obj/item/mail/traitor()
+		shady_mail = new /obj/item/mail/traitor
 	else
-		shady_mail = new /obj/item/mail/traitor/envelope()
+		shady_mail = new /obj/item/mail/traitor/envelope
 	
 	shady_mail.made_by_cached_ckey = user.ckey
 	shady_mail.made_by_cached_name = user.mind.name
