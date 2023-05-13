@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Armed cleanbots no longer break when they encounter a mindless human."
