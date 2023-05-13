@@ -92,10 +92,9 @@
 
 /obj/structure/weightmachine/proc/perform_workout(mob/living/user)
 	user.balloon_alert_to_viewers("[pick(more_weight)]")
-	add_overlay("[base_icon_state]-o")
-	icon_state = "[base_icon_state]-u"
 	START_PROCESSING(SSobj, src)
-	if(do_after(user, 8 SECONDS, src))
+	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
+		user.Stun(3 SECONDS)
 		user.balloon_alert(user, pick(finished_message))
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		user.apply_status_effect(/datum/status_effect/exercised)
@@ -104,17 +103,20 @@
 /obj/structure/weightmachine/proc/end_workout()
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	STOP_PROCESSING(SSobj, src)
-	cut_overlays()
 	icon_state = initial(icon_state)
 
 /obj/structure/weightmachine/process(seconds_per_tick)
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
+	var/image/workout_icon = new(icon, src, "[base_icon_state]-o", ABOVE_MOB_LAYER)
+	workout_icon.plane = GAME_PLANE_UPPER
+	flick_overlay_view(workout_icon, 8)
+	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
-	animate(user, pixel_y = pixel_shift_y, time = 3)
+	animate(user, pixel_y = pixel_shift_y, time = 4)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	animate(pixel_y = user.base_pixel_y, time = 3)
+	animate(pixel_y = user.base_pixel_y, time = 4)
 	return TRUE
 
 /**
@@ -126,3 +128,4 @@
 	base_icon_state = "benchpress"
 
 	pixel_shift_y = 5
+
