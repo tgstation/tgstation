@@ -56,3 +56,6 @@ https://freesound.org/people/Tetrisrocker/sounds/458627/
 
 ark_activation.ogg is taken from ScottFerguson1's "Cucko Clock edited version", which is licensed under CC Attribution 3.0
 https://freesound.org/people/ScottFerguson1/sounds/132846/
+
+parry.ogg is taken from loudernoises "Sword Clash" which is licensed under CC Attributions 0, which is mixed with a genhit.ogg
+https://freesound.org/people/loudernoises/sounds/334169/

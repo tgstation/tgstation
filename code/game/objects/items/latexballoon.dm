@@ -21,7 +21,7 @@
 /obj/item/latexballoon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/latexballoon/proc/set_state(state_to_set)
 	state = state_to_set

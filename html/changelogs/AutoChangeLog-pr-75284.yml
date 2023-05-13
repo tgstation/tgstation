@@ -1,4 +1,0 @@
-author: "BlueMemesauce"
-delete-after: True
-changes:
-  - bugfix: "For the purposes of the crew manifest, Coroner is now considered a medical job rather than both service and medical."
