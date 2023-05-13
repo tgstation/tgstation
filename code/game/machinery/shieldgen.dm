@@ -1142,6 +1142,6 @@
 
 /obj/structure/emergency_shield/modular/emp_act(severity)
 	if(shield_generator)
-		shield_generator.shield_drain(10 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the 10 if not enough damage
+		shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the 10 if not enough damage
 		return
 	qdel(src)
