@@ -301,6 +301,8 @@
  * * clears the light object
  */
 /atom/Destroy(force)
+	TEST_ONLY_ASSERT((flags_1 & INITIALIZED_1), "[type] is being Destroy()ed before initializing!")
+	
 	if(alternate_appearances)
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]
