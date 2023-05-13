@@ -140,7 +140,7 @@
 // proc that goes after unwrapping a mail.
 /obj/item/mail/proc/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
-	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
+	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		user.put_in_hands(stuff)
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
@@ -370,7 +370,7 @@
 /obj/item/mail/traitor/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
-	for(var/obj/item/stuff in contents) // Mail and envelope actually can have more than 1 item.
+	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
 			log_bomber(user, "opened armed mail made by [made_by_cached_name] ([made_by_cached_ckey]), activating", stuff)
 			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item/mail/traitor, attack_self), user)
