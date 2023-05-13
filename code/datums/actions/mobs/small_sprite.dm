@@ -14,6 +14,10 @@
 	small_icon = 'icons/mob/nonhuman-player/alien.dmi'
 	small_icon_state = "alienq"
 
+/datum/action/small_sprite/queen/maid
+	small_icon = 'icons/mob/nonhuman-player/alien.dmi'
+	small_icon_state = "maid"
+
 /datum/action/small_sprite/megafauna
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	small_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'

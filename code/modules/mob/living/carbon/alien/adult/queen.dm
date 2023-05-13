@@ -13,6 +13,8 @@
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
+	var/costume = 0
+	var/datum/action/small_sprite/queen/smallsprite
 	var/alt_inhands_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 
 /mob/living/carbon/alien/adult/royal/Initialize(mapload)
@@ -33,6 +35,7 @@
 
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
+	desc = "That is the scariest fucking thing I've seen in my entire life."
 	caste = "q"
 	maxHealth = 400
 	health = 400
@@ -54,7 +57,7 @@
 	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
 	tail_whip.Grant(src)
 
-	var/datum/action/small_sprite/queen/smallsprite = new(src)
+	smallsprite = new(src)
 	smallsprite.Grant(src)
 
 	var/datum/action/cooldown/alien/promote/promotion = new(src)
@@ -189,14 +192,20 @@
 
 	if(istype(O, /obj/item/clothing/under/costume/maid) || istype(O, /obj/item/clothing/under/rank/civilian/janitor/maid))
 		if(do_after(user, 5 SECONDS, src))
-			maidify()
+			costume = 1
+			dressup()
 			qdel(O)
 		return TRUE
 
-/mob/living/carbon/alien/adult/royal/queen/proc/maidify()
-	name = "alien queen maid"
-	desc = "Lusty, Sexy"
-	icon_state = "alienqmaid"
-	caste = "qmaid"
+
+/mob/living/carbon/alien/adult/royal/queen/proc/dressup()
+	switch(costume)
+		if(1)
+			name = "alien queen maid"
+			desc = "Lusty, Sexy"
+			icon_state = "alienqmaid"
+			caste = "qmaid"
+			smallsprite.Remove(src)
+			var/datum/action/small_sprite/queen/maid/smallspritemaid = new(src)
+			smallspritemaid.Grant(src)
 	update_icons()
-	update_desc()

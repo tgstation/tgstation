@@ -1,5 +1,6 @@
 /mob/living/carbon/alien
 	name = "alien"
+	desc = "It hisses at you with acid dribbling down it's fangs!"
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
@@ -112,6 +113,10 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/get_blind_suicide_message()
 	return "You hear thrashing."
+
+/mob/living/carbon/alien/examine(mob/user)
+	. = ..()
+	. += span_info(desc)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(
