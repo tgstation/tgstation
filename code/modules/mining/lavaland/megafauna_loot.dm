@@ -630,6 +630,7 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
