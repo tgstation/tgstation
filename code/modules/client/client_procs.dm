@@ -574,7 +574,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				"Forever alone :("\
 			)
 
-			send2adminchat("Server", "[cheesy_message] (No admins online)")
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(send2adminchat), "Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
 	active_mousedown_item = null
@@ -983,6 +983,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
 		add_verb(src, /client/proc/self_playtime)
+	if(!CONFIG_GET(flag/forbid_preferences_export))
+		add_verb(src, /client/proc/export_preferences)
 
 
 #undef UPLOAD_LIMIT
