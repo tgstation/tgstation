@@ -107,13 +107,13 @@
 
 	// If we got here, thermal regulators are on. If there's no cell, turn them off
 	if(!cell)
-		toggle_spacesuit(user)
+		toggle_spacesuit()
 		update_hud_icon(user)
 		return
 
 	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
 	if(!cell.use(THERMAL_REGULATOR_COST))
-		toggle_spacesuit(user)
+		toggle_spacesuit()
 		update_hud_icon(user)
 		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
 		return
