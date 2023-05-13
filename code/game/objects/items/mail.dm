@@ -355,7 +355,7 @@
 
 /obj/item/mail/traitor
 	var/armed = FALSE
-	var/datum/weakref/made_by
+	var/datum/weakref/made_by_ref
 	// If somehow mind will disappear, admins will still have info about creator
 	var/made_by_cached_name
 	var/made_by_cached_ckey
@@ -379,9 +379,9 @@
 
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
 	if(armed == FALSE || user.get_inactive_held_item() != src)
-		. = ..()
+		return ..()
 	else
-		if(IS_WEAKREF_OF(user.mind, made_by))
+		if(IS_WEAKREF_OF(user.mind, made_by_ref))
 			balloon_alert(user, "disarming trap...")
 			if(!do_after(user, 2 SECONDS, target = src))
 				return FALSE
@@ -419,14 +419,13 @@
 
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list()
-	msg += span_notice("<i>You notice the manufacture marking on the side of the device...</i>")
-	msg += "\t[span_info("Guerilla Letter Assembler")]"
-	msg += "\t[span_info("GLA Postal Service, right on schedule.")]"
-	return msg
+	. += span_notice("<i>You notice the manufacture marking on the side of the device...</i>")
+	. += "\t[span_info("Guerilla Letter Assembler")]"
+	. += "\t[span_info("GLA Postal Service, right on schedule.")]"
+	return .
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
-	var/mail_type = tgui_alert(user, "Is it gonna be an envelope or a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
+	var/mail_type = tgui_alert(user, "Is it gonna look like an envelope or like a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
 	if(loc != user)
@@ -439,20 +438,13 @@
 	if(loc != user)
 		return FALSE
 
-	if(mail_armed == "Yes")
-		mail_armed = TRUE
-	else
-		mail_armed = FALSE
-
-	var/list/mail_recipients = list("*Anyone*")
-	var/list/mail_recipients_input_list = list("*Anyone*")
+	var/list/mail_recipients = list("Anyone")
+	var/list/mail_recipients_input_list = list("Anyone")
 	var/list/recipients_dupes = list()
 	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
 		if(isnull(person.mind_ref))
 			continue
 		mail_recipients += person.mind_ref
-
-		// This whole code-hell i had to make just remove iterators from the options names.
 		if(recipients_dupes[person.name] == null)
 			if(mail_recipients_input_list.Find(person.name))
 				recipients_dupes[person.name] = 1
@@ -497,8 +489,8 @@
 	atom_storage.hide_contents(user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
-	shady_mail.armed = mail_armed
-	shady_mail.made_by = WEAKREF(user.mind)
+	shady_mail.armed = (mail_armed == "Yes")
+	shady_mail.made_by_ref = WEAKREF(user.mind)
 	user.put_in_hands(shady_mail)
 	qdel(src)
 
