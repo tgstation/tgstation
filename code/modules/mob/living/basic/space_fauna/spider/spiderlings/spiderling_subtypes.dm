@@ -16,7 +16,7 @@
 	desc = "Furry and white, it looks defenseless. This one has sparkling pink eyes."
 	icon_state = "ambush_spiderling"
 	icon_dead = "ambush_spiderling_dead"
-	menu_description = "Slow spider variant specializing in stalking and ambushing prey, but has goo health and damage."
+	menu_description = "Slow spider variant specializing in stalking and ambushing prey, above avarage health and damage with a strong grip."
 
 /// Will differentiate into the "scout" giant spider.
 /mob/living/basic/spiderling/scout

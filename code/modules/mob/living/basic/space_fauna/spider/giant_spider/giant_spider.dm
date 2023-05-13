@@ -57,7 +57,7 @@
 	/// The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
-	var/menu_description = "Versatile spider variant for frontline combat with high health and damage."
+	var/menu_description = "Tanky and strong for the defense of the nest and other spiders."
 	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
 	var/apply_spider_antag = TRUE
 
