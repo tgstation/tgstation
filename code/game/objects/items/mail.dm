@@ -491,7 +491,6 @@
 			shady_mail.name = mail_name
 		else
 			shady_mail.name = mail_type
-		
 	else
 		shady_mail.initialize_for_recipient(mail_recipients[index])
 
