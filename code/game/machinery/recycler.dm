@@ -166,7 +166,7 @@
 	for(var/i = length(nom); i >= 0; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_power(active_power_usage /(recycle_item(nom[i]) ? 1 : 10)) //recycling stuff that produces no material takes slightly less power
+		use_power(active_power_usage /(recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
