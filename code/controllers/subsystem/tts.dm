@@ -165,6 +165,9 @@ SUBSYSTEM_DEF(tts)
 	if(!tts_enabled)
 		return
 
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+
 	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
 	// If there is no alphanumeric char, the output will usually be static, so
 	// don't bother sending
