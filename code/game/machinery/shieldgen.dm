@@ -1020,12 +1020,20 @@
 
 	name = "Modular Shield Charger"
 	desc = "A machine that somehow fabricates hardlight using electronics"
-	color = "#15ff00"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "charger_off_closed"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
 	///Amount of regeneration this machine grants the connected generator
 	var/charge_boost
+
+/obj/machinery/modular_shield/module/charger/update_icon_state()
+	. = ..()
+	if((!shield_generator) || (machine_stat & NOPOWER))
+		icon_state = "charger_off_[panel_open ?"open":"closed"]"
+		return
+	icon_state = "charger_on_[panel_open ?"open":"closed"]"
 
 /obj/machinery/modular_shield/module/charger/RefreshParts()
 	. = ..()
