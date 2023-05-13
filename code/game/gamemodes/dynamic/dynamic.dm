@@ -701,15 +701,15 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			continue
 		possible_latejoin_rules[rule] = rule.get_weight()
 
-	log_dynamic("[newPlayer] was selected to roll for a latejoin ruleset \
-		from the following list: [english_list(possible_latejoin_rules, nothing_text = "No valid rulesets!")].")
 	if(!length(possible_latejoin_rules))
+		log_dynamic("FAIL: [newPlayer] was selected to roll for a latejoin ruleset, but there were no valid rulesets.")
 		return
 
+	log_dynamic("[newPlayer] was selected to roll for a latejoin ruleset from the following list: [english_list(possible_latejoin_rules)].")
 	// You get one shot at becoming a latejoin antag, if it fails the next guy will try.
 	var/datum/dynamic_ruleset/latejoin/picked_rule = pick_ruleset(possible_latejoin_rules, max_allowed_attempts = 1)
 	if(isnull(picked_rule))
-		log_dynamic("No valid rulset was selected for [newPlayer]'s latejoin[was_forced ? "" : ", the next player will be checked instead"].")
+		log_dynamic("FAIL: No valid rulset was selected for [newPlayer]'s latejoin[was_forced ? "" : ", the next player will be checked instead"].")
 		return
 	if(was_forced)
 		log_dynamic("Forcing random [picked_rule.ruletype] ruleset [picked_rule].")
@@ -724,8 +724,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	ruleset.trim_candidates()
 	ruleset.load_templates()
 	if (!ruleset.ready(forced))
-		log_dynamic("[only_candidate] was selected to latejoin with the [ruleset] ruleset, \
-			but the ruleset failed to execute[length(ruleset.candidates) ? " as they were not a valid candiate":""].")
+		log_dynamic("FAIL: [only_candidate] was selected to latejoin with the [ruleset] ruleset, \
+			but the ruleset failed to execute[length(ruleset.candidates) ? "":" as they were not a valid candiate"].")
 		return FALSE
 	if (!ruleset.repeatable)
 		latejoin_rules = remove_from_list(latejoin_rules, ruleset.type)
