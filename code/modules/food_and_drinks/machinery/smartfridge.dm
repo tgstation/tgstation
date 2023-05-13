@@ -121,15 +121,22 @@
 		return FALSE
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	var/tool_tip_set = FALSE
 	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/smartfridge/drying_rack))
 		if(welded_down)
 			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+			tool_tip_set = TRUE
 		else if (!welded_down && anchored)
 			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+			tool_tip_set = TRUE
 		if(machine_stat & BROKEN)
 			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+			tool_tip_set = TRUE
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()

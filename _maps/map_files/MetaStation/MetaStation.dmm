@@ -52047,7 +52047,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sEx" = (
-/obj/machinery/button/door/directional/east,
+/obj/machinery/button/door/directional/east{
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters Control";
+	req_access = list("kitchen")
+	},
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_y = 12

@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "RCD spawned apc, air alarm, fire alarm frames are no longer deleted if the wall mount operation fails."
-  - bugfix: "balloon alert run timing on deleted wall mount frame spawned by an RCD."
