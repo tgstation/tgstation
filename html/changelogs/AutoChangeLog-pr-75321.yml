@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Psychologists have Morgue access on lowpop, on top of their existing Coroner office access."
