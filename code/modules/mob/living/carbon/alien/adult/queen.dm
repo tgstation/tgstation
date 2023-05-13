@@ -192,7 +192,7 @@
 
 	if(istype(O, /obj/item/clothing/under/costume/maid) || istype(O, /obj/item/clothing/under/rank/civilian/janitor/maid))
 		if(do_after(user, 5 SECONDS, src))
-			costume = 1
+			costume = "maid"
 			dressup()
 			qdel(O)
 		return TRUE
@@ -200,7 +200,7 @@
 
 /mob/living/carbon/alien/adult/royal/queen/proc/dressup()
 	switch(costume)
-		if(1)
+		if("maid")
 			name = "alien queen maid"
 			desc = "Lusty, Sexy"
 			icon_state = "alienqmaid"

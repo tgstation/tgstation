@@ -66,6 +66,12 @@
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
 
+/mob/living/carbon/alien/larva/examine(mob/user)
+	. = ..()
+	if(isalien(user))
+		. += span_info("This larva is [amount_grown]/[max_grown] grown into an adult.")
+
+
 /mob/living/carbon/alien/larva/toggle_throw_mode()
 	return
 

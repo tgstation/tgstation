@@ -119,8 +119,8 @@
 			msg += "[span_notice("<b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b>")]\n"
 
 	msg += "</span>"
-
-	. += msg.Join("")
+	if(length(msg > 2))
+		. += msg.Join("")
 
 	if(!appears_dead)
 		switch(stat)
