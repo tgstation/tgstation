@@ -163,7 +163,7 @@
 	 * this is the reverse order in which get_all_contents() returns it's list
 	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
 	 */
-	for(var/i = length(nom); i >= 0; i--)
+	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
 		use_power(active_power_usage /(recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
