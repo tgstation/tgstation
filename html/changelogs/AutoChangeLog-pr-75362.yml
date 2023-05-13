@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Ghosts & camera mobs (ie blobs & AI's) will no longer set off landmines."
-  - bugfix: "Jaunting mobs will now only set off landmines if they stepped on them BEFORE jaunting."
-  - bugfix: "Flying mobs will no longer detonate landmines that were not first stepped on."
