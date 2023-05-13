@@ -70,7 +70,7 @@
 	. = INITIALIZE_HINT_LATELOAD
 
 	if(elevator_music_toggle)
-		elevator_music = new(src, TRUE)
+		elevator_music = new(src, start_immediately = TRUE)
 
 	maploaded = mapload
 	// Maploaded panels link in LateInitialize...
@@ -127,6 +127,14 @@
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
+
+/obj/machinery/elevator_control_panel/power_change()
+	if(machine_stat & (BROKEN|NOPOWER|EMPED))
+		elevator_music.stop()
+	else
+		elevator_music.start()
+	. = ..()
+
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()
