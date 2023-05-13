@@ -617,6 +617,11 @@
 
 	///Max strength gained from our own parts
 	var/innate_strength
+/obj/machinery/modular_shield_gen/power_change()
+	. = ..()
+	if(machine_stat & NOPOWER)
+		deactivate_shields()
+	return
 
 /obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
@@ -961,7 +966,7 @@
 	desc = "A waist high mess of humming pipes and wires that extend the modular shield network"
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "node_off_closed"
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
 	var/list/connected_through_us
