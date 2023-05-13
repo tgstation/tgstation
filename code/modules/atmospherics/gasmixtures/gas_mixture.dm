@@ -21,9 +21,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature = 0 //kelvins
-	var/tmp/temperature_archived = 0
-	var/volume = CELL_VOLUME //liters
+	/// The temperature of the gas mix in kelvin, this should never be 0.
+	var/temperature = TCMB //kelvins
+	/// Archived temperature, so we don't need to recalculate
+	var/tmp/temperature_archived = TCMB
+	/// Volume of the gas mix in liters
+	var/volume = CELL_VOLUME
+	/// The last tick this gas mixture shared on. See `/datum/gas_mixture/proc/share`
 	var/last_share = 0
 	/// Tells us what reactions have happened in our gasmix. Assoc list of reaction - moles reacted pair.
 	var/list/reaction_results
