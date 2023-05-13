@@ -1,4 +1,4 @@
-/// Checks for items int contents of /obj/item/mail/traitor after initialize_for_recipient proc
+/// Checks for items in contents of /obj/item/mail/traitor after initialize_for_recipient proc
 /datum/unit_test/traitor_mail_content_check
 
 /datum/unit_test/traitor_mail_content_check/Run()
