@@ -191,7 +191,7 @@
 /obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
 	if(user)
 		balloon_alert(user, "carved out")
-		playsound(src, 'sound/effects/cloth_rip.ogg', 75, TRUE)
+		playsound(src, 'sound/effects/cloth_rip.ogg', vol = 75, vary = TRUE)
 	carved = TRUE
-	create_storage(1)
+	create_storage(max_slots = 1)
 	return TRUE

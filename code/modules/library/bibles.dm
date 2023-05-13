@@ -81,6 +81,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
+	carve_out()
 
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
