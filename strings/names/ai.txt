@@ -17,7 +17,6 @@ Astor
 B O B
 B-4
 B-9
-B166ER
 Bender
 Bishop
 Blitz
@@ -46,16 +45,15 @@ ED-209
 Emma-2
 Erasmus
 Ez-27
-Fagor
+Taurus
 Faith
 Fi
 FRIEND COMPUTER
 Frost
-Fum
 Futura
 G2
 George
-Gnut
+Gnat
 Gort
 H A R L I E
 H E L P eR
