@@ -89,40 +89,53 @@ export const Modularshieldgen = (props, context) => {
                   Radius {current_radius}/{max_radius}
                 </ProgressBar>
               </Section>
-              <Section horizontal fill title={'Settings'}>
-                Set Radius
-                <Section vertical>
-                  <NumberInput
-                    title={'Set Radius'}
-                    disabled={active}
-                    value={current_radius}
-                    minValue={3}
-                    maxValue={max_radius}
-                    stepPixelSize={10}
-                    lineHeight="30px"
-                    fontSize="26px"
-                    width="90px"
-                    height="30px"
-                    onChange={(e, value) =>
-                      act('set_radius', {
-                        new_radius: value,
-                      })
-                    }
-                  />
-                  <Button
-                    disabled={recovering}
-                    selected={active}
-                    content={active ? 'On' : 'Off'}
-                    icon="power-off"
-                    onClick={() => act('toggle_shields')}
-                  />
-                  <Button
-                    disabled={active}
-                    onClick={() => act('toggle_exterior')}
-                    content={
-                      exterior_only ? 'External only' : 'Internal & External'
-                    }
-                  />
+              <Section title={'Settings'} bold={1}>
+                <Section>
+                  <Section>
+                    <NumberInput
+                      title={'Set Radius'}
+                      disabled={active}
+                      value={current_radius}
+                      minValue={3}
+                      maxValue={max_radius}
+                      stepPixelSize={10}
+                      lineHeight="50px"
+                      fontSize="20px"
+                      width="120px"
+                      height="50px"
+                      onChange={(e, value) =>
+                        act('set_radius', {
+                          new_radius: value,
+                        })
+                      }
+                    />
+                    <Button
+                      top={3.25}
+                      right={-16.75}
+                      bold={1}
+                      disabled={recovering}
+                      selected={active}
+                      content={active ? 'On' : 'Off'}
+                      icon="power-off"
+                      onClick={() => act('toggle_shields')}
+                    />
+                    <Button
+                      disabled={active}
+                      right={4.25}
+                      top={3.25}
+                      onClick={() => act('toggle_exterior')}
+                      content={
+                        exterior_only ? 'External only' : 'Internal & External'
+                      }
+                    />
+
+                    <Section title={'Set Radius'} right={-10.5} top={-4.25}>
+                      Toggle Placement
+                    </Section>
+                    <Section right={-25} top={-7.35}>
+                      Toggle Shields
+                    </Section>
+                  </Section>
                 </Section>
               </Section>
             </Section>
