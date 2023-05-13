@@ -402,7 +402,9 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage."
+	maxHealth = 70
+	health = 70
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast."
 
 /mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
@@ -427,6 +429,14 @@
 		balloon_alert(src, "on fire!")
 		return FALSE
 	return TRUE
+
+mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
+	. = ..()
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
 
 /**
  * ### Viper Spider (Wizard)

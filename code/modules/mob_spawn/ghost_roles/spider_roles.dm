@@ -146,7 +146,7 @@
 	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/basic/giant_spider/hunter/flesh,
+		/mob/living/basic/spiderling/hunter/flesh,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/midwife
