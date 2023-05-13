@@ -62,10 +62,10 @@
 		return
 	if(sealed)
 		return FALSE
-	if(isspider(mover))
-		return TRUE
-	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/basic/giant_spider))
+	if(isliving(mover))
+		if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
+			return TRUE
+		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
 		if(prob(50))
 			balloon_alert(mover, "stuck in web!")
