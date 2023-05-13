@@ -58,7 +58,7 @@
  * * user - The spider sending the message
  * * message - The message to be sent
  */
-	/// send a message to all spiders
+	/// send a message to all living spiders
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
