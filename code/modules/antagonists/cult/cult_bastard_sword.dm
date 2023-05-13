@@ -5,6 +5,7 @@
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
 	block_chance = 50
+	block_sound = 'sound/weapons/parry.ogg'
 	throwforce = 20
 	force = 35
 	armour_penetration = 45
@@ -81,16 +82,10 @@
 /obj/item/cult_bastard/IsReflect(def_zone)
 	if(!spinning)
 		return FALSE
-	playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 	return TRUE
 
 /obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!prob(final_block_chance))
 		return FALSE
-	if(attack_type == PROJECTILE_ATTACK)
-		owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-		return TRUE
-	playsound(src, 'sound/weapons/parry.ogg', 75, 1)
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 	return TRUE

@@ -1,0 +1,4 @@
+author: "ynot01"
+delete-after: True
+changes:
+  - bugfix: "Desert Eagles can no longer load .50 BMG sniper rifle rounds and vice versa."

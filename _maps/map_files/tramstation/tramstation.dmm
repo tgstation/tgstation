@@ -4468,9 +4468,7 @@
 /area/station/cargo/storage)
 "axI" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "axJ" = (
@@ -4561,9 +4559,7 @@
 "ayG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/cardboard{
 	amount = 23
 	},
@@ -18404,7 +18400,6 @@
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "ffk" = (
@@ -19901,8 +19896,8 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
+/obj/item/stock_parts/servo,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -25125,9 +25120,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stock_parts/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -29475,9 +29468,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -35438,6 +35429,7 @@
 /area/station/engineering/atmos)
 "lxi" = (
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "lxm" = (
@@ -39726,9 +39718,9 @@
 /area/station/holodeck/rec_center)
 "ndt" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "ndN" = (
@@ -50976,9 +50968,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56007,8 +55997,8 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "sVy" = (
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "sVz" = (
@@ -59194,6 +59184,7 @@
 /area/station/science/robotics/mechbay)
 "uaM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "uba" = (
@@ -184768,7 +184759,7 @@ tXU
 gVd
 dVM
 iqO
-njC
+aoh
 dLS
 dVM
 dVM
@@ -185286,7 +185277,7 @@ njC
 ndt
 dVM
 dVM
-dVM
+pIQ
 qYJ
 rSB
 dVM
