@@ -115,11 +115,7 @@
 /datum/action/cooldown/lay_web/sticky_web
 	name = "Spin Sticky Web"
 	desc = "Spin a web to stick intruders in place."
-	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "lay_sticky_web"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 20 SECONDS
 	webbing_time = 3 SECONDS
 
