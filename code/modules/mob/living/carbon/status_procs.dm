@@ -33,7 +33,7 @@
 	filters += FILTER_STAMINACRIT
 
 	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), STAMINA_STUN_TIME)
-	stamina.pause(STAMINA_CRIT_TIME)
+	stamina.pause(STAMINA_STUN_TIME + 2 SECONDS)
 
 /mob/living/carbon/exit_stamina_stun()
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)

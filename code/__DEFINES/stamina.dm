@@ -1,6 +1,4 @@
 #define FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
-///Time before regen starts when in stam crit
-#define STAMINA_CRIT_TIME (5 SECONDS)
 ///Time before regen starts when hit with stam damage
 #define STAMINA_REGEN_TIME (2.5 SECONDS)
 ///The amount of stamina a carbon recovers every 2 seconds
@@ -44,7 +42,7 @@
 ///The amount of stamina at which point swinging is free.
 #define STAMINA_MAXIMUM_TO_SWING 100
 ///The time a mob is stunned when stamina stunned
-#define STAMINA_STUN_TIME 3 SECONDS
+#define STAMINA_STUN_TIME 5 SECONDS
 ///The base value of a stamina stun chance
 #define STAMINA_SCALING_STUN_BASE 20
 ///The maximum additional stun chance based on missing stamina
