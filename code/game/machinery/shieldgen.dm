@@ -632,7 +632,7 @@
 		innate_regen += new_servo.tier
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		innate_radius += new_laser.tier * 0.5
+		innate_radius += new_laser.tier * 0.25
 
 	calculate_regeneration()
 	calculate_max_strength()
@@ -814,8 +814,9 @@
 			return
 		current_regeneration = max_regeneration
 		return
-
-	current_regeneration = (max_regeneration / (1 + radius/max_radius))
+//we lose more than half the regeneration rate when generating a shield that is near the max radius that we can handle but if we generate
+//a shield with a very small fraction of the max radius we can support we get a very small bonus multipliar
+	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
 	if(!exterior_only)
 		current_regeneration *=0.5
@@ -1048,18 +1049,26 @@
 
 	name = "Modular Shield Relay"
 	desc = "It helps the shield generator project farther out"
-	color = "#e100ff"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "relay_off_closed"
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
 	///Amount of max range this machine grants the connected generator
 	var/range_boost
 
+/obj/machinery/modular_shield/module/relay/update_icon_state()
+	. = ..()
+	if((!shield_generator) || (machine_stat & NOPOWER))
+		icon_state = "relay_off_[panel_open ?"open":"closed"]"
+		return
+	icon_state = "relay_on_[panel_open ?"open":"closed"]"
+
 /obj/machinery/modular_shield/module/relay/RefreshParts()
 	. = ..()
 	range_boost = 0
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		range_boost += new_laser.tier * 0.5
+		range_boost += new_laser.tier * 0.25
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
