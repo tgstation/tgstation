@@ -18400,7 +18400,6 @@
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "ffk" = (
@@ -35430,6 +35429,7 @@
 /area/station/engineering/atmos)
 "lxi" = (
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "lxm" = (
@@ -39718,9 +39718,9 @@
 /area/station/holodeck/rec_center)
 "ndt" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "ndN" = (
@@ -55997,8 +55997,8 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "sVy" = (
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "sVz" = (
@@ -59184,6 +59184,7 @@
 /area/station/science/robotics/mechbay)
 "uaM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "uba" = (
@@ -184758,7 +184759,7 @@ tXU
 gVd
 dVM
 iqO
-njC
+aoh
 dLS
 dVM
 dVM
@@ -185276,7 +185277,7 @@ njC
 ndt
 dVM
 dVM
-dVM
+pIQ
 qYJ
 rSB
 dVM

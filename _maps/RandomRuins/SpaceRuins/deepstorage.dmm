@@ -1104,6 +1104,7 @@
 	name = "Atmospherics and Power Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "eZ" = (
@@ -1778,13 +1779,18 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "qP" = (
-/turf/open/misc/asteroid/airless,
-/area/space)
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
 "qX" = (
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"rc" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -1900,8 +1906,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "wf" = (
-/turf/closed/mineral/random/low_chance,
-/area/space)
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "wl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2319,6 +2326,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"Ij" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "Ik" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2373,6 +2384,11 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"JY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Kg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
@@ -2382,6 +2398,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Kl" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "KW" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood/o_minus,
@@ -2439,6 +2459,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"Ma" = (
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Mp" = (
 /obj/structure/table,
 /obj/item/storage/medkit/brute{
@@ -2464,6 +2491,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"Nh" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/kitchen)
 "Nv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -2478,6 +2509,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
+"NO" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
 "Ob" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2546,6 +2581,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
+/obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "RT" = (
@@ -2649,12 +2685,16 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "VI" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Wx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
+"WE" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage)
 "WF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -3334,7 +3374,7 @@ hU
 hU
 hU
 hU
-dB
+Kl
 dB
 dB
 dB
@@ -3374,7 +3414,7 @@ ab
 ab
 ab
 ab
-ab
+NO
 ab
 ab
 ab
@@ -3398,7 +3438,7 @@ ey
 dB
 ab
 ab
-gF
+rc
 gF
 gF
 gF
@@ -3427,7 +3467,7 @@ ab
 ab
 ab
 ab
-hU
+qP
 hU
 hU
 hU
@@ -3511,8 +3551,8 @@ ab
 ab
 VI
 VI
-wf
-qP
+ab
+Iy
 Iy
 ab
 ab
@@ -3589,7 +3629,7 @@ aT
 bo
 EX
 hU
-fT
+JY
 cE
 sS
 sS
@@ -3647,7 +3687,7 @@ cS
 cS
 dB
 Yq
-cp
+WE
 cp
 cp
 cp
@@ -3792,7 +3832,7 @@ ab
 ab
 ab
 hU
-af
+Nh
 af
 af
 af
@@ -4152,7 +4192,7 @@ ab
 ab
 ab
 ab
-ag
+Ij
 ag
 ag
 ag
@@ -4364,14 +4404,14 @@ ag
 am
 he
 aE
-aQ
+wf
 bA
 bA
 WG
 bA
 bA
 aQ
-da
+Ma
 da
 Zv
 GY
