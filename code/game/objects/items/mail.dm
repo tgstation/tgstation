@@ -120,7 +120,7 @@
 /obj/item/mail/attack_self(mob/user)
 	if(!unwrap(user))
 		return FALSE
-	after_unwrap(user)
+	return after_unwrap(user)
 
 /// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
@@ -144,6 +144,7 @@
 		user.put_in_hands(stuff)
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
+	return TRUE
 
 
 /obj/item/mail/examine_more(mob/user)
@@ -374,6 +375,7 @@
 			log_bomber(user, "opened armed mail made by [made_by_cached_name] ([made_by_cached_ckey]), activating", stuff)
 			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item/mail/traitor, attack_self), user)
 	qdel(src)
+	return TRUE
 
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
 	if(armed == FALSE || user.get_inactive_held_item() != src)
