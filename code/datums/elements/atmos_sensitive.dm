@@ -30,9 +30,9 @@
 
 /datum/element/atmos_sensitive/proc/react_to_move(datum/source, atom/movable/oldloc, direction, forced)
 	SIGNAL_HANDLER
+
 	var/atom/atom_source = source
-	if(isopenturf(atom_source.loc))
-		atom_source.atmos_conditions_changed() //Make sure you're properly registered
+	atom_source.atmos_conditions_changed() //Make sure you're properly registered
 
 /atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER
