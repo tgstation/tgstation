@@ -71,7 +71,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	acid_overlay = null
 	if(sizzle)
 		QDEL_NULL(sizzle)
 	if(particle_effect)
@@ -122,6 +121,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	process_effect?.InvokeAsync(seconds_per_tick)
 	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
+	// We got unacidable, we need to bail out
+	if(target.resistance_flags & UNACIDABLE)
+		qdel(src)
+		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * seconds_per_tick)
 
 /// Handles processing on an [/atom/movable] (that uses atom_integrity).
@@ -132,6 +135,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /// Handles processing on a [/mob/living].
 /datum/component/acid/proc/process_mob(mob/living/target, seconds_per_tick)
+	if(target.resistance_flags & ACID_PROOF)
+		return
 	target.acid_act(acid_power, acid_volume * seconds_per_tick)
 
 /// Handles processing on a [/turf].
@@ -145,9 +150,11 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(applied_targets)
 		set_volume(acid_volume - (acid_used * applied_targets))
 
+	if(target.resistance_flags & ACID_PROOF)
+		return
+
 	// Snowflake code for handling acid melting walls.
-	// TODO: Move integrity handling to the atom level so this can be desnowflaked. - DONE!
-	// TODO: Desnowflake this properly.
+	// We really should consider making turfs use atom_integrity, but for now this is just for acids.
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
@@ -205,7 +212,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_attack_hand(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	if(!istype(user))
+	if(!iscarbon(user))
 		return NONE
 	if((source == user) || (source.loc == user))
 		return NONE // So people can take their own clothes off.
@@ -216,7 +223,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	var/obj/item/bodypart/affecting = user.get_bodypart(!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 	if(!affecting?.receive_damage(burn = 5))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return NONE
 
 	to_chat(user, span_userdanger("The acid on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
