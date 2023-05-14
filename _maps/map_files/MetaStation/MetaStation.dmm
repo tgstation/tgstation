@@ -35892,7 +35892,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "mUD" = (
-/obj/structure/closet/secure_closet/bar{
+/obj/structure/closet/secure_closet/bar/all_access{
 	pixel_x = -3;
 	pixel_y = -1
 	},
