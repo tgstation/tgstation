@@ -430,7 +430,7 @@
 		return FALSE
 	return TRUE
 
-mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
+/mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
