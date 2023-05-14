@@ -17,9 +17,10 @@
 	category = LOG_CATEGORY_DEBUG_HREF
 	master_category = /datum/log_category/debug
 
+// This is not in the debug master category on purpose, do not add it
 /datum/log_category/debug_runtime
 	category = LOG_CATEGORY_DEBUG_RUNTIME
-	master_category = /datum/log_category/debug
+
 
 /datum/log_category/debug_mapping
 	category = LOG_CATEGORY_DEBUG_MAPPING
