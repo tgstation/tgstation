@@ -142,7 +142,7 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleEscape() {
-    const current = this.innerRef?.current;
+    const current = this.innerRef.current;
 
     if (current) {
       current.blur();
@@ -184,8 +184,7 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleInput() {
-    const currentValue = this.innerRef?.current?.value;
-    if (!currentValue) return;
+    const currentValue = this.innerRef.current?.value;
 
     // If we're typing, send the message
     if (this.channelIterator.isVisible() && this.currentPrefix !== ':b ') {
@@ -256,7 +255,7 @@ export class TguiSay extends Component<{}, State> {
     this.channelIterator.set(channel);
     this.setState({ buttonContent: this.channelIterator.current() });
     setTimeout(() => {
-      this.innerRef?.current?.focus();
+      this.innerRef.current?.focus();
     }, 1);
     windowOpen(this.channelIterator.current());
   };
