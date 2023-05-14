@@ -21,7 +21,6 @@
 /datum/log_category/debug_runtime
 	category = LOG_CATEGORY_DEBUG_RUNTIME
 
-
 /datum/log_category/debug_mapping
 	category = LOG_CATEGORY_DEBUG_MAPPING
 	master_category = /datum/log_category/debug
