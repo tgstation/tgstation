@@ -222,9 +222,7 @@
 		var/client/C = M.client
 		C?.tgui_panel?.stop_music()
 
-	if(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND))
-		S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
-
+	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 //world/proc/shelleo
