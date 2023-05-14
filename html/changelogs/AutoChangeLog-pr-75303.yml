@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - rscadd: "Things made primarily of the glass material datum (and any of its subtypes) will now shatter when thrown, be careful with that statue block now."
-  - code_imp: "Shattering on impact is now a component, rather than code just on plates."
