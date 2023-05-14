@@ -207,6 +207,7 @@
 	if(allows_cooling && temperature_target_delta < 0)
 		return
 
+	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
 	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
