@@ -270,7 +270,7 @@
 		var/obj/item/stack/inserting_stack = target
 		item_stack.add(inserting_stack.amount)
 		qdel(inserting_stack)
-		return 0
+	return 0
 
 /**
  * Inserts the relevant materials from an item into this material container.
