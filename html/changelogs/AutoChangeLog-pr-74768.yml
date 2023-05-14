@@ -1,5 +1,0 @@
-author: "Sylvette"
-delete-after: True
-changes:
-  - bugfix: "Fixed sign language so you can't sign when cuffed or emotemute as initially intended"
-  - balance: "Allows signers to cast spells using sign language as long as both hands are free"
