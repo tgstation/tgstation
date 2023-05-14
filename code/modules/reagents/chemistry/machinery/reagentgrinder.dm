@@ -177,6 +177,9 @@
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
+		if(I.atom_storage.remove_type(/obj/item/reagent_containers/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
 			if(!I.contents.len)
 				to_chat(user, span_notice("You empty [I] into [src]."))
 			else
