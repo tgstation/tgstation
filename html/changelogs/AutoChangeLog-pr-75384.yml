@@ -1,4 +1,0 @@
-author: "orthography"
-delete-after: True
-changes:
-  - bugfix: "fixes an empty oxygen tank on birdshot"
