@@ -1,4 +1,4 @@
-type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'Admin';
+export type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'Admin';
 
 /**
  * ### ChannelIterator
@@ -20,8 +20,8 @@ export class ChannelIterator {
     return this.channels[this.index];
   }
 
-  public set(channel: string): void {
-    this.index = this.channels.indexOf(channel as Channel) || 0;
+  public set(channel: Channel): void {
+    this.index = this.channels.indexOf(channel) || 0;
   }
 
   public current(): Channel {

@@ -1,7 +1,11 @@
-.content {
+.center {
   display: flex;
-  flex: 1 1 auto;
-  border: thin solid red;
-  width: 100%;
+  flex: 1 1 0;
+}
+
+.input {
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex: 1 1 0;
 }

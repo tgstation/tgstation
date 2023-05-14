@@ -1,16 +1,6 @@
 @use 'sass:color';
 @use './colors.scss';
 
-@keyframes gradient {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 100% 0;
-  }
-}
-
 .window {
   background-color: colors.$background;
   display: flex;
@@ -21,13 +11,7 @@
   overflow: hidden;
 }
 
-.window__center {
-  display: flex;
-  flex: 1 1 auto;
-}
-
 .window-lightMode {
-  @extend .window;
   background-color: colors.$lightMode;
 }
 
@@ -42,30 +26,4 @@
 
 .window-70 {
   height: 70px;
-}
-
-/** Creates an animated border for each channel */
-@each $channel, $color in colors.$channel-map {
-  .window-#{$channel} {
-    &:after {
-      animation: gradient 10s linear infinite;
-      background: linear-gradient(
-        to right,
-        darken($color, 35%),
-        $color,
-        lighten($color, 10%),
-        $color,
-        darken($color, 35%)
-      );
-      background-position: 0% 0%;
-      background-size: 500% auto;
-      bottom: 0px;
-      content: '';
-      height: 2px;
-      left: 0px;
-      position: absolute;
-      right: 0px;
-      z-index: 999;
-    }
-  }
 }

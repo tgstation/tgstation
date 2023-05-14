@@ -1,4 +1,4 @@
-import { ChatHistory } from './ChatHistory'; // Update this import path
+import { ChatHistory } from './ChatHistory';
 
 describe('ChatHistory', () => {
   let chatHistory: ChatHistory;

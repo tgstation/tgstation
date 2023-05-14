@@ -1,22 +1,8 @@
-@use './colors.scss';
-
 .textarea {
-  background-color: transparent;
+  background: transparent;
   border: none;
-  color: colors.$background;
   flex: 1 1 auto;
-  font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
-}
-
-.textarea-lightMode {
-  @extend .textarea;
-  color: black;
-}
-
-/** Creates an input for each channel */
-@each $channel, $color in colors.$channel-map {
-  .textarea-#{$channel} {
-    color: $color;
-  }
+  overflow: hidden;
+  padding: 0.5rem;
 }

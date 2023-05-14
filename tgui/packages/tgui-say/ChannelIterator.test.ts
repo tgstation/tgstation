@@ -1,4 +1,4 @@
-import { ChannelIterator } from '../classes/ChannelIterator'; // Update this import path
+import { ChannelIterator } from './ChannelIterator';
 
 describe('ChannelIterator', () => {
   let channelIterator: ChannelIterator;

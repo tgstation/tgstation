@@ -1,68 +1,38 @@
 @use 'sass:color';
 @use './colors.scss';
 
-$borderSize: 2px;
+$borderSize: 4px;
 
 .dragzone-horizontal {
-  color: transparent;
+  flex: 1 1 0;
+  width: 100%;
   height: $borderSize;
-  flex: 1 1 auto;
+  color: transparent;
+  border-bottom: thin solid;
+  border-top: thin solid;
+}
+.dragzone-left {
+  border-left: thin solid;
+}
+
+.dragzone-right {
+  border-right: thin solid;
 }
 
 .dragzone-vertical {
-  color: transparent;
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  height: 100%;
   width: $borderSize;
+  color: transparent;
+  border-left: thin solid;
+  border-right: thin solid;
 }
 
-@each $channel, $color in colors.$channel-map {
-  $darkened: darken($color, 20%);
-
-  .dragzone-bottom-#{$channel} {
-    @extend .dragzone-horizontal;
-    border-left: $borderSize solid $darkened;
-    border-right: $borderSize solid $darkened;
-  }
-
-  .dragzone-left-#{$channel} {
-    @extend .dragzone-vertical;
-    border-left: $borderSize solid $darkened;
-  }
-
-  .dragzone-right-#{$channel} {
-    @extend .dragzone-vertical;
-    border-right: $borderSize solid $darkened;
-  }
-
-  .dragzone-top-#{$channel} {
-    @extend .dragzone-horizontal;
-    border-left: $borderSize solid $darkened;
-    border-right: $borderSize solid $darkened;
-    border-top: $borderSize solid $darkened;
-  }
+.dragzone-top {
+  border-top: thin solid;
 }
 
 /** Lightmode static theme */
-.dragzone-bottom-lightMode {
-  @extend .dragzone-horizontal;
-  border-left: $borderSize solid colors.$lightBorder;
-  border-right: $borderSize solid colors.$lightBorder;
-  border-bottom: $borderSize solid colors.$lightBorder;
-}
-
-.dragzone-left-lightMode {
-  @extend .dragzone-vertical;
-  border-left: $borderSize solid colors.$lightBorder;
-}
-
-.dragzone-right-lightMode {
-  @extend .dragzone-vertical;
-  border-right: $borderSize solid colors.$lightBorder;
-}
-
-.dragzone-top-lightMode {
-  @extend .dragzone-horizontal;
-  border-left: $borderSize solid colors.$lightBorder;
-  border-right: $borderSize solid colors.$lightBorder;
-  border-top: $borderSize solid colors.$lightBorder;
+.dragzone-lightMode {
+  border-color: colors.$lightBorder;
 }

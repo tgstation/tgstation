@@ -1,5 +1,4 @@
 import { WINDOW_SIZES } from './constants';
-import { classes } from 'common/react';
 
 /**
  * Window functions
@@ -64,24 +63,3 @@ const setClosed = () => {
     focus: true,
   });
 };
-
-/** Miscellaneous */
-
-/**
- * Returns modular css classes.
- *
- * Parameters:
- * element - required string. The element selector.
- * theme - optional string. The theme to apply.
- * options - optional string | number. Adds another css selector.
- */
-export const getCss = (
-  element: string,
-  theme?: string,
-  options?: string | number
-) =>
-  classes([
-    element,
-    theme && `${element}-${theme}`,
-    options && `${element}-${options}`,
-  ]);
