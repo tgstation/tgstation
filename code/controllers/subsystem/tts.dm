@@ -123,6 +123,12 @@ SUBSYSTEM_DEF(tts)
 	request.begin_async()
 	in_process_tts_messages += list(entry)
 
+/datum/controller/subsystem/tts/Shutdown()
+	tts_enabled = FALSE
+	for(var/list/data in in_process_tts_messages)
+		var/datum/http_request/request = data[REQUEST_INDEX]
+		UNTIL(request.is_complete())
+
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)
 		flags |= SS_NO_FIRE
@@ -163,9 +169,6 @@ SUBSYSTEM_DEF(tts)
 
 /datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE, message_range = 7)
 	if(!tts_enabled)
-		return
-
-	if(SSticker.current_state == GAME_STATE_FINISHED)
 		return
 
 	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
