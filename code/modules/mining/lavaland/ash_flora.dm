@@ -133,8 +133,8 @@
 	desc = "An odd flower that grows commonly near bodies of lava."
 	icon_state = "fireblossom1"
 	base_icon_state = "fireblossom"
-	light_range = 2.1
-	light_power = 2.1
+	light_range = LIGHT_FIRE_BLOSSOM
+	light_power = LIGHT_FIRE_BLOSSOM
 	light_color = COLOR_BIOLUMINESCENCE_YELLOW
 	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
@@ -148,7 +148,7 @@
 	number_of_variants = 2
 
 /obj/structure/flora/ash/fireblossom/after_harvest()
-	set_light_power(2.7)
+	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
 	set_light_range(1.5)
 	update_light()
 	return ..()
