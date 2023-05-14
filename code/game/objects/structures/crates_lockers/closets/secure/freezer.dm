@@ -59,7 +59,7 @@
 	new /obj/item/reagent_containers/condiment/rice(src)
 	new /obj/item/reagent_containers/condiment/sugar(src)
 
-/obj/structure/closet/secure_closet/freezer/all_access
+/obj/structure/closet/secure_closet/freezer/kitche/all_access
 	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance
