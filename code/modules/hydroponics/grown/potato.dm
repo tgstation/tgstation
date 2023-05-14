@@ -15,9 +15,10 @@
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
-	mutatelist = list(/obj/item/seeds/potato/sweet)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/sweet_potato)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/battery
+	harvest_age = 100
 
 /obj/item/food/grown/potato
 	seed = /obj/item/seeds/potato
@@ -56,7 +57,7 @@
 	species = "sweetpotato"
 	plantname = "Sweet Potato Plants"
 	product = /obj/item/food/grown/potato/sweet
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/potato/sweet

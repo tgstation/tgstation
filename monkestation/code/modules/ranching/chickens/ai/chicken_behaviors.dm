@@ -121,7 +121,7 @@
 
 /datum/ai_behavior/eat_ground_food/setup(datum/ai_controller/controller, ...)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/datum/weakref/target_ref
 	var/list/floor_foods = list()
 	for(var/obj/effect/chicken_feed/food_item in view(3, living_pawn.loc))
@@ -137,7 +137,7 @@
 
 /datum/ai_behavior/eat_ground_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	if(!controller.current_movement_target)
 		finish_action(controller, TRUE)
 		return
@@ -180,7 +180,7 @@
 
 /datum/ai_behavior/find_and_lay/setup(datum/ai_controller/controller, ...)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/datum/weakref/target_ref
 	for(var/obj/structure/nestbox/nesting_box in view(3, living_pawn.loc))
 		target_ref = WEAKREF(nesting_box)
@@ -192,7 +192,7 @@
 
 /datum/ai_behavior/find_and_lay/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 
 	if(!controller.current_movement_target)
 		finish_action(controller, TRUE)

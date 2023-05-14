@@ -11454,14 +11454,11 @@
 /area/station/command/bridge)
 "cAc" = (
 /obj/structure/table,
-/obj/item/storage/box/beakers{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Service - Hydroponics"
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/infuser,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "cAd" = (
@@ -13847,13 +13844,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
-/obj/machinery/door/airlock/hydroponics{
-	name = "Hydroponics Storage"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/closed/wall,
 /area/station/service/hydroponics)
 "dvj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19646,7 +19638,6 @@
 	},
 /area/station/science/lobby)
 "fIl" = (
-/obj/structure/reagent_dispensers/watertank/high,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -19654,6 +19645,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/composters,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "fIH" = (
@@ -44987,6 +44979,13 @@
 "ptQ" = (
 /turf/open/openspace,
 /area/station/science/genetics)
+"ptR" = (
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics)
 "ptU" = (
 /obj/structure/table,
 /obj/item/storage/photo_album/prison,
@@ -46410,6 +46409,16 @@
 /obj/machinery/reagentgrinder,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/item/storage/box/beakers{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "pQY" = (
@@ -52737,6 +52746,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/splicer,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "smV" = (
@@ -100995,7 +101006,7 @@ nUP
 wDw
 ale
 moV
-tto
+ptR
 flP
 feC
 sbv

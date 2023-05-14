@@ -11,6 +11,7 @@
 #define MEDAL_PULSE "Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
 #define MEDAL_RODSUPLEX "Feat of Strength"
+#define MEDAL_SINGULARITY_BUSTER "Scrungularity" // Singularity Nullified
 #define MEDAL_CLOWNCARKING "Round and Full"
 #define MEDAL_THANKSALOT "The Best Driver"
 #define MEDAL_HELBITALJANKEN "Hel-bent on Winning"

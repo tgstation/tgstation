@@ -529,9 +529,9 @@
 		JOB_WARDEN,
 	)
 	required_candidates = 3
-	weight = 3
+	weight = 1
 	delay = 7 MINUTES
-	cost = 20
+	cost = 40
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
 	antag_cap = 3
 	flags = HIGH_IMPACT_RULESET

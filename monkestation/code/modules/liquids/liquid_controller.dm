@@ -134,12 +134,14 @@ SUBSYSTEM_DEF(liquids)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
+				LG.build_turf_reagent()
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
 						return
 					LG.process_member(member)
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
+
 
 /client/proc/toggle_liquid_debug()
 	set category = "Debug"

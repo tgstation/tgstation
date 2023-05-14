@@ -2,7 +2,7 @@
 	. = ..()
 	update_turf_movespeed(loc)
 	if(HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
-		if(!isgroundlessturf(loc))
+		if(!isgroundlessturf(loc) || (/obj/structure/lattice in loc.contents))
 			ADD_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
 		else
 			REMOVE_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)

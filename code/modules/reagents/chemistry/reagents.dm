@@ -119,6 +119,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///The rate of evaporation in units per call
 	var/evaporation_rate = 0.5
 
+	///is this chemical exempt from istype restrictions
+	var/bypass_restriction = FALSE
+	///chemicals that aren't typepathed but are useless so we remove
+	var/restricted = FALSE
+
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
@@ -163,6 +168,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	SHOULD_CALL_PARENT(TRUE)
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
+
+/datum/reagent/proc/evaporate(turf/exposed_turf, reac_volume)
+	return
 
 ///Called whenever a reagent is on fire, or is in a holder that is on fire. (WIP)
 /datum/reagent/proc/burn(datum/reagents/holder)
@@ -247,6 +255,10 @@ Primarily used in reagents/reaction_agents
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
+
+/datum/reagent/proc/generate_infusion_values(datum/reagents/chems)
+	if(!chems)
+		return
 
 /// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
 /datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -335,5 +347,5 @@ Primarily used in reagents/reaction_agents
 
 	return reagent_strings.Join(join_text)
 
-/datum/reagent/proc/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/proc/feed_interaction(mob/living/basic/chicken/target, volume)
 	return

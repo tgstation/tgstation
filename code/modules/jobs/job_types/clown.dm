@@ -43,7 +43,12 @@
 	if(!ishuman(spawned))
 		return
 	spawned.apply_pref_name(/datum/preference/name/clown, player_client)
-
+	var/obj/item/organ/internal/butt/butt = spawned.get_organ_slot(ORGAN_SLOT_BUTT)
+	if(butt)
+		butt.Remove(spawned, 1)
+		QDEL_NULL(butt)
+		butt = new/obj/item/organ/internal/butt/clown
+		butt.Insert(spawned)
 
 /datum/outfit/job/clown
 	name = "Clown"

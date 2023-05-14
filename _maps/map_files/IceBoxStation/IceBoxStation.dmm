@@ -13406,6 +13406,19 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/hos)
+"ehz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/half{
+	dir = 8
+	},
+/obj/machinery/composters,
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/station/service/hydroponics)
 "ehA" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Canteen"
@@ -19155,7 +19168,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "gbF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -19163,6 +19175,8 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/infuser,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gbH" = (
@@ -32584,13 +32598,14 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ksO" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
+/obj/machinery/splicer,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ksU" = (
@@ -36580,6 +36595,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lEK" = (
@@ -45190,6 +45206,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "opu" = (
@@ -51280,6 +51301,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"qoU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics)
 "qoY" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
@@ -173823,7 +173854,7 @@ hmb
 hmb
 hlP
 ahI
-ahI
+qoU
 boV
 hmb
 hmb
@@ -175103,7 +175134,7 @@ xMq
 xMq
 xMq
 exw
-gAN
+ehz
 sCZ
 sCZ
 lmm

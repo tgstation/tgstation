@@ -6,7 +6,7 @@
 	plantname = "Onion Sprouts"
 	product = /obj/item/food/grown/onion
 	lifespan = 20
-	maturation = 3
+	maturation = 30
 	production = 4
 	yield = 6
 	endurance = 25
@@ -14,7 +14,8 @@
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.25)
-	mutatelist = list(/obj/item/seeds/onion/red)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/red_onion)
+	harvest_age = 80
 
 /obj/item/food/grown/onion
 	seed = /obj/item/seeds/onion
@@ -35,7 +36,7 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/food/grown/onion/red
-	mutatelist = null
+	possible_mutations = list()
 
 /obj/item/food/grown/onion/red
 	seed = /obj/item/seeds/onion/red

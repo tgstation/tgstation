@@ -188,7 +188,7 @@
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
-		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients) || is_type_in_list(ingredient, outputted_ingredients))
+		if((!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients)) && !is_type_in_list(ingredient, outputted_ingredients))
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done

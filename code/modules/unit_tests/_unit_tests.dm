@@ -126,8 +126,6 @@
 #include "human_through_recycler.dm"
 #include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
-#include "hydroponics_harvest.dm"
-#include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
 #include "inhands.dm"
 #include "json_savefile_importing.dm"
