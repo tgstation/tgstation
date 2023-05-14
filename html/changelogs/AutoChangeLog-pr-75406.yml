@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed a runtime which occured when a self-recharging gun (ie proto-kinetic accelerator) with a bayonet attached was deleted."

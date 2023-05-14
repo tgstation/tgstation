@@ -514,3 +514,46 @@
       when the griddle is on
   orthography:
   - bugfix: replaces empty oxygen tanks in icebox chapel.
+2023-05-14:
+  Comxy:
+  - bugfix: Fixes the speed of all basic mobs.
+  Jacquerel:
+  - bugfix: Diamond Golems can no longer attack or throw things and remain invisible.
+  - bugfix: 'Bananium Golems are only slippery if you actually tread on them (aka:
+      while they are resting).'
+  - balance: Golem bluespace teleportation is slightly quicker.
+  Jolly:
+  - bugfix: '[MetaStation] Chefs may now brutally murder- I mean deny service to the
+      station patrons once again, the shutters over the counter may now be closed
+      once again.'
+  Melbert:
+  - bugfix: Runtime with burning black slime transformation
+  Paxilmaniac:
+  - rscadd: Things made primarily of the glass material datum (and any of its subtypes)
+      will now shatter when thrown, be careful with that statue block now.
+  - code_imp: Shattering on impact is now a component, rather than code just on plates.
+  Profakos:
+  - code_imp: cleaned up cargo export code a bit
+  Singul0:
+  - bugfix: HoP on northstar can now disperse troublemakers with ease.
+  Sylvette:
+  - bugfix: Fixed sign language so you can't sign when cuffed or emotemute as initially
+      intended
+  - balance: Allows signers to cast spells using sign language as long as both hands
+      are free
+  Thunder12345:
+  - bugfix: "Dueling pistols found in deep space now come in linked pairs for \u221E\
+      % greater usability."
+  YehnBeep:
+  - qol: Posters can now fit back into the boxes they come in.
+  junkgle01:
+  - image: Resprites the vanilla & brioche cakes and their associated slices.
+  kawoppi:
+  - rscadd: added animations to the *jump, *shiver, *sway, *tremble, *twitch and *twitch_s
+      emotes
+  - rscadd: the *jump emote now plays a sound
+  orthography:
+  - bugfix: fixes an empty oxygen tank on birdshot
+  ynot01:
+  - bugfix: Desert Eagles can no longer load .50 BMG sniper rifle rounds and vice
+      versa.
