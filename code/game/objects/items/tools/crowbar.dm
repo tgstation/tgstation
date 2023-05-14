@@ -103,9 +103,9 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
-	var/snap_time_weak_handcuffs = null
+	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
-	var/snap_time_strong_handcuffs = null
+	var/snap_time_strong_handcuffs = 0 SECONDS
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -133,12 +133,12 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
-	if(tool_behaviour == TOOL_CROWBAR)
-		RemoveElement(/datum/element/cuffsnapping)
-	else // this breaks! causes runtime when sswitcihng
-		AddElement(/datum/element/cuffsnapping, snap_time_weak = snap_time_weak_handcuffs, snap_time_strong = snap_time_strong_handcuffs)
 	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
 	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_CROWBAR)
+		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
+	else // this breaks! causes runtime when sswitcihng
+		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/crowbar/power/syndicate

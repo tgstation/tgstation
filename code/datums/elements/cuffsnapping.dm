@@ -78,13 +78,15 @@
 
 	if(cuffs.restraint_strength && isnull(src.snap_time_strong))
 		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		return COMPONENT_SKIP_ATTACK
 
 	else if(isnull(src.snap_time_weak))
 		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		return COMPONENT_SKIP_ATTACK
 
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	. = COMPONENT_SKIP_ATTACK
 
 	INVOKE_ASYNC(src, PROC_REF(do_cuffsnap_target), cutter, target, cutter_user, cuffs)
 
@@ -98,10 +100,10 @@
 	if(cuffs.restraint_strength)
 		snap_time = src.snap_time_strong
 
-	if(do_after(cutter_user, snap_time, target, interaction_key = cutter))
+	if(snap_time == 0 || do_after(cutter_user, snap_time, target, interaction_key = cutter)) // If 0 just do it. This to bypass the do_after() creating a needless progress bar.
 		cutter_user.do_attack_animation(target, used_item = cutter)
 		cutter_user.visible_message(span_notice("[cutter_user] cuts [target]'s restraints with [cutter]!"))
 		qdel(target.handcuffed)
-		playsound(source = get_turf(cutter), soundin = cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
 
 	return

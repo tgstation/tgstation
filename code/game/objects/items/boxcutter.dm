@@ -53,5 +53,5 @@
 	if(tool_behaviour == TOOL_KNIFE)
 		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else
-		RemoveElement(/datum/element/cuffsnapping)
+		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
