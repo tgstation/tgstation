@@ -149,7 +149,7 @@
 
 /obj/structure/flora/ash/fireblossom/after_harvest()
 	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
-	set_light_range(1.5)
+	set_light_range(LIGHT_POWER_FIRE_BLOSSOM_HARVESTED)
 	update_light()
 	return ..()
 
