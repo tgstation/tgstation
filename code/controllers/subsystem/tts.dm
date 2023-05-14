@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(tts)
 	request.begin_async()
 	in_process_tts_messages += list(entry)
 
-// Need to wait for all HTTP requests to complete here because of a rustg crash bug that causes crashes when dd restarts.
+// Need to wait for all HTTP requests to complete here because of a rustg crash bug that causes crashes when dd restarts whilst HTTP requests are ongoing.
 /datum/controller/subsystem/tts/Shutdown()
 	tts_enabled = FALSE
 	for(var/list/data in in_process_tts_messages)
