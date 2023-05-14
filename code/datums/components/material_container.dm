@@ -191,7 +191,7 @@
 		if(inserted > 0)
 			. += inserted
 
-			 //stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
+			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
 			if((!QDELETED(target) || was_stack_split))
 
 				//stack was split by player and that portion was not fully consumed, merge whats left back with the original stack
