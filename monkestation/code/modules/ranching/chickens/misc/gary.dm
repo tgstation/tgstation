@@ -47,7 +47,7 @@
 		var/json_file = file("data/npc_saves/Gary.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = json_decode(rustg_file_read(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		rounds_survived = json["roundssurvived"]
 		longest_survival = json["longestsurvival"]
 		longest_deathstreak = json["longestdeathstreak"]
