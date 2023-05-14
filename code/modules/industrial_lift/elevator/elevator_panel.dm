@@ -133,7 +133,7 @@
 		elevator_music.stop()
 	else
 		elevator_music.start()
-	. = ..()
+	return ..()
 
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
