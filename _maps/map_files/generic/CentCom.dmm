@@ -8143,7 +8143,7 @@
 /area/centcom/central_command_areas/control)
 "OC" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Escapes-on-Pods"
 	},
 /turf/open/floor/iron/smooth_large,
