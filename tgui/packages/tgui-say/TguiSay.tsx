@@ -25,57 +25,48 @@ type State = {
 const channelRegex = /^:\w\s/;
 
 export class TguiSay extends Component<{}, State> {
-  private channelIterator = new ChannelIterator();
-  private chatHistory = new ChatHistory();
-  private innerRef = createRef<HTMLTextAreaElement>();
-  private lightMode = false;
-  private maxLength = 1024;
-  private currentPrefix: keyof typeof RADIO_PREFIXES | null = null;
-  private messages = byondMessages;
+  private channelIterator: ChannelIterator;
+  private chatHistory: ChatHistory;
+  private currentPrefix: keyof typeof RADIO_PREFIXES | null;
+  private innerRef: any;
+  private lightMode: boolean;
+  private maxLength: number;
+  private messages: any;
+  state: State;
 
-  // Fields that cause a re-render
-  state: State = {
-    buttonContent: '',
-    size: WINDOW_SIZES.small,
-  };
+  constructor(props: any) {
+    super(props);
+
+    this.channelIterator = new ChannelIterator();
+    this.chatHistory = new ChatHistory();
+    this.currentPrefix = null;
+    this.innerRef = createRef<HTMLTextAreaElement>();
+    this.lightMode = false;
+    this.maxLength = 1024;
+    this.messages = byondMessages;
+    this.state = {
+      buttonContent: '',
+      size: WINDOW_SIZES.small,
+    };
+
+    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleBackspaceDelete = this.handleBackspaceDelete.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleEscape = this.handleEscape.bind(this);
+    this.handleForceSay = this.handleForceSay.bind(this);
+    this.handleIncrementChannel = this.handleIncrementChannel.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleProps = this.handleProps.bind(this);
+    this.reset = this.reset.bind(this);
+    this.setSize = this.setSize.bind(this);
+    this.setValue = this.setValue.bind(this);
+  }
 
   componentDidMount() {
     this.subscribeToByondEvents();
     windowLoad();
-  }
-
-  subscribeToByondEvents() {
-    Byond.subscribeTo('props', this.handleProps);
-    Byond.subscribeTo('force', this.handleForceSay);
-    Byond.subscribeTo('open', this.handleOpen);
-  }
-
-  handleProps = (data: ByondProps) => {
-    const { maxLength, lightMode } = data;
-    this.maxLength = maxLength;
-    this.lightMode = !!lightMode;
-  };
-
-  handleOpen = (data: ByondOpen) => {
-    const { channel } = data;
-    this.channelIterator.set(channel);
-    this.setState({ buttonContent: this.channelIterator.current() });
-    setTimeout(() => {
-      this.innerRef.current?.focus();
-    }, 0.5);
-    windowOpen(this.channelIterator.current());
-  };
-
-  handleForceSay() {
-    const currentValue = this.innerRef.current?.value;
-    if (!currentValue || !this.channelIterator.isVisible()) return;
-
-    const grunt = this.channelIterator.isSay()
-      ? this.currentPrefix + currentValue
-      : currentValue;
-
-    this.messages.forceSayMsg(grunt);
-    this.reset();
   }
 
   handleArrowKeys(direction: KEY.Up | KEY.Down) {
@@ -151,7 +142,7 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleEscape() {
-    const current = this.innerRef.current;
+    const current = this.innerRef?.current;
 
     if (current) {
       current.blur();
@@ -161,11 +152,21 @@ export class TguiSay extends Component<{}, State> {
     windowClose();
   }
 
-  handleIncrementChannel() {
-    const channelIncrementMsg = this.messages.channelIncrementMsg;
+  handleForceSay() {
+    const currentValue = this.innerRef.current?.value;
+    if (!currentValue || !this.channelIterator.isVisible()) return;
 
+    const grunt = this.channelIterator.isSay()
+      ? this.currentPrefix + currentValue
+      : currentValue;
+
+    this.messages.forceSayMsg(grunt);
+    this.reset();
+  }
+
+  handleIncrementChannel() {
     if (this.channelIterator.isSay() && this.currentPrefix === ':b ') {
-      channelIncrementMsg(true);
+      this.messages.channelIncrementMsg(true);
     }
 
     this.currentPrefix = null;
@@ -174,7 +175,7 @@ export class TguiSay extends Component<{}, State> {
 
     // If we've looped onto a quiet channel, tell byond to hide thinking indicators
     if (!this.channelIterator.isVisible()) {
-      channelIncrementMsg(false);
+      this.messages.channelIncrementMsg(false);
     }
 
     this.setState({
@@ -183,15 +184,15 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleInput() {
-    const typingMsg = this.messages.typingMsg;
-    const currentValue = this.innerRef.current?.value;
+    const currentValue = this.innerRef?.current?.value;
+    if (!currentValue) return;
 
     // If we're typing, send the message
     if (this.channelIterator.isVisible() && this.currentPrefix !== ':b ') {
-      typingMsg();
+      this.messages.typingMsg();
     }
 
-    this.setSize(currentValue?.length ?? 0);
+    this.setSize(currentValue.length ?? 0);
 
     // Is there a value? Is it long enough to be a prefix?
     if (!currentValue || currentValue.length < 3) {
@@ -250,6 +251,22 @@ export class TguiSay extends Component<{}, State> {
     }
   }
 
+  handleOpen = (data: ByondOpen) => {
+    const { channel } = data;
+    this.channelIterator.set(channel);
+    this.setState({ buttonContent: this.channelIterator.current() });
+    setTimeout(() => {
+      this.innerRef?.current?.focus();
+    }, 1);
+    windowOpen(this.channelIterator.current());
+  };
+
+  handleProps = (data: ByondProps) => {
+    const { maxLength, lightMode } = data;
+    this.maxLength = maxLength;
+    this.lightMode = !!lightMode;
+  };
+
   reset() {
     this.currentPrefix = null;
     this.channelIterator.reset();
@@ -278,11 +295,18 @@ export class TguiSay extends Component<{}, State> {
       windowSet(newSize);
     }
   }
+
   setValue(value: string) {
     const textArea = this.innerRef.current;
     if (textArea) {
       textArea.value = value;
     }
+  }
+
+  subscribeToByondEvents() {
+    Byond.subscribeTo('props', this.handleProps);
+    Byond.subscribeTo('force', this.handleForceSay);
+    Byond.subscribeTo('open', this.handleOpen);
   }
 
   render() {
