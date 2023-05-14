@@ -1,3 +1,4 @@
+import { Channel } from './ChannelIterator';
 import { WINDOW_SIZES } from './constants';
 
 /**
@@ -8,7 +9,7 @@ import { WINDOW_SIZES } from './constants';
  * Once byond signals this via keystroke, it
  * ensures window size, visibility, and focus.
  */
-export const windowOpen = (channel: string) => {
+export const windowOpen = (channel: Channel) => {
   setOpen();
   Byond.sendMessage('open', { channel });
 };
