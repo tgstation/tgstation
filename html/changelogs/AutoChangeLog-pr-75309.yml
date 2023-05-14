@@ -1,0 +1,4 @@
+author: "KoJIT2009"
+delete-after: True
+changes:
+  - bugfix: "Fixed dropdown buttons empty selected case"
