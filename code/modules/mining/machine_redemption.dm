@@ -90,7 +90,7 @@
 		var/ore_points= gathered_ore.points
 		var/ore_name = gathered_ore.name
 		var/refined_type = gathered_ore?.refined_type
-		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM)) //increase points only if insertion was successfull
+		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM) > 0) //increase points only if insertion was successfull
 			if(refined_type)
 				points += ore_points * point_upgrade * ore_amount
 			materials.silo_log(src, "smelted", ore_amount, ore_name, mats)

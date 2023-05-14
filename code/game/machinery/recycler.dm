@@ -183,8 +183,8 @@
 		. = TRUE
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/success = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		if(success) //item was salvaged i.e. deleted
+		var/retrived = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+		if(retrived > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
 			return TRUE
 	qdel(weapon)
