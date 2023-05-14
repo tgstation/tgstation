@@ -1,7 +1,7 @@
 /obj/effect/distortion/large
 	icon = 'monkestation/icons/effects/displacement_96x96.dmi'
 	name = "blank"
-	var/size = 127
+	size = 127
 
 /obj/effect/distortion/large/long_legs
 	name = "leg_increase"
