@@ -122,7 +122,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
 	// We got unacidable, we need to bail out
-	if(target.resistance_flags & UNACIDABLE)
+	var/atom/parent_atom = parent
+	if(parent_atom.resistance_flags & UNACIDABLE)
 		qdel(src)
 		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * seconds_per_tick)
@@ -150,7 +151,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(applied_targets)
 		set_volume(acid_volume - (acid_used * applied_targets))
 
-	if(target.resistance_flags & ACID_PROOF)
+	if(target_turf.resistance_flags & ACID_PROOF)
 		return
 
 	// Snowflake code for handling acid melting walls.
