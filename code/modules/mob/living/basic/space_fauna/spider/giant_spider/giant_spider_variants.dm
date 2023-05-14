@@ -265,7 +265,7 @@
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/lay_web/sealer
-	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
+	menu_description = "Royal spider variant specializing in reproduction and leadership, deals low damage."
 
 /mob/living/basic/giant_spider/midwife/Initialize(mapload)
 	. = ..()
