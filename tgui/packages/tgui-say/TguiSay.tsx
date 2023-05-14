@@ -1,6 +1,6 @@
 import { Channel, ChannelIterator } from './ChannelIterator';
 import { ChatHistory } from './ChatHistory';
-import { Component, createRef, InfernoKeyboardEvent } from 'inferno';
+import { Component, createRef, InfernoKeyboardEvent, RefObject } from 'inferno';
 import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { byondMessages } from './timers';
 import { dragStartHandler } from 'tgui/drag';
@@ -8,27 +8,27 @@ import { windowOpen, windowLoad, windowClose, windowSet } from './helpers';
 import { BooleanLike } from 'common/react';
 import { KEY } from 'common/keys';
 
+type ByondOpen = {
+  channel: Channel;
+};
+
 type ByondProps = {
   maxLength: number;
   lightMode: BooleanLike;
 };
 
-type ByondOpen = {
-  channel: Channel;
-};
-
 type State = {
-  buttonContent: string | number;
   size: WINDOW_SIZES;
 };
 
-const channelRegex = /^:\w\s/;
+const CHANNEL_REGEX = /^:\w\s/;
 
 export class TguiSay extends Component<{}, State> {
+  private buttonRef: RefObject<HTMLButtonElement>;
   private channelIterator: ChannelIterator;
   private chatHistory: ChatHistory;
   private currentPrefix: keyof typeof RADIO_PREFIXES | null;
-  private innerRef: any;
+  private innerRef: RefObject<HTMLTextAreaElement>;
   private lightMode: boolean;
   private maxLength: number;
   private messages: any;
@@ -37,6 +37,7 @@ export class TguiSay extends Component<{}, State> {
   constructor(props: any) {
     super(props);
 
+    this.buttonRef = createRef<HTMLButtonElement>();
     this.channelIterator = new ChannelIterator();
     this.chatHistory = new ChatHistory();
     this.currentPrefix = null;
@@ -45,14 +46,13 @@ export class TguiSay extends Component<{}, State> {
     this.maxLength = 1024;
     this.messages = byondMessages;
     this.state = {
-      buttonContent: '',
       size: WINDOW_SIZES.small,
     };
 
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.handleBackspaceDelete = this.handleBackspaceDelete.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
-    this.handleEscape = this.handleEscape.bind(this);
     this.handleForceSay = this.handleForceSay.bind(this);
     this.handleIncrementChannel = this.handleIncrementChannel.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -61,11 +61,14 @@ export class TguiSay extends Component<{}, State> {
     this.handleProps = this.handleProps.bind(this);
     this.reset = this.reset.bind(this);
     this.setSize = this.setSize.bind(this);
+    this.setButtonContent = this.setButtonContent.bind(this);
     this.setValue = this.setValue.bind(this);
   }
 
   componentDidMount() {
-    this.subscribeToByondEvents();
+    Byond.subscribeTo('props', this.handleProps);
+    Byond.subscribeTo('force', this.handleForceSay);
+    Byond.subscribeTo('open', this.handleOpen);
     windowLoad();
   }
 
@@ -81,10 +84,7 @@ export class TguiSay extends Component<{}, State> {
       const prevMessage = this.chatHistory.getOlderMessage();
 
       if (prevMessage) {
-        this.setState({
-          buttonContent: this.chatHistory.getIndex(),
-          size: prevMessage.length,
-        });
+        this.setButtonContent(this.chatHistory.getIndex());
         this.setSize(prevMessage.length);
         this.setValue(prevMessage);
       }
@@ -92,36 +92,43 @@ export class TguiSay extends Component<{}, State> {
       const nextMessage =
         this.chatHistory.getNewerMessage() || this.chatHistory.getTemp() || '';
       const index = this.chatHistory.getIndex() - 1;
-      const content = index <= 0 ? this.channelIterator.current() : index;
+      const buttonContent = index <= 0 ? this.channelIterator.current() : index;
 
-      this.setState({
-        buttonContent: content,
-      });
+      this.setButtonContent(buttonContent);
       this.setSize(nextMessage.length);
       this.setValue(nextMessage);
     }
   }
 
   handleBackspaceDelete() {
-    const current = this.innerRef.current;
-    const { buttonContent } = this.state;
+    const typed = this.innerRef.current?.value;
 
     // User is on a chat history message
-    if (typeof buttonContent === 'number') {
+    if (this.chatHistory.isAtLatest()) {
       this.chatHistory.reset();
-      this.setState({ buttonContent: this.channelIterator.current() });
-    }
-
-    if (!current?.value) {
-      return;
-    }
-
-    if (this.currentPrefix) {
+      this.setButtonContent(this.channelIterator.current());
+      // User is talking and wants to revert to standard say
+    } else if (
+      !!this.currentPrefix &&
+      this.channelIterator.isSay() &&
+      typed?.length === 0
+    ) {
       this.currentPrefix = null;
-      this.setState({ buttonContent: this.channelIterator.current() });
+      this.setButtonContent(this.channelIterator.current());
     }
 
-    this.setSize(current?.value?.length);
+    this.setSize(typed?.length);
+  }
+
+  handleClose() {
+    const current = this.innerRef.current;
+
+    if (current) {
+      current.blur();
+    }
+
+    this.reset();
+    windowClose();
   }
 
   handleEnter() {
@@ -137,23 +144,12 @@ export class TguiSay extends Component<{}, State> {
       });
     }
 
-    this.reset();
-    windowClose();
-  }
-
-  handleEscape() {
-    const current = this.innerRef.current;
-
-    if (current) {
-      current.blur();
-    }
-
-    this.reset();
-    windowClose();
+    this.handleClose();
   }
 
   handleForceSay() {
     const currentValue = this.innerRef.current?.value;
+    // Only force say if we're on a visible channel and have typed something
     if (!currentValue || !this.channelIterator.isVisible()) return;
 
     const grunt = this.channelIterator.isSay()
@@ -165,6 +161,7 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleIncrementChannel() {
+    // Binary talk is a special case, tell byond to show thinking indicators
     if (this.channelIterator.isSay() && this.currentPrefix === ':b ') {
       this.messages.channelIncrementMsg(true);
     }
@@ -178,33 +175,31 @@ export class TguiSay extends Component<{}, State> {
       this.messages.channelIncrementMsg(false);
     }
 
-    this.setState({
-      buttonContent: this.channelIterator.current(),
-    });
+    this.setButtonContent(this.channelIterator.current());
   }
 
   handleInput() {
-    const currentValue = this.innerRef.current?.value;
+    const typed = this.innerRef.current?.value;
 
     // If we're typing, send the message
     if (this.channelIterator.isVisible() && this.currentPrefix !== ':b ') {
       this.messages.typingMsg();
     }
 
-    this.setSize(currentValue.length ?? 0);
+    this.setSize(typed?.length);
 
     // Is there a value? Is it long enough to be a prefix?
-    if (!currentValue || currentValue.length < 3) {
+    if (!typed || typed.length < 3) {
       return;
     }
 
     // Are we talking?
-    if (!this.channelIterator.isSay() || !channelRegex.test(currentValue)) {
+    if (!this.channelIterator.isSay() || !CHANNEL_REGEX.test(typed)) {
       return;
     }
 
     // Is it a valid prefix?
-    const prefix = currentValue.slice(0, 3) as keyof typeof RADIO_PREFIXES;
+    const prefix = typed.slice(0, 3) as keyof typeof RADIO_PREFIXES;
     if (!RADIO_PREFIXES[prefix] || prefix === this.currentPrefix) {
       return;
     }
@@ -215,10 +210,8 @@ export class TguiSay extends Component<{}, State> {
     }
 
     this.currentPrefix = prefix;
-    this.setState({
-      buttonContent: RADIO_PREFIXES[prefix],
-    });
-    this.setValue(currentValue.slice(3));
+    this.setButtonContent(RADIO_PREFIXES[prefix]);
+    this.setValue(typed.slice(3));
   }
 
   handleKeyDown(event: InfernoKeyboardEvent<HTMLTextAreaElement>) {
@@ -245,7 +238,7 @@ export class TguiSay extends Component<{}, State> {
         break;
 
       case KEY.Escape:
-        this.handleEscape();
+        this.handleClose();
         break;
     }
   }
@@ -253,7 +246,7 @@ export class TguiSay extends Component<{}, State> {
   handleOpen = (data: ByondOpen) => {
     const { channel } = data;
     this.channelIterator.set(channel);
-    this.setState({ buttonContent: this.channelIterator.current() });
+    this.setButtonContent(this.channelIterator.current());
     setTimeout(() => {
       this.innerRef.current?.focus();
     }, 1);
@@ -267,16 +260,18 @@ export class TguiSay extends Component<{}, State> {
   };
 
   reset() {
-    this.currentPrefix = null;
-    this.channelIterator.reset();
-    this.chatHistory.reset();
-    windowSet();
-    this.setState({
-      buttonContent: this.channelIterator.current(),
-      size: WINDOW_SIZES.small,
-    });
     this.setValue('');
+    this.setSize();
+    this.setButtonContent(this.channelIterator.current());
   }
+
+  setButtonContent = (buttonContent: string | number) => {
+    const button = this.buttonRef.current;
+
+    if (button && button.value !== buttonContent) {
+      button.value = String(buttonContent);
+    }
+  };
 
   setSize(length = 0) {
     let newSize: WINDOW_SIZES;
@@ -302,15 +297,7 @@ export class TguiSay extends Component<{}, State> {
     }
   }
 
-  subscribeToByondEvents() {
-    Byond.subscribeTo('props', this.handleProps);
-    Byond.subscribeTo('force', this.handleForceSay);
-    Byond.subscribeTo('open', this.handleOpen);
-  }
-
   render() {
-    const { buttonContent, size } = this.state;
-
     const theme =
       (this.lightMode && 'lightMode') ||
       (this.currentPrefix && RADIO_PREFIXES[this.currentPrefix]) ||
@@ -318,7 +305,7 @@ export class TguiSay extends Component<{}, State> {
 
     return (
       <div
-        className={`window window-${theme} window-${size}`}
+        className={`window window-${theme} window-${this.state.size}`}
         $HasKeyedChildren>
         <Dragzone position="top" theme={theme} />
         <div className="center" $HasKeyedChildren>
@@ -327,9 +314,9 @@ export class TguiSay extends Component<{}, State> {
             <button
               className={`button button-${theme}`}
               onClick={this.handleIncrementChannel}
-              type="submit">
-              {buttonContent}
-            </button>
+              ref={this.buttonRef}
+              type="submit"
+            />
             <textarea
               className={`textarea textarea-${theme}`}
               maxLength={this.maxLength}

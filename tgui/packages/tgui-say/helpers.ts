@@ -2,15 +2,11 @@ import { Channel } from './ChannelIterator';
 import { WINDOW_SIZES } from './constants';
 
 /**
- * Window functions
- */
-
-/**
  * Once byond signals this via keystroke, it
  * ensures window size, visibility, and focus.
  */
 export const windowOpen = (channel: Channel) => {
-  setOpen();
+  setWindowSizeAndVisibility(true, WINDOW_SIZES.small);
   Byond.sendMessage('open', { channel });
 };
 
@@ -19,7 +15,10 @@ export const windowOpen = (channel: Channel) => {
  * Sending "close" logs it server side.
  */
 export const windowClose = () => {
-  setClosed();
+  setWindowSizeAndVisibility(false, WINDOW_SIZES.small);
+  Byond.winset('map', {
+    focus: true,
+  });
   Byond.sendMessage('close');
 };
 
@@ -28,34 +27,20 @@ export const windowLoad = () => {
   Byond.winset('tgui_say', {
     pos: '848,500',
   });
-  setClosed();
-};
-
-/**
- * Modifies the window size.
- *
- * Parameters:
- *  size - The size of the window in pixels. Optional.
- */
-export const windowSet = (size = WINDOW_SIZES.small) => {
-  setWindowSizeAndVisibility(true, size);
-};
-
-/** Private functions */
-/** Sets the skin props as opened. Focus might be a placebo here. */
-const setOpen = () => {
-  setWindowSizeAndVisibility(true, WINDOW_SIZES.small);
-};
-
-/** Sets the skin props as closed.  */
-const setClosed = () => {
   setWindowSizeAndVisibility(false, WINDOW_SIZES.small);
   Byond.winset('map', {
     focus: true,
   });
 };
 
-// Helper function
+/**
+ * Modifies the window size.
+ */
+export const windowSet = (size = WINDOW_SIZES.small) => {
+  setWindowSizeAndVisibility(true, size);
+};
+
+/** Helper function to set window size and visibility */
 const setWindowSizeAndVisibility = (isVisible: boolean, size: number) => {
   const sizeStr = `${WINDOW_SIZES.width}x${size}`;
 
