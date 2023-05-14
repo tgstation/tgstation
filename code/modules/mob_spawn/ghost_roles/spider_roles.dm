@@ -194,5 +194,5 @@
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
 	mob_type = chosen_spider
-	mob_name = "[mob_name] ([rand(1, 1000)])"
+	mob_name = "spiderling"
 	return ..()
