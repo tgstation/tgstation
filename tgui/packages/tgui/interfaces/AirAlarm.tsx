@@ -383,16 +383,16 @@ const AirAlarmControlThresholds = (props, context) => {
         <Table.Row>
           <Table.Cell bold>Threshold</Table.Cell>
           <Table.Cell bold color="bad">
-            Danger below
+            Danger Below
           </Table.Cell>
           <Table.Cell bold color="average">
-            Warning below
+            Warning Below
           </Table.Cell>
           <Table.Cell bold color="average">
-            Warning above
+            Warning Above
           </Table.Cell>
           <Table.Cell bold color="bad">
-            Danger above
+            Danger Above
           </Table.Cell>
           <Table.Cell bold>Actions</Table.Cell>
         </Table.Row>
