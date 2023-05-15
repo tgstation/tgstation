@@ -514,3 +514,100 @@
       when the griddle is on
   orthography:
   - bugfix: replaces empty oxygen tanks in icebox chapel.
+2023-05-14:
+  Comxy:
+  - bugfix: Fixes the speed of all basic mobs.
+  Jacquerel:
+  - bugfix: Diamond Golems can no longer attack or throw things and remain invisible.
+  - bugfix: 'Bananium Golems are only slippery if you actually tread on them (aka:
+      while they are resting).'
+  - balance: Golem bluespace teleportation is slightly quicker.
+  Jolly:
+  - bugfix: '[MetaStation] Chefs may now brutally murder- I mean deny service to the
+      station patrons once again, the shutters over the counter may now be closed
+      once again.'
+  Melbert:
+  - bugfix: Runtime with burning black slime transformation
+  Paxilmaniac:
+  - rscadd: Things made primarily of the glass material datum (and any of its subtypes)
+      will now shatter when thrown, be careful with that statue block now.
+  - code_imp: Shattering on impact is now a component, rather than code just on plates.
+  Profakos:
+  - code_imp: cleaned up cargo export code a bit
+  Singul0:
+  - bugfix: HoP on northstar can now disperse troublemakers with ease.
+  Sylvette:
+  - bugfix: Fixed sign language so you can't sign when cuffed or emotemute as initially
+      intended
+  - balance: Allows signers to cast spells using sign language as long as both hands
+      are free
+  Thunder12345:
+  - bugfix: "Dueling pistols found in deep space now come in linked pairs for \u221E\
+      % greater usability."
+  YehnBeep:
+  - qol: Posters can now fit back into the boxes they come in.
+  junkgle01:
+  - image: Resprites the vanilla & brioche cakes and their associated slices.
+  kawoppi:
+  - rscadd: added animations to the *jump, *shiver, *sway, *tremble, *twitch and *twitch_s
+      emotes
+  - rscadd: the *jump emote now plays a sound
+  orthography:
+  - bugfix: fixes an empty oxygen tank on birdshot
+  ynot01:
+  - bugfix: Desert Eagles can no longer load .50 BMG sniper rifle rounds and vice
+      versa.
+2023-05-15:
+  Capsandi:
+  - bugfix: space ambience tracks will no longer cut themselves off
+  - sound: added a new ambient track for space
+  DATA-xPUNGED:
+  - rscadd: Added a new way out of Birdshot's gulag.
+  - bugfix: Replaced the oven on Birdshot with a range.
+  DrDiasyl aka DrTuxedo:
+  - sound: Nanotrasen have started installing music players in the elevators to boost
+      workers' morale.
+  Jacquerel:
+  - balance: The Death Sandwich can no longer be renamed
+  - bugfix: Spiderlings no longer get stuck in webs
+  KoJIT2009:
+  - bugfix: Fixed dropdown buttons empty selected case
+  LT3:
+  - bugfix: Minor fixes to Icebox's elevator
+  Sealed101:
+  - bugfix: made gorilla transformation when affected by excess amounts of genetic
+      damage work
+  SethLafuente:
+  - bugfix: fixed sealed webs not stopping active atmos
+  ShizCalev:
+  - bugfix: Food/slime processors now shake when in use again.
+  - bugfix: Fixed fake grid check events failing to announce properly.
+  - bugfix: Secret recipes will no longer contain inaprovaline or stranger reagent.
+  - bugfix: Guns without magazines inserted can now fire again!
+  - bugfix: Fixed a runtime which occured when a self-recharging gun (ie proto-kinetic
+      accelerator) with a bayonet attached was deleted.
+  - bugfix: Fixed a minor runtime when renaming mechs that don't have a camera attached
+      to them.
+  Singul0:
+  - qol: To clear up confusion with players bringing their own uniforms to the basketball
+      match the holodeck engineers over at centcom added uniforms for their basketball
+      court holodeck!
+  - bugfix: Barriers have been added in the holodeck basketball court to prevent players
+      from entering the bleachers
+  Striders13:
+  - rscadd: 'Northstar: non-secure tech storage been made less secure.'
+  - rscadd: 'Northstar: added a holopad to AI sat entrance.'
+  - rscadd: 'Northstar Z2: fills up maint with more loot.'
+  SyncIt21:
+  - bugfix: Holopad UI will not hang when connection fails
+  - bugfix: signal override & other area sensitive runtimes during area editing with
+      station blueprints
+  - bugfix: gps arrows rotate correctly
+  - bugfix: icons have their correct sizes applied again
+  Watermelon914:
+  - qol: Added a message to the component menu in the integrated circuit interface
+      that explains how to link an integrated circuit to a component printer.
+  kinneb:
+  - qol: Added a Oxy Tank dispenser to the bounty ship for a lil' more general QoL
+  orthography:
+  - bugfix: fixes how the morgue renders on tramstation.

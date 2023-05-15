@@ -1,5 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes:
-  - rscadd: "added animations to the *jump, *shiver, *sway, *tremble, *twitch and *twitch_s emotes"
-  - rscadd: "the *jump emote now plays a sound"

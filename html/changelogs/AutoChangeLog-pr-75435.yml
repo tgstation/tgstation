@@ -1,0 +1,6 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "Turret Outpost's external airlocks now all cycle together instead of as 2 separate pairs."
+  - bugfix: "DJ Station's kitchen fridges no longer require kitchen access to open."
+  - bugfix: "The Faceoff's faster-than-jetpack-speed enemies no longer attack explorers only passing by."
