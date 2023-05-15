@@ -1,0 +1,4 @@
+author: "Watermelon914, Iamgoofball, MrStonedOne"
+delete-after: True
+changes:
+  - rscadd: "Adds TTS to player speech. Players can hear themselves speak."
