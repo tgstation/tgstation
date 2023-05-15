@@ -923,7 +923,6 @@
 	connected_turf = get_step(loc, dir)
 
 /obj/machinery/modular_shield/module/Destroy()
-	. = ..()
 	if(shield_generator)
 		shield_generator.connected_modules -= (src)
 		shield_generator.calculate_boost()
