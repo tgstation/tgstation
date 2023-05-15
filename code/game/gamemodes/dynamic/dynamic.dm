@@ -333,9 +333,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			advisory_string += "Advisory Level: <b>Clown Planet</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advice you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department advises defending chemistry from any clowns that are trying to make baldium or space lube."
 			return advisory_string
+
 		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
 		advisory_string += "Your sector's advisory level is Pulsar Star. A large unknown electromagnetic field has stormed through nearby surveillance equipment. No surveillance data has been able to be obtained showing no credible threats to Nanotrasen assets within the Spinward Sector. The Department advises maintaining high alert against potential threats, regardless of a lack of information."
 		return advisory_string
+
 	switch(round(shown_threat))
 		if(0)
 			advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
@@ -366,6 +368,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(100)
 			advisory_string += "Advisory Level: <b>Midnight Sun</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
+
 	return advisory_string
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
