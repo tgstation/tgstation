@@ -356,8 +356,9 @@
 /obj/item/mail/traitor
 	var/armed = FALSE
 	var/datum/weakref/made_by_ref
-	// If somehow mind will disappear, admins will still have info about creator
+	/// Cached information about who made it for logging purposes
 	var/made_by_cached_name
+	/// Cached information about who made it for logging purposes
 	var/made_by_cached_ckey
 	goodie_count = 0
 
@@ -380,29 +381,28 @@
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
 	if(armed == FALSE || user.get_inactive_held_item() != src)
 		return ..()
+	if(IS_WEAKREF_OF(user.mind, made_by_ref))
+		balloon_alert(user, "disarming trap...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return FALSE
+		balloon_alert(user, "disarmed")
+		playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
 	else
-		if(IS_WEAKREF_OF(user.mind, made_by_ref))
-			balloon_alert(user, "disarming trap...")
-			if(!do_after(user, 2 SECONDS, target = src))
-				return FALSE
-			balloon_alert(user, "disarmed")
+		balloon_alert(user, "tinkering with something...")
+		
+		if(!do_after(user, 2 SECONDS, target = src))
+			after_unwrap(user)
+			return FALSE
+		if(prob(50))
+			balloon_alert(user, "disarmed something...?")
 			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
 			armed = FALSE
 			return TRUE
 		else
-			balloon_alert(user, "tinkering with something...")
-			
-			if(!do_after(user, 2 SECONDS, target = src))
-				after_unwrap(user)
-				return FALSE
-			if(prob(50))
-				balloon_alert(user, "disarmed something...?")
-				playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
-				armed = FALSE
-				return TRUE
-			else
-				after_unwrap(user)
-				return TRUE
+			after_unwrap(user)
+			return TRUE
 
 /obj/item/storage/mail_counterfeit_device
 	name = "GLA-2 mail counterfeit device"
@@ -425,7 +425,7 @@
 	return .
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
-	var/mail_type = tgui_alert(user, "Is it gonna look like an envelope or like a normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
+	var/mail_type = tgui_alert(user, "Make it look like an envelope or like normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
 	if(loc != user)
@@ -500,7 +500,7 @@
 
 /obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
 	. = ..()
-	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standart backpack."
+	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standard backpack."
 	create_storage(max_slots = 21, max_total_storage = 21)
 	atom_storage.allow_big_nesting = TRUE
 
