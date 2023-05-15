@@ -819,7 +819,6 @@
 			radius = max(1,(text2num(params["new_radius"])))
 		if ("toggle_shields")
 			toggle_shields()
-			return
 		if ("toggle_exterior")
 			exterior_only = !(exterior_only)
 			return
