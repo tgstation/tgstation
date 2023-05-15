@@ -1,9 +1,11 @@
+#define LIVER_MESSAGE_THRESHOLD 40
 #define PURGE_LIMIT 5
+#define PURGER_BREAKOUT_TIME (60 SECONDS)
 
 /**
  * # Purger (Purge-O-Matic 3000)
  *
- * A device that purges chemicals from a user, reduces addiction points, and slowly heals liver damage.
+ * A device that purges reagents from a user, reduces addiction points, and slowly heals liver damage.
  *
  * While an occupant is inside, reagents are removed from their reagent holder and released in small reagent gas clouds.
  * The occupant's mind will have any addiction points reduced, and if a liver is present it will be slowly healed.
@@ -11,7 +13,7 @@
  * If unpowered/emagged shut, the door must be opened with a crowbar (or the occupant resisting out).
  *
  * When emagged, will lock in the next occupant, and the machine will release an acid cloud (which WILL eventually destroy the machine if not stopped).
- * Also injects the occupant with amanitin, and worsens any addictions they already have.
+ * Also injects the occupant with amanitin, a reagent that damages upon being purged.
  *
  */
 
@@ -32,9 +34,9 @@
 	///The cooldown for sending escape alerts.
 	COOLDOWN_DECLARE(alert_cooldown)
 	///The number of addiction points to remove per process.
-	var/addiction_purge_amount = 20
+	var/addiction_purge_amount = 10
 	///The lowest volume we can purge reagents down to.
-	var/chemical_purge_amount = 3
+	var/reagent_purge_amount = 5
 
 /obj/machinery/purger/Initialize(mapload)
 	. = ..()
@@ -57,8 +59,8 @@
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		purge_rating += micro_laser.tier
 
-	addiction_purge_amount = initial(addiction_purge_amount) + addiction_rating * 10
-	chemical_purge_amount = initial(chemical_purge_amount) + purge_rating * 3
+	addiction_purge_amount = CEILING(1, addiction_rating * 10)
+	reagent_purge_amount = CEILING(1, purge_rating * 5)
 
 /obj/machinery/purger/attackby(obj/item/attacking_item, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
@@ -105,7 +107,7 @@
 	var/mob/living/mob_occupant = occupant
 	if(istype(mob_occupant))
 		if(!(obj_flags & EMAGGED))
-			for(var/datum/addiction in mob_occupant.mind?.active_addictions)
+			for(var/addiction in mob_occupant.mind?.addiction_points)
 				mob_occupant.mind.remove_addiction_points(addiction, addiction_purge_amount)
 
 			if(occupant.reagents && length(occupant.reagents.reagent_list))
@@ -114,23 +116,19 @@
 				smoke_holder.set_up(1, holder = src, location = src, silent = TRUE)
 				for(var/datum/reagent/reagent_to_purge in mob_occupant.reagents.reagent_list)
 					if(reagent_to_purge.volume > PURGE_LIMIT)
-						var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, chemical_purge_amount)
+						var/amount_to_purge = clamp(reagent_to_purge.volume - PURGE_LIMIT, 0, reagent_purge_amount)
 						mob_occupant.reagents.trans_to(smoke_holder.chemholder, amount_to_purge)
 				smoke_holder.start() //Releases an empty, white cloud when "done".
 
 			var/obj/item/organ/internal/liver/target_liver = mob_occupant.get_organ_slot(ORGAN_SLOT_LIVER)
 			if(target_liver)
 				mob_occupant.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)
-				if(prob(15) && target_liver.damage < 50)
+				if(prob(15) && target_liver.damage > LIVER_MESSAGE_THRESHOLD)
 					to_chat(mob_occupant, span_green("You feel the pain in your gut fading..."))
 
 			return
 
-		//If we're emagged, we worsen active addictions, poison our user, and release a large cloud of acid.
-		for(var/datum/addiction/addiction in mob_occupant.mind?.active_addictions)
-			mob_occupant.mind.add_addiction_points(addiction, addiction_purge_amount)
-			if(prob(20))
-				to_chat(mob_occupant, span_alert("You feel your [addiction] cravings worsen..."))
+		//If we're emagged, we poison our user, and release a large cloud of acid.
 
 		if(mob_occupant.reagents)
 			mob_occupant.reagents.add_reagent(/datum/reagent/toxin/amanitin, 1)
@@ -147,7 +145,7 @@
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 			span_notice("You begin trying to force the door open."), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, 30 SECONDS, target = src))
+		if(do_after(user, PURGER_BREAKOUT_TIME, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
 			open_machine()
@@ -211,4 +209,6 @@
 
 	close_machine(target)
 
+#undef LIVER_MESSAGE_THRESHOLD
 #undef PURGE_LIMIT
+#undef PURGER_BREAKOUT_TIME
