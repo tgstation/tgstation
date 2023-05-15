@@ -220,6 +220,6 @@
 
 /datum/award/achievement/misc/gods_wrath
 	name = "God's Wrath"
-	desc = "Did you think you could get away with defiling the word of god?"
+	desc = "Did you think you could get away with defiling the word of God?"
 	database_id = MEDAL_GODS_WRATH
 	icon = "godswrath"

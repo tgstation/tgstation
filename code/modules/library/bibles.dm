@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	. = ..()
 	if(deity_name)
 		. += span_notice("This bible has been approved by [deity_name].")
-	if(user?.mind?.holy_role)
+	if(user.mind?.holy_role)
 		if(GLOB.chaplain_altars.len)
 			. += span_notice("[src] has an expansion pack to replace any broken Altar.")
 		else
