@@ -167,6 +167,12 @@
 	if(!isnull(attack_result))
 		return attack_result
 
+	var/damage_result = attacked_by(attacking_item, user)
+	if(damage_result & ATTACK_STYLE_CANCEL)
+		return TRUE
+	if(damage_result & ATTACK_STYLE_SKIPPED)
+		return FALSE
+
 	if(!attacking_item.force && !HAS_TRAIT(attacking_item, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(user, 'sound/weapons/tap.ogg', attacking_item.get_clamped_volume(), TRUE, -1)
 	else if(attacking_item.hitsound)
@@ -178,9 +184,7 @@
 	if(attacking_item.force && user == src && client)
 		client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	attacked_by(attacking_item, user)
 	user.do_attack_animation(src, used_item = attacking_item)
-
 	log_combat(user, src, "attacked", attacking_item.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(attacking_item.damtype)])")
 	return FALSE // continue chain
 
@@ -297,6 +301,15 @@
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
+/**
+ * Living attacked_by is where all "this mob is hit and takes damage" code is handled
+ *
+ * It handles calculating final attack damage, checking blocking, and armor calculations
+ *
+ * Returns ATTACK_STYLE_BLOCKED if the attack is blocked
+ * Returns ATTACK_STYLE_HIT if the attack is a success and damage is dealt
+ * Returns ATTACK_STYLE_SKIPPED if the attack ends up dealing 0 damage (from armor or other factors)
+ */
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
 
 	var/obj/item/bodypart/affecting
@@ -325,7 +338,7 @@
 
 	var/armor_block = min(ARMOR_MAX_BLOCK, run_armor_check(
 		def_zone = affecting,
-		attack_flag = MELEE,
+		attack_flag = MELEE, // All melee damage flies under the melee flag, even if it does burn or whatever damage
 		absorb_text = span_notice("Your armor has protected your [hit_zone]!"),
 		soften_text = span_warning("Your armor has softened a hit to your [hit_zone]!"),
 		armour_penetration = attacking_item.armour_penetration,
@@ -461,52 +474,47 @@
 		add_splatter_floor(loc)
 	if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
 		user.add_mob_blood(src)
+	return TRUE
 
-/mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
+/mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
 	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
-		return
+		return FALSE
 
 	. = ..()
-	if(hit_limb.body_zone == BODY_ZONE_HEAD)
-		if(wear_mask)
-			wear_mask.add_mob_blood(src)
-			update_worn_mask()
-		if(wear_neck)
-			wear_neck.add_mob_blood(src)
-			update_worn_neck()
-		if(head)
-			head.add_mob_blood(src)
-			update_worn_head()
-
-/mob/living/carbon/human/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
-	if(!prob(25 + (attacking_item.force * 2)))
+	if(!.)
 		return
-	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
+	if(!apply_to_clothes)
 		return
-
-	attacking_item.add_mob_blood(src) //Make the weapon bloody, not the person.
-	if(!prob(attacking_item.force * 2))
-		return
-
-	if(isturf(loc))
-		add_splatter_floor(loc)
-	if(get_dist(user, src) <= 1)
-		user.add_mob_blood(src)
-
 	switch(hit_limb.body_zone)
 		if(BODY_ZONE_HEAD)
 			if(wear_mask)
 				wear_mask.add_mob_blood(src)
 				update_worn_mask()
-			if(head)
-				head.add_mob_blood(src)
-				update_worn_head()
-			if(glasses && prob(33))
-				glasses.add_mob_blood(src)
-				update_worn_glasses()
 			if(wear_neck)
 				wear_neck.add_mob_blood(src)
 				update_worn_neck()
+			if(glasses && prob(33))
+				glasses.add_mob_blood(src)
+				update_worn_glasses()
+			if(head)
+				head.add_mob_blood(src)
+				update_worn_head()
+
+/mob/living/carbon/human/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
+	if(!prob(25 + (attacking_item.force * 2)))
+		return
+
+	apply_to_clothes = prob(attacking_item.force * 2)
+
+	. = ..()
+	if(!.)
+		return
+	if(!apply_to_clothes)
+		return
+	// This can definitely be improved upon in the future
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			pass()
 
 		if(BODY_ZONE_CHEST)
 			if(wear_suit)
@@ -516,15 +524,15 @@
 				w_uniform.add_mob_blood(src)
 				update_worn_undersuit()
 
-/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
-	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
+/mob/living/simple_animal/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attack_threshold_check(attacking_item.force, attacking_item.damtype))
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
 		return ATTACK_STYLE_BLOCKED
 
 	return ..()
 
 /mob/living/basic/attacked_by(obj/item/I, mob/living/user)
-	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
+	if(!attack_threshold_check(attacking_item.force, attacking_item.damtype
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
 		return ATTACK_STYLE_BLOCKED
 

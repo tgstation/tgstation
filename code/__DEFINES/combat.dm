@@ -330,7 +330,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BATON_ATTACKING 3
 
 // Returns for attack style [finalize_attack] and, by extension, [melee_attack_chain].
-// I'm keeping the first slot open so RETURN TRUE and RETURN FALSE are valid for the old system.
 /// Fairly obvious, attack hit SOMETHING, go to hitsound / success
 #define ATTACK_STYLE_HIT (1<<1)
 /// Fairly obvious, attack missed entirely

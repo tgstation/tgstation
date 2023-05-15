@@ -35,7 +35,7 @@
 /datum/attack_style/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	var/behind_us = REVERSE_DIR(attack_direction)
 	var/list/cone_turfs = list()
-	for(var/around_dir in list(NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST))
+	for(var/around_dir in GLOB.alldirs)
 		if(around_dir & behind_us)
 			continue
 		var/turf/found_turf = get_step(attacker, around_dir)

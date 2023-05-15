@@ -77,7 +77,7 @@
 	speed = 2
 	speak_chance = 1
 	speak = list("THE GODS WILL IT!","DEUS VULT!","REMOVE KABAB!")
-	force_threshold = 10 //trying to simulate actually having armor
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.8, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30

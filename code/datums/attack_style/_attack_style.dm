@@ -150,18 +150,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/proc/get_hit_sound(obj/item/weapon)
 	return successful_hit_sound || weapon.hitsound
 
-#ifdef TESTING
-/datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
-	hit.add_atom_colour(COLOR_RED, TEMPORARY_COLOUR_PRIORITY)
-	hit.maptext = MAPTEXT("[index]")
-	animate(hit, 1 SECONDS, color = null)
-	addtimer(CALLBACK(src, PROC_REF(clear_testing_color), hit), 1 SECONDS)
-
-/datum/attack_style/proc/clear_testing_color(turf/hit)
-	hit.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_RED)
-	hit.maptext = null
-#endif
-
 /datum/attack_style/proc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	RETURN_TYPE(/list)
 	return list(get_step(attacker, attack_direction))
@@ -192,7 +180,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
 	*/
 
+/**
+ * Finalize an attack on a single mob in one of the affected turfs
+ *
+ * Similar to melee attack chain, but with some guff cut out.
+ *
+ * You should call parent with this unless you know what you're doing and implementing your own attack business.
+ */
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
 
@@ -226,6 +222,23 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
 		return . | ATTACK_STYLE_CANCEL
 
+	// Hitsound happens here
+
+	smacked.lastattacker = attacker.real_name
+	smacked.lastattackerckey = attacker.ckey
+
+	if(attacker == smacked && attacker.client)
+		attacker.client.give_award(/datum/award/achievement/misc/selfouch, user, attacker)
+
+	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
+	. |= smacked.attacked_by(weapon, attacker)
+	log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
+
+	// Attack animation
+
+	if(. & (ATTACK_STYLE_BLOCKED|ATTACK_STYLE_CANCEL|ATTACK_STYLE_SKIPPED))
+		return .
+
 	if(right_clicking)
 		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -240,6 +253,20 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Don't really care about the return value of after attack.
 	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE)
 	return .
+
+#ifdef TESTING
+/datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
+	hit.add_atom_colour(COLOR_RED, TEMPORARY_COLOUR_PRIORITY)
+	hit.maptext = MAPTEXT("[index]")
+	animate(hit, 1 SECONDS, color = null)
+	addtimer(CALLBACK(src, PROC_REF(clear_testing_color), hit), 1 SECONDS)
+#endif
+
+#ifdef TESTING
+/datum/attack_style/proc/clear_testing_color(turf/hit)
+	hit.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_RED)
+	hit.maptext = null
+#endif
 
 /**
  * Unarmed attack styles work slightly differently
@@ -268,6 +295,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return ..()
 
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+	SHOULD_CALL_PARENT(FALSE)
 	CRASH("No narmed interaction for [type]!")
 
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
