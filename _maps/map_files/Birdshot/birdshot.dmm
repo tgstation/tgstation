@@ -9562,7 +9562,7 @@
 /area/station/engineering/atmos)
 "dSQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_edge{
@@ -15505,7 +15505,7 @@
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fZC" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/maintenance/starboard/greater)
@@ -27642,6 +27642,10 @@
 	},
 /obj/item/stack/tile/iron{
 	pixel_y = 18
+	},
+/obj/item/key/janitor{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
@@ -64949,7 +64953,7 @@
 /area/station/cargo/office)
 "wzx" = (
 /obj/structure/altar_of_gods,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "wzK" = (
