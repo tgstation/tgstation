@@ -18,34 +18,34 @@ type ByondProps = {
 };
 
 type State = {
+  buttonContent: string | number;
   size: WINDOW_SIZES;
 };
 
 const CHANNEL_REGEX = /^:\w\s/;
 
 export class TguiSay extends Component<{}, State> {
-  private buttonRef: RefObject<HTMLButtonElement>;
   private channelIterator: ChannelIterator;
   private chatHistory: ChatHistory;
   private currentPrefix: keyof typeof RADIO_PREFIXES | null;
   private innerRef: RefObject<HTMLTextAreaElement>;
   private lightMode: boolean;
   private maxLength: number;
-  private messages: any;
+  private messages: typeof byondMessages;
   state: State;
 
-  constructor(props: any) {
+  constructor(props: never) {
     super(props);
 
-    this.buttonRef = createRef<HTMLButtonElement>();
     this.channelIterator = new ChannelIterator();
     this.chatHistory = new ChatHistory();
     this.currentPrefix = null;
-    this.innerRef = createRef<HTMLTextAreaElement>();
+    this.innerRef = createRef();
     this.lightMode = false;
     this.maxLength = 1024;
     this.messages = byondMessages;
     this.state = {
+      buttonContent: '',
       size: WINDOW_SIZES.small,
     };
 
@@ -61,7 +61,6 @@ export class TguiSay extends Component<{}, State> {
     this.handleProps = this.handleProps.bind(this);
     this.reset = this.reset.bind(this);
     this.setSize = this.setSize.bind(this);
-    this.setButtonContent = this.setButtonContent.bind(this);
     this.setValue = this.setValue.bind(this);
   }
 
@@ -84,17 +83,19 @@ export class TguiSay extends Component<{}, State> {
       const prevMessage = this.chatHistory.getOlderMessage();
 
       if (prevMessage) {
-        this.setButtonContent(this.chatHistory.getIndex());
+        this.setState({ buttonContent: this.chatHistory.getIndex() });
         this.setSize(prevMessage.length);
         this.setValue(prevMessage);
       }
     } else {
       const nextMessage =
         this.chatHistory.getNewerMessage() || this.chatHistory.getTemp() || '';
-      const index = this.chatHistory.getIndex() - 1;
-      const buttonContent = index <= 0 ? this.channelIterator.current() : index;
 
-      this.setButtonContent(buttonContent);
+      const buttonContent = this.chatHistory.isAtLatest()
+        ? this.channelIterator.current()
+        : this.chatHistory.getIndex();
+
+      this.setState({ buttonContent });
       this.setSize(nextMessage.length);
       this.setValue(nextMessage);
     }
@@ -104,17 +105,19 @@ export class TguiSay extends Component<{}, State> {
     const typed = this.innerRef.current?.value;
 
     // User is on a chat history message
-    if (this.chatHistory.isAtLatest()) {
+    if (!this.chatHistory.isAtLatest()) {
       this.chatHistory.reset();
-      this.setButtonContent(this.channelIterator.current());
-      // User is talking and wants to revert to standard say
+      this.setState({
+        buttonContent: this.currentPrefix ?? this.channelIterator.current(),
+      });
+      // Empty input, resets the channel
     } else if (
       !!this.currentPrefix &&
       this.channelIterator.isSay() &&
       typed?.length === 0
     ) {
       this.currentPrefix = null;
-      this.setButtonContent(this.channelIterator.current());
+      this.setState({ buttonContent: this.channelIterator.current() });
     }
 
     this.setSize(typed?.length);
@@ -128,11 +131,13 @@ export class TguiSay extends Component<{}, State> {
     }
 
     this.reset();
+    this.chatHistory.reset();
+    this.channelIterator.reset();
+    this.currentPrefix = null;
     windowClose();
   }
 
   handleEnter() {
-    Byond.sendMessage('escaped');
     const prefix = this.currentPrefix ?? '';
     const value = this.innerRef.current?.value;
 
@@ -152,8 +157,9 @@ export class TguiSay extends Component<{}, State> {
     // Only force say if we're on a visible channel and have typed something
     if (!currentValue || !this.channelIterator.isVisible()) return;
 
+    const prefix = this.currentPrefix ?? '';
     const grunt = this.channelIterator.isSay()
-      ? this.currentPrefix + currentValue
+      ? prefix + currentValue
       : currentValue;
 
     this.messages.forceSayMsg(grunt);
@@ -175,7 +181,7 @@ export class TguiSay extends Component<{}, State> {
       this.messages.channelIncrementMsg(false);
     }
 
-    this.setButtonContent(this.channelIterator.current());
+    this.setState({ buttonContent: this.channelIterator.current() });
   }
 
   handleInput() {
@@ -193,13 +199,14 @@ export class TguiSay extends Component<{}, State> {
       return;
     }
 
-    // Are we talking?
-    if (!this.channelIterator.isSay() || !CHANNEL_REGEX.test(typed)) {
+    if (!CHANNEL_REGEX.test(typed)) {
       return;
     }
 
     // Is it a valid prefix?
-    const prefix = typed.slice(0, 3) as keyof typeof RADIO_PREFIXES;
+    const prefix = typed
+      .slice(0, 3)
+      ?.toLowerCase() as keyof typeof RADIO_PREFIXES;
     if (!RADIO_PREFIXES[prefix] || prefix === this.currentPrefix) {
       return;
     }
@@ -209,8 +216,9 @@ export class TguiSay extends Component<{}, State> {
       Byond.sendMessage('thinking', { visible: false });
     }
 
+    this.channelIterator.set('Say');
     this.currentPrefix = prefix;
-    this.setButtonContent(RADIO_PREFIXES[prefix]);
+    this.setState({ buttonContent: RADIO_PREFIXES[prefix] });
     this.setValue(typed.slice(3));
   }
 
@@ -245,11 +253,16 @@ export class TguiSay extends Component<{}, State> {
 
   handleOpen = (data: ByondOpen) => {
     const { channel } = data;
-    this.channelIterator.set(channel);
-    this.setButtonContent(this.channelIterator.current());
+    // Catches the case where the modal is already open
+    if (this.channelIterator.isSay()) {
+      this.channelIterator.set(channel);
+    }
+    this.setState({ buttonContent: this.channelIterator.current() });
+
     setTimeout(() => {
       this.innerRef.current?.focus();
     }, 1);
+
     windowOpen(this.channelIterator.current());
   };
 
@@ -262,16 +275,10 @@ export class TguiSay extends Component<{}, State> {
   reset() {
     this.setValue('');
     this.setSize();
-    this.setButtonContent(this.channelIterator.current());
+    this.setState({
+      buttonContent: this.channelIterator.current(),
+    });
   }
-
-  setButtonContent = (buttonContent: string | number) => {
-    const button = this.buttonRef.current;
-
-    if (button && button.value !== buttonContent) {
-      button.value = String(buttonContent);
-    }
-  };
 
   setSize(length = 0) {
     let newSize: WINDOW_SIZES;
@@ -314,9 +321,9 @@ export class TguiSay extends Component<{}, State> {
             <button
               className={`button button-${theme}`}
               onClick={this.handleIncrementChannel}
-              ref={this.buttonRef}
-              type="submit"
-            />
+              type="button">
+              {this.state.buttonContent}
+            </button>
             <textarea
               className={`textarea textarea-${theme}`}
               maxLength={this.maxLength}
@@ -334,12 +341,13 @@ export class TguiSay extends Component<{}, State> {
 }
 
 const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
+  // Horizontal or vertical?
   const location =
-    position === 'top' || position === 'bottom' ? 'horizontal' : 'vertical';
+    position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
 
   return (
     <div
-      className={`dragzone-${position} dragzone-${location} dragzone-${theme}`}
+      className={`dragzone-${location} dragzone-${position} dragzone-${theme}`}
       onmousedown={dragStartHandler}
     />
   );

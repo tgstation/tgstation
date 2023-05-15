@@ -18,7 +18,7 @@ export enum LINE_LENGTHS {
  */
 export const RADIO_PREFIXES = {
   ':a ': 'Hive',
-  ':b ': 'Sili',
+  ':b ': 'io',
   ':c ': 'Cmd',
   ':e ': 'Engi',
   ':m ': 'Med',

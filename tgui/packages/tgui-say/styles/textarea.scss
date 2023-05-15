@@ -1,8 +1,11 @@
 .textarea {
+  align-items: center;
   background: transparent;
   border: none;
-  flex: 1 1 auto;
+  display: flex;
+  flex-grow: 4;
+  font-family: inherit;
   font-size: 1.1rem;
   overflow: hidden;
-  padding: 0.5rem;
+  margin: 0.1rem 0 0 0.4rem;
 }

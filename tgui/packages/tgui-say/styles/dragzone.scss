@@ -1,15 +1,14 @@
 @use 'sass:color';
 @use './colors.scss';
 
-$borderSize: 4px;
+$borderSize: 5px;
 
 .dragzone-horizontal {
-  flex: 1 1 0;
+  border-left: thin solid;
+  border-right: thin solid;
+  color: transparent;
   width: 100%;
   height: $borderSize;
-  color: transparent;
-  border-bottom: thin solid;
-  border-top: thin solid;
 }
 .dragzone-left {
   border-left: thin solid;
@@ -20,16 +19,17 @@ $borderSize: 4px;
 }
 
 .dragzone-vertical {
-  flex: 1 1 0;
+  color: transparent;
   height: 100%;
   width: $borderSize;
-  color: transparent;
-  border-left: thin solid;
-  border-right: thin solid;
 }
 
 .dragzone-top {
   border-top: thin solid;
+}
+
+.dragzone-bottom {
+  border-bottom: thin solid;
 }
 
 /** Lightmode static theme */

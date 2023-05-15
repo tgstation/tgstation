@@ -3,11 +3,17 @@
 
 .button {
   background-color: colors.$button;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   border: thin solid;
-  font-family: 'Consolas', monospace;
+  flex-grow: 1;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
   font-size: 0.9rem;
   font-weight: bold;
+  width: 3rem;
   &:hover {
     background-color: lighten(colors.$button, 10%);
   }
