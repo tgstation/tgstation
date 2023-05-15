@@ -22,8 +22,8 @@
 	src.number_of_shards = number_of_shards
 	src.shattering_sound = shattering_sound
 
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
-	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact), override = TRUE)
 
 /datum/element/shatters_when_thrown/Detach(datum/target)
 	. = ..()
