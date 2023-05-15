@@ -1022,7 +1022,7 @@
 
 /obj/machinery/modular_shield/module/node/update_icon_state()
 	. = ..()
-	if((!shield_generator) || (machine_stat & NOPOWER))
+	if(!shield_generator || (machine_stat & NOPOWER))
 		icon_state = "node_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "node_on_[panel_open ?"open":"closed"]"
