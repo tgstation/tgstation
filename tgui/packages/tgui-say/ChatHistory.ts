@@ -7,7 +7,7 @@
 export class ChatHistory {
   private messages: string[] = [];
   private index: number = -1; // Initialize index at -1
-  public temp: string | null = null;
+  private temp: string | null = null;
 
   public add(message: string): void {
     this.messages.unshift(message);
