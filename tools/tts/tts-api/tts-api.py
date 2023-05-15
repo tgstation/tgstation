@@ -7,7 +7,7 @@ from flask import Flask, request, send_file, abort
 
 app = Flask(__name__)
 
-authorization_token = "coolio"
+authorization_token = os.get_env("TTS_AUTHORIZATION_TOKEN", "coolio")
 
 @app.route("/tts")
 def text_to_speech():

@@ -374,18 +374,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				speech_bubble_recipients.Add(M.client)
 			found_client = TRUE
 
-	var/tts_message_to_use = tts_message
-	if(!tts_message_to_use)
-		tts_message_to_use = message_raw
-
-	var/list/filter = list()
-	if(length(voice_filter) > 0)
-		filter += voice_filter
-
-	if(length(tts_filter) > 0)
-		filter += tts_filter.Join(",")
-
 	if(voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		var/tts_message_to_use = tts_message
+		if(!tts_message_to_use)
+			tts_message_to_use = message_raw
+
+		var/list/filter = list()
+		if(length(voice_filter) > 0)
+			filter += voice_filter
+
+		if(length(tts_filter) > 0)
+			filter += tts_filter.Join(",")
+
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), message_range = message_range)
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
