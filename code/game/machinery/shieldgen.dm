@@ -631,9 +631,9 @@
 /obj/machinery/modular_shield_generator/RefreshParts()
 	. = ..()
 
-	innate_regen = 3
-	innate_radius = 3
-	innate_strength = 40
+	innate_regen = initial(innate_regen)
+	innate_radius = initial(innate_radius)
+	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		innate_strength += new_capacitor.tier * 10
