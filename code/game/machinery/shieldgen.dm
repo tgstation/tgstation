@@ -861,7 +861,7 @@
 
 	max_regeneration = innate_regen + regen_boost
 
-	if(!(active))
+	if(!active)
 		if(recovering)
 			current_regeneration = max_regeneration * 0.25
 			return
