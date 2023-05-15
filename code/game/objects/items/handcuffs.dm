@@ -48,13 +48,12 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
-	restraint_strength = HANDCUFFS_TYPE_STRONG
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
-	var/restraint_strength = HANDCUFFS_TYPE_WEAK
+	var/restraint_strength = HANDCUFFS_TYPE_STRONG
 
 /datum/armor/restraints_handcuffs
 	fire = 50
