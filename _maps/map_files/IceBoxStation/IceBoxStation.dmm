@@ -74836,7 +74836,7 @@
 	},
 /obj/machinery/light/floor,
 /obj/effect/abstract/elevator_music_zone{
-	linked_elevator_id = s
+	linked_elevator_id = "publicElevator"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
