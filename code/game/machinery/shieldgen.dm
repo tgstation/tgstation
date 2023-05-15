@@ -868,8 +868,8 @@
 			return
 		current_regeneration = max_regeneration
 		return
-//we lose more than half the regeneration rate when generating a shield that is near the max radius that we can handle but if we generate
-//a shield with a very small fraction of the max radius we can support we get a very small bonus multipliar
+	//we lose more than half the regeneration rate when generating a shield that is near the max radius that we can handle but if we generate
+	//a shield with a very small fraction of the max radius we can support we get a very small bonus multiplier
 	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
 	if(!exterior_only)
