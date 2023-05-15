@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "You are now slightly less likely, statistically, to get an antag role on latejoin"
+  - bugfix: "Fixed latejoin antags being logged as \"midround\" antags"

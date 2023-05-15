@@ -6777,7 +6777,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "aQc" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/structure/altar_of_gods,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -42948,7 +42948,7 @@
 "ohW" = (
 /obj/structure/table/wood,
 /obj/machinery/light/dim/directional/north,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/station/service/chapel/monastery)
 "ohY" = (
@@ -63100,7 +63100,7 @@
 "vrd" = (
 /obj/structure/table/wood,
 /obj/machinery/firealarm/directional/north,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/iron/chapel{
 	dir = 9
 	},
