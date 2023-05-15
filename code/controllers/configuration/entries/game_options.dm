@@ -197,7 +197,6 @@
 	key_mode = KEY_MODE_TYPE
 	value_mode = VALUE_MODE_NUM
 	default = list( //DEFAULTS
-	/mob/living/basic = 1,
 	/mob/living/simple_animal = 1,
 	/mob/living/silicon/pai = 1,
 	/mob/living/carbon/alien/adult/hunter = -1,
