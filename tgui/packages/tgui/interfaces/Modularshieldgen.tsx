@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Stack, Section, ProgressBar, Button, NumberInput } from '../components';
 
-type Modularshieldgendata = {
+type modularShieldGeneratorData = {
   max_strength: number;
   current_strength: number;
   max_regeneration: number;
@@ -16,7 +16,7 @@ type Modularshieldgendata = {
 
 export const Modularshieldgen = (props, context) => {
   const { topLevel } = props;
-  const { act, data } = useBackend<Modularshieldgendata>(context);
+  const { act, data } = useBackend<modularShieldGeneratorData>(context);
   const {
     max_strength,
     max_regeneration,
