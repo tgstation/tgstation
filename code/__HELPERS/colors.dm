@@ -84,6 +84,10 @@
 /// But paired down and modified to work for our color range
 /// Accepts the color cutoffs as two 3 length list(0-100,...) arguments
 /proc/blend_cutoff_colors(list/first_color, list/second_color)
+	// These runtimes usually mean that either the eye or the glasses have an incorrect color_cutoffs
+	ASSERT(first_color?.len == 3, "First color must be a 3 length list, received [json_encode(first_color)]")
+	ASSERT(second_color?.len == 3, "Second color must be a 3 length list, received [json_encode(second_color)]")
+
 	var/list/output = new /list(3)
 
 	// Invert the colors, multiply to "darken" (actually lights), then uninvert to get back to what we want

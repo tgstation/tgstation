@@ -49,12 +49,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
 	var/receive_ore_updates = FALSE
-	/// Can others request assistance from this terminal?
-	var/assistance_requestable = FALSE
-	/// Can others request supplies from this terminal?
-	var/supplies_requestable = FALSE
-	/// Can you relay information to this console?
-	var/anon_tips_receiver = FALSE
 	/// Did we error in the last mail?
 	var/has_mail_send_error = FALSE
 	/// Cooldown to prevent announcement spam
@@ -128,15 +122,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
 
 	GLOB.req_console_all += src
-
-	if((assistance_requestable)) // adding to assistance list if not already present
-		GLOB.req_console_assistance |= department
-
-	if((supplies_requestable)) // supplier list
-		GLOB.req_console_supplies |= department
-
-	if((anon_tips_receiver)) // tips lists
-		GLOB.req_console_information |= department
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
 
