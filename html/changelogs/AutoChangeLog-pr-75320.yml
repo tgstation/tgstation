@@ -1,5 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - bugfix: "Setting arrest status with the records console now immediately updates sechud visuals."
-  - bugfix: "Ninja security record hacks now immediately update sechud visuals."

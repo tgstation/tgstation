@@ -355,6 +355,9 @@
 	//can't be put on fire!
 	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
 		return FALSE
+	//already on fire!
+	if(resistance_flags & ON_FIRE)
+		return FALSE
 	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
 		return FALSE

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "The materials sniffer now actually works!"
