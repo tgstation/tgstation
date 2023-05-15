@@ -11355,7 +11355,7 @@
 /area/station/maintenance/port/fore)
 "cKr" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
@@ -84913,7 +84913,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/mix)
 "vkr" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/structure/altar_of_gods,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
