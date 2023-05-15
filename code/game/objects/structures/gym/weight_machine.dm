@@ -68,12 +68,8 @@
 
 /obj/structure/weightmachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	if(anchored)
-		balloon_alert(user, "unsecured")
-		anchored = FALSE
-	else
-		balloon_alert(user, "secured")
-		anchored = TRUE
+	balloon_alert(user, anchored ? "unsecured" : "secured")
+	anchored = !anchored
 	return TRUE
 
 /obj/structure/weightmachine/crowbar_act_secondary(mob/living/user, obj/item/tool)
