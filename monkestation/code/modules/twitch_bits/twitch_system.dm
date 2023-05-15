@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(twitch)
 	if(!running_events.len)
 		return
 	for(var/listed_event in running_events)
-		if(running_events[listed_event] < world.time)
+		if(running_events[listed_event] > world.time)
 			continue
 		var/datum/twitch_event/valued_event = listed_event
 		valued_event.end_event()
