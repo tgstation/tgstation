@@ -617,13 +617,16 @@
 
 	///Max strength gained from our own parts
 	var/innate_strength
+
+	var/list/list_of_turfs
+
 /obj/machinery/modular_shield_gen/power_change()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		deactivate_shields()
-		STOP_PROCESSING(SSobj, src)
+		START_PROCESSING(SSobj, src)
 		return
-	START_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
@@ -650,6 +653,7 @@
 	. = ..()
 	deployed_shields = list()
 	connected_modules = list()
+	list_of_turfs = list()
 	wires = new /datum/wires/modular_shield_gen(src)
 	if(mapload && active && anchored)
 		activate_shields()
@@ -701,15 +705,58 @@
 	activate_shields()
 
 
-//generating the shield, to-do heavily optimize, we dont need or want to generate the shield all at once.
+
 /obj/machinery/modular_shield_gen/proc/activate_shields()
 	if(active) //bug or did admin call proc on already active shield gen?
 		return
 	active = TRUE
 
+	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
+		var/fradius = round(radius)
+		var/list/inside_shield = circle_range_turfs(src, fradius - 1)//in the future we might want to apply an effect to turfs inside the shield
+		var/t1 = fradius/16
+		var/dx = fradius
+		var/dy = 0
+		var/t2
+		var/list/list_of_turfs = list()
+		while(dx >= dy)
+			list_of_turfs += locate(x + dx, y + dy, z)
+			list_of_turfs += locate(x - dx, y + dy, z)
+			list_of_turfs += locate(x + dx, y - dy, z)
+			list_of_turfs += locate(x - dx, y - dy, z)
+			list_of_turfs += locate(x + dy, y + dx, z)
+			list_of_turfs += locate(x - dy, y + dx, z)
+			list_of_turfs += locate(x + dy, y - dx, z)
+			list_of_turfs += locate(x - dy, y - dx, z)
+			dy += 1
+			t1 += dy
+			t2 = t1 - dx
+			if(t2 > 0)
+				t1 = t2
+				dx -= 1
 
-	var/list/inside_shield = circle_range_turfs(src, radius - 1) //in the future we might want to apply an effect to the turfs inside the shield
-	if (exterior_only)
+		if(exterior_only)
+			for(var/turf/target_tile as anything in list_of_turfs)
+				if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+					deploying_shield.shield_generator = src
+					deployed_shields += deploying_shield
+			calculate_regeneration()
+			active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+			return
+
+		for(var/turf/target_tile as anything in list_of_turfs)
+			if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+				deploying_shield.shield_generator = src
+				deployed_shields += deploying_shield
+		calculate_regeneration()
+		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+		return
+
+	//this code only runs on radius less than 10 and gives us a more accurate circle that is more compatible with decimal values
+	var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to the turfs inside the shield
+	if(exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 			if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
@@ -726,7 +773,7 @@
 			deployed_shields += deploying_shield
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
-
+	return
 
 
 /obj/machinery/modular_shield_gen/Destroy()
