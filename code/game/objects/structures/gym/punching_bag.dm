@@ -46,12 +46,8 @@
 
 /obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	if(anchored)
-		balloon_alert(user, "unsecured")
-		anchored = FALSE
-	else
-		balloon_alert(user, "secured")
-		anchored = TRUE
+	balloon_alert(user, anchored ? "unsecured" : "secured")
+	anchored = !anchored
 	return TRUE
 
 /obj/structure/punching_bag/crowbar_act_secondary(mob/living/user, obj/item/tool)
