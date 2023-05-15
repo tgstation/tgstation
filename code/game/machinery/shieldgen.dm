@@ -665,7 +665,7 @@
 
 /datum/wires/modular_shield_generator/New(atom/holder)
 	wires = list(WIRE_HACK)
-	..()
+	return ..()
 
 /datum/wires/modular_shield_generator/on_pulse(wire)
 
