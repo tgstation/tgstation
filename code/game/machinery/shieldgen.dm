@@ -624,9 +624,9 @@
 	. = ..()
 	if(machine_stat & NOPOWER)
 		deactivate_shields()
-		START_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSobj, src)
 		return
-	STOP_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/machinery/modular_shield_gen/RefreshParts()
 	. = ..()
