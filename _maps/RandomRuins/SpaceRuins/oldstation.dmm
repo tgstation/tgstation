@@ -406,7 +406,7 @@
 "bH" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "bJ" = (
 /turf/closed/wall,
@@ -1720,7 +1720,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "gU" = (
 /turf/open/floor/plating/airless,
@@ -1888,7 +1888,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "hL" = (
 /obj/machinery/light/small/directional/east,
@@ -2212,7 +2212,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/closed,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "iU" = (
 /obj/machinery/power/terminal{
@@ -5020,7 +5020,7 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "yu" = (
 /obj/machinery/door/airlock/engineering/glass,
@@ -5918,7 +5918,7 @@
 "Fy" = (
 /obj/machinery/light/small/broken/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Fz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6530,7 +6530,7 @@
 "JA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor/closed,
-/turf/open/floor/iron/airless,
+/turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "JB" = (
 /obj/structure/lattice/catwalk,
@@ -10181,7 +10181,7 @@ Ax
 kQ
 Fy
 ZH
-mW
+Cj
 yt
 mH
 ko
@@ -10300,7 +10300,7 @@ VZ
 nf
 zJ
 zJ
-Cj
+mW
 JA
 Cj
 fY
