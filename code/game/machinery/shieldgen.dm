@@ -592,13 +592,13 @@
 	var/exterior_only = FALSE
 
 	///The list of shields that are ours
-	var/list/deployed_shields = null
+	var/list/deployed_shields = list()
 
 	///The list of turfs that are within the shield
-	var/list/inside_shield = null
+	var/list/inside_shield = list()
 
 	///The list of machines that are connected to and boosting us
-	var/list/obj/machinery/modular_shield/module/connected_modules = null
+	var/list/obj/machinery/modular_shield/module/connected_modules = list()
 
 	///Regeneration gained from machines connected to us
 	var/regen_boost = 0
@@ -618,7 +618,8 @@
 	///Max strength gained from our own parts
 	var/innate_strength
 
-	var/list/list_of_turfs
+	///This is the list of perimeter turfs that we grab when making large shields of 10 or more radius
+	var/list/list_of_turfs = list()
 
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
@@ -651,9 +652,6 @@
 
 /obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
-	deployed_shields = list()
-	connected_modules = list()
-	list_of_turfs = list()
 	wires = new /datum/wires/modular_shield_generator(src)
 	if(mapload && active && anchored)
 		activate_shields()
@@ -669,13 +667,14 @@
 
 /datum/wires/modular_shield_generator/on_pulse(wire)
 
-	var/obj/machinery/modular_shield_generator/G = holder
+	var/obj/machinery/modular_shield_generator/shield_gen = holder
 	switch(wire)
 		if(WIRE_HACK)
-			G.toggle_shields()
+			shield_gen.toggle_shields()
 			return
 	..()
 
+///qdels the forcefield and calls calculate regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/deactivate_shields()
 	active = FALSE
 	QDEL_LIST(deployed_shields)
@@ -696,6 +695,7 @@
 
 	return ..()
 
+///toggles the forcefield on and off
 /obj/machinery/modular_shield_generator/proc/toggle_shields()
 	if(active)
 		deactivate_shields()
@@ -705,7 +705,7 @@
 	activate_shields()
 
 
-
+///generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active) //bug or did admin call proc on already active shield gen?
 		return
@@ -816,35 +816,40 @@
 		if ("set_radius")
 			if (active)
 				return
-			radius = max(1,(text2num(params["new_radius"])))
+			var/change_radius = max(1,(text2num(params["new_radius"])))
+			if(change_radius >= 10)
+				radius = round(change_radius)//if its over 10 we dont allow decimals
+				return
+			radius = change_radius
 		if ("toggle_shields")
 			toggle_shields()
 			return
 		if ("toggle_exterior")
 			exterior_only = !(exterior_only)
-			return
 
-//calculations for the shield`s core stats
+
+///calculations for the stats supplied by the network of machines that boost us
 /obj/machinery/modular_shield_generator/proc/calculate_boost()
 
-	regen_boost = 0
+	regen_boost = initial(regen_boost)
 	for (var/obj/machinery/modular_shield/module/charger/new_charger in connected_modules)
 		regen_boost += new_charger.charge_boost
 
 	calculate_regeneration()
 
-	max_strength_boost = 0
+	max_strength_boost = initial(max_strength_boost)
 	for (var/obj/machinery/modular_shield/module/well/new_well in connected_modules)
 		max_strength_boost += new_well.strength_boost
 
 	calculate_max_strength()
 
-	radius_boost = 0
+	radius_boost = initial(radius_boost)
 	for (var/obj/machinery/modular_shield/module/relay/new_relay in connected_modules)
 		radius_boost += new_relay.range_boost
 
 	calculate_radius()
 
+///Calculates the max radius the shield generator can support, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_radius()
 
 	max_radius = innate_radius + radius_boost
@@ -853,11 +858,12 @@
 		deactivate_shields()
 		radius = max_radius
 
+///Calculates the max strength or health of the forcefield, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
 
-
+///Calculates the regeneration based on the status of the generator and boosts from network, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_regeneration()
 
 	max_regeneration = innate_regen + regen_boost
@@ -875,7 +881,7 @@
 	if(!exterior_only)
 		current_regeneration *=0.5
 
-
+///Reduces the strength of the shield based on the given integer
 /obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	START_PROCESSING(SSobj, src)
@@ -901,9 +907,9 @@
 
 
 
-
 //Start of other machines
-/obj/machinery/modular_shield/module //The general code used for machines that want to connect to the network
+///The general code used for machines that want to connect to the network
+/obj/machinery/modular_shield/module
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn`t see this"
@@ -979,8 +985,8 @@
 
 	if(shield_generator)
 
-		shield_generator.connected_modules += (src)
-		balloon_alert(user, "connected directly to generator")
+		shield_generator.connected_modules |= (src)
+		balloon_alert(user, "connected to generator")
 		update_icon_state()
 		if(istype(src, /obj/machinery/modular_shield/module/node))
 			var/obj/machinery/modular_shield/module/node/connected_node = src
@@ -992,10 +998,10 @@
 
 	if(connected_node)
 
-		connected_node.connected_through_us += (src)
+		connected_node.connected_through_us |= (src)
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
-			shield_generator.connected_modules += (src)
+			shield_generator.connected_modules |= (src)
 			balloon_alert(user, "connected to generator through node")
 			update_icon_state()
 			if(istype(src, /obj/machinery/modular_shield/module/node))
@@ -1003,9 +1009,9 @@
 				connected_node.connect_connected_through_us()
 			shield_generator.calculate_boost()
 			return
-		balloon_alert(user, "connected to node but no path to generator")
+		balloon_alert(user, "connected to node")
 		return
-	balloon_alert(user, "failed to detect powered generator or node")
+	balloon_alert(user, "failed to find connection")
 
 
 
@@ -1018,7 +1024,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
 
-	var/list/connected_through_us
+	var/list/connected_through_us = list()
 
 /obj/machinery/modular_shield/module/node/update_icon_state()
 	. = ..()
@@ -1026,10 +1032,6 @@
 		icon_state = "node_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "node_on_[panel_open ?"open":"closed"]"
-
-/obj/machinery/modular_shield/module/node/Initialize(mapload)
-	. = ..()
-	connected_through_us = list()
 
 /obj/machinery/modular_shield/module/node/setDir(new_dir)
 	. = ..()
@@ -1050,17 +1052,20 @@
 	if(shield_generator)
 		shield_generator.calculate_boost()
 
+///If we are connected to a shield generator this proc will connect anything connected to us to that generator
 /obj/machinery/modular_shield/module/node/proc/connect_connected_through_us()
 
 	if(shield_generator)
 		for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
-			shield_generator.connected_modules += connected
+			shield_generator.connected_modules |= connected
 			connected.shield_generator = shield_generator
 			if(istype(connected, /obj/machinery/modular_shield/module/node))
 				var/obj/machinery/modular_shield/module/node/connected_node = connected
 				connected_node.connect_connected_through_us()
 			connected.update_icon_state()
 
+
+///This proc disconnects modules connected through us from the shield generator in the event that we lose connection
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
 	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
@@ -1081,7 +1086,7 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
 	///Amount of regeneration this machine grants the connected generator
-	var/charge_boost
+	var/charge_boost = 0
 
 /obj/machinery/modular_shield/module/charger/update_icon_state()
 	. = ..()
@@ -1092,7 +1097,7 @@
 
 /obj/machinery/modular_shield/module/charger/RefreshParts()
 	. = ..()
-	charge_boost = 0
+	charge_boost = initial(charge_boost)
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		charge_boost += new_servo.tier
 
@@ -1109,7 +1114,7 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
 	///Amount of max range this machine grants the connected generator
-	var/range_boost
+	var/range_boost = 0
 
 /obj/machinery/modular_shield/module/relay/update_icon_state()
 	. = ..()
@@ -1120,7 +1125,7 @@
 
 /obj/machinery/modular_shield/module/relay/RefreshParts()
 	. = ..()
-	range_boost = 0
+	range_boost = initial(range_boost)
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		range_boost += new_laser.tier * 0.25
 
@@ -1137,11 +1142,11 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
 	///Amount of max strength this machine grants the connected generator
-	var/strength_boost
+	var/strength_boost = 0
 
 /obj/machinery/modular_shield/module/well/RefreshParts()
 	. = ..()
-	strength_boost = 0
+	strength_boost = initial(strength_boost)
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		strength_boost += new_capacitor.tier * 10
 
