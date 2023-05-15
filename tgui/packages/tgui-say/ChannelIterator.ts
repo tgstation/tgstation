@@ -13,9 +13,17 @@ export class ChannelIterator {
   private readonly quiet: Channel[] = ['OOC', 'Admin'];
 
   public next(): Channel {
-    do {
-      this.index = (this.index + 1) % this.channels.length;
-    } while (this.blacklist.includes(this.channels[this.index]));
+    if (this.blacklist.includes(this.channels[this.index])) {
+      return this.channels[this.index];
+    }
+
+    for (let index = 1; index <= this.channels.length; index++) {
+      let nextIndex = (this.index + index) % this.channels.length;
+      if (!this.blacklist.includes(this.channels[nextIndex])) {
+        this.index = nextIndex;
+        break;
+      }
+    }
 
     return this.channels[this.index];
   }
