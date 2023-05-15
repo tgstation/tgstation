@@ -21960,7 +21960,7 @@
 /obj/item/stock_parts/subspace/filter,
 /obj/item/stock_parts/subspace/filter,
 /obj/item/stock_parts/subspace/analyzer,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
 "fKA" = (
 /obj/machinery/light/directional/east,
@@ -127920,7 +127920,7 @@ fmb
 fmb
 fmb
 fmb
-fmb
+kzE
 kzE
 kzE
 kzE
@@ -130491,7 +130491,7 @@ aIV
 aIV
 aIV
 aIV
-aIV
+kzE
 kzE
 kzE
 kzE
