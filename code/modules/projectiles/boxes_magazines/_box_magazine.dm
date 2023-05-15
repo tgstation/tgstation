@@ -31,10 +31,6 @@
 	var/multiload = TRUE
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
-	///cost of all the bullets in the magazine/box
-	var/list/bullet_cost
-	///cost of the materials in the magazine/box itself
-	var/list/base_cost
 
 	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
 	var/ammo_band_color
