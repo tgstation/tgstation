@@ -709,6 +709,8 @@
 /obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active) //bug or did admin call proc on already active shield gen?
 		return
+	if(radius < 0)//what the fuck are admins doing
+		radius = initial(radius)
 	active = TRUE
 
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
