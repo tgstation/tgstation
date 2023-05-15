@@ -11,14 +11,14 @@
 
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human somehow has ketchup before eating")
 
-	fooditem.attack(human, human)
+	fooditem.melee_attack_chain(human, human)
 
 	TEST_ASSERT(belly.reagents.has_reagent(/datum/reagent/consumable/ketchup), "Stomach doesn't have ketchup after eating")
 	TEST_ASSERT_EQUAL(human.reagents.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human body has ketchup after eating it should only be in the stomach")
 
 	//Give them meth and let it kick in
 	pill.reagents.add_reagent(meth, 1.9 * initial(meth.metabolization_rate) * SSMOBS_DT)
-	pill.attack(human, human)
+	pill.melee_attack_chain(human, human)
 	human.Life(SSMOBS_DT)
 
 	TEST_ASSERT(human.reagents.has_reagent(meth), "Human body does not have meth after life tick")
@@ -29,7 +29,7 @@
 
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human has reagents after clearing")
 
-	fooditem.attack(human, human)
+	fooditem.melee_attack_chain(human, human)
 
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human has ketchup without a stomach")
 

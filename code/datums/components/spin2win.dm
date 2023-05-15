@@ -111,7 +111,8 @@
 	item_owner.emote("spin")
 	playsound(item_owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	for(var/mob/living/victim in orange(1, item_owner))
-		spinning_item.attack(victim, item_owner)
+		// This should be an attack style
+		spinning_item.melee_attack_chain(victim, item_owner)
 
 /datum/component/spin2win/proc/on_spin_dropped(datum/source, mob/user)
 	SIGNAL_HANDLER

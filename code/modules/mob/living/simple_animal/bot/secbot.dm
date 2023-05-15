@@ -311,7 +311,7 @@
 	var/threat = 5
 
 	if(harm)
-		weapon.attack(current_target, src)
+		weapon.melee_attack_chain(src, current_target)
 	if(ishuman(current_target))
 		current_target.set_stutter(10 SECONDS)
 		current_target.Paralyze(100)

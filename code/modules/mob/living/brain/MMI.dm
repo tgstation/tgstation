@@ -110,7 +110,7 @@
 		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 	else if(brainmob)
-		O.attack(brainmob, user) //Oh noooeeeee
+		O.melee_attack_chain(user, brainmob) //Oh noooeeeee
 	else
 		return ..()
 

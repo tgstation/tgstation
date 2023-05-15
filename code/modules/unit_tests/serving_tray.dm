@@ -41,7 +41,6 @@
 	human.equip_to_slot(test_tray, ITEM_SLOT_RPOCKET)
 	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_RPOCKET), "Serving tray failed to fit in the Right Pocket")
 
-	test_tray.attack(human, human)
+	test_tray.melee_attack_chain(human, human)
 
 	TEST_ASSERT_EQUAL(test_tray.contents.len, 0, "The serving tray did not drop all items on hitting a human")
-

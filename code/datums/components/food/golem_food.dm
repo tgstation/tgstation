@@ -54,7 +54,7 @@
 			/* owner = */ parent,
 		)
 		RegisterSignal(golem_snack, COMSIG_PARENT_QDELETING, PROC_REF(on_food_destroyed))
-	golem_snack.attack(target, user, click_parameters)
+	golem_snack.attack_wrapper(target, user, click_parameters)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Reference handling for abstract food object

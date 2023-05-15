@@ -200,7 +200,7 @@
 		if(!target || !isliving(target))
 			balloon_alert(src, "not being carried")
 			return FALSE
-		host_scan.attack(target, src)
+		host_scan.melee_attack_chain(src, target)
 		return TRUE
 	if(mode == PAI_SCAN_MASTER)
 		if(!master_ref)
@@ -213,7 +213,7 @@
 		if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
 			balloon_alert(src, "master out of range")
 			return FALSE
-		host_scan.attack(resolved_master, src)
+		host_scan.melee_attack_chain(src, resolved_master)
 		return TRUE
 	return FALSE
 

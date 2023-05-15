@@ -223,13 +223,13 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			else
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	if(go_to_afterattack && weapon.attack(smacked, attacker))
+	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
 		return . | ATTACK_STYLE_CANCEL
 
 	if(right_clicking)
-		switch(weapon.afterattack_secondary(smacked, attacker, prximity_flag = TRUE))
+		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_CANCEL
+				return . | ATTACK_STYLE_CANCEL
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("afterattack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	// Don't really care about the return value of after attack.
-	weapon.afterattack(smacked, attacker, prximity_flag = TRUE))
+	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE)
 	return .
 
 /**

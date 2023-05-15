@@ -159,12 +159,34 @@
 	if(attacking_item.force > 1)
 		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby. \
 			If this item is intended to be a weapon, implement an attack style.")
+
 	user.changeNext_move(attacking_item.attack_speed)
-	return attacking_item.attack(src, user, params)
+	attacking_item.add_fingerprint(user)
+
+	var/attack_result = attacking_item.attack_wrapper(src, user, params)
+	if(!isnull(attack_result))
+		return attack_result
+
+	if(!attacking_item.force && !HAS_TRAIT(attacking_item, TRAIT_CUSTOM_TAP_SOUND))
+		playsound(user, 'sound/weapons/tap.ogg', attacking_item.get_clamped_volume(), TRUE, -1)
+	else if(attacking_item.hitsound)
+		playsound(user, attacking_item.hitsound, attacking_item.get_clamped_volume(), TRUE, extrarange = attacking_item.stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+
+	lastattacker = user.real_name
+	lastattackerckey = user.ckey
+
+	if(attacking_item.force && user == src && client)
+		client.give_award(/datum/award/achievement/misc/selfouch, user)
+
+	attacked_by(attacking_item, user)
+	user.do_attack_animation(src, used_item = attacking_item)
+
+	log_combat(user, src, "attacked", attacking_item.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(attacking_item.damtype)])")
+	return FALSE // continue chain
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
 	if(weapon.force > 1)
-		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby_secondary. \
+		stack_trace("Potentially deprecated use of a weapon ([weapon.type]) via attackby_secondary. \
 			If this item is intended to be a weapon, implement an attack style.")
 
 	var/result = weapon.attack_secondary(src, user, params)
@@ -179,7 +201,39 @@
 	return result
 
 /**
- * Called from [/mob/living/proc/attackby]
+ * This proc serves as a wrapper for calling [obj/item/proc/attack].
+ *
+ * It handles sending the proper signals before calling attack.
+ *
+ * If you do not understand the purpose of this proc, you probably just want to call [obj/item/proc/melee_attack_chian] instead.
+ *
+ * Arguments:
+ * * mob/living/target_mob - The mob being hit by this item
+ * * mob/living/user - The mob hitting with this item
+ * * params - Click params of this attack
+ *
+ * Returns:
+ * * Returning TRUE cancel the attack chain
+ * * Returning FALSE immediately continues attack chain, skipping the rest of the attack proc and going to afterattack.
+ * This means it'll skip the part in which the target takes damage from being clicked on.
+ * * Returning NULL runs normal "target takes damage" part of the attack.
+ */
+/obj/item/proc/attack_wrapper(mob/living/target_mob, mob/living/user, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params) | SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, src, user, params)
+	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE // end chain
+	if(signal_return & COMPONENT_SKIP_ATTACK)
+		return FALSE // continue chain
+	if(attack(src, user, params))
+		return TRUE // end chain
+	if(item_flags & NOBLUDGEON)
+		return FALSE // continue chain
+	return null // do nothing
+
+/**
+ * The item is executing an attack on a living mob target
  *
  * Arguments:
  * * mob/living/target_mob - The mob being hit by this item
@@ -190,41 +244,13 @@
  * Return FALSE to continue with the afterattack.
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
-	// This should always call parent for signals
-	// If you don't want your item to "attack", it should be NOBLUDGEON
-	SHOULD_CALL_PARENT(TRUE)
-
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
-	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
-	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return
-
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
-
-	if(item_flags & NOBLUDGEON)
-		return
+	PROTECTED_PROC(TRUE)
 
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return
+		return TRUE // Cancel attack
 
-	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
-	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
-
-	target_mob.lastattacker = user.real_name
-	target_mob.lastattackerckey = user.ckey
-
-	if(force && target_mob == user && user.client)
-		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
-
-	target_mob.attacked_by(src, user)
-	user.do_attack_animation(target_mob)
-
-	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
-	add_fingerprint(user)
+	return FALSE // Continue chain
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)

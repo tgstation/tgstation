@@ -37,7 +37,7 @@
 	))
 		return
 
-	source.attack(user, user)
+	source.melee_attack_chain(user, user)
 
 /datum/element/foodlike_drink/proc/can_keep_drinking(obj/item/reagent_containers/source, mob/living/user)
 	if(QDELETED(source) || user.get_active_held_item() != source)

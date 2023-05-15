@@ -152,7 +152,7 @@
 	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
 	var/obj/item/item = contents[contents.len]
-	. = item.attack(target, user, params, FALSE)
+	. = item.attack_wrapper(target, user, params, FALSE)
 	update_appearance()
 
 #undef PANCAKE_MAX_STACK

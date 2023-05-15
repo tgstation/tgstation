@@ -61,7 +61,7 @@
 	if(victim.stat == CONSCIOUS)
 		return
 	var/obj/item/soulstone/soulstone = new(parent)
-	soulstone.attack(victim, captor)
+	soulstone.melee_attack_chain(captor, victim)
 	if(!length(soulstone.contents)) // failed
 		qdel(soulstone)
 		return
