@@ -52,7 +52,7 @@
 
 /obj/structure/punching_bag/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(anchored)
-		balloon_alert(user, "unsecure first!")
+		balloon_alert(user, "still secured!")
 		return FALSE
 	tool.play_tool_sound(src)
 	balloon_alert(user, "deconstructing...")
