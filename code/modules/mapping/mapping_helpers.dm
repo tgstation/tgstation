@@ -393,7 +393,7 @@
 	name = "airalarm link helper"
 	icon_state = "airalarm_link_helper"
 	var/chamber_id = ""
-	var/allow_link_change = TRUE
+	var/allow_link_change = FALSE
 
 /obj/effect/mapping_helpers/airalarm/link/Initialize(mapload)
 	. = ..()
