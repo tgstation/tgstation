@@ -50,7 +50,7 @@
 	on = active
 	playsound(src, on_sound, 50)
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
-	if(tool_behaviour == TOOL_KNIFE)
+	if(active)
 		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)

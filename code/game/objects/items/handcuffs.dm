@@ -8,20 +8,19 @@
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
 
-// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
-#define HANDCUFFS_TYPE_WEAK 0
-// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
-#define HANDCUFFS_TYPE_STRONG 1
-
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/restraints.dmi'
-	var/restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+#define HANDCUFFS_TYPE_WEAK 0
+// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+#define HANDCUFFS_TYPE_STRONG 1
 
 /**
  * # Handcuffs
@@ -54,6 +53,8 @@
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
+	var/restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /datum/armor/restraints_handcuffs
 	fire = 50
