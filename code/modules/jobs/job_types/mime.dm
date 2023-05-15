@@ -90,7 +90,6 @@
 	starting_title = "Guide to Dank Mimery"
 
 /obj/item/book/mimery/attack_self(mob/user)
-	. = ..()
 	if(.)
 		return
 
