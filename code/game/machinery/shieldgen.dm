@@ -773,7 +773,7 @@
 			deployed_shields += deploying_shield
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
-	return
+
 
 
 /obj/machinery/modular_shield_generator/Destroy()
@@ -821,11 +821,12 @@
 				radius = round(change_radius)//if its over 10 we dont allow decimals
 				return
 			radius = change_radius
+
 		if ("toggle_shields")
 			toggle_shields()
-			return
+
 		if ("toggle_exterior")
-			exterior_only = !(exterior_only)
+			exterior_only = !exterior_only
 
 
 ///calculations for the stats supplied by the network of machines that boost us
@@ -868,14 +869,16 @@
 
 	max_regeneration = innate_regen + regen_boost
 
-	if(!(active))
+	if(!active)
 		if(recovering)
 			current_regeneration = max_regeneration * 0.25
 			return
 		current_regeneration = max_regeneration
 		return
-//we lose more than half the regeneration rate when generating a shield that is near the max radius that we can handle but if we generate
-//a shield with a very small fraction of the max radius we can support we get a very small bonus multipliar
+
+	//we lose more than half the regeneration rate when generating a shield that is near the max
+	//radius that we can handle but if we generate a shield with a very small fraction
+	//of the max radius we can support we get a very small bonus multiplier
 	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
 	if(!exterior_only)
@@ -1018,17 +1021,17 @@
 /obj/machinery/modular_shield/module/node
 
 	name = "Modular Shield Node"
-	desc = "A waist high mess of humming pipes and wires that extend the modular shield network"
+	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "node_off_closed"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
-
+	///The list of machines that are connected to us and want connection to a generator
 	var/list/connected_through_us = list()
 
 /obj/machinery/modular_shield/module/node/update_icon_state()
 	. = ..()
-	if((!shield_generator) || (machine_stat & NOPOWER))
+	if(!shield_generator || (machine_stat & NOPOWER))
 		icon_state = "node_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "node_on_[panel_open ?"open":"closed"]"
@@ -1090,7 +1093,7 @@
 
 /obj/machinery/modular_shield/module/charger/update_icon_state()
 	. = ..()
-	if((!shield_generator) || (machine_stat & NOPOWER))
+	if(!shield_generator || (machine_stat & NOPOWER))
 		icon_state = "charger_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "charger_on_[panel_open ?"open":"closed"]"
@@ -1118,7 +1121,7 @@
 
 /obj/machinery/modular_shield/module/relay/update_icon_state()
 	. = ..()
-	if((!shield_generator) || (machine_stat & NOPOWER))
+	if(!shield_generator || (machine_stat & NOPOWER))
 		icon_state = "relay_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "relay_on_[panel_open ?"open":"closed"]"
@@ -1155,7 +1158,7 @@
 
 /obj/machinery/modular_shield/module/well/update_icon_state()
 	. = ..()
-	if((!shield_generator) || (machine_stat & NOPOWER))
+	if(!shield_generator || (machine_stat & NOPOWER))
 		icon_state = "well_off_[panel_open ?"open":"closed"]"
 		return
 	icon_state = "well_on_[panel_open ?"open":"closed"]"
