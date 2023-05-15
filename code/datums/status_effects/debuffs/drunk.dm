@@ -144,9 +144,9 @@
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
-	// Apply drunk slurring
-	// Drunk slurring scales in intensity based on how drunk we are, so at the starting point it's barely noticable
-	if(drunk_value >= 21)
+	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
+	// but when we start to scale up you definitely will
+	if(drunk_value >= 16)
 		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
 
 	// And drunk people will always lose jitteriness
