@@ -8,8 +8,8 @@ export enum WINDOW_SIZES {
 
 /** Line lengths for autoexpand */
 export enum LINE_LENGTHS {
-  small = 20,
-  medium = 35,
+  small = 22,
+  medium = 45,
 }
 
 /**

@@ -39,4 +39,10 @@ describe('ChannelIterator', () => {
     channelIterator.set('OOC');
     expect(channelIterator.isVisible()).toBe(false);
   });
+
+  it('should not leak a message from a blacklisted channel', () => {
+    channelIterator.set('Admin');
+    channelIterator.next();
+    expect(channelIterator.current()).toBe('Admin');
+  });
 });
