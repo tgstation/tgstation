@@ -13,17 +13,17 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] blocks your touch!"))
-		return ATTACK_BLOCKED
+		return ATTACK_STYLE_BLOCKED
 
 	// Todo : move this out and into its own style?
 	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.help_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
-				return ATTACK_HIT
+				return ATTACK_STYLE_HIT
 			if(MARTIAL_ATTACK_FAIL)
-				return ATTACK_MISSED
+				return ATTACK_STYLE_MISSED
 
 	var/list/new_modifiers = list(LEFT_CLICK = !right_clicking, RIGHT_CLICK = right_clicking)
 	smacked.attack_hand(attacker, new_modifiers)
-	return ATTACK_HIT
+	return ATTACK_STYLE_HIT

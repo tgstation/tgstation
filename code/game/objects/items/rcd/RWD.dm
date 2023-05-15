@@ -120,7 +120,7 @@
 /// for inserting cable into the rwd
 /obj/item/rwd/attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/stack/cable_coil))
-		return ..()
+		return
 	var/obj/item/stack/cable_coil/cable = attacking_item
 	add_cable(user, cable)
 	return TRUE
@@ -257,3 +257,5 @@
 	name = "admin RWD"
 	max_amount = INFINITY
 	current_amount = INFINITY
+
+

@@ -52,16 +52,16 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] blocks your [attack_verb]!"))
-		return ATTACK_BLOCKED
+		return ATTACK_STYLE_BLOCKED
 
 	// Todo : move this out and into its own style?
 	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.harm_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
-				return ATTACK_HIT
+				return ATTACK_STYLE_HIT
 			if(MARTIAL_ATTACK_FAIL)
-				return ATTACK_MISSED
+				return ATTACK_STYLE_MISSED
 
 	var/obj/item/bodypart/affecting = smacked.get_bodypart(smacked.get_random_valid_zone(attacker.zone_selected))
 
@@ -85,7 +85,7 @@
 		)
 		to_chat(attacker, span_warning("Your [attack_verb] misses [smacked]!"))
 		log_combat(attacker, smacked, "missed unarmed attack ([attack_verb])")
-		return ATTACK_MISSED
+		return ATTACK_STYLE_MISSED
 
 	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration))
 
@@ -128,7 +128,7 @@
 		additional_logging += "(stun attack)"
 
 	log_combat(attacker, smacked, "unarmed attack", addition = additional_logging)
-	return ATTACK_HIT
+	return ATTACK_STYLE_HIT
 
 /// Called when the damage actually is being applied to the smacked mob
 /datum/attack_style/unarmed/generic_damage/proc/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor_block)
@@ -227,7 +227,7 @@
 
 /datum/attack_style/unarmed/generic_damage/hulk/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	. = ..()
-	if(. & ATTACK_HIT)
+	if(. & ATTACK_STYLE_HIT)
 		smacked.hulk_smashed(attacker)
 
 /datum/attack_style/unarmed/generic_damage/kick
@@ -308,6 +308,6 @@
 		// can't attack while eating!
 		if(attacker in smacked.buckled_mobs)
 			attacker.Feedstop()
-		return ATTACK_SKIPPED
+		return ATTACK_STYLE_SKIPPED
 
 	return ..()

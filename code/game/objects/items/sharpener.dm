@@ -24,10 +24,6 @@
 	var/requires_sharpness = TRUE
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
-	. = TRUE
-	if(..())
-		return
-
 	if(uses == 0)
 		to_chat(user, span_warning("The sharpening block is too worn to use again!"))
 		return

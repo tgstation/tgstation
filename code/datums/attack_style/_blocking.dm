@@ -114,7 +114,7 @@
 
 	if(isobj(hitby))
 		var/obj/obj_hit = hitby
-		if(obj_hit.damtype == STAMINA)
+		if(item_hit.damtype == STAMINA)
 			// Stamina damage will go though blocking for now
 			// Originally I intended for stam attacks to be blocked but not apply item defense multiplier
 			// But I realized that it'd be identical anyways, so pointless to continue

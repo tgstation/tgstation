@@ -329,19 +329,18 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
 
-
 // Returns for attack style [finalize_attack] and, by extension, [melee_attack_chain].
-// NOTE: THESE TWO CORRESPOND WITH [TRUE] TO BE COMPATIBLE WITH EXISTING ATTACK CHAIN
-/// Do nothing but let consumers know the attack chain actually happened
-#define ATTACK_SKIPPED (1<<0)
-/// Same as above but worded in a way that makes more sense for the attack chain
-#define ATTACK_CANCELLED ATTACK_SKIPPED
 /// Fairly obvious, attack hit SOMETHING, go to hitsound / success
-#define ATTACK_HIT (1<<1)
+#define ATTACK_STYLE_HIT (1<<0)
 /// Fairly obvious, attack missed entirely
-#define ATTACK_MISSED (1<<2)
+#define ATTACK_STYLE_MISSED (1<<1)
 /// Attack was blocked, doesn't go to the next turf but will proceed to either Hit or Miss
-#define ATTACK_BLOCKED (1<<3)
+#define ATTACK_STYLE_BLOCKED (1<<2)
+/// Cancels the attack entirely, doesn't go to the next turf, doesn't play any sound.
+/// Do not pass go, do not collect $200.
+#define ATTACK_STYLE_CANCEL (1<<3)
+/// Do nothing but let consumers know the attack chain actually happened
+#define ATTACK_STYLE_SKIPPED (1<<4)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living

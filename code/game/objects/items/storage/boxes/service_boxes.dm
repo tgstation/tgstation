@@ -99,8 +99,6 @@
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
 		W.matchignite()
-		return TRUE
-	return ..()
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()

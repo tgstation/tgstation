@@ -286,8 +286,6 @@
 		payment_amount = transaction_amount
 		gun_owners += user.get_bank_account()
 		to_chat(user, span_notice("You link the card to the firing pin."))
-		return TRUE
-	return ..()
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie

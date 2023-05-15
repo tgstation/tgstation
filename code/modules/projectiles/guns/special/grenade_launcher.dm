@@ -19,18 +19,15 @@
 /obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 
 	if(istype(I, /obj/item/grenade/c4))
-		return ..()
+		return
 	if((isgrenade(I)))
-		if(grenades.len >= max_grenades)
+		if(grenades.len < max_grenades)
+			if(!user.transferItemToLoc(I, src))
+				return
+			grenades += I
+			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
+		else
 			balloon_alert(user, "it's already full!")
-			return FALSE
-		if(!user.transferItemToLoc(I, src))
-			return FALSE
-		grenades += I
-		balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
-		return TRUE
-
-	return ..()
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len
