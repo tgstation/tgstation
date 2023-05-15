@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - rscadd: "Added a new way out of Birdshot's gulag."
+  - bugfix: "Replaced the oven on Birdshot with a range."
