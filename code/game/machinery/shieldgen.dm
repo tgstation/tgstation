@@ -898,7 +898,6 @@
 		deactivate_shields()
 		stored_strength = 0
 		update_icon_state()
-		return
 
 /obj/machinery/modular_shield_generator/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
@@ -938,7 +937,7 @@
 	connected_turf = get_step(loc, dir)
 
 /obj/machinery/modular_shield/module/Destroy()
-	. = ..()
+
 	if(shield_generator)
 		shield_generator.connected_modules -= (src)
 		shield_generator.calculate_boost()
@@ -973,11 +972,11 @@
 			connected_node.connected_through_us -= (src)
 			connected_node = null
 		connected_turf = get_step(loc, dir)
-		return
+		return TRUE
 
 	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+		return TRUE
+	return..()
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
