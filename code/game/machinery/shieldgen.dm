@@ -919,7 +919,7 @@
 /obj/machinery/modular_shield/module
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
-	desc = "This is filler for testing you shouldn`t see this"
+	desc = "This is filler for testing you shouldn`t see this."
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
@@ -1086,7 +1086,7 @@
 /obj/machinery/modular_shield/module/charger
 
 	name = "Modular Shield Charger"
-	desc = "A machine that somehow fabricates hardlight using electronics"
+	desc = "A machine that somehow fabricates hardlight using electrons."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "charger_off_closed"
 
@@ -1114,7 +1114,7 @@
 /obj/machinery/modular_shield/module/relay
 
 	name = "Modular Shield Relay"
-	desc = "It helps the shield generator project farther out"
+	desc = "It helps the shield generator project farther out."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "relay_off_closed"
 
@@ -1142,7 +1142,7 @@
 /obj/machinery/modular_shield/module/well
 
 	name = "Modular Shield Well"
-	desc = "A device used to hold more energy for the modular shield generator"
+	desc = "A device used to hold more hardlight for the modular shield generator."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "well_off_closed"
 
