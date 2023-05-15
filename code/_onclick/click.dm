@@ -191,22 +191,10 @@
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 
-		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
-		// Determine if we should skip using special attack styles or not
-		// Nobludgeon items will always skip special attacks,
-		// and surgical tools will skip special attacks if a mob undergoing surgery was clicked on
-		var/skip_attack_style = isnull(using_what_style) || (clicked_with_what.item_flags & NOBLUDGEON)
-		if(isliving(clicked_on))
-			if(clicked_with_what.item_flags & SURGICAL_TOOL)
-				var/mob/living/living_clicked = clicked_on
-				skip_attack_style ||= length(living_clicked.surgeries)
-
-		else if(!combat_mode)
-			// Don't swing if not in combat mode and not clicking on a mob
-			skip_attack_style = TRUE
+		var/datum/attack_style/using_what_style = select_attack_style(clicked_on, clicked_with_what)
 
 		// Do an attack
-		if(!skip_attack_style)
+		if(using_what_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 
 		// Or if we're not meant to be doing an attack, do a normal attack chain
@@ -605,6 +593,28 @@
 			return TRUE
 
 	return FALSE
+
+/mob/proc/select_attack_style(obj/item/holding)
+	return null
+
+/mob/living/select_attack_style(mob/living/clicked_on, obj/item/holding)
+	. = holding.attack_style
+	if(isnull(.))
+		return null
+
+	if(holding.item_flags & NOBLUDGEON)
+		return null
+
+	if(isliving(clicked_on))
+		if(holding.item_flags & SURGICAL_TOOL)
+			var/mob/living/living_clicked = clicked_on
+			if(length(living_clicked.surgeries))
+				return null
+
+	else if(!combat_mode)
+		return null
+
+	return .
 
 #undef MAX_SAFE_BYOND_ICON_SCALE_TILES
 #undef MAX_SAFE_BYOND_ICON_SCALE_PX
