@@ -55,6 +55,12 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/frozen_phonebooth
+	name = "Frozen Phonebooth"
+	id = "frozen_phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	suffix = "icemoon_surface_phonebooth.dmm"
+
 /datum/map_template/ruin/icemoon/smoking_room
 	name = "Smoking Room"
 	id = "smoking_room"

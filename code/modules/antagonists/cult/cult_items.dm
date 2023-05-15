@@ -25,6 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
+	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -47,7 +48,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
 		owner.visible_message(span_danger("[block_message]"))
 		return TRUE
 	else
@@ -73,6 +73,7 @@ Striking a noncultist, however, will tear their flesh."}
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
@@ -86,7 +87,6 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 	else
@@ -112,6 +112,7 @@ Striking a noncultist, however, will tear their flesh."}
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
+	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
@@ -580,23 +581,25 @@ Striking a noncultist, however, will tear their flesh."}
 	var/turf/mobloc = get_turf(C)
 	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
 
-	if(destination)
-		uses--
-		if(uses <= 0)
-			icon_state ="shifter_drained"
-		playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
+	if(!destination || !do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
+		playsound(src, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+		balloon_alert(user, "teleport failed!")
+		return
 
-		var/atom/movable/pulled = handle_teleport_grab(destination, C)
-		if(do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
-			if(pulled)
-				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
-			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			playsound(destination, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	uses--
+	if(uses <= 0)
+		icon_state ="shifter_drained"
 
-	else
-		to_chat(C, span_warning("The veil cannot be torn here!"))
+	var/atom/movable/pulled = handle_teleport_grab(destination, C)
+	if(pulled)
+		C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
+
+	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
+	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
+
+	playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -675,6 +678,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)
@@ -731,16 +735,9 @@ Striking a noncultist, however, will tear their flesh."}
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
-			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(get_turf(owner), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-			return TRUE
-		else
-			playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
-			owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-			return TRUE
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
+		return TRUE
 	else
 		return FALSE
 
@@ -917,7 +914,7 @@ Striking a noncultist, however, will tear their flesh."}
 		for(var/turf/T in get_line(targets_from,temp_target))
 			if (locate(/obj/effect/blessing, T))
 				temp_target = T
-				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, TRUE)
+				playsound(T, 'sound/effects/parry.ogg', 50, TRUE)
 				new /obj/effect/temp_visual/at_shield(T, T)
 				break
 			T.narsie_act(TRUE, TRUE)
@@ -962,6 +959,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
+	block_sound = 'sound/weapons/effects/ric5.ogg'
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -981,7 +979,6 @@ Striking a noncultist, however, will tear their flesh."}
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)
-			playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
 			if(illusions > 0)
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)

@@ -739,6 +739,28 @@
 	moving.Move(target_turf, get_dir(moving, target_turf))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
+/**
+ * Assigns a target to a move loop that immediately freezes for a set duration of time.
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * halted_turf - The turf we want to freeze on. This should typically be the loc of moving.
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. This should be considered extremely non-optional as it will completely stun out the movement loop <i>forever</i> if unset.
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ */
+/datum/controller/subsystem/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
+
+/// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
+/datum/move_loop/freeze
+
+/datum/move_loop/freeze/move()
+	return MOVELOOP_SUCCESS // it's successful because it's not moving. we autoclear outselves when `timeout` is reached
 
 /**
  * Helper proc for the move_rand datum

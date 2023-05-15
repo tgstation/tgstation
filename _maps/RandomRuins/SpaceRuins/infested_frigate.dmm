@@ -36,17 +36,6 @@
 /obj/item/shard,
 /turf/open/space/basic,
 /area/template_noop)
-"aI" = (
-/obj/structure/cable,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
-/obj/machinery/icecream_vat{
-	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "aV" = (
 /obj/machinery/light/small/red/dim/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -90,9 +79,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"bd" = (
-/turf/open/space/basic,
-/area/ruin/space/has_grav/infested_frigate)
 "bg" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -125,6 +111,17 @@
 /obj/structure/cable,
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"bJ" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/trash,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/glass{
+	icon_state = "plasmatiny"
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/power/rtg,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "bM" = (
 /obj/effect/turf_decal{
@@ -399,19 +396,6 @@
 "fl" = (
 /turf/open/space/basic,
 /area/template_noop)
-"fE" = (
-/obj/structure/cable,
-/obj/effect/spawner/random/trash,
-/obj/structure/alien/weeds/node,
-/obj/effect/decal/cleanable/glass{
-	icon_state = "plasmatiny"
-	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
-/obj/machinery/power/rtg,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "fM" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /turf/open/space/basic,
@@ -424,34 +408,6 @@
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
-"gi" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/spawner/random/exotic/languagebook,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
-/obj/effect/decal/cleanable/blood/gibs{
-	icon_state = "gib6-old"
-	},
-/obj/item/reagent_containers/pill/cyanide{
-	pixel_y = -2;
-	pixel_x = 6
-	},
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash,
-/obj/effect/spawner/random/trash,
-/obj/structure/fluff/paper/stack{
-	dir = 4
-	},
-/obj/item/food/burger/xeno,
-/obj/structure/cable,
-/obj/effect/spawner/random/trash,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "gG" = (
 /obj/effect/spawner/random/trash/food_packaging,
@@ -532,6 +488,15 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"hX" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/machinery/icecream_vat{
+	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/infested_frigate)
 "ie" = (
 /obj/structure/showcase/machinery{
 	icon_state = "autolathe";
@@ -603,9 +568,6 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
 "jk" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/barricade/security,
 /obj/structure/door_assembly/door_assembly_ext{
 	anchored = 1
@@ -823,7 +785,6 @@
 "nk" = (
 /obj/item/storage/medkit/o2,
 /obj/item/storage/medkit/toxin,
-/obj/item/defibrillator/compact/combat,
 /obj/item/clothing/glasses/hud/health/night,
 /obj/item/storage/pill_bottle/stimulant,
 /obj/item/clothing/suit/apron/surgical,
@@ -837,7 +798,7 @@
 	},
 /obj/structure/closet/syndicate,
 /obj/structure/cable,
-/obj/item/gun/syringe/syndicate,
+/obj/item/gun/syringe,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "nm" = (
@@ -1024,6 +985,13 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
+"qE" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
 "qF" = (
 /obj/item/ammo_casing/spent,
 /turf/open/space/basic,
@@ -1100,15 +1068,6 @@
 /obj/item/clothing/head/utility/welding,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
-"si" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/plastic,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "so" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -2062,6 +2021,33 @@
 	},
 /turf/open/space/basic,
 /area/template_noop)
+"Gt" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/exotic/languagebook,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gib6-old"
+	},
+/obj/item/reagent_containers/pill/cyanide{
+	pixel_y = -2;
+	pixel_x = 6
+	},
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/trash,
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/obj/item/food/burger/xeno,
+/obj/structure/cable,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
 "Hc" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "larva_chest_s"
@@ -2120,6 +2106,26 @@
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"HQ" = (
+/obj/machinery/iv_drip,
+/obj/item/clothing/mask/facehugger/dead,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/machinery/light/broken/directional/west,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "Im" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -2416,28 +2422,6 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/infested_frigate)
-"MB" = (
-/obj/machinery/iv_drip,
-/obj/item/clothing/mask/facehugger/dead,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/machinery/light/broken/directional/west,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "ME" = (
 /obj/structure/cable,
@@ -2865,7 +2849,7 @@
 	},
 /mob/living/simple_animal/hostile/alien/queen/large{
 	del_on_death = 1;
-	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper);
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
 	desc = "What you saw in your dreams last night.";
 	faction = list("syndicate","xenomorph")
 	},
@@ -3141,11 +3125,9 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
-"YT" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+"Yf" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "ltrails_1";
 	dir = 1
@@ -3276,7 +3258,7 @@ fl
 fl
 fl
 fl
-bd
+fl
 "}
 (2,1,1) = {"
 fl
@@ -3428,7 +3410,7 @@ fl
 Mm
 mG
 wP
-fE
+bJ
 wc
 sQ
 KZ
@@ -3455,7 +3437,7 @@ fl
 wP
 EQ
 wP
-aI
+hX
 SM
 ME
 KT
@@ -3590,7 +3572,7 @@ fl
 vj
 OC
 OC
-si
+qE
 JO
 zK
 wP
@@ -3701,7 +3683,7 @@ mw
 wP
 sL
 sA
-MB
+HQ
 wP
 dx
 wP
@@ -4106,7 +4088,7 @@ Bw
 ip
 BA
 sZ
-YT
+Yf
 Ai
 KC
 vj
@@ -4187,7 +4169,7 @@ cX
 wP
 jy
 PV
-gi
+Gt
 wP
 OK
 vj

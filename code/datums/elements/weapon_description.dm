@@ -69,7 +69,7 @@
  *  * source - The object whose stats are being examined
  */
 /datum/element/weapon_description/proc/build_label_text(obj/item/source)
-	var/list/readout = list("") // Readout is used to store the text block output to the user so it all can be sent in one message
+	var/list/readout = list() // Readout is used to store the text block output to the user so it all can be sent in one message
 
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)

@@ -51,6 +51,6 @@
 	. = ..(user)
 	GLOB.alarmdisplay += src
 
-/datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
+/datum/computer_file/program/alarm_monitor/kill_program()
 	GLOB.alarmdisplay -= src
 	return ..()

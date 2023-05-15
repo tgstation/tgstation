@@ -21,6 +21,7 @@
 /code/controllers/globals.dm @Cyberboss
 /code/datums/helper_datums/getrev.dm @Cyberboss
 /code/modules/tgs/ @Cyberboss
+/code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
 
 

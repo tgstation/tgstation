@@ -498,7 +498,7 @@
 	equip_cooldown = 0
 	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing
 	var/obj/item/gun/medbeam/mech/medigun
-	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*4, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize(mapload)
 	. = ..()

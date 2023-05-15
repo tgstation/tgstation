@@ -593,7 +593,7 @@
 //water electrolysis
 /datum/chemical_reaction/electrolysis
 	results = list(/datum/reagent/oxygen = 1.5, /datum/reagent/hydrogen = 3)
-	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1, /datum/reagent/water = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 //butterflium

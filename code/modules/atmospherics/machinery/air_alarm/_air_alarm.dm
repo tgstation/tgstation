@@ -39,6 +39,25 @@
 	/// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
 	var/list/datum/tlv/tlv_collection
 
+	/// Used for air alarm helper called unlocked to make air alarm unlocked.
+	var/unlocked = FALSE
+	/// Used for air alarm helper called syndicate_access to make air alarm's required access syndicate_access.
+	var/syndicate_access = FALSE
+	/// Used for air alarm helper called away_general_access to make air alarm's required access away_general_access.
+	var/away_general_access = FALSE
+	/// Used for air alarm helper called engine_access to make air alarm's required access one of ACCESS_ATMOSPHERICS & ACCESS_ENGINEERING.
+	var/engine_access = FALSE
+	/// Used for air alarm helper called mixingchamber_access to make air alarm's required access one of ACCESS_ATMOSPHERICS & ACCESS_ORDNANCE.
+	var/mixingchamber_access = FALSE
+	/// Used for air alarm helper called all_access to remove air alarm's required access.
+	var/all_access = FALSE
+
+	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
+	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
+	var/tlv_no_checks = FALSE
+
+
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /datum/armor/machinery_airalarm
@@ -494,3 +513,47 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
+
+/// Used for unlocked air alarm helper, which unlocks the air alarm.
+/obj/machinery/airalarm/proc/unlock()
+	locked = FALSE
+
+/// Used for syndicate_access air alarm helper, which sets air alarm's required access to syndicate_access.
+/obj/machinery/airalarm/proc/give_syndicate_access()
+	req_access = list(ACCESS_SYNDICATE)
+
+///Used for away_general_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_away_general_access()
+	req_access = list(ACCESS_AWAY_GENERAL)
+
+///Used for engine_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_engine_access()
+	name = "engine air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINEERING)
+
+///Used for mixingchamber_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_mixingchamber_access()
+	name = "chamber air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ORDNANCE)
+
+///Used for all_access air alarm helper, which set air alarm's required access to null.
+/obj/machinery/airalarm/proc/give_all_access()
+	name = "all-access air alarm"
+	desc = "This particular atmos control unit appears to have no access restrictions."
+	locked = FALSE
+	req_access = null
+	req_one_access = null
+
+///Used for air alarm cold room tlv helper, which sets cold room temperature and pressure alarm thresholds
+/obj/machinery/airalarm/proc/set_tlv_cold_room()
+	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
+
+///Used for air alarm no tlv helper, which removes alarm thresholds
+/obj/machinery/airalarm/proc/set_tlv_no_checks()
+	tlv_collection["temperature"] = new /datum/tlv/no_checks
+	tlv_collection["pressure"] = new /datum/tlv/no_checks

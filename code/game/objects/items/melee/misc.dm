@@ -29,7 +29,7 @@
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	custom_materials = list(/datum/material/iron = 1000)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -78,8 +78,9 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
+	block_sound = 'sound/weapons/parry.ogg'
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	custom_materials = list(/datum/material/iron = 1000)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
 	bare_wound_bonus = 25
 
@@ -170,6 +171,7 @@
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -247,6 +249,7 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat.")
 	)
 	consume_everything()
+	return TRUE
 
 /obj/item/melee/supermatter_sword/acid_act()
 	visible_message(span_danger("The acid smacks into [src] and rapidly flashes to ash."),\
@@ -446,12 +449,13 @@
 	greyscale_colors = "#FFFFFF"
 
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
-	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
+	block_sound = 'sound/weapons/genhit.ogg'
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

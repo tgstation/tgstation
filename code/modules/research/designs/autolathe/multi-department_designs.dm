@@ -2,7 +2,7 @@
 	name = "Flashlight"
 	id = "flashlight"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/flashlight
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -13,7 +13,7 @@
 	name = "Pocket Crowbar"
 	id = "crowbar"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/crowbar
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -25,7 +25,7 @@
 	name = "Multitool"
 	id = "multitool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/multitool
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -37,7 +37,7 @@
 	name = "Rapid Wiring Device"
 	id = "rwd"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/rwd/loaded
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -49,7 +49,7 @@
 	name = "Gas Analyzer"
 	id = "analyzer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+	materials = list(/datum/material/iron = 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/analyzer
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -61,7 +61,7 @@
 	name = "Welding Tool"
 	id = "welding_tool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 70, /datum/material/glass = 20)
+	materials = list(/datum/material/iron = 70, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/weldingtool/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -157,7 +157,7 @@
 	name = "Toolbox"
 	id = "tool_box"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 500)
+	materials = list(MAT_CATEGORY_ITEM_MATERIAL =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/storage/toolbox
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -168,7 +168,7 @@
 	name = "Emergency Oxygen Tank"
 	id = "emergency_oxygen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -202,7 +202,7 @@
 	name = "Generic Gas Tank"
 	id = "generic_tank"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/tank/internals/generic
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -214,7 +214,7 @@
 	name = "Boxcutter"
 	id = "boxcutter"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/plastic = 500)
+	materials = list(/datum/material/iron = 4000, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/boxcutter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -237,7 +237,7 @@
 	name = "Beaker"
 	id = "beaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
@@ -261,7 +261,7 @@
 	name = "Igniter"
 	id = "igniter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/igniter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -273,7 +273,7 @@
 	name = "Condenser"
 	id = "condenser"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=250, /datum/material/glass=300)
+	materials = list(/datum/material/iron=250, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/assembly/igniter/condenser
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -296,7 +296,7 @@
 	name = "Infrared Emitter"
 	id = "infrared_emitter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/assembly/infra
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -308,7 +308,7 @@
 	name = "Health Sensor"
 	id = "health_sensor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 800, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/assembly/health
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -320,7 +320,7 @@
 	name = "Timer"
 	id = "timer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/timer
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -332,7 +332,7 @@
 	name = "Voice Analyzer"
 	id = "voice_analyzer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/voice
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -344,7 +344,7 @@
 	name = "Light Tube"
 	id = "light_tube"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 100)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/light/tube
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -356,7 +356,7 @@
 	name = "Light Bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 100)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/light/bulb
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -368,7 +368,7 @@
 	name = "Proximity Sensor"
 	id = "prox_sensor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 800, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/assembly/prox_sensor
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -391,7 +391,7 @@
 	name = "Spraycan"
 	id = "spraycan"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/crayon/spraycan
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -415,7 +415,7 @@
 	name = "Fluid Duct"
 	id = "fluid_ducts"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/ducts
 	maxstack = 50
 	category = list(
@@ -440,7 +440,7 @@
 	name = "Package Wrapping"
 	id = "packagewrap"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/stack/package_wrap
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -453,7 +453,7 @@
 	name = "Holodisk"
 	id = "holodisk"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/holodisk
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -465,7 +465,7 @@
 	name = "Blue Circuit Tile"
 	id = "circuit"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/tile/circuit
 	maxstack = 50
 	category = list(
@@ -479,7 +479,7 @@
 	name = "Green Circuit Tile"
 	id = "circuitgreen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/tile/circuit/green
 	maxstack = 50
 	category = list(
@@ -492,7 +492,7 @@
 	name = "Red Circuit Tile"
 	id = "circuitred"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/tile/circuit/red
 	maxstack = 50
 	category = list(
@@ -505,7 +505,7 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/stack/conveyor
 	maxstack = 30
 	category = list(
@@ -530,7 +530,7 @@
 	name = "Laptop Frame"
 	id = "laptop"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/modular_computer/laptop/buildable
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -543,7 +543,7 @@
 	desc = "A utility scanner that fills multiple roles: Exports, sales, and vendor price tags."
 	id = "universal_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/universal_scanner
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -556,7 +556,7 @@
 	desc = "An paper biscuit which can seal in itself paperwork. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
 	id = "biscuit"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/plastic = 20)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/folder/biscuit/unsealed
 	category = list(
 		RND_CATEGORY_INITIAL,

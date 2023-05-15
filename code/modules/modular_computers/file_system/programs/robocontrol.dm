@@ -14,7 +14,7 @@
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
 	///List of all ping types you can annoy drones with.
-	var/list/drone_ping_types = list(
+	var/static/list/drone_ping_types = list(
 		"Low",
 		"Medium",
 		"High",
@@ -84,18 +84,15 @@
 	return data
 
 /datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if (.)
-		return
 	var/mob/current_user = ui.user
 	var/obj/item/card/id/id_card = computer?.computer_id_slot
 
-	var/list/standard_actions = list(
+	var/static/list/standard_actions = list(
 		"patroloff",
 		"patrolon",
 		"ejectpai",
 	)
-	var/list/MULE_actions = list(
+	var/static/list/MULE_actions = list(
 		"stop",
 		"go",
 		"home",
@@ -110,13 +107,13 @@
 	)
 	var/mob/living/simple_animal/bot/simple_bot = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
-		simple_bot.bot_control(action, current_user, current_access)
+		simple_bot.bot_control(action, current_user, id_card?.GetAccess())
 	if (action in MULE_actions)
-		simple_bot.bot_control(action, current_user, current_access, TRUE)
+		simple_bot.bot_control(action, current_user, id_card?.GetAccess(), TRUE)
 
 	switch(action)
 		if("summon")
-			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
+			simple_bot.bot_control(action, current_user, id_card ? id_card.access : id_card?.GetAccess())
 		if("ejectcard")
 			if(!computer || !computer.computer_id_slot)
 				return

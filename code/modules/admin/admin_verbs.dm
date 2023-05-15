@@ -296,7 +296,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	add_verb(src, /client/proc/show_verbs)
 
 	to_chat(src, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	return
 
 /client/proc/show_verbs()
@@ -307,7 +307,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	add_admin_verbs()
 
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Adminverbs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 
 
@@ -328,7 +328,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			message_admins("[key_name_admin(usr)] re-entered corpse")
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
 		return FALSE
@@ -341,7 +341,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/invisimin()
 	set name = "Invisimin"
@@ -366,7 +366,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		log_admin("[key_name(usr)] checked antagonists.") //for tsar~
 		if(!isobserver(usr) && SSticker.HasRoundStarted())
 			message_admins("[key_name_admin(usr)] checked antagonists.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/list_bombers()
 	set name = "List Bombers"
@@ -374,7 +374,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.list_bombers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/list_signalers()
 	set name = "List Signalers"
@@ -382,7 +382,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.list_signalers()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/list_law_changes()
 	set name = "List Law Changes"
@@ -390,7 +390,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.list_law_changes()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Law Changes") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Law Changes") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/show_manifest()
 	set name = "Show Manifest"
@@ -398,7 +398,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.show_manifest()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Manifest") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Manifest") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/list_dna()
 	set name = "List DNA"
@@ -406,7 +406,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.list_dna()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List DNA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List DNA") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/list_fingerprints()
 	set name = "List Fingerprints"
@@ -414,7 +414,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!holder)
 		return
 	holder.list_fingerprints()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Fingerprints") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Fingerprints") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
@@ -422,7 +422,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_BAN))
 		return
 	holder.ban_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/unban_panel()
 	set name = "Unbanning Panel"
@@ -430,14 +430,14 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_BAN))
 		return
 	holder.unban_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/game_panel()
 	set name = "Game Panel"
 	set category = "Admin.Game"
 	if(holder)
 		holder.Game()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/poll_panel()
 	set name = "Server Poll Management"
@@ -445,7 +445,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_POLL))
 		return
 	holder.poll_list_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /// Returns this client's stealthed ckey
 /client/proc/getStealthKey()
@@ -491,7 +491,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	else
 		enable_stealth_mode()
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
@@ -574,7 +574,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
 	set category = "Admin.Fun"
@@ -587,7 +587,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		dyn_explosion(epicenter, ex_power)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Dynamic Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Dynamic Bomb") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/get_dynex_range()
 	set category = "Debug"
@@ -713,7 +713,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
 	message_admins("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
 
@@ -750,7 +750,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	qdel(to_remove)
 	log_admin("[key_name(usr)] removed the spell [chosen_spell] from [key_name(removal_target)].")
 	message_admins("[key_name_admin(usr)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
 	set category = "Admin.Fun"
@@ -763,7 +763,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!D)
 		return
 	T.ForceContractDisease(new D, FALSE, TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Disease") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Disease") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D]."))
 
@@ -777,7 +777,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	O.say(message, sanitize = FALSE)
 	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\""))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Admin.Events"
@@ -785,7 +785,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		return
 	if(src.mob)
 		togglebuildmode(src.mob)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"

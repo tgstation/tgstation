@@ -231,11 +231,11 @@
 				if(!user.transferItemToLoc(part, src))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "suit finished")
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
+				mod.balloon_alert(user, "suit finished")
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, "assembly unscrewed")
