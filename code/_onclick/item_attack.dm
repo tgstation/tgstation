@@ -35,7 +35,7 @@
 	if (is_right_clicking)
 		switch (target.attackby_secondary(src, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
-				attackby_result = target.attackby(src, user, params)
+				. = target.attackby(src, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return ATTACK_STYLE_SKIPPED // Return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -45,19 +45,21 @@
 	else
 		attackby_result = target.attackby(src, user, params)
 
-	if (attackby_result)
+	if(attackby_result & (ATTACK_STYLE_HIT|ATTACK_STYLE_BLOCKED))
 		return attackby_result // Return TRUE
+
+	. |= attackby_result
 
 	if(QDELETED(src) || QDELETED(target))
 		attack_qdeleted(target, user, TRUE, params)
-		return ATTACK_STYLE_SKIPPED // Return TRUE
+		return . | ATTACK_STYLE_SKIPPED // Return TRUE
 
 	if (is_right_clicking)
 		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
 
 		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return ATTACK_STYLE_SKIPPED // Return TRUE
+			return . | ATTACK_STYLE_SKIPPED // Return TRUE
 
 	var/afterattack_result = afterattack(target, user, TRUE, params)
 
@@ -67,7 +69,12 @@
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
-	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
+	if(afterattack_result & TRUE)
+		// after attack will either return TRUE | flags
+		// TRUE indicates "success", so we'll tack on the following
+		. |= ATTACK_STYLE_HIT
+
+	return .
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)

@@ -188,23 +188,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	*/
 
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/melee_result = weapon.melee_attack_chain(attacker, smacked)
-	switch(melee_result)
-		if(TRUE)
-			return ATTACK_STYLE_HIT
-		if(FALSE)
-			return ATTACK_STYLE_MISSED
-		if(null)
-			stack_trace("Melee attack chain returned null, update it.")
-			return ATTACK_STYLE_MISSED
-		else
-			stack_trace("Melee attack chain returned unknown value ([melee_result]), update it.")
-			return ATTACK_STYLE_MISSED
-
-	// obj/item.+attack\(
-	// Convert to bitflags, ATTACK_STYLE_HIT / ATTACK_STYLE_BLOCKED
-	// Attack chain current
-	// Click -> item Melee attack chain -> item tool act -> item pre attack -> mob attackby -> item attack -> mob attacked by -> item attack qdeleted -> item after attack
+	return weapon.melee_attack_chain(attacker, smacked)
 
 /**
  * Unarmed attack styles work slightly differently
