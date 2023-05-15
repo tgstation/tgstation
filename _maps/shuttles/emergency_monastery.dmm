@@ -1612,9 +1612,9 @@
 "yr" = (
 /obj/structure/closet,
 /obj/machinery/light/small/directional/south,
-/obj/item/storage/book/bible,
-/obj/item/storage/book/bible,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
+/obj/item/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "yu" = (
@@ -2037,7 +2037,7 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Dv" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/structure/cable,
 /obj/structure/altar_of_gods,
 /turf/open/floor/carpet,
@@ -3211,7 +3211,7 @@
 /area/shuttle/escape)
 "Si" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Sj" = (

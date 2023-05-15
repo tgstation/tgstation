@@ -3729,7 +3729,7 @@
 	desc = "A memorial wall for pinning mementos upon.";
 	name = "memorial board"
 	},
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/service/chapel/funeral)
@@ -42991,7 +42991,7 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "pwq" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/structure/altar_of_gods,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -51281,7 +51281,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "ssi" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/camera/directional/north{

@@ -61,7 +61,7 @@
 		pre_haunt_throwforce = haunted_item.throwforce
 		haunted_item.throwforce = min(haunted_item.throwforce + throw_force_bonus, throw_force_max)
 
-	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/storage/book/bible)
+	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/book/bible)
 	src.types_which_dispell_us = types_which_dispell_us || default_dispell_types
 	src.despawn_message = despawn_message
 
