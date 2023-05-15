@@ -621,13 +621,15 @@
 	///This is the list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs = list()
 
+	processing_flags = START_PROCESSING_ON_INIT
+
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		deactivate_shields()
-		STOP_PROCESSING(SSobj, src)
+		end_processing()
 		return
-	START_PROCESSING(SSobj, src)
+	begin_processing()
 
 /obj/machinery/modular_shield_generator/RefreshParts()
 	. = ..()
@@ -865,6 +867,7 @@
 /obj/machinery/modular_shield_generator/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
+	begin_processing()
 
 ///Calculates the regeneration based on the status of the generator and boosts from network, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_regeneration()
@@ -889,7 +892,7 @@
 ///Reduces the strength of the shield based on the given integer
 /obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
-	START_PROCESSING(SSobj, src)
+	begin_processing()
 	if (stored_strength < 5)
 		recovering = TRUE
 		deactivate_shields()
@@ -904,7 +907,7 @@
 			recovering = FALSE
 			calculate_regeneration()
 			update_icon_state()
-		STOP_PROCESSING(SSobj, src) //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
+		end_processing() //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
 		var/random_num = rand(1,deployed_shields.len)
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
