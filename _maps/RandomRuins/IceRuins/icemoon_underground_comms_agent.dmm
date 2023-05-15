@@ -1,6 +1,24 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "bk" = (
 /turf/open/floor/iron,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"bs" = (
+/obj/structure/table,
+/obj/structure/desk_bell{
+	pixel_y = -1;
+	pixel_x = -8
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -12,9 +30,12 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"ci" = (
-/turf/template_noop,
-/area/icemoon/underground/explored)
+"ce" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "cI" = (
 /obj/structure/water_source/puddle,
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty{
@@ -25,6 +46,12 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"di" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/template_noop)
 "do" = (
 /turf/open/floor/iron/white,
 /area/ruin/powered{
@@ -33,6 +60,7 @@
 "ds" = (
 /obj/structure/bed/maint,
 /obj/item/bedsheet/syndie,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -66,12 +94,21 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"fE" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
 "ge" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"gv" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/template_noop)
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
@@ -82,10 +119,15 @@
 /obj/effect/turf_decal/siding/wideplating/light{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"ig" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
 "ij" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
 	dir = 8
@@ -103,19 +145,30 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"iZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
+"kA" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/fluff/fokoff_sign,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
 "kD" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "kL" = (
-/obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -124,16 +177,24 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"lf" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "mb" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "nc" = (
 /obj/machinery/door/airlock/glass,
+/obj/structure/cable,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -158,6 +219,13 @@
 	name = "Syndicate Secure Airlock System";
 	desc = "Truly, a marvel of modern engineering."
 	},
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"pV" = (
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -174,9 +242,26 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"rh" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "rA" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"rW" = (
+/obj/structure/filingcabinet,
+/obj/item/paperwork,
+/obj/item/paper/monitorkey,
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -195,10 +280,17 @@
 /obj/machinery/computer/camera_advanced{
 	dir = 4
 	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"tp" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/template_noop)
 "tu" = (
 /obj/structure/table,
 /obj/item/lighter/skull{
@@ -213,9 +305,20 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"tP" = (
+/turf/open/space/basic,
+/area/template_noop)
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"un" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -225,8 +328,22 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"uY" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"vB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -249,8 +366,13 @@
 	name = "\improper Listening Post"
 	})
 "wj" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/centcom{
+	name = "Nanotrasen Airlock";
+	desc = "Truly, a marvel of modern engineering."
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -258,6 +380,9 @@
 /obj/structure/closet/secure_closet/freezer/empty/open,
 /obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/broken_bottle,
+/obj/item/reagent_containers/syringe,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -286,6 +411,7 @@
 /obj/item/storage/photo_album/icemoonlisteningstation{
 	pixel_x = 10
 	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -316,8 +442,9 @@
 	})
 "zG" = (
 /obj/effect/turf_decal/siding/wood{
-	dir = 9
+	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -344,6 +471,7 @@
 	pixel_x = -1;
 	pixel_y = 4
 	},
+/obj/item/reagent_containers/cup/maunamug,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -374,6 +502,12 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"CS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
 "CW" = (
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
@@ -384,8 +518,12 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/maunamug{
-	pixel_x = -5;
-	pixel_y = 1
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = -11;
+	pixel_y = 3
 	},
 /turf/open/floor/wood,
 /area/ruin/powered{
@@ -431,6 +569,7 @@
 "Gq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -459,15 +598,34 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"HX" = (
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Ie" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
 "IJ" = (
 /obj/structure/closet/secure_closet/freezer/empty,
 /obj/item/reagent_containers/condiment/rice,
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/condiment/milk,
+/obj/item/pizzabox{
+	desc = "A box suited for pizzas. This one's pizza seems to have been taken a long time ago."
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Jh" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
 "JD" = (
 /turf/open/genturf,
 /area/icemoon/underground/explored)
@@ -488,6 +646,12 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"KB" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "KG" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -501,6 +665,24 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Lh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/cultivator/rake,
+/turf/open/floor/plating/snowed,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Lr" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/template_noop,
+/area/template_noop)
+"Lz" = (
+/turf/open/floor/wood{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180";
+	name = "bridge"
+	},
+/area/template_noop)
 "LP" = (
 /turf/closed/wall/r_wall,
 /area/ruin/powered)
@@ -519,12 +701,9 @@
 	name = "\improper Listening Post"
 	})
 "Mz" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/door/airlock/centcom{
-	name = "Nanotrasen Airlock";
-	desc = "Truly, a marvel of modern engineering."
-	},
-/turf/open/floor/wood/tile,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -533,6 +712,7 @@
 /area/icemoon/underground/explored)
 "MM" = (
 /obj/machinery/door/airlock/maintenance,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -544,27 +724,68 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Ny" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/washing_machine{
+	pixel_x = 4
+	},
+/turf/open/floor/plating/snowed,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "NJ" = (
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Ok" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
 "Oy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/cultivator/rake,
+/obj/structure/cable,
 /turf/open/floor/plating/snowed,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"OB" = (
+/turf/open/lava/plasma/ice_moon,
+/area/template_noop)
+"OM" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Pj" = (
 /obj/structure/bed/maint,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"PC" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/template_noop)
 "PR" = (
 /obj/structure/girder/reinforced,
 /turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Qn" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Qx" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -572,6 +793,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -584,6 +806,12 @@
 	name = "\improper Listening Post"
 	})
 "Tn" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -595,17 +823,38 @@
 	name = "\improper Listening Post"
 	})
 "Uw" = (
-/obj/structure/table,
-/obj/structure/desk_bell{
-	pixel_y = -1;
-	pixel_x = -8
-	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"UE" = (
+/turf/closed/mineral/snowmountain/icemoon,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"UI" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
+/obj/machinery/computer/records/security/laptop/syndie{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
 "VN" = (
 /turf/open/floor/carpet,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Wl" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -639,9 +888,30 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
+"Xk" = (
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
 "XU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Yd" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "\improper Listening Post"
+	})
+"Yz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
@@ -660,12 +930,6 @@
 /area/ruin/powered{
 	name = "\improper Listening Post"
 	})
-"YZ" = (
-/obj/structure/table,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "\improper Listening Post"
-	})
 "Ze" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -673,6 +937,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "\improper Listening Post"
@@ -805,15 +1070,15 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -848,23 +1113,23 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -889,27 +1154,27 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -932,30 +1197,30 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -975,31 +1240,31 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1018,33 +1283,33 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1061,34 +1326,34 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+il
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1105,34 +1370,34 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+il
+il
+il
+il
 YX
 YX
 YX
 YX
 YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+il
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1148,16 +1413,16 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+il
+il
 LP
 LP
 LP
@@ -1169,14 +1434,14 @@ YX
 YX
 YX
 YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+il
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1192,15 +1457,15 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+il
 YX
 YX
 BD
@@ -1214,14 +1479,14 @@ Ac
 od
 YX
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1235,20 +1500,20 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+il
+il
 YX
 ds
-Tn
-Tn
+uY
+pV
 YI
 wn
 WL
@@ -1258,14 +1523,14 @@ rA
 NJ
 fk
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1279,19 +1544,19 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+il
 il
 YX
 Pj
-Tn
+HX
 Fm
 YI
 GI
@@ -1302,14 +1567,14 @@ ge
 NJ
 Kv
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1323,14 +1588,14 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
 il
 il
 YX
@@ -1343,17 +1608,17 @@ do
 IJ
 YI
 BZ
-NJ
+Wl
 CL
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1366,38 +1631,38 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-il
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
 il
 YX
 YX
 Zt
 Ze
-mb
+YI
 vK
-do
-do
-do
+lf
+lf
+lf
 MM
-NJ
-NJ
+Qx
+Wl
 CW
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1410,17 +1675,17 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
 il
 il
-XU
+YX
 DT
 lb
 QG
@@ -1434,14 +1699,14 @@ YI
 YI
 YX
 Ae
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+fE
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1454,38 +1719,38 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
 il
 il
-XU
+YX
 Mj
 Ml
 QG
 QT
 eE
-eE
+Qx
 DH
 YI
 yG
 sJ
 Tn
 YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1498,37 +1763,37 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
 il
 il
 il
-XU
+YX
 KG
 Ng
 QG
-YZ
-eE
-eE
+kL
+Qx
+Wl
 Gq
 pl
-Tn
-Tn
-Tn
-YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+HX
+rh
+UI
+XU
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1543,36 +1808,36 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
+fE
+fE
 il
 il
+UE
 YX
-YX
-YX
+un
 zG
 mb
 eE
-up
+eE
 in
 kD
 YI
-YI
-Tn
-Tn
-YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+vB
+Yz
+ce
+XU
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1587,36 +1852,36 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
+fE
+il
 il
 il
 YX
-bt
+YX
 YX
 Mz
-YX
-YX
-dP
-tu
-eE
+Yd
+Qn
+up
+in
+ag
 YI
-WU
-Tn
-Tn
-YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+YI
+Yz
+vB
+XU
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1631,37 +1896,37 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
 il
 il
 il
 il
 YX
-YA
-VN
+bt
+YX
 wj
-KM
 YX
 YX
-YX
+dP
+tu
 kL
 YI
-YI
-YI
-YX
-YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+WU
+Yz
+rW
+XU
+tP
+tP
+tP
+tP
+tP
+tP
+tP
+tP
+tP
 EL
 EL
 EL
@@ -1675,36 +1940,36 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
 il
 il
 il
 il
 YX
-sc
+YA
 VN
 Uw
 KM
-Wm
-hl
 YX
-ud
-ud
-ud
-qE
 YX
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+YX
+Xk
+YI
+YI
+YI
+YX
+YX
+il
+il
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1719,35 +1984,35 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
 il
 il
 il
 il
 YX
-YA
-xz
-yR
-YA
-YX
-bk
+sc
+VN
+bs
+KM
+Wm
+hl
 YX
 Oy
-zJ
-cI
-zJ
+Lh
+ud
+qE
 YX
-MH
-MH
-EL
-EL
-EL
-EL
-EL
-EL
+il
+il
+fE
+fE
+fE
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1762,12 +2027,56 @@ EL
 EL
 EL
 EL
+OB
+OB
+OB
+fE
+fE
+il
+il
+il
+il
+YX
+YA
+xz
+yR
+KB
+YX
+bk
+YX
+Ny
+zJ
+cI
+zJ
+YX
+MH
+MH
+fE
+fE
+fE
+fE
+OB
+OB
 EL
 EL
 EL
 EL
 EL
 EL
+EL
+"}
+(26,1,1) = {"
+EL
+EL
+EL
+EL
+EL
+OB
+OB
+OB
+fE
+fE
+fE
 il
 il
 il
@@ -1786,13 +2095,13 @@ zJ
 YX
 MH
 MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+fE
+fE
+fE
+fE
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1800,20 +2109,20 @@ EL
 EL
 EL
 "}
-(26,1,1) = {"
+(27,1,1) = {"
 EL
 EL
 EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+fE
+fE
+fE
+fE
+fE
 il
 il
 YX
@@ -1830,12 +2139,12 @@ PR
 PR
 MH
 MH
-EL
-EL
-EL
-EL
-EL
-EL
+fE
+fE
+fE
+fE
+OB
+OB
 EL
 EL
 EL
@@ -1844,20 +2153,20 @@ EL
 EL
 EL
 "}
-(27,1,1) = {"
+(28,1,1) = {"
 EL
 EL
 EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
 il
 il
 il
@@ -1874,56 +2183,12 @@ PR
 MH
 MH
 MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-"}
-(28,1,1) = {"
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-il
-il
-MH
-MH
-MH
-JD
-JD
-MH
-MH
-MH
-MH
-MH
-MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+fE
+fE
+fE
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1939,36 +2204,36 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
+il
 il
 MH
 MH
 MH
 JD
 JD
-JD
 MH
 MH
 MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+MH
+MH
+MH
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -1984,35 +2249,35 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+fE
+fE
+fE
+fE
+fE
+il
 MH
 MH
 MH
 JD
 JD
+JD
 MH
 MH
 MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2028,35 +2293,35 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+fE
+fE
+fE
+Ie
+fE
+PC
 MH
 MH
 MH
 JD
+JD
 MH
 MH
-ci
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+MH
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2073,34 +2338,34 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+fE
+fE
+ig
+Lz
+iZ
+fE
 MH
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+MH
+MH
+JD
+MH
+MH
+OM
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2118,33 +2383,33 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+fE
+kA
+Lz
+iZ
+fE
+fE
+fE
+OM
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2163,31 +2428,31 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+gv
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+fE
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2207,30 +2472,30 @@ EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+tp
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2252,29 +2517,29 @@ EL
 EL
 EL
 EL
+OB
+OB
+OB
+OB
+Lz
+di
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2299,18 +2564,18 @@ EL
 EL
 EL
 EL
+Lr
+Lz
+CS
 EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
-EL
+OB
+OB
+OB
+OB
+OB
+OB
+OB
+OB
 EL
 EL
 EL
@@ -2343,9 +2608,9 @@ EL
 EL
 EL
 EL
+Jh
 EL
-EL
-EL
+Ok
 EL
 EL
 EL
