@@ -555,14 +555,14 @@
 #undef ACTIVE_HASFIELDS
 
 //Modular Shield Generator Start
-/obj/machinery/modular_shield_gen
+/obj/machinery/modular_shield_generator
 	name = "Modular Shield Generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gen_recovering_closed"
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
-	circuit = /obj/item/circuitboard/machine/modular_shield_gen
+	circuit = /obj/item/circuitboard/machine/modular_shield_generator
 
 	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
@@ -620,7 +620,7 @@
 
 	var/list/list_of_turfs
 
-/obj/machinery/modular_shield_gen/power_change()
+/obj/machinery/modular_shield_generator/power_change()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		deactivate_shields()
@@ -628,7 +628,7 @@
 		return
 	START_PROCESSING(SSobj, src)
 
-/obj/machinery/modular_shield_gen/RefreshParts()
+/obj/machinery/modular_shield_generator/RefreshParts()
 	. = ..()
 
 	innate_regen = 3
@@ -649,39 +649,39 @@
 	calculate_radius()
 
 
-/obj/machinery/modular_shield_gen/Initialize(mapload)
+/obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
 	deployed_shields = list()
 	connected_modules = list()
 	list_of_turfs = list()
-	wires = new /datum/wires/modular_shield_gen(src)
+	wires = new /datum/wires/modular_shield_generator(src)
 	if(mapload && active && anchored)
 		activate_shields()
 
-/datum/wires/modular_shield_gen
+/datum/wires/modular_shield_generator
 	proper_name = "Modular shield generator"
 	randomize = FALSE
-	holder_type = /obj/machinery/modular_shield_gen
+	holder_type = /obj/machinery/modular_shield_generator
 
-/datum/wires/modular_shield_gen/New(atom/holder)
+/datum/wires/modular_shield_generator/New(atom/holder)
 	wires = list(WIRE_HACK)
 	..()
 
-/datum/wires/modular_shield_gen/on_pulse(wire)
+/datum/wires/modular_shield_generator/on_pulse(wire)
 
-	var/obj/machinery/modular_shield_gen/G = holder
+	var/obj/machinery/modular_shield_generator/G = holder
 	switch(wire)
 		if(WIRE_HACK)
 			G.toggle_shields()
 			return
 	..()
 
-/obj/machinery/modular_shield_gen/proc/deactivate_shields()
+/obj/machinery/modular_shield_generator/proc/deactivate_shields()
 	active = FALSE
 	QDEL_LIST(deployed_shields)
 	calculate_regeneration()
 
-/obj/machinery/modular_shield_gen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user,"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
 		"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  W))
@@ -696,7 +696,7 @@
 
 	return ..()
 
-/obj/machinery/modular_shield_gen/proc/toggle_shields()
+/obj/machinery/modular_shield_generator/proc/toggle_shields()
 	if(active)
 		deactivate_shields()
 		return
@@ -706,7 +706,7 @@
 
 
 
-/obj/machinery/modular_shield_gen/proc/activate_shields()
+/obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active) //bug or did admin call proc on already active shield gen?
 		return
 	active = TRUE
@@ -776,25 +776,25 @@
 	return
 
 
-/obj/machinery/modular_shield_gen/Destroy()
+/obj/machinery/modular_shield_generator/Destroy()
 	QDEL_LIST(deployed_shields)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
-/obj/machinery/modular_shield_gen/update_icon_state()
+/obj/machinery/modular_shield_generator/update_icon_state()
 
 	icon_state = ("gen_[!(machine_stat & NOPOWER)?"[recovering ?"recovering_":"ready_"]":"no_power_"][(panel_open)?"open":"closed"]")
 	return ..()
 
 //ui stuff
-/obj/machinery/modular_shield_gen/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/modular_shield_generator/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Modularshieldgen")
 		ui.open()
 
-/obj/machinery/modular_shield_gen/ui_data(mob/user)
+/obj/machinery/modular_shield_generator/ui_data(mob/user)
 
 	var/list/data = list()
 	data["max_radius"] = max_radius
@@ -808,7 +808,7 @@
 	data["exterior_only"] = exterior_only
 	return data
 
-/obj/machinery/modular_shield_gen/ui_act(action, params)
+/obj/machinery/modular_shield_generator/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -825,7 +825,7 @@
 			return
 
 //calculations for the shield`s core stats
-/obj/machinery/modular_shield_gen/proc/calculate_boost()
+/obj/machinery/modular_shield_generator/proc/calculate_boost()
 
 	regen_boost = 0
 	for (var/obj/machinery/modular_shield/module/charger/new_charger in connected_modules)
@@ -845,7 +845,7 @@
 
 	calculate_radius()
 
-/obj/machinery/modular_shield_gen/proc/calculate_radius()
+/obj/machinery/modular_shield_generator/proc/calculate_radius()
 
 	max_radius = innate_radius + radius_boost
 
@@ -853,12 +853,12 @@
 		deactivate_shields()
 		radius = max_radius
 
-/obj/machinery/modular_shield_gen/proc/calculate_max_strength()
+/obj/machinery/modular_shield_generator/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
 
 
-/obj/machinery/modular_shield_gen/proc/calculate_regeneration()
+/obj/machinery/modular_shield_generator/proc/calculate_regeneration()
 
 	max_regeneration = innate_regen + regen_boost
 
@@ -876,7 +876,7 @@
 		current_regeneration *=0.5
 
 
-/obj/machinery/modular_shield_gen/proc/shield_drain(damage_amount)
+/obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	START_PROCESSING(SSobj, src)
 	if (stored_strength < 5)
@@ -886,7 +886,7 @@
 		update_icon_state()
 		return
 
-/obj/machinery/modular_shield_gen/process(seconds_per_tick)
+/obj/machinery/modular_shield_generator/process(seconds_per_tick)
 	stored_strength = min((stored_strength + (current_regeneration * seconds_per_tick)),max_strength)
 	if(stored_strength == max_strength)
 		if (recovering)
@@ -912,7 +912,7 @@
 	density = TRUE
 	dir = SOUTH
 
-	var/obj/machinery/modular_shield_gen/shield_generator
+	var/obj/machinery/modular_shield_generator/shield_generator
 
 	var/obj/machinery/modular_shield/module/node/connected_node
 
@@ -975,7 +975,7 @@
 		balloon_alert(user, "already connected to something")
 		return
 
-	shield_generator = (locate(/obj/machinery/modular_shield_gen) in connected_turf)
+	shield_generator = (locate(/obj/machinery/modular_shield_generator) in connected_turf)
 
 	if(shield_generator)
 
@@ -1163,7 +1163,7 @@
 	color = "#00ffff"
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
 	//our parent
-	var/obj/machinery/modular_shield_gen/shield_generator
+	var/obj/machinery/modular_shield_generator/shield_generator
 
 
 /obj/structure/emergency_shield/modular/Initialize(mapload)
