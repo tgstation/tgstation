@@ -3,6 +3,7 @@
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
+	attack_type = BURN // bish buzz
 	attack_style = /datum/attack_style/unarmed/generic_damage/punch/ethereal
 
 /obj/item/bodypart/head/ethereal/update_limb(dropping_limb, is_creating)
@@ -29,6 +30,7 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN //burn bish
 	attack_style = /datum/attack_style/unarmed/generic_damage/punch/ethereal
 
 /obj/item/bodypart/arm/left/ethereal/update_limb(dropping_limb, is_creating)
@@ -42,6 +44,7 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN // bish buzz
 	attack_style = /datum/attack_style/unarmed/generic_damage/punch/ethereal
 
 /obj/item/bodypart/arm/right/ethereal/update_limb(dropping_limb, is_creating)
@@ -56,6 +59,7 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN // bish buzz
 	attack_style = /datum/attack_style/unarmed/generic_damage/punch/ethereal
 
 /obj/item/bodypart/leg/left/ethereal/update_limb(dropping_limb, is_creating)
@@ -69,6 +73,7 @@
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
+	attack_type = BURN // bish buzz
 	attack_style = /datum/attack_style/unarmed/generic_damage/punch/ethereal
 
 /obj/item/bodypart/leg/right/ethereal/update_limb(dropping_limb, is_creating)

@@ -106,7 +106,7 @@
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
-	actually_apply_damage(attacker, smacked, damage, affecting, armor_block)
+	actually_apply_damage(attacker, smacked, weapon, damage, affecting, armor_block)
 
 	var/additional_logging = "([default_attack_verb])"
 	if(damage >= 9 && ishuman(smacked))
@@ -135,11 +135,11 @@
 	return ATTACK_STYLE_HIT
 
 /// Called when the damage actually is being applied to the smacked mob
-/datum/attack_style/unarmed/generic_damage/proc/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor_block)
+/datum/attack_style/unarmed/generic_damage/proc/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage, affecting, armor_block)
 	var/direction = get_dir(attacker, smacked)
-	smacked.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)
+	smacked.apply_damage(damage, hitting_with.attack_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)
 	if(bonus_stamina_damage_modifier > 0)
-		smacked.apply_damage(damage * bonus_stamina_damage_modifier, attack_type, affecting, armor_block, attack_direction = direction)
+		smacked.apply_damage(damage * bonus_stamina_damage_modifier, STAMINA, affecting, armor_block, attack_direction = direction)
 
 /datum/attack_style/unarmed/generic_damage/punch
 	default_attack_verb = "punch" // The classic punch, wonderfully classic and completely random
@@ -200,7 +200,7 @@
 
 	return ..()
 
-/datum/attack_style/unarmed/generic_damage/bite/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor)
+/datum/attack_style/unarmed/generic_damage/bite/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage, affecting, armor_block)
 	. = ..()
 	if(armor >= disease_armor_thresold)
 		return
@@ -215,7 +215,7 @@
 /datum/attack_style/unarmed/generic_damage/bite/larva
 	miss_chance_modifier = 10
 
-/datum/attack_style/unarmed/generic_damage/bite/larva/actually_apply_damage(mob/living/carbon/alien/larva/attacker, mob/living/smacked, damage, affecting, armor)
+/datum/attack_style/unarmed/generic_damage/bite/larva/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage, affecting, armor_block)
 	. = ..()
 	attacker.amount_grown = min(attacker.amount_grown + damage, attacker.max_grown)
 

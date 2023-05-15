@@ -165,10 +165,14 @@
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
-	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
+	var/attack_type = BRUTE
+	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
-	/// Highest possible punch damage this bodypart can give.
+	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
+	///Damage at which attacks from this bodypart will stun
+	var/unarmed_stun_threshold = 2
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 

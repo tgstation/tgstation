@@ -10,10 +10,12 @@
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
 	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	unarmed_damage_high = 0.5 //snails are soft and squishy
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
 	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	unarmed_damage_high = 0.5
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
@@ -312,20 +314,27 @@
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/mushroom
-
+	unarmed_damage_low = 6
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/arm/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/mushroom
+	unarmed_damage_low = 6
+	unarmed_damage_high = 14
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	attack_style = /datum/attack_style/unarmed/generic_damage/kick/mushroom
+	unarmed_damage_low = 9
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	attack_style = /datum/attack_style/unarmed/generic_damage/kick/mushroom
+	unarmed_damage_low = 9
+	unarmed_damage_high = 21
+	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/head/golem
 	icon = 'icons/mob/species/golems.dmi'
@@ -395,13 +404,9 @@
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
 	attack_style = /datum/attack_style/unarmed/generic_damage/golem
-
-	/*
-	melbert todo
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
-	*/
 
 /obj/item/bodypart/arm/left/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -422,12 +427,9 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
-	/*
-	melbert todo
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
-	*/
 
 /obj/item/bodypart/arm/right/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -447,12 +449,9 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	/*
-	melbert todo
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
-	*/
 
 /obj/item/bodypart/leg/right/golem
 	icon = 'icons/mob/species/golems.dmi'
@@ -463,9 +462,6 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	/*
-	melbert todo
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
-	*/
