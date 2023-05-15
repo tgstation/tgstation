@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Secret recipes will no longer contain inaprovaline or stranger reagent."

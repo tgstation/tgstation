@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Adds the Syndicate Induction Kit for Nuclear Operatives, which lets them induct any willing antagonist into the nuclear operative team for 10 TC."
+  - rscadd: "Uplink spacesuits are randomized between all their different colored variants! Visual only."
