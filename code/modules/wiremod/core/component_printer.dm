@@ -196,6 +196,7 @@
 	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
 		var/obj/item/integrated_circuit/circuit = weapon
 		circuit.linked_component_printer = WEAKREF(src)
+		circuit.update_static_data_for_all_viewers()
 		balloon_alert(user, "successfully linked to the integrated circuit")
 		return
 	return ..()

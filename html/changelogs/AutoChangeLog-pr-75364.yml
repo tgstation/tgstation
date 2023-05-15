@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - qol: "Added a message to the component menu in the integrated circuit interface that explains how to link an integrated circuit to a component printer."
