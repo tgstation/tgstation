@@ -283,15 +283,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// Used for playing a little animation over the turf
 	var/attack_effect = ATTACK_EFFECT_PUNCH
 
-/datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!isnull(weapon))
-		if(weapon.attack_style == src)
-			// The only time this would occur is if someone is thwacking another person with a detached limb.
-			// Technically we could allow it, but I can imagine it being a huge mistake. We'll see
-			pass()
-		else
-			CRASH("Unarmed attack style executed with a weapon [weapon]")
-
+/datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	ASSERT(istype(weapon, /obj/item/bodypart))
 	return ..()
 
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)

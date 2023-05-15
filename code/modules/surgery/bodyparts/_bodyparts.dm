@@ -165,6 +165,10 @@
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
+	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	var/unarmed_damage_low = 1
+	/// Highest possible punch damage this bodypart can give.
+	var/unarmed_damage_high = 1
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 

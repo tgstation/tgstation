@@ -17,10 +17,6 @@
 
 	// Melbert todo: maybe put these back on the limbs
 
-	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
-	var/unarmed_damage_low = 1
-	/// Highest possible punch damage this bodypart can give.
-	var/unarmed_damage_high = 1
 	/// Damage at which attacks from this bodypart will stun.
 	/// If negative, we will never stun. Likewise if 0, we will always stun.
 	var/unarmed_stun_threshold = 2
@@ -29,8 +25,8 @@
 	/// Armor penetration from the attack
 	var/attack_penetration = 0
 
-/datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked)
-	return rand(unarmed_damage_low, unarmed_damage_high)
+/datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
+	return rand(hitting_with.unarmed_damage_low, hitting_with.unarmed_damage_high)
 
 /datum/attack_style/unarmed/generic_damage/proc/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
 	if(damage == 0 && attacker.friendly_verb_simple)
@@ -40,9 +36,17 @@
 
 	return default_attack_verb
 
-/datum/attack_style/unarmed/generic_damage/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/damage = max(0, select_damage(attacker, smacked))
+/datum/attack_style/unarmed/generic_damage/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
+	var/damage = max(0, select_damage(attacker, smacked, weapon))
 	var/attack_verb = select_attack_verb(attacker, smacked, damage)
+	/*
+	Uncomment if you can use limbs as weapons
+	if(iscarbon(attacker))
+		var/mob/living/carbon/carbon_attacker = attacker
+		if(!(weapon in carbon_attacker.bodyparts))
+			damage *= 0.5
+	*/
+
 	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration))
 		smacked.visible_message(
 			span_warning("[smacked] blocks [attacker]'s [attack_verb]!"),
@@ -154,6 +158,9 @@
 	attack_type = BURN // bish buzz
 	default_attack_verb = "burn"
 
+/datum/attack_style/unarmed/generic_damage/golem
+	unarmed_stun_threshold = 11
+
 /datum/attack_style/unarmed/generic_damage/punch/claw
 	successful_hit_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -216,11 +223,12 @@
 	cd = 1.5 SECONDS
 	attack_effect = ATTACK_EFFECT_SMASH
 	successful_hit_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 12
-	unarmed_damage_high = 15
 	unarmed_stun_threshold = -1
 	wound_bonus = 10
 	default_attack_verb = "smash"
+
+/datum/attack_style/unarmed/generic_damage/hulk/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
+	return rand(12, 15)
 
 /datum/attack_style/unarmed/generic_damage/hulk/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
 	return pick(default_attack_verb, "pummel", "slam")
@@ -255,7 +263,7 @@
 /datum/attack_style/unarmed/generic_damage/mob_attack
 	unarmed_stun_threshold = -1
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked)
+/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
 	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
@@ -290,7 +298,7 @@
 	default_attack_verb = "slash"
 	miss_chance_modifier = 10
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/xeno/select_damage(mob/living/attacker, mob/living/smacked)
+/datum/attack_style/unarmed/generic_damage/mob_attack/xeno/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
 	if(isalien(smacked))
 		return 1 // Aliens do 1 damage to each other
 	return ..()

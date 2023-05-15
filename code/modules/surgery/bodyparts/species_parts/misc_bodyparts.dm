@@ -394,6 +394,8 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	attack_style = /datum/attack_style/unarmed/generic_damage/golem
+
 	/*
 	melbert todo
 	unarmed_damage_low = 5

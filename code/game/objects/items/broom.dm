@@ -48,7 +48,6 @@
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
-// Melbert todo: Needs special handling
 /obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity)
