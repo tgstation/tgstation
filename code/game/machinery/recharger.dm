@@ -69,7 +69,7 @@
 
 /obj/machinery/recharger/Exited(atom/movable/gone, direction)
 	if(gone == charging)
-		if(!QDELETED(charging))
+		if(!QDELING(charging))
 			charging.update_appearance()
 		charging = null
 		update_use_power(IDLE_POWER_USE)
