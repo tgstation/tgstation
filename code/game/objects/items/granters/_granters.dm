@@ -5,7 +5,7 @@
  */
 /obj/item/book/granter
 	due_date = 0
-	unique = 1
+	unique = TRUE
 	/// Flavor messages displayed to mobs reading the granter
 	var/list/remarks = list()
 	/// Controls how long a mob must keep the book in his hand to actually successfully learn

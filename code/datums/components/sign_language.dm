@@ -84,6 +84,7 @@
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
 	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
+	RegisterSignal(carbon_parent, COMSIG_MOB_TRY_INVOKE_SPELL, PROC_REF(can_cast_spell))
 	return TRUE
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_DISABLE]
@@ -109,7 +110,8 @@
 		COMSIG_LIVING_TREAT_MESSAGE,
 		COMSIG_MOVABLE_USING_RADIO,
 		COMSIG_MOVABLE_SAY_QUOTE,
-		COMSIG_MOB_SAY
+		COMSIG_MOB_SAY,
+		COMSIG_MOB_TRY_INVOKE_SPELL,
 	))
 	return TRUE
 
@@ -180,10 +182,10 @@
 		busy_hands++
 
 	// Handcuffed or otherwise restrained - can't talk
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+	if(HAS_TRAIT(carbon_parent, TRAIT_RESTRAINED))
 		return SIGN_CUFFED
 	// Some other trait preventing us from using our hands now
-	else if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+	else if(HAS_TRAIT(carbon_parent, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(carbon_parent, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 
 	// Okay let's compare the total hands to the number of busy hands
@@ -195,6 +197,29 @@
 		return SIGN_ONE_HAND
 
 	return SIGN_OKAY
+
+/**
+ * Check if we can sign the given spell
+ *
+ * Checks to make sure the spell is not a mime spell, and that we are able to physically cast the spell.
+ * Arguments:
+ * * mob/living/carbon/source - the caster of the spell
+ * * datum/action/cooldown/spell/spell - the spell we are trying to cast
+ * * feedback - whether or not a message should be displayed in chat
+ * *
+ * * returns SPELL_INVOCATION_FAIL or SPELL_INVOCATION_SUCCESS
+ */
+/datum/component/sign_language/proc/can_cast_spell(mob/living/carbon/source, datum/action/cooldown/spell/spell, feedback)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/carbon_parent = parent
+	if(spell.invocation_type == INVOCATION_EMOTE) // Mime spells are not cast with signs
+		return NONE // Run normal checks
+	else if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
+		if(feedback)
+			to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
+		return SPELL_INVOCATION_FAIL
+
+	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
