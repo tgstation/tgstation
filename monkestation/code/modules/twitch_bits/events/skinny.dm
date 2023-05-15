@@ -12,3 +12,4 @@
 	for(var/mob/living/target in targets)
 		var/obj/effect/distortion/skinny/located = locate() in target.vis_contents
 		qdel(located)
+		target.clear_filters()

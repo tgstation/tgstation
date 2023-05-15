@@ -35,26 +35,27 @@ SUBSYSTEM_DEF(twitch)
 /datum/controller/subsystem/twitch/proc/handle_topic(list/incoming)
 	if(incoming[2] != CONFIG_GET(string/twitch_key))
 		return
+
+	var/datum/twitch_event/chosen_one
+	switch(incoming[3])
+		if("amongus-all15")
+			chosen_one = new /datum/twitch_event/amongus
+		if("amongus-ook10")
+			chosen_one = new /datum/twitch_event/amongus/ook
+		if("skinny-5")
+			chosen_one = new /datum/twitch_event/skinny
+		if("buff-5")
+			chosen_one = new /datum/twitch_event/buff
+		if("anime-ook")
+			chosen_one = new /datum/twitch_event/anime_ook
+		else
+			return
+
 	switch(SSticker.current_state)
 		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
-
-
+			deferred_handlers += incoming[3]
+			return
 		else
-			var/datum/twitch_event/chosen_one
-			switch(incoming[3])
-				if("amongus-all15")
-					chosen_one = new /datum/twitch_event/amongus
-				if("amongus-ook10")
-					chosen_one = new /datum/twitch_event/amongus/ook
-				if("skinny-5")
-					chosen_one = new /datum/twitch_event/skinny
-				if("buff-5")
-					chosen_one = new /datum/twitch_event/buff
-				if("anime-ook")
-					chosen_one = new /datum/twitch_event/anime_ook
-				else
-					return
-
 			for(var/datum/twitch_event/listed_event as anything in running_events)
 				if(listed_event.type == chosen_one.type)
 					running_events[listed_event] = running_events[listed_event] + chosen_one.event_duration

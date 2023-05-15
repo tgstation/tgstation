@@ -20,3 +20,4 @@
 		var/obj/effect/distortion/large/amogus/located = locate() in target.vis_contents
 		qdel(located)
 		target.RemoveElement(/datum/element/waddling)
+		target.clear_filters()
