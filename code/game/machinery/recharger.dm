@@ -36,13 +36,13 @@
 
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	var/status_display_message_shown
+	var/status_display_message_shown = FALSE
 	if(using_power)
 		status_display_message_shown = TRUE
 		. += span_notice("The status display reads:")
 		. += span_notice("- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.")
 
-	if(!charging)
+	if(isnull(charging))
 		return
 	if(!status_display_message_shown)
 		. += span_notice("The status display reads:")
@@ -81,24 +81,24 @@
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 
-	. = TRUE
 	if(!anchored)
 		to_chat(user, span_notice("[src] isn't connected to anything!"))
-		return
+		return TRUE
 	if(charging || panel_open)
-		return
+		return TRUE
 
 	var/area/our_area = get_area(src) //Check to make sure user's not in space doing it, and that the area got proper power.
 	if(!isarea(our_area) || our_area.power_equip == 0)
 		to_chat(user, span_notice("[src] blinks red as you try to insert [attacking_item]."))
-		return
+		return TRUE
 
 	if (istype(attacking_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = attacking_item
 		if(!energy_gun.can_charge)
 			to_chat(user, span_notice("Your gun has no external power connector."))
-			return
+			return TRUE
 	user.transferItemToLoc(attacking_item, src)
+	return TRUE
 
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
@@ -126,14 +126,12 @@
 		return
 
 	add_fingerprint(user)
-	if(!charging)
-		return
-	if(user.put_in_hands(charging))
+	if(isnull(charging) || user.put_in_hands(charging))
 		return
 	charging.forceMove(drop_location())
 
 /obj/machinery/recharger/attack_tk(mob/user)
-	if(!charging)
+	if(isnull(charging))
 		return
 	charging.forceMove(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -143,7 +141,7 @@
 		return PROCESS_KILL
 
 	using_power = FALSE
-	if(!charging)
+	if(isnull(charging))
 		return PROCESS_KILL
 	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
 	if(charging_cell)
@@ -172,7 +170,7 @@
 		return
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
-	if(istype(charging,  /obj/item/gun/energy))
+	if(istype(charging, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = charging
 		if(energy_gun.cell)
 			energy_gun.cell.emp_act(severity)
@@ -197,6 +195,6 @@
 		. += mutable_appearance(icon, "[base_icon_state]-open", alpha = src.alpha)
 		return
 
-	var/icon_to_use = "[base_icon_state]-[!charging ? "empty" : (using_power ? "charging" : "full")]"
+	var/icon_to_use = "[base_icon_state]-[isnull(charging) ? "empty" : (using_power ? "charging" : "full")]"
 	. += mutable_appearance(icon, icon_to_use, alpha = src.alpha)
 	. += emissive_appearance(icon, icon_to_use, src, alpha = src.alpha)
