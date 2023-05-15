@@ -1255,7 +1255,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/announcement/payload(obj/machinery/requests_console/console)
 	console.can_send_announcements = TRUE
-	return
 
 /obj/effect/mapping_helpers/requests_console/assistance
 	name = "request console assistance requestable helper"
@@ -1263,7 +1262,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/assistance/payload(obj/machinery/requests_console/console)
 	GLOB.req_console_assistance |= console.department
-	return
 
 /obj/effect/mapping_helpers/requests_console/supplies
 	name = "request console supplies requestable helper"
@@ -1271,7 +1269,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/supplies/payload(obj/machinery/requests_console/console)
 	GLOB.req_console_supplies |= console.department
-	return
 
 /obj/effect/mapping_helpers/requests_console/information
 	name = "request console information relayable helper"
@@ -1279,7 +1276,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/information/payload(obj/machinery/requests_console/console)
 	GLOB.req_console_information |= console.department
-	return
 
 /obj/effect/mapping_helpers/requests_console/ore_update
 	name = "request console ore update helper"
@@ -1287,4 +1283,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/ore_update/payload(obj/machinery/requests_console/console)
 	console.receive_ore_updates = TRUE
-	return
