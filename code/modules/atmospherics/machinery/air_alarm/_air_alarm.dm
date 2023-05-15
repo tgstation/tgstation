@@ -61,6 +61,8 @@
 	var/obj/machinery/air_sensor/connected_sensor
 	/// Used to link air alarm to air sensor via map helpers
 	var/air_sensor_chamber_id = ""
+	/// Whether it is possible to link/unlink this air alarm from a sensor
+	var/allow_link_change = TRUE
 
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
@@ -165,6 +167,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		if(!allow_link_change)
+			balloon_alert(user, "linking disabled")
+			return TOOL_ACT_SIGNAL_BLOCKING
 		connect_sensor(multi_tool.buffer)
 		balloon_alert(user, "connected sensor")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -196,6 +201,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
 	data["fireAlarm"] = my_area.fire
 	data["sensor"] = !!connected_sensor
+	data["allowLinkChange"] = allow_link_change
 
 	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
@@ -442,7 +448,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				danger_level = AIR_ALARM_ALERT_NONE
 
 		if ("disconnect_sensor")
-			disconnect_sensor()
+			if(allow_link_change)
+				disconnect_sensor()
 
 	update_appearance()
 

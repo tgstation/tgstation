@@ -393,6 +393,7 @@
 	name = "airalarm link helper"
 	icon_state = "airalarm_link_helper"
 	var/chamber_id = ""
+	var/allow_link_change = TRUE
 
 /obj/effect/mapping_helpers/airalarm/link/Initialize(mapload)
 	. = ..()
@@ -403,6 +404,7 @@
 	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
+		alarm.allow_link_change = allow_link_change
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
 		return INITIALIZE_HINT_QDEL

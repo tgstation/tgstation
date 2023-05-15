@@ -14,6 +14,7 @@ type AirAlarmData = {
   atmosAlarm: BooleanLike; // fix this
   fireAlarm: BooleanLike;
   sensor: BooleanLike;
+  allowLinkChange: BooleanLike;
   envData: {
     name: string;
     value: string; // preformatted in backend, shorter code that way.
@@ -174,6 +175,7 @@ const AirAlarmControlHome = (props, context) => {
     filteringPath,
     atmosAlarm,
     sensor,
+    allowLinkChange,
   } = data;
   const isPanicSiphoning = selectedModePath === panicSiphonPath;
   return (
@@ -219,7 +221,7 @@ const AirAlarmControlHome = (props, context) => {
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')}
       />
-      {!!sensor && (
+      {!!sensor && !!allowLinkChange && (
         <Box mt={1}>
           <Button.Confirm
             icon="link-slash"
