@@ -21,7 +21,6 @@ SUBSYSTEM_DEF(twitch)
 	return ..()
 
 /datum/controller/subsystem/twitch/fire(resumed)
-	. = ..()
 	if(deferred_handlers && SSticker.current_state == GAME_STATE_PLAYING)
 		run_deferred()
 	if(!running_events.len)
