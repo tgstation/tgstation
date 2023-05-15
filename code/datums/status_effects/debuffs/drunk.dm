@@ -144,16 +144,13 @@
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
-	// There's always a 30% chance to gain some drunken slurring
-	if(prob(30))
-		owner.adjust_slurring(4 SECONDS)
+	// Apply drunk slurring
+	// Drunk slurring scales in intensity based on how drunk we are, so at the starting point it's barely noticable
+	if(drunk_value >= 21)
+		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
 
 	// And drunk people will always lose jitteriness
 	owner.adjust_jitter(-6 SECONDS)
-
-	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
-	if(drunk_value >= 11)
-		owner.adjust_slurring_up_to(2.4 SECONDS, 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)
