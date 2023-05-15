@@ -1012,7 +1012,7 @@
 /obj/machinery/modular_shield/module/node
 
 	name = "Modular Shield Node"
-	desc = "A waist high mess of humming pipes and wires that extend the modular shield network"
+	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "node_off_closed"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
