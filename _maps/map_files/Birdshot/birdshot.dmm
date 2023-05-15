@@ -27643,6 +27643,10 @@
 /obj/item/stack/tile/iron{
 	pixel_y = 18
 	},
+/obj/item/key/janitor{
+	pixel_x = -3;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "kkL" = (
