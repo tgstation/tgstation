@@ -820,7 +820,7 @@
 		if ("toggle_shields")
 			toggle_shields()
 		if ("toggle_exterior")
-			exterior_only = !(exterior_only)
+			exterior_only = !exterior_only
 			return
 
 //calculations for the shield`s core stats
