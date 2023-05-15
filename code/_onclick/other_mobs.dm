@@ -145,9 +145,9 @@
 
 	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
 	if(hit_style)
-		testing("[src] is attacking with [hit_style], targeting [atom_target]. (Ranged)")
+		testing("[src] is attacking with [hit_style], targeting [atom_target]. (Ranged secondary)")
 		changeNext_move(hit_style.cd * 0.8)
-		hit_style.process_attack(src, null, atom_target)
+		hit_style.process_attack(src, null, atom_target, TRUE)
 		return TRUE
 
 /mob/living/carbon/human/RangedAttack(atom/A, modifiers)
