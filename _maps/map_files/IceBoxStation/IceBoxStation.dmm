@@ -74835,6 +74835,9 @@
 	specific_lift_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = s
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "xMM" = (

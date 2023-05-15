@@ -7364,6 +7364,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_lower_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_lower_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
 "aZQ" = (
@@ -46154,6 +46157,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_dorm_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_dorm_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/left)
 "pvU" = (
@@ -51610,6 +51616,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_upper_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
 "rrk" = (
@@ -52263,7 +52272,7 @@
 	},
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
-	linked_elevator_id = "tram_lower_center_lift";
+	linked_elevator_id = s;
 	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -56636,6 +56645,9 @@
 	},
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_sci_lift"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -66187,6 +66199,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_perma_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_perma_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
 "wxu" = (
@@ -67071,6 +67086,9 @@
 	},
 /obj/structure/railing{
 	dir = 8
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_cargo_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)

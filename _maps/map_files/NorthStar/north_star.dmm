@@ -2011,6 +2011,10 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "fore_vator"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "fore_vator";
+	range = 2
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "ayU" = (
@@ -14842,6 +14846,10 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "aft_vator"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "aft_vator";
+	range = 2
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -73791,6 +73799,10 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "com_vator"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "com_vator";
+	range = 2
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor3/fore)
