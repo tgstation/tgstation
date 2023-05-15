@@ -59,3 +59,7 @@ https://freesound.org/people/ScottFerguson1/sounds/132846/
 
 parry.ogg is taken from loudernoises "Sword Clash" which is licensed under CC Attributions 0, which is mixed with a genhit.ogg
 https://freesound.org/people/loudernoises/sounds/334169/
+
+local_forecast1.ogg to local_forecast8.ogg is "Local Forecast - Elevator" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/

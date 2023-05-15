@@ -65,7 +65,7 @@
 	if(..()) //we have a target
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
-			OpenFire(target)
+			INVOKE_ASYNC(src, PROC_REF(OpenFire), target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)

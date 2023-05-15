@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - admin: "Admins are now warned if they are going to override a currently playing admin midi"
