@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  */
 /datum/attack_style
 	/// Hitsound played on a successful attack hit
+	/// If null, uses item hitsound.
 	var/successful_hit_sound
 
 	var/hit_volume = 50
@@ -136,14 +137,18 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attack_flag |= ATTACK_STYLE_MISSED
 
 	if(attack_flag & ATTACK_STYLE_HIT)
-		if(successful_hit_sound)
-			playsound(attacker, successful_hit_sound, hit_volume, TRUE)
+		var/hitsound_to_use = get_hit_sound()
+		if(hitsound_to_use)
+			playsound(attacker, hitsound_to_use, hit_volume, TRUE)
 
 	else if(attack_flag & ATTACK_STYLE_MISSED)
 		if(miss_sound)
 			playsound(attacker, miss_sound, miss_volume, TRUE)
 
 	return attack_flag
+
+/datum/attack_style/proc/get_hit_sound(obj/item/weapon)
+	return successful_hit_sound || weapon.hitsound
 
 #ifdef TESTING
 /datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
@@ -188,7 +193,53 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	*/
 
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	return weapon.melee_attack_chain(attacker, smacked)
+
+	. = NONE
+
+	var/go_to_attack = !right_clicking
+	if(right_clicking)
+		switch(weapon.pre_attack_secondary(smacked, attacker))
+			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+				return ATTACK_STYLE_CANCEL
+			if(SECONDARY_ATTACK_CALL_NORMAL)
+				pass()
+			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+				go_to_attack = TRUE
+			else
+				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
+
+	if(go_to_attack && weapon.pre_attack(smacked, attacker))
+		return . | ATTACK_STYLE_CANCEL
+
+	var/go_to_afterattack = !right_clicking
+	if(right_clicking)
+		switch(weapon.attack_secondary(smacked, attacker))
+			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+				return ATTACK_STYLE_CANCEL
+			if(SECONDARY_ATTACK_CALL_NORMAL)
+				pass()
+			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+				go_to_afterattack = TRUE
+			else
+				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
+
+	if(go_to_afterattack && weapon.attack(smacked, attacker))
+		return . | ATTACK_STYLE_CANCEL
+
+	if(right_clicking)
+		switch(weapon.afterattack_secondary(smacked, attacker, prximity_flag = TRUE))
+			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+				return ATTACK_STYLE_CANCEL
+			if(SECONDARY_ATTACK_CALL_NORMAL)
+				pass()
+			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+				return .
+			else
+				CRASH("afterattack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
+
+	// Don't really care about the return value of after attack.
+	weapon.afterattack(smacked, attacker, prximity_flag = TRUE))
+	return .
 
 /**
  * Unarmed attack styles work slightly differently

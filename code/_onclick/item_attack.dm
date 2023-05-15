@@ -9,17 +9,15 @@
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
-
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
-
 	var/pre_attack_result
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
 				pre_attack_result = pre_attack(target, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_SKIPPED // Return TRUE
+				return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -28,16 +26,16 @@
 		pre_attack_result = pre_attack(target, user, params)
 
 	if(pre_attack_result)
-		return ATTACK_STYLE_SKIPPED // Return TRUE
+		return TRUE
 
 	var/attackby_result
 
 	if (is_right_clicking)
 		switch (target.attackby_secondary(src, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
-				. = target.attackby(src, user, params)
+				attackby_result = target.attackby(src, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_SKIPPED // Return TRUE
+				return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
@@ -45,21 +43,19 @@
 	else
 		attackby_result = target.attackby(src, user, params)
 
-	if(attackby_result & (ATTACK_STYLE_HIT|ATTACK_STYLE_BLOCKED))
-		return attackby_result // Return TRUE
-
-	. |= attackby_result
+	if (attackby_result)
+		return TRUE
 
 	if(QDELETED(src) || QDELETED(target))
 		attack_qdeleted(target, user, TRUE, params)
-		return . | ATTACK_STYLE_SKIPPED // Return TRUE
+		return TRUE
 
 	if (is_right_clicking)
 		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
 
 		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return . | ATTACK_STYLE_SKIPPED // Return TRUE
+			return TRUE
 
 	var/afterattack_result = afterattack(target, user, TRUE, params)
 
@@ -69,12 +65,7 @@
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
-	if(afterattack_result & TRUE)
-		// after attack will either return TRUE | flags
-		// TRUE indicates "success", so we'll tack on the following
-		. |= ATTACK_STYLE_HIT
-
-	return .
+	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
@@ -160,20 +151,22 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	if(..())
-		return
-	if(!(obj_flags & CAN_BE_HIT))
-		return
-
-	return attacking_item.attack_atom(src, user, params)
+	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())
 		return TRUE
+	if(attacking_item.force > 1)
+		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby. \
+			If this item is intended to be a weapon, implement an attack style.")
 	user.changeNext_move(attacking_item.attack_speed)
 	return attacking_item.attack(src, user, params)
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
+	if(weapon.force > 1)
+		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby_secondary. \
+			If this item is intended to be a weapon, implement an attack style.")
+
 	var/result = weapon.attack_secondary(src, user, params)
 
 	// Normal attackby updates click cooldown, so we have to make up for it
@@ -192,22 +185,29 @@
  * * mob/living/target_mob - The mob being hit by this item
  * * mob/living/user - The mob hitting with this item
  * * params - Click params of this attack
+ *
+ * Return TRUE to stop any following attacks.
+ * Return FALSE to continue with the afterattack.
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
+	// This should always call parent for signals
+	// If you don't want your item to "attack", it should be NOBLUDGEON
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return ATTACK_STYLE_CANCEL
+		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return ATTACK_STYLE_SKIPPED
+		return
 
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
-		return ATTACK_STYLE_SKIPPED
+		return
 
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return ATTACK_STYLE_SKIPPED
+		return
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
@@ -220,8 +220,8 @@
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
+	target_mob.attacked_by(src, user)
 	user.do_attack_animation(target_mob)
-	. = target_mob.attacked_by(src, user)
 
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)

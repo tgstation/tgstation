@@ -196,22 +196,24 @@
 		// Nobludgeon items will always skip special attacks,
 		// and surgical tools will skip special attacks if a mob undergoing surgery was clicked on
 		var/skip_attack_style = isnull(using_what_style) || (clicked_with_what.item_flags & NOBLUDGEON)
-		if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
-			var/mob/living/living_clicked = clicked_on
-			skip_attack_style ||= length(living_clicked.surgeries)
+		if(isliving(clicked_on))
+			if(clicked_with_what.item_flags & SURGICAL_TOOL)
+				var/mob/living/living_clicked = clicked_on
+				skip_attack_style ||= length(living_clicked.surgeries)
 
-		/*
 		else if(!combat_mode)
-			// Don't swing if not in combat mode
+			// Don't swing if not in combat mode and not clicking on a mob
 			skip_attack_style = TRUE
-		*/
 
+		// Do an attack
 		if(!skip_attack_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 
+		// Or if we're not meant to be doing an attack, do a normal attack chain
 		else if(close_enough)
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 
+		// Or if we're not adjacent, just do after attack
 		else
 			if(right_clicking)
 				var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
