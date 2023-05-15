@@ -23,7 +23,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "n" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	req_access = null
+	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
