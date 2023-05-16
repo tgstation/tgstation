@@ -64,10 +64,6 @@
 	// For camera-building borgs
 	var/turf/T = get_step(get_turf(user), user.dir)
 	if(iswallturf(T))
-		if((locate(/obj/machinery/power/apc) in get_turf(user)) && (istype(src, /obj/item/wallframe/apc)))
-			var/obj/machinery/power/apc/mounted_apc = locate(/obj/machinery/power/apc) in get_turf(user)
-			mounted_apc.attackby(src, user)
-			return TOOL_ACT_TOOLTYPE_SUCCESS
 		T.attackby(src, user)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
