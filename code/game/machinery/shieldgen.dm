@@ -924,10 +924,13 @@
 	icon_state = "recharge_port"
 	density = TRUE
 
+	///The shield generator we are connected to if we find one or a node provides us one
 	var/obj/machinery/modular_shield_generator/shield_generator
 
+	///The node we are connected to if we find one
 	var/obj/machinery/modular_shield/module/node/connected_node
 
+	///This is the turf that we are facing and able to search for connections through
 	var/turf/connected_turf
 
 /obj/machinery/modular_shield/module/Initialize(mapload)
