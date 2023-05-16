@@ -2,8 +2,37 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+  screen: number;
+  status: Boolean;
+  server_status: number;
+  auth: number;
+  password: string;
+  is_malf: Boolean;
+  error_message: string;
+  success_message: string;
+  notice_message: string;
+  requests: Request[];
+  messages: Message[];
+};
+
+type Request = {
+  ref: string;
+  message: string;
+  stamp: string;
+  send_dpt: string;
+  id_auth: string;
+};
+
+type Message = {
+  ref: string;
+  message: string;
+  sender: string;
+  recipient: string;
+};
+
 const RequestLogsScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const { requests } = data;
   return (
     <Stack fill vertical>
@@ -50,7 +79,7 @@ const RequestLogsScreen = (props, context) => {
 };
 
 const MessageLogsScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const { messages } = data;
   return (
     <Stack fill vertical>
@@ -74,7 +103,7 @@ const MessageLogsScreen = (props, context) => {
               <Table.Cell>Message</Table.Cell>
             </Table.Row>
             {messages?.map((message) => (
-              <Table.Row key={m.ref}>
+              <Table.Row key={message.ref}>
                 <Table.Cell>
                   <Button
                     icon="trash"
@@ -95,7 +124,6 @@ const MessageLogsScreen = (props, context) => {
 };
 
 const HackedScreen = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Stack.Item grow>
       <Stack fill vertical>
@@ -114,9 +142,13 @@ const HackedScreen = (props, context) => {
 };
 
 const MainScreen = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { password, status, auth, server_status, is_malf } = data;
-
+  const { act, data } = useBackend<Data>(context);
+  const { status, auth, server_status, is_malf, password } = data;
+  const [input_password, setPassword] = useLocalState(
+    context,
+    'input_password',
+    password
+  );
   return (
     <Stack fill vertical>
       {server_status === 1 ? (
@@ -125,13 +157,13 @@ const MainScreen = (props, context) => {
           <Stack.Item>
             <Section>
               <Input
-                value={password}
+                value={input_password}
                 onInput={(e, value) => setPassword(value)}
                 placeholder="Password"
               />
               <Button
                 content={auth ? 'Logout' : 'Auth'}
-                onClick={() => act('auth', { password: password })}
+                onClick={() => act('auth', { password: input_password })}
               />
               <Button
                 content={status ? 'ON' : 'OFF'}
@@ -244,8 +276,14 @@ const MainScreen = (props, context) => {
 };
 
 export const MessageMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { screen, error, succes, notice, server_status } = data;
+  const { act, data } = useBackend<Data>(context);
+  const {
+    screen,
+    error_message,
+    success_message,
+    notice_message,
+    server_status,
+  } = data;
   return (
     <Window width={700} height={400}>
       <Window.Content>
@@ -253,10 +291,14 @@ export const MessageMonitor = (props, context) => {
           {server_status === 1 ? (
             <>
               <Stack.Item>
-                {error !== '' && <NoticeBox color="red">{error}</NoticeBox>}
+                {error_message !== '' && (
+                  <NoticeBox color="red">{error_message}</NoticeBox>
+                )}
               </Stack.Item>
               <Stack.Item>
-                {succes !== '' && <NoticeBox color="green">{succes}</NoticeBox>}
+                {success_message !== '' && (
+                  <NoticeBox color="green">{success_message}</NoticeBox>
+                )}
               </Stack.Item>
               <Stack.Item grow>
                 {(screen === 0 && <MainScreen />) ||
@@ -265,8 +307,8 @@ export const MessageMonitor = (props, context) => {
                   (screen === 3 && <HackedScreen />)}
               </Stack.Item>
               <Stack.Item>
-                {notice !== '' && (
-                  <NoticeBox color="yellow">{notice}</NoticeBox>
+                {notice_message !== '' && (
+                  <NoticeBox color="yellow">{notice_message}</NoticeBox>
                 )}
               </Stack.Item>
               <label>
