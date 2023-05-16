@@ -12,15 +12,15 @@
 	icon_screen = "comm_monitor"
 	desc = "Monitors the details of the telecommunications network it's synced with."
 
-	// Current screen the user is viewing
+	/// Current screen the user is viewing
 	var/screen = MAIN_VIEW
-	// The machines located by the computer
+	/// The machines located by the computer
 	var/list/machinelist = list()
-	// the currently selected machine
+	/// the currently selected machine
 	var/obj/machinery/telecomms/SelectedMachine
-	// The network to probe
+	/// The network to probe
 	var/network = "NULL"
-	// Error message to show
+	/// Error message to show
 	var/error_message = ""
 	circuit = /obj/item/circuitboard/computer/comm_monitor
 
@@ -28,7 +28,7 @@
 	var/list/data = list(
 		"screen" = screen,
 		"network" = network,
-		"error" = error_message
+		"error" = error_message,
 	)
 
 	switch(screen)
@@ -36,7 +36,7 @@
 		if(MAIN_VIEW)
 			var/list/found_machinery = list()
 			for(var/obj/machinery/telecomms/T in machinelist)
-				found_machinery += list(list("ref"=REF(T), "name"=T.name, "id"=T.id))
+				found_machinery += list(list("ref" = REF(T), "name" = T.name, "id" = T.id))
 			data["machinery"] = found_machinery
 	  	// --- Viewing Machine ---
 		if(MACHINE_VIEW)
@@ -46,11 +46,7 @@
 			// Get the linked machinery
 			var/list/linked_machinery = list()
 			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-				var/list/machinery_out = list()
-				machinery_out["ref"] = REF(T.id)
-				machinery_out["name"] = T.name
-				machinery_out["id"] = T.id
-				linked_machinery += list(machinery_out)
+				 linked_machinery += list(list("ref" = REF(T.id), "name" = T.name, "id" = T.id))
 			machine_out["machinery"] = linked_machinery
 			data["machine"] = machine_out
 	return data
@@ -62,7 +58,6 @@
 
 	error_message = ""
 
-	. = TRUE
 	switch(action)
 		// Scan for a network
 		if("probe_network")
@@ -102,7 +97,7 @@
 			SelectedMachine = null
 			screen = MAIN_VIEW
 			return
-	return FALSE
+	return TRUE
 /obj/machinery/computer/telecomms/monitor/attackby()
 	. = ..()
 	updateUsrDialog()
