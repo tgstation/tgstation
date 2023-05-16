@@ -27,7 +27,7 @@
 	/// Error, Success & Notice messages
 	var/error_message = ""
 	var/notice_message = ""
-	var/succes_message = ""
+	var/success_message = ""
 	/// Decrypt password
 	var/password = ""
 
@@ -84,9 +84,9 @@
 /obj/machinery/computer/message_monitor/ui_data(mob/user)
 	var/list/data = list(
 		"screen" = screen,
-		"error" = error_message,
-		"notice" = notice_message,
-		"succes" = succes_message,
+		"error_message" = error_message,
+		"notice_message" = notice_message,
+		"success_message" = success_message,
 		"auth" = auth,
 		"server_status" = !LINKED_SERVER_NONRESPONSIVE
 	)
@@ -120,7 +120,7 @@
 		return .
 
 	error_message = ""
-	succes_message = ""
+	success_message = ""
 	notice_message = ""
 
 	switch(action)
@@ -137,7 +137,7 @@
 				return
 
 			auth = TRUE
-			succes_message = "YOU SUCCESFULLY LOGGED IN!"
+			success_message = "YOU SUCCESFULLY LOGGED IN!"
 
 			return
 		if("link_server")
@@ -194,11 +194,11 @@
 			return
 		if("delete_message")
 			linkedServer.pda_msgs -= locate(params["ref"]) in linkedServer.pda_msgs
-			succes_message = "Log Deleted!"
+			success_message = "Log Deleted!"
 			return
 		if("delete_request")
 			linkedServer.rc_msgs -= locate(params["ref"]) in linkedServer.rc_msgs
-			succes_message = "Log Deleted!"
+			success_message = "Log Deleted!"
 			return
 		if("connect_server")
 			if(!linkedServer)
