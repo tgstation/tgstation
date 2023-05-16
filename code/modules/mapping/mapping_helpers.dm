@@ -1207,10 +1207,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "damaged_window"
 	layer = ABOVE_OBJ_LAYER
 	late = TRUE
-	/// Minimum roll of integrity damage in percents, related to crack overlays
-	var/integrity_min_factor = 0.25
-	/// Maximum roll of integrity damage in percents, related to crack overlays
-	var/integrity_max_factor = 0.75
+	/// Minimum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_min = 0.25
+	/// Maximum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_max = 0.85
 
 /obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
 	. = ..()
