@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Blob and Kudzu tiles which expand into chasms will now be correctly destroyed by the chasm."
