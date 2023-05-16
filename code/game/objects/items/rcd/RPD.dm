@@ -68,6 +68,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/incinerator_tank),
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_burn_chamber),
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_freezer_chamber),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/engine_chamber),
 	)
 ))
 

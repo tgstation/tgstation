@@ -483,7 +483,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				icon_state = "alarm_b1"
 		return ..()
 
-	icon_state = "alarmp"
+	icon_state = isnull(connected_sensor) ? "alarmp" : "alarmp_remote"
 	return ..()
 
 /obj/machinery/airalarm/update_overlays()
@@ -607,6 +607,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	my_area = get_area(connected_sensor)
 	update_name()
 	check_danger()
+	update_appearance()
 
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
@@ -615,3 +616,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	my_area = get_area(src)
 	update_name()
 	check_danger()
+	update_appearance()
