@@ -96,8 +96,8 @@
 			data["password"] = password
 			data["status"] = linkedServer.on
 			// Check is AI or cyboeg malf
-			var/mob/living/silicon/S = user
-			if(istype(S) && S.hack_software)
+			var/mob/living/silicon/silicon_user = user
+			if(istype(silicon_user) && silicon_user.hack_software)
 				data["is_malf"] = TRUE
 			else
 				data["is_malf"] = FALSE
