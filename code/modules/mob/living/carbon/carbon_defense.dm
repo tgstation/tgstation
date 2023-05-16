@@ -405,8 +405,6 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
 	// Shake animation
 	if (incapacitated())
 		var/direction = prob(50) ? -1 : 1

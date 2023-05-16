@@ -59,7 +59,7 @@
 	to_chat(smacked, span_notice("You shock [smacked], stunning [smacked.p_them()]!"))
 
 	if(issilicon(smacked))
-		smacked.flash_act(affect_slicon = TRUE)
+		smacked.flash_act(affect_silicon = TRUE)
 	else
 		smacked.Paralyze(effect_power * 2 SECONDS)
 		smacked.set_stutter_if_lower(effect_power * 2 SECONDS)

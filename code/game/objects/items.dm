@@ -606,7 +606,7 @@
 
 /obj/item/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.can_hold_items(src))
-		if(src in user) // To stop Aliens having items stuck in their pockets
+		if(loc == user) // To stop Aliens having items stuck in their pockets
 			user.dropItemToGround(src)
 		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
 		return

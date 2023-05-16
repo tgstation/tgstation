@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
-	var/obj/hand
+	var/obj/item/bodypart/arm/hand
 	//A list of typepaths to create and insert into ourself on init
 	var/list/items_to_create = list()
 	/// Used to store a list of all items inside, for multi-item implants.
@@ -378,7 +378,7 @@
 	hand.attack_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/muscle_punch]
 
 /obj/item/organ/internal/cyberimp/arm/muscle/on_remove(mob/living/carbon/arm_owner)
-	hand.attack_style = GLOB.attack_styles[initial(corresponding_arm.attack_style)]
+	hand.attack_style = GLOB.attack_styles[initial(hand.attack_style)]
 	return ..()
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
@@ -396,13 +396,13 @@
 /datum/attack_style/unarmed/generic_damage/muscle_punch
 	attack_effect = ATTACK_EFFECT_SMASH
 
-/datum/attack_style/unarmed/generic_damage/muscle_punch/select_damage(mob/living/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with)
+/datum/attack_style/unarmed/generic_damage/muscle_punch/select_damage(mob/living/carbon/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with)
 	return hitting_with.punch_damage
 
-/datum/attack_style/unarmed/generic_damage/muscle_punch/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage)
+/datum/attack_style/unarmed/generic_damage/muscle_punch/select_attack_verb(mob/living/carbon/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage)
 	return pick("punch", "smash")
 
-/datum/attack_style/unarmed/generic_damage/muscle_punch/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
+/datum/attack_style/unarmed/generic_damage/muscle_punch/finalize_attack(mob/living/carbon/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
 	var/obj/item/organ/internal/cyberimp/arm/muscle/implant = locate() in attacker.organs
 
 	if(isnull(implant))
@@ -430,7 +430,7 @@
 
 	return ..()
 
-/datum/attack_style/unarmed/generic_damage/muscle_punch/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage, obj/item/bodypart/affecting, armor_block, direction)
+/datum/attack_style/unarmed/generic_damage/muscle_punch/actually_apply_damage(mob/living/carbon/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage, obj/item/bodypart/affecting, armor_block, direction)
 	. = ..()
 	if(attacker.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(smacked, attacker.dir)

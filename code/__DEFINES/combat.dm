@@ -330,16 +330,24 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BATON_ATTACKING 3
 
 // Returns for attack style [finalize_attack] and, by extension, [melee_attack_chain].
-/// Fairly obvious, attack hit SOMETHING, go to hitsound / success
+/// Fairly obvious, attack hit SOMETHING.
+/// This signifies success - play hitsound at the end of the attack
 #define ATTACK_STYLE_HIT (1<<1)
 /// Fairly obvious, attack missed entirely
+/// This does not necessarily imply failure, but does play misssound at end of the attack
+/// You don't have to set this one manually, it's set by default if no mobs are affected
 #define ATTACK_STYLE_MISSED (1<<2)
 /// Attack was blocked, doesn't go to the next turf but will proceed to either Hit or Miss
+/// This implies a failure - In an attack execution, the following turf in the swing will not be affected.
+/// However, if there is only one turf attacked, this means very little for the actual result.
 #define ATTACK_STYLE_BLOCKED (1<<3)
-/// Cancels the attack entirely, doesn't go to the next turf, doesn't play any sound.
+/// Cancels the attack entirely, stops the next turf from being attacked and stops all hitsounds - quits entirely, failure state
+/// This is also used in the context of the attack chain to stop the chain entirely - no afterattack.
 /// Do not pass go, do not collect $200.
 #define ATTACK_STYLE_CANCEL (1<<4)
-/// Do nothing but let consumers know the attack chain actually happened
+/// Used when the attack is skipped.
+/// Similar to cancelling but used in context of the attack chain to allow afterattacks (where cancelling would stop it entirely).
+/// Essentially a cancel but not indicating failure, just no-op.
 #define ATTACK_STYLE_SKIPPED (1<<5)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it

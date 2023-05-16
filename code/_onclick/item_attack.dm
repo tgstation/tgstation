@@ -230,7 +230,7 @@
 		return TRUE // end chain
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return FALSE // continue chain
-	if(attack(src, user, params))
+	if(attack(target_mob, user, params))
 		return TRUE // end chain
 	if(item_flags & NOBLUDGEON)
 		return FALSE // continue chain
@@ -369,7 +369,7 @@
 		attacking_item = attacking_item,
 	)
 
-	if(ishuman(src) || client) // Icky istype src but it keeps log cleaner
+	if(ishuman(src) || client) // Icky istype src but it keeps the logs cleaner.
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
 
@@ -390,11 +390,12 @@
 	if(isnull(hit_limb))
 		return
 
-	else if(hit_limb.body_zone == BODY_ZONE_CHEST && isnull(attacking_item))
-		if(wear_suit)
-			wear_suit.add_fingerprint(user)
-		else if(w_uniform)
-			w_uniform.add_fingerprint(user)
+	if(isnull(attacking_item))
+		if(hit_limb.body_zone == BODY_ZONE_CHEST)
+			if(wear_suit)
+				wear_suit.add_fingerprint(user)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(user)
 		return
 
 	if(attacking_item.get_sharpness() || armor_block >= 50)

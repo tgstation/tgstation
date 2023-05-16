@@ -8,25 +8,22 @@
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
 	flags_1 = CONDUCT_1
+	item_flags = NEEDS_PERMIT
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	armor_type = /datum/armor/item_singularityhammer
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
-	attack_style = /datum/attack_style/swing // melbert todo needs a unique style
-	///Is it able to pull shit right now?
-	var/charged = TRUE
-
-/datum/armor/item_singularityhammer
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 50
-	fire = 100
-	acid = 100
+	armor_type = /datum/armor/item_magichammer
+	attack_style = /datum/attack_style/swing/requires_wield/singularity_hammer
+	/// AOE radius if the suck. Don't VV this too high, you have been warned
+	var/suck_radius = 5
+	/// Duration of cooldown between sucks
+	var/suck_cooldown_duration = 10 SECONDS
+	/// Actual suck cooldown tracker
+	COOLDOWN_DECLARE(suck_cooldown)
 
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
@@ -40,42 +37,41 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/singularityhammer/proc/recharge()
-	charged = TRUE
+/datum/attack_style/swing/requires_wield/singularity_hammer
 
-/obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
-	for(var/atom/X in orange(5,pull))
-		if(ismovable(X))
-			var/atom/movable/A = X
-			if(A == wielder)
-				continue
-			if(isliving(A))
-				var/mob/living/vortexed_mob = A
-				if(vortexed_mob.mob_negates_gravity())
-					continue
-				else
-					vortexed_mob.Paralyze(2 SECONDS)
-			if(!A.anchored && !isobserver(A))
-				step_towards(A,pull)
-				step_towards(A,pull)
-				step_towards(A,pull)
-
-/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
+/datum/attack_style/swing/requires_wield/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	. = ..()
-	if(!proximity)
+	if(!istype(weapon) || !(. & ATTACK_STYLE_HIT))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		if(charged)
-			charged = FALSE
-			if(isliving(A))
-				var/mob/living/Z = A
-				Z.take_bodypart_damage(20,0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-			var/turf/target = get_turf(A)
-			vortex(target,user)
-			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
-	return .
+	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
+		return
+	if(!COOLDOWN_FINISHED(weapon, suck_cooldown))
+		return
+
+	// Grab the middle turf of the swing
+	var/turf/middle_turf = affecting[ROUND_UP(length(affecting) / 2)]
+	var/mob/living/bonus_damage_target = (isliving(priority_target) && (priority_target in middle_turf)) ? priority_target : locate() in middle_turf
+	// Apply some bonus damage to anyone (prioritizing the clicked atom) in the middle turf
+	bonus_damage_target?.apply_damage(20, BRUTE, BODY_ZONE_CHEST, wound_bonus = 5)
+	// And suck in all non-anchored movables nearby
+	for(var/atom/movable/suck_in in orange(weapon.suck_radius, attacker))
+		if(suck_in == attacker)
+			continue
+		if(suck_in.move_resist >= MOVE_FORCE_OVERPOWERING || suck_in.anchored)
+			continue
+		if(isliving(suck_in))
+			var/mob/living/vortexed_mob = suck_in
+			if(vortexed_mob.mob_negates_gravity())
+				continue
+
+			vortexed_mob.Paralyze(2 SECONDS)
+
+		step_towards(suck_in, middle_turf)
+		step_towards(suck_in, middle_turf)
+		step_towards(suck_in, middle_turf)
+
+	playsound(weapon, 'sound/weapons/marauder.ogg', 50, TRUE)
+	COOLDOWN_START(weapon, suck_cooldown, weapon.suck_cooldown_duration)
 
 /obj/item/mjollnir
 	name = "Mjolnir"
@@ -87,15 +83,18 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
+	item_flags = NEEDS_PERMIT
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	attack_style = /datum/attack_style/swing
+	armor_type = /datum/armor/item_magichammer
+	attack_style = /datum/attack_style/swing/requires_wield
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) // No one can save you now
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 5, \
 		icon_wielded = "[base_icon_state]1", \
@@ -107,27 +106,42 @@
 	return ..()
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
+	if(!istype(target))
+		CRASH("Non-living target passed to shock()!")
+
+	var/datum/effect_system/lightning_spread/thunder_and_lightning = new()
+	thunder_and_lightning.set_up(5, 1, target.loc)
+	thunder_and_lightning.start()
+
 	target.Stun(1.5 SECONDS)
 	target.Knockdown(10 SECONDS)
-	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
-	s.set_up(5, 1, target.loc)
-	s.start()
-	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
-		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
-		span_hear("You hear a heavy electrical crack!"))
+	target.visible_message(
+		span_danger("[target] is shocked by [src]!"),
+		span_userdanger("You feel a powerful shock course through your body sending you flying!"),
+		span_hear("You hear a heavy electrical crack!"),
+	)
+
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 
 /obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
-	..()
-	if(QDELETED(target_mob))
+	. = ..()
+	if(.)
 		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!QDELETED(target_mob) && HAS_TRAIT(src, TRAIT_WIELDED))
 		shock(target_mob)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(.)
+		return
 	if(!QDELETED(hit_atom) && isliving(hit_atom))
 		shock(hit_atom)
+
+/datum/armor/item_magichammer
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 50
+	fire = 100
+	acid = 100

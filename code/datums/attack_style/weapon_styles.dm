@@ -10,7 +10,7 @@
 /datum/attack_style/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		attacker.balloon_alert(attacker, "wield your weapon!")
-		return FALSE
+		return ATTACK_STYLE_CANCEL
 	return ..()
 
 /datum/attack_style/swing/esword

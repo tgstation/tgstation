@@ -1,6 +1,6 @@
 /datum/attack_style/unarmed/help
 	attack_effect = null
-	successful_hit_sound = null
+	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 	miss_sound = null
 
 /datum/attack_style/unarmed/help/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)

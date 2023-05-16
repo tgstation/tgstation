@@ -176,11 +176,10 @@
 	if(living_pawn.next_move > world.time)
 		return
 
-	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
-
-	var/obj/item/weapon = locate(/obj/item) in living_pawn.held_items
-
-	living_pawn.face_atom(target)
+	var/obj/item/weapon = living_pawn.get_active_held_item()
+	if(!weapon)
+		living_pawn.swap_hand()
+		weapon = living_pawn.get_active_held_item()
 
 	living_pawn.set_combat_mode(TRUE)
 
@@ -189,26 +188,26 @@
 
 	// attack with weapon if we have one
 	if(living_pawn.CanReach(target, weapon))
-		if(weapon)
-			weapon.melee_attack_chain(living_pawn, target)
-		else
-			living_pawn.UnarmedAttack(target, null, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarmin
+		var/fake_params = list2params(list(LEFT_CLICK = !disarm, RIGHT_CLICK = disarm))
+		living_pawn.ClickOn(target, fake_params)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
+
 	else if(weapon)
 		var/atom/real_target = target
 		if(prob(10)) // Artificial miss
 			real_target = pick(oview(2, target))
 
-		var/obj/item/gun/gun = locate() in living_pawn.held_items
-		var/can_shoot = gun?.can_shoot() || FALSE
-		if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
-			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
-			gun.afterattack(real_target, living_pawn, FALSE)
-			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
-			if(can_shoot)
-				controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
+		if(isgun(weapon))
+			var/obj/item/gun/gun = locate() in living_pawn.held_items
+			var/can_shoot = gun?.can_shoot() || FALSE
+			if(isgun(weapon) && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
+				living_pawn.ClickOn(real_target)
+				controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
+				if(can_shoot)
+					controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else
-			living_pawn.throw_item(real_target)
+			living_pawn.toggle_throw_mode()
+			living_pawn.ClickOn(target)
 			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // 'worked'
 
 	// no de-aggro

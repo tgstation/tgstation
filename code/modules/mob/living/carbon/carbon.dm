@@ -127,7 +127,10 @@
 		log_combat(src, victim, "crashed into")
 
 //Throwing stuff
-/mob/living/carbon/proc/toggle_throw_mode()
+/mob/proc/toggle_throw_mode()
+	return
+
+/mob/living/carbon/toggle_throw_mode()
 	if(stat)
 		return
 	if(throw_mode)

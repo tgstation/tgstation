@@ -278,4 +278,4 @@
 
 	else if(smacked.mob_size <= MOB_SIZE_HUMAN && isalien(smacked))
 		// Or just freakin' throws xenos away
-		safe_throw_at(get_edge_target_turf(smacked, get_dir(attacker, smacked)), 2, 1, attacker)
+		smacked.safe_throw_at(get_edge_target_turf(smacked, get_dir(attacker, smacked)), 2, 1, attacker)

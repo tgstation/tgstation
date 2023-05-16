@@ -172,23 +172,13 @@
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			UnarmedAttack(item_atom, TRUE, modifiers)
 
-	/*
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, params)
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1,modifiers)
-	*/
-
 	// -- Attacking with an item --
 	if(istype(clicked_with_what))
 		var/close_enough = CanReach(clicked_on, clicked_with_what)
 		// Handle non-combat uses of attacking, IE using a screwdriver on a wall
 		if(close_enough && !ismob(clicked_on))
 			changeNext_move(CLICK_CD_MELEE)
-			clicked_with_what.melee_attack_chain(src, clicked_on, params)
+			clicked_with_what.melee_attack_chain(src, clicked_on, params) // melbert todo : prevents clicking on adjacent turfs to swing.
 			return
 
 		var/datum/attack_style/using_what_style = select_attack_style(clicked_on, clicked_with_what)

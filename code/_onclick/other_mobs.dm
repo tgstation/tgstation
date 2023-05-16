@@ -41,20 +41,23 @@
 /mob/living/carbon/divert_to_attack_style(atom/attack_target, list/modifiers)
 	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb(attack_target) || get_active_hand()
-	var/datum/attack_style/hit_style = default_help_style
+	var/datum/attack_style/hit_style
+
 	// Top priority - disarm
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		hit_style = default_disarm_style
+	// Help intent is next priority, if not on combat mode
+	else if(!combat_mode)
+		hit_style = default_help_style
 	// Then, every attack is a hulk attack
 	else if(HAS_TRAIT(src, TRAIT_HULK) && combat_mode)
 		hit_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
 	// Then attack from arm
 	else if(!isnull(attacking_bodypart))
 		hit_style = attacking_bodypart.attack_style
-	// Then default harm intent style
-	else if(combat_mode)
+	// And if we have no arm, then default harm style
+	else
 		hit_style = default_harm_style
-	// If all fails, we do help style.
 
 	if(hit_style)
 		changeNext_move(hit_style.cd * 0.8)
@@ -138,6 +141,10 @@
 	if(.)
 		return
 
+	if(!combat_mode && pulling && isturf(A) && get_dist(src, A) <= 1)
+		Move_Pulled(A)
+		return TRUE
+
 	if(divert_to_attack_style(A, modifiers))
 		return TRUE
 
@@ -146,17 +153,9 @@
 	if(.)
 		return
 
-	if(divert_to_attack_style(A, modifiers))
+	if(divert_to_attack_style(atom_target, modifiers))
 		return TRUE
 
-/mob/living/carbon/human/RangedAttack(atom/A, modifiers)
-	. = ..()
-	if(.)
-		return
-
-	if(isturf(A) && get_dist(src,A) <= 1)
-		Move_Pulled(A)
-		return TRUE
 
 /*
 	Animals & All Unspecified
@@ -177,7 +176,11 @@
 			resolve_unarmed_attack(attack_target, modifiers)
 		return TRUE
 
-	if(divert_to_attack_style(A, modifiers))
+	if(!combat_mode && pulling && isturf(attack_target))
+		Move_Pulled(A)
+		return TRUE
+
+	if(divert_to_attack_style(attack_target, modifiers))
 		return TRUE
 
 	return FALSE

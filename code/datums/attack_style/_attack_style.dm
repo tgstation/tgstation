@@ -63,6 +63,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	weapon?.add_fingerprint(attacker)
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))
 		attacker.balloon_alert(attacker, "you don't want to attack!")
 		return FALSE
@@ -83,7 +84,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			reverse_range(affecting)
 
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
-	if(!execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking))
+	if(execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking) & ATTACK_STYLE_CANCEL)
 		// Just apply a small second CD so they don't spam failed attacks
 		attacker.changeNext_move(0.33 SECONDS)
 		return FALSE
@@ -103,8 +104,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/attack_flag = NONE
 	var/total_total_hit = 0
 	for(var/turf/hitting as anything in affecting)
-		if(hitting.is_blocked_turf(TRUE, attacker))
-			break
+		// Unfortunately this makes mobs in dense or blocks turfs invincible. Fix that
+		var/atom/blocking_us = hitting.is_blocked_turf(TRUE, attacker)
+		if(blocking_us)
+			attacker.visible_message(
+				span_warning("[attacker]'s swing collides with [blocking_us]!"),
+				span_warning("[blocking_us] blocks your swing partway!"),
+			)
+			playsound(hitting, 'sound/effects/glasshit.ogg', 90, TRUE)
+			return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting.Find(hitting))
@@ -140,7 +148,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attack_flag |= ATTACK_STYLE_MISSED
 
 	if(attack_flag & ATTACK_STYLE_HIT)
-		var/hitsound_to_use = get_hit_sound()
+		var/hitsound_to_use = get_hit_sound(weapon)
 		if(hitsound_to_use)
 			playsound(attacker, hitsound_to_use, hit_volume, TRUE)
 
@@ -151,7 +159,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return attack_flag
 
 /datum/attack_style/proc/get_hit_sound(obj/item/weapon)
-	return successful_hit_sound || weapon.hitsound
+	return successful_hit_sound || weapon?.hitsound
 
 /datum/attack_style/proc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	RETURN_TYPE(/list)

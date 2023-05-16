@@ -244,10 +244,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /**
  * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.
  *
- * Returns truthy value TURF_BLOCKED_TURF_DENSE if the turf is blocked because the turf itself is dense.
- * Returns truthy value TURF_BLOCKED_CONTENT_DENSE if one of the turf's contents is dense and would block
- * a source atom's movement.
- * Returns falsey value TURF_NOT_BLOCKED if the turf is not blocked.
+ * Returns truthy value of an instance of a movable blocking the turf if the turf is blocked.
+ * Returns false if the turf is not blocked.
  *
  * Arguments:
  * * exclude_mobs - If TRUE, ignores dense mobs on the turf.
@@ -275,7 +273,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
 			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
-			return TRUE
+			return movable_content
 	return FALSE
 
 /**
