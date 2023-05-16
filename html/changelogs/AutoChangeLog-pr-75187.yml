@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscadd: "Air alarms can be connected to an area remotely via air sensor with multi-tool and corresponding access"
+  - qol: "Mapping: Added air alarm helper to link air alarm with certain chamber_id on map load"
