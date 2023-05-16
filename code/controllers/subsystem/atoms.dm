@@ -178,6 +178,10 @@ SUBSYSTEM_DEF(atoms)
 	if(!initialized_changed)
 		initialized = old_initialized
 
+/// Returns TRUE if anything is currently being initialized
+/datum/controller/subsystem/atoms/proc/initializing_something()
+	return initialized_changed > 0
+
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
