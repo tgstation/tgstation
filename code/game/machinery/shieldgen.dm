@@ -563,6 +563,7 @@
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_generator
+	processing_flags = START_PROCESSING_ON_INIT
 
 	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
@@ -621,15 +622,14 @@
 	///This is the list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs = list()
 
-	processing_flags = START_PROCESSING_ON_INIT
-
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		deactivate_shields()
-		end_processing()
+	if(!(machine_stat & NOPOWER))
+		begin_processing()
 		return
-	begin_processing()
+
+	deactivate_shields()
+	end_processing()
 
 /obj/machinery/modular_shield_generator/RefreshParts()
 	. = ..()
@@ -923,7 +923,6 @@
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
-	dir = SOUTH
 
 	var/obj/machinery/modular_shield_generator/shield_generator
 
