@@ -27,19 +27,19 @@ const RequestLogsScreen = (props, context) => {
               <Table.Cell>Departament</Table.Cell>
               <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
-            {requests?.map((r) => (
-              <Table.Row key={r.ref}>
+            {requests?.map((request) => (
+              <Table.Row key={request.ref}>
                 <Table.Cell>
                   <Button
                     icon="trash"
                     color="red"
-                    onClick={() => act('delete_request', { ref: m.ref })}
+                    onClick={() => act('delete_request', { ref: request.ref })}
                   />
                 </Table.Cell>
-                <Table.Cell>{m.message}</Table.Cell>
-                <Table.Cell>{r.stamp}</Table.Cell>
-                <Table.Cell>{r.send_dpt}</Table.Cell>
-                <Table.Cell>{r.id_auth}</Table.Cell>
+                <Table.Cell>{request.message}</Table.Cell>
+                <Table.Cell>{request.stamp}</Table.Cell>
+                <Table.Cell>{request.send_dpt}</Table.Cell>
+                <Table.Cell>{request.id_auth}</Table.Cell>
               </Table.Row>
             ))}
           </Table>
@@ -73,18 +73,18 @@ const MessageLogsScreen = (props, context) => {
               <Table.Cell>Recipient</Table.Cell>
               <Table.Cell>Message</Table.Cell>
             </Table.Row>
-            {messages?.map((m) => (
+            {messages?.map((message) => (
               <Table.Row key={m.ref}>
                 <Table.Cell>
                   <Button
                     icon="trash"
                     color="red"
-                    onClick={() => act('delete_message', { ref: m.ref })}
+                    onClick={() => act('delete_message', { ref: message.ref })}
                   />
                 </Table.Cell>
-                <Table.Cell>{m.sender}</Table.Cell>
-                <Table.Cell>{m.recipient}</Table.Cell>
-                <Table.Cell>{m.message}</Table.Cell>
+                <Table.Cell>{message.sender}</Table.Cell>
+                <Table.Cell>{message.recipient}</Table.Cell>
+                <Table.Cell>{message.message}</Table.Cell>
               </Table.Row>
             ))}
           </Table>
