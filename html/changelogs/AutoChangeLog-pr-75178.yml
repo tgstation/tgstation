@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "The console for the solar panels of AIsat solars tramstation are now actually connected together"

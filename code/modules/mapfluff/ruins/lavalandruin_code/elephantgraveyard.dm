@@ -178,7 +178,7 @@
 			new /obj/item/coin/silver(src)
 			new /obj/item/shovel/spade(src)
 		if(4)
-			new /obj/item/storage/book/bible/booze(src)
+			new /obj/item/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
 			new /obj/item/scalpel(src)

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - balance: "Default Syndicate and Russian gunners now fire every 2.5 seconds instead of every 0.2"

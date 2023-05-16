@@ -165,9 +165,7 @@
 /turf/open/water/beach,
 /area/ruin/powered/beach)
 "cV" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawcutlet,
@@ -423,9 +421,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "nI" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/mayonnaise,
 /obj/item/reagent_containers/condiment/flour,
@@ -859,9 +855,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Ds" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Eq" = (

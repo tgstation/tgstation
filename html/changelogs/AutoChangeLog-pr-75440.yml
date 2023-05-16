@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - rscadd: "Metastation's recreation area has been outfitted with a new fitness room containing a set of gym equipment."
+  - bugfix: "Metastation's recreation area shower is now attached to plumbing."

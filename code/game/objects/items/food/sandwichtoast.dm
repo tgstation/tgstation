@@ -258,6 +258,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
+/obj/item/food/death_sandwich/Initialize(mapload)
+	. = ..()
+	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
+
 ///Override for checkliked callback
 /obj/item/food/death_sandwich/make_edible()
 	. = ..()
