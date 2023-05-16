@@ -787,7 +787,7 @@
 
 /obj/machinery/modular_shield_generator/update_icon_state()
 
-	icon_state = ("gen_[!(machine_stat & NOPOWER)?"[recovering ?"recovering_":"ready_"]":"no_power_"][(panel_open)?"open":"closed"]")
+	icon_state = ("gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open)?"open" : "closed"]")
 	return ..()
 
 //ui stuff
@@ -1039,9 +1039,9 @@
 /obj/machinery/modular_shield/module/node/update_icon_state()
 	. = ..()
 	if(isnull(shield_generator) || (machine_stat & NOPOWER))
-		icon_state = "node_off_[panel_open ?"open":"closed"]"
+		icon_state = "node_off_[panel_open ? "open" : "closed"]"
 		return
-	icon_state = "node_on_[panel_open ?"open":"closed"]"
+	icon_state = "node_on_[panel_open ? "open" : "closed"]"
 
 /obj/machinery/modular_shield/module/node/setDir(new_dir)
 	. = ..()
@@ -1102,9 +1102,9 @@
 /obj/machinery/modular_shield/module/charger/update_icon_state()
 	. = ..()
 	if(isnull(shield_generator) || (machine_stat & NOPOWER))
-		icon_state = "charger_off_[panel_open ?"open":"closed"]"
+		icon_state = "charger_off_[panel_open ? "open" : "closed"]"
 		return
-	icon_state = "charger_on_[panel_open ?"open":"closed"]"
+	icon_state = "charger_on_[panel_open ? "open" : "closed"]"
 
 /obj/machinery/modular_shield/module/charger/RefreshParts()
 	. = ..()
@@ -1130,9 +1130,9 @@
 /obj/machinery/modular_shield/module/relay/update_icon_state()
 	. = ..()
 	if(isnull(shield_generator) || (machine_stat & NOPOWER))
-		icon_state = "relay_off_[panel_open ?"open":"closed"]"
+		icon_state = "relay_off_[panel_open ? "open" : "closed"]"
 		return
-	icon_state = "relay_on_[panel_open ?"open":"closed"]"
+	icon_state = "relay_on_[panel_open ? "open" : "closed"]"
 
 /obj/machinery/modular_shield/module/relay/RefreshParts()
 	. = ..()
@@ -1167,9 +1167,9 @@
 /obj/machinery/modular_shield/module/well/update_icon_state()
 	. = ..()
 	if(isnull(shield_generator) || (machine_stat & NOPOWER))
-		icon_state = "well_off_[panel_open ?"open":"closed"]"
+		icon_state = "well_off_[panel_open ? "open" : "closed"]"
 		return
-	icon_state = "well_on_[panel_open ?"open":"closed"]"
+	icon_state = "well_on_[panel_open ? "open" : "closed"]"
 
 
 //The shield itself
