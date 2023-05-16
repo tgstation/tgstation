@@ -116,7 +116,6 @@ const HackedScreen = (props, context) => {
 const MainScreen = (props, context) => {
   const { act, data } = useBackend(context);
   const { password, status, auth, server_status, is_malf } = data;
-  const [pass, setPassword] = useLocalState(context, 'pass', password);
 
   return (
     <Stack fill vertical>
@@ -126,13 +125,13 @@ const MainScreen = (props, context) => {
           <Stack.Item>
             <Section>
               <Input
-                value={pass}
+                value={password}
                 onInput={(e, value) => setPassword(value)}
                 placeholder="Password"
               />
               <Button
                 content={auth ? 'Logout' : 'Auth'}
-                onClick={() => act('auth', { password: pass })}
+                onClick={() => act('auth', { password: password })}
               />
               <Button
                 content={status ? 'ON' : 'OFF'}
