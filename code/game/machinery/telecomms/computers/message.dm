@@ -16,11 +16,11 @@
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	light_color = LIGHT_COLOR_GREEN
-	//Server linked to.
+	/// Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
-	//Sparks effect - For emag
+	/// Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system
-	//Computer properties
+	/// Computer properties
 	var/screen = MSG_MON_SCREEN_MAIN // 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/message = "System bootup complete. Please select an option." // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
@@ -28,7 +28,7 @@
 	var/error_message = ""
 	var/notice_message = ""
 	var/succes_message = ""
-	//Decrypt password
+	/// Decrypt password
 	var/password = ""
 
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
@@ -50,14 +50,14 @@
 		// Will help make emagging the console not so easy to get away with.
 		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
 		var/time = 100 * length(linkedServer.decryptkey)
-		addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), time)
+		addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
 		error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 		linkedServer.toggled = FALSE
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
 
-//Removing the emag effect from the console
-/obj/machinery/computer/message_monitor/proc/UnmagConsole()
+/// Removing the emag effect from the console
+/obj/machinery/computer/message_monitor/proc/unemag_console()
 	screen = MSG_MON_SCREEN_MAIN
 	linkedServer.toggled = TRUE
 	error_message = ""
@@ -83,12 +83,12 @@
 
 /obj/machinery/computer/message_monitor/ui_data(mob/user)
 	var/list/data = list(
-		"screen" = screen, // Current screen
-		"error" = error_message, // Error message
-		"notice" = notice_message, // Notice message
-		"succes" = succes_message, // Succes message
-		"auth" = auth, // Is the console authenticated
-		"server_status" = !LINKED_SERVER_NONRESPONSIVE // Is server online and linked
+		"screen" = screen,
+		"error" = error_message,
+		"notice" = notice_message,
+		"succes" = succes_message,
+		"auth" = auth,
+		"server_status" = !LINKED_SERVER_NONRESPONSIVE
 	)
 
 	switch(screen)
@@ -103,15 +103,15 @@
 				data["is_malf"] = FALSE
 
 		if(MSG_MON_SCREEN_LOGS)
-			var/list/messageList = list()
+			var/list/message_list = list()
 			for(var/datum/data_tablet_msg/pda in linkedServer.pda_msgs)
-				messageList += list(list("ref"=REF(pda), "sender"=pda.sender, "recipient"=pda.recipient, "message"=pda.message))
-			data["messages"] = messageList
+				message_list += list(list("ref" = REF(pda), "sender" = pda.sender, "recipient" = pda.recipient, "message" = pda.message))
+			data["messages"] = message_list
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
-			var/list/requestList = list()
+			var/list/request_list = list()
 			for(var/datum/data_rc_msg/rc in linkedServer.rc_msgs)
-				requestList += list(list("ref"=REF(rc), "message"=rc.message, "stamp"=rc.stamp, "id_auth"=rc.id_auth, "departament"=rc.send_dpt))
-			data["requests"] = requestList
+				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
+			data["requests"] = request_list
 	return data
 
 /obj/machinery/computer/message_monitor/ui_act(action, params)
@@ -123,9 +123,7 @@
 	succes_message = ""
 	notice_message = ""
 
-	. = TRUE
 	switch(action)
-		//User authentication in the console
 		if("auth")
 			// Get auth pass
 			var/authPass = params["password"]
@@ -139,10 +137,9 @@
 				return
 
 			auth = TRUE
-			succes_message = "YOU SUCCESFULY LOGGED IN!"
+			succes_message = "YOU SUCCESFULLY LOGGED IN!"
 
 			return
-		//Linking to another server
 		if("link_server")
 			var/list/message_servers = list()
 			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
@@ -159,7 +156,6 @@
 					error_message = "ALERT: No server detected."
 			screen = MSG_MON_SCREEN_MAIN
 			return
-		// Turn on/off linked server
 		if("turn_server")
 			if(LINKED_SERVER_NONRESPONSIVE)
 				error_message = "ALERT: No server detected."
@@ -167,24 +163,19 @@
 
 			linkedServer.toggled = !linkedServer.toggled
 			return
-		// Message Logs
 		if("view_message_logs")
 			screen = MSG_MON_SCREEN_LOGS
 			return
-		// Request loggs
 		if("view_request_logs")
 			screen = MSG_MON_SCREEN_REQUEST_LOGS
 			return
-		// Clearing message logs
 		if("clear_message_logs")
 			linkedServer.pda_msgs = list()
 			notice_message = "NOTICE: Logs cleared."
 			return
-		// Clearing request logs
 		if("clear_request_logs")
 			linkedServer.rc_msgs = list()
 			notice_message = "NOTICE: Logs cleared."
-		// Setting a new decryption key
 		if("set_key")
 			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 			if(dkey && dkey != "")
@@ -198,33 +189,28 @@
 				else
 					error_message = "ALERT: Incorrect decryption key!"
 			return
-		// Return to MSG_MON_SCREEN_MAIN (Main Page)
 		if("return_home")
 			screen = MSG_MON_SCREEN_MAIN
 			return
-		// Deleting message log
 		if("delete_message")
 			linkedServer.pda_msgs -= locate(params["ref"]) in linkedServer.pda_msgs
 			succes_message = "Log Deleted!"
 			return
-		// Deleteing request log
 		if("delete_request")
 			linkedServer.rc_msgs -= locate(params["ref"]) in linkedServer.rc_msgs
 			succes_message = "Log Deleted!"
 			return
-		// Connecting to the server if the old one was broken or destroyed
 		if("connect_server")
 			if(!linkedServer)
 				for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
 					linkedServer = S
 					break
 			return
-		// Sending fake (admin) message to crew
 		if("send_fake_message")
 			//Get custom sender
-			var/sender = tgui_input_text(usr, "Please sender's name", "Sender")
+			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender")
 			//Get job
-			var/job = tgui_input_text(usr, "Please job", "Job")
+			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
 			//Get recipient
 			var/recipient
 			var/list/viewable_tablets = list()
@@ -266,14 +252,14 @@
 			return
 		// Malfunction AI and cyborgs can hack console. This will auth console, but you need to wait password selection
 		if("hack")
-			var/time = 100 * length(linkedServer.decryptkey)
-			addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), time)
+			var/time = 10 SECONDS * length(linkedServer.decryptkey)
+			addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
 			screen = MSG_MON_SCREEN_HACKED
 			error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 			linkedServer.toggled = FALSE
-			auth = TRUE;
+			auth = TRUE
 			return
-	return FALSE
+	return TRUE
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
