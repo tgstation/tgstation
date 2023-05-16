@@ -665,7 +665,7 @@
 
 /datum/wires/modular_shield_generator/New(atom/holder)
 	wires = list(WIRE_HACK)
-	..()
+	return..()
 
 /datum/wires/modular_shield_generator/on_pulse(wire)
 
@@ -673,8 +673,8 @@
 	switch(wire)
 		if(WIRE_HACK)
 			shield_gen.toggle_shields()
-			return
-	..()
+
+	return..()
 
 ///qdels the forcefield and calls calculate regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/deactivate_shields()
