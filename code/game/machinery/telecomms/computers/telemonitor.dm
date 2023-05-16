@@ -28,7 +28,7 @@
 	var/list/data = list(
 		"screen" = screen,
 		"network" = network,
-		"error" = error_message,
+		"error_message" = error_message,
 	)
 
 	switch(screen)
@@ -46,8 +46,8 @@
 			// Get the linked machinery
 			var/list/linked_machinery = list()
 			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-				 linked_machinery += list(list("ref" = REF(T.id), "name" = T.name, "id" = T.id))
-			machine_out["machinery"] = linked_machinery
+				linked_machinery += list(list("ref" = REF(T.id), "name" = T.name, "id" = T.id))
+			machine_out["linked_machinery"] = linked_machinery
 			data["machine"] = machine_out
 	return data
 
