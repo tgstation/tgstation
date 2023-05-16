@@ -117,7 +117,7 @@
 /obj/machinery/computer/message_monitor/ui_act(action, params)
 	. = ..()
 	if(.)
-		return
+		return .
 
 	error_message = ""
 	succes_message = ""
