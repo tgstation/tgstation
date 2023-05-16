@@ -2,8 +2,29 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, LabeledList, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+  screen: number;
+  network: string;
+  error_message: string;
+  machinery: Machine[];
+  machine: Machine;
+};
+
+type Machine = {
+  ref: string;
+  id: string;
+  name: string;
+  linked_machinery: LinkedMachinery[];
+};
+
+type LinkedMachinery = {
+  ref: string;
+  id: string;
+  name: string;
+};
+
 const MachineScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const { network, machine } = data;
   return (
     <Stack fill vertical>
@@ -33,14 +54,14 @@ const MachineScreen = (props, context) => {
               <Table.Cell>Name</Table.Cell>
               <Table.Cell>Machine</Table.Cell>
             </Table.Row>
-            {machine.machinery?.map((m) => (
-              <Table.Row key={m.ref}>
-                <Table.Cell>{m.ref}</Table.Cell>
-                <Table.Cell>{m.id}</Table.Cell>
+            {machine.linked_machinery?.map((lm) => (
+              <Table.Row key={lm.ref}>
+                <Table.Cell>{lm.ref}</Table.Cell>
+                <Table.Cell>{lm.id}</Table.Cell>
                 <Table.Cell>
                   <Button
-                    content={m.name}
-                    onClick={() => act('view_machine', { id: m.id })}
+                    content={lm.name}
+                    onClick={() => act('view_machine', { id: lm.id })}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -53,7 +74,7 @@ const MachineScreen = (props, context) => {
 };
 
 const MainScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const { machinery, network } = data;
   const [networkId, setNetworkId] = useLocalState(
     context,
@@ -96,14 +117,14 @@ const MainScreen = (props, context) => {
               <Table.Cell>Name</Table.Cell>
               <Table.Cell>Machine</Table.Cell>
             </Table.Row>
-            {machinery?.map((m) => (
-              <Table.Row key={m.ref}>
-                <Table.Cell>{m.ref}</Table.Cell>
-                <Table.Cell>{m.id}</Table.Cell>
+            {machinery?.map((machine) => (
+              <Table.Row key={machine.ref}>
+                <Table.Cell>{machine.ref}</Table.Cell>
+                <Table.Cell>{machine.id}</Table.Cell>
                 <Table.Cell>
                   <Button
-                    content={m.name}
-                    onClick={() => act('view_machine', { id: m.id })}
+                    content={machine.name}
+                    onClick={() => act('view_machine', { id: machine.id })}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -116,14 +137,14 @@ const MainScreen = (props, context) => {
 };
 
 export const TelecommsMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { screen, error } = data;
+  const { act, data } = useBackend<Data>(context);
+  const { screen, error_message } = data;
   return (
     <Window width={575} height={400}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            {error !== '' && <NoticeBox>{error}</NoticeBox>}
+            {error_message !== '' && <NoticeBox>{error_message}</NoticeBox>}
           </Stack.Item>
           <Stack.Item grow>
             {(screen === 0 && <MainScreen />) ||
