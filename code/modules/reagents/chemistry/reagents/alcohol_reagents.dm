@@ -3678,5 +3678,19 @@
 	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	..()
 
+/datum/reagent/consumable/ethanol/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	description = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	boozepwr = 30
+	color = "#FFAA00"
+	taste_description = "static with a hint of sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/wine_voltaic
+	required_drink_type = /datum/reagent/consumable/ethanol/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	desc = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "wine_voltaic"
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
