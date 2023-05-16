@@ -112,11 +112,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
-
-	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
-	var/datum/gas_mixture/environment = our_turf.return_air()
-	check_danger(our_turf, environment, environment.temperature)
-
 	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
