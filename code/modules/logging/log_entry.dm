@@ -97,10 +97,10 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 /datum/log_entry/proc/write_entry_to_file(file)
 	if(!fexists(file))
 		CRASH("Attempted to log to an uninitialized file: [file]")
-	rustg_file_append("[to_json_text()]\n", file)
+	WRITE_LOG_NO_FORMAT(file, "[to_json_text()]")
 
 /// Writes the log entry to a file as a human-readable string.
 /datum/log_entry/proc/write_readable_entry_to_file(file)
 	if(!fexists(file))
 		CRASH("Attempted to log to an uninitialized file: [file]")
-	rustg_file_append("[to_readable_text()]\n", file)
+	WRITE_LOG_NO_FORMAT(file, "[to_readable_text()]")
