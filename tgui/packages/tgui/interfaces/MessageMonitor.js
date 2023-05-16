@@ -137,7 +137,7 @@ const MainScreen = (props, context) => {
               <Button
                 content={status ? 'ON' : 'OFF'}
                 color={status ? 'green' : 'red'}
-                disabled={auth ? false : true}
+                disabled={!auth ? true : false}
                 onClick={() => act('turn_server')}
               />
               {is_malf ? (
@@ -271,7 +271,7 @@ export const MessageMonitor = (props, context) => {
                 )}
               </Stack.Item>
               <label>
-                Reg, #514 forbids sending messages to a Head of Staff containing
+                Reg. #514 forbids sending messages to a Head of Staff containing
                 Erotic Rendering Properties.
               </label>
             </>
