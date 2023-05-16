@@ -1190,23 +1190,26 @@
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
 
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(shield_generator)
-		shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
+	if(isnull(shield_generator))
+		qdel(src)
 		return
-	qdel(src)
+
+	shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
 
 
 //How the shield loses strength
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
-		if(shield_generator)
-			shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
+		if(isnull(shield_generator))
+			qdel(src)
 			return
-		qdel(src)
+
+		shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
 
 /obj/structure/emergency_shield/modular/emp_act(severity)
-	if(shield_generator)
-		shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
+	if(isnull(shield_generator))
+		qdel(src)
 		return
-	qdel(src)
+
+	shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
