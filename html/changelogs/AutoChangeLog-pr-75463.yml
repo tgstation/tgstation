@@ -1,0 +1,4 @@
+author: "Vishenka0704"
+delete-after: True
+changes:
+  - bugfix: "fixed different from english keyboard layout to use tgui chat"
