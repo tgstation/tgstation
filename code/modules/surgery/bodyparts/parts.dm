@@ -104,7 +104,7 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch
 	unarmed_damage_low = 1
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
@@ -336,7 +336,7 @@
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
 	body_zone = BODY_ZONE_L_LEG
-	attack_style = /datum/attack_style/unarmed/generic_damage/kick
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/kick
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10

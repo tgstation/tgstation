@@ -516,19 +516,15 @@
 		owner.clear_mood_event("brain_damage")
 
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
-/obj/item/organ/internal/brain/proc/get_attacking_limb()
-	if(owner.usable_hands <= 0 && owner.usable_legs >= 2)
+/obj/item/organ/internal/brain/proc/get_attacking_limb(atom/clicking_on)
+	var/mob/living/living_clicked = clicking_on
+	if(owner.usable_legs >= 2 && (owner.usable_hands <= 0 || (istype(living_clicked) && living_clicked.body_position == LYING_DOWN)))
 		// 0 hands but we still got legs to kick with.
 		// Choose the leg on the same side of the body as the active hand,
 		// or the first leg we find if that fails
-		return owner.get_bodypart((owner.active_hand_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		. = owner.get_bodypart((owner.active_hand_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 
-	/*
-	if(target.body_position == LYING_DOWN && owner.usable_legs)
-		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
-		return found_bodypart || active_hand
-	*/
-	return owner.get_active_hand()
+	return . || owner.get_active_hand()
 
 /// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
 /obj/item/organ/internal/brain/replace_into(mob/living/carbon/new_owner)

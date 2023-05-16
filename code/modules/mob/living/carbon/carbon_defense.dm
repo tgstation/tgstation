@@ -127,8 +127,9 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE // melbert todo : why does this not return?
+		return TRUE
 
+	. = FALSE
 	for(var/datum/disease/our_disease as anything in user.diseases)
 		if(our_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(our_disease)
@@ -201,51 +202,6 @@
 				continue
 			ForceContractDisease(D)
 		return TRUE
-
-
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message(span_danger("The [M.name] shocks [src]!"), \
-				span_userdanger("The [M.name] shocks you!"))
-
-				do_sparks(5, TRUE, src)
-				var/power = M.powerlevel + rand(0,3)
-				Paralyze(power * 2 SECONDS)
-				set_stutter_if_lower(power * 2 SECONDS)
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-					updatehealth()
-		return 1
-
-// melbert todo : whatever the hell this is
-/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
-	if(!attacker.limb_destroyer)
-		return dam_zone
-	var/obj/item/bodypart/affecting
-	if(dam_zone && attacker.client)
-		affecting = get_bodypart(get_random_valid_zone(dam_zone))
-	else
-		var/list/things_to_ruin = shuffle(bodyparts.Copy())
-		for(var/B in things_to_ruin)
-			var/obj/item/bodypart/bodypart = B
-			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
-				continue
-			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
-				affecting = bodypart
-	if(affecting)
-		dam_zone = affecting.body_zone
-		if(affecting.get_damage() >= affecting.max_damage)
-			affecting.dismember()
-			return null
-		return affecting.body_zone
-	return dam_zone
 
 /mob/living/carbon/is_shove_knockdown_blocked()
 	for (var/obj/item/clothing/clothing in get_equipped_items(include_pockets = FALSE))

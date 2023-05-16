@@ -256,3 +256,26 @@
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
 
 #undef HULK_TAILTHROW_STEPS
+
+/datum/attack_style/unarmed/generic_damage/hulk
+	cd = 1.5 SECONDS
+	attack_effect = ATTACK_EFFECT_SMASH
+	successful_hit_sound = 'sound/effects/meteorimpact.ogg'
+	wound_bonus = 10
+	default_attack_verb = "smash"
+
+/datum/attack_style/unarmed/generic_damage/hulk/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
+	return rand(12, 15)
+
+/datum/attack_style/unarmed/generic_damage/hulk/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
+	return pick(default_attack_verb, "pummel", "slam")
+
+/datum/attack_style/unarmed/generic_damage/hulk/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage, obj/item/bodypart/affecting, armor_block, direction)
+	. = ..()
+	if(smacked.mob_size <= MOB_SIZE_SMALL || iscyborg(smacked))
+		// Forces small mobs or robots up to 2 tiles way
+		smacked.AddComponent(/datum/component/force_move, get_step_away(attacker, smacked, 30))
+
+	else if(smacked.mob_size <= MOB_SIZE_HUMAN && isalien(smacked))
+		// Or just freakin' throws xenos away
+		safe_throw_at(get_edge_target_turf(smacked, get_dir(attacker, smacked)), 2, 1, attacker)

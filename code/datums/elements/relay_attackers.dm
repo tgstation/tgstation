@@ -9,7 +9,7 @@
 	. = ..()
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
 	RegisterSignal(target, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(after_attackby))
-	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_MOB_ATTACK_ALIEN), PROC_REF(on_attack_generic))
+	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_attack_generic))
 	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_BASIC_MOB, COMSIG_ATOM_ATTACK_ANIMAL), PROC_REF(on_attack_npc))
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
@@ -24,7 +24,6 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_ATTACK_BASIC_MOB,
 		COMSIG_ATOM_ATTACK_ANIMAL,
-		COMSIG_MOB_ATTACK_ALIEN,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_HITBY,
 		COMSIG_ATOM_HULK_ATTACK,

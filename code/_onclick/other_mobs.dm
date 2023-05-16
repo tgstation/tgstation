@@ -38,22 +38,29 @@
 		attack_target.attack_hand(src, modifiers)
 	*/
 
-/mob/living/carbon/select_unarmed_strike(list/modifiers)
-	. = ..()
-	if(.)
-		return
+/mob/living/carbon/divert_to_attack_style(atom/attack_target, list/modifiers)
+	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb(attack_target) || get_active_hand()
+	var/datum/attack_style/hit_style = default_help_style
+	// Top priority - disarm
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		hit_style = default_disarm_style
+	// Then, every attack is a hulk attack
+	else if(HAS_TRAIT(src, TRAIT_HULK) && combat_mode)
+		hit_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
+	// Then attack from arm
+	else if(!isnull(attacking_bodypart))
+		hit_style = attacking_bodypart.attack_style
+	// Then default harm intent style
+	else if(combat_mode)
+		hit_style = default_harm_style
+	// If all fails, we do help style.
 
-	if(combat_mode)
-		// figure out a better way to do this.
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			return GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
-
-		// melbert todo : needs to handle kicking
-		var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb() || get_active_hand()
-		return attacking_bodypart.attack_style
-
-	return GLOB.attack_styles[/datum/attack_style/unarmed/help]
+	if(hit_style)
+		changeNext_move(hit_style.cd * 0.8)
+		hit_style.process_attack(src, attacking_bodypart, attack_target)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_hand_secondary(src, modifiers)
@@ -131,11 +138,7 @@
 	if(.)
 		return
 
-	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
-	if(hit_style)
-		testing("[src] is attacking with [hit_style], targeting [A]. (Ranged)")
-		changeNext_move(hit_style.cd * 0.8)
-		hit_style.process_attack(src, null, A)
+	if(divert_to_attack_style(A, modifiers))
 		return TRUE
 
 /mob/living/ranged_secondary_attack(atom/atom_target, modifiers)
@@ -143,11 +146,7 @@
 	if(.)
 		return
 
-	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
-	if(hit_style)
-		testing("[src] is attacking with [hit_style], targeting [atom_target]. (Ranged secondary)")
-		changeNext_move(hit_style.cd * 0.8)
-		hit_style.process_attack(src, null, atom_target, TRUE)
+	if(divert_to_attack_style(A, modifiers))
 		return TRUE
 
 /mob/living/carbon/human/RangedAttack(atom/A, modifiers)
@@ -178,26 +177,29 @@
 			resolve_unarmed_attack(attack_target, modifiers)
 		return TRUE
 
-	var/datum/attack_style/unarmed/hit_style = select_unarmed_strike(modifiers)
+	if(divert_to_attack_style(A, modifiers))
+		return TRUE
+
+	return FALSE
+
+/mob/living/proc/divert_to_attack_style(atom/attack_target, list/modifiers)
+	var/datum/attack_style/hit_style
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		hit_style = default_disarm_style
+	else if(combat_mode)
+		hit_style = default_harm_style
+	else
+		hit_style = default_help_style
+
 	if(hit_style)
-		testing("[src] is attacking with [hit_style], targeting [attack_target]. (Melee)")
 		changeNext_move(hit_style.cd * 0.8)
 		hit_style.process_attack(src, null, attack_target)
 		return TRUE
 	return FALSE
 
-/mob/living/proc/select_unarmed_strike(list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		. ||= default_disarm_attack_style
-
-	if(combat_mode)
-		. ||= default_harm_attack_style
-
-	return .
-
 /mob/living/proc/handle_bite(atom/attack_target)
-	var/datum/attack_style/unarmed/bite_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/bite]
-	return bite_style?.process_attack(src, null, attack_target)
+	var/datum/attack_style/unarmed/bite_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/limb_based/bite]
+	return bite_style?.process_attack(src, get_bodypart(BODY_ZONE_HEAD), attack_target)
 
 /mob/living/silicon/handle_bite(atom/attack_target)
 	return // ??
@@ -287,23 +289,11 @@
 /atom/proc/attack_alien_secondary(mob/living/carbon/alien/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-// Babby aliens
 /mob/living/carbon/alien/larva/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	attack_target.attack_larva(src, modifiers)
+	return FALSE
 
 /mob/living/carbon/alien/larva/resolve_right_click_attack(atom/target, list/modifiers)
-	return target.attack_larva_secondary(src, modifiers)
-
-/atom/proc/attack_larva(mob/user, list/modifiers)
-	return
-
-/**
- * Called when an alien larva right clicks an atom.
- * Returns a SECONDARY_ATTACK_* value.
- */
-/atom/proc/attack_larva_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
-
 
 /*
 	Slimes

@@ -74,7 +74,7 @@
 	SIGNAL_HANDLER
 
 	// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
-	if(!ISADVANCEDTOOLUSER(source)) // melbert todo : needs prox flag?
+	if(!ISADVANCEDTOOLUSER(source) && proximity_flag) // This prox flag check is not necessary but we'll keep it just in case
 		target.attack_paw(source, modifiers)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -208,5 +208,5 @@
 		return
 	in_the_way_mob.knockOver(owner)
 
-/obj/item/organ/internal/brain/primate/get_attacking_limb()
+/obj/item/organ/internal/brain/primate/get_attacking_limb(atom/clicking_on)
 	return owner.get_bodypart(BODY_ZONE_HEAD)

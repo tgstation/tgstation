@@ -1,94 +1,3 @@
-/mob/living/basic/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	// so that martial arts don't double dip
-	if (..())
-		return TRUE
-
-	if(!user.combat_mode)
-		if (stat == DEAD)
-			return
-		visible_message(span_notice("[user] [response_help_continuous] [src]."), \
-						span_notice("[user] [response_help_continuous] you."), null, null, user)
-		to_chat(user, span_notice("You [response_help_simple] [src]."))
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		return TRUE
-
-	/*
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt [src]!"))
-		return
-	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
-					span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
-	playsound(loc, attacked_sound, 25, TRUE, -1)
-	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-	var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
-
-	attack_threshold_check(damage)
-	log_combat(user, src, "attacked")
-	updatehealth()
-	return TRUE
-	*/
-
-/*
-/mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(..()) //successful monkey bite.
-		if(stat != DEAD)
-			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
-	if (!user.combat_mode)
-		if (health > 0)
-			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
-							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-*/
-
-/*
-/mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
-			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
-		log_combat(user, src, "disarmed")
-		return
-	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	visible_message(span_danger("[user] slashes at [src]!"), \
-		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You slash at [src]!"))
-	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-	attack_threshold_check(damage)
-	log_combat(user, src, "attacked")
-*/
-
-/*
-/mob/living/basic/attack_larva(mob/living/carbon/alien/larva/attacking_larva, list/modifiers)
-	. = ..()
-	if(. && stat != DEAD) //successful larva bite
-		var/damage = rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper)
-		. = attack_threshold_check(damage)
-		if(.)
-			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage, attacking_larva.max_grown)
-
-/mob/living/basic/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		return attack_threshold_check(damage, user.melee_damage_type)
-*/
-
-/mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
-		if(M.is_adult)
-			damage = rand(20, 35)
-		return attack_threshold_check(damage)
-
 /mob/living/basic/attack_drone(mob/living/simple_animal/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
@@ -99,7 +8,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/mob/living/basic/proc/proc/attack_threshold_check(damage, damagetype = BRUTE)
+/mob/living/basic/proc/attack_threshold_check(damage, damagetype = BRUTE)
 	if(damage * (damage_coeff[damagetype] || 0) <= force_threshold)
 		visible_message(span_warning("[src] looks unharmed!"))
 		return FALSE
@@ -174,3 +83,25 @@
 		if(EMP_HEAVY)
 			visible_message(span_danger("[src] suddenly bursts apart!"))
 			apply_damage(maxHealth)
+
+
+/mob/living/basic/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration)
+	. = ..()
+	if(.)
+		return
+
+	var/tap_vol = 50
+	if(isitem(hitby))
+		var/obj/item/item_hitting = hitby
+		if(!attack_threshold_check(damage, item_hitting.damtype))
+			tap_vol = item_hitting.get_clamped_volume()
+			. = TRUE
+
+	else if(!attack_threshold_check(damage))
+		// This operates on the assumption the damage being recieved is brute damage, should be changed later.
+		. = TRUE
+
+	if(.)
+		playsound(loc, 'sound/weapons/tap.ogg', tap_vol, TRUE, -1)
+		visible_message(span_warning("[src] looks unharmed!"), blind_message = span_hear("You hear a thud."))
+	return .

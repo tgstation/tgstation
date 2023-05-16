@@ -121,7 +121,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		var/total_hit = 0
 		for(var/mob/living/smack_who as anything in foes)
-			attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+			var/new_results = finalize_attack(attacker, smack_who, weapon, right_clicking)
+			if(!(new_results & ATTACK_STYLE_HIT))
+				continue
+			attack_flag |= new_results
 			total_hit++
 			total_total_hit++
 			if(total_hit >= hits_per_turf_allowed)
@@ -228,7 +231,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	smacked.lastattackerckey = attacker.ckey
 
 	if(attacker == smacked && attacker.client)
-		attacker.client.give_award(/datum/award/achievement/misc/selfouch, user, attacker)
+		attacker.client.give_award(/datum/award/achievement/misc/selfouch, attacker)
 
 	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
 	. |= smacked.attacked_by(weapon, attacker)
@@ -284,7 +287,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/attack_effect = ATTACK_EFFECT_PUNCH
 
 /datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	ASSERT(istype(weapon, /obj/item/bodypart))
+	ASSERT(isnull(weapon) || istype(weapon, /obj/item/bodypart))
 	return ..()
 
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)

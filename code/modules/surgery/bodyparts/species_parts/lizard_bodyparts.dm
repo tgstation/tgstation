@@ -11,12 +11,12 @@
 /obj/item/bodypart/arm/left/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/arm/right/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/arm/left/lizard/ashwalker
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)

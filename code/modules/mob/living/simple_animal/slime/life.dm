@@ -72,7 +72,7 @@
 						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 						if(Target.Adjacent(src))
-							Target.attack_slime(src)
+							ClickOn(Target)
 					break
 				if((Target.body_position == STANDING_UP) && prob(80))
 
@@ -82,7 +82,7 @@
 							addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 							if(Target.Adjacent(src))
-								Target.attack_slime(src)
+								ClickOn(Target)
 
 					else
 						if(!Atkcool && Target.Adjacent(src))

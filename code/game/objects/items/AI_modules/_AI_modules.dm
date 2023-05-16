@@ -10,12 +10,13 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "An AI Module for programming laws to an AI."
 	flags_1 = CONDUCT_1
-	force = 5
+	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
+	attack_style = null
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)

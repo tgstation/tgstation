@@ -225,28 +225,34 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
-	if(!client && powerlevel > 0)
-		var/probab = 10
-		switch(powerlevel)
-			if(1 to 2)
-				probab = 20
-			if(3 to 4)
-				probab = 30
-			if(5 to 6)
-				probab = 40
-			if(7 to 8)
-				probab = 60
-			if(9)
-				probab = 70
-			if(10)
-				probab = 95
-		if(prob(probab))
-			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
-				if(nutrition <= get_hunger_nutrition() && !Atkcool)
-					if (is_adult || prob(5))
-						O.attack_slime(src)
-						Atkcool = TRUE
-						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
+	if(client || powerlevel <= 0)
+		return
+
+	if(!istype(O, /obj/structure/window) && !istype(O, /obj/structure/grille))
+		return
+
+	if(nutrition > get_hunger_nutrition() || Atkcool)
+		return
+
+	var/probab = 10
+	switch(powerlevel)
+		if(1 to 2)
+			probab = 20
+		if(3 to 4)
+			probab = 30
+		if(5 to 6)
+			probab = 40
+		if(7 to 8)
+			probab = 60
+		if(9)
+			probab = 70
+		if(10)
+			probab = 95
+
+	if(prob(probab) && (is_adult || prob(5)))
+		ClickOn(O)
+		Atkcool = TRUE
+		addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 2
@@ -304,40 +310,6 @@
 /mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
-/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		if(M == src)
-			return
-		if(buckled)
-			Feedstop(silent = TRUE)
-			visible_message(span_danger("[M] pulls [src] off!"), \
-				span_danger("You pull [src] off!"))
-			return
-		attacked += 5
-		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			adjust_nutrition(-(50 + (40 * M.is_adult)))
-			M.add_nutrition(50 + (40 * M.is_adult))
-		if(health > 0)
-			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
-			M.updatehealth()
-
-/mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		attacked += 10
-
-
-/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(..()) //successful monkey bite.
-		attacked += 10
-
-/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
-	if(..()) //successful larva bite.
-		attacked += 10
-
-/mob/living/simple_animal/slime/hulk_smashed(mob/living/carbon/human/hulk)
-	discipline_slime(hulk)
-
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(buckled)
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -374,12 +346,6 @@
 						return TRUE
 		if(..()) //successful attack
 			attacked += 10
-
-/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(..()) //if harm or disarm intent.
-		attacked += 10
-		discipline_slime(user)
-
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
@@ -436,6 +402,12 @@
 				playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		return
 	..()
+
+/mob/living/simple_animal/slime/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	. = ..()
+	attacked += clamp(damage * 0.5, 0, 10)
+	if(iscarbon(user))
+		discipline_slime(user)
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)

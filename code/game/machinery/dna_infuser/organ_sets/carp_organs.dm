@@ -57,13 +57,11 @@
 		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
-/*
-	melbert todo
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = 10
 	head.unarmed_damage_high = 15
 	head.unarmed_stun_threshold = 15
-*/
+
 /obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
 	. = ..()
 	if(!ishuman(tongue_owner))
@@ -73,13 +71,10 @@
 		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
-/*
-	melbert todo
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
 	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
-*/
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -126,7 +121,7 @@
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
 
-/obj/item/organ/internal/brain/carp/get_attacking_limb()
+/obj/item/organ/internal/brain/carp/get_attacking_limb(atom/clicking_on)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 /obj/item/organ/internal/brain/carp/proc/unsatisfied_nomad()

@@ -291,13 +291,7 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
-	/*
-	melbert todo
-	arm.unarmed_attack_verb = "slash"
-	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
-	*/
+	arm.attack_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/limb_based/punch/claw]
 	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
@@ -314,13 +308,7 @@
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	/*
-	melbert todo
-	arm.unarmed_attack_verb = initial(arm.unarmed_attack_verb)
-	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
-	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
-	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	*/
+	arm.attack_style = GLOB.attack_styles[initial(arm.attack_style)]
 	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
 
 /// Remove references to deleted arms
@@ -368,12 +356,9 @@
 
 /// Make the targeted arm big and strong
 /datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
-	/*
-	melbert todo
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
 	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
-	*/
 	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
@@ -390,12 +375,9 @@
 /datum/status_effect/golem/titanium/proc/debuff_arm(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	/*
-	melbert todo
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
 	arm.unarmed_stun_threshold -= damage_increase
-	*/
 	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
 
 /// Remove references to deleted arms

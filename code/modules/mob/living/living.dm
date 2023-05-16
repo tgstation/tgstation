@@ -14,8 +14,9 @@
 	update_fov()
 	gravity_setup()
 
-	default_harm_attack_style = GLOB.attack_styles[default_harm_attack_style]
-	default_disarm_attack_style = GLOB.attack_styles[default_disarm_attack_style]
+	default_harm_style = GLOB.attack_styles[default_harm_style]
+	default_disarm_style = GLOB.attack_styles[default_disarm_style]
+	default_help_style = GLOB.attack_styles[default_help_style]
 
 /mob/living/prepare_huds()
 	..()
@@ -45,8 +46,9 @@
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
 
-	default_harm_attack_style = null
-	default_disarm_attack_style = null
+	default_harm_style = null
+	default_disarm_style = null
+	default_help_style = null
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels, message = TRUE)

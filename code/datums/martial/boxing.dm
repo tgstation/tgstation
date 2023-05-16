@@ -1,11 +1,18 @@
 /datum/attack_style/unarmed/generic_damage/boxing
 	attack_type = STAMINA
-	bonus_stamina_damage_modifier = 0
 
-/datum/attack_style/unarmed/generic_damage/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, damage)
+/datum/attack_style/unarmed/generic_damage/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	return pick("left hook", "right hook", "straight punch")
 
-/datum/attack_style/unarmed/generic_damage/boxing/actually_apply_damage(mob/living/attacker, mob/living/smacked, damage, affecting, armor_block)
+/datum/attack_style/unarmed/generic_damage/boxing/actually_apply_damage(
+	mob/living/attacker,
+	mob/living/smacked,
+	obj/item/bodypart/hitting_with,
+	damage,
+	obj/item/bodypart/affecting,
+	armor_block,
+	direction,
+)
 	. = ..()
 	var/smacked_stam = smacked.getStaminaLoss()
 	if(smacked.stat == DEAD || smacked_stam <= 50)
@@ -41,7 +48,7 @@
 
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	var/datum/attack_style/unarmed/give_them_the_heat = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/boxing]
-	if(give_them_the_heat.process_attack(attacker, null, defender) & ATTACK_STYLE_HIT)
+	if(give_them_the_heat.process_attack(attacker, attacker.get_active_hand(), defender) & ATTACK_STYLE_HIT)
 		return MARTIAL_ATTACK_SUCCESS
 
 	return MARTIAL_ATTACK_FAIL

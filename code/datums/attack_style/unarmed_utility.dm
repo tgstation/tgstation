@@ -3,9 +3,15 @@
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 
-/datum/attack_style/unarmed/disarm/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
+/datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(attacker.body_position != STANDING_UP)
 		return ATTACK_STYLE_CANCEL
+	if(attacker.loc in affecting)
+		return ATTACK_STYLE_CANCEL
+
+	return ..()
+
+/datum/attack_style/unarmed/disarm/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(attacker == smacked || attacker.loc == smacked.loc)
 		return ATTACK_STYLE_CANCEL
 
@@ -41,6 +47,10 @@
 			return ATTACK_STYLE_HIT
 		if(MARTIAL_ATTACK_FAIL)
 			return ATTACK_STYLE_MISSED
+
+	return disarm_target(attacker, smacked)
+
+/datum/attack_style/unarmed/disarm/proc/disarm_target(mob/living/attacker, mob/living/smacked)
 
 	SEND_SIGNAL(smacked, COMSIG_HUMAN_DISARM_HIT, attacker, attacker.zone_selected)
 	var/shove_dir = get_dir(attacker, smacked)

@@ -20,9 +20,6 @@
 							span_danger("You avoid [user]'s kick!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your kick misses [src]!"))
 
-/mob/living/carbon/alien/larva/hulk_smashed(mob/living/carbon/human/hulk)
-	hulk.AddComponent(/datum/component/force_move, get_step_away(hulk, src, 30))
-
 /mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_BITE

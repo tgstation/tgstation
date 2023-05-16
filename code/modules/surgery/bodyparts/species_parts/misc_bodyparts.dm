@@ -9,21 +9,21 @@
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5 //snails are soft and squishy
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/snail
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor
@@ -185,11 +185,11 @@
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
-	attack_style = /datum/attack_style/unarmed/generic_damage/punch/claw
+	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/leg/left/pod
 	limb_id = SPECIES_PODPERSON
@@ -403,7 +403,6 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
-	attack_style = /datum/attack_style/unarmed/generic_damage/golem
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11

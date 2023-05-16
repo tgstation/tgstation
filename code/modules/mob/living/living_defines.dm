@@ -105,9 +105,6 @@
 	/// Time of death
 	var/tod = null
 
-	/// Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
-	var/limb_destroyer = 0
-
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
@@ -235,5 +232,6 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
-	var/datum/attack_style/unarmed/default_harm_attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack
-	var/datum/attack_style/unarmed/default_disarm_attack_style = /datum/attack_style/unarmed/disarm
+	var/datum/attack_style/unarmed/default_help_style = /datum/attack_style/unarmed/help
+	var/datum/attack_style/unarmed/default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack
+	var/datum/attack_style/unarmed/default_disarm_style = /datum/attack_style/unarmed/disarm

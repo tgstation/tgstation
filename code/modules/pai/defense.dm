@@ -42,18 +42,23 @@
 	return TRUE
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!user.combat_mode)
-		visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
+	if(user.combat_mode)
+		CRASH("Silicon attack hand was called from someone in combat mode, this shouldn't be possible in theory")
+
+	visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
+
+/mob/living/silicon/pai/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	if(!isnull(attacking_item) || user.name != master_name)
+		take_holo_damage(round(damage * 0.2))
 		return
-	user.do_attack_animation(src)
-	if(user.name != master_name)
-		visible_message(span_danger("[user] stomps on [src]!."))
-		take_holo_damage(2)
-		return
+
+	INVOKE_ASYNC(src, PROC_REF(force_scoop), user)
+
+/mob/living/silicon/pai/proc/force_scoop(mob/living/user)
 	visible_message(span_notice("Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence."))
 	if(!do_after(user, 1 SECONDS, src))
 		return
-	fold_in()
+	fold_in(force = TRUE)
 	if(user.put_in_hands(card))
 		user.visible_message(span_notice("[user] promptly scoops up [user.p_their()] pAI's card."))
 

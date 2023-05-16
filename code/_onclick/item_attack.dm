@@ -369,6 +369,10 @@
 		attacking_item = attacking_item,
 	)
 
+	if(ishuman(src) || client) // Icky istype src but it keeps log cleaner
+		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
+
 	was_attacked_effects(attacking_item, user, affecting, damage, armor_block)
 
 	if(damage_type == BRUTE && prob(33))
@@ -376,20 +380,24 @@
 
 	return ATTACK_STYLE_HIT
 
-/**
- * Effects ran when this mob is attacked with an item by another mob, from [attacked_by].
- */
 /mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
 	return
 
 /mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
-	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-	SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
-
 	if(damage > 10 || (damage >= 5 && prob(33)))
 		force_say(user)
 
-	if(isnull(hit_limb) || attacking_item.get_sharpness() || armor_block >= 50)
+	if(isnull(hit_limb))
+		return
+
+	else if(hit_limb.body_zone == BODY_ZONE_CHEST && isnull(attacking_item))
+		if(wear_suit)
+			wear_suit.add_fingerprint(user)
+		else if(w_uniform)
+			w_uniform.add_fingerprint(user)
+		return
+
+	if(attacking_item.get_sharpness() || armor_block >= 50)
 		return
 
 	switch(hit_limb.body_zone)
@@ -523,20 +531,6 @@
 			if(w_uniform)
 				w_uniform.add_mob_blood(src)
 				update_worn_undersuit()
-
-/mob/living/simple_animal/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(!attack_threshold_check(attacking_item.force, attacking_item.damtype))
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-		return ATTACK_STYLE_BLOCKED
-
-	return ..()
-
-/mob/living/basic/attacked_by(obj/item/I, mob/living/user)
-	if(!attack_threshold_check(attacking_item.force, attacking_item.damtype
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-		return ATTACK_STYLE_BLOCKED
-
-	return ..()
 
 /**
  * Last proc in the [/obj/item/proc/melee_attack_chain].

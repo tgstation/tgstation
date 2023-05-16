@@ -180,68 +180,29 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		modularInterface.inserted_disk = floppy
 		return
 
-	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
 	return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(body_position == STANDING_UP)
-			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			var/obj/item/I = get_active_held_item()
-			if(I)
-				uneq_active()
-				visible_message(span_danger("[user] disarmed [src]!"), \
-					span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")
-			else
-				Stun(40)
-				step(src,get_dir(user,src))
-				log_combat(user, src, "pushed")
-				visible_message(span_danger("[user] forces back [src]!"), \
-					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
-	else
-		..()
-	return
-
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime shock
-		flash_act()
-		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
-
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs receive half damage
-	adjustBruteLoss(damage)
-
-	return
-
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	add_fingerprint(user)
 	if(!opened)
 		return ..()
-	if(!wiresexposed && !issilicon(user))
-		if(!cell)
-			return
-		cell.update_appearance()
-		cell.add_fingerprint(user)
-		user.put_in_active_hand(cell)
-		to_chat(user, span_notice("You remove \the [cell]."))
-		cell = null
-		update_icons()
-		diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/hulk_smashed(mob/living/carbon/human/hulk)
+	add_fingerprint(user)
+	if(wiresexposed || issilicon(user))
+		return
+	if(!cell)
+		return
+	cell.update_appearance()
+	cell.add_fingerprint(user)
+	user.put_in_active_hand(cell)
+	balloon_alert(user, "cell removed")
+	cell = null
+	update_icons()
+	diag_hud_set_borgcell()
+
+/mob/living/silicon/robot/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	. = ..()
 	spark_system.start()
-	step_away(src, hulk, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(hulk), 15), 3)
+
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode && usr != src)

@@ -5,70 +5,50 @@
 /mob/living/silicon/get_ear_protection()//no ears
 	return 2
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(..()) //if harm or disarm intent
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		if (prob(90))
-			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user] slashes at [src]!"), \
-							span_userdanger("[user] slashes at you!"), null, null, user)
-			to_chat(user, span_danger("You slash at [src]!"))
-			if(prob(8))
-				flash_act(affect_silicon = 1)
-			log_combat(user, src, "attacked")
-			adjustBruteLoss(damage)
-			updatehealth()
-		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user]'s swipe misses [src]!"), \
-							span_danger("You avoid [user]'s swipe!"), null, null, user)
-			to_chat(user, span_warning("Your swipe misses [src]!"))
 
-/mob/living/silicon/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		if(prob(damage))
-			for(var/mob/living/buckled in buckled_mobs)
-				buckled.Paralyze(20)
-				unbuckle_mob(buckled)
-				buckled.visible_message(span_danger("[buckled] is knocked off of [src] by [user]!"), \
-								span_userdanger("You're knocked off of [src] by [user]!"), null, null, user)
-				to_chat(user, span_danger("You knock [buckled] off of [src]!"))
-		switch(user.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
+/mob/living/silicon/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	if(prob(damage))
+		for(var/mob/living/buckled in buckled_mobs)
+			buckled.Paralyze(2 SECONDS)
+			unbuckle_mob(buckled)
+			buckled.visible_message(
+				span_danger("[buckled] is knocked off of [src] by [user]!"),
+				span_userdanger("You're knocked off of [src] by [user]!"),
+				ignored_mobs = user,
+			)
+			to_chat(user, span_danger("You knock [buckled] off of [src]!"))
 
 /mob/living/silicon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
-	if(!L.combat_mode)
-		visible_message(span_notice("[L.name] rubs its head against [src]."))
+/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration)
+	. = ..()
+	if(.)
+		return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
+	if(attack_text == UNARMED_ATTACK && damage <= 10)
+		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
+		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return TRUE
+	return FALSE
+
 /mob/living/silicon/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
-	if(has_buckled_mobs() && !user.combat_mode)
+	. = ..()
+	if(.)
+		return
+	if(user.combat_mode)
+		CRASH("Silicon attack hand was called from someone in combat mode, this shouldn't be possible in theory")
+	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
-	else
-		if(user.combat_mode)
-			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
-			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
-							span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
-		else
-			visible_message(span_notice("[user] pets [src]."), \
-							span_notice("[user] pets you."), null, null, user)
-			to_chat(user, span_notice("You pet [src]."))
-			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
+		return
 
+	visible_message(
+		span_notice("[user] pets [src]."),
+		span_notice("[user] pets you."),
+		ignored_mobs = user,
+	)
+	to_chat(user, span_notice("You pet [src]."))
+	user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.combat_mode)

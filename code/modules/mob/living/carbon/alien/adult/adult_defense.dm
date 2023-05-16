@@ -1,7 +1,3 @@
-/mob/living/carbon/alien/adult/hulk_smashed(mob/living/carbon/human/hulk)
-	if(mob_size < MOB_SIZE_LARGE)
-		safe_throw_at(get_edge_target_turf(src, get_dir(hulk, src)), 2, 1, hulk)
-
 /mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!..() || !user.combat_mode)
 		return

@@ -202,17 +202,6 @@
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/ladder/attack_larva(mob/user, list/modifiers)
-	use(user)
-	return TRUE
-
-/obj/structure/ladder/attack_larva_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attack_animal(mob/user, list/modifiers)
 	use(user)
 	return TRUE

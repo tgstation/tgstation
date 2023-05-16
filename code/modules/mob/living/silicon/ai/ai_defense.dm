@@ -4,21 +4,15 @@
 		var/obj/item/ai_module/MOD = W
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
-			return
+			return TRUE
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
-		return
-	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
-		spark_system.start()
+		return TRUE
+
 	return ..()
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(user, "You cannot attack people before the game has started.")
-		return
-	..()
-
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	return //immune to slimes
+/mob/living/silicon/ai/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb)
+	if(!QDELETED(src))
+		spark_system.start()
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
@@ -54,9 +48,11 @@
 
 	return TRUE
 
+/*
 /mob/living/silicon/ai/bullet_act(obj/projectile/Proj)
 	. = ..(Proj)
 	updatehealth()
+*/
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing

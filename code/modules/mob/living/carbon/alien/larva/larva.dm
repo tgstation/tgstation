@@ -24,7 +24,9 @@
 		/obj/item/bodypart/head/larva,
 	)
 
-	default_harm_attack_style = /datum/attack_style/unarmed/generic_damage/bite
+	default_help_style = /datum/attack_style/unarmed/help/larva
+	default_disarm_style = null
+	default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/bite/larva
 
 	var/amount_grown = 0
 	var/max_grown = 100

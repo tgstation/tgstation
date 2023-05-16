@@ -251,30 +251,6 @@
 	return TRUE
 
 /*
-/mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if(M.buckled)
-		if(M in buckled_mobs)
-			M.Feedstop()
-		return // can't attack while eating!
-
-	if(HAS_TRAIT(src, TRAIT_PACIFISM))
-		to_chat(M, span_warning("You don't want to hurt anyone!"))
-		return FALSE
-
-	if (stat != DEAD)
-		log_combat(M, src, "attacked")
-		M.do_attack_animation(src)
-		visible_message(span_danger("\The [M.name] glomps [src]!"), \
-						span_userdanger("\The [M.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, span_danger("You glomp [src]!"))
-		return TRUE
-*/
-
-/*
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	user.face_atom(src)
@@ -298,95 +274,6 @@
 	return TRUE
 */
 
-/*
-/mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
-/mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/misc/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
-		return FALSE
-
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (user != src && iscarbon(src))
-			user.disarm(src)
-			return TRUE
-	if (!user.combat_mode)
-		return FALSE
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt anyone!"))
-		return FALSE
-
-	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
-		to_chat(user, span_warning("You can't bite with your mouth covered!"))
-		return FALSE
-	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
-	if (prob(75))
-		log_combat(user, src, "attacked")
-		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message(span_danger("[user.name] bites [src]!"), \
-						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You bite [src]!"))
-		return TRUE
-	else
-		visible_message(span_danger("[user.name]'s bite misses [src]!"), \
-						span_danger("You avoid [user.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your bite misses [src]!"))
-
-	return FALSE
-
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
-	if(L.combat_mode)
-		if(HAS_TRAIT(L, TRAIT_PACIFISM))
-			to_chat(L, span_warning("You don't want to hurt anyone!"))
-			return
-
-		L.do_attack_animation(src)
-		if(prob(90))
-			log_combat(L, src, "attacked")
-			visible_message(span_danger("[L.name] bites [src]!"), \
-							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_danger("You bite [src]!"))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			return TRUE
-		else
-			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
-							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_warning("Your bite misses [src]!"))
-	else
-			// melbert todo : soulcode
-		visible_message(span_notice("[L.name] rubs its head against [src]."), \
-						span_notice("[L.name] rubs its head against you."), null, null, L)
-		to_chat(L, span_notice("You rub your head against [src]."))
-		return FALSE
-	return FALSE
-*/
-/*
-/mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		return TRUE
-	if(user.combat_mode)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to hurt anyone!"))
-			return FALSE
-		user.do_attack_animation(src)
-		return TRUE
-	else
-			// melbert todo : soulcode
-		visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
-						span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
-		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
-		return FALSE
-*/
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE
@@ -557,14 +444,6 @@
 /mob/living/proc/is_shove_knockdown_blocked()
 	return !(status_flags & CANKNOCKDOWN)
 
-/**
- * Called when a mob is struck by a hulk.
- * See [/datum/attack_style/unarmed/generic_damage/hulk].
- */
-/mob/living/proc/hulk_smashed(mob/living/carbon/human/hulk)
-	return
-
-// See above.
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
 
