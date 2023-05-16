@@ -611,3 +611,39 @@
   - qol: Added a Oxy Tank dispenser to the bounty ship for a lil' more general QoL
   orthography:
   - bugfix: fixes how the morgue renders on tramstation.
+2023-05-16:
+  ChungusGamer666:
+  - rscadd: You can burn bibles now! But heresy has a steep cost...
+  Helg2:
+  - rscadd: Old bar on Metastation, tranquility emergency shuttle and Beach away mission
+      now have free access bar closets. Also freezers on beach are now all access
+      so you can now open them.
+  LT3:
+  - admin: Admins are now warned if they are going to override a currently playing
+      admin midi
+  Melbert:
+  - balance: You are now slightly less likely, statistically, to get an antag role
+      on latejoin
+  - bugfix: Fixed latejoin antags being logged as "midround" antags
+  Mothblocks:
+  - bugfix: Fixed an issue where objects on something that loaded dynamically, like
+      shuttles, would not be smoothed.
+  OneAsianTortoise:
+  - bugfix: Fixes Birdshot Station's Missing Pimpin' Ride Key
+  Profakos, sprites by CoiledLamb:
+  - qol: Most request console varedits have been moved to mapping helpers.
+  Thunder12345:
+  - image: Skillchips have been resprited to be smaller and more chip-like
+  Watermelon914, Iamgoofball, MrStonedOne:
+  - rscadd: Adds TTS to player speech. Players can hear themselves speak.
+  YehnBeep:
+  - bugfix: Turret Outpost's external airlocks now all cycle together instead of as
+      2 separate pairs.
+  - bugfix: DJ Station's kitchen fridges no longer require kitchen access to open.
+  - bugfix: The Faceoff's faster-than-jetpack-speed enemies no longer attack explorers
+      only passing by.
+  carlarctg:
+  - rscadd: Adds the Syndicate Induction Kit for Nuclear Operatives, which lets them
+      induct any willing antagonist into the nuclear operative team for 10 TC.
+  - rscadd: Uplink spacesuits are randomized between all their different colored variants!
+      Visual only.
