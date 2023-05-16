@@ -716,28 +716,8 @@
 	active = TRUE
 
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
-		var/fradius = round(radius)
-		var/list/inside_shield = circle_range_turfs(src, fradius - 1)//in the future we might want to apply an effect to turfs inside the shield
-		var/t1 = fradius/16
-		var/dx = fradius
-		var/dy = 0
-		var/t2
-		var/list/list_of_turfs = list()
-		while(dx >= dy)
-			list_of_turfs += locate(x + dx, y + dy, z)
-			list_of_turfs += locate(x - dx, y + dy, z)
-			list_of_turfs += locate(x + dx, y - dy, z)
-			list_of_turfs += locate(x - dx, y - dy, z)
-			list_of_turfs += locate(x + dy, y + dx, z)
-			list_of_turfs += locate(x - dy, y + dx, z)
-			list_of_turfs += locate(x + dy, y - dx, z)
-			list_of_turfs += locate(x - dy, y - dx, z)
-			dy += 1
-			t1 += dy
-			t2 = t1 - dx
-			if(t2 > 0)
-				t1 = t2
-				dx -= 1
+		var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to turfs inside the shield
+		var/list/list_of_turfs = get_perimeter(src, radius)
 
 		if(exterior_only)
 			for(var/turf/target_tile as anything in list_of_turfs)
