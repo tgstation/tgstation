@@ -149,7 +149,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1
+		)
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller"
@@ -164,10 +165,11 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/modular_shield_generator
 	req_components = list(
-		/datum/stock_part/servo =	1,
+		/datum/stock_part/servo = 1,
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/capacitor = 1,
-		/obj/item/stack/sheet/plasteel = 3)
+		/obj/item/stack/sheet/plasteel = 3
+		)
 
 /obj/item/circuitboard/machine/modular_shield_node
 	name = "Modular Shield Node"
@@ -175,9 +177,8 @@
 	build_path = /obj/machinery/modular_shield/module/node
 	req_components = list(
 	/obj/item/stack/cable_coil = 15,
-	/obj/item/stack/sheet/plasteel = 2)
-
-	needs_anchored = FALSE
+	/obj/item/stack/sheet/plasteel = 2
+	)
 
 /obj/item/circuitboard/machine/modular_shield_well
 	name = "Modular Shield Well"
@@ -185,7 +186,8 @@
 	build_path = /obj/machinery/modular_shield/module/well
 	req_components = list(
 			/datum/stock_part/capacitor = 3,
-			/obj/item/stack/sheet/plasteel = 2)
+			/obj/item/stack/sheet/plasteel = 2
+			)
 
 /obj/item/circuitboard/machine/modular_shield_relay
 	name = "Modular Shield Relay"
@@ -193,7 +195,8 @@
 	build_path = /obj/machinery/modular_shield/module/relay
 	req_components = list(
 		/datum/stock_part/micro_laser = 3,
-		/obj/item/stack/sheet/plasteel = 2)
+		/obj/item/stack/sheet/plasteel = 2
+		)
 
 /obj/item/circuitboard/machine/modular_shield_charger
 	name = "Modular Shield Charger"
@@ -201,7 +204,8 @@
 	build_path = /obj/machinery/modular_shield/module/charger
 	req_components = list(
 		/datum/stock_part/servo = 3,
-		/obj/item/stack/sheet/plasteel = 2)
+		/obj/item/stack/sheet/plasteel = 2
+		)
 
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger"
