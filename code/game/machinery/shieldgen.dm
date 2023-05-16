@@ -959,7 +959,8 @@
 		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 		return TRUE
 
-//rather than automatically checking for connections its probably alot less expensive to just make the players manually multi tool sync each part
+	//rather than automatically checking for connections its probably alot less
+	//expensive to just make the players manually multi tool sync each part
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		try_connect(user)
 		return
@@ -1020,7 +1021,7 @@
 			return
 		balloon_alert(user, "connected to node")
 		return
-	balloon_alert(user, "failed to find connection")
+	balloon_alert(user, "failed to find connection!")
 
 
 
