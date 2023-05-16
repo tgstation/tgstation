@@ -54,7 +54,7 @@
 /obj/machinery/computer/telecomms/monitor/ui_act(action, params)
 	. = ..()
 	if(.)
-		return
+		return .
 
 	error_message = ""
 
