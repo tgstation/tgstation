@@ -795,7 +795,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Modularshieldgen")
+		ui = new(user, src, "ModularShieldGen")
 		ui.open()
 
 /obj/machinery/modular_shield_generator/ui_data(mob/user)

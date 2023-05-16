@@ -14,7 +14,7 @@ type modularShieldGeneratorData = {
   exterior_only: Boolean;
 };
 
-export const Modularshieldgen = (props, context) => {
+export const ModularShieldGen = (props, context) => {
   const { topLevel } = props;
   const { act, data } = useBackend<modularShieldGeneratorData>(context);
   const {
