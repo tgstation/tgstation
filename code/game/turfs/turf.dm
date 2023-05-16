@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  */
 /turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
 	if(density)
-		return TRUE
+		return src
 
 	for(var/atom/movable/movable_content as anything in contents)
 		// We don't want to block ourselves
