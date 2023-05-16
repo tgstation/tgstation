@@ -320,12 +320,13 @@
 	
 	
 /datum/crafting_recipe/atmospherics_gas_mask
-        name = "atmospherics gas mask"
-        result = /obj/item/clothing/mask/gas/atmos
-        tool_behaviors = list(TOOL_WELDER)
-        time = 8 SECONDS
-        reqs = list(
-            /obj/item/stack/sheet/mineral/metal_hydrogen = 1,
-            /obj/item/stack/sheet/mineral/zaukerite = 1,
-        )
+	name = "atmospherics gas mask"
+	result = /obj/item/clothing/mask/gas/atmos
+	tool_behaviors = list(TOOL_WELDER)
+	time = 8 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/metal_hydrogen = 1,
+		/obj/item/stack/sheet/mineral/zaukerite = 1,
+	)
+	
 	category = CAT_CLOTHING
