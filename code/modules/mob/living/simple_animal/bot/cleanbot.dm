@@ -262,9 +262,9 @@
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
 		if(victim && victim == target)
-			UnarmedAttack(victim, proximity_flag = TRUE) // Acid spray
+			click_on_without_item(victim, proximity_flag = TRUE) // Acid spray
 		if(isopenturf(loc) && prob(15)) // Wets floors and spawns foam randomly
-			UnarmedAttack(src, proximity_flag = TRUE)
+			click_on_without_item(src, proximity_flag = TRUE)
 	else if(prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
 
@@ -286,7 +286,7 @@
 			return
 
 		if(get_dist(src, target) <= 1)
-			UnarmedAttack(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+			click_on_without_item(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 			if(QDELETED(target)) //We done here.
 				target = null
 				mode = BOT_IDLE
@@ -356,7 +356,7 @@
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/cleanbot/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(ismopable(attack_target))

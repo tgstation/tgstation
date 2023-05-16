@@ -63,7 +63,7 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/firebot/click_on_without_item(atom/A, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -73,7 +73,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/firebot/click_on_without_item_at_range(atom/A, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
@@ -306,4 +306,3 @@
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL
 #undef FOAM_INTERVAL
-

@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETTING, spell_special_targetting[spell_type])
 
 /// Shoot when you click away from you
-/mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)
+/mob/living/basic/carp/magic/click_on_without_item_at_range(atom/atom_target, modifiers)
 	spell.Trigger(target = atom_target)
 
 /***

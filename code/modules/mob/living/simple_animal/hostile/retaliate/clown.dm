@@ -416,7 +416,7 @@
 		return ..()
 	eat_atom(attacked_target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/click_on_without_item(atom/A, proximity_flag, list/modifiers)
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)

@@ -1,5 +1,5 @@
 
-/mob/living/silicon/robot/ClickOn(atom/clicked_on, params)
+/mob/living/silicon/robot/ClickOn(atom/A, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -46,45 +46,41 @@
 		aicamera.captureimage(A, usr)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/active_module = get_active_held_item()
 
-	if(!W && get_dist(src,A) <= interaction_range)
-		A.attack_robot(src)
+	if(isnull(active_module))
+		if(get_dist(src, A) <= interaction_range)
+			A.attack_robot(src)
 		return
 
-	if(W)
-		if(incapacitated())
-			return
+	if(incapacitated())
+		return
 
-		//while buckled, you can still connect to and control things like doors, but you can't use your modules
-		if(buckled)
-			to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
-			return
+	//while buckled, you can still connect to and control things like doors, but you can't use your modules
+	if(buckled)
+		to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
+		return
 
-		//if your "hands" are blocked you shouldn't be able to use modules
-		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-			return
+	//if your "hands" are blocked you shouldn't be able to use modules
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 
-		if(W == A)
-			W.attack_self(src)
-			return
+	if(active_module == A)
+		active_module.attack_self(src, modifiers)
+		return
 
-		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
-		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
-			return
+	// This is for module storage management
+	if(A == loc || (A in loc) || (A in contents))
+		active_module.melee_attack_chain(src, A, params)
+		return
 
-		if(!isturf(loc))
-			return
+	if(!isturf(loc))
+		return
 
-		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
-		if(isturf(A) || isturf(A.loc))
-			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
-				return
-			else
-				W.afterattack(A, src, 0, params)
-				return
+	// Actual weapon handling goes here
+	if(isturf(A) || isturf(A.loc))
+		click_on_with_item(A, active_module, params)
+		return
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
@@ -155,19 +151,19 @@
 		..()
 
 /*
-	As with AI, these are not used in click code,
-	because the code for robots is specific, not generic.
-
-	If you would like to add advanced features to robot
-	clicks, you can do so here, but you will have to
-	change attack_robot() above to the proper function
-*/
-/mob/living/silicon/robot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+ * As with AI, these are not used in click code,
+ * because the code for robots is specific, not generic.
+ *
+ * If you would like to add advanced features to robot
+ * clicks, you can do so here, but you will have to
+ * change attack_robot() above to the proper function
+ */
+/mob/living/silicon/robot/click_on_without_item(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	A.attack_robot(src)
 
-/mob/living/silicon/robot/RangedAttack(atom/A)
+/mob/living/silicon/robot/click_on_without_item_at_range(atom/A, modifiers)
 	A.attack_robot(src)
 
 /atom/proc/attack_robot(mob/user)

@@ -122,7 +122,7 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/imp/slaughter/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		bodyslam(attack_target)
 		return

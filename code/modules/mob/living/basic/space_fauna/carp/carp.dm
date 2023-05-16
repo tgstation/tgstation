@@ -149,7 +149,7 @@
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
 
 /// Teleport when you right click away from you
-/mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
+/mob/living/basic/carp/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
 	teleport.Trigger(target = atom_target)
 
 /// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do

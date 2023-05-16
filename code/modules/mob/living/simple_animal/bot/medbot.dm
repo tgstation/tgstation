@@ -482,7 +482,7 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/medbot/click_on_without_item(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A) && !tending)

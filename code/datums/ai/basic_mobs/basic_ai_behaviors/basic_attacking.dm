@@ -82,12 +82,12 @@
 
 	if(shots>1)
 		var/atom/burst_target = final_target
-		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
+		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,click_on_without_item_at_range), burst_target)
 		for(var/i in 2 to shots)
 			addtimer(callback, (i - 1) * burst_interval)
 		callback.Invoke()
 	else
-		basic_mob.RangedAttack(final_target)
+		basic_mob.ClickOn(final_target)
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()

@@ -568,7 +568,7 @@
 		return 1
 
 
-/mob/living/simple_animal/hostile/RangedAttack(atom/A, modifiers) //Player firing
+/mob/living/simple_animal/hostile/click_on_without_item_at_range(atom/A, modifiers) //Player firing
 	if(ranged && ranged_cooldown <= world.time)
 		GiveTarget(A)
 		OpenFire(A)

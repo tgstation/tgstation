@@ -148,7 +148,7 @@
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
-/mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
+/mob/living/simple_animal/hostile/space_dragon/secondary_click_on_without_item_at_range(atom/target, modifiers)
 	if(using_special)
 		return
 	using_special = TRUE

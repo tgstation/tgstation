@@ -93,7 +93,7 @@
 	return ..()
 
 /// Lunge if you click something at range
-/mob/living/basic/giant_spider/tarantula/ranged_secondary_attack(atom/atom_target, modifiers)
+/mob/living/basic/giant_spider/tarantula/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)
 
 /**

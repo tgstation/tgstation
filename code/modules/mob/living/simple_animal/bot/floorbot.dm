@@ -394,7 +394,7 @@
 	new /obj/item/stack/tile/iron/base(Tsec, 1)
 	return ..()
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/floorbot/click_on_without_item(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A))

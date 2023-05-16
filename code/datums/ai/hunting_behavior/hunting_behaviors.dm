@@ -120,7 +120,7 @@
 	if(always_reset_target && hunting_target_key)
 		controller.clear_blackboard_key(hunting_target_key)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target
+/datum/ai_behavior/hunt_target/simple_click
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
-	hunter.UnarmedAttack(hunted, TRUE)
+/datum/ai_behavior/hunt_target/simple_click/target_caught(mob/living/hunter, obj/structure/cable/hunted)
+	hunter.ClickOn(hunted)

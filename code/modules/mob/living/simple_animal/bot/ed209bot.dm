@@ -111,7 +111,7 @@
 				target = to_arrest
 				mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
+/mob/living/simple_animal/bot/secbot/ed209/click_on_without_item_at_range(atom/A)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	shoot_at(A)

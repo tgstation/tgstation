@@ -127,7 +127,7 @@
 	direction,
 )
 	SHOULD_CALL_PARENT(TRUE)
-
+	// Melbert todo : needs to pass in wound bonus so it gets wound bonus from simplemobs
 	. = ""
 	var/damage_type = istype(hitting_with) ? hitting_with.attack_type : attack_type
 	smacked.apply_damage(damage, damage_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)

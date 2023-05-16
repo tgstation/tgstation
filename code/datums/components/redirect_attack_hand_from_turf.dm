@@ -96,7 +96,7 @@
 	if (!movable_parent.can_interact(user))
 		return NONE
 
-	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, UnarmedAttack), parent, proximity_flag = TRUE, modifiers = modifiers)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, click_on_without_item), parent, proximity_flag = TRUE, modifiers = modifiers)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

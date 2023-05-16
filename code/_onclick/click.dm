@@ -59,10 +59,10 @@
  * check whether you're adjacent to the target, then pass off the click to whoever
  * is receiving it.
  * The most common are:
- * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
+ * * [mob/proc/click_on_without_item] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
  * * [atom/proc/attackby] (item,user) - used only when adjacent
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
- * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
+ * * [mob/proc/click_on_without_item_at_range] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
 /mob/proc/ClickOn(atom/clicked_on, params)
 	if(world.time <= next_click)
@@ -131,7 +131,7 @@
 	// -- Hands blocked (handcuffed) can't do much. --
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED) //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(clicked_on, FALSE, modifiers)
+		click_on_without_item(clicked_on, FALSE, modifiers)
 		return
 
 	if(throw_mode)
@@ -159,7 +159,7 @@
 		else
 			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(clicked_on, FALSE, modifiers)
+			click_on_without_item(clicked_on, FALSE, modifiers)
 		return
 
 	// Can't reach anything else in lockers or other weirdness
@@ -170,49 +170,23 @@
 	if(isitem(clicked_on))
 		var/obj/item/item_atom = clicked_on
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
-			UnarmedAttack(item_atom, TRUE, modifiers)
+			click_on_without_item(item_atom, TRUE, modifiers)
 
 	// -- Attacking with an item --
 	if(istype(clicked_with_what))
-		var/close_enough = CanReach(clicked_on, clicked_with_what)
-		// Handle non-combat uses of attacking, IE using a screwdriver on a wall
-		if(close_enough && !ismob(clicked_on))
-			changeNext_move(CLICK_CD_MELEE)
-			clicked_with_what.melee_attack_chain(src, clicked_on, params) // melbert todo : prevents clicking on adjacent turfs to swing.
-			return
-
-		var/datum/attack_style/using_what_style = select_attack_style(clicked_on, clicked_with_what)
-
-		// Do an attack
-		if(using_what_style)
-			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
-
-		// Or if we're not meant to be doing an attack, do a normal attack chain
-		else if(close_enough)
-			clicked_with_what.melee_attack_chain(src, clicked_on, params)
-
-		// Or if we're not adjacent, just do after attack
-		else
-			if(right_clicking)
-				var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					clicked_with_what.afterattack(clicked_on, src, FALSE, params)
-
-			else
-				clicked_with_what.afterattack(clicked_on, src, FALSE, params)
-
+		click_on_with_item(clicked_on, clicked_with_what, params)
 		return
 
 	// -- Unarmed combat (punching) --
 	else if(CanReach(clicked_on))
-		UnarmedAttack(clicked_on, TRUE, modifiers)
+		click_on_without_item(clicked_on, TRUE, modifiers)
 
 	// -- Ranged combat without a weapon --
 	else
 		if(right_clicking)
-			ranged_secondary_attack(clicked_on, modifiers)
+			secondary_click_on_without_item_at_range(clicked_on, modifiers)
 		else
-			RangedAttack(clicked_on, modifiers)
+			click_on_without_item_at_range(clicked_on, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -309,8 +283,53 @@
 /mob/proc/DblClickOn(atom/A, params)
 	return
 
+/**
+ * Highest level of item click chain (besides click itself)
+ *
+ * Ends up translating into melee_attack_chain (tool act, pre_attack, attackby, attack / attack_atom, attacked_by, afterattack)
+ * Or instead goes into attack styles (process_attack, execute_attack, finalize_attack, etc)
+ * Or neither: If no attack style is executed and the mob is not in attack range of what they clicked, afterattack is called
+ */
+/mob/proc/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
+	PROTECTED_PROC(TRUE)
+
+	var/close_enough = CanReach(clicked_on, clicked_with_what)
+	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
+	if(close_enough && !ismob(clicked_on))
+		changeNext_move(CLICK_CD_MELEE)
+		/*
+		clicked_with_what.melee_attack_chain(src, clicked_on, params) // melbert todo : prevents clicking on adjacent turfs to swing.
+		return
+		*/
+		if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
+			return
+
+	var/datum/attack_style/using_what_style = select_attack_style(clicked_on, clicked_with_what)
+
+	// Do an attack
+	if(using_what_style)
+		using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
+		return
+
+	// Or if we're not meant to be doing an attack, do a normal attack chain
+	if(close_enough)
+		clicked_with_what.melee_attack_chain(src, clicked_on, params)
+		return
+
+	// Or if we're not adjacent, just do afterattack
+	if(right_clicking)
+		var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
+		if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
+			clicked_with_what.afterattack(clicked_on, src, FALSE, params)
+
+	else
+		clicked_with_what.afterattack(clicked_on, src, FALSE, params)
 
 /**
+ * Also known as "Unarmed attack"ing
+ *
+ * Called with this mob clicks on any atom in touch range whilst not holding an item.
+ *
  * Translates into [atom/proc/attack_hand], etc.
  *
  * Note: proximity_flag here is used to distinguish between normal usage (flag=1),
@@ -323,31 +342,39 @@
  * modifiers is a lazy list of click modifiers this attack had,
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/proc/click_on_without_item(atom/A, proximity_flag, list/modifiers)
+	PROTECTED_PROC(TRUE)
+
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /**
- * Ranged unarmed attack:
+ * Also known as a "ranged unarmed attack"
+ *
+ * Called when this mob clicks on an atom at range whilst not holding any items
  *
  * This currently is just a default for all mobs, involving
  * laser eyes and telekinesis.  You could easily add exceptions
  * for things like ranged glove touches, spitting alien acid/neurotoxin,
  * animals lunging, etc.
  */
-/mob/proc/RangedAttack(atom/A, modifiers)
+/mob/proc/click_on_without_item_at_range(atom/A, modifiers)
+	PROTECTED_PROC(TRUE)
+
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
 /**
- * Ranged secondary attack
- *
- * If the same conditions are met to trigger RangedAttack but it is
+ * Called when this mob clicks on an atom at range whilst not holding any items (and is right clicking)
+
+ * If the same conditions are met to trigger click_on_without_item_at_range but it is
  * instead initialized via a right click, this will trigger instead.
  * Useful for mobs that have their abilities mapped to right click.
  */
-/mob/proc/ranged_secondary_attack(atom/target, modifiers)
+/mob/proc/secondary_click_on_without_item_at_range(atom/target, modifiers)
+	PROTECTED_PROC(TRUE)
+
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED_SECONDARY, target, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 

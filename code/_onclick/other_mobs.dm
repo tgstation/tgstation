@@ -9,7 +9,7 @@
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
 		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
-/mob/living/carbon/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/carbon/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		// Only thing we can do without hands is check ourself.
 		if(src == attack_target)
@@ -34,7 +34,7 @@
 	return ..()
 
 	/*
-	if(!right_click_attack_chain(attack_target, modifiers) && !dna?.species?.spec_unarmedattack(src, attack_target, modifiers)) //Because species like monkeys dont use attack hand
+	if(!right_click_attack_chain(attack_target, modifiers) && !dna?.species?.spec_click_on_without_item(src, attack_target, modifiers)) //Because species like monkeys dont use attack hand
 		attack_target.attack_hand(src, modifiers)
 	*/
 
@@ -136,7 +136,7 @@
 		return ui_interact(user)
 	return FALSE
 
-/mob/living/RangedAttack(atom/A, modifiers)
+/mob/living/click_on_without_item_at_range(atom/A, modifiers)
 	. = ..()
 	if(.)
 		return
@@ -148,7 +148,7 @@
 	if(divert_to_attack_style(A, modifiers))
 		return TRUE
 
-/mob/living/ranged_secondary_attack(atom/atom_target, modifiers)
+/mob/living/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
 	. = ..()
 	if(.)
 		return
@@ -161,7 +161,7 @@
 	Animals & All Unspecified
 */
 
-/mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		// Melbert todo : handle bite handling here
 		if(proximity_flag)
@@ -177,7 +177,7 @@
 		return TRUE
 
 	if(!combat_mode && pulling && isturf(attack_target))
-		Move_Pulled(A)
+		Move_Pulled(attack_target)
 		return TRUE
 
 	if(divert_to_attack_style(attack_target, modifiers))
@@ -348,7 +348,7 @@
 	Brain
 */
 
-/mob/living/brain/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
+/mob/living/brain/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
 	return
 
 
