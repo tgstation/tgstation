@@ -330,3 +330,4 @@
 	)
 	
 	category = CAT_CLOTHING
+
