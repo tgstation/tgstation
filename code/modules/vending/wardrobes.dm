@@ -285,13 +285,17 @@
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
 		/obj/item/storage/box/bodybags = 3,
+		/obj/item/storage/medkit/coroner = 1,
 		/obj/item/toy/crayon/white = 2,
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/toggle/labcoat/coroner = 1,
 		/obj/item/clothing/suit/apron/surgical = 1,
 		/obj/item/clothing/gloves/latex/coroner = 1,
+		/obj/item/clothing/head/utility/surgerycap/black = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
+		/obj/item/clothing/under/rank/medical/coroner = 1,
+		/obj/item/clothing/under/rank/medical/coroner/skirt = 1,
 		/obj/item/storage/backpack/coroner = 1,
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
