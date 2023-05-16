@@ -24,7 +24,7 @@
 	var/screen = MSG_MON_SCREEN_MAIN // 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/message = "System bootup complete. Please select an option." // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
-	// Error, Succes & Notice messages
+	/// Error, Success & Notice messages
 	var/error_message = ""
 	var/notice_message = ""
 	var/succes_message = ""
