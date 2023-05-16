@@ -40,6 +40,10 @@
 		bonus_modifier = 0 , \
 		butcher_sound = hitsound, \
 	)
+	var/datum/callback/door_start_trap_callback = CALLBACK(src, PROC_REF(start_trapping_door))
+	var/datum/callback/airlock_tip_callback = CALLBACK(src, PROC_REF(on_airlock_tip))
+
+	AddComponent(/datum/component/airlock_tip, 1 MINUTES, door_start_trap_callback, airlock_tip_callback)
 	//axes are not known for being precision butchering tools
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
 
@@ -60,6 +64,28 @@
 			if(!(A.resistance_flags & INDESTRUCTIBLE))
 				var/obj/structure/W = A
 				W.atom_destruction("fireaxe")
+
+/// Rig to airlock
+/obj/item/fireaxe/proc/start_trapping_door(mob/living/prankster, obj/machinery/door/trapped_airlock)
+	prankster.visible_message(span_danger("[prankster] begins rigging [src] to [trapped_airlock]..."), span_warning("You begin rigging [src] to [trapped_airlock]..."), vision_distance = COMBAT_MESSAGE_RANGE)
+
+/// Whack
+/obj/item/fireaxe/proc/on_airlock_tip(atom/movable/victim, obj/machinery/door/trapped_airlock)
+	if(iscarbon(victim))
+		forceMove(get_turf(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		var/obj/item/bodypart/chop_part = carbon_victim.get_bodypart(BODY_ZONE_HEAD) || carbon_victim.get_bodypart(BODY_ZONE_CHEST)
+		victim.visible_message(span_danger("[src] falls from [trapped_airlock], chopping into [victim]'s [chop_part.plaintext_zone]!"), span_userdanger("[src] falls from [trapped_airlock], chopping into your [chop_part.plaintext_zone]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		chop_part.receive_damage(force, updating_health = TRUE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus)
+		add_mob_blood(victim)
+		var/turf/location = get_turf(victim)
+		carbon_victim.add_splatter_floor(location)
+		playsound(src, hitsound, 100)
+	else
+		victim.visible_message(span_danger("[src] falls from [trapped_airlock], chopping into [victim]!"), span_userdanger("[src] falls off of [trapped_airlock], chopping into you!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		forceMove(get_turf(victim))
+		//victim.apply_damage(force, damtype, attacking_item = src)
+		playsound(src, hitsound, 100)
 
 /*
  * Bone Axe

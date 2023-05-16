@@ -378,9 +378,35 @@
 	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
+	var/datum/callback/door_start_trap_callback = CALLBACK(src, PROC_REF(start_trapping_door))
+	var/datum/callback/airlock_tip_callback = CALLBACK(src, PROC_REF(on_airlock_tip))
+	AddComponent(/datum/component/airlock_tip, 3 SECONDS, door_start_trap_callback, airlock_tip_callback)
 	if(greyscale_colors == initial(greyscale_colors))
 		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
 	return ..()
+
+/// By default, doors will only allow you to put buckets with only water (or nothing) on top of it
+/obj/item/reagent_containers/cup/bucket/proc/start_trapping_door(mob/living/prankster, obj/machinery/door/trapped_airlock)
+	for(var/datum/reagent/iter_reagent in reagents.reagent_list)
+		if(!istype(iter_reagent, /datum/reagent/water))
+			playsound(trapped_airlock, 'sound/machines/deniedbeep.ogg', 30, 2)
+			to_chat(prankster, span_warning("[trapped_airlock] beeps aggressively, refusing to take part in a prank that involves pouring anything that isn't water on some poor person! It thinks you're in very poor taste."))
+			return COMPONENT_AIRLOCK_TIP_FAIL
+
+	prankster.visible_message(span_danger("[prankster] begins rigging [src] to [trapped_airlock]..."), span_warning("You begin rigging [src] to [trapped_airlock]..."), vision_distance = COMBAT_MESSAGE_RANGE)
+
+/// Spill!
+/obj/item/reagent_containers/cup/bucket/proc/on_airlock_tip(atom/movable/victim, obj/machinery/door/trapped_airlock)
+	victim.visible_message(span_danger("[src] falls off of [trapped_airlock], spilling its contents on [victim]!"), span_userdanger("[src] falls off of [trapped_airlock], spilling its contents all over you!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	reagents.expose(victim, TOUCH)
+	return TRUE
+
+/obj/item/reagent_containers/cup/bucket/prank
+	name = "prank bucket"
+	desc = "A bucket that doesn't give a damn about letting an airlock know what's inside it when you place it on top."
+
+/obj/item/reagent_containers/cup/bucket/prank/start_trapping_door(mob/living/prankster, obj/machinery/door/trapped_airlock)
+	prankster.visible_message(span_danger("[prankster] begins rigging [src] to [trapped_airlock]..."), span_warning("You begin rigging [src] to [trapped_airlock]..."), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"

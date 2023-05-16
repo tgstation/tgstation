@@ -427,3 +427,6 @@
 
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
+
+/// for [/datum/component/airlock_tip], return this on trap_start_callback to deny the trap
+#define COMPONENT_AIRLOCK_TIP_FAIL (1<<0)
