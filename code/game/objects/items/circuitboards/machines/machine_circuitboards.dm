@@ -82,7 +82,8 @@
 		/obj/item/stack/cable_coil = 1,
 		/datum/stock_part/filter = 1,
 		/datum/stock_part/crystal = 1,
-		/datum/stock_part/micro_laser = 2)
+		/datum/stock_part/micro_laser = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/bus
 	name = "Bus Mainframe"
@@ -91,7 +92,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/hub
 	name = "Hub Mainframe"
@@ -100,7 +102,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 2)
+		/datum/stock_part/filter = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/message_server
 	name = "Messaging Server"
@@ -109,7 +112,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 3)
+		/datum/stock_part/filter = 3,
+	)
 
 /obj/item/circuitboard/machine/telecomms/processor
 	name = "Processor Unit"
@@ -121,7 +125,8 @@
 		/datum/stock_part/treatment = 2,
 		/datum/stock_part/analyzer = 1,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/amplifier = 1)
+		/datum/stock_part/amplifier = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver"
@@ -131,7 +136,8 @@
 		/datum/stock_part/ansible = 1,
 		/datum/stock_part/filter = 1,
 		/datum/stock_part/servo = 2,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/telecomms/relay
 	name = "Relay Mainframe"
@@ -140,7 +146,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 2)
+		/datum/stock_part/filter = 2,
+	)
 
 /obj/item/circuitboard/machine/telecomms/server
 	name = "Telecommunication Server"
@@ -149,8 +156,8 @@
 	req_components = list(
 		/datum/stock_part/servo = 2,
 		/obj/item/stack/cable_coil = 1,
-		/datum/stock_part/filter = 1
-		)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller"
