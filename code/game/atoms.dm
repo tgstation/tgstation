@@ -177,6 +177,8 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
+	var/image/demo_last_appearance
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -197,7 +199,7 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-
+	SSdemo.mark_new(src)
 /**
  * The primary method that objects are setup in SS13 with
  *
@@ -824,6 +826,7 @@
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
+	SSdemo.mark_dirty(src)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
 
 /// Updates the icon state of the atom
@@ -835,6 +838,12 @@
 /atom/proc/update_overlays()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
+
+	if(isturf(src))
+		SSdemo.mark_turf(src)
+	else if(isobj(src) || ismob(src))
+		SSdemo.mark_dirty(src)
+
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
 /**
@@ -1122,6 +1131,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
+	SSdemo.mark_dirty(src)
 
 /**
  * Called when the atom log's in or out

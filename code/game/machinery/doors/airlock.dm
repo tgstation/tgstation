@@ -415,6 +415,7 @@
 			icon_state = ""
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
