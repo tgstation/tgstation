@@ -79,6 +79,7 @@
 	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/plas_damage_type = TOX
 
+	var/tritium_damage_moles_min = MINIMUM_MOLE_COUNT
 	var/tritium_irradiation_moles_min = 1
 	var/tritium_irradiation_moles_max = 15
 	var/tritium_irradiation_probability_min = 10
@@ -556,8 +557,9 @@
 /obj/item/organ/internal/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
 	var/gas_breathed = breathe_gas_volume(breath, /datum/gas/tritium)
 	// Tritium side-effects.
-	var/ratio = gas_breathed * 15
-	breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+	if(gas_breathed > tritium_damage_moles_min)
+		var/ratio = gas_breathed * 15
+		breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 	// If you're breathing in half an atmosphere of radioactive gas, you fucked up.
 	if((trit_pp > tritium_irradiation_moles_min) && SSradiation.can_irradiate_basic(breather))
 		var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
