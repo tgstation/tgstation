@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			if(!(announcement_authenticated || isAdminGhostAI(usr)))
 				return
 
-			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
+			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				return
@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/priority = params["priority"]
 			if(!priority)
 				return
-			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
+			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				has_mail_send_error = TRUE
