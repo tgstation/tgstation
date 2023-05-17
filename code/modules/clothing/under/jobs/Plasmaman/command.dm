@@ -28,12 +28,10 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/plasmaman_head_of_security
-	melee = 10
+/datum/armor/security_head_of_security/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
-	wound = 10
 
 /obj/item/clothing/under/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit"

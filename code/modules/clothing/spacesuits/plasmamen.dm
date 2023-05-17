@@ -189,18 +189,12 @@
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
 	icon_state = "security_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_security_helmet
+	armor_type = /datum/armor/head_helmet/plasmaman
 
-/datum/armor/plasmaman_security_helmet
-	melee = 35
+/datum/armor/head_helmet/plasmaman
 	bio = 100
-	bomb = 25
-	bullet = 30
-	laser = 30
-	energy = 40
 	fire = 100
 	acid = 75
-	wound = 4
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/detective
 	name = "detective's plasma envirosuit helmet"
@@ -209,15 +203,10 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_detective_helmet
 
-/datum/armor/plasmaman_detective_helmet
-	melee = 25
+/datum/armor/fedora_det_hat/plasmaman
 	bio = 100
-	bullet = 5
-	laser = 25
-	energy = 35
 	fire = 100
 	acid = 75
-	wound = 5
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	name = "warden's plasma envirosuit helmet"
@@ -226,34 +215,22 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_warden_helmet
 
-/datum/armor/plasmaman_warden_helmet
-	melee = 40
+/datum/armor/hats_warden/plasmaman
 	bio = 100
-	bomb = 25
-	bullet = 30
-	laser = 30
-	energy = 40
 	fire = 100
 	acid = 75
-	wound = 6
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
 	name = "head of security's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Security. A pair of gold stripes are added to differentiate them from other members of security."
 	icon_state = "hos_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_head_of_security_helmet
+	armor_type = /datum/armor/hats_hos/plasmaman
 
-/datum/armor/plasmaman_head_of_security_helmet
-	melee = 40
+/datum/armor/hats_hos/plasmaman
 	bio = 100
-	bomb = 25
-	bullet = 30
-	laser = 25
-	energy = 35
 	fire = 100
 	acid = 75
-	wound = 10
 
 /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	name = "prisoner's plasma envirosuit helmet"
