@@ -568,6 +568,9 @@
 	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
 
+	///If the generator is currently spawning the forcefield in
+	var/initiating = FALSE
+
 	///Determins if we can turn it on or not, no longer recovering when back to max strength
 	var/recovering = TRUE
 
@@ -709,11 +712,12 @@
 
 ///generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
-	if(active) //bug or did admin call proc on already active shield gen?
+	if(active)//bug or did admin call proc on already active shield gen?
 		return
 	if(radius < 0)//what the fuck are admins doing
 		radius = initial(radius)
 	active = TRUE
+	initiating = TRUE
 
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
 		var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to turfs inside the shield
@@ -725,6 +729,7 @@
 					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 					deploying_shield.shield_generator = src
 					deployed_shields += deploying_shield
+					addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 			return
@@ -734,6 +739,7 @@
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
+				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
@@ -746,6 +752,7 @@
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
+				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
@@ -755,10 +762,18 @@
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			deployed_shields += deploying_shield
+			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
 	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
 
+///After giving people a grace period to react to we up the alpha value and make the forcefield dense
+/obj/machinery/modular_shield_generator/proc/finish_field()
+
+	for(var/obj/structure/emergency_shield/modular/current_shield in deployed_shields)
+		current_shield.density = TRUE
+		current_shield.alpha = 255
+	initiating = FALSE
 
 /obj/machinery/modular_shield_generator/Destroy()
 	QDEL_LIST(deployed_shields)
@@ -790,6 +805,7 @@
 	data["active"] = active
 	data["recovering"] = recovering
 	data["exterior_only"] = exterior_only
+	data["initiating_field"] = initiating
 	return data
 
 /obj/machinery/modular_shield_generator/ui_act(action, params)
@@ -1157,6 +1173,8 @@
 	name = "Modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
+	density = FALSE
+	alpha = 100
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
 	//our parent
 	var/obj/machinery/modular_shield_generator/shield_generator
