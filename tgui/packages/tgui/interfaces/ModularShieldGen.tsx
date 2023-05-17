@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Stack, Section, ProgressBar, Button, NumberInput } from '../components';
+import { BooleanLike } from 'common/react';
 
 type ModularShieldGenData = {
   max_strength: number;
@@ -9,10 +10,10 @@ type ModularShieldGenData = {
   current_regeneration: number;
   max_radius: number;
   current_radius: number;
-  active: Boolean;
-  recovering: Boolean;
-  exterior_only: Boolean;
-  initiating_field: Boolean;
+  active: BooleanLike;
+  recovering: BooleanLike;
+  exterior_only: BooleanLike;
+  initiating_field: BooleanLike;
 };
 
 export const ModularShieldGen = (props, context) => {
