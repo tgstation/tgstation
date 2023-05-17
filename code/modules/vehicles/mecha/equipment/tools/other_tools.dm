@@ -287,7 +287,7 @@
 	activated = FALSE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
-	var/max_fuel = 150000
+	var/max_fuel = 50000
 	/// Fuel used per second while idle, not generating
 	var/fuelrate_idle = 12.5
 	/// Fuel used per second while actively generating
