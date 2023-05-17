@@ -114,11 +114,13 @@
 			updateEmbedding()
 		heat = active_heat
 		START_PROCESSING(SSobj, src)
+		blocking_ability = 1.5
 	else
 		if(embedding)
 			disableEmbedding()
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
+		blocking_ability = initial(blocking_ability)
 
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
@@ -182,7 +184,6 @@
 	throw_range = 5
 	armour_penetration = 35
 	block_chance = 50
-	blocking_ability = 1.5 // melbert todo : only when active
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

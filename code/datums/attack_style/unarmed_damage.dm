@@ -23,6 +23,8 @@
 	return -1
 
 /datum/attack_style/unarmed/generic_damage/proc/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
+	if(smacked.response_harm_simple)
+		return smacked.response_harm_simple
 	if(damage == 0 && attacker.friendly_verb_simple)
 		return attacker.friendly_verb_simple
 	if(attacker.attack_verb_simple)

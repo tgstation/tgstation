@@ -3,6 +3,12 @@
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 
+/datum/attack_style/unarmed/disarm/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
+	if(smacked.response_disarm_simple)
+		return smacked.response_disarm_simple
+
+	return ..()
+
 /datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(attacker.body_position != STANDING_UP)
 		return ATTACK_STYLE_CANCEL

@@ -62,6 +62,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  */
 /datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	weapon?.add_fingerprint(attacker)
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))

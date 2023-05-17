@@ -41,6 +41,8 @@
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
+	// Melbert todo : figure these the fuck out
+
 	// These vars relate to this mob dealing damage via unarmed melee attacks.
 	// They are used if your mob has the attack style [/datum/attack_style/unarmed/generic_damage/mob_attack]
 	/// Lower bound of damage done by unarmed melee attacks.
@@ -48,13 +50,27 @@
 	/// Upper bound of damage done by unarmed melee attacks. P
 	var/melee_damage_upper = 0
 	/// Attacking verb in present continuous tense.
-	var/attack_verb_continuous = "attacks"
+	var/attack_verb_continuous
 	/// Attacking verb in present simple tense.
-	var/attack_verb_simple = "attack"
+	var/attack_verb_simple
 	/// If you are attacking, but deal zero damage (or helping), you will use this verb instead, verb in present continuous tense.
-	var/friendly_verb_continuous = "nuzzles"
+	var/friendly_verb_continuous
 	/// If you are attacking, but deal zero damage (or helping), you will use this verb instead, verb in present simple tense.
-	var/friendly_verb_simple = "nuzzle"
+	var/friendly_verb_simple
+
+	// These vars relate to this mob taking damage via unarmed melee attacks.
+	/// Help-intent verb in present continuous tense.
+	var/response_help_continuous
+	/// Help-intent verb in present simple tense.
+	var/response_help_simple
+	/// Disarm-intent verb in present continuous tense.
+	var/response_disarm_continuous
+	/// Disarm-intent verb in present simple tense.
+	var/response_disarm_simple
+	/// Harm-intent verb in present continuous tense.
+	var/response_harm_continuous
+	/// Harm-intent verb in present simple tense.
+	var/response_harm_simple
 
 	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
 	var/living_flags = NONE

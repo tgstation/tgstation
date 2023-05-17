@@ -24,7 +24,6 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 75
-	blocking_ability = 1 // melbert todo only when active
 	max_integrity = 200
 	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
@@ -66,6 +65,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
+	blocking_ability = 1
 
 /// Triggered on unwield of two handed item
 /// switch hitsounds
@@ -74,6 +74,7 @@
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
+	blocking_ability = initial(blocking_ability)
 
 /obj/item/dualsaber/get_sharpness()
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness

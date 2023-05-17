@@ -3,6 +3,12 @@
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 	miss_sound = null
 
+/datum/attack_style/unarmed/help/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
+	if(smacked.response_help_simple)
+		return smacked.response_help_simple
+
+	return ..()
+
 /datum/attack_style/unarmed/help/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(smacked.check_block(attacker, 0, "[attacker]'s touch", UNARMED_ATTACK))
 		smacked.visible_message(

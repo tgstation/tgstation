@@ -47,24 +47,17 @@
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
 
-	// Melbert todo : figure these the fuck out
-	// These are used when someone help clicks on us. See [unarmed_help.dm]
-	/// Help-intent verb in present continuous tense.
-	var/response_help_continuous = "pokes"
-	/// Help-intent verb in present simple tense.
-	var/response_help_simple = "poke"
+	attack_verb_continuous = "attacks"
+	attack_verb_simple = "attack"
+	friendly_verb_continuous = "nuzzles"
+	friendly_verb_simple = "nuzzle"
 
-	// These are used when someone disarms us. See [unarmed_utility.dm]
-	/// Disarm-intent verb in present continuous tense.
-	var/response_disarm_continuous = "shoves"
-	/// Disarm-intent verb in present simple tense.
-	var/response_disarm_simple = "shove"
-
-	// These are used when someone unarmed smacks us. See [unarmed_damage.dm]
-	/// Harm-intent verb in present continuous tense.
-	var/response_harm_continuous = "hits"
-	/// Harm-intent verb in present simple tense.
-	var/response_harm_simple = "hit"
+	response_help_continuous = "pokes"
+	response_help_simple = "poke"
+	response_disarm_continuous = "shoves"
+	response_disarm_simple = "shove"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 
 	////////THIS SECTION COULD BE ITS OWN ELEMENT
 	///Icon to use
