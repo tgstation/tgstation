@@ -126,7 +126,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		shuffle_inplace(foes)
 		if(priority_target in foes)
 			foes.Remove(priority_target)
-			foes.Insert(1, priority_target)
+			foes.Insert(1, priority_target) // to the front
+		if(attacker in foes)
+			foes.Remove(attacker)
+			foes.Add(attacker) // to the end
 
 		var/total_hit = 0
 		for(var/mob/living/smack_who as anything in foes)
