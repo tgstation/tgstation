@@ -735,6 +735,8 @@
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.max_slots = 8
+	atom_storage.screen_max_columns = 4
+	atom_storage.screen_max_rows = 2
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/cup/tube,
 	))
