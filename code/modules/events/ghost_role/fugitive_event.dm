@@ -57,7 +57,7 @@
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	var/hunter_backstory = pick(HUNTER_PACK_COPS, HUNTER_PACK_RUSSIAN, HUNTER_PACK_BOUNTY, HUNTER_PACK_PSYKER)
-	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
