@@ -652,6 +652,15 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
 
+## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
+#TTS_HTTP_URL http://localhost:5002
+
+## Token that can be used to prevent misuse of your TTS server that you've set up.
+#TTS_HTTP_TOKEN coolio
+
+## The maximum number of concurrent tts http requests that can be made by the server at once.
+#TTS_MAX_CONCURRENT_REQUESTS 4
+
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT

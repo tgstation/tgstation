@@ -136,27 +136,29 @@
 
 	console_notify_timer = null
 
-	var/area/A = get_area(src)
-	var/msg = "Now available in [A]:<br>"
+	var/area/our_area = get_area(src)
+	var/message = "Now available in [our_area]:"
 
 	var/has_minerals = FALSE
+	var/list/appended_list = list()
 
-	for(var/mat in mat_container.materials)
-		var/datum/material/M = mat
-		var/mineral_amount = mat_container.materials[mat] / SHEET_MATERIAL_AMOUNT
+	for(var/current_material in mat_container.materials)
+		var/datum/material/material_datum = current_material
+		var/mineral_amount = mat_container.materials[current_material] / SHEET_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
-		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
+		appended_list["[capitalize(material_datum.name)]"] = "[mineral_amount] sheets"
 
 	if(!has_minerals)
 		return
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"ore_update" = TRUE,
-		"sender" = "Ore Redemption Machine",
-		"message" = msg,
-		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
-		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
+		"sender_department" = "Ore Redemption Machine",
+		"message" = message,
+		"verified" = "Ore Redemption Machine",
+		"priority" = REQ_NORMAL_MESSAGE_PRIORITY,
+		"appended_list" = appended_list,
 	))
 	signal.send_to_receivers()
 
