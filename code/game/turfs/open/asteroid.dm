@@ -239,18 +239,19 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	damaged_dmi = null
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
-	return
+	return FALSE
+
+/turf/open/misc/asteroid/snow/ice/burn_tile()
+	return FALSE
 
 /turf/open/misc/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 0
-
-/turf/open/misc/asteroid/snow/ice/burn_tile()
-	return FALSE
 
 /turf/open/misc/asteroid/snow/airless
 	initial_gas_mix = AIRLESS_ATMOS
