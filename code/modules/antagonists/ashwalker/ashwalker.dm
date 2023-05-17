@@ -72,6 +72,6 @@
 		report += "The [name] managed to perform <b>[sacrifices_made]</b> sacrifices to the Necropolis. From this, the Necropolis produced <b>[eggs_created]</b> Ashwalker eggs."
 
 	else
-		report += "<b>But none of it's eggs hatched!</b>"
+		report += "<b>But none of its eggs hatched!</b>"
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
