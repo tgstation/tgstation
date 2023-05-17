@@ -34,6 +34,13 @@ export const sound_instruments: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const sound_tts: FeatureToggle = {
+  name: 'Enable TTS',
+  category: 'SOUND',
+  description: 'When enabled, be able to hear text-to-speech sounds in game.',
+  component: CheckboxInput,
+};
+
 export const sound_jukebox: FeatureToggle = {
   name: 'Enable jukebox music',
   category: 'SOUND',

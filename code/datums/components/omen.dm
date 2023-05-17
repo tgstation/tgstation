@@ -17,11 +17,18 @@
 	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(vessel)
+/datum/component/omen/Initialize(obj/vessel, permanent, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.vessel = vessel
+	if(istype(vessel))
+		src.vessel = vessel
+		RegisterSignal(vessel, COMSIG_PARENT_QDELETING, PROC_REF(vessel_qdeleting))
+	src.permanent = permanent
+	if(!isnull(luck_mod))
+		src.luck_mod = luck_mod
+	if(!isnull(damage_mod))
+		src.damage_mod = damage_mod
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
@@ -29,6 +36,8 @@
 
 	if(vessel)
 		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
+		UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+		vessel.burn()
 		vessel = null
 
 	return ..()
@@ -53,8 +62,8 @@
 
 	if(!isliving(our_guy))
 		return
-	var/mob/living/living_guy = our_guy
 
+	var/mob/living/living_guy = our_guy
 	if(!prob(15 * luck_mod))
 		return
 
@@ -124,7 +133,10 @@
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
-	if (!("blessing" in our_guy.mob_mood.mood_events))
+	if(permanent)
+		return
+
+	if(!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
@@ -132,6 +144,9 @@
 /// Severe deaths. Normally lifts the curse.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
+
+	if(permanent)
+		return
 
 	qdel(src)
 
@@ -142,20 +157,17 @@
 	for(var/mob/witness in view(2, our_guy))
 		shake_camera(witness, 1 SECONDS, 2)
 
+/// Vessel got deleted, set it to null
+/datum/component/omen/proc/vessel_qdeleting(atom/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+	vessel = null
+
 /**
  * The smite omen. Permanent.
  */
 /datum/component/omen/smite
-
-/datum/component/omen/smite/Initialize(vessel, permanent)
-	. = ..()
-	src.permanent = permanent
-
-/datum/component/omen/smite/check_bless(mob/living/our_guy, category)
-	if(!permanent)
-		return ..()
-
-	return
 
 /datum/component/omen/smite/check_death(mob/living/our_guy)
 	if(!permanent)
@@ -198,3 +210,22 @@
 	player.spawn_gibs()
 
 	return
+
+/**
+ * The bible omen.
+ * While it lasts, parent gets a cursed aura filter.
+ */
+/datum/component/omen/bible
+
+/datum/component/omen/bible/RegisterWithParent()
+	. = ..()
+	var/mob/living/living_parent = parent
+	living_parent.add_filter("omen", 2, list("type" = "drop_shadow", "color" = COLOR_DARK_RED, "alpha" = 0, "size" = 2))
+	var/filter = living_parent.get_filter("omen")
+	animate(filter, alpha = 255, time = 2 SECONDS, loop = -1)
+	animate(alpha = 0, time = 2 SECONDS)
+
+/datum/component/omen/bible/UnregisterFromParent()
+	. = ..()
+	var/mob/living/living_parent = parent
+	living_parent.remove_filter("omen")

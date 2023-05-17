@@ -2272,7 +2272,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Pi" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/bar/all_access,
 /obj/machinery/light/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)

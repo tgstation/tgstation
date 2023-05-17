@@ -947,6 +947,7 @@
 	force = 15
 	armour_penetration = 30
 	block_chance = 30
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")

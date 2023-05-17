@@ -570,6 +570,7 @@
 		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
 		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
 		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
+		/obj/machinery/vending/wardrobe/coroner_wardrobe = "MortiDrobe",
 		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
 		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
 		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
