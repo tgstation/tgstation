@@ -31,7 +31,6 @@
 
 /obj/structure/lavaland/ash_walker/Destroy()
 	ashies = null
-	QDEL_NULL(linked_objective)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
