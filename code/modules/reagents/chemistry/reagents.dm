@@ -228,19 +228,16 @@ Primarily used in reagents/reaction_agents
 	return
 
 /**
- * New, standardized method for chemicals to affect hydroponics trays.
- * Defined on a per-chem level as opposed to by the tray.
+ * Called when this chemical is processed in a hydroponics tray.
+ *
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
  */
-/datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-
-/// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
-/datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
+/datum/reagent/proc/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	ASSERT(mytray)
-	// Check if we have atleast a single amount of the reagent
-	if(!chems.has_reagent(type, 1))
-		return FALSE
 
+	if(volume < 1)
+		return FALSE
 	return TRUE
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios

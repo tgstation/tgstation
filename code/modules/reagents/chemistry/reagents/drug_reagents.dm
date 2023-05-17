@@ -74,11 +74,12 @@
 	addiction_types = list(/datum/addiction/nicotine = 15) // 6 per 2 seconds
 
 	//Nicotine is used as a pesticide IRL.
-/datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
+/datum/reagent/drug/nicotine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(!.)
 		return
 
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+	mytray.adjust_toxic(round(volume))
 	mytray.adjust_pestlevel(-rand(1, 2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
