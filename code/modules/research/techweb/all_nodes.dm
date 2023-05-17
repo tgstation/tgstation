@@ -1222,6 +1222,7 @@
 		"nvgmesons",
 		"nv_scigoggles",
 		"security_hud_night",
+		"mech_light_amplification",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 

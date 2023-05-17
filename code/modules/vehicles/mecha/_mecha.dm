@@ -175,6 +175,9 @@
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
 
+	//Bool for night vision on/off
+	var/light_amplification = FALSE
+
 	///Remaining smoke charges
 	var/smoke_charges = 5
 	///Cooldown between using smoke
