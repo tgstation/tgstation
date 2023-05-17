@@ -3754,7 +3754,7 @@
 	icon_state = "pod_tesla"
 
 /datum/reagent/consumable/ethanol/pod_tesla/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
 	ADD_TRAIT(affected_mob, TRAIT_TESLA_SHOCKIMMUNE, type)
 	ADD_TRAIT(affected_mob, TRAIT_FEARLESS, type)
