@@ -35,8 +35,8 @@
 	  	// --- Main Menu ---
 		if(MAIN_VIEW)
 			var/list/found_machinery = list()
-			for(var/obj/machinery/telecomms/T in machinelist)
-				found_machinery += list(list("ref" = REF(T), "name" = T.name, "id" = T.id))
+			for(var/obj/machinery/telecomms/telecomms in machinelist)
+				found_machinery += list(list("ref" = REF(telecomms), "name" = telecomms.name, "id" = telecomms.id))
 			data["machinery"] = found_machinery
 	  	// --- Viewing Machine ---
 		if(MACHINE_VIEW)
