@@ -201,7 +201,7 @@
 	desc = "A special containment helmet designed for detectives, protecting them from burning alive, alongside other undesirables."
 	icon_state = "white_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_detective_helmet
+	armor_type = /datum/armor/fedora_det_hat/plasmaman
 
 /datum/armor/fedora_det_hat/plasmaman
 	bio = 100
@@ -213,7 +213,7 @@
 	desc = "A plasmaman containment helmet designed for the warden. A pair of white stripes being added to differeciate them from other members of security."
 	icon_state = "warden_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_warden_helmet
+	armor_type = /datum/armor/hats_warden/plasmaman
 
 /datum/armor/hats_warden/plasmaman
 	bio = 100
