@@ -38,8 +38,8 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 50
-	health = 50
+	maxHealth = 60
+	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	poison_per_bite = 5
