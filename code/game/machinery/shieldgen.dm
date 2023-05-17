@@ -980,7 +980,7 @@
 /obj/machinery/modular_shield/module/proc/try_connect(user)
 
 	if(shield_generator || connected_node)
-		balloon_alert(user, "already connected to something")
+		balloon_alert(user, "already connected to something!")
 		return
 
 	shield_generator = (locate(/obj/machinery/modular_shield_generator) in connected_turf)
