@@ -107,7 +107,7 @@
 	///required access level for mecha operation
 	var/list/operation_req_access = list()
 	///required access to change internal components
-	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)
+	var/list/internals_req_access = list()
 
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
