@@ -363,7 +363,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-	heart_knowledge.on_research(source)
+	heart_knowledge.on_research(source, src)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
