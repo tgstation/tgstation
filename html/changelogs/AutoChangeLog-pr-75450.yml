@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - refactor: "Recharger code was modernized a little & will now properly say how much charge you have in a power pack."
