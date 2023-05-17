@@ -32,7 +32,8 @@
 	if(!length(shoveables))
 		return
 	var/mob/living/shove_me = pick(shoveables)
-	target.click_on_without_item(shove_me, proximity_flag = TRUE, modifiers = list("right" = TRUE))
+	var/datum/attack_style/unarmed/disarm/disarm_style = GLOB.attack_styles[/datum/attack_style/unarmed/disarm]
+	disarm_style.process_attack(target, null, shove_me, TRUE)
 
 /datum/smite/ghost_control/proc/ghost_sit(mob/living/target)
 	if(HAS_TRAIT(target, TRAIT_IMMOBILIZED))

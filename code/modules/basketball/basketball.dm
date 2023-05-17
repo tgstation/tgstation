@@ -48,7 +48,7 @@
 
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
 	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
-	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
+	RegisterSignal(user, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
 
 /obj/item/toy/basketball/proc/remove_ball_effects()
@@ -57,7 +57,7 @@
 	// unlike on_equip, this signal is triggered after the ball is removed from hands
 	// so we can just use is_holding_item_of_type() proc to check for multiple balls
 	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
-		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
 
 	wielder = null
 

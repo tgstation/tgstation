@@ -51,18 +51,23 @@
 		if(MARTIAL_ATTACK_FAIL)
 			return ATTACK_STYLE_MISSED
 
-	// melbert todo : "human disarm", "cyborg disarm", etc?
 	return disarm_target(attacker, smacked, shove_verb)
 
 /datum/attack_style/unarmed/disarm/proc/disarm_target(mob/living/attacker, mob/living/smacked, shove_verb)
-	SEND_SIGNAL(smacked, COMSIG_HUMAN_DISARM_HIT, attacker, attacker.zone_selected)
 	var/shove_dir = get_dir(attacker, smacked)
 	var/turf/target_shove_turf = get_step(smacked, shove_dir)
-	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 	var/turf/target_old_turf = smacked.loc
 
 	//Are we hitting anything? or
-	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
+	var/pre_sig_return = SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE)
+	if(pre_sig_return & DISARM_STOP)
+		return ATTACK_STYLE_MISSED
+
+	// At this point a shove is going to happen
+	SEND_SIGNAL(smacked, COMSIG_LIVING_DISARM_HIT, attacker, attacker.zone_selected)
+
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+	if(pre_sig_return & DISARM_ACT_AS_SOLID)
 		shove_blocked = TRUE
 	else
 		smacked.Move(target_shove_turf, shove_dir)
@@ -106,7 +111,7 @@
 
 	if(can_hit_something)
 		//Don't hit people through windows, ok?
-		if(!directional_blocked && (SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, attacker, smacked, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED))
+		if(!directional_blocked && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, attacker, smacked, shove_blocked) & DISARM_SHOVE_HANDLED))
 			return . | ATTACK_STYLE_HIT
 
 		if(directional_blocked || shove_blocked)
@@ -146,7 +151,7 @@
 				span_warning("Your grip on \the [target_held_item] loosens!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
-		addtimer(CALLBACK(smacked, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown), target_held_item), SHOVE_SLOWDOWN_LENGTH)
+		addtimer(CALLBACK(smacked, TYPE_PROC_REF(/mob/living, clear_shove_slowdown), target_held_item), SHOVE_SLOWDOWN_LENGTH)
 
 	else if(target_held_item)
 		smacked.dropItemToGround(target_held_item)

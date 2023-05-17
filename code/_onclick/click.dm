@@ -293,6 +293,9 @@
 /mob/proc/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
 	PROTECTED_PROC(TRUE)
 
+	stack_trace("Somehow, a non-living mob ([src], [type]) called click_on_with_item with an item ([clicked_with_what], [clicked_with_what.type])")
+
+/mob/living/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
@@ -345,7 +348,6 @@
 
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
-	return
 
 /**
  * Also known as a "ranged unarmed attack"

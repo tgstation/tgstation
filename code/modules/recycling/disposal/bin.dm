@@ -61,7 +61,7 @@
 	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_rummage))
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(trash_carbon),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -560,6 +560,6 @@
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	return DISARM_SHOVE_HANDLED
 
 #undef SEND_PRESSURE

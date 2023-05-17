@@ -88,7 +88,7 @@
 	update_appearance()
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(locker_carbon),
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -796,7 +796,7 @@
 			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 		to_chat(src, span_danger("You shove [target.name] into [src]!"))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	return DISARM_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
 /obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)

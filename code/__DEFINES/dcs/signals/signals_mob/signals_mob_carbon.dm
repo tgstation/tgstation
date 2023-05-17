@@ -13,13 +13,6 @@
 ///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
 
-///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
-#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
-	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
-///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
-	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
-
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
 ///When a carbon gets a vending machine tilted on them
@@ -113,8 +106,6 @@
 
 // /mob/living/carbon/human signals
 
-///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
@@ -125,9 +116,6 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/click_on_without_item(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_LIVING_CHECK_BLOCK "human_check_shields"
-	#define SUCCESSFUL_BLOCK (1<<0)
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 

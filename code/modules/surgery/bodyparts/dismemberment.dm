@@ -5,7 +5,7 @@
 	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent = TRUE)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -50,7 +50,7 @@
 	return TRUE
 
 
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type, silent)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner

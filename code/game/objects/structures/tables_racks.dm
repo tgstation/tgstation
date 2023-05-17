@@ -45,7 +45,7 @@
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_carbon),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -325,7 +325,7 @@
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 	log_combat(src, target, "shoved", "onto [src] (table)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	return DISARM_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -888,4 +888,3 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
-

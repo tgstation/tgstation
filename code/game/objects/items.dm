@@ -753,7 +753,7 @@
 			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
-		usr.click_on_without_item(src)
+		attack_hand(usr)
 
 /**
  *This proc is executed when someone clicks the on-screen UI button.

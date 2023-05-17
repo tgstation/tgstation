@@ -6,8 +6,8 @@
 
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
+		COMSIG_LIVING_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(disarm_collision),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -1343,7 +1343,7 @@
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	if(can_be_shoved_into)
-		return COMSIG_CARBON_ACT_SOLID
+		return DISARM_ACT_AS_SOLID
 
 /mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
@@ -1356,7 +1356,7 @@
 		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name]")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	return DISARM_SHOVE_HANDLED
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.

@@ -365,7 +365,7 @@
 
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
-	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, PROC_REF(reset_crystalizing))
+	RegisterSignal(victim, COMSIG_LIVING_DISARM_HIT, PROC_REF(reset_crystalizing))
 	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine), override = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
@@ -398,7 +398,7 @@
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
 /obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
-	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
+	UnregisterSignal(ethereal, COMSIG_LIVING_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 

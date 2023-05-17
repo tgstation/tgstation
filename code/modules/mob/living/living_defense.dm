@@ -439,6 +439,19 @@
 	to_chat(helper, span_notice("You [help_simple] [src]."))
 	adjust_status_effects_on_shake_up()
 
+/**
+ * Used primarily for callbacks, clears the slowdown from being shoved
+ */
+/mob/living/proc/clear_shove_slowdown(obj/item/was_holding)
+	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
+	var/obj/item/active_item = get_active_held_item()
+	if(!QDELETED(was_holding) && active_item && active_item == was_holding)
+		visible_message(
+			span_warning("[name] regains their grip on \the [active_item]!"),
+			span_warning("You regain your grip on \the [active_item]"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
 

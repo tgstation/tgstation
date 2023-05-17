@@ -19,9 +19,11 @@
 		return
 	new /obj/effect/temp_visual/telekinesis(get_turf(src))
 	add_hiddenprint(user)
-	user.click_on_without_item(src, FALSE) // attack_hand, attack_paw, etc
+	// Telekinesis is an affront to god.
+	// Skips the entirely of click chain so we can do this without the prox flag
+	// Do not replicate
+	UNLINT(user.click_on_without_item(src, FALSE))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 
 /obj/attack_tk(mob/user)
 	if(user.stat)
