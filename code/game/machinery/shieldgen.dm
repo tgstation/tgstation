@@ -613,13 +613,13 @@
 	var/max_strength_boost = 0
 
 	///Regeneration gained from our own parts
-	var/innate_regen
+	var/innate_regen = 3
 
 	///Max radius gained from our own parts
-	var/innate_radius
+	var/innate_radius = 3
 
 	///Max strength gained from our own parts
-	var/innate_strength
+	var/innate_strength = 40
 
 	///This is the list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs = list()
@@ -636,9 +636,9 @@
 /obj/machinery/modular_shield_generator/RefreshParts()
 	. = ..()
 
-	innate_regen = 3
-	innate_radius = 3
-	innate_strength = 40
+	innate_regen = initial(innate_regen)
+	innate_radius = initial(innate_radius)
+	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
 		innate_strength += new_capacitor.tier * 10
