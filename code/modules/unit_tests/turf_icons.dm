@@ -19,7 +19,6 @@
 		instanced_turf = allocate(turf_path)
 
 		var/list/burnt_states = instanced_turf.burnt_states()
-		if(!burnt_states.len)
 		for(var/state in burnt_states)
 			if(!(state in icon_states(damaged_dmi)))
 				TEST_FAIL("[turf_path] has an invalid icon in burnt_states - \"[state]\", in '[damaged_dmi]'")
