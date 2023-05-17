@@ -14,12 +14,11 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_GRASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_CLOSED_TURFS
 	layer = HIGH_TURF_LAYER
-	var/damaged_dmi = 'icons/turf/floors/grass.dmi'
+	damaged_dmi = 'icons/turf/floors/grass.dmi'
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 
-/turf/open/misc/grass/break_tile()
-	. = ..()
-	icon_state = "damaged"
+/turf/open/misc/grass/broken_states()
+	return list("damaged")
 
 /turf/open/misc/grass/Initialize(mapload)
 	. = ..()
@@ -28,6 +27,9 @@
 		translation.Translate(-9, -9)
 		transform = translation
 		icon = smooth_icon
+
+	if(is_station_level(z))
+		GLOB.station_turfs += src
 
 /turf/open/misc/grass/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
