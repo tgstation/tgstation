@@ -561,7 +561,6 @@
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gen_recovering_closed"
 	density = TRUE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_generator
 	processing_flags = START_PROCESSING_ON_INIT
 
@@ -733,7 +732,6 @@
 					deployed_shields += deploying_shield
 					addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
-			active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 			return
 
 		for(var/turf/target_tile as anything in list_of_turfs)
@@ -743,7 +741,6 @@
 				deployed_shields += deploying_shield
 				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
-		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
 
 	//this code only runs on radius less than 10 and gives us a more accurate circle that is more compatible with decimal values
@@ -756,7 +753,6 @@
 				deployed_shields += deploying_shield
 				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
-		active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 		return
 
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
@@ -766,7 +762,6 @@
 			deployed_shields += deploying_shield
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
-	active_power_usage += deployed_shields.len * BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 
 
 ///After giving people a grace period to react to we up the alpha value and make the forcefield dense
@@ -779,7 +774,6 @@
 
 /obj/machinery/modular_shield_generator/Destroy()
 	QDEL_LIST(deployed_shields)
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	return ..()
 
 /obj/machinery/modular_shield_generator/update_icon_state()
