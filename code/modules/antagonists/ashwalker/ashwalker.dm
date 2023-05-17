@@ -46,7 +46,11 @@
 /datum/team/ashwalkers/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>An Ashwalker Tribe was discovered in the wastes:</span><br>"
+	report += "<span class='header'>An Ashwalker Tribe inhabited the wastes...</span><br>"
+	if(!length(members)) //The team is generated alongside the tendril, and it's entirely possible that nobody takes the role.
+		report += "<b>But none of it's eggs hatched!</b>"
+		return "<div class='panel redborder'>[report.Join("<br>")]</div>"
+
 	report += "The [member_name]s were:"
 	report += printplayerlist(members)
 
@@ -54,11 +58,11 @@
 
 	if(necropolis_objective)
 		objectives -= necropolis_objective //So we don't count it in the check for other objectives.
-		report += "<span class='header'>The [name] was tasked with defending their Necropolis:</span><br>"
+		report += "<b>The [name] was tasked with defending the Necropolis:</b>"
 		if(necropolis_objective.check_completion())
-			report += span_greentext("The [name] successfully defended and served the Necropolis!")
+			report += span_greentext("<span class='header'>The nest stands! Glory to the Necropolis!</span><br>")
 		else
-			report += span_redtext("The [name] failed to defend the Necropolis!")
+			report += span_redtext("<span class='header'>The Necropolis was destroyed...</span><br>")
 
 	if(length(objectives))
 		report += "<span class='header'>The [name]'s other objectives were:</span>"
