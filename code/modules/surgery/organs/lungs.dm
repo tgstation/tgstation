@@ -79,7 +79,7 @@
 	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/plas_damage_type = TOX
 
-	var/tritium_damage_moles_min = MINIMUM_MOLE_COUNT
+	var/tritium_damage_moles_min = TOXIC_GAS_DAMAGE_MIN_MOLES
 	var/tritium_irradiation_moles_min = 1
 	var/tritium_irradiation_moles_max = 15
 	var/tritium_irradiation_probability_min = 10

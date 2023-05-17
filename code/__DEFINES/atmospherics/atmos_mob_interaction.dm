@@ -25,6 +25,8 @@
 #define MIASMA_CORPSE_MOLES 0.02
 #define MIASMA_GIBS_MOLES 0.005
 
+/// Minimum amount of toxic gas moles in a single breath required to receive damage
+#define TOXIC_GAS_DAMAGE_MIN_MOLES (MOLES_GAS_VISIBLE * BREATH_PERCENTAGE)
 #define MIN_TOXIC_GAS_DAMAGE 1
 #define MAX_TOXIC_GAS_DAMAGE 10
 
