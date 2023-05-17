@@ -22,6 +22,10 @@
 	if(!.)
 		return
 
+	toxic_plant_application(mytray, user)
+
+/// Implements toxin subtype specific interations for botany plants
+/datum/reagent/toxin/proc/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -69,13 +73,8 @@
 	affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype)
 	return ..()
 
-/datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+/datum/reagent/toxin/mutagen/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
-
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
@@ -355,12 +354,8 @@
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// Plant-B-Gone is just as bad
-/datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+// Plant-B-Gone is just as bad
+/datum/reagent/toxin/plantbgone/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume * 10))
 	mytray.adjust_toxic(round(volume * 6))
 	mytray.adjust_weedlevel(-rand(4,8))
@@ -401,12 +396,8 @@
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//Weed Spray
-/datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+//Weed Spray
+/datum/reagent/toxin/plantbgone/weedkiller/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume * 0.5))
 	mytray.adjust_weedlevel(-rand(1,2))
 
@@ -419,11 +410,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Pest Spray
-/datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+/datum/reagent/toxin/pestkiller/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume))
 	mytray.adjust_pestlevel(-rand(1,2))
 
@@ -441,11 +428,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Pest Spray
-/datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+/datum/reagent/toxin/pestkiller/organic/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume * 0.1))
 	mytray.adjust_pestlevel(-rand(1,2))
 
@@ -1073,12 +1056,9 @@
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-// ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
-/datum/reagent/toxin/acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+// ...Why? I mean, clearly someone had to have done this and thought, well,
+// acid doesn't hurt plants, but what brought us here, to this point?
+/datum/reagent/toxin/acid/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume))
 	mytray.adjust_toxic(round(volume * 1.5))
 	mytray.adjust_weedlevel(-rand(1,2))
@@ -1122,11 +1102,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // SERIOUSLY
-/datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
+/datum/reagent/toxin/acid/fluacid/toxic_plant_application(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume * 2))
 	mytray.adjust_toxic(round(volume * 3))
 	mytray.adjust_weedlevel(-rand(1,4))

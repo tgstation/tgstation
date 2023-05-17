@@ -266,7 +266,7 @@
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 
-///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
+// For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(!.)
@@ -274,6 +274,8 @@
 
 	handle_hydroponics(mytray, user)
 
+/// Water isn't supposed to be in tray reagent tanks so by default we nuke it
+/// However this proc allows for water subtypes to not get nuked and act as a fertilizer
 /datum/reagent/water/proc/handle_hydroponics(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume))
 	//You don't belong in this world, monster!
@@ -976,7 +978,7 @@
 	mytray.adjust_plant_health(-round(volume * 2))
 	mytray.adjust_toxic(round(volume * 2.5))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
-	mytray.adjust_weedlevel(-rand(1,4))
+	mytray.adjust_weedlevel(-rand(1, 4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
@@ -1009,7 +1011,7 @@
 
 	mytray.adjust_plant_health(-round(volume * 0.75))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
-	mytray.adjust_weedlevel(-rand(1,2))
+	mytray.adjust_weedlevel(-rand(1, 2))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1085,17 +1087,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium
-	name ="Uranium"
+	name = "Uranium"
 	description = "A jade-green metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#5E9964" //this used to be silver, but liquid uranium can still be green and it's more easily noticeable as uranium like this so why bother?
 	taste_description = "the inside of a reactor"
-	/// How much tox damage to deal per tick
-	var/tox_damage = 0.5
 	ph = 4
 	material = /datum/material/uranium
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/effect/decal/cleanable/greenglow
+	/// How much tox damage to deal per tick
+	var/tox_damage = 0.5
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM)
@@ -1121,7 +1123,7 @@
 	mytray.mutation_roll(user)
 
 	mytray.adjust_plant_health(-round(volume))
-	mytray.adjust_toxic(round(volume * 2))
+	mytray.adjust_toxic(round(volume / tox_damage)) // more damage = more
 
 /datum/reagent/uranium/radium
 	name = "Radium"
@@ -1129,20 +1131,10 @@
 	reagent_state = SOLID
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
-	tox_damage = 1*REM
+	tox_damage = 1
 	material = null
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/uranium/radium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
-	mytray.mutation_roll(user)
-
-	mytray.adjust_plant_health(-round(volume))
-	mytray.adjust_toxic(round(volume))
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
