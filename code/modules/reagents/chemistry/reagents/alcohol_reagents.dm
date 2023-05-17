@@ -3764,7 +3764,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
 	REMOVE_TRAIT(affected_mob, TRAIT_FEARLESS, type)
 	REMOVE_TRAIT(affected_mob, TRAIT_TESLA_SHOCKIMMUNE, type)
-	..()
+	return ..()
 
 /datum/reagent/consumable/ethanol/pod_tesla/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
