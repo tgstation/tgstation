@@ -21,10 +21,6 @@
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_pestlevel(rand(2, 3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
@@ -268,15 +264,6 @@
 
 // For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
-	handle_hydroponics(mytray, user)
-
-/// Water isn't supposed to be in tray reagent tanks so by default we nuke it
-/// However this proc allows for water subtypes to not get nuked and act as a fertilizer
-/datum/reagent/water/proc/handle_hydroponics(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume))
 	//You don't belong in this world, monster!
 	mytray.reagents.remove_reagent(type, volume)
@@ -297,7 +284,7 @@
 	icon_state = "glass_clear"
 
 // Holy water. Unlike water, which is nuked, stays in and heals the plant a little with the power of the spirits. Also ALSO increases instability.
-/datum/reagent/water/holywater/handle_hydroponics(obj/machinery/hydroponics/mytray, mob/user)
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_waterlevel(round(volume))
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.15))
@@ -944,10 +931,6 @@
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 /datum/reagent/chlorine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(-round(volume))
 	mytray.adjust_toxic(round(volume * 1.5))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
@@ -971,10 +954,6 @@
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 /datum/reagent/fluorine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(-round(volume * 2))
 	mytray.adjust_toxic(round(volume * 2.5))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
@@ -1005,10 +984,6 @@
 
 // Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(-round(volume * 0.75))
 	mytray.adjust_waterlevel(-round(volume * 0.5))
 	mytray.adjust_weedlevel(-rand(1, 2))
@@ -1116,12 +1091,7 @@
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.mutation_roll(user)
-
 	mytray.adjust_plant_health(-round(volume))
 	mytray.adjust_toxic(round(volume / tox_damage)) // more damage = more
 
@@ -1403,9 +1373,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/ammonia/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 	// Ammonia is bad ass.
 	mytray.adjust_plant_health(round(volume * 0.12))
 
@@ -1424,10 +1391,6 @@
 
 // This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,2))
 	var/obj/item/seeds/myseed = mytray.myseed
@@ -1652,9 +1615,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
 		myseed.adjust_instability(0.2)
@@ -1669,9 +1629,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.2))
@@ -1684,9 +1641,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/robustharvestnutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
 		myseed.adjust_instability(-0.25)
@@ -1701,9 +1655,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/endurogrow/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
 		myseed.adjust_potency(-round(volume * 0.1))
@@ -1718,9 +1669,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
 
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
@@ -2046,10 +1994,6 @@
 
 // Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 /datum/reagent/ash/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_weedlevel(-1)
 
@@ -2219,10 +2163,6 @@
 
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 /datum/reagent/saltpetre/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(round(volume * 0.18))
 	mytray.myseed?.adjust_production(-round(volume / 10)-prob(volume % 10))
 	mytray.myseed?.adjust_potency(round(volume))
@@ -2900,10 +2840,6 @@
 	affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1) * seconds_per_tick)
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_weedlevel(-1)
 	mytray.adjust_pestlevel(-1)
 	mytray.adjust_plant_health(round(volume))

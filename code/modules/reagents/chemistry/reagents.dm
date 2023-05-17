@@ -233,12 +233,7 @@ Primarily used in reagents/reaction_agents
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-	ASSERT(mytray)
-
-	if(volume < 1)
-		return FALSE
-	return TRUE
+	return
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)

@@ -75,10 +75,6 @@
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_toxic(round(volume))
 	mytray.adjust_pestlevel(-rand(1, 2))
 

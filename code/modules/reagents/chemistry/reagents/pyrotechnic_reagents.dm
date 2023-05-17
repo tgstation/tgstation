@@ -34,10 +34,6 @@
 
 	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.myseed?.adjust_instability(-round(volume))
 
 /datum/reagent/clf3
@@ -198,10 +194,6 @@
 
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	if(!(mytray.myseed?.resistance_flags & FIRE_PROOF))
 		mytray.adjust_plant_health(-round(volume * 6))
 		mytray.adjust_toxic(round(volume * 7))

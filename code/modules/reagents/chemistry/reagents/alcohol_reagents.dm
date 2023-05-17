@@ -114,10 +114,6 @@
 
 	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(-round(volume * 0.05))
 	mytray.adjust_waterlevel(round(volume * 0.7))
 

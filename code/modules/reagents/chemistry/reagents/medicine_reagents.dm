@@ -47,10 +47,6 @@
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_waterlevel(round(volume))
 	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,5))
@@ -153,10 +149,6 @@
 
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(round(volume * 3))
 	mytray.adjust_toxic(-round(volume * 3))
 
@@ -894,10 +886,6 @@
 
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.spawnplant()
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead

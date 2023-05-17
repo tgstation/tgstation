@@ -61,10 +61,6 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(round(volume * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
@@ -252,10 +248,6 @@
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_weedlevel(rand(1, 2))
 	mytray.adjust_pestlevel(rand(1, 2))
 
@@ -279,10 +271,6 @@
 
 // Compost for EVERYTHING
 /datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	mytray.adjust_plant_health(-round(volume * 0.5))
 
 /datum/reagent/consumable/soysauce
@@ -705,10 +693,6 @@
 
 // On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
 /datum/reagent/consumable/honey/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(!.)
-		return
-
 	if(!isnull(mytray.myseed) && prob(20))
 		mytray.pollinate(range = 1)
 		return
