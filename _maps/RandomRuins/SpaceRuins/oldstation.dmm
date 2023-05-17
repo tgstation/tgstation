@@ -4241,7 +4241,6 @@
 	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "sJ" = (
@@ -5514,7 +5513,6 @@
 /obj/machinery/door/window/right/directional/east{
 	req_access = list("away_general")
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "BT" = (
