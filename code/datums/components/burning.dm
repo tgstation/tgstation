@@ -38,20 +38,21 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return ..()
 
 /datum/component/burning/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ATOM_EXTINGUISH, PROC_REF(on_extinguish))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	var/atom/atom_parent = parent
 	atom_parent.resistance_flags |= ON_FIRE
 	atom_parent.update_appearance()
 
 /datum/component/burning/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
-		COMSIG_ATOM_EXTINGUISH))
+		COMSIG_ATOM_EXTINGUISH,
+		COMSIG_PARENT_EXAMINE,
+	))
 	var/atom/atom_parent = parent
 	if(!QDELETED(atom_parent))
 		atom_parent.resistance_flags &= ~ON_FIRE
