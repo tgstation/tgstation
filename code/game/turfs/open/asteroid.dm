@@ -186,6 +186,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	baseturfs = /turf/open/misc/asteroid/snow
 	icon_state = "snow"
 	base_icon_state = "snow"
@@ -207,7 +208,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	return FALSE
 
 /turf/open/misc/grass/burnt_states()
-	return list("snoyw_dug")
+	return list("snow_dug")
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon

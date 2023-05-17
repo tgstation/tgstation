@@ -181,6 +181,7 @@
 	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
 	flags_1 = NONE
@@ -198,7 +199,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0) //TODO BEFORE MERGE: double check this is setting broken state properly.
 
 /turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")
