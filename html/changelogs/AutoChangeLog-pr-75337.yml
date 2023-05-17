@@ -1,0 +1,4 @@
+author: "HWSensum"
+delete-after: True
+changes:
+  - qol: "Players now are able to use other languages for announcements via requests console."

@@ -298,7 +298,7 @@
 		return
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
@@ -306,7 +306,7 @@
 		return FALSE
 	staminaloss = amount
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

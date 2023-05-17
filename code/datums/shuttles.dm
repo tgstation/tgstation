@@ -547,8 +547,8 @@
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
-	name = "NT Construction Vessel"
-	description = "A small cargo vessel with open interiors. Starts with a 25% chance to spawn a functional RIPLEY, and has infinite power."
+	name = "NT Heavy Salvage Vessel"
+	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
 
 /datum/map_template/shuttle/whiteship/birdshot
 	suffix = "birdshot"
