@@ -9,10 +9,20 @@
 	flash_enabled = FALSE
 
 /obj/item/camera/siliconcam/proc/toggle_camera_mode(mob/user, sound = TRUE)
+	// another thing is our active click intercept
+	if(user.click_intercept && user.click_intercept != src)
+		to_chat(user, span_notice("You can't take pictures right now."))
+		return
+
 	in_camera_mode = !in_camera_mode
 	if(sound)
 		playsound(src, 'sound/items/wirecutter.ogg', 50, TRUE)
 	to_chat(user, span_notice("Camera mode: [in_camera_mode ? "Activated" : "Deactivated"]."))
+	user.click_intercept = in_camera_mode ? src : null
+
+/obj/item/camera/siliconcam/proc/InterceptClickOn(mob/clicker, params, atom/clicked)
+	toggle_camera_mode(sound = FALSE)
+	captureimage(clicked, clicker, picture_size_x - 1, picture_size_y - 1)
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	RETURN_TYPE(/datum/picture)

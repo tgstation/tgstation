@@ -4,7 +4,7 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params, ))
+	if(check_click_intercept(params, A))
 		return
 
 	if(stat || lockcharge || IsParalyzed() || IsStun())
@@ -40,11 +40,6 @@
 		return
 
 	face_atom(A) // change direction to face what you clicked on
-
-	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(A, usr)
-		return
 
 	var/obj/item/active_module = get_active_held_item()
 

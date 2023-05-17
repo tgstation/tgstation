@@ -1,12 +1,3 @@
-/mob/living/silicon/pai/ClickOn(atom/target, params)
-	..()
-	if(!camera?.in_camera_mode)
-		return FALSE
-	//pAI picture taking
-	camera.toggle_camera_mode(sound = FALSE)
-	camera.captureimage(target, usr, camera.picture_size_x - 1, camera.picture_size_y - 1)
-	return TRUE
-
 /obj/item/camera/siliconcam/pai_camera
 	name = "pAI photo camera"
 	light_color = COLOR_PAI_GREEN
