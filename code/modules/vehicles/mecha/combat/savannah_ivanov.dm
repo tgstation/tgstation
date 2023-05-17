@@ -28,8 +28,8 @@
 	force = 30
 	destruction_sleep_duration = 40
 	exit_delay = 40
-	encumbrance_gap = 3
-	internal_damage_threshold = 17.5
+	encumbrance_gap = 2.6
+	internal_damage_threshold = 17
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
 	max_occupants = 2
 	max_equip_by_category = list(
