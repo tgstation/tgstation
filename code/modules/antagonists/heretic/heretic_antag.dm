@@ -354,9 +354,8 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL]
-/// So, we'll give them some lee-way and give them back the living heart afterwards
-/// (Maybe put this behind only admin_revives only? Not sure.)
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
+/// Gives the heretic aliving heart on aheal or organ refresh
 /datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
