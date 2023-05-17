@@ -601,8 +601,9 @@
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
+// Melbert todo: Test that this still works
 /obj/item/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	return attack_hand(user, modifiers) // Melbert todo test monkey grab regressions
+	return attack_hand(user, modifiers)
 
 /obj/item/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.can_hold_items(src))

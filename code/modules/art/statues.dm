@@ -287,7 +287,7 @@
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 3 // You're gonna have a bad time
-	attack_style = null // Melbert todo, not ideal since it is weapon-like but eh
+	attack_style = /datum/attack_style/stab_out
 
 	/// Block we're currently carving in
 	var/obj/structure/carving_block/prepared_block

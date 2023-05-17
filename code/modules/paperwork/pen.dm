@@ -31,7 +31,7 @@
 	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
-	attack_style = null // melbert todo maybe could use unique stuff
+	attack_style = /datum/attack_style/stab_out
 
 /obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
@@ -154,7 +154,7 @@
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
-	to_chat(user, span_warning("You stab [M] with the pen."))
+	to_chat(user, span_warning("You stab [M] with [src]."))
 	to_chat(M, span_danger("You feel a tiny prick!"))
 	log_combat(user, M, "stabbed", src)
 	return TRUE

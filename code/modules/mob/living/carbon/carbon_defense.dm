@@ -150,32 +150,7 @@
 		if(wounds.try_handling(user))
 			return TRUE
 
-	if(iscarbon(user))
-		help_shake_act(user)
-
-	// Melbert todo
-	// animal disarm verb, harm verb, and harm verb w/ 0 damage handling is absent
-
-	else if(isanimal(user))
-		var/mob/living/simple_animal/animal = user
-		visible_message(
-			span_notice("[user] [animal.friendly_verb_continuous] [src]!"), \
-			span_notice("[user] [animal.friendly_verb_continuous] you!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = user,
-		)
-		to_chat(user, span_notice("You [animal.friendly_verb_simple] [src]!"))
-
-	else if(isbasicmob(user))
-		var/mob/living/basic/animal = user
-		visible_message(
-			span_notice("[user] [animal.friendly_verb_continuous] [src]!"), \
-			span_notice("[user] [animal.friendly_verb_continuous] you!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = user,
-		)
-		to_chat(user, span_notice("You [animal.friendly_verb_simple] [src]!"))
-
+	help_shake_act(user)
 	return FALSE
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
@@ -275,7 +250,11 @@
 	if(should_stun)
 		Paralyze(60)
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
+/// Called when this mob is help-intent clicked on my the helper mob
+/mob/living/carbon/help_shake_act(mob/living/carbon/helper)
+	if(!iscarbon(helper))
+		return ..()
+
 	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP, helper) & COMPONENT_BLOCK_HELP_ACT)
 		return
 

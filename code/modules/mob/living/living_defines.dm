@@ -41,10 +41,8 @@
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
-	// Melbert todo : figure these the fuck out
+	// These vars relate to this mob interatcing with unarmed clicks.
 
-	// These vars relate to this mob dealing damage via unarmed melee attacks.
-	// They are used if your mob has the attack style [/datum/attack_style/unarmed/generic_damage/mob_attack]
 	/// Lower bound of damage done by unarmed melee attacks.
 	var/melee_damage_lower = 0
 	/// Upper bound of damage done by unarmed melee attacks. P
@@ -58,7 +56,9 @@
 	/// If you are attacking, but deal zero damage (or helping), you will use this verb instead, verb in present simple tense.
 	var/friendly_verb_simple
 
-	// These vars relate to this mob taking damage via unarmed melee attacks.
+	// These vars relate to this mob being interacted with from an unarmed click.
+	// If null, it will instead defer to what the interaction's default verb is, or above if the mob has any set.
+
 	/// Help-intent verb in present continuous tense.
 	var/response_help_continuous
 	/// Help-intent verb in present simple tense.

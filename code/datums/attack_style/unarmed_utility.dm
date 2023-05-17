@@ -3,12 +3,6 @@
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'
 
-/datum/attack_style/unarmed/disarm/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
-	if(smacked.response_disarm_simple)
-		return smacked.response_disarm_simple
-
-	return ..()
-
 /datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(attacker.body_position != STANDING_UP)
 		return ATTACK_STYLE_CANCEL
@@ -21,32 +15,35 @@
 	if(attacker == smacked || attacker.loc == smacked.loc)
 		return ATTACK_STYLE_CANCEL
 
-	if(smacked.check_block(attacker, 0, "[attacker]'s shove", MELEE_ATTACK))
+	var/shove_verb = smacked.response_disarm_simple || "shove"
+
+	if(smacked.check_block(attacker, 0, "[attacker]'s [shove_verb]", MELEE_ATTACK))
 		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s shove!"),
-			span_userdanger("You block [attacker]'s shove!"),
+			span_warning("[smacked] blocks [attacker]'s [shove_verb]!"),
+			span_userdanger("You block [attacker]'s [shove_verb]!"),
 			span_hear("You hear a swoosh!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_warning("[smacked] blocks your shove!"))
+		to_chat(attacker, span_warning("[smacked] blocks your [shove_verb]!"))
 		return ATTACK_STYLE_BLOCKED
 
 	if(attacker.move_force < smacked.move_resist)
 		smacked.visible_message(
-			span_warning("[smacked] resists [attacker]'s shove!"),
-			span_userdanger("You resist [attacker]'s shove!"),
+			span_warning("[smacked] resists [attacker]'s [shove_verb]!"),
+			span_userdanger("You resist [attacker]'s [shove_verb]!"),
 			span_hear("You hear a swoosh!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_warning("[smacked] resists your shove!"))
+		to_chat(attacker, span_warning("[smacked] resists your [shove_verb]!"))
 		return ATTACK_STYLE_BLOCKED
 
 	if (ishuman(smacked))
 		var/mob/living/carbon/human/human_smacked = smacked
 		human_smacked.w_uniform?.add_fingerprint(attacker)
 
+	// Todo : move this out and into its own style?
 	var/datum/martial_art/art = attacker.mind?.martial_art
 	switch(art?.disarm_act(attacker, smacked))
 		if(MARTIAL_ATTACK_SUCCESS)
@@ -54,10 +51,10 @@
 		if(MARTIAL_ATTACK_FAIL)
 			return ATTACK_STYLE_MISSED
 
-	return disarm_target(attacker, smacked)
+	// melbert todo : "human disarm", "cyborg disarm", etc?
+	return disarm_target(attacker, smacked, shove_verb)
 
-/datum/attack_style/unarmed/disarm/proc/disarm_target(mob/living/attacker, mob/living/smacked)
-
+/datum/attack_style/unarmed/disarm/proc/disarm_target(mob/living/attacker, mob/living/smacked, shove_verb)
 	SEND_SIGNAL(smacked, COMSIG_HUMAN_DISARM_HIT, attacker, attacker.zone_selected)
 	var/shove_dir = get_dir(attacker, smacked)
 	var/turf/target_shove_turf = get_step(smacked, shove_dir)
@@ -115,24 +112,24 @@
 		if(directional_blocked || shove_blocked)
 			smacked.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			smacked.visible_message(
-				span_danger("[attacker] shoves [smacked], knocking [smacked.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [attacker]!"),
+				span_danger("[attacker] [shove_verb]s [smacked], knocking [smacked.p_them()] down!"),
+				span_userdanger("You're knocked down from a [shove_verb] by [attacker]!"),
 				span_hear("You hear aggressive shuffling followed by a loud thud!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				ignored_mobs = attacker,
 			)
-			to_chat(attacker, span_danger("You shove [smacked], knocking [smacked.p_them()] down!"))
+			to_chat(attacker, span_danger("You [shove_verb] [smacked], knocking [smacked.p_them()] down!"))
 			log_combat(attacker, smacked, "shoved", "knocking them down")
 			return . | ATTACK_STYLE_HIT
 
 	smacked.visible_message(
-		span_danger("[attacker] shoves [smacked]!"),
-		span_userdanger("You're shoved by [attacker]!"),
+		span_danger("[attacker] [shove_verb]s [smacked]!"),
+		span_userdanger("You're [shove_verb]d by [attacker]!"),
 		span_hear("You hear aggressive shuffling!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = attacker,
 	)
-	to_chat(attacker, span_danger("You shove [smacked]!"))
+	to_chat(attacker, span_danger("You [shove_verb] [smacked]!"))
 
 	//Take their lunch money
 	var/obj/item/target_held_item = smacked.get_active_held_item()
@@ -191,33 +188,3 @@
 
 	smacked.grabbedby(attacker)
 	return ATTACK_STYLE_HIT
-
-/datum/attack_style/unarmed/instant_disarm
-	attack_effect = ATTACK_EFFECT_DISARM
-	successful_hit_sound = null
-
-/datum/attack_style/unarmed/instant_disarm/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/obj/item/held_thing = smacked.get_active_held_item()
-	if(held_thing && smacked.dropItemToGround(held_thing))
-		playsound(smacked, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-		smacked.visible_message(
-			span_danger("[attacker] disarms [smacked]!"),
-			span_userdanger("[attacker] disarms you!"),
-			span_hear("You hear aggressive shuffling!"),
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_danger("You disarm [smacked]!"))
-		log_combat(attacker, smacked, "instant-disarmed")
-
-	else
-		playsound(smacked, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-		smacked.Paralyze(10 SECONDS)
-		smacked.visible_message(
-			span_danger("[attacker] tackles [smacked] down!"),
-			span_userdanger("[attacker] tackles you down!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"),
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_danger("You tackle [smacked] down!"))
-		log_combat(attacker, smacked, "tackled (paralyzed)")
-	return TRUE

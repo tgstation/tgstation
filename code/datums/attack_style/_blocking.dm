@@ -36,8 +36,7 @@
 
 /datum/status_effect/blocking/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
-	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
-	// melbert todo : register signals to remove when out of stamina
+	RegisterSignals(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(on_health_update))
 	return TRUE
 
 /datum/status_effect/blocking/refresh(effect, obj/item/new_blocker)
@@ -53,6 +52,7 @@
 		COMSIG_LIVING_CHECK_BLOCK,
 		COMSIG_LIVING_HEALTH_UPDATE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
+		COMSIG_MOB_APPLY_DAMAGE,
 	))
 
 /datum/status_effect/blocking/Destroy()
@@ -131,8 +131,6 @@
 		return NONE
 
 	source.apply_damage(final_damage, STAMINA, spread_damage = TRUE)
-
-	update_shield()
 	// Stops all following effects of the attack.
 	return SUCCESSFUL_BLOCK
 

@@ -780,7 +780,7 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
-// Melbert todo this will need unique handing
+// Melbert todo: Test that this still works
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(timer > world.time)
@@ -847,6 +847,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
+	// Melbert todo: This should be two styles
 	attack_style = /datum/attack_style/swing
 	/// Whether the saw is open or not
 	var/is_open = FALSE
@@ -1015,7 +1016,7 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
-// Melbert todo this will need unique handling
+// Melbert todo: Test that this still works
 /obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	. |= AFTERATTACK_PROCESSED_ITEM

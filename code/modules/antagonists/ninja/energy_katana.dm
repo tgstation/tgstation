@@ -44,7 +44,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-// Melbert todo: this needs unique handling
+// Melbert todo: Test that this still works
 /obj/item/energy_katana/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)

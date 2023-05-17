@@ -57,7 +57,7 @@
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = null
 
-/datum/attack_style/unarmed/disarm/xeno/disarm_target(mob/living/attacker, mob/living/smacked)
+/datum/attack_style/unarmed/disarm/xeno/disarm_target(mob/living/attacker, mob/living/smacked, shove_verb)
 	if(iscyborg(smacked))
 		var/mob/living/silicon/robot/robot_hit = smacked
 		var/obj/item/borg_module = robot_hit.get_active_held_item()

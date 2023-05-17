@@ -12,7 +12,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
-	// melbert dodo: figure out surgical tools
 
 /obj/item/retractor/augment
 	desc = "Micro-mechanical manipulator for retracting stuff."

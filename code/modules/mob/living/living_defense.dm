@@ -420,6 +420,25 @@
 /mob/living/proc/is_shove_knockdown_blocked()
 	return !(status_flags & CANKNOCKDOWN)
 
+/mob/living/attack_hand(mob/living/user, list/modifiers)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+
+	help_shake_act(user)
+	return FALSE
+
+/// Called when this mob is help-intent clicked on by the helper mob
+/mob/living/proc/help_shake_act(mob/living/helper)
+	var/help_simple = response_help_simple || helper.friendly_verb_simple
+	var/help_cont = response_help_continuous || helper.friendly_verb_continuous
+
+	if(!help_simple || !help_cont)
+		return
+
+	visible_message(span_notice("[helper] [help_cont] [src]."), span_notice("[helper] [help_cont] you."), ignored_mobs = helper)
+	to_chat(helper, span_notice("You [help_simple] [src]."))
+	adjust_status_effects_on_shake_up()
+
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
 

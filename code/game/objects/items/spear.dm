@@ -189,7 +189,6 @@
 	attack_verb_simple = list("gore")
 	force_unwielded = 15
 	force_wielded = 25
-	// melbert todo needs a unique attack style
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()

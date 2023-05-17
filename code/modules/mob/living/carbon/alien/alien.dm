@@ -17,7 +17,7 @@
 
 	default_help_style = /datum/attack_style/unarmed/help/xeno
 	default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno
-	default_disarm_style = /datum/attack_style/unarmed/instant_disarm
+	default_disarm_style = /datum/attack_style/unarmed/disarm/xeno
 
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs

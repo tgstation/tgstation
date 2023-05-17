@@ -163,7 +163,6 @@
 
 /mob/living/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		// Melbert todo : handle bite handling here
 		if(proximity_flag)
 			return handle_bite(attack_target)
 		return FALSE
@@ -201,16 +200,20 @@
 	return FALSE
 
 /mob/living/proc/handle_bite(atom/attack_target)
-	var/datum/attack_style/unarmed/bite_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/limb_based/bite]
-	return bite_style?.process_attack(src, get_bodypart(BODY_ZONE_HEAD), attack_target)
+	if(!combat_mode)
+		return FALSE
+
+	var/obj/item/bodypart/head/biting_with = get_bodypart(BODY_ZONE_HEAD)
+	if(!isnull(biting_with))
+		return biting_with.attack_style?.process_attack(src, biting_with, attack_target)
+
+	if(istype(default_harm_style, /datum/attack_style/unarmed/generic_damage/mob_attack/bite))
+		return default_harm_style.process_attack(src, null, attack_target)
+
+	return FALSE
 
 /mob/living/silicon/handle_bite(atom/attack_target)
-	return // ??
-
-/mob/living/carbon/handle_bite(atom/attack_target)
-	if(get_bodypart(BODY_ZONE_HEAD))
-		return FALSE
-	return ..()
+	return FALSE // ??
 
 /mob/living/carbon/human/handle_bite(atom/attack_target)
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_BITER))
