@@ -12,7 +12,7 @@
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	destruction_sleep_duration = 40
 	exit_delay = 40
-	encumbrance_gap = 2
+	encumbrance_gap = 1.6
 	internal_damage_threshold = 25
 	wreckage = /obj/structure/mecha_wreckage/phazon
 	mech_type = EXOSUIT_MODULE_PHAZON

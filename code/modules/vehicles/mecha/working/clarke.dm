@@ -7,7 +7,7 @@
 	max_temperature = 65000
 	max_integrity = 200
 	movedelay = 1.25
-	encumbrance_gap = 1.5
+	encumbrance_gap = 1.6
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	step_energy_drain = 15 //slightly higher energy drain since you movin those wheels FAST

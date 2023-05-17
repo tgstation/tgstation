@@ -94,6 +94,7 @@
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	movedelay = 3
 	max_integrity = 550
+	encumbrance_gap = 4
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	force = 55
 	max_equip_by_category = list(
