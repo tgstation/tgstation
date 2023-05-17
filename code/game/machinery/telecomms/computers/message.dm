@@ -56,7 +56,7 @@
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
 
-/// Removing the emag effect from the console
+/// Remove the emag effect from the console
 /obj/machinery/computer/message_monitor/proc/unemag_console()
 	screen = MSG_MON_SCREEN_MAIN
 	linkedServer.toggled = TRUE
@@ -72,8 +72,8 @@
 /obj/machinery/computer/message_monitor/LateInitialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
-		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
-			linkedServer = S
+		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
+			linkedServer = message_server
 			break
 
 /obj/machinery/computer/message_monitor/Destroy()
@@ -88,19 +88,16 @@
 		"notice_message" = notice_message,
 		"success_message" = success_message,
 		"auth" = auth,
-		"server_status" = !LINKED_SERVER_NONRESPONSIVE
+		"server_status" = !LINKED_SERVER_NONRESPONSIVE,
 	)
 
 	switch(screen)
 		if(MSG_MON_SCREEN_MAIN)
 			data["password"] = password
 			data["status"] = linkedServer.on
-			// Check is AI or cyboeg malf
+			// Check is AI or cyborg malf
 			var/mob/living/silicon/silicon_user = user
-			if(istype(silicon_user) && silicon_user.hack_software)
-				data["is_malf"] = TRUE
-			else
-				data["is_malf"] = FALSE
+			data["is_malf"] = istype(silicon_user) && silicon_user.hack_software
 
 		if(MSG_MON_SCREEN_LOGS)
 			var/list/message_list = list()
@@ -125,8 +122,7 @@
 
 	switch(action)
 		if("auth")
-			// Get auth pass
-			var/authPass = params["password"]
+			var/authPass = params["auth_password"]
 
 			if(auth)
 				auth = FALSE
@@ -142,8 +138,8 @@
 			return
 		if("link_server")
 			var/list/message_servers = list()
-			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
-				message_servers += M
+			for (var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
+				message_servers += message_server
 
 			if(length(message_servers) > 1)
 				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
@@ -207,11 +203,9 @@
 					break
 			return
 		if("send_fake_message")
-			//Get custom sender
 			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender")
-			//Get job
 			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
-			//Get recipient
+
 			var/recipient
 			var/list/viewable_tablets = list()
 			for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
@@ -225,11 +219,11 @@
 				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 			else
 				recipient = null
-			//Get message
+
 			var/message = tgui_input_text(usr, "Please enter your message", "Message")
 			if(isnull(sender) || sender == "")
 				sender = "UNKNOWN"
-			// Checking parametrs
+
 			if(isnull(recipient))
 				notice_message = "NOTICE: No recipient selected!"
 				return attack_hand(usr)
@@ -275,7 +269,7 @@
 #undef MSG_MON_SCREEN_HACKED
 #undef LINKED_SERVER_NONRESPONSIVE
 
-// Monitor decryption key paper
+/// Monitor decryption key paper
 
 /obj/item/paper/monitorkey
 	name = "monitor decryption key"
