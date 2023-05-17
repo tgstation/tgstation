@@ -268,7 +268,7 @@
 			. += "The cover is broken and can probably be pried off with enough force."
 			return
 		if(terminal && has_electronics)
-		 . += "The cover is missing but can be replaced using a new frame."
+			. += "The cover is missing but can be replaced using a new frame."
 		return
 	if(opened)
 		if(has_electronics && terminal)
