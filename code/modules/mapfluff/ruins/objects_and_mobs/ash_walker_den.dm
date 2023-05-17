@@ -24,6 +24,7 @@
 	ashies = new /datum/team/ashwalkers()
 	var/datum/objective/protect_object/objective = new
 	objective.set_target(src)
+	objective.team = ashies
 	linked_objective = objective
 	ashies.objectives += objective
 	START_PROCESSING(SSprocessing, src)

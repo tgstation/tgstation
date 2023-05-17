@@ -40,5 +40,28 @@
 		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 
 /datum/team/ashwalkers
-	name = "Ashwalkers"
-	show_roundend_report = FALSE
+	name = "Ashwalker Tribe"
+	member_name = "Ashwalker"
+
+/datum/team/ashwalkers/roundend_report()
+	var/list/report = list()
+
+	report += "<span class='header'>An Ashwalker Tribe was discovered in the wastes:</span><br>"
+	report += "The [member_name]s were:"
+	report += printplayerlist(members)
+
+	var/datum/objective/protect_object/necropolis_objective = locate(/datum/objective/protect_object) in objectives
+
+	if(necropolis_objective)
+		objectives -= necropolis_objective //So we don't count it in the check for other objectives.
+		report += "<span class='header'>The [name] was tasked with defending their Necropolis:</span><br>"
+		if(necropolis_objective.check_completion())
+			report += span_greentext("The [name] successfully defended and served the Necropolis!")
+		else
+			report += span_redtext("The [name] failed to defend the Necropolis!")
+
+	if(length(objectives))
+		report += "<span class='header'>The [name]'s other objectives were:</span>"
+		printobjectives(objectives)
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
