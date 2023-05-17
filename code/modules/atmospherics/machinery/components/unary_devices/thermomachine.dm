@@ -229,7 +229,7 @@
 			W.forceMove(src)
 			pyro_anomaly_core = W
 			RefreshParts()
-	. = ..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
