@@ -102,7 +102,7 @@
 		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
-	if(pyro_anomaly_core)
+	if(has_anomaly_core())
 		max_temperature += T1500K
 
 
@@ -150,7 +150,7 @@
 	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
 	. += span_notice(" -[EXAMINE_HINT("AltClick")] to cycle between temperaure ranges.")
 	. += span_notice(" -[EXAMINE_HINT("CtrlClick")] to toggle on/off.")
-	if(pyro_anomaly_core)
+	if(has_anomaly_core())
 		. += span_notice(" -There is a pyroclastic anomaly core slotted into the back of the machine, it pumps massive amounts of heat into the machine.")
 	else
 		. += span_notice(" -There seems to be a slot for something in the back, what could it be?")
@@ -204,7 +204,7 @@
 	var/temperature_target_delta = target_temperature - port.temperature
 
 	// Checking if the thermomachine is anomalous
-	if(allows_cooling && temperature_target_delta < 0)
+	if(can_cool_gas() && temperature_target_delta < 0)
 		return
 
 	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
@@ -222,7 +222,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/assembly/signaler/anomaly/pyro))
-		if(pyro_anomaly_core)
+		if(has_anomaly_core())
 			balloon_alert(user, "already an anomaly core!")
 		else
 			balloon_alert(user, "inserted [W.name]")
@@ -362,6 +362,12 @@
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_appearance()
 
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/has_anomaly_core()
+	return pyro_anomaly_core
+
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/can_cool_gas()
+	return allows_cooling
+
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
 
@@ -407,6 +413,5 @@
 	min_temperature = T0C
 	max_temperature = calculated_bin_rating * 2500
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
-
 
 #undef THERMOMACHINE_POWER_CONVERSION
