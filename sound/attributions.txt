@@ -63,3 +63,16 @@ https://freesound.org/people/loudernoises/sounds/334169/
 local_forecast1.ogg to local_forecast8.ogg is "Local Forecast - Elevator" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+
+
+revolutionary_tide.ogg is adapted from several audio samples:
+
+Marching.wav, which is licensed under CC Attribution 4.0
+https://freesound.org/people/WebbFilmsUK/sounds/200321/
+
+TribalDrums.wav, which is licensed under Noncommercial 4.0 License
+https://freesound.org/people/vmgraw/sounds/235610/
+
+vmgraw's "Distant Whistle" (CC 0)
+https://freesound.org/people/giddster/sounds/414480/
