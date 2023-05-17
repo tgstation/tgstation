@@ -577,7 +577,7 @@
 	mix_message = "You swear you saw a spark fly from the glass..."
 
 /datum/chemical_reaction/drink/pod_tesla
-	results = list(/datum/reagent/consumable/ethanol/telepole = 5)
+	results = list(/datum/reagent/consumable/ethanol/pod_tesla = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/telepole = 5, /datum/reagent/consumable/ethanol/brave_bull = 3, /datum/reagent/consumable/ethanol/admiralty = 7)
 	mix_message = "Arcs of lightning fly from the mixture."
 	mix_sound = 'sound/weapons/zapbang.ogg'
