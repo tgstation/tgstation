@@ -15,13 +15,13 @@
 		return
 
 	in_camera_mode = !in_camera_mode
+	user.click_intercept = in_camera_mode ? src : null
 	if(sound)
 		playsound(src, 'sound/items/wirecutter.ogg', 50, TRUE)
-	to_chat(user, span_notice("Camera mode: [in_camera_mode ? "Activated" : "Deactivated"]."))
-	user.click_intercept = in_camera_mode ? src : null
+		to_chat(user, span_notice("Camera mode: [in_camera_mode ? "Activated" : "Deactivated"]."))
 
 /obj/item/camera/siliconcam/proc/InterceptClickOn(mob/clicker, params, atom/clicked)
-	toggle_camera_mode(sound = FALSE)
+	toggle_camera_mode(clicker, sound = FALSE)
 	captureimage(clicked, clicker, picture_size_x - 1, picture_size_y - 1)
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
