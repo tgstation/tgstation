@@ -55,7 +55,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/current_rules = list()
 	/// List of executed rulesets.
 	var/list/executed_rules = list()
-	/// When TRUE GetInjectionChance returns 100.
+	/// If TRUE, the next player to latejoin will guarantee roll for a random latejoin antag
+	/// (this does not guarantee they get said antag roll, depending on preferences and circumstances)
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
@@ -707,8 +708,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				as the most recent latejoin did not fulfill the ruleset's requirements.")
 		return
 
-	if(latejoin_injection_cooldown >= world.time && !forced_injection && !prob(latejoin_roll_chance))
-		return
+	if(!forced_injection)
+		if(latejoin_injection_cooldown >= world.time)
+			return
+		if(!prob(latejoin_roll_chance))
+			return
 
 	var/was_forced = forced_injection
 	forced_injection = FALSE
