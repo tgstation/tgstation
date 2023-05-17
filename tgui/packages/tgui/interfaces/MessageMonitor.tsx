@@ -1,14 +1,15 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   screen: number;
-  status: Boolean;
+  status: BooleanLike;
   server_status: number;
   auth: number;
   password: string;
-  is_malf: Boolean;
+  is_malf: BooleanLike;
   error_message: string;
   success_message: string;
   notice_message: string;
@@ -141,52 +142,138 @@ const HackedScreen = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
+const MainScreenAuth = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { status, auth, server_status, is_malf, password } = data;
-  const [input_password, setPassword] = useLocalState(
+  const { status, is_malf, password } = data;
+  const [auth_password, setPassword] = useLocalState(
     context,
     'input_password',
     password
   );
   return (
-    <Stack fill vertical>
-      {server_status === 1 ? (
-        <>
-          <Stack.Item content="Welcome, please select an option" />
-          <Stack.Item>
-            <Section>
-              <Input
-                value={input_password}
-                onInput={(e, value) => setPassword(value)}
-                placeholder="Password"
-              />
-              <Button
-                content={auth ? 'Logout' : 'Auth'}
-                onClick={() => act('auth', { password: input_password })}
-              />
-              <Button
-                content={status ? 'ON' : 'OFF'}
-                color={status ? 'green' : 'red'}
-                disabled={!auth ? true : false}
-                onClick={() => act('turn_server')}
-              />
-              {is_malf ? (
-                <Button
-                  content="Hack"
-                  color="red"
-                  disabled={auth ? true : false}
-                  onClick={() => act('hack')}
-                />
-              ) : (
-                ''
-              )}
-            </Section>
-          </Stack.Item>
-        </>
-      ) : (
-        ''
-      )}
+    <>
+      <Stack.Item>
+        <Section>
+          <Input
+            value={auth_password}
+            onInput={(e, value) => setPassword(value)}
+            placeholder="Password"
+          />
+          <Button
+            content={'Logout'}
+            onClick={() => act('auth', { auth_password: auth_password })}
+          />
+          <Button
+            content={status ? 'ON' : 'OFF'}
+            color={status ? 'green' : 'red'}
+            onClick={() => act('turn_server')}
+          />
+          {is_malf === 1 && (
+            <Button
+              content="Hack"
+              color="red"
+              disabled
+              onClick={() => act('hack')}
+            />
+          )}
+        </Section>
+      </Stack.Item>
+      <Table>
+        <Table.Row header>
+          <Table.Cell>Option</Table.Cell>
+          <Table.Cell>Description</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button
+              content={'View Message Logs'}
+              onClick={() => act('view_message_logs')}
+            />
+          </Table.Cell>
+          <Table.Cell>Shows all messages that have been sent</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button
+              content={'View Request Console Logs'}
+              onClick={() => act('view_request_logs')}
+            />
+          </Table.Cell>
+          <Table.Cell>
+            Shows all orders that were made in the cargo department
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button
+              content={'Clear Message Logs'}
+              onClick={() => act('clear_message_logs')}
+            />
+          </Table.Cell>
+          <Table.Cell>Clears message logs</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button
+              content={'Clear Request Console Logs'}
+              onClick={() => act('clear_request_logs')}
+            />
+          </Table.Cell>
+          <Table.Cell>Clears request console logs</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button content={'Set Custom Key'} onClick={() => act('set_key')} />
+          </Table.Cell>
+          <Table.Cell>Changes decryption key</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Button
+              content={'Send Admin Message'}
+              onClick={() => act('send_fake_message')}
+            />
+          </Table.Cell>
+          <Table.Cell>Sends a custom message to the user&apos;s PDA</Table.Cell>
+        </Table.Row>
+      </Table>
+    </>
+  );
+};
+
+const MainScreenNotAuth = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { status, is_malf, password } = data;
+  const [auth_password, setPassword] = useLocalState(
+    context,
+    'input_password',
+    password
+  );
+
+  return (
+    <>
+      <Stack.Item>
+        <Section>
+          <Input
+            value={auth_password}
+            onInput={(e, value) => setPassword(value)}
+            placeholder="Password"
+          />
+          <Button
+            content={'Auth'}
+            onClick={() => act('auth', { auth_password: auth_password })}
+          />
+          <Button
+            content={status ? 'ON' : 'OFF'}
+            color={status ? 'green' : 'red'}
+            disabled
+            onClick={() => act('turn_server')}
+          />
+          {is_malf === 1 && (
+            <Button content="Hack" color="red" onClick={() => act('hack')} />
+          )}
+        </Section>
+      </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable title="Choose Option">
           <Table>
@@ -194,83 +281,28 @@ const MainScreen = (props, context) => {
               <Table.Cell>Option</Table.Cell>
               <Table.Cell>Description</Table.Cell>
             </Table.Row>
-            {server_status === 1 && auth === 1 ? (
-              <>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'View Message Logs'}
-                      onClick={() => act('view_message_logs')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    Shows all messages that have been sent
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'View Request Console Logs'}
-                      onClick={() => act('view_request_logs')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    Shows all orders that were made in the cargo department
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'Clear Message Logs'}
-                      onClick={() => act('clear_message_logs')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>Clears message logs</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'Clear Request Console Logs'}
-                      onClick={() => act('clear_request_logs')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>Clears request console logs</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'Set Custom Key'}
-                      onClick={() => act('set_key')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>Changes decryption key</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>
-                    <Button
-                      content={'Send Admin Message'}
-                      onClick={() => act('send_fake_message')}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    Sends a custom message to the user&apos;s PDA
-                  </Table.Cell>
-                </Table.Row>
-              </>
-            ) : (
-              <Table.Row>
-                <Table.Cell>
-                  <Button
-                    content={'Link Server'}
-                    onClick={() => act('link_server')}
-                  />
-                </Table.Cell>
-                <Table.Cell>Connects to the server</Table.Cell>
-              </Table.Row>
-            )}
+            <Table.Row>
+              <Table.Cell>
+                <Button
+                  content={'Link Server'}
+                  onClick={() => act('link_server')}
+                />
+              </Table.Cell>
+              <Table.Cell>Connects to the server</Table.Cell>
+            </Table.Row>
           </Table>
         </Section>
       </Stack.Item>
+    </>
+  );
+};
+
+const MainScreen = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { auth } = data;
+  return (
+    <Stack fill vertical>
+      {auth === 1 ? <MainScreenAuth /> : <MainScreenNotAuth />}
     </Stack>
   );
 };
