@@ -59,7 +59,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /datum/component/burning/process(seconds_per_tick)
 	var/atom/atom_parent = parent
-	// Check if the parent somehow became fireproof
+	// Check if the parent somehow became fireproof, remove component if so
 	if(atom_parent.resistance_flags & FIRE_PROOF)
 		atom_parent.extinguish()
 		return
@@ -71,20 +71,18 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	examine_list += span_danger("[source.p_theyre(TRUE)] burning!")
 
-/// Handles searing the hand of anyone who tries to touch this without protection.
+/// Handles searing the hand of anyone who tries to touch parent without protection.
 /datum/component/burning/proc/on_attack_hand(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	// attack_hand() behavior should only apply to items, for now
-	if(!isitem(source))
-		return NONE
-
 	var/can_handle_hot = FALSE
-	if(!istype(user))
+	if(!iscarbon(user))
 		can_handle_hot = TRUE
 	else if(user.gloves && (user.gloves.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE))
 		can_handle_hot = TRUE
 	else if(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+		can_handle_hot = TRUE
+	else if((source == user) || (source.loc == user)) // So people can take their own clothes off.
 		can_handle_hot = TRUE
 
 	if(can_handle_hot)

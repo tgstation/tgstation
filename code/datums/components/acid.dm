@@ -118,13 +118,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /// Handles the slow corrosion of the parent [/atom].
 /datum/component/acid/process(seconds_per_tick)
-	process_effect?.InvokeAsync(seconds_per_tick)
-	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
-		return
-	// We got unacidable, we need to bail out
+	// If we somehow got unacidable, we need to bail out
 	var/atom/parent_atom = parent
 	if(parent_atom.resistance_flags & UNACIDABLE)
 		qdel(src)
+		return
+	process_effect?.InvokeAsync(seconds_per_tick)
+	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * seconds_per_tick)
 
@@ -209,7 +209,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	set_volume(acid_volume + reac_volume)
 	return NONE
 
-/// Handles searing the hand of anyone who tries to touch this without protection.
+/// Handles searing the hand of anyone who tries to touch parent without protection.
 /datum/component/acid/proc/on_attack_hand(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
