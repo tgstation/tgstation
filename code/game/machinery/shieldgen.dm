@@ -971,7 +971,7 @@
 
 	if(default_deconstruction_crowbar(I))
 		return TRUE
-	return..()
+	return ..()
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
