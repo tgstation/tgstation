@@ -1,0 +1,4 @@
+author: "Reality Overseer"
+delete-after: True
+changes:
+  - bugfix: "makes elder atmosian statue craftable"
