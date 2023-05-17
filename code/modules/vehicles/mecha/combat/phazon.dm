@@ -3,6 +3,7 @@
 	name = "\improper Phazon"
 	icon_state = "phazon"
 	base_icon_state = "phazon"
+	allow_diagonal_movement = TRUE
 	movedelay = 2
 	step_energy_drain = 3
 	max_integrity = 200
@@ -11,13 +12,15 @@
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 2
+	internal_damage_threshold = 25
 	wreckage = /obj/structure/mecha_wreckage/phazon
 	mech_type = EXOSUIT_MODULE_PHAZON
 	force = 15
 	max_equip_by_category = list(
 		MECHA_UTILITY = 1,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 2,
+		MECHA_ARMOR = 3,
 	)
 	phase_state = "phazon-phase"
 

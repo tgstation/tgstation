@@ -10,6 +10,7 @@
 	energy_drain = 10
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
+	movedelay = 0.2
 	toolspeed = 0.8
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_RIPLEY
@@ -95,7 +96,7 @@
 				chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
 				span_notice("[chassis] pushes you aside."))
 			return ..()
-		else if((source.istate & ISTATE_SECONDARY) && iscarbon(M))//meme clamp here
+		else if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(M))//meme clamp here
 			if(!killer_clamp)
 				to_chat(source, span_notice("You longingly wish to tear [M]'s arms off."))
 				return
@@ -115,7 +116,7 @@
 			playsound(src, get_dismember_sound(), 80, TRUE)
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
 						span_userdanger("[chassis] rips your arms off!"))
-			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext((source.istate & ISTATE_HARM))] (DAMTYPE: [uppertext(damtype)])")
+			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
 		M.take_overall_damage(clamp_damage)
@@ -126,7 +127,7 @@
 		target.visible_message(span_danger("[chassis] squeezes [target]!"), \
 							span_userdanger("[chassis] squeezes you!"),\
 							span_hear("You hear something crack."))
-		log_combat(source, M, "attacked", "[name]", "(Combat mode: [(source.istate & ISTATE_HARM) ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+		log_combat(source, M, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 	return ..()
 
 
@@ -136,6 +137,7 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them! This time for real!"
 	killer_clamp = TRUE
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake//harmless fake for pranks
 	desc = "They won't know what clamped them!"
@@ -151,6 +153,7 @@
 	energy_drain = 0
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0.2
 	mech_flags = EXOSUIT_MODULE_WORKING
 	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
@@ -227,6 +230,7 @@
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0.4
 	item_flags = NO_MAT_REDEMPTION
 	///determines what we'll so when clicking on a turf
 	var/mode = MODE_DECONSTRUCT

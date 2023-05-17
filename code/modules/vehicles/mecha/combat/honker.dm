@@ -10,6 +10,8 @@
 	max_temperature = 25000
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 2
+	internal_damage_threshold = 20
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
@@ -18,7 +20,7 @@
 	max_equip_by_category = list(
 		MECHA_UTILITY = 2,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 0,
+		MECHA_ARMOR = 1,
 	)
 	var/squeak = TRUE
 

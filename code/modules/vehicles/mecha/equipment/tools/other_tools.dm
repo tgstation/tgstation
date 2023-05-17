@@ -11,6 +11,7 @@
 	equip_cooldown = 150
 	energy_drain = 1000
 	range = MECHA_RANGED
+	movedelay = 0.4
 	var/teleport_range = 7
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, list/modifiers)
@@ -33,6 +34,7 @@
 	equip_cooldown = 50
 	energy_drain = 300
 	range = MECHA_RANGED
+	movedelay = 0.4
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, list/modifiers)
@@ -75,6 +77,7 @@
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0.5
 	///Which atom we are movable_target onto for
 	var/atom/movable/movable_target
 	///Whether we will throw movable atomstothrow by locking onto them or just throw them back from where we click
@@ -154,6 +157,8 @@
 //////////////////////////// ARMOR BOOSTER MODULES //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/armor
 	equipment_slot = MECHA_ARMOR
+	movedelay = 0.4
+
 	///short protection name to display in the UI
 	var/protect_name = "you're mome"
 	///icon in armor.dmi that shows in the UI
@@ -203,8 +208,9 @@
 	range = 0
 	activated = FALSE
 	equipment_slot = MECHA_UTILITY
+	movedelay = 0.4
 	/// Repaired health per second
-	var/health_boost = 0.5
+	var/health_boost = 1
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
 
@@ -277,6 +283,7 @@
 	icon_state = "tesla"
 	range = MECHA_MELEE
 	equipment_slot = MECHA_POWER
+	movedelay = 0.4
 	activated = FALSE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -286,7 +293,7 @@
 	/// Fuel used per second while actively generating
 	var/fuelrate_active = 100
 	/// Energy recharged per second
-	var/rechargerate = 10
+	var/rechargerate = 100
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()
@@ -438,6 +445,7 @@
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
 	effect_type = /obj/effect/particle_effect/fluid/smoke
+	movedelay = 0.25
 	var/move_cost = 20 //moles per step
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -463,6 +471,7 @@
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments."
 	detachable = FALSE
 	effect_type = /obj/effect/particle_effect/ion_trails
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(movement_dir)
 	if(!chassis)

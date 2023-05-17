@@ -124,9 +124,9 @@
 	)
 	///assoc list: max equips for non-arm modules key-count
 	var/list/max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_UTILITY = 1,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 0,
+		MECHA_ARMOR = 1,
 	)
 	///flat equipment for iteration
 	var/list/flat_equipment
@@ -140,8 +140,10 @@
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
+	/// How many points of slowdown are negated from equipment? Added to the mech's base movedelay.
+	var/encumbrance_gap = 1
 
-	///TIme taken to leave the mech
+	///Time taken to leave the mech
 	var/exit_delay = 2 SECONDS
 	///Time you get slept for if you get forcible ejected by the mech exploding
 	var/destruction_sleep_duration = 2 SECONDS

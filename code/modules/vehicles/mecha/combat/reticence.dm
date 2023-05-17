@@ -10,6 +10,8 @@
 	force = 30
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 2
+	internal_damage_threshold = 25
 	wreckage = /obj/structure/mecha_wreckage/reticence
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)

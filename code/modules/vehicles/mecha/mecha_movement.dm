@@ -50,7 +50,7 @@
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
+	COOLDOWN_START(src, cooldown_vehicle_move, get_movedelay())
 	if(completely_disabled)
 		return FALSE
 	if(!direction)
@@ -117,7 +117,7 @@
 		setDir(direction)
 		return TRUE
 
-	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
+	set_glide_size(DELAY_TO_GLIDE_SIZE(get_movedelay()))
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 	if(phasing)
@@ -176,3 +176,22 @@
 		GLOB.cameranet.updatePortableCamera(chassis_camera, MECH_CAMERA_BUFFER)
 	updating = FALSE
 #undef MECH_CAMERA_BUFFER
+
+/obj/vehicle/sealed/mecha/proc/get_movedelay()
+	var/tally = 0
+
+	if(LAZYLEN(flat_equipment))
+		for(var/obj/item/mecha_parts/mecha_equipment/ME in flat_equipment)
+			if(ME.get_movedelay())
+				tally += ME.get_movedelay()
+
+		if(tally <= encumbrance_gap)	// If the total is less than our encumbrance gap, ignore equipment weight.
+			tally = 0
+		else	// Otherwise, start the tally after cutting that gap out.
+			tally -= encumbrance_gap
+
+	if(leg_overload_mode)	// At the end, because this would normally just make the mech *slower* since tally wasn't starting at 0.
+		tally = min(1, round(tally/2))
+
+//	return max(1, round(tally, 0.1))	// Round the total to the nearest 10th. Can't go lower than 1 tick. Even humans have a delay longer than that.
+	return movedelay + round(tally, 0.1)

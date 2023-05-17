@@ -5,6 +5,7 @@
 	base_icon_state = "odysseus"
 	allow_diagonal_movement = TRUE
 	movedelay = 2
+	encumbrance_gap = 1
 	max_temperature = 15000
 	max_integrity = 120
 	wreckage = /obj/structure/mecha_wreckage/odysseus

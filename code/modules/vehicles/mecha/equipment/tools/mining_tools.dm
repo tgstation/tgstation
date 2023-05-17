@@ -17,6 +17,7 @@
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
+	movedelay = 0.2
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -157,6 +158,7 @@
 	equip_cooldown = 15
 	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
+	movedelay = 0.2
 	var/scanning_time = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)

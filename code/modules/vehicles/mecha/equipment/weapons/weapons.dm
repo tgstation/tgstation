@@ -1,6 +1,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
 	range = MECHA_RANGED
+	movedelay = 0.4
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/mecha/weapdestr.ogg'
 	mech_flags = EXOSUIT_MODULE_COMBAT
@@ -78,6 +79,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
+	movedelay = 0.2
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
@@ -96,6 +98,7 @@
 	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
 	energy_drain = 100
+	movedelay = 0
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
@@ -180,6 +183,7 @@
 	desc = "Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
 	icon_state = "mecha_honker"
 	energy_drain = 200
+	movedelay = 0
 	equip_cooldown = 150
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
@@ -413,6 +417,7 @@
 	projectiles_cache = 999
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -425,6 +430,7 @@
 	projectiles_cache = 999
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
@@ -438,6 +444,7 @@
 	energy_drain = 250
 	equip_cooldown = 20
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0
 	missile_range = 5
 	projectile = /obj/item/punching_glove
 	fire_sound = 'sound/items/bikehorn.ogg'
@@ -505,6 +512,7 @@
 	projectiles = 8
 	projectiles_cache = 999
 	mech_flags = EXOSUIT_MODULE_HONK
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache
 	name = "\improper HONKeR-6 grenade launcher"

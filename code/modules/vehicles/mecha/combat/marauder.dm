@@ -9,6 +9,8 @@
 	max_temperature = 60000
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 3
+	internal_damage_threshold = 25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
