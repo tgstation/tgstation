@@ -91,6 +91,7 @@
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 				else
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
+			ashies.sacrifices_made++
 
 /obj/structure/lavaland/ash_walker/proc/remake_walker(datum/mind/oldmind, oldname)
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))
@@ -109,5 +110,6 @@
 		new /obj/effect/mob_spawn/ghost_role/human/ash_walker(get_step(loc, pick(GLOB.alldirs)), ashies)
 		visible_message(span_danger("One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!"))
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
+		ashies.eggs_created++
 
 #undef ASH_WALKER_SPAWN_THRESHOLD
