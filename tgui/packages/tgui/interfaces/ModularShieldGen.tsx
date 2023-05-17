@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Stack, Section, ProgressBar, Button, NumberInput } from '../components';
 
-type modularShieldGeneratorData = {
+type ModularShieldGenData = {
   max_strength: number;
   current_strength: number;
   max_regeneration: number;
@@ -12,11 +12,12 @@ type modularShieldGeneratorData = {
   active: Boolean;
   recovering: Boolean;
   exterior_only: Boolean;
+  initiating_field: Boolean;
 };
 
 export const ModularShieldGen = (props, context) => {
   const { topLevel } = props;
-  const { act, data } = useBackend<modularShieldGeneratorData>(context);
+  const { act, data } = useBackend<ModularShieldGenData>(context);
   const {
     max_strength,
     max_regeneration,
@@ -27,6 +28,7 @@ export const ModularShieldGen = (props, context) => {
     active,
     exterior_only,
     recovering,
+    initiating_field,
   } = data;
 
   return (
@@ -53,7 +55,6 @@ export const ModularShieldGen = (props, context) => {
             </Section>
             <Section
               horizontal
-              fill
               height={'95px'}
               title={'Regeneration and Radius'}>
               <Section height={'20px'}>
@@ -113,7 +114,7 @@ export const ModularShieldGen = (props, context) => {
                       top={3.25}
                       right={-16.75}
                       bold={1}
-                      disabled={recovering}
+                      disabled={recovering || initiating_field}
                       selected={active}
                       content={active ? 'On' : 'Off'}
                       icon="power-off"
@@ -123,11 +124,9 @@ export const ModularShieldGen = (props, context) => {
                       disabled={active}
                       right={4.25}
                       top={3.25}
-                      onClick={() => act('toggle_exterior')}
-                      content={
-                        exterior_only ? 'External only' : 'Internal & External'
-                      }
-                    />
+                      onClick={() => act('toggle_exterior')}>
+                      {exterior_only ? 'External only' : 'Internal & External'}
+                    </Button>
 
                     <Section title={'Set Radius'} right={-10.5} top={-4.25}>
                       Toggle Placement

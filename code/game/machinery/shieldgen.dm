@@ -702,6 +702,8 @@
 
 ///toggles the forcefield on and off
 /obj/machinery/modular_shield_generator/proc/toggle_shields()
+	if(initiating)
+		return
 	if(active)
 		deactivate_shields()
 		return
