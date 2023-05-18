@@ -1,6 +1,6 @@
 /datum/looping_sound/local_forecast
 	start_sound = 'sound/ambience/music/local_forecast/local_forecast1.ogg'
-	start_length = 5.83 SECONDS
+	start_length = 9.32 SECONDS
 
 	mid_sounds = list(
 		'sound/ambience/music/local_forecast/local_forecast2.ogg' = 6,
@@ -10,7 +10,7 @@
 		'sound/ambience/music/local_forecast/local_forecast6.ogg' = 2,
 		'sound/ambience/music/local_forecast/local_forecast7.ogg' = 1,
 	)
-	mid_length = 5.83 SECONDS
+	mid_length = 9.32 SECONDS
 
 	end_sound = 'sound/ambience/music/local_forecast/local_forecast8.ogg'
 
