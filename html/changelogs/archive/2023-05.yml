@@ -694,3 +694,22 @@
   - bugfix: Metastation's recreation area shower is now attached to plumbing.
   Vishenka0704:
   - bugfix: fixed different from english keyboard layout to use tgui chat
+2023-05-18:
+  Helg2:
+  - balance: Security Plasmamen now have Security armor. No bullying them with bottlesmashes
+      anymore.
+  Melbert:
+  - bugfix: Latejoins triggering before the minimum time set
+  Reality Overseer:
+  - bugfix: fixed photographs having black borders in photos
+  - bugfix: makes elder atmosian statue craftable
+  Rhials:
+  - sound: Revolutionaries now have their own stinger that plays upon becoming that
+      antagonist.
+  jlsnow301:
+  - refactor: Tgui Say is rewritten, becoming "much more performant". Hey, that's
+      what it says on the tin! I'm not from marketing!
+  - bugfix: Tguisay drag zones are now ever so slightly larger around the corner of
+      the window
+  - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
+      if it's already open
