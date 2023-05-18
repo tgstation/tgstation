@@ -201,7 +201,6 @@
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
-	attack_style = /datum/attack_style/overhead
 
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER

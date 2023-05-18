@@ -149,7 +149,6 @@
 	base_icon_state = "bloodhand"
 	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	attack_style = /datum/attack_style/overhead
 
 /obj/item/mutant_hand/Initialize(mapload)
 	. = ..()

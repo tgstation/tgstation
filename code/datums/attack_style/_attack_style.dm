@@ -309,6 +309,3 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	if(attack_effect)
 		attacker.do_attack_animation(affecting[1], attack_effect)
-
-// Overhead swings, bypass blocks / targets heads
-/datum/attack_style/overhead

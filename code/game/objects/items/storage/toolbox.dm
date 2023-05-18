@@ -20,7 +20,6 @@
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
-	attack_style = /datum/attack_style/overhead
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5

@@ -1329,9 +1329,7 @@
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
-		var/datum/attack_style/unarmed/generic_damage/arm_style = active_arm.attack_style
-		if(istype(arm_style))
-			return arm_style.attack_type
+		return active_arm.attack_type
 
 	return ..()
 
