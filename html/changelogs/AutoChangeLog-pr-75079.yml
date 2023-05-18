@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Bolt-action rifles (the Mosin-Nagant) will no longer spam \"can't jam!\" when attempting to smack it with just about anything."
-  - bugfix: "Anti-materiel rifles (the .50 BMG ones) can now have their magazines manipulated independent of bolt status."
