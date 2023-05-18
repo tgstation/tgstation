@@ -62,10 +62,10 @@
 	desc = "A military-grade gas mask that can be connected to an air supply."
 	icon_state = "gas_mining"
 	inhand_icon_state = "explorer_gasmask"
-	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_cover = MASKCOVERSEYES
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	visor_flags_inv = HIDEFACIALHAIR
-	visor_flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	actions_types = list(/datum/action/item_action/adjust)
 	armor_type = /datum/armor/gas_explorer
 	resistance_flags = FIRE_PROOF
@@ -146,10 +146,10 @@
 			set_armor(/datum/armor/none)
 			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
 		else
-			slot_flags = initial(slot_flags)			
+			slot_flags = initial(slot_flags)
 			set_armor(initial(armor_type))
 			user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
-			
+
 /datum/armor/cloak_goliath
 	melee = 35
 	bullet = 10
