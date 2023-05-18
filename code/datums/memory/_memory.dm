@@ -253,7 +253,7 @@
 		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/hostile/headcrab,
 		/mob/living/simple_animal/hostile/killertomato,
-		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/basic/lizard,
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 		/mob/living/simple_animal/hostile/morph,
 		/mob/living/simple_animal/hostile/mushroom,
