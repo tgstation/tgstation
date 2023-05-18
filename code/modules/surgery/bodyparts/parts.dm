@@ -67,7 +67,7 @@
 	is_dimorphic = FALSE
 	wound_resistance = -10
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_HUMANOID
+	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
 /obj/item/bodypart/chest/alien
