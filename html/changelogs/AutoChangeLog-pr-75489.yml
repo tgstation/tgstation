@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Makes checks for the station z level more robust against coders doing less intuitive stuff, thus protecting it from breaking in weirdly difficult and seemingly unrelated places (I'm looking at you, nuke cinematic unit test)."

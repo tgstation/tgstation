@@ -10,6 +10,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	icon_dead = "spiderling_dead"
+	density = FALSE
 	faction = list(FACTION_SPIDER)
 	speed = 1
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
@@ -53,9 +54,7 @@
 
 	// the proc that handles passtable is nice but we should always be able to pass through table since we're so small so we can eschew adding that here
 	pass_flags |= PASSTABLE
-	ADD_TRAIT(src, TRAIT_PASSTABLE, INNATE_TRAIT)
-
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_PASSTABLE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WEB_SURFER), INNATE_TRAIT)
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 

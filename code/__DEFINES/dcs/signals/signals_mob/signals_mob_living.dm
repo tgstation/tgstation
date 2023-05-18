@@ -107,7 +107,9 @@
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
 	/// The index of message_args that corresponds to the actual message
-	#define TREAT_MESSAGE_MESSAGE 1
+	#define TREAT_MESSAGE_ARG 1
+	#define TREAT_TTS_MESSAGE_ARG 2
+	#define TREAT_TTS_FILTER_ARG 3
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"

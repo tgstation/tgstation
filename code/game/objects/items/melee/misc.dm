@@ -71,6 +71,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
+	block_sound = 'sound/weapons/parry.ogg'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
@@ -164,6 +165,7 @@
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -448,6 +450,7 @@
 	throwforce = 8
 	block_chance = 10
 	blocking_ability = 2.5
+	block_sound = 'sound/weapons/genhit.ogg'
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

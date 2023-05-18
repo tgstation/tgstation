@@ -16,7 +16,7 @@
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
 	blocking_ability = 1
-
+	block_sound = 'sound/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -248,7 +248,7 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
-
+	block_sound = 'sound/weapons/block_blade.ogg'
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.

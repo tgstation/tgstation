@@ -210,7 +210,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -434,16 +434,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)

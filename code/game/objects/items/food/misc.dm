@@ -205,6 +205,7 @@
 	block_chance = 50
 	blocking_ability = 1.5
 	armour_penetration = 80
+	block_sound = 'sound/weapons/parry.ogg'
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
