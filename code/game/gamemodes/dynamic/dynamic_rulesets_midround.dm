@@ -324,6 +324,8 @@
 	flags = HIGH_IMPACT_RULESET
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
+	minimum_players = 30
+
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if(!check_candidates())
 		return FALSE
