@@ -139,12 +139,4 @@ export const ModularShieldGen = (props, context) => {
       </Window.Content>
     </Window>
   );
-  <Button
-    bold={1}
-    disabled={recovering || initiating_field}
-    selected={active}
-    content={active ? 'On' : 'Off'}
-    icon="power-off"
-    onClick={() => act('toggle_shields')}
-  />;
 };
