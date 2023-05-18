@@ -1,10 +1,9 @@
 /datum/looping_sound/elevator_music
 	start_sound = 'sound/ambience/music/elevator/elevator-01.ogg'
-	start_length =  6.21 SECONDS
+	start_length = 7.3 SECONDS
 
 	mid_sounds = list(
 		'sound/ambience/music/elevator/elevator-01.ogg',
-		'sound/ambience/music/elevator/elevator-02.ogg',
 		'sound/ambience/music/elevator/elevator-02.ogg',
 		'sound/ambience/music/elevator/elevator-03.ogg',
 		'sound/ambience/music/elevator/elevator-04.ogg',
@@ -14,12 +13,10 @@
 		'sound/ambience/music/elevator/elevator-08.ogg',
 		'sound/ambience/music/elevator/elevator-09.ogg',
 		'sound/ambience/music/elevator/elevator-10.ogg',
-		'sound/ambience/music/elevator/elevator-11.ogg',
-		'sound/ambience/music/elevator/elevator-12.ogg',
 	)
-	mid_length =  6.21 SECONDS
+	mid_length = 7.3 SECONDS
 
-	end_sound = 'sound/ambience/music/elevator/elevator-12.ogg'
+	end_sound = 'sound/ambience/music/elevator/elevator-10.ogg'
 
 	volume = 20
 	falloff_exponent = 5
