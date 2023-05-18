@@ -53,7 +53,7 @@
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
 	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
-	var/audio_index = 0
+	var/audio_index = 1
 
 	// Args
 	/// Do we skip the starting sounds?
@@ -177,7 +177,7 @@
 		. = play_from
 		audio_index++
 		if(audio_index > length(play_from))
-			audio_index = 0
+			audio_index = 1
 		return .[audio_index]
 
 	if(!length(cut_list))
