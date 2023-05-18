@@ -187,7 +187,6 @@
 		/mob/living/simple_animal/hostile/jungle/mega_arachnid,
 		/mob/living/simple_animal/hostile/jungle/mook,
 		/mob/living/simple_animal/hostile/jungle/seedling,
-		/mob/living/basic/killer_tomato,
 		/mob/living/simple_animal/hostile/lightgeist,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/hostile/lizard/eats_the_roaches,
