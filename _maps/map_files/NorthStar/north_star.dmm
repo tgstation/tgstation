@@ -35775,7 +35775,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/basic/lizard{
 	name = "Allad Minsa"
 	},
 /obj/machinery/camera/directional/west{

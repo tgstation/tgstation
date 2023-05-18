@@ -12611,7 +12611,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/flowers_br/style_random,
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/basic/lizard{
 	name = "Bathes-In-Heatlamp"
 	},
 /turf/open/misc/sandy_dirt,
@@ -70837,7 +70837,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/flowers_br/style_random,
-/mob/living/simple_animal/hostile/lizard/eats_the_roaches,
+/mob/living/basic/lizard/eats_the_roaches,
 /turf/open/misc/sandy_dirt,
 /area/station/maintenance/port/lesser)
 "ybO" = (
