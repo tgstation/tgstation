@@ -120,7 +120,7 @@ export const ModularShieldGen = (props, context) => {
             </Section>
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Set Radius">
+                <LabeledList.Item label="Toggle Power">
                   <Section right={0.75}>
                     <Button
                       bold={1}
