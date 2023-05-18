@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - qol: "Double clicking your corpse or something containing it as a ghost will now orbit as in other cases instead of re-entering your corpse."
