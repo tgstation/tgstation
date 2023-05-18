@@ -31,6 +31,7 @@
 
 /obj/structure/lavaland/ash_walker/Destroy()
 	ashies = null
+	linked_objective = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
