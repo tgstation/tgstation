@@ -200,7 +200,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0) //TODO BEFORE MERGE: double check this is setting broken state properly.
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
 
 /turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")

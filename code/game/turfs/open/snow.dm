@@ -16,7 +16,7 @@
 
 /turf/open/misc/snow/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2) //TODO BEFORE MERGE: double check this is setting broken state properly.
+	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2)
 
 /turf/open/misc/snow/broken_states()
 	return list("snow_dug")
