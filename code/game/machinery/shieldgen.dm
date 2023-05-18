@@ -726,20 +726,20 @@
 
 		if(exterior_only)
 			for(var/turf/target_tile as anything in list_of_turfs)
-				if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+				if(isspaceturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 					deploying_shield.shield_generator = src
 					deployed_shields += deploying_shield
-					addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
 
 		for(var/turf/target_tile as anything in list_of_turfs)
-			if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+			if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
-				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
 
@@ -747,20 +747,20 @@
 	var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to the turfs inside the shield
 	if(exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-			if (!(target_tile in inside_shield) && isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+			if(isspaceturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				deployed_shields += deploying_shield
-				addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
 
 	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-		if (!(target_tile in inside_shield) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+		if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			deployed_shields += deploying_shield
-			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
 
 
