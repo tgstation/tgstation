@@ -85,6 +85,7 @@
 			. += "[initial(icon_state)]-device"
 
 	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += light_mask
 		. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
