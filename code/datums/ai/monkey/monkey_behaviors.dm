@@ -151,22 +151,16 @@
 	if(!isturf(target.loc) || IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
 		return
 
-	// check if target has a weapon
-	var/obj/item/their_weapon
-	for(var/obj/item/held_thing in target.held_items)
-		if(held_thing.item_flags & (ABSTRACT|HAND_ITEM))
-			continue
-		if(held_thing.force <= 0)
-			continue
-
-		their_weapon = held_thing
-		break
-
+	// Checks if they're holding a weapon that can be disarmed without a wall shove
+	var/obj/item/their_weapon = target.get_active_held_item()
+	var/disarmable_weapon = is_type_in_typecache(their_weapon, GLOB.shove_disarming_types)
+	// Checks if they're standing behind a turf we can wall shove them into (tables, walls, etc)
 	var/shove_dir = get_dir(target, living_pawn)
 	var/turf/turf_behind = get_step(target, shove_dir)
-	var/turf_can_be_shoved_into = turf_behind.is_blocked_turf(source_atom = living_pawn)
-	// We only want to try and disarm the target if they're holding a weapon or standing in front of a turf that we can shove them into.
-	var/do_disarm = (their_weapon || turf_can_be_shoved_into) && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick)
+	var/turf_can_be_shoved_into = turf_behind?.is_blocked_turf(source_atom = living_pawn)
+	// We only want to try and disarm the target if they're holding a weapon we can disarm or standing in front of a turf that we can shove them into.
+	// We don't want them to pointlessly shove the target around the room if they can't actually land a successful disarm / wallshove.
+	var/do_disarm = (disarmable_weapon || turf_can_be_shoved_into) && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick)
 	monkey_attack(controller, target, seconds_per_tick, do_disarm)
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -213,7 +207,7 @@
 					controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else
 			living_pawn.toggle_throw_mode()
-			living_pawn.ClickOn(target)
+			living_pawn.ClickOn(real_target)
 			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // 'worked'
 
 	// no de-aggro
