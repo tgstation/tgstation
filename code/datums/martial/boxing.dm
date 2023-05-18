@@ -8,10 +8,8 @@
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
 	var/smacked_stam = smacked.getStaminaLoss()
@@ -30,9 +28,9 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_danger("You knock [smacked] out with a haymaker!"))
-		smacked.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-		smacked.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS, armor_block)
-		log_combat(attacker, smacked, "knocked out (boxing)")
+		smacked.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, packet.blocked)
+		smacked.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS, packet.blocked)
+		. += "knocked out (boxing)"
 
 /datum/martial_art/boxing
 	name = "Boxing"

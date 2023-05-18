@@ -4,7 +4,7 @@
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/glomp
 	default_attack_verb = "glomp"
-	wound_bonus = CANT_WOUND
+	wound_bonus_modifier = CANT_WOUND
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/glomp/select_damage(mob/living/simple_animal/slime/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
 	. = ..()
@@ -30,15 +30,13 @@
 	mob/living/simple_animal/slime/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
 
 	if(isslime(smacked))
-		steal_slime_stuff(attacker, smacked, damage)
+		steal_slime_stuff(attacker, smacked, packet.damage)
 		return . + "(stealing nutrition and health)"
 
 	var/slime_power = attacker.powerlevel

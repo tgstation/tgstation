@@ -261,7 +261,7 @@
 	cd = 1.5 SECONDS
 	attack_effect = ATTACK_EFFECT_SMASH
 	successful_hit_sound = 'sound/effects/meteorimpact.ogg'
-	wound_bonus = 10
+	wound_bonus_modifier = 10
 	default_attack_verb = "smash"
 
 /datum/attack_style/unarmed/generic_damage/hulk/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
@@ -270,7 +270,13 @@
 /datum/attack_style/unarmed/generic_damage/hulk/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	return pick(default_attack_verb, "pummel", "slam")
 
-/datum/attack_style/unarmed/generic_damage/hulk/actually_apply_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage, obj/item/bodypart/affecting, armor_block, direction)
+/datum/attack_style/unarmed/generic_damage/hulk/actually_apply_damage(
+	mob/living/attacker,
+	mob/living/smacked,
+	obj/item/bodypart/hitting_with,
+	obj/item/bodypart/affecting,
+	datum/apply_damage_packet/packet,
+)
 	. = ..()
 	if(smacked.mob_size <= MOB_SIZE_SMALL || iscyborg(smacked))
 		// Forces small mobs or robots up to 2 tiles way

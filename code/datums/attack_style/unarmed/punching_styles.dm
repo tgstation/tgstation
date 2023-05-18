@@ -7,13 +7,14 @@
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
-	smacked.apply_damage(damage * bonus_stamina_damage_modifier, STAMINA, affecting, armor_block, attack_direction = direction)
+	var/datum/apply_damage_packet/new_packet = packet.copy_packet()
+	new_packet.damage *= bonus_stamina_damage_modifier
+	new_packet.damagetype *= STAMINA
+	new_packet.execute(attacker)
 
 /datum/attack_style/unarmed/generic_damage/limb_based/punch/ethereal
 	successful_hit_sound = 'sound/weapons/etherealhit.ogg'

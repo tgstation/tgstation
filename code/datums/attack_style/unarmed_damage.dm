@@ -13,9 +13,11 @@
 	/// Flat added modifier to miss chance
 	var/miss_chance_modifier = 0
 	/// Wound bonus on attacks from this attack method
-	var/wound_bonus = 0
+	var/wound_bonus_modifier = 0
+	/// Bare wound bonus on attacks from this attack method
+	var/bare_wound_bonus_modifier = 0
 	/// Armor penetration from this attack method
-	var/attack_penetration = 0
+	var/attack_penetration_modifier = 0
 	/// If TRUE, attacks on limbs which are at max damage will be dismembered
 	var/can_dismember_limbs = FALSE
 
@@ -42,7 +44,7 @@
 	var/damage = max(0, select_damage(attacker, smacked, weapon))
 	var/attack_verb = select_attack_verb(attacker, smacked, weapon, damage)
 
-	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration))
+	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier))
 		smacked.visible_message(
 			span_warning("[smacked] blocks [attacker]'s [attack_verb]!"),
 			span_userdanger("You block [attacker]'s [attack_verb]!"),
@@ -77,7 +79,7 @@
 		log_combat(attacker, smacked, "missed unarmed attack ([attack_verb])")
 		return ATTACK_STYLE_MISSED
 
-	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration))
+	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration_modifier))
 
 	// melbert todo : probably sounds silly
 	smacked.visible_message(
@@ -92,8 +94,22 @@
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
+	var/datum/apply_damage_packet/packet = new(
+		/* damage = */damage,
+		/* damagetype = */attack_type,
+		/* def_zone = */affecting,
+		/* blocked = */armor_block,
+		/* forced = */FALSE,
+		/* spread_damage = */FALSE,
+		/* wound_bonus = */wound_bonus_modifier,
+		/* bare_wound_bonus = */bare_wound_bonus_modifier,
+		/* sharpness = */NONE,
+		/* attack_direction = */get_dir(attacker, smacked),
+		/* attack attacking_item = */null,
+	)
+
 	var/additional_logging = "([default_attack_verb])"
-	var/logging_returned = actually_apply_damage(attacker, smacked, weapon, damage, affecting, armor_block, get_dir(attacker, smacked))
+	var/logging_returned = actually_apply_damage(attacker, smacked, weapon, affecting, packet)
 	if(logging_returned)
 		additional_logging += logging_returned
 
@@ -123,21 +139,19 @@
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	SHOULD_CALL_PARENT(TRUE)
 
-	// Melbert todo : needs to pass in wound bonus so it gets wound bonus from simplemobs
-	. = ""
-	var/damage_type = istype(hitting_with) ? hitting_with.attack_type : attack_type
-	smacked.apply_damage(damage, damage_type, affecting, armor_block, wound_bonus = wound_bonus, attack_direction = direction)
+	var/returned_logging = ""
+	packet.execute(smacked)
 
 	if(can_dismember_limbs && istype(affecting) && (affecting.get_damage() >= affecting.max_damage))
-		. += "(dismembering [affecting])"
-		affecting.dismember(damage_type, silent = FALSE)
+		returned_logging += "(dismembering [affecting])"
+		affecting.dismember(packet.damage, silent = FALSE)
+
+	return returned_logging
 
 /*
  * Limb attack unarmed style
@@ -167,10 +181,8 @@
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
 	if(smacked.stat == DEAD)
@@ -178,7 +190,7 @@
 	if(hitting_with.unarmed_stun_threshold < 0)
 		return
 
-	if(damage >= hitting_with.unarmed_stun_threshold)
+	if(packet.damage >= hitting_with.unarmed_stun_threshold)
 		smacked.visible_message(
 			span_danger("[attacker] knocks [smacked] down!"),
 			span_userdanger("You're knocked down by [attacker]!"),
@@ -188,7 +200,7 @@
 		)
 		to_chat(attacker, span_danger("You knock [smacked] down!"))
 		var/knockdown_duration = (4 SECONDS) + (smacked.getStaminaLoss() + (smacked.getBruteLoss() * 0.5)) * 0.8
-		smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
+		smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, packet.blocked)
 		. += "(stun attack)"
 
 /*

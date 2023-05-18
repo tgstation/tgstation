@@ -832,6 +832,7 @@
 #include "code\datums\armor\_atom_armor.dm"
 #include "code\datums\atmosphere\_atmosphere.dm"
 #include "code\datums\atmosphere\planetary.dm"
+#include "code\datums\attack_style\_apply_damage_packet.dm"
 #include "code\datums\attack_style\_attack_style.dm"
 #include "code\datums\attack_style\_blocking.dm"
 #include "code\datums\attack_style\unarmed_damage.dm"

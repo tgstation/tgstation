@@ -23,13 +23,11 @@
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
-	if(armor_block >= disease_armor_thresold)
+	if(packet.blocked >= disease_armor_thresold)
 		return
 	if(!smacked.try_inject(attacker, affecting))
 		return
@@ -57,12 +55,10 @@
 	mob/living/carbon/alien/larva/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
-	damage,
 	obj/item/bodypart/affecting,
-	armor_block,
-	direction,
+	datum/apply_damage_packet/packet,
 )
 	. = ..()
 	// Larva will grow when they bite organic people
 	if(smacked.mob_biotypes & MOB_ORGANIC)
-		attacker.amount_grown = min(attacker.amount_grown + damage, attacker.max_grown)
+		attacker.amount_grown = min(attacker.amount_grown + packet.damage, attacker.max_grown)

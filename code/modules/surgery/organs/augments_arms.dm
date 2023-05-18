@@ -430,7 +430,13 @@
 
 	return ..()
 
-/datum/attack_style/unarmed/generic_damage/muscle_punch/actually_apply_damage(mob/living/carbon/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage, obj/item/bodypart/affecting, armor_block, direction)
+/datum/attack_style/unarmed/generic_damage/muscle_punch/actually_apply_damage(
+	mob/living/attacker,
+	mob/living/smacked,
+	obj/item/organ/internal/cyberimp/arm/muscle/hitting_with,
+	obj/item/bodypart/affecting,
+	datum/apply_damage_packet/packet,
+)
 	. = ..()
 	if(attacker.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(smacked, attacker.dir)
