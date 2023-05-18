@@ -107,7 +107,7 @@ export const ModularShieldGen = (props, context) => {
             </Section>
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Placement limitations">
+                <LabeledList.Item label="Placement Limitations">
                   <Section right={0.75}>
                     <Button
                       disabled={active}
