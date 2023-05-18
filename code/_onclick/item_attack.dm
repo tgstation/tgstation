@@ -374,16 +374,17 @@
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
 
 	was_attacked_effects(attacking_item, user, affecting, damage, armor_block)
-
 	if(damage_type == BRUTE && prob(33))
 		add_blood_from_being_attacked(attacking_item, user, affecting)
 
 	return ATTACK_STYLE_HIT
 
 /mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_ATTACKED_BY, user, attacking_item)
 
 /mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	SHOULD_CALL_PARENT(TRUE)
 	if(damage > 10 || (damage >= 5 && prob(33)))
 		force_say(user)
 

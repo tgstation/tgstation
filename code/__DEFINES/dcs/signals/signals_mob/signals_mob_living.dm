@@ -177,3 +177,5 @@
 ///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 #define COMSIG_LIVING_DISARM_COLLIDE "carbon_disarm_collision"
 	#define DISARM_SHOVE_HANDLED (1<<0)
+
+#define COMSIG_LIVING_ATTACKED_BY "living_attacked_by"

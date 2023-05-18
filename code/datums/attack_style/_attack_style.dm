@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/total_total_hit = 0
 	for(var/turf/hitting as anything in affecting)
 		// Unfortunately this makes mobs in dense or blocks turfs invincible. Fix that
-		var/atom/blocking_us = hitting.is_blocked_turf(TRUE, attacker)
+		var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, soucre_atom = attacker)
 		if(blocking_us)
 			attacker.visible_message(
 				span_warning("[attacker]'s swing collides with [blocking_us]!"),

@@ -13,7 +13,7 @@
 	. = ..()
 	var/datum/apply_damage_packet/new_packet = packet.copy_packet()
 	new_packet.damage *= bonus_stamina_damage_modifier
-	new_packet.damagetype *= STAMINA
+	new_packet.damagetype = STAMINA
 	new_packet.execute(attacker)
 
 /datum/attack_style/unarmed/generic_damage/limb_based/punch/ethereal

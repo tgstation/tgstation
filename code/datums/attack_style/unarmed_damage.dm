@@ -146,7 +146,6 @@
 
 	var/returned_logging = ""
 	packet.execute(smacked)
-
 	if(can_dismember_limbs && istype(affecting) && (affecting.get_damage() >= affecting.max_damage))
 		returned_logging += "(dismembering [affecting])"
 		affecting.dismember(packet.damage, silent = FALSE)

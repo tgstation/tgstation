@@ -9,6 +9,8 @@
 	return ..()
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+	if(damage <= 0)
+		return TRUE
 	if(damage * (damage_coeff[damagetype] || 0) <= force_threshold)
 		visible_message(span_warning("[src] looks unharmed!"))
 		return FALSE

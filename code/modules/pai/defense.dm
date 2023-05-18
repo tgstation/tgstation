@@ -48,6 +48,7 @@
 	visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
 
 /mob/living/silicon/pai/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	. = ..()
 	if(!isnull(attacking_item) || user.name != master_name)
 		take_holo_damage(round(damage * 0.2))
 		return

@@ -224,8 +224,8 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
-	..()
+/mob/living/simple_animal/bot/secbot/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	. = ..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
 	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.

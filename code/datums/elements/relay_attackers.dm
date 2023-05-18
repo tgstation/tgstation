@@ -8,42 +8,23 @@
 /datum/element/relay_attackers/Attach(datum/target)
 	. = ..()
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
-	RegisterSignal(target, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(after_attackby))
-	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_attack_generic))
-	RegisterSignals(target, list(COMSIG_ATOM_ATTACK_BASIC_MOB, COMSIG_ATOM_ATTACK_ANIMAL), PROC_REF(on_attack_npc))
+	RegisterSignal(target, COMSIG_LIVING_ATTACKED_BY, PROC_REF(on_attacked_by))
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
-	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, PROC_REF(on_attack_hulk))
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
+
+/datum/element/relay_attackers/proc/on_attacked_by(atom/target, mob/living/attacker, obj/item/weapon)
+	SIGNAL_HANDLER
+	relay_attacker(target, attacker)
 
 /datum/element/relay_attackers/Detach(datum/source, ...)
 	. = ..()
 	UnregisterSignal(source, list(
-		COMSIG_ATOM_AFTER_ATTACKEDBY,
-		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_ATTACK_PAW,
-		COMSIG_ATOM_ATTACK_BASIC_MOB,
-		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_HITBY,
-		COMSIG_ATOM_HULK_ATTACK,
 		COMSIG_ATOM_ATTACK_MECH,
+		COMSIG_LIVING_ATTACKED_BY,
 	))
-
-/datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker)
-	SIGNAL_HANDLER
-	if(weapon.force)
-		relay_attacker(target, attacker)
-
-/datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
-	SIGNAL_HANDLER
-	if(attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-		relay_attacker(target, attacker)
-
-/datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)
-	SIGNAL_HANDLER
-	if(attacker.melee_damage_upper > 0)
-		relay_attacker(target, attacker)
 
 /datum/element/relay_attackers/proc/on_bullet_act(atom/target, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
@@ -64,10 +45,6 @@
 	if(!ismob(thrown_by))
 		return
 	relay_attacker(target, thrown_by)
-
-/datum/element/relay_attackers/proc/on_attack_hulk(atom/target, mob/attacker)
-	SIGNAL_HANDLER
-	relay_attacker(target, attacker)
 
 /datum/element/relay_attackers/proc/on_attack_mech(atom/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot)
 	SIGNAL_HANDLER
