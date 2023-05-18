@@ -203,7 +203,6 @@
 		else
 			if(skin == "")
 				skin = "-warning"
-				frame_color = null
 				to_chat(user, span_notice("You change the button frame's front panel to warning lines."))
 			else
 				skin = ""
