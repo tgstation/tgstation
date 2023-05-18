@@ -439,6 +439,15 @@
 		spawned_simplemob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
+
+	if(isbasicmob(spawned_mob))
+		var/mob/living/basic/spawned_basicmob = spawned_mob
+		if(spawned_basicmob.basic_mob_flags & HOSTILE_MOB)
+			spawned_basicmob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
+			spawned_basicmob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
+			// basic mob speeds are a bit yonked in comparison to simple animal's "move to delay" so let's just fucking uhhhh idk toy with that a bit.
+			spawned_basicmob.set_varspeed(initial(spawned_basicmob.speed) - (round(our_seed.production * mob_speed_multiplier) * 0.1))
+
 	our_plant.forceMove(our_plant.drop_location())
 	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
 	qdel(our_plant)

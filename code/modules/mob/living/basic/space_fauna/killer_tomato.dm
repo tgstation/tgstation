@@ -32,6 +32,7 @@
 	minimum_survivable_temperature = T0C - 130
 	maximum_survivable_temperature = T0C + 230
 	gold_core_spawnable = HOSTILE_SPAWN
+	basic_mob_flags = HOSTILE_MOB
 
 	ai_controller = /datum/ai_controller/basic_controller/killer_tomato
 
