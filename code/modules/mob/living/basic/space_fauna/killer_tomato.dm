@@ -12,6 +12,7 @@
 	icon_dead = "tomato_dead"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	gender = NEUTER
+	speed = 1 // if you wanna touch this, keep in mind we want to incentivize people growing really good botany plants in order to make these buggers faster.
 	maxHealth = 30
 	health = 30
 	butcher_results = list(/obj/item/food/meat/slab/killertomato = 2)
