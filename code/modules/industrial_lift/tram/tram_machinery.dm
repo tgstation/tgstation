@@ -639,7 +639,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
 	update_sign()
-	process()
+	INVOKE_ASYNC(src, PROC_REF(process))
 
 /obj/machinery/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
