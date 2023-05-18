@@ -230,6 +230,8 @@
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
+	minimum_players = 8
+
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
 	candidates = living_players
@@ -321,6 +323,8 @@
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
+
+	minimum_players = 30
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if(!check_candidates())
