@@ -16287,7 +16287,7 @@
 "ehT" = (
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
-	elevator_music_toggle = 0;
+	elevator_music_toggle = FALSE;
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
 	preset_destination_names = list("2"="Supply-Engi Floor","3"="Med-Sci Floor","4"="Service Floor")
@@ -41278,7 +41278,7 @@
 	pixel_y = -7
 	},
 /obj/machinery/elevator_control_panel/directional/east{
-	elevator_music_toggle = 0;
+	elevator_music_toggle = FALSE;
 	linked_elevator_id = "com_vator";
 	pixel_x = 24;
 	preset_destination_names = list("4"="Service","5"="Command")
@@ -53678,7 +53678,7 @@
 	pixel_y = -7
 	},
 /obj/machinery/elevator_control_panel/directional/east{
-	elevator_music_toggle = 0;
+	elevator_music_toggle = FALSE;
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
 	preset_destination_names = list("2"="Supply-Engi Floor","3"="Med-Sci Floor","4"="Service Floor")
