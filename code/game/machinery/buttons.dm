@@ -2,8 +2,8 @@
 	name = "button"
 	desc = "A remote control switch."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "doorctrl"
-	var/skin = "doorctrl"
+	icon_state = "button"
+	var/skin = ""
 	power_channel = AREA_USAGE_ENVIRON
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
@@ -61,32 +61,37 @@
 
 /obj/machinery/button/update_icon_state()
 	if(panel_open)
-		icon_state = "button-open"
+		icon_state = "[initial(icon_state)]-open"
 		return ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[skin]-p"
-		return ..()
-	icon_state = skin
+	icon_state = "[initial(icon_state)][skin]"
 	return ..()
 
-/obj/machinery/button/update_overlays()
+/obj/machinery/button/update_appearance()
 	. = ..()
-	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
-	if(!panel_open)
-		return
-	if(device)
-		. += "button-device"
-	if(board)
-		. += "button-board"
+
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
+		set_light(0)
+	else
+		set_light(1.5, 1, "#00FF22")
+
+	if(panel_open && board)
+		. += mutable_appearance(icon, "[initial(icon_state)]-board")
+	if(panel_open && device)
+		if(istype(device, /obj/item/assembly/signaler))
+			. += mutable_appearance(icon, "[initial(icon_state)]-signaler")
+		else
+			. += mutable_appearance(icon, "[initial(icon_state)]-device")
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += mutable_appearance(icon, "[initial(icon_state)]-overlay")
+		. += emissive_appearance(icon, "[initial(icon_state)]-overlay", src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "button-open", "[skin]", tool)
+		default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", "[skin]", tool)
 		update_appearance()
 	else
-		to_chat(user, span_alert("Maintenance Access Denied."))
-		flick("[skin]-denied", src)
+		balloon_alert(user, "access denied")
+		flick_overlay_view("[initial(icon_state)]-overlay-error", 1 SECONDS)
 
 	return TRUE
 
@@ -194,11 +199,11 @@
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
 		else
-			if(skin == "doorctrl")
-				skin = "launcher"
+			if(skin == "")
+				skin = "-warning"
 			else
-				skin = "doorctrl"
-			balloon_alert(user, "swapped button style")
+				skin = ""
+			balloon_alert(user, "swapped style")
 			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
@@ -209,18 +214,16 @@
 		return
 
 	if(!allowed(user))
-		to_chat(user, span_alert("Access Denied."))
-		flick("[skin]-denied", src)
+		balloon_alert(user, "access denied")
+		flick_overlay_view("[initial(icon_state)]-overlay-error", 1 SECONDS)
 		return
 
 	use_power(5)
-	icon_state = "[skin]1"
+	flick_overlay_view("[initial(icon_state)]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
-
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
 
 /obj/machinery/button/door
 	name = "door button"
@@ -284,8 +287,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
-	icon_state = "launcher"
-	skin = "launcher"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/massdriver
 
 /obj/machinery/button/massdriver/indestructible
@@ -294,8 +296,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
-	icon_state = "launcher"
-	skin = "launcher"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/igniter
 
 /obj/machinery/button/ignition/indestructible
@@ -317,8 +318,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
-	icon_state = "launcher"
-	skin = "launcher"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/flasher
 
 /obj/machinery/button/flasher/indestructible
@@ -327,8 +327,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
-	icon_state = "launcher"
-	skin = "launcher"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
@@ -340,8 +339,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
-	icon_state = "launcher"
-	skin = "launcher"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
