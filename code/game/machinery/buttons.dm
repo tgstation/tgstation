@@ -80,9 +80,9 @@
 		. += "[initial(icon_state)]-board"
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. "[initial(icon_state)]-signaler"
+			. += "[initial(icon_state)]-signaler"
 		else
-			. "[initial(icon_state)]-device"
+			. += "[initial(icon_state)]-device"
 
 	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
