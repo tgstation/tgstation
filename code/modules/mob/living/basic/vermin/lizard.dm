@@ -32,6 +32,8 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	can_be_held = TRUE
+	ai_controller = /datum/ai_controller/basic_controller/lizard
+
 	/// Typecache of things that we seek out to eat. Yummy.
 	var/static/list/edibles = typecacheof(list(
 		/mob/living/basic/cockroach,
