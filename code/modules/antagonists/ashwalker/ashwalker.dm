@@ -40,8 +40,8 @@
 		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 
 /datum/team/ashwalkers
-	name = "Ashwalker Tribe"
-	member_name = "Ashwalker"
+	name = "Ash Walker Tribe"
+	member_name = "Ash Walker"
 	///A list of "worthy" (meat-bearing) sacrifices made to the Necropolis
 	var/sacrifices_made = 0
 	///A list of how many eggs were created by the Necropolis
@@ -50,7 +50,7 @@
 /datum/team/ashwalkers/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>An Ashwalker Tribe inhabited the wastes...</span><br>"
+	report += "<span class='header'>An Ash Walker Tribe inhabited the wastes...</span><br>"
 	if(length(members)) //The team is generated alongside the tendril, and it's entirely possible that nobody takes the role.
 		report += "The [member_name]s were:"
 		report += printplayerlist(members)
@@ -69,7 +69,7 @@
 			report += "<span class='header'>The [name]'s other objectives were:</span>"
 			printobjectives(objectives)
 
-		report += "The [name] managed to perform <b>[sacrifices_made]</b> sacrifices to the Necropolis. From this, the Necropolis produced <b>[eggs_created]</b> Ashwalker eggs."
+		report += "The [name] managed to perform <b>[sacrifices_made]</b> sacrifices to the Necropolis. From this, the Necropolis produced <b>[eggs_created]</b> Ash Walker eggs."
 
 	else
 		report += "<b>But none of its eggs hatched!</b>"
