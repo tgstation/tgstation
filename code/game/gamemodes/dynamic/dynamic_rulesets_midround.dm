@@ -230,6 +230,8 @@
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
+	minimum_players = 8
+
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
 	candidates = living_players
