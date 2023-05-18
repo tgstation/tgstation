@@ -446,7 +446,7 @@
 /// Killer Tomato's transformation gene.
 /datum/plant_gene/trait/mob_transformation/tomato
 	dangerous = TRUE
-	killer_plant = /mob/living/simple_animal/hostile/killertomato
+	killer_plant = /mob/living/basic/killer_tomato
 	mob_health_multiplier = 0.33
 	mob_melee_multiplier = 0.1
 	mob_speed_multiplier = 0.02

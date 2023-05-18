@@ -252,7 +252,7 @@
 		/mob/living/basic/giant_spider/hunter,
 		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/hostile/headcrab,
-		/mob/living/simple_animal/hostile/killertomato,
+		/mob/living/basic/killer_tomato,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 		/mob/living/simple_animal/hostile/morph,
