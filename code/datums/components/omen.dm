@@ -24,7 +24,8 @@
 	if(istype(vessel))
 		src.vessel = vessel
 		RegisterSignal(vessel, COMSIG_PARENT_QDELETING, PROC_REF(vessel_qdeleting))
-	src.permanent = permanent
+	if(!isnull(permanent))
+		src.permanent = permanent
 	if(!isnull(luck_mod))
 		src.luck_mod = luck_mod
 	if(!isnull(damage_mod))
