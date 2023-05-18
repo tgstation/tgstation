@@ -39,6 +39,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
 	var/pacifism_completely_banned = FALSE
 
+/datum/attack_style/proc/get_swing_description()
+	return "It swings at one tile in the direction you are attacking."
+
 /**
  * Process attack -> execute attack -> finalize attack
  *
@@ -106,30 +109,35 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/total_total_hit = 0
 	for(var/turf/hitting as anything in affecting)
 		// Unfortunately this makes mobs in dense or blocks turfs invincible. Fix that
-		var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, soucre_atom = attacker)
-		if(blocking_us)
-			attacker.visible_message(
-				span_warning("[attacker]'s swing collides with [blocking_us]!"),
-				span_warning("[blocking_us] blocks your swing partway!"),
-			)
-			playsound(hitting, 'sound/effects/glasshit.ogg', 90, TRUE)
-			return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
+		if(length(affecting) > 1)
+			var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
+			if(blocking_us)
+				attacker.visible_message(
+					span_warning("[attacker]'s swing collides with [blocking_us]!"),
+					span_warning("[blocking_us] blocks your swing partway!"),
+				)
+				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
+				return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting.Find(hitting))
 #endif
 
 		var/list/mob/living/foes = list()
-		for(var/mob/living/foes_in_turf in hitting)
-			foes += foes_in_turf
+		for(var/mob/living/foe_in_turf in hitting)
+			var/foe_prio = rand(4, 8) // assign a random priority so it's non-deterministic
+			if(foe_in_turf == priority_target)
+				foe_prio = 10
+			else if(foe_in_turf == attacker)
+				foe_prio = -10
+			else if(foe_in_turf.faction & attacker.faction)
+				foe_prio = 1 // de-prio same factions
+			else if(foe_in_turf.stat != CONSCIOUS)
+				foe_prio = 2 // de-prio folk who can't fight back
 
-		shuffle_inplace(foes)
-		if(priority_target in foes)
-			foes.Remove(priority_target)
-			foes.Insert(1, priority_target) // to the front
-		if(attacker in foes)
-			foes.Remove(attacker)
-			foes.Add(attacker) // to the end
+			foes[foe_in_turf] = foe_prio
+
+		sortTim(foes, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
 
 		var/total_hit = 0
 		for(var/mob/living/smack_who as anything in foes)

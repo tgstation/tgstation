@@ -148,20 +148,26 @@
 		finish_action(controller, TRUE) //Target == owned
 		return
 
-	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
-		// check if target has a weapon
-		var/obj/item/W
-		for(var/obj/item/I in target.held_items)
-			if(!(I.item_flags & ABSTRACT))
-				W = I
-				break
+	if(!isturf(target.loc) || IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
+		return
 
-		// if the target has a weapon, chance to disarm them
-		if(W && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
-			monkey_attack(controller, target, seconds_per_tick, TRUE)
-		else
-			monkey_attack(controller, target, seconds_per_tick, FALSE)
+	// check if target has a weapon
+	var/obj/item/their_weapon
+	for(var/obj/item/held_thing in target.held_items)
+		if(held_thing.item_flags & (ABSTRACT|HAND_ITEM))
+			continue
+		if(held_thing.force <= 0)
+			continue
 
+		their_weapon = held_thing
+		break
+
+	var/shove_dir = get_dir(target, living_pawn)
+	var/turf/turf_behind = get_step(target, shove_dir)
+	var/turf_can_be_shoved_into = turf_behind.is_blocked_turf(source_atom = living_pawn)
+	// We only want to try and disarm the target if they're holding a weapon or standing in front of a turf that we can shove them into.
+	var/do_disarm = (their_weapon || turf_can_be_shoved_into) && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick)
+	monkey_attack(controller, target, seconds_per_tick, do_disarm)
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -188,7 +194,7 @@
 
 	// attack with weapon if we have one
 	if(living_pawn.CanReach(target, weapon))
-		var/fake_params = list2params(list(LEFT_CLICK = !disarm, RIGHT_CLICK = disarm))
+		var/fake_params = list2params(list(LEFT_CLICK = !disarm, RIGHT_CLICK = disarm)) // Sets up params for either attacking or disarming
 		living_pawn.ClickOn(target, fake_params)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
 

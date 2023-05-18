@@ -46,18 +46,23 @@
 	// Top priority - disarm
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		hit_style = default_disarm_style
+		testing("[src] is attempting to use attack style [hit_style] (disarm style)")
 	// Help intent is next priority, if not on combat mode
 	else if(!combat_mode)
 		hit_style = default_help_style
+		testing("[src] is attempting to use attack style [hit_style] (help style)")
 	// Then, every attack is a hulk attack
 	else if(HAS_TRAIT(src, TRAIT_HULK) && combat_mode)
 		hit_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
+		testing("[src] is attempting to use attack style [hit_style] (hulk style)")
 	// Then attack from arm
 	else if(!isnull(attacking_bodypart))
 		hit_style = attacking_bodypart.attack_style
+		testing("[src] is attempting to use attack style [hit_style] (bodypart style)")
 	// And if we have no arm, then default harm style
 	else
 		hit_style = default_harm_style
+		testing("[src] is attempting to use attack style [hit_style] (harm style)")
 
 	if(hit_style)
 		changeNext_move(hit_style.cd * 0.8)
@@ -188,10 +193,13 @@
 	var/datum/attack_style/hit_style
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		hit_style = default_disarm_style
-	else if(combat_mode)
-		hit_style = default_harm_style
-	else
+		testing("[src] is attempting to use attack style [hit_style] (disarm style)")
+	else if(!combat_mode)
 		hit_style = default_help_style
+		testing("[src] is attempting to use attack style [hit_style] (help style)")
+	else
+		hit_style = default_harm_style
+		testing("[src] is attempting to use attack style [hit_style] (harm style)")
 
 	if(hit_style)
 		changeNext_move(hit_style.cd * 0.8)

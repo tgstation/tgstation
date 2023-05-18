@@ -421,7 +421,7 @@
 /atom/movable/screen/strafe
 	name = "strafe"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "act_throw_off"
+	icon_state = "strafe_off"
 
 /atom/movable/screen/strafe/Click(location, control, params)
 	if(isliving(usr))
@@ -431,7 +431,7 @@
 
 /atom/movable/screen/strafe/update_icon_state()
 	. = ..()
-	icon_state = hud.mymob?.set_dir_on_move ? "act_throw_off" : "act_throw_on"
+	icon_state = "strafe_[hud.mymob?.set_dir_on_move ? "off" : "on"]"
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"

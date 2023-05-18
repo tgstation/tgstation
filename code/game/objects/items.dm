@@ -229,8 +229,6 @@
 	 */
 	var/datum/attack_style/attack_style = /datum/attack_style
 
-	/// This is a % based chance of entirely preventing an attack, to be removed in favor of below
-	var/block_chance = 0
 	/**
 	 * How well can we block with this thing?
 	 * This is a multiplier to stamina damage recieved from active blocking with this item
@@ -432,7 +430,10 @@
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-		return
+
+	var/style_describer = attack_style?.get_swing_description()
+	if(style_describer)
+		. += style_describer
 
 /obj/item/examine_more(mob/user)
 	. = ..()

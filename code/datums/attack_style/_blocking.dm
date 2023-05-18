@@ -32,6 +32,7 @@
 	SET_PLANE_EXPLICIT(shield_overlay, new_owner.plane, new_owner)
 	shield_overlay.pixel_y = new_owner.pixel_y + shield_offset_const
 	shield_overlay.color = LIGHT_COLOR_BABY_BLUE
+	owner.add_overlay(shield_overlay)
 	update_shield()
 
 /datum/status_effect/blocking/on_apply()
@@ -77,6 +78,7 @@
 	var/percent = round(100 - ((owner.getStaminaLoss() / owner.maxHealth) * 100), 10)
 	var/new_icon_state = "shield[percent]"
 	if(percent <= 0)
+		owner.visible_message(span_danger("[owner]'s guard is broken!"), span_userdanger("Your guard is broken!"))
 		qdel(src)
 
 	else if(shield_overlay.icon_state != new_icon_state)

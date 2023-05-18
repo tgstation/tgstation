@@ -137,7 +137,7 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/strafing)
 	else
 		add_movespeed_modifier(/datum/movespeed_modifier/strafing)
-	hud_used?.strafe_icon.update_appearance(UPDATE_ICON_STATE)
+	hud_used?.strafe_icon?.update_appearance(UPDATE_ICON_STATE)
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))
@@ -464,6 +464,8 @@
 
 /mob/living/proc/begin_blocking()
 	if(incapacitated(IGNORE_GRAB))
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return FALSE
 
 	var/obj/item/blocker = get_inactive_held_item() || get_active_held_item()
