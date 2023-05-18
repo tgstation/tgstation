@@ -12,10 +12,10 @@
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
 	///The light mask used in the icon file for emissive layer
-	var/light_mask = null
+	var/light_mask = "button-overlay"
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
-	light_color = LIGHT_COLOR_DARK_BLUE
+	light_color = LIGHT_COLOR_VIVID_GREEN
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -60,10 +60,9 @@
 	return ..()
 
 /obj/machinery/button/update_icon_state()
-	if(panel_open)
-		icon_state = "[initial(icon_state)]-open"
-		return ..()
 	icon_state = "[initial(icon_state)][skin]"
+	if(panel_open)
+		icon_state += "-open"
 	return ..()
 
 /obj/machinery/button/update_appearance()
@@ -72,18 +71,21 @@
 	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
 		set_light(0)
 	else
-		set_light(1.5, 1, "#00FF22")
+		set_light(light_range, light_power, light_color)
+
+/obj/machinery/button/update_overlays()
+	. = ..()
 
 	if(panel_open && board)
-		. += mutable_appearance(icon, "[initial(icon_state)]-board")
+		. += "[initial(icon_state)]-board"
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. += mutable_appearance(icon, "[initial(icon_state)]-signaler")
+			. "[initial(icon_state)]-signaler"
 		else
-			. += mutable_appearance(icon, "[initial(icon_state)]-device")
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += mutable_appearance(icon, "[initial(icon_state)]-overlay")
-		. += emissive_appearance(icon, "[initial(icon_state)]-overlay", src, alpha = src.alpha)
+			. "[initial(icon_state)]-device"
+
+	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
@@ -201,10 +203,12 @@
 		else
 			if(skin == "")
 				skin = "-warning"
+				frame_color = null
+				to_chat(user, span_notice("You change the button frame's front panel to warning lines."))
 			else
 				skin = ""
+				to_chat(user, span_notice("You change the button frame's front panel to default."))
 			balloon_alert(user, "swapped style")
-			to_chat(user, span_notice("You change the button frame's front panel."))
 		return
 
 	if((machine_stat & (NOPOWER|BROKEN)))
@@ -287,6 +291,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
+	icon_state= "button-warning"
 	skin = "-warning"
 	device_type = /obj/item/assembly/control/massdriver
 
@@ -296,6 +301,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
+	icon_state= "button-warning"
 	skin = "-warning"
 	device_type = /obj/item/assembly/control/igniter
 
@@ -318,6 +324,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
+	icon_state= "button-warning"
 	skin = "-warning"
 	device_type = /obj/item/assembly/control/flasher
 
@@ -327,6 +334,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
+	icon_state= "button-warning"
 	skin = "-warning"
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
@@ -339,6 +347,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
+	icon_state= "button-warning"
 	skin = "-warning"
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
