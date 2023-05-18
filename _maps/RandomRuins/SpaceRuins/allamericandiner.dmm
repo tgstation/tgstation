@@ -348,9 +348,7 @@
 /area/ruin/space)
 "pa" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/machinery/light/dim/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/kitchen/small,
@@ -852,9 +850,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "Is" = (
 /obj/machinery/vending/cola,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
