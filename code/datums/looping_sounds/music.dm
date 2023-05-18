@@ -3,6 +3,7 @@
 	start_length =  6.21 SECONDS
 
 	mid_sounds = list(
+		'sound/ambience/music/elevator/elevator-01.ogg',
 		'sound/ambience/music/elevator/elevator-02.ogg',
 		'sound/ambience/music/elevator/elevator-02.ogg',
 		'sound/ambience/music/elevator/elevator-03.ogg',
