@@ -3,9 +3,10 @@
 	desc = "An all-in-one tool combining knife, screwdriver, cutters and many more."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "spess_knife"
-	inhand_icon_state = "screwdriver" // TODO
-	worn_icon_state = "screwdriver" // TODO
-	belt_icon_state = "screwdriver" // TODO
+	belt_icon_state = "spess_knife"
+	inhand_icon_state = "spess_knife"
+	///Inhand icons for unfolded knife states
+	var/inhand_icon_state_unfolded = "spess_knife_unfolded"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -144,5 +145,10 @@
 
 	if (tool_behaviour)
 		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
+
+	if(tool_behaviour)
+		inhand_icon_state = initial(inhand_icon_state)
+	else
+		inhand_icon_state = inhand_icon_state_unfolded
 
 	return ..()
