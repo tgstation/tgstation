@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Request Console Announcements breaking and reporting \"/list\""

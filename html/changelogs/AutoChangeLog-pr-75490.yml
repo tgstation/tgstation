@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Ahealing a heretic now properly gives them their heart back"

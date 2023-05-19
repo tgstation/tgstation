@@ -713,3 +713,27 @@
       the window
   - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
       if it's already open
+2023-05-19:
+  Fikou:
+  - bugfix: fixes clown planet report
+  GoldenAlpharex:
+  - bugfix: Makes checks for the station z level more robust against coders doing
+      less intuitive stuff, thus protecting it from breaking in weirdly difficult
+      and seemingly unrelated places (I'm looking at you, nuke cinematic unit test).
+  Jacquerel:
+  - bugfix: The Cursed quirk will once more plague you with bad luck for your entire
+      shift rather than just once.
+  Melbert:
+  - bugfix: Ahealing a heretic now properly gives them their heart back
+  - bugfix: Request Console Announcements breaking and reporting "/list"
+  Mothblocks:
+  - balance: Adjusted stowaway changeling requirements to be closer to roundstart
+      Changelings.
+  Thunder12345:
+  - qol: Double clicking your corpse or something containing it as a ghost will now
+      orbit as in other cases instead of re-entering your corpse.
+  - bugfix: Dueling pistols can no longer be fitted in turrets to instantly kill people.
+  TiviPlus:
+  - bugfix: fixed TTS not working when used by local servers
+  YakumoChen:
+  - qol: Bar bottles now work as makeshift rolling pins
