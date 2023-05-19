@@ -239,7 +239,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 12
-	requirements = list(101,101,40,40,20,20,10,10,10,10)
+	requirements = list(101,101,60,50,40,20,20,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/stowaway_changeling/execute()

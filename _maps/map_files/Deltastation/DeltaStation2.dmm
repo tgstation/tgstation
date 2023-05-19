@@ -84519,7 +84519,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/mob/living/basic/lizard/wags_his_tail,
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
 "veu" = (
@@ -90311,7 +90311,7 @@
 	dir = 9;
 	name = "service camera"
 	},
-/mob/living/simple_animal/hostile/lizard/eats_the_roaches,
+/mob/living/basic/lizard/eats_the_roaches,
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
 "wzD" = (

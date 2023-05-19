@@ -694,3 +694,46 @@
   - bugfix: Metastation's recreation area shower is now attached to plumbing.
   Vishenka0704:
   - bugfix: fixed different from english keyboard layout to use tgui chat
+2023-05-18:
+  Helg2:
+  - balance: Security Plasmamen now have Security armor. No bullying them with bottlesmashes
+      anymore.
+  Melbert:
+  - bugfix: Latejoins triggering before the minimum time set
+  Reality Overseer:
+  - bugfix: fixed photographs having black borders in photos
+  - bugfix: makes elder atmosian statue craftable
+  Rhials:
+  - sound: Revolutionaries now have their own stinger that plays upon becoming that
+      antagonist.
+  jlsnow301:
+  - refactor: Tgui Say is rewritten, becoming "much more performant". Hey, that's
+      what it says on the tin! I'm not from marketing!
+  - bugfix: Tguisay drag zones are now ever so slightly larger around the corner of
+      the window
+  - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
+      if it's already open
+2023-05-19:
+  Fikou:
+  - bugfix: fixes clown planet report
+  GoldenAlpharex:
+  - bugfix: Makes checks for the station z level more robust against coders doing
+      less intuitive stuff, thus protecting it from breaking in weirdly difficult
+      and seemingly unrelated places (I'm looking at you, nuke cinematic unit test).
+  Jacquerel:
+  - bugfix: The Cursed quirk will once more plague you with bad luck for your entire
+      shift rather than just once.
+  Melbert:
+  - bugfix: Ahealing a heretic now properly gives them their heart back
+  - bugfix: Request Console Announcements breaking and reporting "/list"
+  Mothblocks:
+  - balance: Adjusted stowaway changeling requirements to be closer to roundstart
+      Changelings.
+  Thunder12345:
+  - qol: Double clicking your corpse or something containing it as a ghost will now
+      orbit as in other cases instead of re-entering your corpse.
+  - bugfix: Dueling pistols can no longer be fitted in turrets to instantly kill people.
+  TiviPlus:
+  - bugfix: fixed TTS not working when used by local servers
+  YakumoChen:
+  - qol: Bar bottles now work as makeshift rolling pins
