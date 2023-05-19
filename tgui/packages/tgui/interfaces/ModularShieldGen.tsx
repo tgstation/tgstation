@@ -74,7 +74,9 @@ export const ModularShieldGen = (props, context) => {
             </ProgressBar>
           </Section>
         </Section>
-        <Section title={'Settings'}>
+         </ Stack.Item>
+         <Stack.Item grow>
+        <Section title="Settings">
           <Stack>
             <Section>
               <LabeledList>
