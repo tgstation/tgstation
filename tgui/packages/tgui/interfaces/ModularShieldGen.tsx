@@ -103,7 +103,6 @@ export const ModularShieldGen = (props, context) => {
                       onClick={() => act('toggle_exterior')}>
                       {exterior_only ? 'External only' : 'Internal & External'}
                     </Button>
-                  </Section>
                 </LabeledList.Item>
               </LabeledList>
             </Section>
