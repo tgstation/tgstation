@@ -86,7 +86,7 @@
 	name = "custodial holobarrier projector"
 	desc = "A holographic projector that creates hard light wet floor barriers."
 	holosign_type = /obj/structure/holosign/barrier/wetsign
-	creation_time = 20
+	creation_time = 6
 	max_signs = 12
 
 /obj/item/holosign_creator/security
@@ -102,8 +102,8 @@
 	desc = "A holographic projector that creates holographic engineering barriers."
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/structure/holosign/barrier/engineering
-	creation_time = 30
-	max_signs = 6
+	creation_time = 6
+	max_signs = 12
 
 /obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
@@ -118,8 +118,8 @@
 	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
-	creation_time = 30
-	max_signs = 3
+	creation_time = 6
+	max_signs = 6
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
