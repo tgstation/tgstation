@@ -64,7 +64,6 @@ export const ModularShieldGen = (props, context) => {
                 }}>
                 Regeneration {current_regeneration}/{max_regeneration}
               </ProgressBar>
-              <Section>
                 <ProgressBar
                   title="Shield radius"
                   value={current_radius}
