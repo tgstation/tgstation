@@ -17,7 +17,7 @@
 #define BLOB_EXPAND_COST 4 // Price to expand onto a new tile
 #define BLOB_ATTACK_REFUND 2 // Points 'refunded' when the expand attempt actually attacks something instead
 #define BLOB_BRUTE_RESIST 0.5 // Brute damage taken gets multiplied by this value
-#define BLOB_FIRE_RESIST 1 // Burn damage taken gets multiplied by this value
+#define BLOB_FIRE_RESIST 0.85 // Burn damage taken gets multiplied by this value
 #define BLOB_EXPAND_CHANCE_MULTIPLIER 1 // Increase this value to make blobs naturally expand faster
 #define BLOB_REINFORCE_CHANCE 2.5 // The seconds_per_tick chance for cores/nodes to reinforce their surroundings
 #define BLOB_REAGENTATK_VOL 25 // Amount of strain-reagents that get injected when the blob attacks: main source of blob damage
@@ -25,7 +25,7 @@
 
 // Structure properties
 
-#define BLOB_CORE_MAX_HP 400
+#define BLOB_CORE_MAX_HP 405
 #define BLOB_CORE_HP_REGEN 2 // Bases health regeneration rate every process(), can be added on by strains
 #define BLOB_CORE_CLAIM_RANGE 12 // Range in which blob tiles are 'claimed' (converted from dead to alive, rarely useful)
 #define BLOB_CORE_PULSE_RANGE 4 // The radius up to which the core activates structures, and up to which structures can be built
@@ -34,7 +34,7 @@
 #define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
 #define BLOB_CORE_MAX_SPORES 0 // Spores that the core can produce for free
 
-#define BLOB_NODE_MAX_HP 200
+#define BLOB_NODE_MAX_HP 205
 #define BLOB_NODE_HP_REGEN 3
 #define BLOB_NODE_MIN_DISTANCE 5 // Minimum distance between nodes
 #define BLOB_NODE_CLAIM_RANGE 10
@@ -44,26 +44,26 @@
 #define BLOB_NODE_REFLECTOR_REINFORCE_RANGE 0
 #define BLOB_NODE_MAX_SPORES 0 // Spores that nodes can maintain
 
-#define BLOB_FACTORY_MAX_HP 200
+#define BLOB_FACTORY_MAX_HP 205
 #define BLOB_FACTORY_HP_REGEN 1
 #define BLOB_FACTORY_MIN_DISTANCE 7 // Minimum distance between factories
 #define BLOB_FACTORY_MAX_SPORES 3
 
-#define BLOB_RESOURCE_MAX_HP 60
+#define BLOB_RESOURCE_MAX_HP 65
 #define BLOB_RESOURCE_HP_REGEN 15
 #define BLOB_RESOURCE_MIN_DISTANCE 4 // Minimum distance between resource blobs
 #define BLOB_RESOURCE_GATHER_DELAY (4 SECONDS) // Gather points when pulsed outside this interval
 #define BLOB_RESOURCE_GATHER_ADDED_DELAY (0.25 SECONDS) // Every additional resource blob adds this amount to the gather delay
 #define BLOB_RESOURCE_GATHER_AMOUNT 1 // The amount of points added to the overmind
 
-#define BLOB_REGULAR_MAX_HP 25
-#define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile
+#define BLOB_REGULAR_MAX_HP 30
+#define BLOB_REGULAR_HP_INIT 26 // The starting HP of a normal blob tile
 #define BLOB_REGULAR_HP_REGEN 1 // Health regenerated when pulsed by a node/core
 
-#define BLOB_STRONG_MAX_HP 150
+#define BLOB_STRONG_MAX_HP 155
 #define BLOB_STRONG_HP_REGEN 2
 
-#define BLOB_REFLECTOR_MAX_HP 150
+#define BLOB_REFLECTOR_MAX_HP 155
 #define BLOB_REFLECTOR_HP_REGEN 2
 
 
