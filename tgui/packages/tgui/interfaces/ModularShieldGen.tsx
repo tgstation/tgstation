@@ -34,7 +34,9 @@ export const ModularShieldGen = (props, context) => {
 
   return (
     <Window title="Modular Shield Generator" width={600} height={350}>
-      <Window.Content scrollable>
+      <Window.Content>
+          <Stack fill>
+           <Stack.Item grow={2}>
         <Section title="Shield Strength" color={recovering ? 'red' : 'white'}>
           <ProgressBar
             title="Shield Strength"
