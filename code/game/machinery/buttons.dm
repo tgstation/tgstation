@@ -62,7 +62,7 @@
 	return ..()
 
 /obj/machinery/button/update_icon_state()
-	icon_state = "[initial(base_icon_state)][skin]"
+	icon_state = "[base_icon_state][skin]"
 	if(panel_open)
 		icon_state += "-open"
 	else if(machine_stat & (NOPOWER|BROKEN))
@@ -81,23 +81,23 @@
 	. = ..()
 
 	if(panel_open && board)
-		. += "[initial(base_icon_state)]-overlay-board"
+		. += "[base_icon_state]-overlay-board"
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. += "[initial(base_icon_state)]-overlay-signaler"
+			. += "[base_icon_state]-overlay-signaler"
 		else
-			. += "[initial(base_icon_state)]-overlay-device"
+			. += "[base_icon_state]-overlay-device"
 
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, "[initial(base_icon_state)]-light-mask", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "[initial(base_icon_state)][skin]-open", "[initial(base_icon_state)][skin]", tool)
+		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
 		update_appearance()
 	else
 		balloon_alert(user, "access denied")
-		flick_overlay_view("[initial(base_icon_state)]-overlay-error", 1 SECONDS)
+		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 
 	return TRUE
 
@@ -223,11 +223,11 @@
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied")
-		flick_overlay_view("[initial(base_icon_state)]-overlay-error", 1 SECONDS)
+		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return
 
 	use_power(5)
-	flick_overlay_view("[initial(base_icon_state)]-overlay-success", 1 SECONDS)
+	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
