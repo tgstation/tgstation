@@ -128,8 +128,6 @@ export const ModularShieldGen = (props, context) => {
                   </Section>
                 </LabeledList.Item>
               </LabeledList>
-            </Section>
-          </Stack>
         </Section>
 </ Stack.Item>
 </ Stack>
