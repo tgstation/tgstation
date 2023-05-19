@@ -50,7 +50,7 @@
 /datum/team/ashwalkers/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>An Ash Walker Tribe inhabited the wastes...</span><br>"
+	report += span_header("An Ash Walker Tribe inhabited the wastes...</span><br>")
 	if(length(members)) //The team is generated alongside the tendril, and it's entirely possible that nobody takes the role.
 		report += "The [member_name]s were:"
 		report += printplayerlist(members)
@@ -66,7 +66,7 @@
 				report += span_redtext("<span class='header'>The Necropolis was destroyed, the tribe has fallen...</span><br>")
 
 		if(length(objectives))
-			report += "<span class='header'>The [name]'s other objectives were:</span>"
+			report += span_header("The [name]'s other objectives were:")
 			printobjectives(objectives)
 
 		report += "The [name] managed to perform <b>[sacrifices_made]</b> sacrifices to the Necropolis. From this, the Necropolis produced <b>[eggs_created]</b> Ash Walker eggs."
