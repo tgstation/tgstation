@@ -11,6 +11,8 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	armor_type = /datum/armor/obj_structure
 	burning_particles = /particles/smoke/burning
+	// If this is set to true, will not send a "You can't move while buckled to [src]!" message while inside or buckled too.
+	var/abstract_container = FALSE
 	var/broken = FALSE
 
 /datum/armor/obj_structure

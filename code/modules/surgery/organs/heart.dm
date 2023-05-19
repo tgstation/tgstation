@@ -448,6 +448,7 @@
 	resistance_flags = FIRE_PROOF
 	density = TRUE
 	anchored = TRUE
+	abstract_container = TRUE
 	///The organ this crystal belongs to
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart
 	///Timer for the healing process. Stops if destroyed.

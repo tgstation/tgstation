@@ -890,9 +890,11 @@
 /atom/proc/relaymove(mob/living/user, direction)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
 		return
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
-		to_chat(user, span_warning("You can't move while buckled to [src]!"))
+	if(buckle_message_cooldown <= world.time && isstructure(src))
+		var/obj/structure/buckled = src
+		if(!buckled.abstract_container)
+			buckle_message_cooldown = world.time + 50
+			to_chat(user, span_warning("You can't move while buckled to [src]!"))
 	return
 
 /**
