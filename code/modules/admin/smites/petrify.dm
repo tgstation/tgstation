@@ -1,8 +1,8 @@
 /// Turn pur target to stone, forever
-/datum/smite/nugget
+/datum/smite/petrify
 	name = "Petrify"
 
-/datum/smite/nugget/effect(client/user, mob/living/target)
+/datum/smite/petrify/effect(client/user, mob/living/target)
 	. = ..()
 
 	if(!ishuman(target))

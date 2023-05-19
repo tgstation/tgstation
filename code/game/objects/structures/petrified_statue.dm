@@ -5,11 +5,13 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
-	abstract_container = TRUE
 	// Should we leave a brain behind when the statue is wrecked?
 	var/brain = TRUE
 	var/timer = 480 //eventually the person will be freed
 	var/mob/living/petrified_mob
+
+/obj/structure/statue/petrified/relaymove()
+	return
 
 /obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer, save_brain)
 	. = ..()

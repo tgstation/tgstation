@@ -448,13 +448,15 @@
 	resistance_flags = FIRE_PROOF
 	density = TRUE
 	anchored = TRUE
-	abstract_container = TRUE
 	///The organ this crystal belongs to
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart
 	///Timer for the healing process. Stops if destroyed.
 	var/crystal_heal_timer
 	///Is the crystal still being built? True by default, gets changed after a timer.
 	var/being_built = TRUE
+
+/obj/structure/ethereal_crystal/relaymove()
+	return
 
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/internal/heart/ethereal/ethereal_heart)
 	. = ..()
