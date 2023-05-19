@@ -4918,7 +4918,7 @@
 /obj/structure/closet/crate/internals,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "bOk" = (
 /obj/machinery/light/directional/west,
 /obj/item/radio/intercom/directional/west,
@@ -5694,7 +5694,7 @@
 /obj/structure/closet/crate/preopen,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "cfy" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -5947,7 +5947,7 @@
 "clA" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "clE" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -7611,8 +7611,9 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "cSv" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -9901,7 +9902,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "dLc" = (
 /obj/machinery/gravity_generator/main,
 /obj/effect/turf_decal/bot_white,
@@ -14946,7 +14947,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "fDL" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -15558,7 +15559,7 @@
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "fOd" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -18652,7 +18653,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/item/stock_parts/cell,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "gUY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -19225,7 +19226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "hep" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -20776,7 +20777,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "hGF" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -22613,7 +22614,7 @@
 /obj/item/clothing/shoes/wheelys/rollerskates,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "imw" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;
@@ -26775,7 +26776,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "jDk" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -28235,7 +28236,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "kdC" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -28815,7 +28816,7 @@
 "kod" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "koj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -31794,7 +31795,7 @@
 	name = "old sink"
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "lsJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -33107,7 +33108,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/sealed/mecha/working/ripley/cargo,
 /turf/open/floor/plating,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "lUe" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -34636,7 +34637,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "mxn" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/hos)
@@ -35654,7 +35655,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "mNZ" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron,
@@ -36220,7 +36221,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "mXK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -37564,7 +37565,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "nvn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -41534,7 +41535,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "oQJ" = (
 /obj/structure/table,
 /obj/item/storage/box/gloves{
@@ -43092,7 +43093,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "puG" = (
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -44344,7 +44345,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "pQK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -44544,7 +44545,7 @@
 /obj/machinery/light_switch/directional/north,
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "pVM" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/south{
@@ -45134,7 +45135,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "qgu" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -46362,7 +46363,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "qFA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -51354,7 +51355,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "srp" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -51478,8 +51479,9 @@
 "stw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "stC" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
@@ -55371,7 +55373,7 @@
 /obj/item/electronics/apc,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "tKE" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/engineering)
@@ -57765,7 +57767,7 @@
 "uAp" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "uAu" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -58094,7 +58096,7 @@
 	req_access = list("cargo")
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "uGb" = (
 /obj/structure/table,
 /obj/machinery/light/directional/east,
@@ -59857,7 +59859,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "vmp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -59996,7 +59998,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "vpg" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -60498,7 +60500,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "vzx" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/siding/purple{
@@ -60549,7 +60551,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "vzS" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -61456,7 +61458,7 @@
 /area/station/maintenance/disposal/incinerator)
 "vQs" = (
 /turf/closed/wall,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "vQt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -63114,7 +63116,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "wtX" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
@@ -63644,7 +63646,7 @@
 	location = "QM #2"
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "wFa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
@@ -66668,7 +66670,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "xJa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -68032,7 +68034,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/station/cargo/warehouse)
+/area/station/cargo/warehouse/lights_off)
 "yiN" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,

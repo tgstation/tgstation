@@ -656,7 +656,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cr" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,
