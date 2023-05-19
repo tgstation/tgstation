@@ -119,7 +119,7 @@
 		if(TOOL_SAW)
 			force = 6
 			sharpness = SHARP_EDGED
-			usesound = initial(usesound)
+			usesound = initial(hitsound)
 			usesound = initial(usesound)
 		if(TOOL_ROLLINGPIN)
 			force = 6
