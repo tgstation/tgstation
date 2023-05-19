@@ -8,15 +8,15 @@
 
 /datum/reagent/australium/on_mob_add(mob/living/L, amount)
 	. = ..()
-	var/matrix/m180 = matrix(target.transform)
+	var/matrix/m180 = matrix(L.transform)
 	m180.Turn(180)
-	animate(target, transform = m180, time = 3)
+	animate(L, transform = m180, time = 3)
 
 /datum/reagent/australium/on_mob_delete(mob/living/L)
 	. = ..()
-	var/matrix/m180 = matrix(target.transform)
+	var/matrix/m180 = matrix(L.transform)
 	m180.Turn(180)
-	animate(target, transform = m180, time = 3)
+	animate(L, transform = m180, time = 3)
 
 /datum/reagent/australium/on_container_process(obj/item/reagent_containers/host)
 	for(var/datum/reagent/listed_reagent in host.reagents.reagent_list)
