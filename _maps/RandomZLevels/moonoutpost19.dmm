@@ -6136,6 +6136,19 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"ZO" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/lizard{
+	name = "Newt"
+	},
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "ZZ" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -7;
@@ -38698,7 +38711,7 @@ wq
 wq
 wq
 wq
-wq
+ZO
 wq
 wq
 wq

@@ -646,7 +646,7 @@
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/basic/lizard,
 		/mob/living/basic/mouse,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
