@@ -27,3 +27,4 @@
 	each_once = TRUE
 	skip_starting_sounds = TRUE
 	in_order = TRUE
+	direct = TRUE
