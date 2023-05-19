@@ -4,6 +4,7 @@
 	base_icon_state = "tram"
 	icon_state = "tram"
 	can_alter_skin = FALSE
+	light_color = LIGHT_COLOR_DARK_BLUE
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1

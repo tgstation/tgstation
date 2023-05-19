@@ -723,6 +723,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
 	base_icon_state = "tram"
 	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
 	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
