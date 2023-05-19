@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /datum/pipe_info/proc/Params()
 	return ""
 
-/datum/pipe_info/proc/get_preview(selected_dir)
+/datum/pipe_info/proc/get_preview(selected_dir, selected = FALSE)
 	var/list/dirs
 	switch(dirtype)
 		if(PIPE_STRAIGHT, PIPE_BENDABLE)
@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		row["previews"] += list(list(
-			"selected" = !selected_dir ? FALSE : dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
+			"selected" = selected && (!selected_dir ? FALSE : dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir)),
 			"dir" = dir2text(numdir),
 			"dir_name" = dirs[dir],
 			"icon_state" = icon_state,
@@ -359,7 +359,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"category" = category,
 		"piping_layer" = piping_layer,
 		"ducting_layer" = ducting_layer,
-		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
 		"selected_color" = paint_color,
@@ -387,7 +386,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
 					continue
 
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "preview" = info.get_preview()))
+			r += list(list(
+				"pipe_name" = info.name,
+				"pipe_index" = i,
+				"preview" = info.get_preview(p_dir, info == recipe)
+				))
 			if(info == recipe)
 				data["selected_category"] = c
 		if(r.len == 0) //when all air sensors are installed this list will become empty

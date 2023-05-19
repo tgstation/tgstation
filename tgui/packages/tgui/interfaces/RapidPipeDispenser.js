@@ -40,18 +40,19 @@ const TOOLS = [
 
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend(context);
-  const { space } = props;
   const { selected_color } = data;
   return (
     <LabeledList.Item label="Color">
-      {space ? <span>&nbsp;</span> : ''}
-      <Box inline width="64px" color={data.paint_colors[selected_color]}>
-        {capitalizeAll(selected_color)}
-      </Box>
       {Object.keys(data.paint_colors).map((colorName) => (
         <ColorBox
           key={colorName}
-          ml={1}
+          height="20px"
+          width="20px"
+          style={{
+            'border':
+              '3px solid ' +
+              (colorName === selected_color ? '#20b142' : '#222'),
+          }}
           color={data.paint_colors[colorName]}
           onClick={() =>
             act('color', {
@@ -60,6 +61,9 @@ export const ColorItem = (props, context) => {
           }
         />
       ))}
+      <Box inline ml={2} color={data.paint_colors[selected_color]}>
+        {capitalizeAll(selected_color)}
+      </Box>
     </LabeledList.Item>
   );
 };
@@ -69,22 +73,18 @@ const ModeItem = (props, context) => {
   const { mode } = data;
   return (
     <LabeledList.Item label="Modes">
-      <Stack fill>
-        {TOOLS.map((tool) => (
-          <Stack.Item grow key={tool.bitmask}>
-            <Button.Checkbox
-              checked={mode & tool.bitmask}
-              fluid
-              content={tool.name}
-              onClick={() =>
-                act('mode', {
-                  mode: tool.bitmask,
-                })
-              }
-            />
-          </Stack.Item>
-        ))}
-      </Stack>
+      {TOOLS.map((tool) => (
+        <Button.Checkbox
+          key={tool.bitmask}
+          checked={mode & tool.bitmask}
+          content={tool.name}
+          onClick={() =>
+            act('mode', {
+              mode: tool.bitmask,
+            })
+          }
+        />
+      ))}
     </LabeledList.Item>
   );
 };
@@ -109,12 +109,15 @@ const CategoryItem = (props, context) => {
 };
 
 const SelectionSection = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { category: rootCategoryIndex } = data;
   return (
     <Section>
       <LabeledList>
         <CategoryItem />
         <ModeItem />
-        <ColorItem />
+        {rootCategoryIndex === 0 && <ColorItem />}
+        {rootCategoryIndex === 0 && <LayerSelect />}
       </LabeledList>
     </Section>
   );
@@ -124,21 +127,20 @@ export const LayerSelect = (props, context) => {
   const { act, data } = useBackend(context);
   const { piping_layer } = data;
   return (
-    <Stack vertical mb={1}>
+    <LabeledList.Item label="Layer">
       {[1, 2, 3, 4, 5].map((layer) => (
-        <Stack.Item my={0} key={layer}>
-          <Button.Checkbox
-            checked={layer === piping_layer}
-            content={'Layer ' + layer}
-            onClick={() =>
-              act('piping_layer', {
-                piping_layer: layer,
-              })
-            }
-          />
-        </Stack.Item>
+        <Button.Checkbox
+          key={layer}
+          checked={layer === piping_layer}
+          content={layer}
+          onClick={() =>
+            act('piping_layer', {
+              piping_layer: layer,
+            })
+          }
+        />
       ))}
-    </Stack>
+    </LabeledList.Item>
   );
 };
 
@@ -180,16 +182,6 @@ const PreviewSelect = (props, context) => {
         </Button>
       ))}
     </Box>
-  );
-};
-
-const LayerSection = (props, context) => {
-  const { data } = useBackend(context);
-  const { category: rootCategoryIndex, piping_layer } = data;
-  return (
-    <Section fill width={7.5}>
-      {rootCategoryIndex === 0 && <LayerSelect />}
-    </Section>
   );
 };
 
@@ -321,30 +313,23 @@ export const RapidPipeDispenser = (props, context) => {
   const { data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
-    <Window width={560} height={540}>
+    <Window width={530} height={530}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <SelectionSection />
+            <Stack fill>
+              <Stack.Item grow>
+                <SelectionSection />
+              </Stack.Item>
+              {rootCategoryIndex === 0 && (
+                <Stack.Item width="90px">
+                  <SmartPipeBlockSection />
+                </Stack.Item>
+              )}
+            </Stack>
           </Stack.Item>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <Stack vertical fill>
-                  {rootCategoryIndex === 0 && (
-                    <Stack.Item>
-                      <SmartPipeBlockSection />
-                    </Stack.Item>
-                  )}
-                  <Stack.Item grow>
-                    <LayerSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow>
-                <PipeTypeSection />
-              </Stack.Item>
-            </Stack>
+            <PipeTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>
