@@ -15,8 +15,6 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
-	///The light mask used in the icon file for emissive layer
-	var/light_mask = "button-overlay"
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
 	light_color = LIGHT_COLOR_VIVID_GREEN
