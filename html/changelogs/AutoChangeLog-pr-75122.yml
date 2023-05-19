@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "The Occupational Corruption Device (now the \"Organic Capital Disturbance\" virus) now triggers directly from the uplink, rather than spawning a remote."
-  - balance: "The OCD now has a very small progression requirement behind it."

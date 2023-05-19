@@ -1,0 +1,4 @@
+author: "DaydreamIQ"
+delete-after: True
+changes:
+  - bugfix: "Space Dragon can no longer place their portals outside the station on Tramstation"

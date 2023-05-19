@@ -245,7 +245,7 @@
 
 				investigate_log("has been set from [target_record.wanted_status] to [new_status] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
 				target_record.wanted_status = new_status
-				sec_hud_set_security_status()
+				update_matching_security_huds(target_record.name)
 				return
 
 			if(href_list["view"])
@@ -281,7 +281,7 @@
 				var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
 
 				target_record.citations += new_citation
-				new_citation.alert_owner(target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
+				new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
 				investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, citation_name, fine)
 

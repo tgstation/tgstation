@@ -613,7 +613,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cj" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/bar/all_access,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/drinkingglasses,
@@ -656,9 +656,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cr" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = list("kitchen")
-	},
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,

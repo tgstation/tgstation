@@ -1011,7 +1011,7 @@
 /area/ruin/space/ks13/hallway/aft)
 "oC" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,

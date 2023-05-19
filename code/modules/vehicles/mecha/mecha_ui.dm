@@ -245,7 +245,7 @@
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
 			name = userinput
-			chassis_camera.update_c_tag(src)
+			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return

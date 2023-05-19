@@ -1218,7 +1218,7 @@
 /area/shuttle/escape/brig)
 "Xk" = (
 /obj/structure/closet/crate/critter,
-/mob/living/simple_animal/hostile/lizard/space{
+/mob/living/basic/lizard/space{
 	name = "Stows-Away"
 	},
 /turf/open/floor/plating,
