@@ -147,8 +147,8 @@
 		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
 
 	if(tool_behaviour)
-		inhand_icon_state = initial(inhand_icon_state)
-	else
 		inhand_icon_state = inhand_icon_state_unfolded
+	else
+		inhand_icon_state = initial(inhand_icon_state)
 
 	return ..()
