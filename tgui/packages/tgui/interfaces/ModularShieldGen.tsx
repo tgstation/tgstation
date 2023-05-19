@@ -33,52 +33,54 @@ export const ModularShieldGen = (props, context) => {
   } = data;
 
   return (
-    <Window title="Modular Shield Generator" width={600} height={350}>
+    <Window title="Modular Shield Generator" width={900} height={225}>
       <Window.Content>
-          <Stack fill>
-           <Stack.Item grow={2}>
-        <Section title="Shield Strength" color={recovering ? 'red' : 'white'}>
-          <ProgressBar
-            title="Shield Strength"
-            value={current_strength}
-            maxValue={max_strength}
-            ranges={{
-              'good': [max_strength * 0.75, max_strength],
-              'average': [max_strength * 0.25, max_strength * 0.75],
-              'bad': [0, max_strength * 0.25],
-            }}>
-            {current_strength}/{max_strength}
-          </ProgressBar>
-        </Section>
-        <Section title="Regeneration and Radius">
-          <ProgressBar
-            title="Regeneration rate"
-            value={current_regeneration}
-            maxValue={max_regeneration}
-            ranges={{
-              'good': [max_regeneration * 0.75, max_regeneration],
-              'average': [max_regeneration * 0.25, max_regeneration * 0.75],
-              'bad': [0, max_regeneration * 0.25],
-            }}>
-            Regeneration {current_regeneration}/{max_regeneration}
-          </ProgressBar>
-          <Section>
-            <ProgressBar
-              title="Shield radius"
-              value={current_radius}
-              maxValue={max_radius}
-              ranges={{
-                'good': [max_radius * 0.75, max_radius],
-                'average': [max_radius * 0.25, max_radius * 0.75],
-                'bad': [0, max_radius * 0.25],
-              }}>
-              Radius {current_radius}/{max_radius}
-            </ProgressBar>
-          </Section>
-        </Section>
-         </ Stack.Item>
-         <Stack.Item grow>
-        <Section title="Settings">
+        <Stack fill>
+          <Stack.Item grow={2}>
+            <Section
+              title="Shield Strength"
+              color={recovering ? 'red' : 'white'}>
+              <ProgressBar
+                title="Shield Strength"
+                value={current_strength}
+                maxValue={max_strength}
+                ranges={{
+                  'good': [max_strength * 0.75, max_strength],
+                  'average': [max_strength * 0.25, max_strength * 0.75],
+                  'bad': [0, max_strength * 0.25],
+                }}>
+                {current_strength}/{max_strength}
+              </ProgressBar>
+            </Section>
+            <Section title="Regeneration and Radius">
+              <ProgressBar
+                title="Regeneration rate"
+                value={current_regeneration}
+                maxValue={max_regeneration}
+                ranges={{
+                  'good': [max_regeneration * 0.75, max_regeneration],
+                  'average': [max_regeneration * 0.25, max_regeneration * 0.75],
+                  'bad': [0, max_regeneration * 0.25],
+                }}>
+                Regeneration {current_regeneration}/{max_regeneration}
+              </ProgressBar>
+              <Section>
+                <ProgressBar
+                  title="Shield radius"
+                  value={current_radius}
+                  maxValue={max_radius}
+                  ranges={{
+                    'good': [max_radius * 0.75, max_radius],
+                    'average': [max_radius * 0.25, max_radius * 0.75],
+                    'bad': [0, max_radius * 0.25],
+                  }}>
+                  Radius {current_radius}/{max_radius}
+                </ProgressBar>
+              </Section>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section title="Settings">
               <LabeledList>
                 <LabeledList.Item label="Set Radius">
                   <NumberInput
@@ -86,10 +88,6 @@ export const ModularShieldGen = (props, context) => {
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
-                    lineHeight="30px"
-                    fontSize="15px"
-                    width="60px"
-                    height="20px"
                     onChange={(e, value) =>
                       act('set_radius', {
                         new_radius: value,
@@ -98,35 +96,30 @@ export const ModularShieldGen = (props, context) => {
                   />
                 </LabeledList.Item>
                 <LabeledList.Item label="Placement Limitations">
-                    <Button
-                      disabled={active}
-                      onClick={() => act('toggle_exterior')}>
-                      {exterior_only ? 'External only' : 'Internal & External'}
-                    </Button>
+                  <Button
+                    disabled={active}
+                    onClick={() => act('toggle_exterior')}>
+                    {exterior_only ? 'External only' : 'Internal & External'}
+                  </Button>
                 </LabeledList.Item>
               </LabeledList>
             </Section>
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Toggle Power">
-                  <Section right={0.75}>
-                    <Button
-                      bold={1}
-                      disabled={recovering || initiating_field}
-                      selected={active}
-                      content={active ? 'On' : 'Off'}
-                      icon="power-off"
-                      onClick={() => act('toggle_shields')}
-                    />
+                  <Button
+                    bold={1}
+                    disabled={recovering || initiating_field}
+                    selected={active}
+                    content={active ? 'On' : 'Off'}
+                    icon="power-off"
+                    onClick={() => act('toggle_shields')}
+                  />
                 </LabeledList.Item>
               </LabeledList>
-        </Section>
-</ Stack.Item>
-</ Stack>
-</ Stack.Item>
-</ Stack>
-</ Stack.Item>
-</ Stack>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
