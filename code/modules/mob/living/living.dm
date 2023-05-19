@@ -1403,7 +1403,7 @@
 				/mob/living/basic/mouse,
 				/mob/living/simple_animal/chicken,
 				/mob/living/basic/cow,
-				/mob/living/simple_animal/hostile/lizard,
+				/mob/living/basic/lizard,
 				/mob/living/simple_animal/pet/fox,
 				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,

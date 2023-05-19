@@ -1,8 +1,8 @@
 ## Basic documentation
-To run, simply do `docker compose up -d` in the tts and ffmpeg folders.
-This will build the container if it isn't build already, but if it is, then it'll re-use the built image.
-
-To build the container after making any changes to the non-persistent files, you can do `docker compose build`
+To run follow these steps:
+1. Install [Docker](https://docs.docker.com/get-docker/)
+2. Run `docker compose up -d` in the ./tools/tts folder. This may take a while the first time.
+3. To build the container after making any changes to the non-persistent files, you can do `docker compose build`
 
 ### If you are testing on local
 Once it's running, edit your config so that `TTS_HTTP_URL` is set to http://localhost:5002 and `TTS_HTTP_TOKEN` is set to `coolio`
