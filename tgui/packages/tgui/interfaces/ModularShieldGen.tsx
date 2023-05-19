@@ -130,6 +130,8 @@ export const ModularShieldGen = (props, context) => {
         </Section>
 </ Stack.Item>
 </ Stack>
+</ Stack.Item>
+</ Stack>
       </Window.Content>
     </Window>
   );
