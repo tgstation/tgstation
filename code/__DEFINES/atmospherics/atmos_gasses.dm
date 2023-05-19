@@ -8,7 +8,7 @@
 #define GAS_AIR "air"
 #define GAS_WATER_VAPOR "water_vapor"
 #define GAS_TRITIUM "tritium"
-#define GAS_HYPER_NOBLIUM "hyper-noblium"
+#define GAS_HYPER_NOBLIUM "hypernoblium"
 #define GAS_PLUOXIUM "pluoxium"
 #define GAS_MIASMA "miasma"
 #define GAS_FREON "freon"

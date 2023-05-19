@@ -264,7 +264,7 @@
 	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
 
 /datum/gas/helium
-	id = GAS_HEALIUM
+	id = GAS_HELIUM
 	specific_heat = 15
 	name = "Helium"
 	fusion_power = 7
