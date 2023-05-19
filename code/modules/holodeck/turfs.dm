@@ -52,7 +52,10 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
+
+/turf/open/floor/holofloor/plating/burnmix/Initialize(mapload)
 	initial_gas_mix = BURNMIX_ATMOS
+	return ..()
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL

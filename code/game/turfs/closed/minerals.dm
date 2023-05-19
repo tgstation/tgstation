@@ -8,7 +8,6 @@
 	icon_state = "rock"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	baseturfs = /turf/open/misc/asteroid/airless
-	initial_gas_mix = AIRLESS_ATMOS
 	opacity = TRUE
 	density = TRUE
 	layer = EDGED_TURF_LAYER
@@ -41,6 +40,9 @@
 	// The cost of the list() being in the type def is very large for something as common as minerals
 	src.smoothing_groups = smoothing_groups
 	src.canSmoothWith = canSmoothWith
+
+	if(!initial_gas_mix)
+		initial_gas_mix = AIRLESS_ATMOS
 
 	return ..()
 
@@ -492,8 +494,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
+
+/turf/closed/mineral/iron/ice/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
+	return ..()
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/stack/ore/uranium
@@ -510,8 +515,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
+
+/turf/closed/mineral/diamond/ice/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
+	return ..()
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/stack/ore/gold
@@ -547,8 +555,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
+
+/turf/closed/mineral/plasma/ice/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
+	return ..()
 
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
@@ -585,9 +596,12 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/ashplanet/wateryrock
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
 	defer_change = TRUE
+
+/turf/closed/mineral/ash_rock/Initialize(mapload)
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	return ..()
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"
@@ -597,9 +611,12 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/asteroid/snow
-	initial_gas_mix = FROZEN_ATMOS
 	turf_type = /turf/open/misc/asteroid/snow
 	defer_change = TRUE
+
+/turf/closed/mineral/snowmountain/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
+	return ..()
 
 /turf/closed/mineral/snowmountain/icemoon
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
@@ -773,8 +790,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
+
+/turf/closed/mineral/gibtonite/ice/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
+	return ..()
 
 /turf/closed/mineral/gibtonite/ice/icemoon
 	turf_type = /turf/open/misc/asteroid/snow/ice/icemoon

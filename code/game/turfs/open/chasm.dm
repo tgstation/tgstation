@@ -105,9 +105,12 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	icon_state = "junglechasm-255"
 	base_icon_state = "junglechasm"
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/jungle
+
+/turf/open/chasm/jungle/Initialize(mapload)
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	return ..()
 
 /turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'

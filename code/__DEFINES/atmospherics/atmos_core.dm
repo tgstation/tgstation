@@ -36,6 +36,8 @@
 #define T20C 293.15
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
+/// -93.15C - Temperature used for Icemoon, frozen temperatures.
+#define FROZEN_ROOM_TEMP 180
 
 /**
  *I feel the need to document what happens here. Basically this is used

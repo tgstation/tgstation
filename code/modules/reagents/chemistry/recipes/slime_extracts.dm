@@ -239,7 +239,7 @@
 	if(holder?.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("plasma=50;TEMP=1000")
+			T.atmos_spawn_air("[GAS_PLASMA]=50;TEMP=1000")
 
 
 /datum/chemical_reaction/slime/slimesmoke

@@ -167,8 +167,9 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
-/turf/open/indestructible/necropolis/air
+/turf/open/indestructible/necropolis/air/Initialize(mapload)
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	return ..()
 
 /turf/open/indestructible/boss //you put stone tiles on this and use it as a base
 	name = "necropolis floor"
@@ -178,8 +179,9 @@
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/indestructible/boss/air
+/turf/open/indestructible/boss/air/Initialize(mapload)
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	return ..()
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'

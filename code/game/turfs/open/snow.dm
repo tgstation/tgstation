@@ -6,7 +6,6 @@
 	desc = "Looks cold."
 	icon_state = "snow"
 	planetary_atmos = TRUE
-	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
@@ -15,6 +14,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/misc/snow/Initialize(mapload)
+	initial_gas_mix = FROZEN_ATMOS
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2)
 
@@ -24,4 +24,8 @@
 /turf/open/misc/snow/actually_safe
 	slowdown = 0
 	planetary_atmos = FALSE
+
+/turf/open/misc/snow/actually_safe/Initialize(mapload)
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	return ..()
+

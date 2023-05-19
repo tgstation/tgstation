@@ -124,8 +124,9 @@
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
-/turf/open/lava/airless
+/turf/open/lava/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
+	return ..()
 
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(burn_stuff(arrived))
@@ -335,14 +336,14 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
-/turf/open/lava/smooth/airless
+/turf/open/lava/smooth/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
+	return ..()
 
 /turf/open/lava/plasma
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
 
 	light_range = 3
@@ -351,6 +352,10 @@
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
+
+/turf/open/lava/plasma/Initialize(mapload)
+	initial_gas_mix = BURNING_COLD
+	return ..()
 
 /turf/open/lava/plasma/examine(mob/user)
 	. = ..()
@@ -422,6 +427,9 @@
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
+
+/turf/open/lava/plasma/mafia/Initialize(mapload)
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	return ..()

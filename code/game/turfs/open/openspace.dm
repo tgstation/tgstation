@@ -13,8 +13,9 @@
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
-/turf/open/openspace/airless
+/turf/open/openspace/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
+	return ..()
 
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE
