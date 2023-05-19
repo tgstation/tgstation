@@ -384,7 +384,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ATTACKED_BY, user, attacking_item)
 
 /mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
-	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	if(damage > 10 || (damage >= 5 && prob(33)))
 		force_say(user)
 
