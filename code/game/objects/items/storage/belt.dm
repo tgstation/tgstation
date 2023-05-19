@@ -74,6 +74,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
+		/obj/item/spess_knife,
 	))
 
 /obj/item/storage/belt/utility/chief
