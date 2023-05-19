@@ -1,9 +1,13 @@
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/buttons.dmi'
+	base_icon_state = "button"
 	icon_state = "button"
+	///Icon suffix for the skin of the front pannel that is added to base_icon_state
 	var/skin = ""
+	///Whether it is possible to change the panel skin
+	var/can_alter_skin = TRUE
 	power_channel = AREA_USAGE_ENVIRON
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
@@ -60,9 +64,11 @@
 	return ..()
 
 /obj/machinery/button/update_icon_state()
-	icon_state = "[initial(icon_state)][skin]"
+	icon_state = "[initial(base_icon_state)][skin]"
 	if(panel_open)
 		icon_state += "-open"
+	else if(machine_stat & (NOPOWER|BROKEN))
+		icon_state += "-nopower"
 	return ..()
 
 /obj/machinery/button/update_appearance()
@@ -71,30 +77,29 @@
 	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
 		set_light(0)
 	else
-		set_light(light_range, light_power, light_color)
+		set_light(initial(light_range), light_power, light_color)
 
 /obj/machinery/button/update_overlays()
 	. = ..()
 
 	if(panel_open && board)
-		. += "[initial(icon_state)]-board"
+		. += "[initial(base_icon_state)]-overlay-board"
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. += "[initial(icon_state)]-signaler"
+			. += "[initial(base_icon_state)]-overlay-signaler"
 		else
-			. += "[initial(icon_state)]-device"
+			. += "[initial(base_icon_state)]-overlay-device"
 
-	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += light_mask
-		. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, "[initial(base_icon_state)]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", "[skin]", tool)
+		default_deconstruction_screwdriver(user, "[initial(base_icon_state)][skin]-open", "[initial(base_icon_state)][skin]", tool)
 		update_appearance()
 	else
 		balloon_alert(user, "access denied")
-		flick_overlay_view("[initial(icon_state)]-overlay-error", 1 SECONDS)
+		flick_overlay_view("[initial(base_icon_state)]-overlay-error", 1 SECONDS)
 
 	return TRUE
 
@@ -197,17 +202,18 @@
 				req_access = list()
 				req_one_access = list()
 				board = null
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 			balloon_alert(user, "electronics removed")
 			to_chat(user, span_notice("You remove electronics from the button frame."))
 
-		else
+		else if(can_alter_skin)
 			if(skin == "")
 				skin = "-warning"
 				to_chat(user, span_notice("You change the button frame's front panel to warning lines."))
 			else
 				skin = ""
 				to_chat(user, span_notice("You change the button frame's front panel to default."))
+			update_appearance(UPDATE_ICON)
 			balloon_alert(user, "swapped style")
 		return
 
@@ -219,11 +225,11 @@
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied")
-		flick_overlay_view("[initial(icon_state)]-overlay-error", 1 SECONDS)
+		flick_overlay_view("[initial(base_icon_state)]-overlay-error", 1 SECONDS)
 		return
 
 	use_power(5)
-	flick_overlay_view("[initial(icon_state)]-overlay-success", 1 SECONDS)
+	flick_overlay_view("[initial(base_icon_state)]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
