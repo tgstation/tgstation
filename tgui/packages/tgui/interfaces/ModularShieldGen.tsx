@@ -96,7 +96,7 @@ export const ModularShieldGen = (props, context) => {
                     }
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Placement Limitations">
+                <LabeledList.Item label="Limitations">
                   <Button
                     disabled={active}
                     onClick={() => act('toggle_exterior')}>
