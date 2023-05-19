@@ -60257,7 +60257,7 @@
 /obj/effect/turf_decal/trimline/purple/warning{
 	dir = 8
 	},
-/obj/effect/spawner/random/structure/girder,
+/obj/machinery/drone_dispenser,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port)
 "pMa" = (
@@ -82265,7 +82265,6 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
 	},
-/obj/machinery/drone_dispenser,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port)
 "vHz" = (
@@ -198818,10 +198817,10 @@ bnI
 aal
 aAK
 ybG
-rlw
+pLW
 jpH
 ikG
-pLW
+rlw
 fMf
 cUN
 pnc
