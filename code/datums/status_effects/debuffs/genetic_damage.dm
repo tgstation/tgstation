@@ -33,9 +33,9 @@
 
 /datum/status_effect/genetic_damage/tick(seconds_per_tick, times_fired)
 	if(ismonkey(owner) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && SPT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, seconds_per_tick))
-		qdel(src)
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.gorillize()
+		qdel(src)
 		return
 
 	if(total_damage >= minimum_before_tox_damage)

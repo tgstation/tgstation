@@ -98,6 +98,8 @@
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
 /// Currently used to identify valid guns to steal
 #define NOT_A_REAL_GUN (1<<1)
+/// This gun shouldn't be allowed to go in a turret (it probably causes a bug/exploit)
+#define TURRET_INCOMPATIBLE (1<<2)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

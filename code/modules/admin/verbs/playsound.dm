@@ -81,6 +81,8 @@
 	var/web_sound_url = ""
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
+	var/duration = 0
+
 	if(istext(input))
 		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[input]\"")
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
@@ -108,7 +110,7 @@
 		music_extra_data["artist"] = data["artist"]
 		music_extra_data["upload_date"] = data["upload_date"]
 		music_extra_data["album"] = data["album"]
-		var/duration = data["duration"] * 1 SECONDS
+		duration = data["duration"] * 1 SECONDS
 		if (duration > 10 MINUTES)
 			if((tgui_alert(user, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel")) != "Yes"))
 				return
@@ -161,6 +163,8 @@
 				else
 					C.tgui_panel?.stop_music()
 
+	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
 
@@ -174,6 +178,11 @@
 	if(!ytdl)
 		to_chat(src, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
+
+	if(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND))
+		if(tgui_alert(usr, "Someone else is already playing an Internet sound! It has [DisplayTimeText(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND), 1)] remaining. \
+		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
+			return
 
 	var/web_sound_input = tgui_input_text(usr, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
 
@@ -212,6 +221,8 @@
 		SEND_SOUND(M, sound(null))
 		var/client/C = M.client
 		C?.tgui_panel?.stop_music()
+
+	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 //world/proc/shelleo

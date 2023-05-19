@@ -5,7 +5,7 @@
 
 /// Midround Rulesets
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
-	ruletype = "Midround"
+	ruletype = MIDROUND_RULESET
 	var/midround_ruleset_style
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
