@@ -17,6 +17,7 @@
 			h_mob.stamina.adjust(-40) //monkestation edit
 	return ..()
 
+
 /obj/projectile/neurotoxin/damaging //for ai controlled aliums
 	damage = 30
 	paralyze = 0 SECONDS
