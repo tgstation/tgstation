@@ -220,7 +220,15 @@
 	cell_cover_open = !cell_cover_open
 	to_chat(user, span_notice("You [cell_cover_open ? "open" : "close"] the cell cover on \the [src]."))
 
-/// Toggle the space suit's thermal regulator status
+/**
+ * Toggle the space suit's thermal regulator status
+ *
+ * Toggle the space suit's thermal regulator status...
+ * Can't do it if it has no charge.
+ * Arguments:
+ * * toggler - User mob who recieves the to_chat messages.
+ * * manual_toggle - If false get a differently-flavored message about it being disabled by itself
+ */
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
