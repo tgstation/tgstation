@@ -74,7 +74,6 @@
 	return ..()
 
 /turf/open/floor/circuit/telecomms/Initialize(mapload)
-	. = ..()
 	initial_gas_mix = TCOMMS_ATMOS
 	return ..()
 
