@@ -82265,7 +82265,7 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tank,
+/obj/machinery/drone_dispenser,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port)
 "vHz" = (
