@@ -33,15 +33,13 @@ export const ModularShieldGen = (props, context) => {
   } = data;
 
   return (
-    <Window title="Modular Shield Generator" width={600} height={400}>
+    <Window title="Modular Shield Generator" width={600} height={350}>
       <Window.Content scrollable>
-        <Section title={'Shield Strength'} color={recovering ? 'red' : 'white'}>
+        <Section title="Shield Strength" color={recovering ? 'red' : 'white'}>
           <ProgressBar
             title="Shield Strength"
             value={current_strength}
-            minValue={0}
             maxValue={max_strength}
-            height={'30px'}
             ranges={{
               'good': [max_strength * 0.75, max_strength],
               'average': [max_strength * 0.25, max_strength * 0.75],
@@ -50,12 +48,10 @@ export const ModularShieldGen = (props, context) => {
             {current_strength}/{max_strength}
           </ProgressBar>
         </Section>
-        <Section title={'Regeneration and Radius'}>
+        <Section title="Regeneration and Radius">
           <ProgressBar
-            height={'20px'}
             title="Regeneration rate"
             value={current_regeneration}
-            minValue={0}
             maxValue={max_regeneration}
             ranges={{
               'good': [max_regeneration * 0.75, max_regeneration],
@@ -66,10 +62,8 @@ export const ModularShieldGen = (props, context) => {
           </ProgressBar>
           <Section>
             <ProgressBar
-              height={'20px'}
               title="Shield radius"
               value={current_radius}
-              minValue={0}
               maxValue={max_radius}
               ranges={{
                 'good': [max_radius * 0.75, max_radius],
@@ -85,23 +79,21 @@ export const ModularShieldGen = (props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Set Radius">
-                  <Section right={0.75}>
-                    <NumberInput
-                      disabled={active}
-                      value={current_radius}
-                      minValue={3}
-                      maxValue={max_radius}
-                      lineHeight="30px"
-                      fontSize="15px"
-                      width="60px"
-                      height="20px"
-                      onChange={(e, value) =>
-                        act('set_radius', {
-                          new_radius: value,
-                        })
-                      }
-                    />
-                  </Section>
+                  <NumberInput
+                    disabled={active}
+                    value={current_radius}
+                    minValue={3}
+                    maxValue={max_radius}
+                    lineHeight="30px"
+                    fontSize="15px"
+                    width="60px"
+                    height="20px"
+                    onChange={(e, value) =>
+                      act('set_radius', {
+                        new_radius: value,
+                      })
+                    }
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Section>
