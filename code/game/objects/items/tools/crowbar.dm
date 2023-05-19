@@ -119,11 +119,6 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/crowbar/power/proc/pre_snapping()
-	if(tool_behaviour == TOOL_CROWBAR)
-		return FALSE
-	return TRUE
-
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
