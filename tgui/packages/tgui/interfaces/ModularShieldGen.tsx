@@ -33,7 +33,7 @@ export const ModularShieldGen = (props, context) => {
   } = data;
 
   return (
-    <Window title="Modular Shield Generator" width={900} height={225}>
+    <Window title="Modular Shield Generator" width={690} height={225}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow={2}>
