@@ -85,6 +85,7 @@ export const ModularShieldGen = (props, context) => {
                 <LabeledList.Item label="Set Radius">
                   <NumberInput
                     disabled={active}
+                    fluid
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
