@@ -1,9 +1,9 @@
 /**
  * ##temporary_body
  *
- * Used on carbons when they are meant to be a 'temporary body'
+ * Used on living mobs when they are meant to be a 'temporary body'
  * Holds a reference to an old mind & body, to put them back in
- * once this temporary one is being deleted.
+ * once the body this component is attached to, is being deleted.
  */
 /datum/component/temporary_body
 	///The old mind we will be put back into when parent is being deleted.
