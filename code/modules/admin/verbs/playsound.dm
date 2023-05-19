@@ -41,7 +41,7 @@
 			SEND_SOUND(M, admin_sound)
 			admin_sound.volume = vol
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 
 /client/proc/play_local_sound(S as sound)
@@ -53,7 +53,7 @@
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/play_direct_mob_sound(S as sound, mob/M)
 	set category = "Admin.Fun"
@@ -68,7 +68,7 @@
 	log_admin("[key_name(src)] played a direct mob sound [S] to [M].")
 	message_admins("[key_name_admin(src)] played a direct mob sound [S] to [ADMIN_LOOKUPFLW(M)].")
 	SEND_SOUND(M, S)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
 /proc/web_sound(mob/user, input)
@@ -81,6 +81,8 @@
 	var/web_sound_url = ""
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
+	var/duration = 0
+
 	if(istext(input))
 		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[input]\"")
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
@@ -108,7 +110,7 @@
 		music_extra_data["artist"] = data["artist"]
 		music_extra_data["upload_date"] = data["upload_date"]
 		music_extra_data["album"] = data["album"]
-		var/duration = data["duration"] * 1 SECONDS
+		duration = data["duration"] * 1 SECONDS
 		if (duration > 10 MINUTES)
 			if((tgui_alert(user, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel")) != "Yes"))
 				return
@@ -161,6 +163,8 @@
 				else
 					C.tgui_panel?.stop_music()
 
+	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
 
@@ -174,6 +178,11 @@
 	if(!ytdl)
 		to_chat(src, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
+
+	if(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND))
+		if(tgui_alert(usr, "Someone else is already playing an Internet sound! It has [DisplayTimeText(S_TIMER_COOLDOWN_TIMELEFT(SStimer, COOLDOWN_INTERNET_SOUND), 1)] remaining. \
+		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
+			return
 
 	var/web_sound_input = tgui_input_text(usr, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
 
@@ -198,7 +207,7 @@
 
 	log_admin("[key_name(src)] set the round end sound to [S]")
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/stop_sounds()
 	set category = "Debug"
@@ -212,7 +221,9 @@
 		SEND_SOUND(M, sound(null))
 		var/client/C = M.client
 		C?.tgui_panel?.stop_music()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+	S_TIMER_COOLDOWN_RESET(SStimer, COOLDOWN_INTERNET_SOUND)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 //world/proc/shelleo
 #undef SHELLEO_ERRORLEVEL

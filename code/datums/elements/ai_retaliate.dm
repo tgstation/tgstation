@@ -20,10 +20,4 @@
 /datum/element/ai_retaliate/proc/on_attacked(mob/victim, atom/attacker)
 	SIGNAL_HANDLER
 
-	if (!victim.ai_controller)
-		return
-	var/list/enemy_refs = victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-	if (!enemy_refs)
-		enemy_refs = list()
-	enemy_refs |= WEAKREF(attacker)
-	victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
+	victim.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)

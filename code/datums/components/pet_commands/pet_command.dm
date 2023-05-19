@@ -68,7 +68,7 @@
 		return
 	if (IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
 		return
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == WEAKREF(src)) // We're already doing it
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == src) // We're already doing it
 		return
 	set_command_active(parent, commander)
 
@@ -77,13 +77,13 @@
 	set_command_target(parent, null)
 
 	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
-	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = WEAKREF(src)
+	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 
 /// Store the target for the AI blackboard
 /datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
-	parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] = WEAKREF(target)
+	parent.ai_controller.set_blackboard_key(BB_CURRENT_PET_TARGET, target)
 
 /// Provide information about how to display this command in a radial menu
 /datum/pet_command/proc/provide_radial_data()
@@ -137,9 +137,9 @@
 		return FALSE
 	if (IS_DEAD_OR_INCAP(parent))
 		return FALSE
-	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != WEAKREF(src)) // We're not listening right now
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != src) // We're not listening right now
 		return FALSE
-	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
+	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == pointed_atom) // That's already our target
 		return FALSE
 	if (!can_see(parent, pointed_atom, sense_radius))
 		return FALSE

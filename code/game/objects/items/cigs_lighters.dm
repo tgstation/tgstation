@@ -20,7 +20,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
-	var/smoketime = 10 SECONDS
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
@@ -29,6 +28,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// Whether this match has burnt out.
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
+	var/smoketime = 10 SECONDS
 
 /obj/item/match/process(seconds_per_tick)
 	smoketime -= seconds_per_tick * (1 SECONDS)
@@ -115,7 +115,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 40 SECONDS
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize(mapload)
@@ -177,7 +177,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(starts_lit)
 		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_MASK|ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
 

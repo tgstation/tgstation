@@ -3,6 +3,7 @@
 	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
 	team = MAFIA_TEAM_MAFIA
 	role_type = MAFIA_REGULAR
+	role_flags = ROLE_CAN_KILL
 	hud_icon = "hudchangeling"
 	revealed_icon = "changeling"
 	winner_award = /datum/award/achievement/mafia/changeling

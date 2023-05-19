@@ -15,7 +15,7 @@
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard =SHEET_MATERIAL_AMOUNT)
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack

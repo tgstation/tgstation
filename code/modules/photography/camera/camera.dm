@@ -18,7 +18,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
@@ -189,8 +189,8 @@
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 
-	var/width = size_x * 2
-	var/height = size_y * 2
+	var/width = size_x * 2 + 1
+	var/height = size_y * 2 + 1
 	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
 			placeholder = SSmapping.get_turf_below(placeholder)
@@ -203,6 +203,9 @@
 				mobs += M
 			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
+
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
 
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
@@ -225,6 +228,8 @@
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)

@@ -6,6 +6,10 @@
 #define MOVABLE_LIGHT 2
 ///Light made by masking the lighting darkness plane, and is directional.
 #define MOVABLE_LIGHT_DIRECTIONAL 3
+///Light made by masking the lighting darkness plane, and is a directionally focused beam.
+#define MOVABLE_LIGHT_BEAM 4
+/// Nonesensical value for light color, used for null checks.
+#define NONSENSICAL_VALUE -99999
 
 ///Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
@@ -34,6 +38,9 @@
 
 ///How many tiles standard fires glow.
 #define LIGHT_RANGE_FIRE 3
+#define LIGHT_FIRE_BLOSSOM 2.1
+#define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
+#define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
 
 // Lighting cutoff defines
 // These are a percentage of how much darkness to cut off (in rgb)

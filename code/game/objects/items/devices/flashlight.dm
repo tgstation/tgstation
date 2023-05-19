@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
@@ -202,6 +202,7 @@
 /obj/item/flashlight/equipped(mob/user, slot, initial)
 	. = ..()
 	setDir(initial(dir))
+	SEND_SIGNAL(user, COMSIG_ATOM_DIR_CHANGE, user.dir, user.dir) // This is dumb, but if we don't do this then the lighting overlay may be facing the wrong direction depending on how it is picked up
 
 /// for directional sprites - so when we drop the flashlight, it drops facing the same way the user is facing
 /obj/item/flashlight/dropped(mob/user, silent = FALSE)
@@ -327,7 +328,7 @@
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE
-	custom_materials = list(/datum/material/plastic=50)
+	custom_materials = list(/datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
@@ -343,6 +344,16 @@
 
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/flashlight/flare/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(!isliving(victim))
+		return ..()
+
+	if(on && victim.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
+
 	return ..()
 
 /obj/item/flashlight/flare/toggle_light()
@@ -441,7 +452,7 @@
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /**
  * Just checks the wax level of the candle for displaying the correct sprite.
@@ -456,7 +467,7 @@
 			current_wax_level = 2
 		if(0 to 15 MINUTES)
 			current_wax_level = 3
-			
+
 	if(last_wax_level != current_wax_level)
 		last_wax_level = current_wax_level
 		update_appearance(UPDATE_ICON | UPDATE_NAME)
@@ -509,7 +520,7 @@
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
 	if(try_light_candle(attacking_item, user, silent = istype(attacking_item, src.type))) // so we don't double balloon alerts when a candle is used to light another candle
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else 
+	else
 		return ..()
 
 // allows lighting an unlit candle from some fire source by left clicking the source with the candle
@@ -823,7 +834,12 @@
 	light_range = 1
 	light_power = 0.07
 
-#undef FAILURE 
-#undef SUCCESS 
-#undef NO_FUEL 
-#undef ALREADY_LIT 
+/obj/item/flashlight/eyelight/glow
+	light_system = MOVABLE_LIGHT_BEAM
+	light_range = 4
+	light_power = 2
+
+#undef FAILURE
+#undef SUCCESS
+#undef NO_FUEL
+#undef ALREADY_LIT

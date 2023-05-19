@@ -6,7 +6,7 @@
 	inhand_icon_state = "welding"
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor_type = /datum/armor/utility_welding

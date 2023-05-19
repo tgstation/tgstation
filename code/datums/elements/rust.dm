@@ -19,7 +19,7 @@
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(handle_examine))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
-	target.update_icon(UPDATE_OVERLAYS)
+	target.update_appearance()
 
 /datum/element/rust/Detach(atom/source)
 	. = ..()
@@ -27,19 +27,23 @@
 	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
-	source.update_icon(UPDATE_OVERLAYS)
+	source.update_appearance()
 
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
+
 	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off.")
 
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
-	overlays += rust_overlay
+
+	if(rust_overlay)
+		overlays += rust_overlay
 
 /// Because do_after sleeps we register the signal here and defer via an async call
 /datum/element/rust/proc/secondary_tool_act(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
+
 	INVOKE_ASYNC(src, PROC_REF(handle_tool_use), source, user, item)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 

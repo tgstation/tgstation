@@ -1118,8 +1118,6 @@
 	if(machine_stat & BROKEN)
 		. += span_notice("It looks broken and non-functional.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(resistance_flags & ON_FIRE)
-			. += span_warning("It's on fire!")
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)

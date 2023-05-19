@@ -3,6 +3,7 @@
 	name = "item"
 	icon = 'icons/obj/objects.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -78,6 +79,8 @@
 	var/drop_sound
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
+	///Sound which is produced when blocking an attack
+	var/block_sound
 
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
@@ -172,7 +175,10 @@
 	///How fast does the tool work
 	var/toolspeed = 1
 
+	///Chance of blocking incoming attack
 	var/block_chance = 0
+	///Effect of blocking
+	var/block_effect = /obj/effect/temp_visual/block
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -442,7 +448,7 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/item/ui_act(action, list/params)
+/obj/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	return ..()
 
@@ -635,6 +641,9 @@
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		var/owner_turf = get_turf(owner)
+		new block_effect(owner_turf, COLOR_YELLOW)
+		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
@@ -879,6 +888,8 @@
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
+	if(resistance_flags & ON_FIRE)
+		return max(heat, BURNING_ITEM_MINIMUM_TEMPERATURE)
 	return heat
 
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.

@@ -4,6 +4,12 @@
 	icon_state = "doctor_envirosuit"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/plasmaman/coroner
+	name = "coroner plasma envirosuit"
+	desc = "A plasmaman envirosuit made for morticians."
+	icon_state = "coroner_envirosuit"
+	inhand_icon_state = null
+
 /obj/item/clothing/under/plasmaman/paramedic
 	name = "paramedic envirosuit"
 	desc = "A suit designed for the station's plasmaman paramedics."

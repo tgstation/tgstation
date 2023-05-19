@@ -17,6 +17,7 @@
 	icon = 'icons/obj/poster.dmi'
 	force = 0
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
@@ -111,6 +112,8 @@
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
+	///Exclude posters of these types from being added to the random pool
+	var/list/blacklisted_types = list()
 	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
 	var/printable = FALSE
 
@@ -150,6 +153,9 @@
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
+	if(length(blacklisted_types))
+		for(var/iterated_type in blacklisted_types)
+			poster_types -= typesof(iterated_type)
 	var/list/approved_types = list()
 	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
 		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
@@ -290,6 +296,7 @@
 	icon_state = "random_anything"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
+	blacklisted_types = list(/obj/structure/sign/poster/traitor)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 
@@ -1071,5 +1078,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "You Wouldn't Download A Gun"
 	desc = "A poster reminding the crew that corporate secrets should stay in the workplace."
 	icon_state = "download_gun"
+
+/obj/structure/sign/poster/contraband/singletank_bomb
+	name = "Single Tank Bomb Guide"
+	desc = "This informational poster teaches the viewer how to make a single tank bomb of high quality."
+	icon_state = "singletank_bomb"
 
 #undef PLACE_SPEED

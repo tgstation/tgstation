@@ -265,7 +265,7 @@ const CheckoutTab = (props, context) => {
         <Section>
           <Stack>
             <Stack.Item grow mt={0.5}>
-              Total Cost:{total_cargo_cost}&#40;Express:
+              Total:{total_cargo_cost}&#40;Express:
               {total_cost * express_cost_multiplier}&#41;
             </Stack.Item>
             {!forced_express && (
@@ -277,7 +277,7 @@ const CheckoutTab = (props, context) => {
                   disabled={total_cargo_cost < cargo_value}
                   tooltip={
                     total_cargo_cost < cargo_value
-                      ? `Total Cost must be above or equal to ${cargo_value}`
+                      ? `Total must be above or equal to ${cargo_value}`
                       : purchase_tooltip
                   }
                   tooltipPosition="top"

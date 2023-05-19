@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "order consoles cancelling order's less than 200 but still subtracting money, mining points from the player"
-  - code_imp: "multiplier for all shipments made through cargo"
-  - refactor: "2 new procs retrive_points() &  subtract_points() to dela with different types"

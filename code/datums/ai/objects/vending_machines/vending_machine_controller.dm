@@ -42,7 +42,7 @@
 		for(var/mob/living/living_target in oview(vision_range, pawn))
 			if(living_target.stat || living_target.incorporeal_move) //They're already fucked up or incorporeal
 				continue
-			blackboard[BB_VENDING_CURRENT_TARGET] = living_target
+			set_blackboard_key(BB_VENDING_CURRENT_TARGET, living_target)
 			queue_behavior(/datum/ai_behavior/vendor_crush, BB_VENDING_CURRENT_TARGET)
 			return
-		blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + search_for_enemy_cooldown
+		set_blackboard_key(BB_VENDING_TILT_COOLDOWN, world.time + search_for_enemy_cooldown)

@@ -20,17 +20,15 @@
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
-	var/list/all_roles_shuffle = shuffle(game.all_roles)
-	for(var/role in all_roles_shuffle)
-		var/datum/mafia_role/possible = role
-		if(possible.team == MAFIA_TEAM_TOWN && possible.game_status != MAFIA_DEAD)
+	var/list/all_roles_shuffle = shuffle(game.living_roles)
+	for(var/datum/mafia_role/possible as anything in all_roles_shuffle)
+		if(possible.team == MAFIA_TEAM_TOWN)
 			obsession = possible
 			break
 	if(!obsession)
 		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
 	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
 	to_chat(body, span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
-	add_note("I vowed to watch my obsession, [obsession.body.real_name], hang!")
 	RegisterSignal(obsession, COMSIG_MAFIA_ON_KILL, PROC_REF(check_victory))
 	UnregisterSignal(game, COMSIG_MAFIA_SUNDOWN)
 
