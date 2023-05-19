@@ -47,7 +47,7 @@
 	else
 		tool_behaviour = new_tool_behaviour
 
-	var/mistake_chance = HAS_TRAIT(user, TRAIT_CLUMSY) ? wrong_tool_prob * 2 : wrong_tool_prob
+	var/mistake_chance = HAS_TRAIT(user, TRAIT_CLUMSY) ? wrong_tool_prob * 5 : wrong_tool_prob
 	var/mistake_occured = FALSE
 	if(!isnull(tool_behaviour) && prob(mistake_chance))
 		do
