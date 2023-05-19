@@ -24,8 +24,8 @@
 /obj/item/spess_knife/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-		speed = 12 SECONDS, \
-		effectiveness = 80, \
+		speed = 8 SECONDS, \
+		effectiveness = 100, \
 		disabled = TRUE, \
 	)
 	options = list(
