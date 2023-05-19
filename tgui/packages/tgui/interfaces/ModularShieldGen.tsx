@@ -125,7 +125,6 @@ export const ModularShieldGen = (props, context) => {
                       icon="power-off"
                       onClick={() => act('toggle_shields')}
                     />
-                  </Section>
                 </LabeledList.Item>
               </LabeledList>
         </Section>
