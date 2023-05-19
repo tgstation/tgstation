@@ -319,7 +319,7 @@
 
 /turf/open/floor/material/meat/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
+	. = ..()
 	baseturfs = /turf/open/misc/asteroid/airless
 
 /turf/open/floor/iron/tgmcemblem
