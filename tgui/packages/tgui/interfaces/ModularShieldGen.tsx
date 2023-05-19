@@ -100,7 +100,6 @@ export const ModularShieldGen = (props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Placement Limitations">
-                  <Section right={0.75}>
                     <Button
                       disabled={active}
                       onClick={() => act('toggle_exterior')}>
