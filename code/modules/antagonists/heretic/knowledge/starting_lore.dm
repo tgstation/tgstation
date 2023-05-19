@@ -214,3 +214,45 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	route = PATH_START
+
+/**
+ * Codex Cicatrixi can now be crafted at the start.
+ * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
+ * Construct a codex and take what's left with more points.
+ * Another downside to having the book is strip searches, which means that it's not just a free nab, at least until you get exposed - and when you do, you'll probably need the faster drawing speed.
+ * Overall, it's a tradeoff between speed and stealth or power.
+ */
+/datum/heretic_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
+		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
+		It can also be used to draw and remove transmutation runes easier."
+	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
+		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	required_atoms = list(
+		/obj/item/book = 1,
+		/obj/item/pen = 1,
+		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide) = 1,
+	)
+	banned_atom_types = list(/obj/item/pen)
+	result_atoms = list(/obj/item/codex_cicatrix)
+	cost = 1
+	route = PATH_START
+	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
+
+/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item, number_of_things)
+	if(item.type == /obj/item/pen)
+		return "unique type of pen"
+	else return ..()
+
+/datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/mob/living/body in atoms)
+		if(body.stat != DEAD)
+			continue
+
+		selected_atoms += body
+		return TRUE

@@ -70,9 +70,9 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "When day came, the Sleeper got lost. \
 		The sun outshone the stars, so he lost his guide."
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/summon/fire_shark,
 	)
@@ -114,6 +114,7 @@
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
 		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "He didn't try, yet felt the call of the night's Creator."
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
@@ -208,6 +209,7 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "He was well known, so he had a lot of drawing to do to gather as much of the things he forgot."
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,

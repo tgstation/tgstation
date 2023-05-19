@@ -80,9 +80,9 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
 	)
@@ -165,6 +165,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
@@ -194,6 +195,7 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
+	adds_sidepath_point = TRUE
 	next_knowledge = list(
 		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/ultimate/rust_final,

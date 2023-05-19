@@ -90,6 +90,7 @@
 	// A copy of our requirements list.
 	// We decrement the values of to determine if enough of each key is present.
 	var/list/requirements_list = ritual.required_atoms.Copy()
+	var/list/banned_atom_types = ritual.banned_atom_types.Copy()
 	// A list of all atoms we've selected to use in this recipe.
 	var/list/selected_atoms = list()
 
@@ -105,8 +106,21 @@
 			// We already have enough of this type, skip
 			if(requirements_list[req_type] <= 0)
 				continue
-			if(!istype(nearby_atom, req_type))
+			// If req_type is a list of types, check all of them for one match.
+			if(islist(req_type))
+				if(!(is_type_in_list(nearby_atom, req_type)))
+					continue
+			else if(!istype(nearby_atom, req_type))
 				continue
+			// if list has items, check if the strict type is banned.
+			if(length(banned_atom_types))
+				var/bad_item = FALSE
+				for(var/banned_type in banned_atom_types) // the loop pile doesn't stop from getting taller
+					if(nearby_atom.type == banned_type)
+						bad_item = TRUE
+						break
+				if(bad_item)
+					continue
 
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
@@ -122,7 +136,7 @@
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/atom/req_type as anything in requirements_list)
+	for(var/req_type as anything in requirements_list)
 		var/number_of_things = requirements_list[req_type]
 		// <= 0 means it's fulfilled, skip
 		if(number_of_things <= 0)
@@ -130,10 +144,13 @@
 
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
-		var/formatted_thing = "[number_of_things] [initial(req_type.name)]\s"
-		if(ispath(req_type, /mob/living/carbon/human))
-			// If we need a human, there is a high likelihood we actually need a (dead) body
-			formatted_thing = "[number_of_things] [number_of_things > 1 ? "bodies":"body"]"
+		var/formatted_thing = "[number_of_things] "
+		if(islist(req_type))
+			var/list/req_type_list = req_type
+			for(var/atom/possible_type as anything in req_type_list)
+				formatted_thing += parse_required_item(possible_type)
+
+		else formatted_thing += parse_required_item(possible_type)
 
 		what_are_we_missing += formatted_thing
 
@@ -179,6 +196,7 @@
 		loc.balloon_alert(user, "ritual complete")
 
 	return ritual_result
+
 
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big

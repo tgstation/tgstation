@@ -31,6 +31,8 @@
 	var/heretic_path = PATH_START
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
+	/// How many side path points the heretic has. He gains one of these per main path that splits into two sidepaths. These can be used in place of knowledge points for side paths only.
+	var/side_path_points = 0
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
@@ -135,7 +137,12 @@
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
 			if(initial(researched_path.cost) > knowledge_points)
-				return TRUE
+
+				// If side path and has path points, buy!
+				if(!(initial(researched_path.route) == PATH_SIDE && side_path_points > 0))
+					return TRUE
+				side_path_points--
+
 			if(!gain_knowledge(researched_path))
 				return TRUE
 
@@ -284,7 +291,7 @@
  * * drawing_time - how long the do_after takes to make the rune
  * * additional checks - optional callbacks to be ran while drawing the rune
  */
-/datum/antagonist/heretic/proc/try_draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
+/datum/antagonist/heretic/proc/try_draw_rune(mob/living/user, turf/target_turf, drawing_time = 22 SECONDS, additional_checks)
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
 		if(!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_rune_turfs))
 			target_turf.balloon_alert(user, "invalid placement for rune!")
@@ -309,7 +316,7 @@
  * * drawing_time - how long the do_after takes to make the rune
  * * additional checks - optional callbacks to be ran while drawing the rune
  */
-/datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
+/datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 22 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
 	var/rune_colour = path_to_rune_color[heretic_path]
