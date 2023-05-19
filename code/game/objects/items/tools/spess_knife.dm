@@ -19,6 +19,14 @@
 	///Chance to select wrong tool
 	var/wrong_tool_prob = 10
 
+/obj/item/spess_knife/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/butchering, \
+		speed = 12 SECONDS, \
+		effectiveness = 80, \
+		disabled = TRUE, \
+	)
+
 /obj/item/spess_knife/attack_self(mob/user, modifiers)
 	var/list/options = list(
 		"fold" = image(icon = 'icons/obj/tools.dmi', icon_state = initial(icon_state)),
@@ -69,6 +77,9 @@
 
 /// Used to update sounds and tool parameters during switching
 /obj/item/spess_knife/proc/update_tool_parameters()
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = tool_behaviour == TOOL_KNIFE
+
 	switch(tool_behaviour)
 		if(null)
 			force = 0
