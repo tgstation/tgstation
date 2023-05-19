@@ -79,8 +79,6 @@ export const ModularShieldGen = (props, context) => {
          </ Stack.Item>
          <Stack.Item grow>
         <Section title="Settings">
-          <Stack>
-            <Section>
               <LabeledList>
                 <LabeledList.Item label="Set Radius">
                   <NumberInput
