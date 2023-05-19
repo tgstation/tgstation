@@ -304,6 +304,12 @@
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_appearance()
+
+	if(reasses_processing())
+		START_PROCESSING(SSobj, src)
+	else if(datum_flags & DF_ISPROCESSING)
+		STOP_PROCESSING(SSobj, src)
+
 	return NONE
 
 /obj/item/reagent_containers/update_overlays()
