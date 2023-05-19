@@ -147,3 +147,6 @@
 
 /datum/movespeed_modifier/health_scaling_speed_buff
 	variable = TRUE
+
+/datum/movespeed_modifier/grown_killer_tomato
+	variable = TRUE

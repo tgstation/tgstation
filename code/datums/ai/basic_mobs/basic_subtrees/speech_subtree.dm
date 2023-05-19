@@ -125,3 +125,16 @@
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
 	emote_see = list("photosynthesizes angirly.")
+
+/datum/ai_planning_subtree/random_speech/pig
+	speech_chance = 3
+	speak = list("oink?","oink","snurf")
+	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
+	emote_hear = list("snorts.")
+	emote_see = list("sniffs around.")
+
+/datum/ai_planning_subtree/random_speech/killer_tomato
+	speech_chance = 3
+	speak = list("gnashes.", "growls lowly.", "snarls.")
+	emote_hear = list("gnashes.")
+	emote_see = list("salivates.")
