@@ -51,14 +51,8 @@
 	return TRUE
 
 /**
- * Sends a big message to all spiders from the target.
- *
- * Allows the user to send a message to all spiders that exist.  Ghosts will also see the message.
- * Arguments:
- * * user - The spider sending the message
- * * message - The message to be sent
+ * Formats the string to have an appropiate size and text color
  */
-	/// send a message to all living spiders
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
@@ -82,13 +76,5 @@
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "message"
 
-/**
- * Sends a message to all spiders from the target.
- *
- * Allows the user to send a message to all spiders that exist.  Ghosts will also see the message.
- * Arguments:
- * * user - The spider sending the message
- * * message - The message to be sent
- */
 /datum/action/command_spiders/communication_spiders/format_message(mob/living/user, message)
 	return span_spiderscout("<b>Report from [user]:</b> [message]")
