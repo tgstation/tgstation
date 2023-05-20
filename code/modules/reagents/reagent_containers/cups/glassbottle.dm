@@ -25,6 +25,8 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
+	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
+	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"

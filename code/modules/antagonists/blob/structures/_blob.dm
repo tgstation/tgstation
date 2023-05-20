@@ -38,6 +38,7 @@
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
