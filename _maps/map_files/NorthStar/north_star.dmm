@@ -14614,7 +14614,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "dLm" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/smooth_large,
 /area/station/medical/psychology)
@@ -15535,7 +15535,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/fore)
 "dXo" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/noslip,
 /area/station/commons/fitness)
 "dXp" = (
@@ -25074,7 +25074,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "gFy" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
@@ -35775,7 +35775,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/basic/lizard{
 	name = "Allad Minsa"
 	},
 /obj/machinery/camera/directional/west{

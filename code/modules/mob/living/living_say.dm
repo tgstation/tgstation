@@ -438,8 +438,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
  *
  * message - The message to treat.
  * capitalize_message - Whether we run capitalize() on the message after we're done.
+ *
+ * Returns a list, which is a packet of information corresponding to the message that has been treated, which
+ * contains the new message, as well as text-to-speech information.
  */
 /mob/living/proc/treat_message(message, tts_message, tts_filter, capitalize_message = TRUE)
+	RETURN_TYPE(/list)
+
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
 
@@ -457,7 +462,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = capitalize(message)
 		tts_message = capitalize(tts_message)
 
-	return list(message = message, tts_message = tts_message, tts_filter = tts_filter)
+	return list("message" = message, "tts_message" = tts_message, "tts_filter" = tts_filter)
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src
