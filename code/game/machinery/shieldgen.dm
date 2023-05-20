@@ -594,14 +594,14 @@
 	///Determins if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
 
-	///The list of shields that are ours
-	var/list/deployed_shields = list()
+	///The lazy list of shields that are ours
+	var/list/deployed_shields
 
-	///The list of turfs that are within the shield
-	var/list/inside_shield = list()
+	///The lazy list of turfs that are within the shield
+	var/list/inside_shield
 
-	///The list of machines that are connected to and boosting us
-	var/list/obj/machinery/modular_shield/module/connected_modules = list()
+	///The lazy list of machines that are connected to and boosting us
+	var/list/obj/machinery/modular_shield/module/connected_modules
 
 	///Regeneration gained from machines connected to us
 	var/regen_boost = 0
@@ -621,8 +621,8 @@
 	///Max strength gained from our own parts
 	var/innate_strength = 40
 
-	///This is the list of perimeter turfs that we grab when making large shields of 10 or more radius
-	var/list/list_of_turfs = list()
+	///This is the lazy list of perimeter turfs that we grab when making large shields of 10 or more radius
+	var/list/list_of_turfs
 
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
@@ -682,6 +682,9 @@
 /obj/machinery/modular_shield_generator/proc/deactivate_shields()
 	active = FALSE
 	QDEL_LIST(deployed_shields)
+	deployed_shields = null
+	LAZYNULL(list_of_turfs)
+	LAZYNULL(inside_shield)
 	calculate_regeneration()
 
 /obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
@@ -721,15 +724,15 @@
 	initiating = TRUE
 
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
-		var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to turfs inside the shield
-		var/list/list_of_turfs = get_perimeter(src, radius)
+		LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to turfs inside the shield
+		LAZYADD(list_of_turfs, get_perimeter(src, radius))
 
 		if(exterior_only)
 			for(var/turf/target_tile as anything in list_of_turfs)
 				if(isspaceturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 					deploying_shield.shield_generator = src
-					deployed_shields += deploying_shield
+					LAZYADD(deployed_shields, deploying_shield)
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
@@ -738,19 +741,19 @@
 			if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
-				deployed_shields += deploying_shield
+				LAZYADD(deployed_shields, deploying_shield)
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
 
 	//this code only runs on radius less than 10 and gives us a more accurate circle that is more compatible with decimal values
-	var/list/inside_shield = circle_range_turfs(src, radius - 1)//in the future we might want to apply an effect to the turfs inside the shield
+	LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to the turfs inside the shield
 	if(exterior_only)
 		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
 			if(isspaceturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
-				deployed_shields += deploying_shield
+				LAZYADD(deployed_shields, deploying_shield)
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
@@ -759,7 +762,7 @@
 		if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
-			deployed_shields += deploying_shield
+			LAZYADD(deployed_shields, deploying_shield)
 	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
 
@@ -933,10 +936,10 @@
 /obj/machinery/modular_shield/module/Destroy()
 
 	if(shield_generator)
-		shield_generator.connected_modules -= (src)
+		LAZYREMOVE(shield_generator.connected_modules, (src))
 		shield_generator.calculate_boost()
 	if(connected_node)
-		connected_node.connected_through_us -= (src)
+		LAZYREMOVE(connected_node.connected_through_us, (src))
 	return ..()
 
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
@@ -955,16 +958,16 @@
 	//expensive to just make the players manually multi tool sync each part
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		try_connect(user)
-		return
+		return TRUE
 
 	if(default_change_direction_wrench(user, I))
 		if(shield_generator)
-			shield_generator.connected_modules -= (src)
+			LAZYREMOVE(shield_generator.connected_modules, (src))
 			shield_generator.calculate_boost()
 			shield_generator = null
 			update_icon_state()
 		if(connected_node)
-			connected_node.connected_through_us -= (src)
+			LAZYREMOVE(connected_node.connected_through_us, (src))
 			connected_node = null
 		connected_turf = get_step(loc, dir)
 		return TRUE
@@ -987,7 +990,7 @@
 
 	if(shield_generator)
 
-		shield_generator.connected_modules |= (src)
+		LAZYOR(shield_generator.connected_modules, (src))
 		balloon_alert(user, "connected to generator")
 		update_icon_state()
 		if(istype(src, /obj/machinery/modular_shield/module/node))
@@ -1000,10 +1003,10 @@
 
 	if(connected_node)
 
-		connected_node.connected_through_us |= (src)
+		LAZYOR(connected_node.connected_through_us, (src))
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
-			shield_generator.connected_modules |= (src)
+			LAZYOR(shield_generator.connected_modules, (src))
 			balloon_alert(user, "connected to generator through node")
 			update_icon_state()
 			if(istype(src, /obj/machinery/modular_shield/module/node))
@@ -1025,8 +1028,8 @@
 	icon_state = "node_off_closed"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/modular_shield_node
-	///The list of machines that are connected to us and want connection to a generator
-	var/list/connected_through_us = list()
+	///The lazy list of machines that are connected to us and want connection to a generator
+	var/list/connected_through_us
 
 /obj/machinery/modular_shield/module/node/update_icon_state()
 	. = ..()
@@ -1041,7 +1044,7 @@
 	disconnect_connected_through_us()
 	if(isnull(shield_generator))
 		return
-	shield_generator.connected_modules -= (src)
+	LAZYREMOVE(shield_generator.connected_modules, (src))
 	shield_generator.calculate_boost()
 	shield_generator = null
 	update_icon_state()
@@ -1060,7 +1063,7 @@
 
 	if(shield_generator)
 		for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
-			shield_generator.connected_modules |= connected
+			LAZYOR(shield_generator.connected_modules, connected)
 			connected.shield_generator = shield_generator
 			if(istype(connected, /obj/machinery/modular_shield/module/node))
 				var/obj/machinery/modular_shield/module/node/connected_node = connected
@@ -1072,7 +1075,7 @@
 /obj/machinery/modular_shield/module/node/proc/disconnect_connected_through_us()
 
 	for(var/obj/machinery/modular_shield/module/connected in connected_through_us)
-		shield_generator.connected_modules -= connected
+		LAZYREMOVE(shield_generator.connected_modules, connected)
 		if(istype(connected, /obj/machinery/modular_shield/module/node))
 			var/obj/machinery/modular_shield/module/node/connected_node = connected
 			connected_node.disconnect_connected_through_us()
