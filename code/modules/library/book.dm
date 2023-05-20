@@ -179,14 +179,13 @@
 		return FALSE
 	//special check for wirecutter's because they don't have a sharp edge
 	if((carving_item.sharpness & SHARP_EDGED) || (carving_item.tool_behaviour == TOOL_WIRECUTTER))
-		return FALSE
-	//i love balloon alerts i love them sooo much
-	balloon_alert(user, "carving out...")
-	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
-		return FALSE
-	carve_out(carving_item, user)
-	return TRUE
+		//i love balloon alerts i love them sooo much
+		balloon_alert(user, "carving out...")
+		if(!do_after(user, 3 SECONDS, target = src))
+			balloon_alert(user, "interrupted!")
+			return FALSE
+		carve_out(carving_item, user)
+		return TRUE
 
 /// Called when the book gets carved successfully
 /obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
