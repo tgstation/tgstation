@@ -22,8 +22,8 @@ BONUS
 	level = 8
 	severity = -1
 	base_message_chance = 50
-	symptom_delay_min = 60
-	symptom_delay_max = 105
+	symptom_delay_min = 80
+	symptom_delay_max = 145
 	var/big_heal
 	var/all_disease
 	var/eggsplosion
