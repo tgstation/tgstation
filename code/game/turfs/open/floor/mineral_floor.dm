@@ -76,41 +76,36 @@
 /turf/open/floor/mineral/titanium/rust_heretic_act()
 	return // titanium does not rust
 
-/turf/open/floor/mineral/titanium/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/yellow
 	icon_state = "titanium_yellow"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/yellow
 
-/turf/open/floor/mineral/titanium/yellow/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/blue
 	icon_state = "titanium_blue"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/blue
 
-/turf/open/floor/mineral/titanium/blue/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/white
 	icon_state = "titanium_white"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/white
 
-/turf/open/floor/mineral/titanium/white/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/purple
 	icon_state = "titanium_purple"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/purple
 
-/turf/open/floor/mineral/titanium/purple/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 // OLD TITANIUM (titanium floor tiles before PR #50454)
 /turf/open/floor/mineral/titanium/tiled
@@ -121,41 +116,36 @@
 /turf/open/floor/mineral/titanium/tiled/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/mineral/titanium/tiled/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/tiled/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/tiled/yellow
 	icon_state = "titanium_tiled_yellow"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/yellow
 
-/turf/open/floor/mineral/titanium/tiled/yellow/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/tiled/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/tiled/blue
 	icon_state = "titanium_tiled_blue"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/blue
 
-/turf/open/floor/mineral/titanium/tiled/blue/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/tiled/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/tiled/white
 	icon_state = "titanium_tiled_white"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/white
 
-/turf/open/floor/mineral/titanium/tiled/white/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/tiled/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/titanium/tiled/purple
 	icon_state = "titanium_tiled_purple"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/purple
 
-/turf/open/floor/mineral/titanium/tiled/purple/airless/Initialize(mapload)
+/turf/open/floor/mineral/titanium/tiled/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
@@ -170,17 +160,15 @@
 /turf/open/floor/mineral/plastitanium/rust_heretic_act()
 	return // plastitanium does not rust
 
-/turf/open/floor/mineral/plastitanium/airless/Initialize(mapload)
+/turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/mineral/plastitanium/red
 	icon_state = "plastitanium_red"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/red
 
-/turf/open/floor/mineral/plastitanium/red/airless/Initialize(mapload)
+/turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 //Used in SnowCabin.dm
 /turf/open/floor/mineral/plastitanium/red/snow_cabin
@@ -229,9 +217,8 @@
 		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
 		sound_cooldown = world.time + 10
 
-/turf/open/floor/mineral/bananium/airless/Initialize(mapload)
+/turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 //DIAMOND
 

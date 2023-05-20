@@ -26,13 +26,11 @@
 	return ..()
 
 
-/turf/open/floor/iron/airless/Initialize(mapload)
+/turf/open/floor/iron/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/telecomms/Initialize(mapload)
+/turf/open/floor/iron/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -168,25 +166,20 @@
 	base_icon_state = "textured_dark_large"
 	floor_tile = /obj/item/stack/tile/iron/dark/textured_large
 
-/turf/open/floor/iron/dark/textured/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/textured_edge/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured_edge/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/textured_half/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured_half/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/textured_corner/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured_corner/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/textured_large/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured_large/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/dark/small
 	icon_state = "dark_small"
@@ -203,33 +196,24 @@
 	base_icon_state = "dark_herringbone"
 	floor_tile = /obj/item/stack/tile/iron/dark/herringbone
 
-/turf/open/floor/iron/dark/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/telecomms/Initialize(mapload)
+/turf/open/floor/iron/dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/textured/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/textured/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
+/turf/open/floor/iron/dark/smooth_large/airless
+	initial_gas_mix = AIRLESS_ATMOS
+/turf/open/floor/iron/dark/side/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/iron/dark/smooth_large/airless/Initialize(mapload)
+/turf/open/floor/iron/dark/corner/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/dark/side/airless/Initialize(mapload)
+/turf/open/floor/iron/checker/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
-
-/turf/open/floor/iron/dark/corner/airless/Initialize(mapload)
-	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
-
-/turf/open/floor/iron/checker/airless/Initialize(mapload)
-	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/white
 	icon_state = "white"
@@ -311,25 +295,20 @@
 	base_icon_state = "white_herringbone"
 	floor_tile = /obj/item/stack/tile/iron/white/herringbone
 
-/turf/open/floor/iron/white/airless/Initialize(mapload)
+/turf/open/floor/iron/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/white/telecomms/Initialize(mapload)
+/turf/open/floor/iron/white/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/white/side/airless/Initialize(mapload)
+/turf/open/floor/iron/white/side/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/white/corner/airless/Initialize(mapload)
+/turf/open/floor/iron/white/corner/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/iron/cafeteria/airless/Initialize(mapload)
+/turf/open/floor/iron/cafeteria/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/recharge_floor
 	icon_state = "recharge_floor"
@@ -415,18 +394,16 @@
 	base_icon_state = "showroomfloor"
 	floor_tile = /obj/item/stack/tile/iron/showroomfloor
 
-/turf/open/floor/iron/showroomfloor/airless/Initialize(mapload)
+/turf/open/floor/iron/showroomfloor/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/solarpanel
 	icon_state = "solarpanel"
 	base_icon_state = "solarpanel"
 	floor_tile = /obj/item/stack/tile/iron/solarpanel
 
-/turf/open/floor/iron/solarpanel/airless/Initialize(mapload)
+/turf/open/floor/iron/solarpanel/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 
 /turf/open/floor/iron/freezer
@@ -434,9 +411,8 @@
 	base_icon_state = "freezerfloor"
 	floor_tile = /obj/item/stack/tile/iron/freezer
 
-/turf/open/floor/iron/freezer/airless/Initialize(mapload)
+/turf/open/floor/iron/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/iron/freezer/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

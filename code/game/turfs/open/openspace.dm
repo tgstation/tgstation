@@ -5,6 +5,7 @@
 	// In its icon state so we can count it as a "non black" tile
 	icon_state = MAP_SWITCH("pure_white", "invisible")
 	baseturfs = /turf/open/openspace
+	initial_gas_mix = AIRLESS_ATMOS
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -12,10 +13,6 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
-
-/turf/open/openspace/airless/Initialize(mapload)
-	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE

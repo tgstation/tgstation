@@ -6,6 +6,7 @@
 	icon_state = "dirt"
 	base_icon_state = "dirt"
 	baseturfs = /turf/open/chasm/jungle
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
@@ -13,21 +14,13 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-/turf/open/misc/dirt/Initialize(mapload)
-	if(!initial_gas_mix)
-		initial_gas_mix = OPENTURF_LOW_PRESSURE
-	return ..()
-
 /turf/open/misc/dirt/dark
 	icon_state = "greenerdirt"
 	base_icon_state = "greenerdirt"
 
 /turf/open/misc/dirt/jungle
-	slowdown = 0.5
-
-/turf/open/misc/dirt/jungle/Initialize(mapload)
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	return ..()
+	slowdown = 0.5
 
 /turf/open/misc/dirt/jungle/dark
 	icon_state = "greenerdirt"
@@ -55,14 +48,11 @@
 	name = "jungle grass"
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/misc/dirt
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
-
-/turf/open/misc/grass/jungle/Initialize(mapload)
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	return ..()
 
 /turf/open/misc/grass/broken_states()
 	return list("jungle_damaged")

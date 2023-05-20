@@ -145,11 +145,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/misc/asteroid/basalt/airless
-	worm_chance = 0
-
-/turf/open/misc/asteroid/basalt/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
+	worm_chance = 0
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
@@ -184,11 +181,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/airless
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
-	worm_chance = 0
-
-/turf/open/misc/asteroid/airless/Initialize(mapload)
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
+	worm_chance = 0
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL
@@ -197,6 +191,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon = 'icons/turf/snow.dmi'
 	damaged_dmi = 'icons/turf/snow.dmi'
 	baseturfs = /turf/open/misc/asteroid/snow
+	initial_gas_mix = FROZEN_ATMOS
 	icon_state = "snow"
 	base_icon_state = "snow"
 	slowdown = 2
@@ -205,10 +200,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	dig_result = /obj/item/stack/sheet/mineral/snow
-
-/turf/open/misc/asteroid/snow/Initialize(mapload)
-	initial_gas_mix = FROZEN_ATMOS
-	return ..()
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -243,6 +234,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/misc/asteroid/snow/ice
+	initial_gas_mix = BURNING_COLD
 	floor_variance = 0
 	icon_state = "snow-ice"
 	base_icon_state = "snow-ice"
@@ -251,10 +243,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	damaged_dmi = null
-
-/turf/open/misc/asteroid/snow/ice/Initialize(mapload)
-	initial_gas_mix = BURNING_COLD
-	return ..()
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
 	return FALSE
@@ -269,15 +257,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	slowdown = 0
 
 /turf/open/misc/asteroid/snow/airless
+	initial_gas_mix = AIRLESS_ATMOS
 	worm_chance = 0
 
-/turf/open/misc/asteroid/snow/airless/Initialize(mapload)
-	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
-
-/turf/open/misc/asteroid/snow/temperatre/Initialize(mapload)
+/turf/open/misc/asteroid/snow/temperatre
 	initial_gas_mix = COLD_ATMOS
-	return ..()
 
 //Used for when you want to have real, genuine snow in your kitchen's cold room
 /turf/open/misc/asteroid/snow/coldroom
@@ -294,18 +278,12 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	temperature = 180
 
 /turf/open/misc/asteroid/snow/atmosphere
-	planetary_atmos = FALSE
-
-/turf/open/misc/asteroid/snow/atmosphere/Initialize(mapload)
 	initial_gas_mix = FROZEN_ATMOS
-	return ..()
+	planetary_atmos = FALSE
 
 /turf/open/misc/asteroid/snow/standard_air
-	planetary_atmos = FALSE
-
-/turf/open/misc/asteroid/snow/standard_air/Initialize(mapload)
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	return ..()
+	planetary_atmos = FALSE
 
 /turf/open/misc/asteroid/moon
 	name = "lunar surface"

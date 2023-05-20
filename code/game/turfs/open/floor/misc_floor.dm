@@ -69,13 +69,11 @@
 	icon_state = "bcircuitoff"
 	always_off = TRUE
 
-/turf/open/floor/circuit/airless/Initialize(mapload)
+/turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/circuit/telecomms/Initialize(mapload)
+/turf/open/floor/circuit/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
@@ -98,13 +96,11 @@
 	icon_normal = "gcircuitanim"
 	floor_tile = /obj/item/stack/tile/circuit/green/anim
 
-/turf/open/floor/circuit/green/airless/Initialize(mapload)
+/turf/open/floor/circuit/green/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/circuit/green/telecomms/Initialize(mapload)
+/turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
@@ -124,13 +120,11 @@
 	icon_normal = "rcircuitanim"
 	floor_tile = /obj/item/stack/tile/circuit/red/anim
 
-/turf/open/floor/circuit/red/airless/Initialize(mapload)
+/turf/open/floor/circuit/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/circuit/red/telecomms/Initialize(mapload)
+/turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-	return ..()
 
 /turf/open/floor/pod
 	name = "pod floor"
@@ -251,9 +245,8 @@
 	AddElement(/datum/element/rust)
 	color = null
 
-/turf/open/floor/plating/plasma/Initialize(mapload)
+/turf/open/floor/plating/plasma
 	initial_gas_mix = ATMOS_TANK_PLASMA
-	return ..()
 
 /turf/open/floor/plating/plasma/rust/Initialize(mapload)
 	. = ..()
@@ -302,9 +295,8 @@
 /turf/open/floor/cult/narsie_act()
 	return
 
-/turf/open/floor/cult/airless/Initialize(mapload)
+/turf/open/floor/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/material/meat
 	name = "living floor"
@@ -316,9 +308,8 @@
 	. = ..()
 	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
-/turf/open/floor/material/meat/airless/Initialize(mapload)
+/turf/open/floor/material/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	. = ..()
 	baseturfs = /turf/open/misc/asteroid/airless
 
 /turf/open/floor/iron/tgmcemblem

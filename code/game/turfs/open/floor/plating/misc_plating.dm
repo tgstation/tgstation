@@ -1,14 +1,10 @@
 
-/turf/open/floor/plating/airless/Initialize(mapload)
+/turf/open/floor/plating/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/plating/lowpressure
-	baseturfs = /turf/open/floor/plating/lowpressure
-
-/turf/open/floor/plating/lowpressure/Initialize(mapload)
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	return ..()
+	baseturfs = /turf/open/floor/plating/lowpressure
 
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
@@ -49,6 +45,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
+	initial_gas_mix = FROZEN_ATMOS
 	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
@@ -57,18 +54,11 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/snowed/Initialize(mapload)
-	if(!initial_gas_mix)
-		initial_gas_mix = FROZEN_ATMOS
-	return ..()
+/turf/open/floor/plating/snowed/cavern
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 
-/turf/open/floor/plating/snowed/cavern/Initialize(mapload)
-	initial_gas_mix = BURNING_COLD
-	return ..()
-
-/turf/open/floor/plating/snowed/icemoon/Initialize(mapload)
+/turf/open/floor/plating/snowed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	return ..()
 
 /turf/open/floor/plating/snowed/smoothed
 	icon = 'icons/turf/floors/snow_turf.dmi'

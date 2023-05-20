@@ -71,9 +71,8 @@
 /turf/open/floor/wood/freezing
 	temperature = 180
 
-/turf/open/floor/wood/airless/Initialize(mapload)
+/turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/wood/tile
 	icon_state = "wood_tile"
@@ -188,6 +187,7 @@
 	icon_state = "snow"
 	flags_1 = NONE
 	floor_tile = null
+	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
@@ -199,7 +199,6 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/fake_snow/Initialize(mapload)
-	initial_gas_mix = FROZEN_ATMOS
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2, worm_chance = 0)
 
@@ -380,45 +379,35 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_DONK
 
 //*****Airless versions of all of the above.*****
-/turf/open/floor/carpet/airless/Initialize(mapload)
+/turf/open/floor/carpet/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/black/airless/Initialize(mapload)
+/turf/open/floor/carpet/black/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/blue/airless/Initialize(mapload)
+/turf/open/floor/carpet/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/cyan/airless/Initialize(mapload)
+/turf/open/floor/carpet/cyan/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/green/airless/Initialize(mapload)
+/turf/open/floor/carpet/green/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/orange/airless/Initialize(mapload)
+/turf/open/floor/carpet/orange/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/purple/airless/Initialize(mapload)
+/turf/open/floor/carpet/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/red/airless/Initialize(mapload)
+/turf/open/floor/carpet/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/royalblack/airless/Initialize(mapload)
+/turf/open/floor/carpet/royalblack/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/royalblue/airless/Initialize(mapload)
+/turf/open/floor/carpet/royalblue/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -711,121 +700,92 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS
 
-/turf/open/floor/carpet/neon/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/white/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/black/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/black/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/red/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/orange/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/orange/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/yellow/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/lime/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/lime/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/green/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/green/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/teal/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/teal/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/cyan/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/cyan/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/blue/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/purple/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/violet/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/violet/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/pink/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/pink/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/white/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/white/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/black/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/black/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/red/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/red/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/orange/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/orange/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/yellow/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/yellow/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/lime/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/lime/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/green/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/green/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/teal/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/teal/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/cyan/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/cyan/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/blue/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/blue/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/purple/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/purple/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/violet/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/violet/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
-/turf/open/floor/carpet/neon/simple/pink/nodots/airless/Initialize(mapload)
+/turf/open/floor/carpet/neon/simple/pink/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	return ..()
 
 /turf/open/floor/carpet/blue/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
