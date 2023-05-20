@@ -216,9 +216,9 @@
 	dug_closed = FALSE
 	return TRUE
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
+/obj/structure/closet/crate/grave/tool_interact(obj/item/weapon, mob/living/carbon/user)
 	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
-	if(S.tool_behaviour != TOOL_SHOVEL)
+	if(weapon.tool_behaviour != TOOL_SHOVEL)
 		return ..()
 
 	//player is attempting to open/close the grave with a shovel
@@ -227,7 +227,7 @@
 			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
 			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
 		)
-		if(!do_after(user, 20, target = src))
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
 			return 1
 
 		if(opened)
@@ -251,7 +251,7 @@
 			span_notice("[user] Is attempting to remove [src]."),
 			span_notice("You start removing [src]."),
 		)
-		if(!do_after(user, 15, target = src) || !opened)
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
 			return 1
 
 		to_chat(user, span_notice("You remove \the [src]  completely."))
