@@ -62,13 +62,6 @@
 	else
 		return ..()
 
-/obj/machinery/computer/cargo/proc/get_export_categories()
-	. = EXPORT_CARGO
-	if(contraband)
-		. |= EXPORT_CONTRABAND
-	if(obj_flags & EMAGGED)
-		. |= EXPORT_EMAG
-
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
@@ -327,7 +320,6 @@
 				requisition_paper.update_appearance()
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
-				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
 				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)

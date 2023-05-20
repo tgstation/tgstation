@@ -94,6 +94,12 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// The voice that this movable makes when speaking
+	var/voice
+
+	/// The filter to apply to the voice when processing the TTS audio message.
+	var/voice_filter = ""
+
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
@@ -165,6 +171,8 @@
 			AddComponent(/datum/component/overlay_lighting)
 		if(MOVABLE_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
+		if(MOVABLE_LIGHT_BEAM)
+			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)

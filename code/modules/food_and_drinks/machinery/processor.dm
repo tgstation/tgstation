@@ -151,16 +151,16 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
-	sleep(total_time / rating_speed)
+
+	var/duration = (total_time / rating_speed)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 2, 2, duration, max(duration*0.02, 0.01)) //initial values work out to duration 4 seconds, interval 0.8
+	sleep(duration)
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
 		if (!recipe)
 			log_admin("DEBUG: [content_item] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(recipe, content_item)
-	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 

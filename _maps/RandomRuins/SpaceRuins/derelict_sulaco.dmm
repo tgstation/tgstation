@@ -1548,8 +1548,8 @@
 /area/template_noop)
 "WQ" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/energy/dueling,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/storage/lockbox/dueling,
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "WR" = (
