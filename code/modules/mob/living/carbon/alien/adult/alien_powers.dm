@@ -343,7 +343,6 @@ Doesn't work on other aliens/AI.*/
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "sneak_alien"
 	/// The alpha we go to when sneaking.
-	var/sneak_alpha = 75
 
 /datum/action/cooldown/sneak/alien/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))

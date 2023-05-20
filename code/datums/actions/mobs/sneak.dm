@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// The alpha we go to when sneaking.
-	var/sneak_alpha = 100
+	var/sneak_alpha = 75
 
 /datum/action/cooldown/sneak/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
