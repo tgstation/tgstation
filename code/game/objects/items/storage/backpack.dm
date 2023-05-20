@@ -279,6 +279,7 @@
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
 	shoulder_carry = TRUE
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_RPOCKET
 
 /obj/item/storage/backpack/satchel/Initialize(mapload)
 	. = ..()
