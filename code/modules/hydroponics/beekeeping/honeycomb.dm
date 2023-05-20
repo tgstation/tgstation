@@ -10,7 +10,7 @@
 
 	var/honey_color = ""
 
-obj/item/food/honeycomb/update_overlays()
+/obj/item/food/honeycomb/update_overlays()
 	. = ..()
 	var/mutable_appearance/honey_overlay = mutable_appearance(icon, "honey")
 	if(honey_color)
@@ -18,7 +18,7 @@ obj/item/food/honeycomb/update_overlays()
 		honey_overlay.color = honey_color
 		. += honey_overlay
 
-obj/item/food/honeycomb/proc/set_reagent(reagent)
+/obj/item/food/honeycomb/proc/set_reagent(reagent)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 	if(istype(R))
 		name = "honeycomb ([R.name])"
