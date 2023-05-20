@@ -51,38 +51,28 @@ export const PipeDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={530} height={530}>
       <Window.Content>
         <Stack fill vertical>
-          {rootCategoryIndex === 0 && (
-            <Stack.Item>
-              <Section>
-                <LabeledList>
-                  <ColorItem />
-                </LabeledList>
-              </Section>
-            </Stack.Item>
-          )}
-          <Stack.Item grow>
+          <Stack.Item>
             <Stack fill>
+              <Stack.Item grow>
+                <Section>
+                  <LabeledList>
+                    <ColorItem />
+                    <LayerSelect />
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
               {rootCategoryIndex === 0 && (
-                <Stack.Item>
-                  <Stack vertical fill>
-                    <Stack.Item>
-                      <SmartPipeBlockSection />
-                    </Stack.Item>
-                    <Stack.Item grow>
-                      <Section fill width={7.5}>
-                        <LayerSelect />
-                      </Section>
-                    </Stack.Item>
-                  </Stack>
+                <Stack.Item width="90px">
+                  <SmartPipeBlockSection />
                 </Stack.Item>
               )}
-              <Stack.Item grow>
-                <PipeTypeSection />
-              </Stack.Item>
             </Stack>
+          </Stack.Item>
+          <Stack.Item grow>
+            <PipeTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>
