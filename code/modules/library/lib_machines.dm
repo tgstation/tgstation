@@ -648,7 +648,7 @@
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_bible()
-	var/obj/item/storage/book/bible/holy_book = new(loc)
+	var/obj/item/book/bible/holy_book = new(loc)
 	if(!GLOB.bible_icon_state || !GLOB.bible_inhand_icon_state)
 		return
 	holy_book.icon_state = GLOB.bible_icon_state

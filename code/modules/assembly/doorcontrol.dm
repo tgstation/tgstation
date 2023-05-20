@@ -113,14 +113,16 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
-	sleep(1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage2)), 1 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage2()
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage3)), 6 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage3()
 	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))

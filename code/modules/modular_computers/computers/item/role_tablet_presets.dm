@@ -316,8 +316,22 @@
 
 /obj/item/modular_computer/pda/clown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(AfterSlip)), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
+	AddComponent(\
+		/datum/component/slippery,\
+		knockdown = 12 SECONDS,\
+		lube_flags = NO_SLIP_WHEN_WALKING,\
+		on_slip_callback = CALLBACK(src, PROC_REF(AfterSlip)),\
+		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
+		slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT),\
+	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+
+/// Return true if our wearer is in a position to slip someone
+/obj/item/modular_computer/pda/clown/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	if(!istype(slipper.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/clown_shoes))
+		to_chat(slipper,span_warning("[src] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy..."))
+		return FALSE
+	return TRUE
 
 /obj/item/modular_computer/pda/clown/update_overlays()
 	. = ..()

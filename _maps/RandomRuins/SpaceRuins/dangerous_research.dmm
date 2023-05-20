@@ -9,7 +9,7 @@
 "ae" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
-/obj/item/storage/book/bible{
+/obj/item/book/bible{
 	pixel_x = 3
 	},
 /obj/item/book/manual/wiki/cytology{
