@@ -97,9 +97,10 @@ type Data = {
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { selected_color, paint_colors } = data;
+  const colorNames = Object.keys(paint_colors);
   return (
     <LabeledList.Item label="Color">
-      {Object.keys(paint_colors).map((colorName) => (
+      {colorNames.map((colorName) => (
         <ColorBox
           key={colorName}
           height="20px"
