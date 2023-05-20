@@ -56,6 +56,11 @@
 	speech_chance = 3
 	emote_see = list("jumps in a circle.", "shakes.")
 
+/datum/ai_planning_subtree/random_speech/lizard // all of these have to be three words long or i'm killing you. you're dead.
+	speech_chance = 3
+	emote_hear = list("stamps around some.", "hisses a bit.")
+	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
+
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
@@ -140,3 +145,9 @@
 	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
+
+/datum/ai_planning_subtree/random_speech/killer_tomato
+	speech_chance = 3
+	speak = list("gnashes.", "growls lowly.", "snarls.")
+	emote_hear = list("gnashes.")
+	emote_see = list("salivates.")
