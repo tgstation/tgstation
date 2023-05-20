@@ -3858,7 +3858,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Meets-the-Ore"
 	},
 /turf/open/space/basic,
@@ -75236,7 +75236,7 @@
 	},
 /area/station/engineering/atmos/mix)
 "sPZ" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -79060,7 +79060,7 @@
 /turf/open/floor/iron,
 /area/station/security/range)
 "tNE" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/station/commons/fitness/recreation)
@@ -84519,7 +84519,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/mob/living/basic/lizard/wags_his_tail,
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
 "veu" = (
@@ -90311,7 +90311,7 @@
 	dir = 9;
 	name = "service camera"
 	},
-/mob/living/simple_animal/hostile/lizard/eats_the_roaches,
+/mob/living/basic/lizard/eats_the_roaches,
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
 "wzD" = (

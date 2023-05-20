@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - refactor: "Tgui Say is rewritten, becoming \"much more performant\". Hey, that's what it says on the tin! I'm not from marketing!"
-  - bugfix: "Tguisay drag zones are now ever so slightly larger around the corner of the window"
-  - bugfix: "Pressing one of the chat open keys (T/Y/M/O) will no longer change channels if it's already open"

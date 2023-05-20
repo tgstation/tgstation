@@ -6746,7 +6746,7 @@
 "cyU" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/carpplushie{
-	color = "red";
+	greyscale_colors = "#ff5050#000000";
 	name = "\improper Nanotrasen wildlife department space carp plushie"
 	},
 /turf/open/floor/carpet,
@@ -7214,7 +7214,7 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "cLa" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/white/textured_edge{
@@ -24260,7 +24260,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/mob/living/basic/lizard/wags_his_tail,
 /turf/open/floor/plating,
 /area/station/service/janitor)
 "iMR" = (
@@ -68014,7 +68014,7 @@
 /area/station/science/explab)
 "yib" = (
 /obj/structure/lattice/catwalk,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Void-Stares-Back"
 	},

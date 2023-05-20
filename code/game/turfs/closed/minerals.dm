@@ -662,6 +662,7 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
+	icon_state = "rock_Gibtonite_inactive"
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
@@ -766,7 +767,7 @@
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice
-	icon_state = "icerock_Gibtonite"
+	icon_state = "icerock_Gibtonite_inactive"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
