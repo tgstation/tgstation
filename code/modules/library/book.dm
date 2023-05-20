@@ -178,7 +178,7 @@
 	if(!user.combat_mode)
 		return FALSE
 	//special check for wirecutter's because they don't have a sharp edge
-	if((carving_item.tool_behaviour != TOOL_WIRECUTTER) && !(carving_item.sharpness & SHARP_EDGED))
+	if((carving_item.sharpness & SHARP_EDGED) || (carving_item.tool_behaviour == TOOL_WIRECUTTER))
 		return FALSE
 	//i love balloon alerts i love them sooo much
 	balloon_alert(user, "carving out...")
