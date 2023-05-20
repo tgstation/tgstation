@@ -53458,7 +53458,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/wood,
 /obj/item/radio/intercom,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "As long as I have you by my side, I know I'll get better!";
 	name = "Cures-The-Sniffles"
 	},
@@ -76493,7 +76493,7 @@
 /obj/structure/chair/plastic{
 	dir = 8
 	},
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Warns-The-Fool";
 	pixel_x = -3;
 	pixel_y = 2
