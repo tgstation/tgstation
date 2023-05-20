@@ -35,10 +35,10 @@
 		return FALSE
 	if(istype(file_removing, /datum/computer_file/program))
 		var/datum/computer_file/program/program_file = file_removing
-		if(program_file.program_state != PROGRAM_STATE_KILLED)
-			program_file.kill_program(TRUE)
-		if(program_file.program_state == PROGRAM_STATE_ACTIVE)
-			active_program = null
+		if(program_file == active_program)
+			active_program.kill_program()
+		for(var/datum/computer_file/program/programs as anything in idle_threads)
+			programs.kill_program()
 
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 	stored_files.Remove(file_removing)

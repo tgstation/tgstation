@@ -586,7 +586,7 @@
 	name = "Weapon Recharger Board"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
-	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SECURITY
@@ -1036,3 +1036,14 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/navbeacon
+	name = "Machine Design (Bot Navigational Beacon)"
+	desc = "The circuit board for a beacon that aids bot navigation."
+	id = "botnavbeacon"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/navbeacon
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

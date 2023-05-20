@@ -22,6 +22,7 @@
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
+	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
 	return ..()
 
 /turf/open/floor/circuit/update_appearance(updates)
@@ -210,7 +211,7 @@
 	icon_state = "plastic"
 	thermal_conductivity = 0.1
 	heat_capacity = 900
-	custom_materials = list(/datum/material/plastic=500)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/broken_states()
@@ -305,7 +306,7 @@
 
 /turf/open/floor/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/open/floor/material/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS

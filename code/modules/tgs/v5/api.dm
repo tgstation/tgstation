@@ -17,6 +17,11 @@
 
 	var/initialized = FALSE
 
+	var/chunked_requests = 0
+	var/list/chunked_topics = list()
+
+	var/detached = FALSE
+
 /datum/tgs_api/v5/ApiVersion()
 	return new /datum/tgs_version(
 		#include "__interop_version.dm"
@@ -97,13 +102,6 @@
 /datum/tgs_api/v5/OnInitializationComplete()
 	Bridge(DMAPI5_BRIDGE_COMMAND_PRIME)
 
-/datum/tgs_api/v5/proc/TopicResponse(error_message = null)
-	var/list/response = list()
-	if(error_message)
-		response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
-		return json_encode(response)
-	return "{}"
-
 /datum/tgs_api/v5/OnTopic(T)
 	RequireInitialBridgeResponse()
 	var/list/params = params2list(T)
@@ -111,167 +109,11 @@
 	if(!json)
 		return FALSE // continue to /world/Topic
 
-	var/list/topic_parameters = json_decode(json)
-	if(!topic_parameters)
-		return TopicResponse("Invalid topic parameters json!");
-
 	if(!initialized)
-		TGS_WARNING_LOG("Missed topic due to not being initialized: [T]")
+		TGS_WARNING_LOG("Missed topic due to not being initialized: [json]")
 		return TRUE // too early to handle, but it's still our responsibility
 
-	var/their_sCK = topic_parameters[DMAPI5_PARAMETER_ACCESS_IDENTIFIER]
-	if(their_sCK != access_identifier)
-		return TopicResponse("Failed to decode [DMAPI5_PARAMETER_ACCESS_IDENTIFIER] from: [json]!");
-
-	var/command = topic_parameters[DMAPI5_TOPIC_PARAMETER_COMMAND_TYPE]
-	if(!isnum(command))
-		return TopicResponse("Failed to decode [DMAPI5_TOPIC_PARAMETER_COMMAND_TYPE] from: [json]!")
-
-	switch(command)
-		if(DMAPI5_TOPIC_COMMAND_CHAT_COMMAND)
-			intercepted_message_queue = list()
-			var/result = HandleCustomCommand(topic_parameters[DMAPI5_TOPIC_PARAMETER_CHAT_COMMAND])
-			if(!result)
-				result = TopicResponse("Error running chat command!")
-			//TODO: make this not need the decode/encode.
-			if (length(intercepted_message_queue))
-				var/list/result_array = json_decode(result)
-				result_array[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
-				result = json_encode(result_array)
-			intercepted_message_queue = null
-			return result
-		if(DMAPI5_TOPIC_COMMAND_EVENT_NOTIFICATION)
-			intercepted_message_queue = list()
-			var/list/event_notification = topic_parameters[DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]
-			if(!istype(event_notification))
-				return TopicResponse("Invalid [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
-
-			var/event_type = event_notification[DMAPI5_EVENT_NOTIFICATION_TYPE]
-			if(!isnum(event_type))
-				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_TYPE]!")
-
-			var/list/event_parameters = event_notification[DMAPI5_EVENT_NOTIFICATION_PARAMETERS]
-			if(event_parameters && !istype(event_parameters))
-				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_PARAMETERS]!")
-
-			var/list/event_call = list(event_type)
-			if(event_parameters)
-				event_call += event_parameters
-
-			if(event_handler != null)
-				event_handler.HandleEvent(arglist(event_call))
-
-			var/list/response = list()
-			response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
-			intercepted_message_queue = null
-			return json_encode(response)
-		if(DMAPI5_TOPIC_COMMAND_CHANGE_PORT)
-			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
-			if (!isnum(new_port) || !(new_port > 0))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]")
-
-			if(event_handler != null)
-				event_handler.HandleEvent(TGS_EVENT_PORT_SWAP, new_port)
-
-			//the topic still completes, miraculously
-			//I honestly didn't believe byond could do it without exploding
-			if(!world.OpenPort(new_port))
-				return TopicResponse("Port change failed!")
-
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_CHANGE_REBOOT_STATE)
-			var/new_reboot_mode = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_REBOOT_STATE]
-			if(!isnum(new_reboot_mode))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_REBOOT_STATE]!")
-
-			if(event_handler != null)
-				event_handler.HandleEvent(TGS_EVENT_REBOOT_MODE_CHANGE, reboot_mode, new_reboot_mode)
-
-			reboot_mode = new_reboot_mode
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_INSTANCE_RENAMED)
-			var/new_instance_name = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME]
-			if(!istext(new_instance_name))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME]!")
-
-			if(event_handler != null)
-				event_handler.HandleEvent(TGS_EVENT_INSTANCE_RENAMED, new_instance_name)
-
-			instance_name = new_instance_name
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_CHAT_CHANNELS_UPDATE)
-			var/list/chat_update_json = topic_parameters[DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE]
-			if(!istype(chat_update_json))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE]!")
-
-			DecodeChannels(chat_update_json)
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_SERVER_PORT_UPDATE)
-			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
-			if (!isnum(new_port) || !(new_port > 0))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]")
-
-			server_port = new_port
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_HEARTBEAT)
-			return TopicResponse()
-		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
-			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
-			var/error_message = null
-			if (new_port != null)
-				if (!isnum(new_port) || !(new_port > 0))
-					error_message = "Invalid [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]"
-				else
-					server_port = new_port
-
-			var/new_version_string = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]
-			if (!istext(new_version_string))
-				if(error_message != null)
-					error_message += ", "
-				error_message += "Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]]"
-			else
-				var/datum/tgs_version/new_version = new(new_version_string)
-				if (event_handler)
-					event_handler.HandleEvent(TGS_EVENT_WATCHDOG_REATTACH, new_version)
-
-				version = new_version
-
-			return json_encode(list(DMAPI5_RESPONSE_ERROR_MESSAGE = error_message, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
-
-	return TopicResponse("Unknown command: [command]")
-
-/datum/tgs_api/v5/proc/Bridge(command, list/data)
-	if(!data)
-		data = list()
-
-	data[DMAPI5_BRIDGE_PARAMETER_COMMAND_TYPE] = command
-	data[DMAPI5_PARAMETER_ACCESS_IDENTIFIER] = access_identifier
-
-	var/json = json_encode(data)
-	var/encoded_json = url_encode(json)
-
-	// This is an infinite sleep until we get a response
-	var/export_response = world.Export("http://127.0.0.1:[server_port]/Bridge?[DMAPI5_BRIDGE_DATA]=[encoded_json]")
-	if(!export_response)
-		TGS_ERROR_LOG("Failed export request: [json]")
-		return
-
-	var/response_json = file2text(export_response["CONTENT"])
-	if(!response_json)
-		TGS_ERROR_LOG("Failed export request, missing content!")
-		return
-
-	var/list/bridge_response = json_decode(response_json)
-	if(!bridge_response)
-		TGS_ERROR_LOG("Failed export request, bad json: [response_json]")
-		return
-
-	var/error = bridge_response[DMAPI5_RESPONSE_ERROR_MESSAGE]
-	if(error)
-		TGS_ERROR_LOG("Failed export request, bad request: [error]")
-		return
-
-	return bridge_response
+	return ProcessTopicJson(json, TRUE)
 
 /datum/tgs_api/v5/OnReboot()
 	var/list/result = Bridge(DMAPI5_BRIDGE_COMMAND_REBOOT)

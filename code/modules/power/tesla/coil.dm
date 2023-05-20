@@ -83,7 +83,7 @@
 
 	return ..()
 
-/obj/machinery/power/energy_accumulator/tesla_coil/process(delta_time)
+/obj/machinery/power/energy_accumulator/tesla_coil/process(seconds_per_tick)
 	. = ..()
 	zap_sound_volume = min(energy_to_joules(stored_energy)/200000, 100)
 	zap_sound_range = min(energy_to_joules(stored_energy)/4000000, 10)

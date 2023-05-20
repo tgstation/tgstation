@@ -83,7 +83,7 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
-/// from start of /mob/living/handle_breathing(): (delta_time, times_fired)
+/// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
@@ -107,7 +107,9 @@
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
 	/// The index of message_args that corresponds to the actual message
-	#define TREAT_MESSAGE_MESSAGE 1
+	#define TREAT_MESSAGE_ARG 1
+	#define TREAT_TTS_MESSAGE_ARG 2
+	#define TREAT_TTS_FILTER_ARG 3
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -139,3 +141,25 @@
 
 /// From /mob/living/unfriend() : (mob/living/old_friend)
 #define COMSIG_LIVING_UNFRIENDED "living_unfriended"
+
+/// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
+#define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
+
+/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
+#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
+	/// Return to allow the parry to happen
+	#define ALLOW_PARRY (1<<0)
+
+/// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
+#define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
+	/// Return to prevent the projectile from executing any code in on_parry()
+	#define INTERCEPT_PARRY_EFFECTS (1<<0)
+
+/// From /turf/closed/mineral/gibtonite/defuse() : (det_time)
+#define COMSIG_LIVING_DEFUSED_GIBTONITE "living_defused_gibtonite"
+
+/// From /obj/item/kinetic_crusher/afterattack() : (mob/living/target, obj/item/kinetic_crusher/crusher, backstabbed)
+#define COMSIG_LIVING_CRUSHER_DETONATE "living_crusher_detonate"
+
+/// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
+#define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"

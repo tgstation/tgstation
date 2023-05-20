@@ -16,14 +16,9 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/spawn_turf in GLOB.generic_maintenance_landmarks)
-		if(istype(get_area(spawn_turf), /area/station/maintenance) && is_safe_turf(spawn_turf))
-			possible_spawns += spawn_turf
-	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found, aborting...")
+	var/turf/landing_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(isnull(landing_turf))
 		return MAP_ERROR
-	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 
@@ -104,14 +99,18 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick("space cop", "russian", "bounty hunter")
+	var/backstory = pick(HUNTER_PACK_COPS, HUNTER_PACK_RUSSIAN, HUNTER_PACK_BOUNTY, HUNTER_PACK_PSYKER)
 	var/datum/map_template/shuttle/ship
-	if(backstory == "space cop")
-		ship = new /datum/map_template/shuttle/hunter/space_cop
-	else if (backstory == "russian")
-		ship = new /datum/map_template/shuttle/hunter/russian
-	else
-		ship = new /datum/map_template/shuttle/hunter/bounty
+	switch(backstory)
+		if(HUNTER_PACK_COPS)
+			ship = new /datum/map_template/shuttle/hunter/space_cop
+		if(HUNTER_PACK_RUSSIAN)
+			ship = new /datum/map_template/shuttle/hunter/russian
+		if(HUNTER_PACK_BOUNTY)
+			ship = new /datum/map_template/shuttle/hunter/bounty
+		if(HUNTER_PACK_PSYKER)
+			ship = new /datum/map_template/shuttle/hunter/psyker
+
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value

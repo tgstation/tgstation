@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,

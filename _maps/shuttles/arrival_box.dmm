@@ -55,9 +55,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "n" = (

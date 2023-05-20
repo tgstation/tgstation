@@ -176,6 +176,7 @@
 /turf/open/floor/plating/foam/ex_act()
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return
@@ -212,7 +213,7 @@
 		if(PLATE_BOLTS_LOOSENED)
 			return span_notice("The plating reinforcement is <i>unscrewed</i> but <b>welded</b> firmly to the plating.")
 		if(PLATE_CUT)
-			return span_notice("The plating reinforcements have been <i>sliced through</i> but is still <b>loosly</b> held in place.")
+			return span_notice("The plating reinforcements have been <i>sliced through</i> but are still <b>loosely</b> held in place.")
 
 /turf/open/floor/plating/reinforced/update_icon_state()
 	icon_state = "r_plate-[deconstruction_state]"

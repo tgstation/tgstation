@@ -1,6 +1,6 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2)
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -11,7 +11,7 @@
 	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
-	if(get_dist(on_wall,user)>1)
+	if(get_dist(on_wall,user) > 1)
 		balloon_alert(user, "you are too far!")
 		return
 	var/floor_to_wall = get_dir(user, on_wall)
@@ -68,8 +68,8 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
-	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
-	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
+	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
 
 	if(!metal_amt && !glass_amt)
 		return FALSE
@@ -91,6 +91,6 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	custom_price = PAYCHECK_CREW * 0.5

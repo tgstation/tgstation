@@ -65,7 +65,7 @@
 	if(..()) //we have a target
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
-			OpenFire(target)
+			INVOKE_ASYNC(src, PROC_REF(OpenFire), target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -76,6 +76,8 @@
 			adjustBruteLoss(140)
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
+
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
@@ -133,7 +135,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()

@@ -49,7 +49,7 @@
 	var/datum/antagonist/blob_minion/blob_zombie/zombie = new(overmind)
 	mind.add_antag_datum(zombie)
 
-/mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/blob/blobspore/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/target in view(src,1)) //Only for corpse right next to/on same tile
 			if(!is_weak && target.stat == DEAD)

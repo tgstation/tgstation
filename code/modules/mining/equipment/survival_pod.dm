@@ -96,14 +96,7 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "pwindow"
 
-/obj/structure/window/reinforced/survival_pod/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/survival_pod/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/survival_pod/spawner/west
-	dir = WEST
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
 
 //Door
 /obj/machinery/door/airlock/survival_pod

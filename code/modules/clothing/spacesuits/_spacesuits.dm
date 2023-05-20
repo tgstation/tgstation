@@ -96,7 +96,7 @@
 	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
 
 // Space Suit temperature regulation and power usage
-/obj/item/clothing/suit/space/process(delta_time)
+/obj/item/clothing/suit/space/process(seconds_per_tick)
 	var/mob/living/carbon/human/user = loc
 	if(!user || !ishuman(user) || user.wear_suit != src)
 		return
@@ -120,7 +120,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * delta_time))
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * seconds_per_tick))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy

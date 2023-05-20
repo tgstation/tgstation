@@ -391,3 +391,15 @@
 	)
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/pie/asdfpie
+	name = "pie-flavored pie"
+	desc = "I baked you a pie!"
+	icon_state = "asdfpie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("pie" = 1, "the far off year of 2010" = 1)
+	foodtypes = GRAIN
+	burns_in_oven = TRUE

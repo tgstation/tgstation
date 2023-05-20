@@ -103,7 +103,7 @@
 	if(isprojectile(movable) && !(movable in tracked))
 		capture_projectile(movable)
 
-/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)
+/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(seconds_per_tick)
 	for(var/mob/living/silicon/robot/borg in range(current_range, get_turf(host)))
 		if(!borg.has_buckled_mobs())
 			continue

@@ -37,3 +37,14 @@
 	duration = 6
 	pixel_x = -64
 	pixel_y = -64
+
+/obj/effect/temp_visual/cosmic_gem
+	name = "cosmic gem"
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "cosmic_gem"
+	duration = 12
+
+/obj/effect/temp_visual/cosmic_gem/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)

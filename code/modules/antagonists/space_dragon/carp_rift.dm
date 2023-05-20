@@ -131,20 +131,20 @@
 	dragon = null
 	return ..()
 
-/obj/structure/carp_rift/process(delta_time)
+/obj/structure/carp_rift/process(seconds_per_tick)
 	// If we're fully charged, just start mass spawning carp and move around.
 	if(charge_state == CHARGE_COMPLETED)
-		if(DT_PROB(1.25, delta_time) && dragon)
+		if(SPT_PROB(1.25, seconds_per_tick) && dragon)
 			var/mob/living/newcarp = new dragon.ai_to_spawn(loc)
 			newcarp.faction = dragon.owner.current.faction.Copy()
-		if(DT_PROB(1.5, delta_time))
+		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
 			SSmove_manager.move_to(src, get_step(src, rand_dir), 1)
 		return
 
 	// Increase time trackers and check for any updated states.
-	time_charged = min(time_charged + delta_time, max_charge)
-	last_carp_inc += delta_time
+	time_charged = min(time_charged + seconds_per_tick, max_charge)
+	last_carp_inc += seconds_per_tick
 	update_check()
 
 /obj/structure/carp_rift/attack_ghost(mob/user)

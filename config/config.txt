@@ -623,6 +623,20 @@ MOTD motd.txt
 ## but enabled on production (the default).
 CACHE_ASSETS 0
 
+## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
+## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
+## Will only seek to waste disk space if ran on production.
+#SAVE_SPRITESHEETS
+
+## If this remains commented out, we will allow players to download their own preferences as a JSON file to do whatever they wish.
+## This does require the game code to read (and only read) the /data folder where these files are stored, and then use the BYOND FTP Function to send the file to the client.
+## In case you get overloaded with requests such as these, simply uncomment to disable this feature to clients.
+#FORBID_PREFERENCES_EXPORT
+
+## The time (in seconds) that a player must wait between download requests of their JSON preferences.
+## Minimum number settable for this is 1.
+SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT 10
+
 ## Uncomment to allow the station name to be in the hub entry.
 ## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
 ## BYOND staff have gotten upset at us in the past for inappropriate station names.
@@ -637,6 +651,15 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
+
+## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
+#TTS_HTTP_URL http://localhost:5002
+
+## Token that can be used to prevent misuse of your TTS server that you've set up.
+#TTS_HTTP_TOKEN coolio
+
+## The maximum number of concurrent tts http requests that can be made by the server at once.
+#TTS_MAX_CONCURRENT_REQUESTS 4
 
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.

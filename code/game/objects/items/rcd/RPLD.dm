@@ -159,7 +159,7 @@
 
 	return data
 
-/obj/item/construction/plumbing/ui_act(action, params)
+/obj/item/construction/plumbing/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -38,6 +38,7 @@
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
@@ -232,7 +233,7 @@
 	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
-	..()
+	. = ..()
 	if(overmind)
 		overmind.blobstrain.extinguish_reaction(src)
 
@@ -411,14 +412,14 @@
 	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
 	var/reflector_reinforce_range = 0
 
-/obj/structure/blob/special/proc/reinforce_area(delta_time) // Used by cores and nodes to upgrade their surroundings
+/obj/structure/blob/special/proc/reinforce_area(seconds_per_tick) // Used by cores and nodes to upgrade their surroundings
 	if(strong_reinforce_range)
 		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
-			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
 				B.change_to(/obj/structure/blob/shield/core, overmind)
 	if(reflector_reinforce_range)
 		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
-			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
 				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
 
 /obj/structure/blob/special/proc/pulse_area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)

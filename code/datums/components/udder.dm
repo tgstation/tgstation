@@ -83,7 +83,7 @@
 	STOP_PROCESSING(SSobj, src)
 	udder_mob = null
 
-/obj/item/udder/process(delta_time)
+/obj/item/udder/process(seconds_per_tick)
 	if(udder_mob.stat != DEAD)
 		generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process
 
@@ -137,7 +137,7 @@
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_attacking))
 
-/obj/item/udder/gutlunch/process(delta_time)
+/obj/item/udder/gutlunch/process(seconds_per_tick)
 	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob
 	if(reagents.total_volume != reagents.maximum_volume)
 		return

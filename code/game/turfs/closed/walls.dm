@@ -101,21 +101,24 @@
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
 		dismantle_wall(1,1)
-		return
+		return TRUE
 
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			//SN src = null
 			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			dismantle_wall(prob(50), TRUE)
 		if(EXPLODE_LIGHT)
 			if (prob(hardness))
 				dismantle_wall(0,1)
+
 	if(!density)
-		..()
+		return ..()
+
+	return TRUE
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
@@ -188,15 +191,13 @@
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc //get user's location for delay checks
-
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
 		return
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
 		return FALSE
 
@@ -214,7 +215,7 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
@@ -228,7 +229,7 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
@@ -283,12 +284,8 @@
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
-			if(!try_wallmount(new_wallmount, user, src))
-				qdel(new_wallmount)
-				return FALSE
-			return TRUE
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE

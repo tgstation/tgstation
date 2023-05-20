@@ -7,11 +7,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"dS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
 "dU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -38,22 +33,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
-"hd" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	dir = 1;
-	freq = 1400;
-	location = "Engineering";
-	name = "navigation beacon (Engineering Delivery)"
-	},
-/obj/machinery/conveyor{
-	id = "engineeringchute"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "hn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -104,6 +83,20 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/crew_quarters/dorms)
+"nu" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Engineering";
+	name = "navigation beacon (Engineering Delivery)"
+	},
+/obj/machinery/conveyor{
+	id = "engineeringchute"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "nz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -224,6 +217,11 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Ba" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "BZ" = (
@@ -656,7 +654,7 @@ BZ
 BZ
 BZ
 BZ
-dS
+Ba
 Uk
 CH
 Me
@@ -1542,7 +1540,7 @@ zN
 hn
 Cz
 ql
-hd
+nu
 FK
 lC
 CH

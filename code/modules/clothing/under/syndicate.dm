@@ -70,11 +70,30 @@
 	inhand_icon_state = "bl_suit"
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/syndicate_tacticool
+	stubborn_stains = TRUE
 
 /datum/armor/syndicate_tacticool
 	bio = 10
 	fire = 50
 	acid = 40
+
+/obj/item/clothing/under/syndicate/tacticool/examine(mob/user)
+	. = ..()
+	. += "It has a label that says cleaning this 'genuine' Waffle Corp. product with cleaning solutions other than Grime Liberator telelocational podcrystals will void the warranty."
+	. += "What on earth is a <font color='red'>tele</font>locational pod<font color='red'>crystal</font>?"
+
+/obj/item/clothing/under/syndicate/tacticool/dye_item(dye_color, dye_key_override)
+	if(dye_color == DYE_SYNDICATE)
+		if(dying_key == DYE_REGISTRY_JUMPSKIRT)
+			special_wash(/obj/item/clothing/under/syndicate/skirt)
+		else
+			special_wash(/obj/item/clothing/under/syndicate)
+		qdel(src)
+		return
+	return ..()
+
+/obj/item/clothing/under/syndicate/tacticool/proc/special_wash(obj/item/clothing/under/syndicate/our_jumpsuit)
+	new our_jumpsuit(loc)
 
 /obj/item/clothing/under/syndicate/tacticool/skirt
 	name = "tacticool skirtleneck"
@@ -93,7 +112,7 @@
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"
-	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
+	desc = "A double seamed tactical turtleneck disguised as a civilian-grade silk suit. Intended for the most formal operator. The collar is really sharp."
 	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE

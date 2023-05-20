@@ -479,27 +479,27 @@
 	return examine_text
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
-/obj/vehicle/sealed/mecha/process(delta_time)
+/obj/vehicle/sealed/mecha/process(seconds_per_tick)
 	if(internal_damage)
 		if(internal_damage & MECHA_INT_FIRE)
-			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && DT_PROB(2.5, delta_time))
+			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SPT_PROB(2.5, seconds_per_tick))
 				clear_internal_damage(MECHA_INT_FIRE)
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
 					set_internal_damage(MECHA_INT_TANK_BREACH)
 				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*delta_time)
+					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*seconds_per_tick)
 			if(cabin_air && cabin_air.return_volume()>0)
-				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*delta_time)
+				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*seconds_per_tick)
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(delta_time*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
+					take_damage(seconds_per_tick*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 
 		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(SPT_PROB_RATE(0.05, seconds_per_tick))
 				if(loc)
 					loc.assume_air(leaked_gas)
 				else
@@ -508,13 +508,13 @@
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
 				spark_system.start()
-				cell.charge -= min(10 * delta_time, cell.charge)
-				cell.maxcharge -= min(10 * delta_time, cell.maxcharge)
+				cell.charge -= min(10 * seconds_per_tick, cell.charge)
+				cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
 
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL))
 		if(cabin_air && cabin_air.return_volume() > 0)
 			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * delta_time
+			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * seconds_per_tick
 
 	if(internal_tank)
 		var/datum/gas_mixture/tank_air = internal_tank.return_air()
@@ -584,7 +584,7 @@
 			checking = checking.loc
 
 	if(mecha_flags & LIGHTS_ON)
-		use_power(2*delta_time)
+		use_power(2*seconds_per_tick)
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()

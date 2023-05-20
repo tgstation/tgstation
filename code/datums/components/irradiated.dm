@@ -74,7 +74,7 @@
 
 	return ..()
 
-/datum/component/irradiated/process(delta_time)
+/datum/component/irradiated/process(seconds_per_tick)
 	if (!ishuman(parent))
 		return PROCESS_KILL
 
@@ -91,9 +91,9 @@
 		return
 
 	if (human_parent.stat > DEAD)
-		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, delta_time)
+		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, seconds_per_tick)
 
-	process_tox_damage(human_parent, delta_time)
+	process_tox_damage(human_parent, seconds_per_tick)
 
 /datum/component/irradiated/proc/should_halt_effects(mob/living/carbon/human/target)
 	if (IS_IN_STASIS(target))
@@ -107,7 +107,7 @@
 
 	return FALSE
 
-/datum/component/irradiated/proc/process_tox_damage(mob/living/carbon/human/target, delta_time)
+/datum/component/irradiated/proc/process_tox_damage(mob/living/carbon/human/target, seconds_per_tick)
 	if (!COOLDOWN_FINISHED(src, last_tox_damage))
 		return
 

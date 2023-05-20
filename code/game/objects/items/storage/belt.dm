@@ -474,7 +474,7 @@
 	icon_state = "championbelt"
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
-	custom_materials = list(/datum/material/gold=400)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
@@ -783,7 +783,7 @@
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE

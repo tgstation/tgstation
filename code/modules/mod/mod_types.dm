@@ -421,6 +421,16 @@
 		/obj/item/mod/module/jetpack,
 	)
 
+/obj/item/mod/control/pre_equipped/apocryphal/officer
+	applied_modules = list(
+		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack,
+	)
+
 /obj/item/mod/control/pre_equipped/corporate
 	theme = /datum/mod_theme/corporate
 	applied_core = /obj/item/mod/core/infinite

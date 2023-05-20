@@ -557,7 +557,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	else if(valve_open && holding)
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/canister/process(delta_time)
+/obj/machinery/portable_atmospherics/canister/process(seconds_per_tick)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
@@ -565,7 +565,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	protected_contents = FALSE
 	if(shielding_powered)
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
-		var/power_consumed = power_factor * 250 * delta_time
+		var/power_consumed = power_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_power(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE

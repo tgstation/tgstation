@@ -61,8 +61,7 @@
 	},
 /area/template_noop)
 "j" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/holofloor{
@@ -80,8 +79,7 @@
 /area/template_noop)
 "l" = (
 /obj/structure/chair/stool/bar/directional/south,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/holofloor{
@@ -178,9 +176,7 @@
 	},
 /area/template_noop)
 "G" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/storage/box/cups,
 /turf/open/floor/holofloor{
@@ -251,7 +247,7 @@
 	},
 /area/template_noop)
 "R" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -289,8 +285,7 @@
 /area/template_noop)
 "Y" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/holofloor{

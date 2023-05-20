@@ -14,13 +14,14 @@
 	uniform = /obj/item/clothing/under/plasmaman/security
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
+	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
-	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	uniform = /obj/item/clothing/under/plasmaman/security/detective
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
-	head = /obj/item/clothing/head/helmet/space/plasmaman/white
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security/detective
 
 /datum/outfit/plasmaman/warden
 	name = "Warden Plasmaman"
@@ -28,6 +29,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/security/warden
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/warden
+	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
 /datum/outfit/plasmaman/prisoner
 	name = "Prisoner Plasmaman"
@@ -42,6 +44,15 @@
 	uniform = /obj/item/clothing/under/plasmaman/medical
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
+	mask = /obj/item/clothing/mask/breath/medical
+
+/datum/outfit/plasmaman/coroner
+	name = "Coroner Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/coroner
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/coroner
+	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/paramedic
 	name = "Paramedic Plasmaman"
@@ -49,6 +60,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/paramedic
 	gloves = /obj/item/clothing/gloves/color/plasmaman/plasmanitrile
 	head = /obj/item/clothing/head/helmet/space/plasmaman/paramedic
+	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/viro
 	name = "Virology Plasmaman"
@@ -56,6 +68,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/viro
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/viro
+	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/chemist
 	name = "Chemist Plasmaman"
@@ -63,6 +76,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/chemist
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chemist
+	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/science
 	name = "Science Plasmaman"
@@ -112,6 +126,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/mining
 	gloves = /obj/item/clothing/gloves/color/plasmaman/explorer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/mining
+	mask = /obj/item/clothing/mask/gas/explorer/plasmaman
 
 /datum/outfit/plasmaman/chaplain
 	name = "Chaplain Plasmaman"
@@ -198,6 +213,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/security/head_of_security
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
+	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
 /datum/outfit/plasmaman/chief_engineer
 	name = "Chief Engineer Plasmaman"
@@ -212,6 +228,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/chief_medical_officer
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
+	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/research_director
 	name = "Research Director Plasmaman"
@@ -226,7 +243,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/centcom_commander
 	gloves = /obj/item/clothing/gloves/color/plasmaman/centcom_commander
 	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
 /datum/outfit/plasmaman/centcom_official
 	name = "CentCom Official Plasmaman"
@@ -262,7 +279,7 @@
 	uniform = /obj/item/clothing/under/plasmaman/engineering
 	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering
-	mask = /obj/item/clothing/mask/gas/atmos
+	mask = /obj/item/clothing/mask/gas/atmos/plasmaman
 
 /datum/outfit/plasmaman/party_comedian
 	name = "ERP Comedian Plasmaman"

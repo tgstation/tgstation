@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(fluids)
 
 
 /datum/controller/subsystem/fluids/fire(resumed)
-	var/delta_time
+	var/seconds_per_tick
 	var/cached_bucket_index
 	var/list/obj/effect/particle_effect/fluid/currentrun
 	MC_SPLIT_TICK_INIT(2)
@@ -130,14 +130,14 @@ SUBSYSTEM_DEF(fluids)
 		spread_carousel[spread_bucket_index] = list() // Reset the bucket so we don't process an _entire station's worth of foam_ spreading every 2 ticks when the foam flood event happens.
 		resumed_spreading = TRUE
 
-	delta_time = spread_wait / (1 SECONDS)
+	seconds_per_tick = spread_wait / (1 SECONDS)
 	currentrun = currently_spreading
 	while(currentrun.len)
 		var/obj/effect/particle_effect/fluid/to_spread = currentrun[currentrun.len]
 		currentrun.len--
 
 		if(!QDELETED(to_spread))
-			to_spread.spread(delta_time)
+			to_spread.spread(seconds_per_tick)
 			to_spread.spread_bucket = null
 
 		if (MC_TICK_CHECK)
@@ -153,14 +153,14 @@ SUBSYSTEM_DEF(fluids)
 		currently_processing = tmp_list.Copy()
 		resumed_effect_processing = TRUE
 
-	delta_time = effect_wait / (1 SECONDS)
+	seconds_per_tick = effect_wait / (1 SECONDS)
 	cached_bucket_index = effect_bucket_index
 	currentrun = currently_processing
 	while(currentrun.len)
 		var/obj/effect/particle_effect/fluid/to_process = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (QDELETED(to_process) || to_process.process(delta_time) == PROCESS_KILL)
+		if (QDELETED(to_process) || to_process.process(seconds_per_tick) == PROCESS_KILL)
 			effect_carousel[cached_bucket_index] -= to_process
 			to_process.effect_bucket = null
 			to_process.datum_flags &= ~DF_ISPROCESSING

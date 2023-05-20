@@ -66,7 +66,7 @@
 	name = "surgical medkit"
 	icon_state = "medkit_surgery"
 	inhand_icon_state = "medkit"
-	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
+	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
 
 /obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
@@ -282,6 +282,7 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
@@ -305,15 +306,67 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/coroner
+	name = "compact coroner's medkit"
+	desc = "A smaller medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	icon = 'icons/obj/storage/medkit.dmi'
+	icon_state = "compact_coronerkit"
+	inhand_icon_state = "coronerkit"
+	var/max_slots = 6
+	var/max_total_storage = 6
+
+/obj/item/storage/medkit/coroner/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //lowering this so it can't hold the autopsy scanner
+	atom_storage.max_slots = max_slots
+	atom_storage.max_total_storage = max_total_storage
+
+/obj/item/storage/medkit/coroner/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/reagent_containers/blood = 1,
+		/obj/item/bodybag = 2,
+		/obj/item/reagent_containers/syringe = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/coroner/large
+	name = "coroner's medkit"
+	desc = "A medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
+	icon = 'icons/obj/storage/medkit.dmi'
+	icon_state = "coronerkit"
+	inhand_icon_state = "coronerkit"
+	max_slots = 12
+	max_total_storage = 24
+
+/obj/item/storage/medkit/coroner/large/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/toy/crayon/white = 1,
+		/obj/item/reagent_containers/blood = 1,
+		/obj/item/bodybag = 2,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
 	)
 	generate_items_inside(items_inside,src)
 
@@ -593,7 +646,7 @@
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process(delta_time)
+/obj/item/storage/organbox/process(seconds_per_tick)
 	///if there is enough coolant var
 	var/using_coolant = coolant_to_spend()
 	if (isnull(using_coolant))
@@ -604,7 +657,7 @@
 				stored.unfreeze()
 		return
 
-	var/amount_used = 0.05 * delta_time
+	var/amount_used = 0.05 * seconds_per_tick
 	if (using_coolant != /datum/reagent/cryostylane)
 		amount_used *= 2
 	reagents.remove_reagent(using_coolant, amount_used)

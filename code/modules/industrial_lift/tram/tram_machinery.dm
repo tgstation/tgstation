@@ -612,13 +612,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		GLOB.tram_signs += src
 
 	sign_states = list(
-		"[base_icon_state][DESTINATION_WEST_ACTIVE]",
-		"[base_icon_state][DESTINATION_WEST_IDLE]",
-		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
-		"[base_icon_state][DESTINATION_EAST_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
-		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+		"[DESTINATION_WEST_ACTIVE]",
+		"[DESTINATION_WEST_IDLE]",
+		"[DESTINATION_EAST_ACTIVE]",
+		"[DESTINATION_EAST_IDLE]",
+		"[DESTINATION_CENTRAL_IDLE]",
+		"[DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
+		"[DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
 	)
 
 /obj/machinery/destination_sign/Destroy()
@@ -661,8 +661,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	use_power(active_power_usage)
 
 	if(malfunctioning)
-		icon_state = "[pick(sign_states)]"
-		light_mask = "[pick(sign_states)]_e"
+		icon_state = "[base_icon_state][pick(sign_states)]"
+		light_mask = "[base_icon_state][pick(sign_states)]_e"
 		update_appearance()
 		return PROCESS_KILL
 

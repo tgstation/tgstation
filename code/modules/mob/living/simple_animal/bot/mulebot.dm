@@ -222,6 +222,8 @@
 		if(EXPLODE_LIGHT)
 			wires.cut_random()
 
+	return TRUE
+
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()
@@ -714,7 +716,9 @@
 									// the we will navigate there
 			destination = new_destination
 			target = NB.loc
-			var/direction = NB.dir // this will be the load/unload dir
+			var/direction = NB.codes[NAVBEACON_DELIVERY_DIRECTION] // this will be the load/unload dir
+			if(!direction)
+				direction = NB.dir // fallback
 			if(direction)
 				loaddir = text2num(direction)
 			else

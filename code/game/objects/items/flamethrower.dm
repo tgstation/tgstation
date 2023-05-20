@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = MOVABLE_LIGHT
@@ -33,7 +33,7 @@
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
