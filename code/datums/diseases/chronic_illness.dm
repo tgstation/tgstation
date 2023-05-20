@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
 	process_dead = TRUE
-	stage_prob = 0.5
+	stage_prob = 0.25
 	cure_text = "Sansufentanyl"
 	cures = list(/datum/reagent/medicine/sansufentanyl)
 	infectivity = 0
@@ -13,6 +13,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timesteam correction technology."
 	severity = DISEASE_SEVERITY_UNCURABLE
+	var/heartswap = TRUE
 
 /datum/disease/chronic_illness/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -42,14 +43,6 @@
 				SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.adjustBruteLoss(1)
-			if(SPT_PROB(0.5, seconds_per_tick))
-				switch(rand(1,3))
-					if(1)
-						scramble_dna(affected_mob, 1, 0, 0, rand(15,45))
-					if(2)
-						scramble_dna(affected_mob, 0, 1, 0, rand(15,45))
-					if(3)
-						scramble_dna(affected_mob, 0, 0, 1, rand(15,45))
 		if(4)
 			if(prob(30))
 				affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
@@ -67,16 +60,8 @@
 				to_chat(affected_mob, span_danger("[pick("You feel as though your atoms are accelerating in place.", "You feel like you're being torn apart!")]"))
 				affected_mob.emote("scream")
 				affected_mob.adjustBruteLoss(10)
-			if(SPT_PROB(1, seconds_per_tick))
-				switch(rand(1,3))
-					if(1)
-						scramble_dna(affected_mob, 1, 0, 0, rand(15,45))
-					if(2)
-						scramble_dna(affected_mob, 0, 1, 0, rand(15,45))
-					if(3)
-						scramble_dna(affected_mob, 0, 0, 1, rand(15,45))
 		if(5)
-			switch(pick(1,2,3,4))
+			switch(rand(1,4))
 				if(1)
 					to_chat(affected_mob, span_notice("You feel your atoms begin to realign. You're safe. For now."))
 					stage = 1
@@ -88,16 +73,19 @@
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()
 					new /obj/effect/decal/cleanable/plasma(affected_mob.loc)
+					new /obj/effect/decal/cleanable/ash(affected_mob.loc)
 					affected_mob.visible_message(span_warning("[affected_mob] is erased from the timeline!"), span_userdanger("You are ripped from the timeline!"))
 					qdel(affected_mob)
 				if(3)
 					affected_mob.visible_message(span_warning("[affected_mob] is torn apart!"), span_userdanger("Your atoms accelerate into criticality!"))
 					affected_mob.gib()
 				if(4)
-					if(affected_mob.stat == CONSCIOUS)
-						affected_mob.visible_message(span_danger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart is stopping!"), \
-					span_userdanger("You feel a horrible pain as your heart is replaced with one from another dimension!"))
-					var/obj/item/organ/internal/heart/cursed/cheart = new /obj/item/organ/internal/heart/cursed()
-					cheart.replace_into(affected_mob)
-					playsound(affected_mob, 'sound/hallucinations/far_noise.ogg', 50, 1)
-					stage = 3
+					if(heartswap == TRUE)
+						heartswap = FALSE
+						if(affected_mob.stat == CONSCIOUS)
+							affected_mob.visible_message(span_danger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart is stopping!"), \
+						span_userdanger("You feel a horrible pain as your heart is replaced with one from another dimension!"))
+						var/obj/item/organ/internal/heart/cursed/cheart = new /obj/item/organ/internal/heart/cursed()
+						cheart.replace_into(affected_mob)
+						playsound(affected_mob, 'sound/hallucinations/far_noise.ogg', 50, 1)
+						stage = 3
