@@ -1,9 +1,3 @@
-#define TARGET_INDEX 1
-#define IDENTIFIER_INDEX 2
-#define START_TIME_INDEX 3
-#define REQUEST_INDEX 4
-#define MESSAGE_INDEX 5
-
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
 	wait = 0.05 SECONDS
