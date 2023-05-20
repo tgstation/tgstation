@@ -90,7 +90,7 @@
 /datum/symptom/proc/OnRemove(datum/disease/advance/A)
 	return
 
-/datum/symptom/proc/OnDeath(datum/disease/advance/A)    //What happens when the host dies.
+/datum/symptom/proc/OnDeath(datum/disease/advance/advanced_disease)    //What happens when the host dies.
 	return !neutered
 
 /**

@@ -11,4 +11,3 @@
 
 #define MOVESPEED_ID_MOB_GRAB_STATE "mob_grab_state"
 #define MOVESPEED_ID_MOB_WALK_RUN "mob_walk_run"
-#define MOVESPEED_ID_NECRO_VIRUS_SLOWDOWN "NECRO_VIRUS"
