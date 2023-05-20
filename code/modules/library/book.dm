@@ -177,9 +177,12 @@
 		return FALSE
 	if(!user.combat_mode)
 		return FALSE
-	if(!((carving_item.sharpness & SHARP_EDGED) && (carving_item.tool_behaviour != TOOL_KNIFE) && (carving_item.tool_behaviour != TOOL_WIRECUTTER)))
-		return FALSE
-	//i hate balloon alerts i hate them so god damn much
+	//if it's not a knife or wirecutter(whose sharpness = null for some reason) check if it's any item that has a sharpe edge
+	if((carving_item.tool_behaviour != TOOL_KNIFE) && (carving_item.tool_behaviour != TOOL_WIRECUTTER))
+		//if not sharp enough return
+		if(!(carving_item.sharpness & SHARP_EDGED))
+			return FALSE
+	//i love balloon alerts i love them sooo much
 	balloon_alert(user, "carving out...")
 	if(!do_after(user, 3 SECONDS, target = src))
 		balloon_alert(user, "interrupted!")
