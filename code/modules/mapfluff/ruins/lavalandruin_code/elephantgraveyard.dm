@@ -210,7 +210,7 @@
 		return FALSE
 
 	if(!dug_closed)
-		to_chat(user, span_notice("You need a shovel to cover this grave."))
+		to_chat(user, span_notice("You need a shovel to close the grave."))
 		return FALSE
 
 	dug_closed = FALSE
