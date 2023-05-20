@@ -54,23 +54,23 @@ export const PipeDispenser = (props, context) => {
     <Window width={530} height={530}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item>
-            <Stack fill>
-              <Stack.Item grow>
-                <Section>
-                  <LabeledList>
-                    <ColorItem />
-                    <LayerSelect />
-                  </LabeledList>
-                </Section>
-              </Stack.Item>
-              {rootCategoryIndex === 0 && (
+          {rootCategoryIndex === 0 && (
+            <Stack.Item>
+              <Stack fill>
+                <Stack.Item grow>
+                  <Section>
+                    <LabeledList>
+                      <ColorItem />
+                      <LayerSelect />
+                    </LabeledList>
+                  </Section>
+                </Stack.Item>
                 <Stack.Item width="90px">
                   <SmartPipeBlockSection />
                 </Stack.Item>
-              )}
-            </Stack>
-          </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <PipeTypeSection />
           </Stack.Item>
