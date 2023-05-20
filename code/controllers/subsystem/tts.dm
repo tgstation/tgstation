@@ -120,6 +120,8 @@ SUBSYSTEM_DEF(tts)
 		##tts_message_queue -= ##target; \
 	};
 
+#define TTS_ARBRITRARY_DELAY "arbritrary delay"
+
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)
 		flags |= SS_NO_FIRE
@@ -185,16 +187,30 @@ SUBSYSTEM_DEF(tts)
 			continue
 
 		if(current_target.audio_file)
+			if(current_target.audio_file == TTS_ARBRITRARY_DELAY)
+				if(current_target.when_to_play < world.time)
+					SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
+				continue
 			var/sound/audio_file = new(current_target.audio_file)
 			if(current_target.local)
 				SEND_SOUND(tts_target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			else if(current_target.when_to_play < world.time)
 				play_tts(tts_target, current_target.listeners, audio_file, current_target.language, current_target.message_range)
-				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
-				if(length(data) != 0)
-					var/datum/tts_request/next_target = data[1]
+				if(length(data) != 1)
+					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length
+				else
+					// So that if the audio file is already playing whilst a new file comes in,
+					// it won't play in the middle of the audio file.
+					var/datum/tts_request/arbritrary_delay = new()
+					arbritrary_delay.when_to_play = world.time + current_target.audio_length
+					arbritrary_delay.audio_file = TTS_ARBRITRARY_DELAY
+					queued_tts_messages[tts_target] += arbritrary_delay
+				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
+
+
+#undef TTS_ARBRITRARY_DELAY
 
 /datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0)
 	if(!tts_enabled)
