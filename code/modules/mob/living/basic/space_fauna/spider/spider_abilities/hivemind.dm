@@ -51,7 +51,12 @@
 	return TRUE
 
 /**
- * Formats the string to have an appropiate size and text color
+ * Sends a big message to all spiders from the target.
+ *
+ * Allows the user to send a message to all spiders that exist.  Ghosts will also see the message.
+ * Arguments:
+ * * user - The spider sending the message
+ * * message - The message to be sent
  */
 /datum/action/command_spiders/proc/spider_command(mob/living/user, message)
 	if(!message)
@@ -64,6 +69,9 @@
 		to_chat(ghost, "[link] [my_message]")
 	user.log_talk(message, LOG_SAY, tag = "spider command")
 
+/**
+ * Formats the string to have an appropiate size and text color
+ */
 /datum/action/command_spiders/proc/format_message(mob/living/user, message)
 	return span_spiderbroodmother(("<b>Command from [user]:</b> [message]"))
 
