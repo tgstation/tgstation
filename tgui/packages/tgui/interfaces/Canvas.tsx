@@ -5,8 +5,12 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
+const LEFT_CLICK = 0;
+const RIGHT_CLICK = 2;
+
 type PaintCanvasProps = Partial<{
   onCanvasModifiedHandler: (data: PointData[]) => void;
+  onCanvasDropperHandler: (x: number, y: number) => void;
   value: string[][];
   width: number;
   height: number;
@@ -35,6 +39,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   baseImageData: Color[][];
   modifiedElements: PointData[];
   onCanvasModified: (data: PointData[]) => void;
+  onCanvasDropper: (x: number, y: number) => void;
   drawing: boolean;
   drawing_color: string;
 
@@ -44,6 +49,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.modifiedElements = [];
     this.drawing = false;
     this.onCanvasModified = props.onCanvasModifiedHandler;
+	this.onCanvasDropper = props.onCanvasDropperHandler;
 
     this.handleStartDrawing = this.handleStartDrawing.bind(this);
     this.handleDrawing = this.handleDrawing.bind(this);
@@ -112,10 +118,16 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   handleStartDrawing(event: MouseEvent) {
+    if (event.button === RIGHT_CLICK) {
+      const coords = this.eventToCoords(event);
+      this.onCanvasDropper(coords.x+1, coords.y+1); // 1-based index dm side
+      return;
+    }
     if (
       !this.props.editable ||
       this.props.drawing_color === undefined ||
-      this.props.drawing_color === null
+      this.props.drawing_color === null ||
+	  event.button !== LEFT_CLICK
     ) {
       return;
     }
@@ -234,6 +246,15 @@ export const Canvas = (props, context) => {
             onCanvasModifiedHandler={(changed) =>
               act('paint', { data: toMassPaintFormat(changed) })
             }
+            onCanvasDropperHandler={(x, y) =>
+              act('select_color_from_coords', {
+                point_x : x,
+                point_y : y,
+              })
+            }
+            oncontextmenu={(e) =>
+              e.preventDefault()
+            }
             editable={data.editable}
           />
           <Flex align="center" justify="center" direction="column">
@@ -257,6 +278,13 @@ export const Canvas = (props, context) => {
                         selected_color: element.color,
                       })
                     }
+                    oncontextmenu={(e) => {
+                    e.preventDefault();
+                      act('change_palette', {
+                        color_index: index+1,
+                        old_color: element.color,
+                      })
+                    }}
                   />
                 ))}
               </Flex.Item>
