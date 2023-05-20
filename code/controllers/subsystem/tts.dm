@@ -85,14 +85,12 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound/audio, datum/language/language, range = 7, volume_offset = 0)
+/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, datum/language/language, range = 7, volume_offset = 0)
 	var/turf/turf_source = get_turf(target)
 	if(!turf_source)
 		return
 
 	var/channel = SSsounds.random_available_channel()
-	var/listeners = get_hearers_in_view(range, turf_source)
-
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
 		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
 		if(volume_to_play_at == 0 || !listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
@@ -196,13 +194,13 @@ SUBSYSTEM_DEF(tts)
 				SEND_SOUND(tts_target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			else if(current_target.when_to_play < world.time)
-				play_tts(tts_target, audio_file, current_target.language, current_target.message_range)
+				play_tts(tts_target, current_target.listeners, audio_file, current_target.language, current_target.message_range)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 				if(length(data) != 0)
 					var/datum/tts_request/next_target = data[1]
 					next_target.when_to_play = world.time + current_target.audio_length
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, local = FALSE, message_range = 7, volume_offset = 0)
+/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0)
 	if(!tts_enabled)
 		return
 
@@ -224,7 +222,7 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, shell_scrubbed_input, target, local, language, message_range, volume_offset)
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
@@ -240,6 +238,9 @@ SUBSYSTEM_DEF(tts)
 /datum/tts_request
 	/// The mob to play this TTS message on
 	var/mob/target
+	/// The people who are going to hear this TTS message
+	/// Does nothing if local is set to TRUE
+	var/list/listeners
 	/// The HTTP request of this message
 	var/datum/http_request/request
 	/// The language to limit this TTS message to
@@ -267,7 +268,7 @@ SUBSYSTEM_DEF(tts)
 	var/timed_out = FALSE
 
 
-/datum/tts_request/New(identifier, datum/http_request/request, message, target, local, datum/language/language, message_range, volume_offset)
+/datum/tts_request/New(identifier, datum/http_request/request, message, target, local, datum/language/language, message_range, volume_offset, list/listeners)
 	. = ..()
 	src.identifier = identifier
 	src.request = request
@@ -277,5 +278,6 @@ SUBSYSTEM_DEF(tts)
 	src.local = local
 	src.message_range = message_range
 	src.volume_offset = volume_offset
+	src.listeners = listeners
 	start_time = world.time
 

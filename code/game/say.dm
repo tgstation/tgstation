@@ -76,7 +76,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	var/found_client = FALSE
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+	var/list/listeners = get_hearers_in_view(range, source)
+	for(var/atom/movable/hearing_movable as anything in listeners)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
@@ -96,7 +97,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		filter += tts_filter.Join(",")
 
 	if(voice && found_client)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), message_range = range)
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listeners, message_range = range)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
