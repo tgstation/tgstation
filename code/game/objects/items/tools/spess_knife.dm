@@ -3,6 +3,7 @@
 	desc = "An all-in-one tool combining knife, screwdriver, cutters and many more."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "spess_knife"
+	worn_icon_state = "spess_knife"
 	belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"
 	///Inhand icons for unfolded knife states
