@@ -77,7 +77,7 @@
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MECHA_MELEE|MECHA_RANGED
-	movedelay = 0.5
+	movedelay = 0.4
 	///Which atom we are movable_target onto for
 	var/atom/movable/movable_target
 	///Whether we will throw movable atomstothrow by locking onto them or just throw them back from where we click
@@ -445,7 +445,7 @@
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
 	effect_type = /obj/effect/particle_effect/fluid/smoke
-	movedelay = 0.25
+	movedelay = 0.2
 	var/move_cost = 20 //moles per step
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -540,32 +540,3 @@
 	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()
-
-/////////////////////////////////////////// LIGHT AMPLIFICATION /////////////////////////////////////////////
-/obj/item/mecha_parts/mecha_equipment/light_amplification
-	name = "exosuit light amplification module"
-	desc = "An enhancement module for the mech cockpit which enables night vision and meson vision functionality."
-	icon_state = "mecha_lightamplification"
-	equipment_slot = MECHA_UTILITY
-	movedelay = 0.2
-
-/obj/item/mecha_parts/mecha_equipment/light_amplification/ui_act(action, list/params)
-	. = ..()
-	if(action == "toggle")
-		if(activated)
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Light amplification functionality enabled.")]")
-			chassis.initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/light_amplification)
-			log_message("Activated.", LOG_MECHA)
-		else
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Light amplification functionality disabled.")]")
-			chassis.remove_passenger_action_type(/datum/action/vehicle/sealed/mecha/light_amplification)
-			log_message("Deactivated.", LOG_MECHA)
-		return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/light_amplification/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	M.initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/light_amplification)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/light_amplification/detach()
-	chassis.remove_passenger_action_type(/datum/action/vehicle/sealed/mecha/light_amplification)
-	return ..()

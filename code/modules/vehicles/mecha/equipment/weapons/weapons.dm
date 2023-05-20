@@ -1,7 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
 	range = MECHA_RANGED
-	movedelay = 0.4
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/mecha/weapdestr.ogg'
 	mech_flags = EXOSUIT_MODULE_COMBAT
@@ -183,7 +182,6 @@
 	desc = "Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
 	icon_state = "mecha_honker"
 	energy_drain = 200
-	movedelay = 0
 	equip_cooldown = 150
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
@@ -225,6 +223,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballistic weapon"
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	movedelay = 0.4
 	var/projectiles
 	var/projectiles_cache //ammo to be loaded in, if possible.
 	var/projectiles_cache_max
@@ -512,7 +511,6 @@
 	projectiles = 8
 	projectiles_cache = 999
 	mech_flags = EXOSUIT_MODULE_HONK
-	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache
 	name = "\improper HONKeR-6 grenade launcher"

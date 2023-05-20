@@ -96,7 +96,7 @@
 				chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
 				span_notice("[chassis] pushes you aside."))
 			return ..()
-		else if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(M))//meme clamp here
+		else if((source.istate & ISTATE_SECONDARY) && iscarbon(M))//meme clamp here
 			if(!killer_clamp)
 				to_chat(source, span_notice("You longingly wish to tear [M]'s arms off."))
 				return
