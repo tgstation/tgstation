@@ -60,13 +60,13 @@ BONUS
 	switch(advanced_disease.stage)
 		if(5)
 			if(all_disease)
-				for(var/datum/disease/variable55 in victim.diseases)
-					if((variable55.spread_flags & DISEASE_SPREAD_SPECIAL) || (variable55.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-						continue
-					if(variable55 == advanced_disease)
-						continue
-					variable55 += variable55
-			new /obj/item/food/eggsac(victim.loc, diseases, eggsplosion, sneaky, big_heal)
+				//for(var/datum/disease/variable55 in victim.diseases)
+					//if((variable55.spread_flags & DISEASE_SPREAD_SPECIAL) || (variable55.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+					//	continue
+					//if(variable55 == advanced_disease)
+					//	continue
+				//diseases += variable55
+				new /obj/item/food/eggsac(victim.loc, diseases, eggsplosion, sneaky, big_heal)
 
 #define EGGSPLODE_DELAY 100 SECONDS
 /obj/item/food/eggsac
@@ -83,7 +83,7 @@ BONUS
 /obj/item/food/eggsac/New(loc, var/list/disease, var/eggsplodes, var/sneaky, var/large_heal)
 	..()
 	for(var/datum/disease/variable55 in disease)
-		variable55 += variable55
+		diseases += variable55
 	if(large_heal)
 		reagents.add_reagent_list(list(/datum/reagent/medicine/c2/probital = 20, /datum/reagent/medicine/granibitaluri = 10))
 		reagents.add_reagent(/datum/reagent/blood, 10, diseases)
