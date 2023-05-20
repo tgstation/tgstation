@@ -154,6 +154,8 @@ SUBSYSTEM_DEF(tts)
 		if(response.errored)
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
+		if(!current_request.audio_length)
+			current_request.audio_length = 0
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
 		// Don't need the request anymore so we can deallocate it
 		current_request.request = null
