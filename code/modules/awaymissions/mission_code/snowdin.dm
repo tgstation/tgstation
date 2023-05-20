@@ -154,12 +154,9 @@
 	possible_destinations = "snowdin_mining_top;snowdin_mining_down"
 
 /turf/open/floor/iron/dark/snowdin
-	planetary_atmos = 1
-	temperature = 180
-
-/turf/open/floor/iron/dark/snowdin/Initialize(mapload)
 	initial_gas_mix = FROZEN_ATMOS
-	return ..()
+	planetary_atmos = TRUE
+	temperature = 180
 
 /////////// papers
 

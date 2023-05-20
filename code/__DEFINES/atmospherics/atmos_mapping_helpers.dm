@@ -3,8 +3,9 @@
 
 //OPEN TURF ATMOS
 /// the default air mix that open turfs spawn
-#define OPENTURF_DEFAULT_ATMOS GAS_O2 + "=22;" + GAS_N2 "=82;" + TURF_TEMPERATURE(T20C)
-#define OPENTURF_LOW_PRESSURE GAS_O2 + "=14;" + GAS_N2 "=30;" + TURF_TEMPERATURE(T20C)
+#define OPENTURF_DEFAULT_ATMOS GAS_O2 + "=22;" + GAS_N2 + "=82;" + TURF_TEMPERATURE(T20C)
+/// the default low-pressure air mix used mostly for mining areas.
+#define OPENTURF_LOW_PRESSURE GAS_O2 + "=14;" + GAS_N2 + "=30;" + TURF_TEMPERATURE(T20C)
 /// -193,15°C telecommunications. also used for xenobiology slime killrooms
 #define TCOMMS_ATMOS GAS_N2 + "=100;" + TURF_TEMPERATURE(80)
 /// space

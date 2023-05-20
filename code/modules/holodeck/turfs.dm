@@ -52,10 +52,7 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-
-/turf/open/floor/holofloor/plating/burnmix/Initialize(mapload)
 	initial_gas_mix = BURNMIX_ATMOS
-	return ..()
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
@@ -175,13 +172,10 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
+	initial_gas_mix = SPACE_TEMP_NOBLIUM
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
-
-/turf/open/floor/holofloor/snow/cold/Initialize(mapload)
-	initial_gas_mix = SPACE_TEMP_NOBLIUM
-	return ..()
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"

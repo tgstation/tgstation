@@ -500,7 +500,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	atmos_spawn_air("[TURF_TEMPERATURE(1000)]")
 
 
 // ----------------------------

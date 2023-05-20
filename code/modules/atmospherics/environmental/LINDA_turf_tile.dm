@@ -23,7 +23,7 @@
 	 * approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	 * If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 	**/
-	var/initial_gas_mix
+	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open
 	//used for spacewind
@@ -55,8 +55,6 @@
 	#endif
 
 /turf/open/Initialize(mapload)
-	if(!initial_gas_mix)
-		initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	if(!blocks_air)
 		air = create_gas_mixture()
 		if(planetary_atmos)
