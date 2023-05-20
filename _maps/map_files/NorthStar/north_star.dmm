@@ -12947,6 +12947,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"dkH" = (
+/obj/machinery/telecomms/broadcaster/preset_left,
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "dkP" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
@@ -13601,6 +13606,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"duJ" = (
+/obj/machinery/telecomms/broadcaster/preset_right,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "duX" = (
 /obj/structure/sign/poster/official/moth_hardhat{
 	pixel_x = 32
@@ -16326,6 +16335,11 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port/fore)
+"eht" = (
+/obj/machinery/telecomms/receiver/preset_left,
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "ehu" = (
 /obj/structure/chair/sofa/corp{
 	dir = 4
@@ -27984,7 +27998,7 @@
 /obj/item/circuitboard/machine/telecomms/broadcaster,
 /obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/circuitboard/machine/telecomms/processor,
-/turf/open/floor/circuit/green/telecomms,
+/turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "hre" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
@@ -43633,6 +43647,10 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard)
+"lxw" = (
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "lxC" = (
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 8
@@ -45427,10 +45445,6 @@
 	dir = 4
 	},
 /area/station/medical/chemistry)
-"lUQ" = (
-/obj/machinery/telecomms/broadcaster/preset_left/birdstation,
-/turf/open/floor/circuit/green/telecomms,
-/area/station/tcommsat/server)
 "lUY" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate,
@@ -75485,6 +75499,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
+"tPV" = (
+/obj/structure/grille,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/floor1/port)
 "tPW" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/pod/light,
@@ -85721,10 +85739,6 @@
 	dir = 8
 	},
 /area/station/medical/chemistry)
-"wAr" = (
-/obj/machinery/telecomms/receiver/preset_left/birdstation,
-/turf/open/floor/circuit/green/telecomms,
-/area/station/tcommsat/server)
 "wAt" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
@@ -127664,14 +127678,14 @@ xgH
 xgH
 xgH
 xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
 xgH
 xgH
 lWQ
@@ -127922,12 +127936,12 @@ fmb
 fmb
 kzE
 kzE
-kzE
-kzE
-kzE
-kzE
-kzE
-kzE
+pCb
+mHz
+ess
+ess
+mHz
+tFK
 kzE
 kzE
 xgH
@@ -128179,12 +128193,12 @@ kzE
 kzE
 kzE
 xqs
-pCb
-mHz
-ess
-ess
-mHz
-tFK
+snO
+dkH
+eht
+aAt
+ckd
+snO
 mfU
 kzE
 xgH
@@ -128440,7 +128454,7 @@ snO
 dTR
 eIr
 aAt
-ckd
+qVF
 snO
 msN
 kzE
@@ -128694,14 +128708,14 @@ dRE
 mNh
 ngH
 snO
-vow
-kHz
 aAt
-qVF
+aAt
+aAt
+nwJ
 snO
 kzE
 kzE
-xgH
+kzE
 eVh
 hdA
 hdA
@@ -128951,10 +128965,10 @@ orK
 mNh
 nSn
 snO
+vow
+kHz
 aAt
-aAt
-aAt
-nwJ
+cFy
 snO
 cYx
 uiT
@@ -129208,10 +129222,10 @@ uxT
 qkL
 qkL
 snO
-wrp
-mgw
 aAt
-cFy
+aAt
+aAt
+mpV
 wfW
 jHc
 aQA
@@ -129465,10 +129479,10 @@ nMI
 cjF
 oFF
 snO
+wrp
+mgw
 aAt
-aAt
-aAt
-mpV
+rpN
 snO
 rZX
 iHG
@@ -129722,10 +129736,10 @@ qyB
 iqt
 ibu
 snO
-tVe
-eQd
 aAt
-rpN
+aAt
+aAt
+pjV
 snO
 kzE
 kzE
@@ -129979,13 +129993,13 @@ uxT
 wcw
 qkL
 snO
-wAr
-lUQ
+tVe
+eQd
 aAt
-pjV
+aAt
 snO
 kzE
-kzE
+tPV
 kzE
 kzE
 kzE
@@ -130235,14 +130249,14 @@ kzE
 kzE
 kzE
 kzE
-gzO
-gyx
-ess
-ess
-gyx
-hnd
+snO
+duJ
+lxw
+aAt
 eqV
+snO
 kzE
+tPV
 xgH
 trD
 hdA
@@ -130492,14 +130506,14 @@ aIV
 aIV
 aIV
 kzE
+gzO
+gyx
+ess
+ess
+gyx
+hnd
 kzE
-kzE
-kzE
-kzE
-kzE
-kzE
-kzE
-kzE
+tPV
 xgH
 eKk
 hdA
@@ -130748,14 +130762,14 @@ xgH
 xgH
 xgH
 xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
-xgH
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
+kzE
 xgH
 xgH
 dxr
