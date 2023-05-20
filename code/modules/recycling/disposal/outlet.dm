@@ -25,9 +25,9 @@
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
-	var/eject_range = EJECT_RANGE_MED
+	var/eject_range = EJECT_RANGE_SLOW
 	/// how fast we're spitting fir- atoms
-	var/eject_speed = EJECT_SPEED_MED
+	var/eject_speed = EJECT_SPEED_SLOW
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
