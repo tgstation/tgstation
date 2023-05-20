@@ -236,7 +236,7 @@
 		/obj/item/food/grown,
 		/obj/item/graft,
 		/obj/item/grown,
-		/obj/item/reagent_containers/honeycomb,
+		/obj/item/food/honeycomb,
 		/obj/item/seeds,
 		))
 ////////
