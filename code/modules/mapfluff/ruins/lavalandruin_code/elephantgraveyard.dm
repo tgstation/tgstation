@@ -147,11 +147,6 @@
 	var/first_open = FALSE
 	var/dug_closed = FALSE
 
-
-/obj/structure/closet/crate/grave/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
 		return NONE
@@ -164,8 +159,7 @@
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
-	. += span_notice("The grave can be [EXAMINE_HINT(opened ? "Dug open" : "Covered")] with a shovel")
-
+	. += span_notice("The grave can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
