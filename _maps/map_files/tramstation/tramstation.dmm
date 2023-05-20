@@ -4744,7 +4744,9 @@
 	c_tag = "Science - Monkey Pit";
 	network = list("ss13","rd")
 	},
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "aBo" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -14236,7 +14238,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "dzF" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
@@ -19416,7 +19418,7 @@
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "fwY" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -41088,7 +41090,9 @@
 /area/station/solars/port)
 "nzO" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "nzR" = (
 /turf/open/floor/engine/vacuum,
@@ -47526,7 +47530,9 @@
 /area/station/security/checkpoint/escape)
 "pTj" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "pTl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49266,7 +49272,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "qAy" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
@@ -55088,7 +55094,9 @@
 /turf/open/floor/plating,
 /area/station/solars/starboard/fore)
 "sGF" = (
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "sGG" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -56532,7 +56540,9 @@
 /area/station/commons/dorms/laundry)
 "tdY" = (
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "tdZ" = (
 /obj/machinery/door/firedoor,
@@ -63900,7 +63910,9 @@
 "vDg" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/effect/landmark/event_spawn,
-/turf/open/misc/dirt/jungle,
+/turf/open/misc/dirt/jungle{
+	baseturfs = /turf/open/misc/dirt
+	},
 /area/station/science/explab)
 "vDE" = (
 /obj/machinery/light/small/directional/west,
@@ -67342,7 +67354,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
 "wSS" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "wTl" = (
