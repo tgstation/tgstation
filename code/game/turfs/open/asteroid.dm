@@ -171,17 +171,14 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	turf_flags = NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
 	turf_type = /turf/open/misc/asteroid/lowpressure
 
-/turf/open/misc/asteroid/lowpressure/Initialize(mapload)
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	return ..()
-
 /turf/open/misc/asteroid/airless
+	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
-	initial_gas_mix = AIRLESS_ATMOS
 	worm_chance = 0
 
 /turf/open/misc/asteroid/snow
@@ -191,9 +188,9 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon = 'icons/turf/snow.dmi'
 	damaged_dmi = 'icons/turf/snow.dmi'
 	baseturfs = /turf/open/misc/asteroid/snow
-	initial_gas_mix = FROZEN_ATMOS
 	icon_state = "snow"
 	base_icon_state = "snow"
+	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	flags_1 = NONE
 	planetary_atmos = TRUE

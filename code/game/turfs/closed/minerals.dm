@@ -585,12 +585,9 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/ashplanet/wateryrock
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
 	defer_change = TRUE
-
-/turf/closed/mineral/ash_rock/Initialize(mapload)
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	return ..()
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"
@@ -600,8 +597,8 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/asteroid/snow
-	turf_type = /turf/open/misc/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
+	turf_type = /turf/open/misc/asteroid/snow
 	defer_change = TRUE
 
 /turf/closed/mineral/snowmountain/icemoon

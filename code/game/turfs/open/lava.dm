@@ -342,8 +342,8 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	baseturfs = /turf/open/lava/plasma
 	initial_gas_mix = BURNING_COLD
+	baseturfs = /turf/open/lava/plasma
 
 	light_range = 3
 	light_power = 0.75
@@ -422,6 +422,6 @@
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
-	baseturfs = /turf/open/lava/plasma/mafia
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0

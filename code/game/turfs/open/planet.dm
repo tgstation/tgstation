@@ -19,8 +19,8 @@
 	base_icon_state = "greenerdirt"
 
 /turf/open/misc/dirt/jungle
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0.5
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/misc/dirt/jungle/dark
 	icon_state = "greenerdirt"
@@ -46,9 +46,9 @@
 
 /turf/open/misc/grass/jungle
 	name = "jungle grass"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/misc/dirt
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
