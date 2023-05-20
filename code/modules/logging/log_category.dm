@@ -16,6 +16,9 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
+	/// Whether the readable version of the runtime if formatted internally instead of by rustg
+	var/internal_formatting = TRUE
+
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Backup log category to catch attempts to log to a category that doesn't exist
@@ -48,6 +51,6 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 /datum/log_category/proc/write_entry(datum/log_entry/entry)
 	// config isn't loaded? assume we want human readable logs
 	if(isnull(config) || CONFIG_GET(flag/log_as_human_readable))
-		entry.write_readable_entry_to_file(get_output_file(entry, "log"))
+		entry.write_readable_entry_to_file(get_output_file(entry, "log"), format_internally = internal_formatting)
 
 	entry.write_entry_to_file(get_output_file(entry))

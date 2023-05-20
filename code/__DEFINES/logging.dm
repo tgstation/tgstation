@@ -78,6 +78,7 @@
 #define LOG_CATEGORY_MANIFEST "manifest"
 #define LOG_CATEGORY_MECHA "mecha"
 #define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_RUNTIME "runtime"
 #define LOG_CATEGORY_SHUTTLE "shuttle"
 #define LOG_CATEGORY_SILICON "silicon"
 #define LOG_CATEGORY_SILO "silo"
@@ -107,7 +108,6 @@
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
-#define LOG_CATEGORY_DEBUG_RUNTIME "debug-runtime"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
 #define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 

@@ -19,7 +19,8 @@
 
 // This is not in the debug master category on purpose, do not add it
 /datum/log_category/debug_runtime
-	category = LOG_CATEGORY_DEBUG_RUNTIME
+	category = LOG_CATEGORY_RUNTIME
+	internal_formatting = FALSE
 
 /datum/log_category/debug_mapping
 	category = LOG_CATEGORY_DEBUG_MAPPING

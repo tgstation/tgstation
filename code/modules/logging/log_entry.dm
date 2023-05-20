@@ -61,8 +61,11 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	return src
 
 /// Converts the log entry to a human-readable string.
-/datum/log_entry/proc/to_readable_text(serialize_data = FALSE)
-	return "\[[timestamp]\] [uppertext(category)]: [message]"
+/datum/log_entry/proc/to_readable_text(format = TRUE)
+	if(format)
+		return "\[[timestamp]\] [uppertext(category)]: [message]"
+	else
+		return "[message]"
 
 /// Converts the log entry to a JSON string.
 /datum/log_entry/proc/to_json_text()
@@ -100,7 +103,12 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	WRITE_LOG_NO_FORMAT(file, "[to_json_text()]\n")
 
 /// Writes the log entry to a file as a human-readable string.
-/datum/log_entry/proc/write_readable_entry_to_file(file)
+/datum/log_entry/proc/write_readable_entry_to_file(file, format_internally = TRUE)
 	if(!fexists(file))
 		CRASH("Attempted to log to an uninitialized file: [file]")
-	WRITE_LOG_NO_FORMAT(file, "[to_readable_text()]\n")
+
+	// If it's being formatted internally we need to manually add a newline
+	if(format_internally)
+		WRITE_LOG_NO_FORMAT(file, "[to_readable_text(format = TRUE)]\n")
+	else
+		WRITE_LOG(file, "[to_readable_text(format = FALSE)]")

@@ -40,7 +40,7 @@
 
 /* Log to the logfile only. */
 /proc/log_runtime(text, list/data)
-	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text, data)
+	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 
 /proc/log_signal(text, list/data)
 	logger.Log(LOG_CATEGORY_SIGNAL, text, data)
@@ -56,6 +56,6 @@
 /// Log to both DD and the logfile.
 /proc/log_world(text, list/data)
 #ifdef USE_CUSTOM_ERROR_HANDLER
-	logger.Log(LOG_CATEGORY_DEBUG_RUNTIME, text, data)
+	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)
