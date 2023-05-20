@@ -137,3 +137,16 @@
 
 /datum/action/cooldown/lay_web/web_spikes/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/spikes(target_turf)
+
+/datum/action/cooldown/lay_web/web_carcass
+	name = "leave carcass"
+	desc = "Shed your skin and leave a web carcass behind."
+	button_icon_state = "shed_web_carcass"
+	cooldown_time = 60 SECONDS
+	webbing_time = 0 SECONDS
+
+/datum/action/cooldown/lay_web/web_carcass/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/carcass) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/web_carcass/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/carcass(target_turf)

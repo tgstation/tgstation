@@ -193,3 +193,12 @@
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
+/obj/structure/spider/carcass
+	name = "web carcass"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "webcarcass"
+	max_integrity = 125
+	density = TRUE
+	anchored = FALSE

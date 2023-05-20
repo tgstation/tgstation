@@ -28,6 +28,34 @@
 	sneak_web.Grant(src)
 
 /**
+ * ### Spider Guard
+ * A subtype of the giant spider which is similar on every single way,
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/guard
+	name = "guard spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon_state = "guard"
+	icon_living = "guard"
+	icon_dead = "guard_dead"
+	gender = FEMALE
+	maxHealth = 125
+	health = 125
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	speed = 5
+	player_speed_modifier = -4
+	menu_description = "Tanky and strong for the defense of the nest and other spiders."
+
+/mob/living/basic/giant_spider/guard/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+
+	var/datum/action/cooldown/lay_web/web_carcass/carcass_web = new(src)
+	carcass_web.Grant(src)
+
+/**
  * ### Spider Hunter
  * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
  * This spider is only slightly slower than a human.

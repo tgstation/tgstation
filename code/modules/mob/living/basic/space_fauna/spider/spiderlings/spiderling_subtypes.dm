@@ -2,7 +2,7 @@
 
 /// Will differentiate into the base giant spider (known colloquially as the "guard" spider).
 /mob/living/basic/spiderling/guard
-	grow_as = /mob/living/basic/giant_spider
+	grow_as = /mob/living/basic/giant_spider/guard
 	name = "guard spiderling"
 	desc = "Furry and brown, it looks defenseless. This one has sparkling red eyes."
 	icon_state = "guard_spiderling"
