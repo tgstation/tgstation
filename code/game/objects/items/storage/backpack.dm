@@ -22,6 +22,7 @@
 	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
+	var/shoulder_carry = FALSE
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -277,6 +278,11 @@
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
+	shoulder_carry = TRUE
+
+/obj/item/storage/backpack/satchel/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 18
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
