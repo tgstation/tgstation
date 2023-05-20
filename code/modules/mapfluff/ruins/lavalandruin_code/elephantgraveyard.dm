@@ -140,6 +140,7 @@
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	can_install_electronics = FALSE
 	can_weld_shut = FALSE
+	cutting_tool = null
 	paint_jobs = null
 
 	var/lead_tomb = FALSE
@@ -202,9 +203,9 @@
 	return TRUE
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	//anything that isn't a shovel does nothing to the grave
+	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
 	if(S.tool_behaviour != TOOL_SHOVEL)
-		return 1
+		return ..()
 
 	//player is attempting to open/close the grave with a shovel
 	if(!user.combat_mode)
