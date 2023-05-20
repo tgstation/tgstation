@@ -663,5 +663,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	my_area = get_area(src)
 	update_name()
 	check_danger()
- 
- #undef AIRALARM_WARNING_COOLDOWN
+
+#undef AIRALARM_WARNING_COOLDOWN
