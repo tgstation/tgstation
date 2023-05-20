@@ -186,6 +186,7 @@
 			return FALSE
 		carve_out(carving_item, user)
 		return TRUE
+	return FALSE
 
 /// Called when the book gets carved successfully
 /obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
