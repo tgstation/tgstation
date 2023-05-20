@@ -147,9 +147,6 @@
 	var/first_open = FALSE
 	var/dug_closed = FALSE
 
-/obj/structure/closet/crate/grave/filled/examine(mob/user)
-	. = ..()
-	. += span_notice("The grave can be [EXAMINE_HINT(opened ? "Dug open" : "Covered")] with a shovel")
 
 /obj/structure/closet/crate/grave/Initialize(mapload)
 	. = ..()
@@ -164,6 +161,11 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
+
+/obj/structure/closet/crate/grave/examine(mob/user)
+	. = ..()
+	. += span_notice("The grave can be [EXAMINE_HINT(opened ? "Dug open" : "Covered")] with a shovel")
+
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
