@@ -147,6 +147,24 @@
 	var/first_open = FALSE
 	var/dug_closed = FALSE
 
+/obj/structure/closet/crate/grave/filled/examine(mob/user)
+	. = ..()
+	. += span_notice("The grave can be [EXAMINE_HINT(opened ? "Dug open" : "Covered")] with a shovel")
+
+/obj/structure/closet/crate/grave/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SHOVEL)
+		context[SCREENTIP_CONTEXT_RMB] = opened ? "Cover up" : "Dig open"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
