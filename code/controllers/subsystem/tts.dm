@@ -56,11 +56,9 @@ SUBSYSTEM_DEF(tts)
 /proc/cmp_word_length_asc(datum/tts_request/a, datum/tts_request/b)
 	return length(b.message) - length(a.message)
 
-/datum/controller/subsystem/tts/Initialize()
-	if(!CONFIG_GET(string/tts_http_url))
-		return SS_INIT_NO_NEED
-
-	queued_http_messages = new /datum/heap(GLOBAL_PROC_REF(cmp_word_length_asc))
+/// Establishes (or re-establishes) a connection to the TTS server and updates the list of available speakers.
+/// This is blocking, so be careful when calling.
+/datum/controller/subsystem/tts/proc/establish_connection_to_tts()
 	var/datum/http_request/request = new()
 	var/list/headers = list()
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
@@ -70,12 +68,21 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
 		stack_trace(response.error)
-		return SS_INIT_FAILURE
-	max_concurrent_requests = CONFIG_GET(number/tts_max_concurrent_requests)
+		return FALSE
 	available_speakers = json_decode(response.body)
 	tts_enabled = TRUE
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
 	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
+	return TRUE
+
+/datum/controller/subsystem/tts/Initialize()
+	if(!CONFIG_GET(string/tts_http_url))
+		return SS_INIT_NO_NEED
+
+	queued_http_messages = new /datum/heap(GLOBAL_PROC_REF(cmp_word_length_asc))
+	max_concurrent_requests = CONFIG_GET(number/tts_max_concurrent_requests)
+	if(!establish_connection_to_tts())
+		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/tts/proc/play_tts(target, sound/audio, datum/language/language, range = 7, volume_offset = 0)
