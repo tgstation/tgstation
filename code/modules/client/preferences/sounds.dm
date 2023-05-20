@@ -38,8 +38,8 @@
 	savefile_key = "sound_tts_volume"
 	savefile_identifier = PREFERENCE_PLAYER
 
-	min = 0
-	max = 100
+	minimum = 0
+	maximum = 100
 
 /// Controls hearing dance machines
 /datum/preference/toggle/sound_jukebox
