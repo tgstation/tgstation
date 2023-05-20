@@ -8,12 +8,8 @@ type Data = {
   // Dynamic
   category: number;
   piping_layer: number;
-  ducting_layer: number;
   categories: Category[];
-  selected_recipe: string;
   selected_color: string;
-  selected_category: string;
-  mode: number;
   init_directions: Directions;
   // Static
   paint_colors: Colors;
