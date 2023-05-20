@@ -33,7 +33,6 @@
 	if(advanced_disease.totalStealth() >= 8)
 		chest = TRUE
 
-
 /datum/symptom/necroseed/Activate(datum/disease/advance/advanced_disease)
 	if(!..())
 		return
@@ -108,9 +107,10 @@
 		Victim.visible_message("<span class='danger'>An unearthly roar shakes the ground as [Victim] explodes into a shower of gore, leaving behind an ominous, fleshy chest.</span>")
 		playsound(Victim.loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 		addtimer(CALLBACK(Victim, /mob/living/proc/gib), 0.5 SECONDS)	//we can't gib mob while it's already dying
-		if(!iscarbon(Victim)) //not carbon, no chest.
+		if(!iscarbon(Victim) || ismonkey(Victim)) //not carbon, no chest.
 			return
 		new /obj/structure/closet/crate/necropolis/tendril(Victim.loc)
+
 
 /obj/effect/temp_visual/goliath_tentacle/necro
 	name = "fledgling necropolis tendril"

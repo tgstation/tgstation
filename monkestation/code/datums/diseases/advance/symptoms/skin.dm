@@ -11,6 +11,7 @@ BONUS
 	Provides Brute Healing when Egg Sacs/Eggs are eaten, simultaneously infecting anyone who eats them
 
 ***********************************/
+
 /datum/symptom/skineggs //Thought Exolocomotive Xenomitosis was a weird symptom? Well, this is about 10x weirder.
 	name = "Dermagraphic Ovulogenesis"
 	desc = "The virus causes the host to grow egg-like nodules on their skin, which periodically fall off and contain the disease and some healing chemicals."
