@@ -198,6 +198,10 @@ SUBSYSTEM_DEF(tts)
 	if(!tts_enabled)
 		return
 
+	// TGS updates can clear out the tmp folder, so we need to create the folder again if it no longer exists.
+	if(!fexists("tmp/tts/init.txt"))
+		rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
+
 	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
 	// If there is no alphanumeric char, the output will usually be static, so
 	// don't bother sending
