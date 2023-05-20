@@ -159,7 +159,7 @@
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
-	. += span_notice("The grave can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
+	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -210,7 +210,7 @@
 		return FALSE
 
 	if(!dug_closed)
-		to_chat(user, span_notice("You need a shovel to close the grave."))
+		to_chat(user, span_notice("You need a shovel to cover it up."))
 		return FALSE
 
 	dug_closed = FALSE
