@@ -47,9 +47,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "k" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "r" = (
@@ -61,9 +59,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "A" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "F" = (

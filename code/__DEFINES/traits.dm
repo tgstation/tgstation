@@ -839,6 +839,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
+/// Objects with this trait are deleted if they fall into chasms, rather than entering abstract storage
+#define TRAIT_CHASM_DESTROYED "chasm_destroyed"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"

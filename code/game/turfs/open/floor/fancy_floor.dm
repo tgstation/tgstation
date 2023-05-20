@@ -133,7 +133,7 @@
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
-	icon_state = "grass0"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	flags_1 = NONE
 	bullet_bounce_sound = null
@@ -144,7 +144,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/grass/broken_states()
-	return list("sand")
+	return list("[initial(icon_state)]_damaged")
 
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
@@ -161,6 +161,7 @@
 	icon_state = "sand"
 	broken = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	damaged_dmi = 'icons/turf/damaged.dmi'
 
 /turf/open/floor/grass/lavaland/spawniconchange()
 	return
@@ -168,7 +169,7 @@
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
 	desc = "Something about this grass makes you want to frolic. Or get high."
-	icon_state = "fairygrass0"
+	icon_state = "fairygrass"
 	floor_tile = /obj/item/stack/tile/fairygrass
 	light_range = 2
 	light_power = 0.80
@@ -181,6 +182,7 @@
 	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
 	flags_1 = NONE
@@ -823,6 +825,7 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
+	damaged_dmi = 'icons/turf/space.dmi'
 
 /turf/open/floor/fakespace/broken_states()
 	return list("damaged")

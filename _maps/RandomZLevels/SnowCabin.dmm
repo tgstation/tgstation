@@ -1763,7 +1763,7 @@
 	},
 /area/awaymission/cabin/caves/mountain)
 "fZ" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
