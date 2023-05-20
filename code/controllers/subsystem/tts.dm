@@ -88,14 +88,17 @@ SUBSYSTEM_DEF(tts)
 	var/listeners = get_hearers_in_view(range, turf_source)
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
-		var/datum/language_holder/holder = listening_mob.get_language_holder()
-		if(!listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
+		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
+		if(volume_to_play_at == 0 || !listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts))
 			continue
 
+		var/sound_volume = ((listening_mob == target)? 60 : 85) + volume_offset
+		sound_volume = sound_volume * (volume_to_play_at / 100)
+		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		if(get_dist(listening_mob, turf_source) <= range && holder.has_language(language, spoken = FALSE))
 			listening_mob.playsound_local(
 				turf_source,
-				vol = ((listening_mob == target)? 60 : 85) + volume_offset,
+				vol = sound_volume,
 				falloff_exponent = SOUND_FALLOFF_EXPONENT,
 				channel = channel,
 				pressure_affected = TRUE,
