@@ -191,13 +191,14 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			if(!(announcement_authenticated || isAdminGhostAI(usr)))
 				return
 
-			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
+			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				return
 			if(isliving(usr))
 				var/mob/living/L = usr
-				message = L.treat_message(message)
+				message = L.treat_message(message)["message"]
+
 			minor_announce(message, "[department] Announcement:", html_encode = FALSE)
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
@@ -226,7 +227,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/priority = params["priority"]
 			if(!priority)
 				return
-			var/message = reject_bad_text(params["message"], ascii_only = FALSE)
+			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
 				to_chat(usr, span_alert("Invalid message."))
 				has_mail_send_error = TRUE

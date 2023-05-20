@@ -713,3 +713,59 @@
       the window
   - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
       if it's already open
+2023-05-19:
+  Fikou:
+  - bugfix: fixes clown planet report
+  GoldenAlpharex:
+  - bugfix: Makes checks for the station z level more robust against coders doing
+      less intuitive stuff, thus protecting it from breaking in weirdly difficult
+      and seemingly unrelated places (I'm looking at you, nuke cinematic unit test).
+  Jacquerel:
+  - bugfix: The Cursed quirk will once more plague you with bad luck for your entire
+      shift rather than just once.
+  Melbert:
+  - bugfix: Ahealing a heretic now properly gives them their heart back
+  - bugfix: Request Console Announcements breaking and reporting "/list"
+  Mothblocks:
+  - balance: Adjusted stowaway changeling requirements to be closer to roundstart
+      Changelings.
+  Thunder12345:
+  - qol: Double clicking your corpse or something containing it as a ghost will now
+      orbit as in other cases instead of re-entering your corpse.
+  - bugfix: Dueling pistols can no longer be fitted in turrets to instantly kill people.
+  TiviPlus:
+  - bugfix: fixed TTS not working when used by local servers
+  YakumoChen:
+  - qol: Bar bottles now work as makeshift rolling pins
+2023-05-20:
+  DaydreamIQ:
+  - bugfix: Space Dragon can no longer place their portals outside the station on
+      Tramstation
+  JohnFulpWillard:
+  - qol: Gym equipment was reworked. You now buckle yourself to weight machines to
+      use them, rather than clicking on it and getting stunned for a few seconds.
+      It also means it works like a chair now.
+  - qol: Gym equipment no longer breaks a sweat in no gravity.
+  MTandi:
+  - bugfix: fixed possible issues with apc, airalarm and damaged machinery/windows
+      helpers
+  Profakos:
+  - bugfix: fixes request console messages not being trimmed and encoded properly
+  ShizCalev:
+  - code_imp: Made a new unit test to find turfs with broken/missing icons! Rejoice!
+  - bugfix: Fixed a bunch of incorrect and missing turf icons.
+  orthography:
+  - bugfix: fixed Tramstation genetics pen chasms
+  san7890:
+  - refactor: Lizards (the animal (not the species of people)) are now a bit smarter.
+      Expect to see them avidly hunt down their prey, rather than languish around
+      and wait for it to come to them. Hungry buggers.
+  - image: We now actually implement the previously unused lizard gib animation for
+      those little buggers!
+  - refactor: Expect to see Killer Tomatoes be a bit smarter as they now are able
+      to juggle multiple targets, lock onto you, and barrel towards you. They're much
+      the same as before, but just a little bit more intelligent, which is especially
+      scary considering they're a fucking plant.
+  timothymtorres:
+  - code_imp: Add extra clothing options to equip mob outfits.  Replaced many one-letter
+      vars in file with better descriptions.
