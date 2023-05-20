@@ -3,11 +3,20 @@ import io
 import gc
 import subprocess
 import requests
+import re
 from flask import Flask, request, send_file, abort
 
 app = Flask(__name__)
 
 authorization_token = os.getenv("TTS_AUTHORIZATION_TOKEN", "coolio")
+
+def hhmmss_to_seconds(string):
+    new_time = 0
+    separated_times = string.split(":")
+    new_time = 60 * 60 * float(separated_times[0])
+    new_time += 60 * float(separated_times[1])
+    new_time += float(separated_times[2])
+    return new_time
 
 @app.route("/tts")
 def text_to_speech():
@@ -29,9 +38,17 @@ def text_to_speech():
 		ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=response.content, capture_output = True)
 	else:
 		ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=response.content, capture_output = True)
-	print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
+	ffmpeg_metadata_output = ffmpeg_result.stderr.decode()
+	print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_metadata_output}")
 
-	return send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
+
+	matched_length = re.search(r"time=([0-9:\\.]+)", ffmpeg_metadata_output)
+	hh_mm_ss = matched_length.group(1)
+	length = hhmmss_to_seconds(hh_mm_ss)
+
+	response = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
+	response.headers['audio-length'] = length
+	return response
 
 
 @app.route("/tts-voices")
