@@ -1,7 +1,7 @@
 /// ## A bunch of turf subtypes used to really make this ruin work.
 
 /// Define of the specific gas mix we want across all of the turfs.
-#define CO2_PRESSURIZED_MIX GAS_O2 + "=22;" + GAS_N2 + "=82;" + GAS_CO2 + "=500;" + TURF_TEMPERATURE(T20C)
+#define CO2_PRESSURIZED_MIX GAS_O2 + "=22;" + GAS_N2 + "=82;" + GAS_CO2 + "=500;TEMP=T20C"
 
 /turf/open/floor/iron/co2_pressurized
 	initial_gas_mix = CO2_PRESSURIZED_MIX

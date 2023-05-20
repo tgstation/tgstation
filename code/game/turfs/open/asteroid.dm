@@ -263,12 +263,9 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 //Used for when you want to have real, genuine snow in your kitchen's cold room
 /turf/open/misc/asteroid/snow/coldroom
 	baseturfs = /turf/open/misc/asteroid/snow/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 	planetary_atmos = FALSE
 	temperature = COLD_ROOM_TEMP
-
-/turf/open/misc/asteroid/snow/coldroom/Initialize(mapload)
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
