@@ -8,6 +8,49 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = null
+	var/broken = FALSE
+	var/burnt = FALSE
+
+
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/proc/broken_states()
+	return list()
+
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/proc/burnt_states()
+	return list()
+
+/turf/open/break_tile()
+	if(isnull(damaged_dmi) || broken)
+		return FALSE
+	broken = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/burn_tile()
+	if(isnull(damaged_dmi) || burnt)
+		return FALSE
+	burnt = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/update_overlays()
+	if(isnull(damaged_dmi))
+		return ..()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+	else if(burnt)
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
 	if(direction == DOWN)
