@@ -96,10 +96,10 @@ type Data = {
 
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { selected_color } = data;
+  const { selected_color, paint_colors } = data;
   return (
     <LabeledList.Item label="Color">
-      {Object.keys(data.paint_colors).map((colorName) => (
+      {Object.keys(paint_colors).map((colorName) => (
         <ColorBox
           key={colorName}
           height="20px"
@@ -109,7 +109,7 @@ export const ColorItem = (props, context) => {
               '3px solid ' +
               (colorName === selected_color ? '#20b142' : '#222'),
           }}
-          color={data.paint_colors[colorName]}
+          color={paint_colors[colorName]}
           onClick={() =>
             act('color', {
               paint_color: colorName,
@@ -117,7 +117,7 @@ export const ColorItem = (props, context) => {
           }
         />
       ))}
-      <Box inline ml={2} px={1} bold color={data.paint_colors[selected_color]}>
+      <Box inline ml={2} px={1} bold color={paint_colors[selected_color]}>
         {capitalizeAll(selected_color)}
       </Box>
     </LabeledList.Item>
@@ -286,7 +286,7 @@ const PipeTypeSection = (props, context) => {
 
 export const SmartPipeBlockSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const init_directions = data.init_directions || [];
+  const { init_directions = [] } = data;
   return (
     <Section height={7.5}>
       <Stack fill vertical textAlign="center">
