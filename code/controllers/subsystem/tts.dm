@@ -12,7 +12,6 @@ SUBSYSTEM_DEF(tts)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// Queued HTTP requests that have yet to be sent. TTS requests are handled as lists rather than datums.
-	/// It could be worth refactoring TTS messages to be datums instead to reduce complexity.
 	var/datum/heap/queued_http_messages
 
 	/// An associative list of mobs mapped to a list of their own /datum/tts_request_target
