@@ -340,6 +340,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/sneak/alien
 	name = "Sneak"
+	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
