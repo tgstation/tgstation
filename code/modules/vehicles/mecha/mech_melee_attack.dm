@@ -63,16 +63,19 @@
 		return 0
 	mecha_attacker.do_attack_animation(src)
 	if(mecha_attacker.damtype == BRUTE)
-		step_away(src, mecha_attacker, 15)
+		step_away(src,mecha_attacker,15)
+	var/throwtarget = get_edge_target_turf(mecha_attacker, get_dir(mecha_attacker, get_step_away(src, mecha_attacker)))
 	var/obj/item/bodypart/selected_zone = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
 	if(selected_zone)
 		var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
 		switch(mecha_attacker.damtype)
 			if(BRUTE)
-				if(mecha_attacker.force > 35) // durand and other heavy mechas
-					Unconscious(20)
-				else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
-					Knockdown(40)
+				if(mecha_attacker.force >= 20) // lightweight mechas like gygax
+					Knockdown(1 SECONDS)
+					src.throw_at(throwtarget, 4, 1, src)
+				else if(mecha_attacker.force >= 35) // durand and other heavy mechas
+					Knockdown(1.5 SECONDS)
+					src.throw_at(throwtarget, 5, 2, src) //one tile further than mushroom punch/psycho brawling
 				selected_zone.receive_damage(dmg, 0, updating_health = TRUE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 			if(FIRE)
