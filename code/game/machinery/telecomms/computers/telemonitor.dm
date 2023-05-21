@@ -65,11 +65,11 @@
 
 			if(length(new_network) > MAX_NETWORK_ID_LENGTH)
 				error_message = "OPERATION FAILED: NETWORK ID TOO LONG."
-				return
+				return TRUE
 
 			if(machinelist.len > 0)
 				error_message = "OPERATION FAILED: CANNOT PROBE WHEN BUFFER FULL."
-				return
+				return TRUE
 
 			network = new_network
 
@@ -78,13 +78,13 @@
 					machinelist.Add(T)
 			if(machinelist.len == 0)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN  [network]."
-				return
+				return TRUE
 			error_message = "[machinelist.len] ENTITIES LOCATED & BUFFERED";
-			return
+			return TRUE
 		if("flush_buffer")
 			machinelist = list()
 			network = ""
-			return
+			return TRUE
 		if("view_machine")
 			for(var/obj/machinery/telecomms/T in machinelist)
 				if(T.id == params["id"])
@@ -92,11 +92,11 @@
 			if(!SelectedMachine)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE MACHINERY."
 			screen = MACHINE_VIEW
-			return
+			return TRUE
 		if("return_home")
 			SelectedMachine = null
 			screen = MAIN_VIEW
-			return
+			return TRUE
 	return TRUE
 /obj/machinery/computer/telecomms/monitor/attackby()
 	. = ..()
