@@ -5,7 +5,7 @@
 	button_icon_state = "sniper_zoom"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED | AB_CHECK_INCAPACITATED
 	/// The alpha we go to when sneaking.
 	var/sneak_alpha = 75
 

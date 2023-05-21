@@ -342,7 +342,8 @@ Doesn't work on other aliens/AI.*/
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "sneak_alien"
-	/// The alpha we go to when sneaking.
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
 
 /datum/action/cooldown/sneak/alien/Remove(mob/living/remove_from)
 	if(HAS_TRAIT(remove_from, TRAIT_SNEAK))
