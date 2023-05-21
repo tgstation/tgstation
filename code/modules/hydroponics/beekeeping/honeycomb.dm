@@ -10,6 +10,10 @@
 
 	var/honey_color = ""
 
+/obj/item/food/honeycomb/Initialize()
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
+
 /obj/item/food/honeycomb/update_overlays()
 	. = ..()
 	var/mutable_appearance/honey_overlay = mutable_appearance(icon, "honey")
