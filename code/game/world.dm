@@ -329,8 +329,6 @@ GLOBAL_VAR(restart_counter)
 	if (debug_server)
 		LIBCALL(debug_server, "auxtools_shutdown")()
 
-	AUXTOOLS_FULL_SHUTDOWN(AUXCOV)
-
 /world/Del()
 	auxcleanup()
 	. = ..()
@@ -463,7 +461,7 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/init_coverage()
 #ifdef CODE_COVERAGE
-	AUXTOOLS_CHECK_NO_CONFIG(AUXCOV)
+	AUXTOOLS_CHECK_NO_CONFIG(AUXLUA)
 	start_code_coverage("code_coverage.xml")
 #endif
 
