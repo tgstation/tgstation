@@ -2,10 +2,10 @@
 GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/bat,
 	/mob/living/basic/butterfly,
-	/mob/living/basic/lizard,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/cow,
 	/mob/living/basic/giant_spider/sgt_araneus,
+	/mob/living/basic/lizard,
 	/mob/living/basic/mothroach,
 	/mob/living/basic/mouse/brown/tom,
 	/mob/living/basic/pet,
