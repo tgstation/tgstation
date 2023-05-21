@@ -7084,7 +7084,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "NK" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower/directional/south{
+	has_water_reclaimer = 0
+	},
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
