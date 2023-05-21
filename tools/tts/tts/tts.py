@@ -10,7 +10,7 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
 tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
-letters_to_use = "abcdefghijklmnopqrstuvwxyz1234567890"
+letters_to_use = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 random_factor = 0.35
 os.makedirs('samples', exist_ok=True)
 app = Flask(__name__)
