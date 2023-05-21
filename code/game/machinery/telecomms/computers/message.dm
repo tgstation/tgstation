@@ -126,16 +126,16 @@
 
 			if(auth)
 				auth = FALSE
-				return
+				return TRUE
 
 			if(linkedServer.decryptkey != authPass)
 				error_message = "ALERT: Incorrect decryption key!"
-				return
+				return TRUE
 
 			auth = TRUE
 			success_message = "YOU SUCCESFULLY LOGGED IN!"
 
-			return
+			return TRUE
 		if("link_server")
 			var/list/message_servers = list()
 			for (var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
@@ -151,27 +151,28 @@
 				else
 					error_message = "ALERT: No server detected."
 			screen = MSG_MON_SCREEN_MAIN
-			return
+			return TRUE
 		if("turn_server")
 			if(LINKED_SERVER_NONRESPONSIVE)
 				error_message = "ALERT: No server detected."
-				return
+				return TRUE
 
 			linkedServer.toggled = !linkedServer.toggled
-			return
+			return TRUE
 		if("view_message_logs")
 			screen = MSG_MON_SCREEN_LOGS
 			return
 		if("view_request_logs")
 			screen = MSG_MON_SCREEN_REQUEST_LOGS
-			return
+			return TRUE
 		if("clear_message_logs")
 			linkedServer.pda_msgs = list()
 			notice_message = "NOTICE: Logs cleared."
-			return
+			return TRUE
 		if("clear_request_logs")
 			linkedServer.rc_msgs = list()
 			notice_message = "NOTICE: Logs cleared."
+			return TRUE
 		if("set_key")
 			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 			if(dkey && dkey != "")
@@ -184,24 +185,24 @@
 					notice_message = "NOTICE: Decryption key set."
 				else
 					error_message = "ALERT: Incorrect decryption key!"
-			return
+			return TRUE
 		if("return_home")
 			screen = MSG_MON_SCREEN_MAIN
-			return
+			return TRUE
 		if("delete_message")
 			linkedServer.pda_msgs -= locate(params["ref"]) in linkedServer.pda_msgs
 			success_message = "Log Deleted!"
-			return
+			return TRUE
 		if("delete_request")
 			linkedServer.rc_msgs -= locate(params["ref"]) in linkedServer.rc_msgs
 			success_message = "Log Deleted!"
-			return
+			return TRUE
 		if("connect_server")
 			if(!linkedServer)
 				for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
 					linkedServer = S
 					break
-			return
+			return TRUE
 		if("send_fake_message")
 			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender")
 			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
@@ -243,7 +244,7 @@
 			// This will log the signal and transmit it to the target
 			linkedServer.receive_information(signal, null)
 			usr.log_message("(Tablet: [name] | [usr.real_name]) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
-			return
+			return TRUE
 		// Malfunction AI and cyborgs can hack console. This will auth console, but you need to wait password selection
 		if("hack")
 			var/time = 10 SECONDS * length(linkedServer.decryptkey)
@@ -252,7 +253,7 @@
 			error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 			linkedServer.toggled = FALSE
 			auth = TRUE
-			return
+			return TRUE
 	return TRUE
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/user, datum/tgui/ui)
