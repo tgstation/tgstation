@@ -74,7 +74,11 @@ GLOBAL_LIST_EMPTY(elevator_music)
 		return
 	if ((entered in tracked_mobs))
 		return
-	tracked_mobs[entered] = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
+
+	if (entered.client?.prefs.read_preference(/datum/preference/toggle/sound_elevator))
+		tracked_mobs[entered] = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
+	else
+		tracked_mobs[entered] = null // Still add it to the list so we don't keep making this check
 	RegisterSignal(entered, COMSIG_PARENT_QDELETING, PROC_REF(mob_destroyed))
 
 /datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/location)

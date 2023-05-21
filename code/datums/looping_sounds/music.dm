@@ -1,17 +1,10 @@
 /datum/looping_sound/local_forecast
-	start_length = 5.7 SECONDS
+	start_length = 46.8 SECONDS
 
 	mid_sounds = list(
-		'sound/ambience/music/local_forecast/local_forecast1.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast2.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast3.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast4.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast5.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast6.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast7.ogg' = 1,
-		'sound/ambience/music/local_forecast/local_forecast8.ogg' = 1,
+		'sound/ambience/music/local_forecast/elevator_music.ogg' = 1,
 	)
-	mid_length = 5.7 SECONDS
+	mid_length = 46.8 SECONDS
 
 	volume = 20
 	vary = FALSE
