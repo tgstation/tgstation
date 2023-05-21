@@ -174,8 +174,8 @@
 			var/obj/item/painting_implement = user.get_active_held_item()
 			if(!painting_implement)
 				return FALSE
-			var/x = text2num(params["point_x"])
-			var/y = text2num(params["point_y"])
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
 			painting_implement.set_painting_tool_color(grid[x][y])
 			. = TRUE
 		if("change_palette")

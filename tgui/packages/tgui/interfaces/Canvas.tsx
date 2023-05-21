@@ -6,7 +6,6 @@ import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
-const RIGHT_CLICK = 2;
 
 type PaintCanvasProps = Partial<{
   onCanvasModifiedHandler: (data: PointData[]) => void;
@@ -49,11 +48,12 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.modifiedElements = [];
     this.drawing = false;
     this.onCanvasModified = props.onCanvasModifiedHandler;
-	this.onCanvasDropper = props.onCanvasDropperHandler;
+    this.onCanvasDropper = props.onCanvasDropperHandler;
 
     this.handleStartDrawing = this.handleStartDrawing.bind(this);
     this.handleDrawing = this.handleDrawing.bind(this);
     this.handleEndDrawing = this.handleEndDrawing.bind(this);
+    this.handleDropper = this.handleDropper.bind(this);
   }
 
   componentDidMount() {
@@ -118,16 +118,11 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   handleStartDrawing(event: MouseEvent) {
-    if (event.button === RIGHT_CLICK) {
-      const coords = this.eventToCoords(event);
-      this.onCanvasDropper(coords.x+1, coords.y+1); // 1-based index dm side
-      return;
-    }
     if (
       !this.props.editable ||
       this.props.drawing_color === undefined ||
       this.props.drawing_color === null ||
-	  event.button !== LEFT_CLICK
+      event.button !== LEFT_CLICK
     ) {
       return;
     }
@@ -167,6 +162,12 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
   }
 
+  handleDropper(event: MouseEvent) {
+    event.preventDefault();
+    const coords = this.eventToCoords(event);
+    this.onCanvasDropper(coords.x + 1, coords.y + 1); // 1-based index dm side
+  }
+
   render() {
     const {
       value,
@@ -185,7 +186,9 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         onMouseDown={this.handleStartDrawing}
         onMouseMove={this.handleDrawing}
         onMouseUp={this.handleEndDrawing}
-        onMouseOut={this.handleEndDrawing}>
+        onMouseOut={this.handleEndDrawing}
+        onContextMenu={this.handleDropper}
+      >
         Canvas failed to render.
       </canvas>
     );
@@ -233,7 +236,8 @@ export const Canvas = (props, context) => {
         75 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }>
+      }
+    >
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
@@ -247,13 +251,7 @@ export const Canvas = (props, context) => {
               act('paint', { data: toMassPaintFormat(changed) })
             }
             onCanvasDropperHandler={(x, y) =>
-              act('select_color_from_coords', {
-                point_x : x,
-                point_y : y,
-              })
-            }
-            oncontextmenu={(e) =>
-              e.preventDefault()
+              act('select_color_from_coords', { px: x, py: y })
             }
             editable={data.editable}
           />
@@ -279,11 +277,11 @@ export const Canvas = (props, context) => {
                       })
                     }
                     oncontextmenu={(e) => {
-                    e.preventDefault();
+                      e.preventDefault();
                       act('change_palette', {
-                        color_index: index+1,
+                        color_index: index + 1,
                         old_color: element.color,
-                      })
+                      });
                     }}
                   />
                 ))}
@@ -305,7 +303,8 @@ export const Canvas = (props, context) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ 'border-style': 'inset' }}>
+                style={{ 'border-style': 'inset' }}
+              >
                 <Box mb={1} fontSize="18px" bold>
                   {decodeHtmlEntities(data.name)}
                 </Box>
