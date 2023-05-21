@@ -1075,6 +1075,14 @@
 	name = "Patient Room B"
 	icon_state = "patients"
 
+/area/station/medical/patients_rooms/room_c
+	name = "Patient Room C"
+	icon_state = "patients"
+
+/area/station/medical/patients_rooms/room_d
+	name = "Patient Room D"
+	icon_state = "patients"
+
 /area/station/medical/virology
 	name = "Virology"
 	icon_state = "virology"
