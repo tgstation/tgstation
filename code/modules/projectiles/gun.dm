@@ -99,10 +99,15 @@
 	if(A == chambered)
 		chambered = null
 		update_appearance()
-	if(A == bayonet)
-		clear_bayonet()
 	if(A == suppressed)
 		clear_suppressor()
+	return ..()
+
+/obj/item/gun/Exited(atom/movable/gone, direction)
+	if(gone == bayonet)
+		bayonet = null
+		if(!QDELING(src))
+			update_appearance()
 	return ..()
 
 ///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
@@ -454,7 +459,13 @@
 		return
 
 	if(bayonet && can_bayonet) //if it has a bayonet, and the bayonet can be removed
-		return remove_bayonet(user, I)
+		I.play_tool_sound(src)
+		to_chat(user, span_notice("You unfix [bayonet] from [src]."))
+		bayonet.forceMove(drop_location())
+
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(bayonet)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	else if(pin?.pin_removable && user.is_holding(src))
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
@@ -465,7 +476,7 @@
 			user.visible_message(span_notice("[pin] is pried out of [src] by [user], destroying the pin in the process."),
 								span_warning("You pry [pin] out with [I], destroying the pin in the process."), null, 3)
 			QDEL_NULL(pin)
-			return TRUE
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/gun/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -500,23 +511,6 @@
 								span_warning("You rip [pin] out of [src] with [I], mangling the pin in the process."), null, 3)
 			QDEL_NULL(pin)
 			return TRUE
-
-/obj/item/gun/proc/remove_bayonet(mob/living/user, obj/item/tool_item)
-	tool_item?.play_tool_sound(src)
-	to_chat(user, span_notice("You unfix [bayonet] from [src]."))
-	bayonet.forceMove(drop_location())
-
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(bayonet)
-
-	return clear_bayonet()
-
-/obj/item/gun/proc/clear_bayonet()
-	if(!bayonet)
-		return
-	bayonet = null
-	update_appearance()
-	return TRUE
 
 /obj/item/gun/update_overlays()
 	. = ..()

@@ -243,3 +243,7 @@ define_sanity_output.txt
 auxcov.dll
 libauxcov.so
 code_coverage.xml
+
+# ezdb
+/db/
+/config/ezdb.txt
