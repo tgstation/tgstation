@@ -11,25 +11,17 @@ app = Flask(__name__)
 authorization_token = os.getenv("TTS_AUTHORIZATION_TOKEN", "coolio")
 
 def hhmmss_to_seconds(string):
-    new_time = 0
-    separated_times = string.split(":")
-    new_time = 60 * 60 * float(separated_times[0])
-    new_time += 60 * float(separated_times[1])
-    new_time += float(separated_times[2])
-    return new_time
+	new_time = 0
+	separated_times = string.split(":")
+	new_time = 60 * 60 * float(separated_times[0])
+	new_time += 60 * float(separated_times[1])
+	new_time += float(separated_times[2])
+	return new_time
 
-@app.route("/tts")
-def text_to_speech():
-	if authorization_token != request.headers.get("Authorization", ""):
-		abort(401)
-
-	voice = request.args.get("voice", '')
-	text = request.json.get("text", '')
-
-	filter_complex = request.args.get("filter", '')
+def text_to_speech_handler(endpoint, voice, text, filter_complex):
 	filter_complex = filter_complex.replace("\"", "")
 
-	response = requests.get(f"http://tts-container:5003/generate-tts", json={ 'text': text, 'voice': voice })
+	response = requests.get(f"http://tts-container:5003/" + endpoint, json={ 'text': text, 'voice': voice })
 	if response.status_code != 200:
 		abort(500)
 
@@ -49,6 +41,29 @@ def text_to_speech():
 	response = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
 	response.headers['audio-length'] = length
 	return response
+
+@app.route("/tts")
+def text_to_speech_normal():
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
+
+	voice = request.args.get("voice", '')
+	text = request.json.get("text", '')
+
+	filter_complex = request.args.get("filter", '')
+	return text_to_speech_handler("generate-tts", voice, text, filter_complex)
+
+@app.route("/tts-blips")
+def text_to_speech_blips():
+	if authorization_token != request.headers.get("Authorization", ""):
+		abort(401)
+
+	voice = request.args.get("voice", '')
+	text = request.json.get("text", '')
+
+	filter_complex = request.args.get("filter", '')
+	return text_to_speech_handler("generate-tts-blips", voice, text, filter_complex)
+
 
 
 @app.route("/tts-voices")

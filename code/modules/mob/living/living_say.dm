@@ -252,6 +252,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
+
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	if(!GET_CLIENT(src))
 		return FALSE
@@ -308,7 +309,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = deaf_message
 
 		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-
 		return understood && show_message_success
 
 	if(speaker != src)
