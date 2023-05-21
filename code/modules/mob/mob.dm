@@ -790,16 +790,11 @@
 
 	M.key = key
 
-/mob/proc/check_death_time()
-	return 0
-
 /mob/proc/check_respawn_delay(override_delay = 0)
 	if(!override_delay && !CONFIG_GET(number/respawn_delay))
 		return TRUE
 
-	var/death_time = check_death_time()
-	if(!death_time)
-		return TRUE
+	var/death_time = world.time - client.player_details.time_of_death
 
 	var/required_delay = override_delay
 	if(!required_delay)
