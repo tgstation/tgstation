@@ -5311,6 +5311,8 @@
 #include "monkestation\code\modules\antagonists\florida_man\florida_events.dm"
 #include "monkestation\code\modules\antagonists\florida_man\florida_spells.dm"
 #include "monkestation\code\modules\antagonists\florida_man\supplypods.dm"
+#include "monkestation\code\modules\ballpit\ballbit_sink.dm"
+#include "monkestation\code\modules\ballpit\ballpit.dm"
 #include "monkestation\code\modules\cargo\crates\large.dm"
 #include "monkestation\code\modules\client\preference_savefile.dm"
 #include "monkestation\code\modules\client\preferences.dm"
