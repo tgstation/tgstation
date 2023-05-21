@@ -880,6 +880,7 @@
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
+	chemical_flags = NONE
 
 /datum/reagent/medicine/strange_reagent/New()
 	. = ..()
@@ -1152,7 +1153,7 @@
 	reagent_state = LIQUID
 	color = "#A4D8D8"
 	ph = 8.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.losebreath >= 5)

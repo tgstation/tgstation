@@ -160,6 +160,13 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "update_icon_updates_onmob element usage"
+if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS' $code_files; then
+	echo
+	echo -e "${RED}ERROR: update_icon_updates_onmob element automatically updates ITEM_SLOT_HANDS, this is redundant and should be removed.${NC}"
+	st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
@@ -198,10 +205,18 @@ do
 done
 
 part "updatepaths validity"
-lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
-if [ $lines -gt 0 ]; then
+missing_txt_lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
+if [ $missing_txt_lines -gt 0 ]; then
     echo
     echo -e "${RED}ERROR: Found an UpdatePaths File that doesn't end in .txt! Please add the proper file extension!${NC}"
+    st=1
+fi;
+
+number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | wc -l)
+valid_number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | $grep -P "\d+_(.+)" | wc -l)
+if [ $valid_number_prefix_lines -ne $number_prefix_lines ]; then
+    echo
+    echo -e "${RED}ERROR: Detected an UpdatePaths File that doesn't start with the PR number! Please add the proper number prefix!${NC}"
     st=1
 fi;
 

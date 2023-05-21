@@ -825,7 +825,7 @@ Sz
 Kw
 Kw
 Kw
-Kw
+nm
 nm
 nm
 nm
@@ -867,8 +867,8 @@ nm
 Sz
 Sz
 Sz
-Sz
 Kw
+nm
 nm
 nm
 nm
@@ -909,9 +909,9 @@ nm
 (12,1,1) = {"
 nm
 nm
-nm
 Sz
 Kw
+nm
 nm
 nm
 nm
@@ -952,9 +952,9 @@ nm
 (13,1,1) = {"
 nm
 nm
-nm
 Sz
 Kw
+nm
 nm
 nm
 nm
@@ -995,10 +995,10 @@ nm
 (14,1,1) = {"
 nm
 nm
-nm
 Sz
 Kw
-nm
+Sz
+Sz
 nm
 nm
 CG
@@ -1038,8 +1038,8 @@ nm
 (15,1,1) = {"
 nm
 nm
-nm
 Sz
+Kw
 Kw
 Kw
 Kw
@@ -1081,8 +1081,8 @@ nm
 (16,1,1) = {"
 nm
 nm
-nm
 Sz
+Kw
 hi
 KS
 cJ
@@ -1124,7 +1124,7 @@ nm
 (17,1,1) = {"
 nm
 nm
-nm
+Sz
 Sz
 Sz
 Sz
@@ -1300,7 +1300,7 @@ nm
 cn
 vr
 Vh
-Sz
+tD
 tD
 tD
 Mf

@@ -41,7 +41,7 @@
 
 /obj/item/implant/chem/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
-	activate(reagents.total_volume)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/item/implant/chem, activate), reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
 	. = ..()

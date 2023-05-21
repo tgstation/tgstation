@@ -67,6 +67,10 @@
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message(span_danger("The [P.name] gets reflected by [src]!"), \
 								span_userdanger("The [P.name] gets reflected by [src]!"))
+				// Finds and plays the block_sound of item which reflected
+				for(var/obj/item/I in held_items)
+					if(I.IsReflect(def_zone))
+						playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 				// Find a turf near or on the original location to bounce to
 				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
@@ -372,11 +376,11 @@
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
 	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
-		return
+		return FALSE
 
 	. = ..()
-	if (!severity || QDELETED(src))
-		return
+	if (!. || !severity || QDELETED(src))
+		return FALSE
 	var/brute_loss = 0
 	var/burn_loss = 0
 	var/bomb_armor = getarmor(null, BOMB)
@@ -398,7 +402,7 @@
 							SSexplosions.low_mov_atom += thing
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib()
-				return
+				return TRUE
 			else
 				brute_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
@@ -453,6 +457,8 @@
 				max_limb_loss--
 				if(!max_limb_loss)
 					break
+
+	return TRUE
 
 
 /mob/living/carbon/human/blob_act(obj/structure/blob/B)

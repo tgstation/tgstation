@@ -525,5 +525,5 @@
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)

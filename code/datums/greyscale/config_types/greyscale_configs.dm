@@ -233,7 +233,7 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
-	
+
 /datum/greyscale_config/sneakers_marisa/worn
 	name = "Worn Marisa Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
@@ -296,10 +296,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"

@@ -15,6 +15,8 @@ GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
+/// Global assoc list of required mapping items, [item typepath] to [required item datum].
+GLOBAL_LIST_EMPTY(required_map_items)
 
 /// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
@@ -159,40 +161,51 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
+	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/test_output_desc = "[test_path]"
+	var/message = ""
 
 	log_world("::group::[test_path]")
-	test.Run()
 
-	duration = REALTIMEOFDAY - duration
-	GLOB.current_test = null
-	GLOB.failed_any_test |= !test.succeeded
+	if(skip_test)
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
 
-	var/list/log_entry = list()
-	var/list/fail_reasons = test.fail_reasons
+	else
 
-	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
-		var/text = fail_reasons[reasonID][1]
-		var/file = fail_reasons[reasonID][2]
-		var/line = fail_reasons[reasonID][3]
+		test.Run()
 
-		test.log_for_test(text, "error", file, line)
+		duration = REALTIMEOFDAY - duration
+		GLOB.current_test = null
+		GLOB.failed_any_test |= !test.succeeded
 
-		// Normal log message
-		log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
+		var/list/log_entry = list()
+		var/list/fail_reasons = test.fail_reasons
 
-	var/message = log_entry.Join("\n")
-	log_test(message)
+		for(var/reasonID in 1 to LAZYLEN(fail_reasons))
+			var/text = fail_reasons[reasonID][1]
+			var/file = fail_reasons[reasonID][2]
+			var/line = fail_reasons[reasonID][3]
 
-	var/test_output_desc = "[test_path] [duration / 10]s"
-	if (test.succeeded)
-		log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
+			test.log_for_test(text, "error", file, line)
+
+			// Normal log message
+			log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
+
+		if(length(log_entry))
+			message = log_entry.Join("\n")
+			log_test(message)
+
+		test_output_desc += " [duration / 10]s"
+		if (test.succeeded)
+			log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
 
 	log_world("::endgroup::")
 
-	if (!test.succeeded)
+	if (!test.succeeded && !skip_test)
 		log_world("::error::[TEST_OUTPUT_RED("FAIL")] [test_output_desc]")
 
-	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
+	var/final_status = skip_test ? UNIT_TEST_SKIPPED : (test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED)
+	test_results[test_path] = list("status" = final_status, "message" = message, "name" = test_path)
 
 	qdel(test)
 

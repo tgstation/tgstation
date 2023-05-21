@@ -267,7 +267,7 @@
 	lose_text = span_danger("You lose faith!")
 	medical_record_text = "Patient reports a belief in a higher power."
 	mail_goodies = list(
-		/obj/item/storage/book/bible/booze,
+		/obj/item/book/bible/booze,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater,
 		/obj/item/bedsheet/chaplain,
 		/obj/item/toy/cards/deck/tarot,
