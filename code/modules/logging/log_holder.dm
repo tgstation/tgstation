@@ -109,7 +109,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	// Sort the sub categories
 	for(var/datum/log_category/master as anything in sub_categories)
 		if(!(master in category_tree))
-			stack_trace("log category [master] is an invalid master category as its a sub category")
+			stack_trace("log category [master] is an invalid master category as it's a sub category")
 			continue
 		for(var/datum/log_category/sub_category as anything in sub_categories[master])
 			if(initial(sub_category.secret) != initial(master.secret))
