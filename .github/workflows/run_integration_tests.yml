@@ -47,9 +47,9 @@ jobs:
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
-      - name: Install aux
+      - name: Install auxlua
         run: |
-          bash tools/ci/install_aux.sh
+          bash tools/ci/install_auxlua.sh
       - name: Configure version
         run: |
           echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
