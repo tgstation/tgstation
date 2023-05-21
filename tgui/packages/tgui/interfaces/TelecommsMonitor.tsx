@@ -2,8 +2,13 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, LabeledList, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
+enum Screen {
+  Main,
+  Machine,
+}
+
 type Data = {
-  screen: number;
+  screen: Screen;
   network: string;
   error_message: string;
   machinery: Machine[];
@@ -147,8 +152,8 @@ export const TelecommsMonitor = (props, context) => {
             {error_message !== '' && <NoticeBox>{error_message}</NoticeBox>}
           </Stack.Item>
           <Stack.Item grow>
-            {(screen === 0 && <MainScreen />) ||
-              (screen === 1 && <MachineScreen />)}
+            {(screen === Screen.Main && <MainScreen />) ||
+              (screen === Screen.Machine && <MachineScreen />)}
           </Stack.Item>
         </Stack>
       </Window.Content>
