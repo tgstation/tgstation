@@ -1,0 +1,21 @@
+{
+	"map_plushie_slime": [
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_slime_body",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_slime_eyes",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "plushie_slime_pupil",
+			"blend_mode": "overlay"
+		}
+	]
+}

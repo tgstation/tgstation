@@ -19,9 +19,9 @@
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
-	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	uniform = /obj/item/clothing/under/plasmaman/security/detective
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
-	head = /obj/item/clothing/head/helmet/space/plasmaman/white
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security/detective
 
 /datum/outfit/plasmaman/warden
 	name = "Warden Plasmaman"
@@ -44,6 +44,14 @@
 	uniform = /obj/item/clothing/under/plasmaman/medical
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
+	mask = /obj/item/clothing/mask/breath/medical
+
+/datum/outfit/plasmaman/coroner
+	name = "Coroner Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/coroner
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/coroner
 	mask = /obj/item/clothing/mask/breath/medical
 
 /datum/outfit/plasmaman/paramedic

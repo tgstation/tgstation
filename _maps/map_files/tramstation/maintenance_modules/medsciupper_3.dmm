@@ -482,11 +482,6 @@
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
-"Od" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/medical)
 "Pp" = (
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/science)
@@ -993,10 +988,10 @@ Pu
 "}
 (10,1,1) = {"
 TE
-Od
 li
 li
 li
+Pu
 Pu
 Pu
 Pu
@@ -1038,8 +1033,8 @@ Pu
 TE
 TE
 TE
-TE
 li
+Pu
 Pu
 Pu
 Pu
@@ -1080,9 +1075,9 @@ Pu
 (12,1,1) = {"
 Pu
 Pu
-Pu
 TE
 li
+Pu
 Pu
 Pu
 Pu
@@ -1123,9 +1118,9 @@ Pu
 (13,1,1) = {"
 Pu
 Pu
-Pu
 TE
 li
+Pu
 Pu
 Pu
 Pu
@@ -1166,10 +1161,10 @@ Pu
 (14,1,1) = {"
 Pu
 Pu
-Pu
 TE
 li
-Pu
+TE
+TE
 Pu
 Pu
 ct
@@ -1209,8 +1204,8 @@ Pu
 (15,1,1) = {"
 Pu
 Pu
-Pu
 TE
+li
 li
 li
 li
@@ -1252,8 +1247,8 @@ Pu
 (16,1,1) = {"
 Pu
 Pu
-Pu
 TE
+li
 Ms
 aW
 xw
@@ -1295,7 +1290,7 @@ Pu
 (17,1,1) = {"
 Pu
 Pu
-Pu
+TE
 TE
 TE
 TE
@@ -1471,7 +1466,7 @@ Pu
 gZ
 hQ
 JY
-TE
+wP
 wP
 LV
 wP

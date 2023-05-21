@@ -431,9 +431,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ib" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ic" = (

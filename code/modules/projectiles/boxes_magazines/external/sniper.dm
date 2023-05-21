@@ -4,7 +4,7 @@
 	base_icon_state = ".50mag"
 	ammo_type = /obj/item/ammo_casing/p50
 	max_ammo = 6
-	caliber = CALIBER_50
+	caliber = CALIBER_50BMG
 
 /obj/item/ammo_box/magazine/sniper_rounds/update_icon_state()
 	. = ..()

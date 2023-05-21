@@ -43,9 +43,7 @@
 "bo" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)

@@ -13,7 +13,7 @@
 ## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.
 ## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.
 ## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:
-## "# Total Positions" should always be changed to "Total Positions", no additional spacing. 
+## "# Total Positions" should always be changed to "Total Positions", no additional spacing.
 ## Best of luck editing!
 
 [AI]
@@ -93,6 +93,12 @@
 "# Required Account Age" = 0
 "# Spawn Positions" = 1
 "# Total Positions" = 2
+
+[CORONER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
 
 [CURATOR]
 "# Playtime Requirements" = 0
