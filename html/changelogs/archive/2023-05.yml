@@ -769,3 +769,14 @@
   timothymtorres:
   - code_imp: Add extra clothing options to equip mob outfits.  Replaced many one-letter
       vars in file with better descriptions.
+2023-05-21:
+  MTandi:
+  - bugfix: made it impossible to change tram/elevator button styles that couldn't
+      be reverted back
+  - image: changed button styles, added tram/elevator button overlays
+  - refactor: refactored the way button sprites are applied, updated sprite names
+      to make more sense
+  - rscdel: removed unused button sprites
+  Thunder12345:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
