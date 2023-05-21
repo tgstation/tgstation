@@ -57,7 +57,7 @@ def text_to_speech_blips():
 			if not os.path.exists('samples/' + voice):
 				os.makedirs('samples/' + voice, exist_ok=True)
 				for i, value in enumerate(letters_to_use):
-					tts.tts_to_file(text=value.upper() + ".", speaker=voice, file_path="samples/" + voice + "/" + value + ".wav")
+					tts.tts_to_file(text=value + ".", speaker=voice, file_path="samples/" + voice + "/" + value + ".wav")
 					loaded_word = AudioSegment.from_file("samples/" + voice + "/" + value + ".wav")
 					audio_chunks = split_on_silence(loaded_word, min_silence_len = 100, silence_thresh = -45, keep_silence = 50)
 					combined = AudioSegment.empty()
