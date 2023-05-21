@@ -66,7 +66,7 @@
 // #define UNIT_TESTS
 
 // If this is uncommented, we will use auxtools to generate cobertura XML files (under /coverage) that can be shunted to a CI service like https://codecov.io
-// Note,this requires using CBT to build in flat file mode
+// Note, this requires using CBT to build in flat file mode
 // #define CODE_COVERAGE
 
 // If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
