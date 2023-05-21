@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - code_imp: "Made a new unit test to find turfs with broken/missing icons! Rejoice!"
-  - bugfix: "Fixed a bunch of incorrect and missing turf icons."
