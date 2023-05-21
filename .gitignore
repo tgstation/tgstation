@@ -239,9 +239,7 @@ define_sanity_output.txt
 *.flat.dme
 *.flat.m.dme
 
-# For/From auxtools code coverage
-auxcov.dll
-libauxcov.so
+# From auxtools code coverage
 code_coverage.xml
 
 # ezdb
