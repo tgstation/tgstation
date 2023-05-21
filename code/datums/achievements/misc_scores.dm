@@ -21,3 +21,9 @@
 	name = "Style Score"
 	desc = "You might not be a robot, but you were damn close."
 	database_id = STYLE_SCORE
+
+/// How many people have hearted you?
+/datum/award/score/hearted
+	name = "Hearts Received"
+	desc = "Nobody Loves Me."
+	database_id = HEARTED_SCORE

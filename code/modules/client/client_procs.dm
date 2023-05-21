@@ -1129,7 +1129,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/new_duration = world.realtime + duration
 	if(prefs.hearted_until > new_duration)
 		return
-	to_chat(src, span_nicegreen("Someone awarded you a heart!"))
+	to_chat(src, span_nicegreen("Someone awarded you a heart! You've received [get_award_status(/datum/award/score/hearted)] in total!"))
 	prefs.hearted_until = new_duration
 	prefs.hearted = TRUE
 	prefs.save_preferences()

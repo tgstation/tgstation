@@ -91,6 +91,7 @@
 /mob/proc/receive_heart(mob/heart_sender, duration = 24 HOURS, instant = FALSE)
 	if(!client)
 		return
+	client.give_award(/datum/award/score/hearted, src)
 	to_chat(heart_sender, span_nicegreen("Commendation sent!"))
 	message_admins("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
 	log_admin("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")

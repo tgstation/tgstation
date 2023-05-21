@@ -126,6 +126,9 @@
 // DB ID for style point count
 #define STYLE_SCORE "Style Score"
 
+// DB ID for hearts received
+#define HEARTED_SCORE "Hearted Score"
+
 // Tourist related achievements and scores
 
 //centcom grades (achievement)
