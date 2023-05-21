@@ -1,10 +1,10 @@
 /datum/symptom/necroseed
 	name = "Necropolis Seed"
 	desc = "An infantile form of the root of Lavaland's tendrils. Forms a symbiotic bond with the host, making them stronger and hardier, at the cost of speed. Should the disease be cured, the host will be severely weakened"
-	stealth = 0
-	resistance = 3
-	stage_speed = -10
-	transmittable = -3
+	stealth = 0  // 0
+	resistance = 3  // 3
+	stage_speed = -10  // -10
+	transmittable = -3  // -3
 	level = 8
 	base_message_chance = 5
 	severity = -1
@@ -104,11 +104,17 @@
 	var/mob/living/carbon/Victim = advanced_disease.affected_mob
 	if(chest && advanced_disease.stage >= 5)
 		to_chat(Victim, "<span class='danger'>Your soul is ripped from your body!</span>")
-		Victim.visible_message("<span class='danger'>An unearthly roar shakes the ground as [Victim] explodes into a shower of gore, leaving behind an ominous, fleshy chest.</span>")
+		Victim.visible_message("<span class='danger'>An unearthly roar shakes the ground as [Victim] expires, leaving behind an ominous, fleshy chest.</span>")
 		playsound(Victim.loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
-		addtimer(CALLBACK(Victim, /mob/living/proc/gib), 0.5 SECONDS)	//we can't gib mob while it's already dying
-		if(ishuman(Victim))
+		Victim.dust(FALSE,TRUE,TRUE) //so if stealth is 8, they get dusted on death, this and no monke farming reduces the ways they can farm chests to using cloners...with are slow.
+		to_chat(Victim, "<span class='danger'>DEBUG MESSAGE Victim=[Victim] advanced_disease=[advanced_disease]</span>")
+		Victim.visible_message("<span class='danger'>DEBUG MESSAGE Victim=[Victim] advanced_disease=[advanced_disease]</span>")
+		if(ismonkey(Victim))// anti chest farming
+			return
+		if(iscarbon(Victim)) // if carbon and not monkey, drop a chest.
 			new /obj/structure/closet/crate/necropolis/tendril(Victim.loc)
+
+
 /obj/effect/temp_visual/goliath_tentacle/necro
 	name = "fledgling necropolis tendril"
 
