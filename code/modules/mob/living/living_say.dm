@@ -462,6 +462,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = capitalize(message)
 		tts_message = capitalize(tts_message)
 
+	///caps the length of individual letters to 3: ex: heeeeeeyy -> heeeyy
+	/// prevents TTS from choking on unrealistic text while keeping emphasis
+	var/static/regex/length_regex = regex(@"(.+)\1\1\1", "gi")
+	while(length_regex.Find(tts_message))
+		var/replacement = tts_message[length_regex.index]+tts_message[length_regex.index]+tts_message[length_regex.index]
+		tts_message = replacetext(tts_message, length_regex.match, replacement, length_regex.index)
+
 	return list("message" = message, "tts_message" = tts_message, "tts_filter" = tts_filter)
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
