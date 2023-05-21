@@ -16,7 +16,7 @@
 
 	return ..()
 
-/datum/action/cooldown/sneak/Activate(atom/target)
+/datum/action/cooldown/sneak/spider/Activate(atom/target)
 	if(HAS_TRAIT(owner, TRAIT_SNEAK))
 		// It's safest to go to the initial alpha of the mob.
 		// Otherwise we get permanent invisbility exploits.
