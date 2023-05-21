@@ -12,6 +12,7 @@
 	gender = FEMALE
 	maxHealth = 100
 	health = 100
+	obj_damage = 45	
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	speed = 5
@@ -43,6 +44,7 @@
 	health = 125
 	melee_damage_lower = 20
 	melee_damage_upper = 25
+	obj_damage = 45
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders."
