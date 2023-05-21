@@ -45,7 +45,7 @@ def text_to_speech():
 @app.route("/generate-tts-blips")
 def text_to_speech_blips():
 	global request_count
-	text = request.json.get("text", "")
+	text = request.json.get("text", "").upper()
 	voice = request.json.get("voice", "")
 	if use_voice_name_mapping:
 		voice = voice_name_mapping_reversed[voice]
