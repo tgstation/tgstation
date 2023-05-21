@@ -3,8 +3,15 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
 import { Window } from '../layouts';
 
+enum Screen {
+  Main,
+  MessageLogs,
+  RequestLogs,
+  Hacked,
+}
+
 type Data = {
-  screen: number;
+  screen: Screen;
   status: BooleanLike;
   server_status: number;
   auth: number;
@@ -333,10 +340,10 @@ export const MessageMonitor = (props, context) => {
                 )}
               </Stack.Item>
               <Stack.Item grow>
-                {(screen === 0 && <MainScreen />) ||
-                  (screen === 1 && <MessageLogsScreen />) ||
-                  (screen === 2 && <RequestLogsScreen />) ||
-                  (screen === 3 && <HackedScreen />)}
+                {(screen === Screen.Main && <MainScreen />) ||
+                  (screen === Screen.MessageLogs && <MessageLogsScreen />) ||
+                  (screen === Screen.RequestLogs && <RequestLogsScreen />) ||
+                  (screen === Screen.Hacked && <HackedScreen />)}
               </Stack.Item>
               <Stack.Item>
                 {notice_message !== '' && (
