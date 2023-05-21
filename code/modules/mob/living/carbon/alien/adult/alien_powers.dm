@@ -341,7 +341,7 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/sneak/alien
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
-	button_icon_state = "sneak_alien"
+	button_icon_state = "alien_sneak"
 	/// The alpha we go to when sneaking.
 
 /datum/action/cooldown/sneak/alien/Remove(mob/living/remove_from)
