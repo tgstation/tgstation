@@ -38,7 +38,7 @@ const TOOLS = [
   },
 ];
 
-type Directions = {
+type DirectionsAllowed = {
   north: BooleanLike;
   south: BooleanLike;
   east: BooleanLike;
@@ -89,7 +89,7 @@ type Data = {
   selected_color: string;
   selected_category: string;
   mode: number;
-  init_directions: Directions;
+  init_directions: DirectionsAllowed;
   // Static
   paint_colors: Colors;
 };
