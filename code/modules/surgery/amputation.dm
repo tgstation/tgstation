@@ -18,6 +18,11 @@
 		/datum/surgery_step/sever_limb,
 	)
 
+/datum/surgery/amputation/can_start(mob/user, mob/living/patient)
+	if(HAS_TRAIT(target, TRAIT_NODISMEMBER))
+		return FALSE
+	return ..()
+
 /datum/surgery_step/sever_limb
 	name = "sever limb (circular saw)"
 	implements = list(
@@ -33,9 +38,6 @@
 	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(HAS_TRAIT(target, TRAIT_NODISMEMBER))
-		to_chat(user, span_warning("You fail to amputate [target]'s [parse_zone(target_zone)]!"))
-		return SURGERY_STEP_FAIL
 	display_results(
 		user,
 		target,
