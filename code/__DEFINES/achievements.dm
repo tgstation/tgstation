@@ -127,7 +127,7 @@
 #define STYLE_SCORE "Style Score"
 
 // DB ID for hearts received
-#define HEARTED_SCORE "Hearted Score"
+#define HEARTED_SCORE "Hearts Received"
 
 // Tourist related achievements and scores
 
