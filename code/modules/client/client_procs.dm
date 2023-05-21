@@ -536,6 +536,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	gc_destroyed = world.time
+	if (!QDELING(src))
+		stack_trace("Client does not purport to be QDELING, this is going to cause bugs in other places!")
+
 	if(mob)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_join = mob.client?.prefs?.read_preference(/datum/preference/toggle/broadcast_login_logout)
