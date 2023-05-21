@@ -342,7 +342,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Sneak"
 	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
-	button_icon_state = "alien_sneak"
+	button_icon_state = "alien_sneak_0"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 
