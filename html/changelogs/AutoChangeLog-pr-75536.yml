@@ -1,7 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "made it impossible to change tram/elevator button styles that couldn't be reverted back"
-  - image: "changed button styles, added tram/elevator button overlays"
-  - refactor: "refactored the way button sprites are applied, updated sprite names to make more sense"
-  - rscdel: "removed unused button sprites"
