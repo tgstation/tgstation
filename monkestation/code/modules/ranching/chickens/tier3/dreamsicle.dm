@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/dreamsicle
+/mob/living/basic/chicken/dreamsicle
 	icon_suffix = "dreamsicle"
 
 	breed_name = "Dreamsicle"
@@ -10,7 +10,7 @@
 	name = "Dreamsicle Egg"
 	icon_state = "dreamsicle"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/dreamsicle
+	layer_hen_type = /mob/living/basic/chicken/dreamsicle
 
 /obj/item/food/egg/dreamsicle/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	to_chat(eater, "<span class='warning'>You start to feel a dreamsicle high coming on.</span>")

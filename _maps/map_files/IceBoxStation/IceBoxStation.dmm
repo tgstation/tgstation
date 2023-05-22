@@ -7289,7 +7289,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
 	},
-/turf/open/floor/iron,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "cmL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13406,6 +13410,19 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/hos)
+"ehz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/half{
+	dir = 8
+	},
+/obj/machinery/composters,
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/station/service/hydroponics)
 "ehA" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Canteen"
@@ -16936,7 +16953,7 @@
 /area/station/engineering/supermatter/room)
 "fpJ" = (
 /obj/structure/fireaxecabinet/directional/west,
-/obj/machinery/suit_storage_unit/atmos,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "fpP" = (
@@ -19155,7 +19172,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "gbF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -19163,6 +19179,8 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/infuser,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gbH" = (
@@ -28316,9 +28334,11 @@
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "jaN" = (
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "jaO" = (
 /obj/machinery/door/airlock/atmos/glass{
@@ -32584,13 +32604,14 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ksO" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
+/obj/machinery/splicer,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ksU" = (
@@ -36580,6 +36601,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lEK" = (
@@ -45190,6 +45212,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "opu" = (
@@ -49618,8 +49645,10 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/tank_dispenser{
+	pixel_x = -1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "pKu" = (
@@ -51280,6 +51309,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"qoU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics)
 "qoY" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
@@ -69549,8 +69588,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "wij" = (
@@ -173823,7 +173862,7 @@ hmb
 hmb
 hlP
 ahI
-ahI
+qoU
 boV
 hmb
 hmb
@@ -175103,7 +175142,7 @@ xMq
 xMq
 xMq
 exw
-gAN
+ehz
 sCZ
 sCZ
 lmm

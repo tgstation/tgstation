@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/borg/upgrade/modkit/lifesteal(loc)
 			new /obj/item/bedsheet/cult(loc)
 		if(13)
-			new /obj/item/gun/ballistic/shotgun/hook(loc)
+			new /obj/item/gun/magic/hook (loc)
 		if(14)
 			new /obj/item/guardiancreator/miner(loc)
 		if(15)

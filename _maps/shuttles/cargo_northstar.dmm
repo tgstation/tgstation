@@ -125,6 +125,7 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/docking_port/mobile/supply,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/shuttle/supply)
 "I" = (
@@ -152,7 +153,6 @@
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "QMLoad"
-	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "Y" = (

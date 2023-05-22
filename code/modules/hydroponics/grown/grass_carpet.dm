@@ -8,16 +8,16 @@
 	product = /obj/item/food/grown/grass
 	lifespan = 40
 	endurance = 40
-	maturation = 2
+	maturation = 80
 	production = 5
 	yield = 5
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/carpet, /datum/hydroponics/plant_mutation/fairy)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
-
+	harvest_age = 80
 /obj/item/food/grown/grass
 	seed = /obj/item/seeds/grass
 	name = "grass"
@@ -52,7 +52,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
 	graft_gene = /datum/plant_gene/trait/glow/blue
-	mutatelist = null
+	possible_mutations = list()
 
 /obj/item/food/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
@@ -70,7 +70,7 @@
 	species = "carpet"
 	plantname = "Carpet"
 	product = /obj/item/food/grown/grass/carpet
-	mutatelist = null
+	possible_mutations = list()
 	rarity = 10
 
 /obj/item/food/grown/grass/carpet

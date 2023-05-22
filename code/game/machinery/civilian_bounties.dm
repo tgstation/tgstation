@@ -72,7 +72,7 @@
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
  */
-/obj/machinery/computer/piratepad_control/civilian/send()
+/obj/machinery/computer/piratepad_control/civilian/send(mob/user)
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
@@ -105,6 +105,9 @@
 
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
+
+
+		usr.client.prefs.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "completed a bounty", respects_roundcap = TRUE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -181,7 +184,7 @@
 		if("recalc")
 			recalc()
 		if("send")
-			start_sending()
+			start_sending(usr)
 		if("stop")
 			stop_sending()
 		if("pick")

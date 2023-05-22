@@ -1,0 +1,5 @@
+author: "nednaZ"
+delete-after: True
+changes:
+  - rscadd: "You may now splash a fire alarm with ants for fun."
+  - code_imp: "Added defines to fire alarm construction states"

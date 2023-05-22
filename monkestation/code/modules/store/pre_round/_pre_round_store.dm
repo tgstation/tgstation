@@ -85,7 +85,8 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 		var/obj/item/effect_granter/granting_time = created_item
 		if(granting_time.human_only && iscarbon(new_player_mob_living))
 			spawn(4 SECONDS)
-				granting_time.grant_effect(new_player_mob_living)
+				if(!granting_time.grant_effect(new_player_mob_living))
+					return
 		else
 			ui_close()
 			qdel(new_player_mob.client.readied_store)

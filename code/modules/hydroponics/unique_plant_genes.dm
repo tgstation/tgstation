@@ -54,7 +54,7 @@
 
 	if(force_multiplier)
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		our_plant.force = round((5 + our_seed.potency * force_multiplier), 1)
+		our_plant.force = min(round((5 + our_seed.potency * force_multiplier), 1),25)
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, PROC_REF(on_plant_attack))
 	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, PROC_REF(after_plant_attack))
 

@@ -2108,7 +2108,6 @@
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
 "azC" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
@@ -14187,7 +14186,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "dFO" = (
@@ -18339,6 +18338,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/toilet)
+"eMj" = (
+/obj/effect/turf_decal/tile/green/full,
+/obj/machinery/infuser,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "eMp" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
@@ -20424,6 +20429,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ftr" = (
@@ -47753,7 +47759,7 @@
 /area/station/maintenance/floor2/port/aft)
 "mFB" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/simple_animal/chicken,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "mFD" = (
@@ -73243,6 +73249,8 @@
 "twO" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/splicer,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "twQ" = (
@@ -78043,6 +78051,11 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/machinery/light/directional/north,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "uQD" = (
@@ -249597,7 +249610,7 @@ jZP
 ruo
 ftp
 pzi
-hRg
+eMj
 diA
 loe
 dDn

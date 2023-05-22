@@ -12,3 +12,8 @@
 	name = "Core Set Booster Pack"
 	item_path = /obj/item/cardpack/series_one/mega
 	item_cost = 1000
+
+/datum/store_item/roundstart/stickers
+	name = "Ook Certified Sticker Box"
+	item_path = /obj/item/storage/box/monkestation_stickers
+	item_cost = 100

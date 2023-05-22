@@ -32,7 +32,7 @@
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
-			new /obj/item/gun/ballistic/shotgun/hook(src)
+			new /obj/item/gun/magic/hook (src)
 		if(8)
 			new /obj/item/rod_of_asclepius(src)
 		if(9)

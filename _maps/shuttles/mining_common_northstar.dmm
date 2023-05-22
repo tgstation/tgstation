@@ -77,6 +77,7 @@
 	port_direction = 8;
 	shuttle_id = "mining_common"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "D" = (

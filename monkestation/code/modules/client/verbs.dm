@@ -1,11 +1,11 @@
 GLOBAL_LIST_INIT(high_threat_antags, list(
 	/datum/antagonist/cult,
 	/datum/antagonist/rev/head,
+	/datum/antagonist/wizard,
 ))
 
 GLOBAL_LIST_INIT(medium_threat_antags, list(
 	/datum/antagonist/ninja,
-	/datum/antagonist/wizard,
 	/datum/antagonist/heretic,
 ))
 
@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	saved_tokens.in_queued_tier = tier
 	saved_tokens.in_queue = new chosen_antagonist
 
+	to_chat(src, "Your request has been sent to the admins.")
 	wait_for_approval(src, chosen_antagonist)
 
 

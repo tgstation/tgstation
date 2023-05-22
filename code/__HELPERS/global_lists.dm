@@ -3,8 +3,10 @@
 //////////////////////////
 
 /proc/make_datum_references_lists()
-	//hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
+	///roundstart hair
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.roundstart_hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list, roundstart = TRUE)
+	//hair - includes all locked hair
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.hairstyles_list)
 	//facial hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
 	//underwear

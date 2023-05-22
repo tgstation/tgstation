@@ -1,0 +1,1 @@
+So here we took the original image and stretched it to what we wanted, than ran it through the program mentioned in the previous doc, and it outputted the product that is the displacement effect, when this is applied in game you will get
