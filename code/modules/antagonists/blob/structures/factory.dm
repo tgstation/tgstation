@@ -8,6 +8,7 @@
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
 	max_spores = BLOB_FACTORY_MAX_SPORES
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut
 
 /obj/structure/blob/special/factory/scannerreport()
 	if(naut)
@@ -19,16 +20,18 @@
 		overmind.factory_blobs += src
 
 /obj/structure/blob/special/factory/Destroy()
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
-		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
-		spore.death()
 	if(naut)
 		naut.factory = null
 		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
 		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
-	spores = null
+		naut = null
 	if(overmind)
 		overmind.factory_blobs -= src
+	return ..()
+
+/obj/structure/blob/special/factory/produce_spores()
+	if(naut)
+		return
 	return ..()
 
 /obj/structure/blob/special/factory/Be_Pulsed()

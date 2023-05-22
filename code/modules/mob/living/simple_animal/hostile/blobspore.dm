@@ -20,6 +20,8 @@
 	del_on_death = TRUE
 	death_message = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
+	/// The special blob tile that generated this spore
+	var/obj/structure/blob/special/factory = null
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = 1
 	/// The attached person
@@ -87,13 +89,12 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Destroy()
+/mob/living/simple_animal/hostile/blob/blobspore/death()
 	if(factory)
 		factory.spores -= src
 		factory = null
-	if(corpse)
-		corpse.forceMove(loc)
-		corpse = null
+	corpse?.forceMove(loc)
+	corpse = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()

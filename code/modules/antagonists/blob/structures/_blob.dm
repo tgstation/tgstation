@@ -400,7 +400,6 @@
 	var/expand_range = 0
 
 	// Spore production vars: for core, factories, and nodes (with strains)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 0
 	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
@@ -411,6 +410,13 @@
 	var/strong_reinforce_range = 0
 	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
 	var/reflector_reinforce_range = 0
+
+/obj/structure/blob/special/Destroy()
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
+		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
+		spore.death()
+	spores = null
+	return ..()
 
 /obj/structure/blob/special/proc/reinforce_area(seconds_per_tick) // Used by cores and nodes to upgrade their surroundings
 	if(strong_reinforce_range)
@@ -455,8 +461,6 @@
 			B.Be_Pulsed()
 
 /obj/structure/blob/special/proc/produce_spores()
-	if(naut)
-		return
 	if(spores.len >= max_spores)
 		return
 	if(!COOLDOWN_FINISHED(src, spore_delay))
