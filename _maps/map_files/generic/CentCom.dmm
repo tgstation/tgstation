@@ -8143,7 +8143,7 @@
 /area/centcom/central_command_areas/control)
 "OC" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Escapes-on-Pods"
 	},
 /turf/open/floor/iron/smooth_large,
@@ -10505,11 +10505,11 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /obj/machinery/requests_console/directional/north{
-	department = "Captain's Desk";
-	assistance_requestable = 1;
-	anon_tips_receiver = 1;
-	can_send_announcements = 1
+	department = "Captain's Desk"
 	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "Zx" = (

@@ -440,7 +440,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "QQ" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "How the fuck did he get in there?!";
 	name = "Zingo"
 	},
@@ -467,7 +467,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ua" = (
-/mob/living/simple_animal/hostile/lizard/space{
+/mob/living/basic/lizard/space{
 	desc = "How are you ALIVE?!";
 	name = "Blarpo"
 	},

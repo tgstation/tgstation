@@ -479,7 +479,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_CAMERA_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(chassis_camera.is_emp_scrambled)
+	if(chassis_camera?.is_emp_scrambled)
 		holder.icon_state = "hudcamera_empd"
 		return
 	holder.icon_state = "hudcamera"
