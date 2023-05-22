@@ -1,8 +1,8 @@
 import { Color } from 'common/color';
-import { decodeHtmlEntities } from 'common/string';
+import { multiline, decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex } from '../components';
+import { Tooltip, Icon, Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
@@ -17,6 +17,7 @@ type PaintCanvasProps = Partial<{
   imageHeight: number;
   editable: boolean;
   drawing_color: string | null;
+  has_palette: boolean;
 }>;
 
 type PointData = {
@@ -164,6 +165,9 @@ class PaintCanvas extends Component<PaintCanvasProps> {
 
   handleDropper(event: MouseEvent) {
     event.preventDefault();
+    if (!this.props.has_palette) {
+      return;
+    }
     const coords = this.eventToCoords(event);
     this.onCanvasDropper(coords.x + 1, coords.y + 1); // 1-based index dm side
   }
@@ -226,7 +230,7 @@ export const Canvas = (props, context) => {
   const scaled_width = width * data.px_per_unit;
   const scaled_height = height * data.px_per_unit;
   const average_plaque_height = 90;
-  const palette_height = 36;
+  const palette_height = 44;
   return (
     <Window
       width={scaled_width + 72}
@@ -237,6 +241,31 @@ export const Canvas = (props, context) => {
         (data.editable && data.paint_tool_palette ? palette_height : 0)
       }>
       <Window.Content>
+        {!!data.paint_tool_palette && (
+          <Tooltip
+            content={
+              multiline`
+              You can Right-Click the canvas to change the color of  
+              the painting tool to that of the clicked pixel. 
+            ` +
+              (data.editable
+                ? multiline` 
+              \n You can also select a color from the 
+              palette at the bottom of the UI, 
+              or input a new one with Right-Click.
+            `
+                : '')
+            }>
+            <Icon
+              name="question-circle"
+              position="relative"
+              color="blue"
+              size={1.5}
+              m={0.5}
+            />
+            <br />
+          </Tooltip>
+        )}
         <Box textAlign="center">
           <PaintCanvas
             value={data.grid}
@@ -252,6 +281,7 @@ export const Canvas = (props, context) => {
               act('select_color_from_coords', { px: x, py: y })
             }
             editable={data.editable}
+            has_palette={!!data.paint_tool_palette}
           />
           <Flex align="center" justify="center" direction="column">
             {!!data.editable && !!data.paint_tool_palette && (

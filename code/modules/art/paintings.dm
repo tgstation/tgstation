@@ -128,11 +128,11 @@
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
 	var/obj/item/painting_implement = user.get_active_held_item()
+	if(!painting_implement)
+		return
 	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
 	.["paint_tool_palette"] = null
-	if(!painting_implement)
-		return
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
