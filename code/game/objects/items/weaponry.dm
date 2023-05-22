@@ -877,13 +877,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	splattable = typecacheof(list(
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
 		/obj/item/queen_bee,
 		/obj/structure/spider/spiderling,
 		/mob/living/simple_animal/hostile/ant,
+		/mob/living/simple_animal/hostile/bee,
 		/obj/effect/decal/cleanable/ants,
+		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
 		/mob/living/basic/giant_spider,

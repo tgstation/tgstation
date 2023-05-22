@@ -37,8 +37,8 @@
 
 	/// Typecache of things that we seek out to eat. Yummy.
 	var/static/list/edibles = typecacheof(list(
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/butterfly,
 	))
 
 /mob/living/basic/lizard/Initialize(mapload)

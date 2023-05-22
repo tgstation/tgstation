@@ -36,9 +36,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "j" = (
-/mob/living/simple_animal/butterfly{
-	atmos_requirements = list()
-	},
+/mob/living/basic/butterfly/lavaland,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "l" = (
@@ -67,9 +65,7 @@
 "r" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
-/mob/living/simple_animal/butterfly{
-	atmos_requirements = list()
-	},
+/mob/living/basic/butterfly/lavaland,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "s" = (
