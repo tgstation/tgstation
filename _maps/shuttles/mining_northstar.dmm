@@ -10,6 +10,7 @@
 	port_direction = 8;
 	shuttle_id = "mining"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "c" = (

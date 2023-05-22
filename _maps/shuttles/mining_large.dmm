@@ -306,6 +306,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
