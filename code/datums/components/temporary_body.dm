@@ -24,7 +24,7 @@
 /datum/component/temporary_body/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroy))
 
-/datum/component/bakeable/UnregisterFromParent()
+/datum/component/temporary_body/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 
 /**
