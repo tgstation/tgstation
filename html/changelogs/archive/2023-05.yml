@@ -780,3 +780,9 @@
   Thunder12345:
   - image: Space lizard, carp, slime and snake plushies have been resprited and set
       up to support GAGS.
+2023-05-22:
+  SyncIt21:
+  - bugfix: wire cutter's can carve out book's again.
+  - bugfix: bibles can convert other bibles
+  TiviPlus:
+  - qol: TTS no longer chokes on large amounts of one letter
