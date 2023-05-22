@@ -8,4 +8,4 @@
 	if(!ishuman(target))
 		to_chat(user, span_warning("This must be used on a human subtype."), confidential = TRUE)
 		return
-	target.petrify(INFINITY, /* save_brain = */ FALSE)
+	target.petrify(statue_timer = INFINITY, save_brain = FALSE)
