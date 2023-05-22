@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "6.4.2"
+#define TGS_DMAPI_VERSION "6.4.3"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -104,6 +104,12 @@
 #define TGS_EVENT_WORLD_PRIME 21
 // DMAPI also doesnt implement this
 // #define TGS_EVENT_DREAM_DAEMON_LAUNCH 22
+/// After a single submodule update is performed. Parameters: Updated submodule name
+#define TGS_EVENT_REPO_SUBMODULE_UPDATE 23
+/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, byond version
+#define TGS_EVENT_PRE_DREAM_MAKER 24
+/// Whenever a deployment folder is deleted from disk. Parameters: Game directory path
+#define TGS_EVENT_DEPLOYMENT_CLEANUP 25
 
 // OTHER ENUMS
 

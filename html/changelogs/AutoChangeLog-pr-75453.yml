@@ -1,0 +1,5 @@
+author: "orthography"
+delete-after: True
+changes:
+  - bugfix: "fixes the guide to mimery radial menu."
+  - refactor: "refactors how the mime book works."

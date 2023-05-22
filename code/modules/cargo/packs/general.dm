@@ -209,7 +209,7 @@
 	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
-					/obj/item/storage/book/bible/booze = 2,
+					/obj/item/book/bible/booze = 2,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie = 2,
 					/obj/item/clothing/under/misc/burial = 2,
 				)
