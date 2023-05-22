@@ -38,6 +38,7 @@
 	pacifist_style = TRUE
 
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
+	defender.balloon_alert(attacker, "can't disarm while boxing!")
 	return MARTIAL_ATTACK_FAIL
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)

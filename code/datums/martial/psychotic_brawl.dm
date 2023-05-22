@@ -19,10 +19,14 @@
 				var/mob/living/carbon/carbon_defender = defender
 				carbon_defender.help_shake_act(attacker)
 			atk_verb = "helped"
+			. = MARTIAL_ATTACK_FAIL
+
 		if(2)
 			attacker.emote("cry")
 			attacker.Stun(2 SECONDS)
 			atk_verb = "cried looking at"
+			. = MARTIAL_ATTACK_FAIL
+
 		if(3)
 			if(attacker.grab_state >= GRAB_AGGRESSIVE)
 				defender.grabbedby(attacker, 1)
@@ -40,6 +44,8 @@
 					else
 						log_combat(attacker, defender, "grabbed", addition="passively")
 						attacker.setGrabState(GRAB_PASSIVE)
+			. = MARTIAL_ATTACK_SUCCESS
+
 		if(4)
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			atk_verb = "headbutt"
@@ -55,6 +61,8 @@
 					carbon_defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			attacker.Stun(rand(1 SECONDS, 4.5 SECONDS))
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
+			. = MARTIAL_ATTACK_SUCCESS
+
 		if(5,6)
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("kick", "hit", "slam")
@@ -66,9 +74,11 @@
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 			defender.throw_at(throwtarget, 4, 2, attacker)//So stuff gets tossed around at the same time.
 			defender.Paralyze(6 SECONDS)
+			. = MARTIAL_ATTACK_SUCCESS
+
 		if(7,8)
-			return FALSE //Resume default behaviour
+			return MARTIAL_ATTACK_INVALID //Resume default behaviour
 
 	if(atk_verb)
 		log_combat(attacker, defender, "[atk_verb] (Psychotic Brawling)")
-	return TRUE
+	return .

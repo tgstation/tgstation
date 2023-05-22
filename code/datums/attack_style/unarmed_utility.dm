@@ -44,12 +44,13 @@
 		human_smacked.w_uniform?.add_fingerprint(attacker)
 
 	// Todo : move this out and into its own style?
-	var/datum/martial_art/art = attacker.mind?.martial_art
-	switch(art?.disarm_act(attacker, smacked))
-		if(MARTIAL_ATTACK_SUCCESS)
-			return ATTACK_STYLE_HIT
-		if(MARTIAL_ATTACK_FAIL)
-			return ATTACK_STYLE_MISSED
+	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
+		var/datum/martial_art/art = attacker.mind?.martial_art
+		switch(art?.disarm_act(attacker, smacked))
+			if(MARTIAL_ATTACK_SUCCESS)
+				return ATTACK_STYLE_HIT
+			if(MARTIAL_ATTACK_FAIL)
+				return ATTACK_STYLE_MISSED
 
 	return disarm_target(attacker, smacked, shove_verb)
 
