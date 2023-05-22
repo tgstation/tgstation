@@ -157,6 +157,7 @@ SUBSYSTEM_DEF(tts)
 		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_request.start_time)
 		var/identifier = current_request.identifier
 		if(current_request.requests_errored())
+			current_request.timed_out = TRUE
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
@@ -194,6 +195,9 @@ SUBSYSTEM_DEF(tts)
 			timeout_start = current_target.start_time
 
 		var/timeout = timeout_start + message_timeout
+		// Here, we check if the request has timed out or not.
+		// If current_target.timed_out is set to TRUE, it means the request failed in some way
+		// and there is no TTS audio file to play.
 		if(timeout < world.time || current_target.timed_out)
 			SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			continue
