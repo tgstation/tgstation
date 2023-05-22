@@ -172,7 +172,7 @@
 	if(!stat && !ckey)
 		amount_grown += rand(0.5 * seconds_per_tick, 1 * seconds_per_tick)
 		if(amount_grown >= 100)
-			new /mob/living/simple_animal/chicken(src.loc)
+			new /mob/living/basic/chicken(src.loc)
 			qdel(src)
 
 /mob/living/simple_animal/chick/holo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
