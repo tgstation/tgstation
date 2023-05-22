@@ -971,7 +971,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 50
 	throwforce = 25
 	throw_speed = 4
-	attack_speed = CLICK_CD_HYPER_RAPID
 	embedding = list("embed_chance" = 100)
 	block_chance = 25
 	blocking_ability = 2
@@ -979,6 +978,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	attack_style = /datum/attack_style/high_frequency_blade
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
@@ -1107,3 +1107,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/datum/attack_style/high_frequency_blade
+	cd = CLICK_CD_HYPER_RAPID

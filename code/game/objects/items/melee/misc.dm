@@ -158,7 +158,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
-	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
 	blocking_ability = 2
 	armour_penetration = 65
@@ -166,6 +165,7 @@
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
+	attack_style = /datum/attack_style/rapid_attacks
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -179,6 +179,9 @@
 	user.visible_message(span_suicide("[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
+
+/datum/attack_style/rapid_attacks
+	cd = CLICK_CD_RAPID
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"

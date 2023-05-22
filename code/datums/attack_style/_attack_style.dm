@@ -185,37 +185,31 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(isnull(weapon))
 		return
 
-	// attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), used_item = weapon)
-
 	var/num_turfs_to_move = length(affecting)
 	var/final_animation_length = time_per_turf * num_turfs_to_move
 	var/initial_angle = -weapon_sprite_angle + get_angle(attacker, affecting[1])
 	var/final_angle = -weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
-	if(final_angle < initial_angle)
-		final_angle += 360
-
 	var/image/attack_image = image(icon = weapon, loc = attacker.loc, layer = attacker.layer + 0.1)
-	if(isnull(attack_image.transform))
-		attack_image.transform = matrix()
+	attack_image.transform = turn(attack_image.transform, initial_angle)
 	attack_image.transform *= 1.5
-	attack_image.transform.Turn(initial_angle)
 	attack_image.pixel_x = (affecting[1].x - attacker.x) * 16
 	attack_image.pixel_y = (affecting[1].y - attacker.y) * 16
-	var/matrix/final_transform = matrix(attack_image.transform)
-	var/last_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
-	var/last_y = (affecting[num_turfs_to_move].y - attacker.y) * 16
+	var/matrix/final_transform = turn(attack_image.transform, final_angle - initial_angle)
+	var/final_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
+	var/final_y = (affecting[num_turfs_to_move].y - attacker.y) * 16
 
-	testing(" \
+	testing(span_notice(" \
 		Start : [initial_angle] - [attack_image.pixel_x] [attack_image.pixel_y], \
-		End : [final_angle] - [last_x] [last_y]")
+		End : [final_angle] - [final_x] [final_y]"))
+	attacker.do_attack_animation(affecting[ROUND_UP(length(affecting) / 2)], no_effect = TRUE)
 	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf) // add a little extra time
 	animate(
 		attack_image,
 		time = final_animation_length,
+		transform = final_transform,
+		pixel_x = final_x,
+		pixel_y = final_y,
 		alpha = 175,
-		transform = final_transform.Turn(final_angle),
-		pixel_x = last_x,
-		pixel_y = last_y,
 		easing = CUBIC_EASING|EASE_OUT,
 	)
 	animate(

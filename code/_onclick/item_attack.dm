@@ -193,16 +193,7 @@
 		stack_trace("Potentially deprecated use of a weapon ([weapon.type]) via attackby_secondary. \
 			If this item is intended to be a weapon, implement an attack style.")
 
-	var/result = weapon.attack_secondary(src, user, params)
-
-	// Normal attackby updates click cooldown, so we have to make up for it
-	if (result != SECONDARY_ATTACK_CALL_NORMAL)
-		if(weapon.secondary_attack_speed)
-			user.changeNext_move(weapon.secondary_attack_speed)
-		else
-			user.changeNext_move(weapon.attack_speed)
-
-	return result
+	return weapon.attack_secondary(src, user, params)
 
 /**
  * This proc serves as a wrapper for calling [obj/item/proc/attack].
