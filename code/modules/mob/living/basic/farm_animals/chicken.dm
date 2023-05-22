@@ -19,6 +19,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	response_harm_simple = "peck"
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "peck"
+	friendly_verb_continuous = "headbutts"	
+	friendly_verb_simple = "headbutt"
 	health = 15
 	maxHealth = 15
 	pass_flags = PASSTABLE | PASSMOB
