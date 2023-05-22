@@ -166,6 +166,7 @@ SUBSYSTEM_DEF(tts)
 		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		// Don't need the request anymore so we can deallocate it
 		current_request.request = null
+		current_request.request_blips = null
 		if(MC_TICK_CHECK)
 			return
 
