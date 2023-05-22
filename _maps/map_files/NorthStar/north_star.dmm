@@ -12949,7 +12949,6 @@
 /area/station/command/bridge)
 "dkH" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
-/obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
 "dkP" = (
