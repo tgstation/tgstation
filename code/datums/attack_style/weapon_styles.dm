@@ -22,6 +22,7 @@
 /datum/attack_style/swing/esword
 	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
 	reverse_for_lefthand = FALSE
+	weapon_sprite_angle = 45
 
 /datum/attack_style/swing/esword/get_swing_description()
 	return ..() + " It must be active to swing. Right-clicking will swing in the opposite direction."

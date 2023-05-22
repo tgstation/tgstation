@@ -39,6 +39,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
 	var/pacifism_completely_banned = FALSE
 
+	var/time_per_turf = 0.4 SECONDS
+	var/weapon_sprite_angle = 0
+
 /datum/attack_style/proc/get_swing_description()
 	return "It swings at one tile in the direction you are attacking."
 
@@ -102,6 +105,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	attack_effect_animation(attacker, weapon, affecting)
 
@@ -181,27 +185,52 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(isnull(weapon))
 		return
 
-	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
+	// attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), used_item = weapon)
 
-	attacker.do_attack_animation(midpoint, used_item = weapon)
-	/*
 	var/num_turfs_to_move = length(affecting)
-	var/time_per_turf = 0.4 SECONDS
 	var/final_animation_length = time_per_turf * num_turfs_to_move
-	var/initial_angle = get_angle(attacker, affecting[1])
-	var/final_angle = get_angle(attacker, affecting[num_turfs_to_move])
+	var/initial_angle = -weapon_sprite_angle + get_angle(attacker, affecting[1])
+	var/final_angle = -weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
+	if(final_angle < initial_angle)
+		final_angle += 360
 
-	var/image/attack_image = image(icon = weapon, loc = attacker, layer = attacker.layer + 0.1)
-	var/matrix/base_transform = matrix(attack_image.transform)
-	attack_image.alpha = 180
-	attack_image.color = "#c4c4c4"
+	var/image/attack_image = image(icon = weapon, loc = attacker.loc, layer = attacker.layer + 0.1)
+	if(isnull(attack_image.transform))
+		attack_image.transform = matrix()
+	attack_image.transform *= 1.5
 	attack_image.transform.Turn(initial_angle)
-	var/matrix/final_transform = base_transform.Turn(final_angle)
+	attack_image.pixel_x = (affecting[1].x - attacker.x) * 16
+	attack_image.pixel_y = (affecting[1].y - attacker.y) * 16
+	var/matrix/final_transform = matrix(attack_image.transform)
+	var/last_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
+	var/last_y = (affecting[num_turfs_to_move].y - attacker.y) * 16
 
-	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf)
-	animate(attack_image, time = final_animation_length, alpha = 120, transform = final_transform)
-	// animate(attack_image, time = time_per_turf, alpha = 0, easing = CIRCULAR_EASING|EASE_OUT)
-	*/
+	testing(" \
+		Start : [initial_angle] - [attack_image.pixel_x] [attack_image.pixel_y], \
+		End : [final_angle] - [last_x] [last_y]")
+	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf) // add a little extra time
+	animate(
+		attack_image,
+		time = final_animation_length,
+		alpha = 175,
+		transform = final_transform.Turn(final_angle),
+		pixel_x = last_x,
+		pixel_y = last_y,
+		easing = CUBIC_EASING|EASE_OUT,
+	)
+	animate(
+		time = time_per_turf,
+		alpha = 0,
+		easing = CIRCULAR_EASING|EASE_OUT,
+	)
+
+/// Used in [proc/attack_effect_animation] to select some atom in the list of affecting turfs to play the attack animation over
+/datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
+	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
+	// Attack animations play over the layer of the atom passed into it
+	// So in order we will select a living mob -> a movable -> the turf itself
+	// This ensures the effect plays on the relevant layer and is always visible
+	return (locate(/mob/living) in midpoint) || (locate(/atom/movable) in midpoint) || midpoint
 
 /**
  * Finalize an attack on a single mob in one of the affected turfs
@@ -212,6 +241,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  */
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	. = NONE
 
@@ -314,6 +344,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("No narmed interaction for [type]!")
 
-/datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
-	if(attack_effect)
-		attacker.do_attack_animation(affecting[1], attack_effect)
+/datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting, override_effect)
+	var/selected_effect = override_effect || attack_effect
+	if(selected_effect)
+		attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), selected_effect)

@@ -226,15 +226,13 @@
 		var/mob/living/basic/animal = attacker
 		return animal.attack_verb_simple
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting, override_effect)
 	if(isanimal(attacker))
 		var/mob/living/simple_animal/animal = attacker
-		if(animal.attack_vis_effect)
-			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
-		return
+		override_effect = animal.attack_vis_effect
 
 	if(isbasicmob(attacker))
 		var/mob/living/basic/animal = attacker
-		if(animal.attack_vis_effect)
-			attacker.do_attack_animation(affecting[1], animal.attack_vis_effect)
-		return
+		override_effect = animal.attack_vis_effect
+
+	return ..()
