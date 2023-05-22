@@ -191,3 +191,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/sammi_plush
 	name = "Sammi Plush"
 	item_path = /obj/item/toy/plush/sammiplush
+
+/datum/loadout_item/toys/cirno_plush
+	name = "Cirno Plush"
+	item_path = /obj/item/toy/plush/cirno_plush
