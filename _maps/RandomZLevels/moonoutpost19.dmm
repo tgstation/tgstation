@@ -8828,7 +8828,7 @@
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/mines)
 "Zn" = (
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/basic/lizard{
 	name = "Newt"
 	},
 /turf/open/floor/carpet/royalblue,

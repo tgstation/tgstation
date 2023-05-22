@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Gym equipment was reworked. You now buckle yourself to weight machines to use them, rather than clicking on it and getting stunned for a few seconds. It also means it works like a chair now."
+  - qol: "Gym equipment no longer breaks a sweat in no gravity."

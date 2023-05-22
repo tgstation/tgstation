@@ -34,7 +34,7 @@ type LobbyData = {
 type MafiaData = {
   players: PlayerInfo[];
   lobbydata: LobbyData[];
-  user_notes: number;
+  user_notes: string;
   roleinfo: RoleInfo;
   phase: string;
   turn: number;
