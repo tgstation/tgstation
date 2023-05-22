@@ -57,21 +57,12 @@
  */
 /datum/mafia_role/proc/put_player_in_body(client/player)
 	if(player.mob.mind && player.mob.mind.current)
-		ADD_TRAIT(player.mob.mind.current, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
-		body.AddComponent(/datum/component/temporary_body, \
-			/* old_mind = */ player.mob.mind, \
-			/* old_body = */ player.mob.mind.current, \
-			/* body_return_callback = */ CALLBACK(src, PROC_REF(remove_mafia_trait)), \
+		body.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = player.mob.mind, \
+			old_body = player.mob.mind.current, \
 		)
 	body.key = player.key
-
-/**
- * remove_mafia_trait
- * Send by a callback from the temporary body component
- * Used to clear the playing mafia trait from their old body.
- */
-/datum/mafia_role/proc/remove_mafia_trait(datum/mind/old_mind, mob/living/old_body)
-	REMOVE_TRAIT(old_body, TRAIT_PLAYING_MAFIA, MAFIA_TRAIT)
 
 /**
  * Tests kill immunities, if nothing prevents the kill, kills this role.

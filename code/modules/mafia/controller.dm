@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(total_guilty_votes > total_innocent_votes) //strictly need majority guilty to lynch
 		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
 		on_trial.kill(src, lynch = TRUE)
-		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
+		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 	else
 		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	var/victory_message
 
-	if(!(living_mafia.len + living_town.len))
+	if(living_mafia.len + living_town.len <= 0)
 		victory_message = "Draw!</span>" //this is in-case no neutrals won, but there's no town/mafia left.
 		for(var/datum/mafia_role/solo as anything in neutral_killers)
 			victory_message = "[uppertext(solo.name)] VICTORY!</span>"

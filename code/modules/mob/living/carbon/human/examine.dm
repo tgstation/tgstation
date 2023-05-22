@@ -121,8 +121,6 @@
 		if(!just_sleeping)
 			if(HAS_TRAIT(src, TRAIT_SUICIDED))
 				. += span_warning("[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.")
-			if(HAS_TRAIT(src, TRAIT_PLAYING_MAFIA))
-				. += span_warning("[t_He] appear[p_s()] to still be lingering somewhere... [p_they()] will surely be back soon.")
 
 			. += generate_death_examine_text()
 

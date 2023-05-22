@@ -749,8 +749,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
 
-///Trait given to a mob playing Mafia, allowing people to know someone will re-enter the round later.
-#define TRAIT_PLAYING_MAFIA "playing_mafia"
+///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
+#define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

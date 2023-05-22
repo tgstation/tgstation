@@ -11,15 +11,12 @@
 	///The old body we will be put back into when parent is being deleted.
 	var/datum/weakref/old_body_ref
 
-	///A callback sent once parent's mind is returned to their old body.
-	var/datum/callback/body_return_callback
-
-/datum/component/temporary_body/Initialize(old_mind, old_body, body_return_callback)
-	if(!isliving(parent))
+/datum/component/temporary_body/Initialize(datum/mind/old_mind, mob/living/old_body)
+	if(!isliving(parent) || !isliving(old_body))
 		return COMPONENT_INCOMPATIBLE
+	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	src.old_mind_ref = WEAKREF(old_mind)
 	src.old_body_ref = WEAKREF(old_body)
-	src.body_return_callback = body_return_callback
 
 /datum/component/temporary_body/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroy))
@@ -47,11 +44,12 @@
 	if(!ghost)
 		CRASH("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
 	ghost.mind = old_mind
-	old_mind.set_current(old_body)
 	if(old_body.stat != DEAD)
-		old_body.key = old_mind.key
+		old_mind.transfer_to(old_body, force_key_move = TRUE)
+	else
+		old_mind.set_current(old_body)
 
-	if(body_return_callback)
-		body_return_callback.Invoke(old_mind, old_body)
+	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
+
 	old_mind = null
 	old_body = null
