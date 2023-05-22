@@ -65,29 +65,16 @@
 #define LOGSRC_MOB "Mob"
 
 // Log header keys
-#define LOG_HEADER_CATEGORY "category"
-#define LOG_HEADER_INIT_TIMESTAMP "timestamp"
-#define LOG_HEADER_ROUND_ID "round_id"
-
-// Log data keys
-#define LOG_ENTRY_MESSAGE "message"
-#define LOG_ENTRY_TIMESTAMP "timestamp"
-#define LOG_ENTRY_DATA "data"
+#define LOG_HEADER_CATEGORY "cat"
+#define LOG_HEADER_CATEGORY_LIST "cat-list"
+#define LOG_HEADER_INIT_TIMESTAMP "ts"
+#define LOG_HEADER_ROUND_ID "round-id"
+#define LOG_HEADER_SECRET "secret"
 
 // Log json keys
-#define LOG_JSON_CATEGORY "category"
+#define LOG_JSON_CATEGORY "cat"
 #define LOG_JSON_ENTRIES "entries"
-#define LOG_JSON_LOGGING_START "log_start"
-
-// Log entry keys
-#define LOG_ENTRY_KEY_TIMESTAMP "ts"
-#define LOG_ENTRY_KEY_CATEGORY "cat"
-#define LOG_ENTRY_KEY_MESSAGE "msg"
-#define LOG_ENTRY_KEY_DATA "data"
-#define LOG_ENTRY_KEY_WORLD_STATE "w-state"
-#define LOG_ENTRY_KEY_SEMVER_STORE "s-store"
-#define LOG_ENTRY_KEY_ID "id"
-#define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
+#define LOG_JSON_LOGGING_START "log-start"
 
 // Category for invalid/missing categories
 #define LOG_CATEGORY_NOT_FOUND "invalid-category"
@@ -112,7 +99,6 @@
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
-#define LOG_CATEGORY_QDEL "qdel"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -131,6 +117,7 @@
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
+#define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
 #define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
@@ -162,12 +149,6 @@
 #define LOG_CATEGORY_PDA "pda"
 #define LOG_CATEGORY_PDA_CHAT "pda-chat"
 #define LOG_CATEGORY_PDA_COMMENT "pda-comment"
-
-// Flags that apply to the entry_flags var on logging categories
-// These effect how entry datums process the inputs passed into them
-/// Enables data list usage for readable log entries
-/// You'll likely want to disable internal formatting to make this work properly
-#define ENTRY_USE_DATA_W_READABLE (1<<0)
 
 #define SCHEMA_VERSION "schema-version"
 

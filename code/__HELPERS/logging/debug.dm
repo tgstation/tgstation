@@ -19,9 +19,6 @@
 /proc/log_lua(text, list/data)
 	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data)
 
-/proc/log_mechcomp(text)
-	WRITE_LOG(GLOB.mechcomp_log, "MECHCOMP: [text]")
-
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS
