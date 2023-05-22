@@ -36,6 +36,9 @@
 
 	if(!(slot & ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
+	var/obj/item/storage/backpack/equipped_backpack = equipped_item
+	if(equipped_backpack.shoulder_carry)
+		return
 
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
