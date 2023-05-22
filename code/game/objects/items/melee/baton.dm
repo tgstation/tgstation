@@ -165,6 +165,7 @@
 	if(desc)
 		target.visible_message(desc["visible"], desc["local"])
 
+// melbert todo : likely not even necessary
 /obj/item/melee/baton/proc/check_parried(mob/living/target, mob/living/user)
 	if (target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(target, 'sound/weapons/genhit.ogg', 50, TRUE)

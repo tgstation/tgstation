@@ -82,3 +82,19 @@
 		attack_direction,
 		attacking_item,
 	)
+
+/// Primarily for serialization, or so you can pass it via arglist if you really wanted to
+/datum/apply_damage_packet/proc/to_list()
+	return list(
+		"damage" = damage,
+		"damagetype" = damagetype,
+		"def_zone" = def_zone,
+		"blocked" = blocked,
+		"forced" = forced,
+		"spread_damage" = spread_damage,
+		"wound_bonus" = wound_bonus,
+		"bare_wound_bonus" = bare_wound_bonus,
+		"sharpness" = sharpness,
+		"attack_direction" = attack_direction,
+		"attacking_item" = attacking_item,
+	)

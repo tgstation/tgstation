@@ -169,6 +169,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
+/// Mob is not slowed down when aggressively grabbing (or higher people), yes this includes the slowdown from kill grab
+#define TRAIT_NO_PULL_SLOWDOWN "no_pull_slowdown"
 /// Makes it so the mob can use guns regardless of tool user status
 #define TRAIT_GUN_NATURAL "gunnatural"
 /// This human can bite with their mouth when their hands are blocked

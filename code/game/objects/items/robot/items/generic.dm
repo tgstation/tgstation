@@ -19,6 +19,7 @@
 	var/charge_cost = 1000
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
+	// melbert todo : potentially not even necessary
 	if(attacked_mob.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
 		playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE

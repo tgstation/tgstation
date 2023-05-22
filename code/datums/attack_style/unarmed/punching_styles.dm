@@ -11,6 +11,9 @@
 	datum/apply_damage_packet/packet,
 )
 	. = ..()
+	if(bonus_stamina_damage_modifier <= 0)
+		return
+
 	var/datum/apply_damage_packet/new_packet = packet.copy_packet()
 	new_packet.damage *= bonus_stamina_damage_modifier
 	new_packet.damagetype = STAMINA

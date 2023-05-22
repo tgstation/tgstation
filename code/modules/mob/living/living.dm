@@ -2148,6 +2148,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Updates the grab state of the mob and updates movespeed
 /mob/living/setGrabState(newstate)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_NO_PULL_SLOWDOWN))
+		return
 	switch(grab_state)
 		if(GRAB_PASSIVE)
 			remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
