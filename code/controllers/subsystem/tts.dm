@@ -181,8 +181,16 @@ SUBSYSTEM_DEF(tts)
 			continue
 
 		var/datum/tts_request/current_target = data[1]
+		// This determines when we start the timer to time out.
+		// This is so that the TTS message doesn't get timed out if it's waiting
+		// on another TTS message to finish playing their audio.
+
+		// For example, if a TTS message plays for more than 7 seconds, which is our current timeout limit,
+		// then the next TTS message would be unable to play.
 		var/timeout_start = current_target.when_to_play
 		if(!timeout_start)
+			// In the normal case, we just set timeout to start_time as it means we aren't waiting on
+			// a TTS message to finish playing
 			timeout_start = current_target.start_time
 
 		var/timeout = timeout_start + message_timeout
