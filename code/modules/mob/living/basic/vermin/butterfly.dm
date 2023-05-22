@@ -41,3 +41,6 @@
 /datum/ai_controller/basic_controller/butterfly
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+/mob/living/basic/butterfly/lavaland
+	unsuitable_atmos_damage = 0
