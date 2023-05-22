@@ -3962,7 +3962,6 @@
 #include "code\modules\logging\categories\log_category_game.dm"
 #include "code\modules\logging\categories\log_category_misc.dm"
 #include "code\modules\logging\categories\log_category_pda.dm"
-#include "code\modules\logging\categories\log_category_silo.dm"
 #include "code\modules\logging\categories\log_category_target_zone_switch.dm"
 #include "code\modules\logging\categories\log_category_uplink.dm"
 #include "code\modules\mafia\_defines.dm"

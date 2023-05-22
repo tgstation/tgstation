@@ -19,8 +19,7 @@
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
 	var/internal_formatting = TRUE
 
-	/// List of log entries for this category
-	var/list/entries = list()
+GENERAL_PROTECT_DATUM(/datum/log_category)
 
 	/// Total number of entries this round so far
 	var/entry_count = 0
