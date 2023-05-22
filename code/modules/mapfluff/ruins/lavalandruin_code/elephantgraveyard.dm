@@ -257,7 +257,7 @@
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
 			return TRUE
 
-		to_chat(user, span_notice("You remove \the [src]  completely."))
+		to_chat(user, span_notice("You remove \the [src] completely."))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
 		return TRUE
