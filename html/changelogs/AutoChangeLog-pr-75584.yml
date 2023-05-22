@@ -1,0 +1,4 @@
+author: "Furrior"
+delete-after: True
+changes:
+  - admin: "If you are on a downstream server using non-Latin fonts (e.g. Cyrillic) for character/job names: The player panel encoding has been fixed so it should show up properly for you now."
