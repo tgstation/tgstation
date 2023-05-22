@@ -91,9 +91,9 @@
 	)
 
 /datum/ai_planning_subtree/random_speech/chicken
+	speech_chance = 15 // really talkative ladies
 	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
-	speak_emote = list("clucks", "croons")
-	emote_hear = list("clucks.")
+	emote_hear = list("clucks.", "croons.")
 	emote_see = list("pecks at the ground.","flaps her wings viciously.")
 
 /datum/ai_planning_subtree/random_speech/cow
