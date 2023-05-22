@@ -136,7 +136,7 @@
 
 	return TRUE
 
-/datum/status_effect/fire_blasted/tick(delta_time, times_fired)
+/datum/status_effect/fire_blasted/tick(seconds_per_tick, times_fired)
 	owner.adjustFireLoss(tick_damage)
 	owner.stamina.adjust(-2 * tick_damage)
 

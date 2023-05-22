@@ -1,7 +1,7 @@
 /datum/ai_behavior/chicken_attack_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
-/datum/ai_behavior/chicken_attack_mob/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/chicken_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 
 	var/mob/living/target = controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET]
@@ -11,7 +11,7 @@
 		finish_action(controller, TRUE) //we don't want chickens to kill or maybe we do this can be adjusted
 
 	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
-		chicken_attack(controller, target, delta_time, FALSE)
+		chicken_attack(controller, target, seconds_per_tick, FALSE)
 
 /datum/ai_behavior/chicken_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
@@ -39,7 +39,7 @@
 		used_projectile.fire()
 		return used_projectile
 
-/datum/ai_behavior/chicken_attack_mob/proc/chicken_attack(datum/ai_controller/controller, mob/living/target, delta_time, disarm)
+/datum/ai_behavior/chicken_attack_mob/proc/chicken_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(living_pawn.next_move > world.time)
@@ -50,7 +50,7 @@
 	living_pawn.face_atom(target)
 
 	// check for projectile and roll a dice, than fire that bad boy
-	if(controller.blackboard[BB_CHICKEN_PROJECTILE] && DT_PROB(5, delta_time))
+	if(controller.blackboard[BB_CHICKEN_PROJECTILE] && SPT_PROB(5, seconds_per_tick))
 		shoot(target, controller)
 
 	// attack with weapon if we have one (we don't as of now as sword chickens are frauds)
@@ -62,7 +62,7 @@
 		return
 
 	// reduce aggro
-	if(DT_PROB(CHICKEN_HATRED_REDUCTION_PROB, delta_time))
+	if(SPT_PROB(CHICKEN_HATRED_REDUCTION_PROB, seconds_per_tick))
 		controller.blackboard[BB_CHICKEN_SHITLIST][target]--
 
 	// if we are not angry at our target, go back to idle
@@ -72,7 +72,7 @@
 		if(controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] == target)
 			finish_action(controller, TRUE)
 
-/datum/ai_behavior/recruit_chickens/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/recruit_chickens/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	controller.blackboard[BB_CHICKEN_RECRUIT_COOLDOWN] = world.time + CHICKEN_RECRUIT_COOLDOWN
 	var/mob/living/living_pawn = controller.pawn
@@ -81,7 +81,7 @@
 		if(!HAS_AI_CONTROLLER_TYPE(living_viewers, /datum/ai_controller/chicken))
 			continue
 
-		if(!DT_PROB(CHICKEN_RECRUIT_PROB, delta_time))
+		if(!SPT_PROB(CHICKEN_RECRUIT_PROB, seconds_per_tick))
 			continue
 
 		var/datum/ai_controller/chicken/chicken_ai = living_viewers.ai_controller
@@ -94,7 +94,7 @@
 
 /datum/ai_behavior/chicken_flee
 
-/datum/ai_behavior/chicken_flee/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/chicken_flee/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 
 	var/mob/living/living_pawn = controller.pawn
@@ -121,7 +121,7 @@
 
 /datum/ai_behavior/eat_ground_food/setup(datum/ai_controller/controller, ...)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/datum/weakref/target_ref
 	var/list/floor_foods = list()
 	for(var/obj/effect/chicken_feed/food_item in view(3, living_pawn.loc))
@@ -135,9 +135,9 @@
 	controller.current_movement_target = target_ref.resolve()
 	return TRUE
 
-/datum/ai_behavior/eat_ground_food/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/eat_ground_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	if(!controller.current_movement_target)
 		finish_action(controller, TRUE)
 		return
@@ -161,7 +161,7 @@
 
 /datum/ai_behavior/follow_leader
 
-/datum/ai_behavior/follow_leader/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/follow_leader/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/mob/living/target = controller.blackboard[BB_CHICKEN_CURRENT_LEADER]
 
@@ -180,7 +180,7 @@
 
 /datum/ai_behavior/find_and_lay/setup(datum/ai_controller/controller, ...)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/datum/weakref/target_ref
 	for(var/obj/structure/nestbox/nesting_box in view(3, living_pawn.loc))
 		target_ref = WEAKREF(nesting_box)
@@ -190,9 +190,9 @@
 	controller.current_movement_target = target_ref.resolve()
 	return TRUE
 
-/datum/ai_behavior/find_and_lay/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/find_and_lay/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 
 	if(!controller.current_movement_target)
 		finish_action(controller, TRUE)

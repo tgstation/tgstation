@@ -28,7 +28,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/credit_type = CREDIT_TYPE_CREDIT
 	///Whether the console can only use express mode ONLY
 	var/forced_express = FALSE
-	///Multiplied cost to use express mode
+	///Multiplied cost to use for cargo mode
+	var/cargo_cost_multiplier = 1
+	///Multiplied cost to use for express mode
 	var/express_cost_multiplier = 2
 	///The categories of orderable items this console can view and purchase.
 	var/list/order_categories = list()
@@ -69,10 +71,17 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		ui = new(user, src, "ProduceConsole", name)
 		ui.open()
 
+/**
+ * points is any type of currency this machine accepts(money, mining points etc) which is displayed on the ui
+ * Args:
+ * card - The ID card we retrive these points from
+ */
+/obj/machinery/computer/order_console/proc/retrive_points(obj/item/card/id/id_card)
+	return FLOOR(id_card.registered_account?.account_balance, 1)
+
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
-	var/cost = get_total_cost()
-	data["total_cost"] = "[cost] (Express: [cost * express_cost_multiplier])"
+	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	if(!isliving(user))
@@ -80,7 +89,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(id_card)
-		data["points"] = id_card.registered_account?.account_balance
+		data["points"] = retrive_points(id_card)
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
@@ -97,17 +106,21 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	data["express_tooltip"] = express_tooltip
 	data["purchase_tooltip"] = purchase_tooltip
 	data["forced_express"] = forced_express
+	data["cargo_value"] = CARGO_CRATE_VALUE
+	data["cargo_cost_multiplier"] = cargo_cost_multiplier
+	data["express_cost_multiplier"] = express_cost_multiplier
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
+
 		data["order_datums"] += list(list(
 			"name" = item.name,
 			"desc" = item.desc,
 			"cat" = item.category_index,
 			"ref" = REF(item),
-			"cost" = item.cost_per_order,
+			"cost" = FLOOR(item.cost_per_order * cargo_cost_multiplier, 1),
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
 		))
 	return data
@@ -136,20 +149,19 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
-		if("purchase", "ltsrbt_deliver")
+		if("purchase")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			if(forced_express)
 				return ui_act(action = "express")
+			//So miners cant spam buy crates for a very low price
+			if(get_total_cost() < CARGO_CRATE_VALUE)
+				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
 			if(!purchase_items(used_id_card))
-				return
-			//So miners cant spam buy crates for a very low price
-			if(get_total_cost() < CARGO_CRATE_VALUE)
-				say("For the delivery order needs to cost more or equal to [CARGO_CRATE_VALUE] points!")
 				return
 			if(blackbox_key)
 				SSblackbox.record_feedback("tally", "non_express_[blackbox_key]_order", 1, name)
@@ -197,16 +209,30 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * returns TRUE if we can afford, FALSE otherwise.
  */
 /obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, express = FALSE)
-	var/final_cost = get_total_cost()
-	var/failure_message = "Sorry, but you do not have enough money."
-	if(express)
-		final_cost *= express_cost_multiplier
-		failure_message += " Remember, Express upcharges the cost!"
-	if(card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
+	var/final_cost = get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier)
+	var/failure_message = !express ? "Sorry, but you do not have enough [credit_type]." : " Remember, Express upcharges the cost!"
+	if(subtract_points(final_cost, card))
 		return TRUE
 	say(failure_message)
 	return FALSE
 
+/**
+ * whatever type of points was retrived in retrive_points() subtract those type of points from the card upon confirming order
+ * Args:
+ * final_cost - amount of points to subtract from this card
+ * card - The ID card to subtract these points from
+ * returns TRUE if successfull
+ */
+/obj/machinery/computer/order_console/proc/subtract_points(final_cost, obj/item/card/id/card)
+	return card.registered_account.adjust_money(-final_cost, "[name]: Purchase")
+
+/**
+ * start of the shipment of your order
+ * Args:
+ * purchaser - The mob who is making this purchase
+ * card - The card used to place this order
+ * groceries - the list of orders to be placed
+ */
 /obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	return
 

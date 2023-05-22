@@ -239,14 +239,14 @@
 	chassis.add_overlay(droid_overlay)
 
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/process(seconds_per_tick)
 	if(!chassis)
 		return PROCESS_KILL
-	var/h_boost = health_boost * delta_time
+	var/h_boost = health_boost * seconds_per_tick
 	var/repaired = FALSE
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
-	else if(chassis.internal_damage && DT_PROB(8, delta_time))
+	else if(chassis.internal_damage && SPT_PROB(8, seconds_per_tick))
 		for(var/int_dam_flag in repairable_damage)
 			if(!(chassis.internal_damage & int_dam_flag))
 				continue
@@ -346,7 +346,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	load_fuel(weapon)
 
-/obj/item/mecha_parts/mecha_equipment/generator/process(delta_time)
+/obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
 		activated = FALSE
 		return PROCESS_KILL
@@ -364,8 +364,8 @@
 	var/use_fuel = fuelrate_idle
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuelrate_active
-		chassis.give_power(rechargerate * delta_time)
-	fuel.amount -= min(delta_time * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
+		chassis.give_power(rechargerate * seconds_per_tick)
+	fuel.amount -= min(seconds_per_tick * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 

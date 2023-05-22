@@ -62,8 +62,9 @@
 /datum/plant_gene/core/proc/apply_stat(obj/item/seeds/our_seed)
 	return
 
-/datum/plant_gene/core/New(initial_value = 0)
-	value = initial_value
+/datum/plant_gene/core/New(initial_value)
+	if(initial_value)
+		value = initial_value
 
 	return
 
@@ -93,6 +94,13 @@
 
 /datum/plant_gene/core/production/apply_stat(obj/item/seeds/our_seed)
 	our_seed.production = value
+
+/datum/plant_gene/core/maturation
+	name = "Maturation Speed"
+	value = 6
+
+/datum/plant_gene/core/maturation/apply_stat(obj/item/seeds/S)
+	S.maturation = value
 
 /datum/plant_gene/core/yield
 	name = "Yield"

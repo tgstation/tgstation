@@ -1,5 +1,6 @@
 //Preferences stuff
 	//Hairstyles
+GLOBAL_LIST_EMPTY(roundstart_hairstyles_list)
 GLOBAL_LIST_EMPTY(hairstyles_list) //stores /datum/sprite_accessory/hair indexed by name
 GLOBAL_LIST_EMPTY(hairstyles_male_list) //stores only hair names
 GLOBAL_LIST_EMPTY(hairstyles_female_list) //stores only hair names
@@ -231,8 +232,8 @@ GLOBAL_LIST_INIT(backpacklist, list(
 GLOBAL_LIST_EMPTY(female_clothing_icons)
 
 GLOBAL_LIST_INIT(scarySounds, list(
-	'sound/effects/clownstep1.ogg',
-	'sound/effects/clownstep2.ogg',
+	'sound/effects/footstep/clownstep1.ogg',
+	'sound/effects/footstep/clownstep2.ogg',
 	'sound/effects/glassbr1.ogg',
 	'sound/effects/glassbr2.ogg',
 	'sound/effects/glassbr3.ogg',

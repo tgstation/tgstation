@@ -560,7 +560,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		is_slow = TRUE
 		speed = 2
 
-/mob/living/basic/pet/dog/corgi/ian/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/corgi/ian/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -635,7 +635,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	unique_pet = TRUE
 	held_state = "narsian"
 
-/mob/living/basic/pet/dog/corgi/narsie/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/corgi/narsie/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && !istype(P,/mob/living/basic/pet/dog/corgi/narsie))
@@ -821,13 +821,13 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/basic/pet/dog/breaddog/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 
 	if(health < maxHealth)
-		adjustBruteLoss(-4 * delta_time) //Fast life regen
+		adjustBruteLoss(-4 * seconds_per_tick) //Fast life regen
 
 	for(var/mob/living/carbon/humanoid_entities in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
 		humanoid_entities.add_mood_event("kobun", /datum/mood_event/kobun)

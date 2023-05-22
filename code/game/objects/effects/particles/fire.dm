@@ -1,3 +1,4 @@
+// Fire related particles.
 /particles/embers
 	icon = 'icons/effects/particles/generic.dmi'
 	icon_state = list("dot"=4,"cross"=1,"curl"=1)
@@ -14,3 +15,21 @@
 	drift = generator(GEN_VECTOR, list(-0.1,0), list(0.1,0.025), UNIFORM_RAND)
 	spin = generator(GEN_NUM, list(-15,15), NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.5,0.5), list(2,2), NORMAL_RAND)
+
+/particles/bonfire
+	icon = 'icons/effects/particles/bonfire.dmi'
+	icon_state = "bonfire"
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 4
+	lifespan = 0.7 SECONDS
+	fade = 1 SECONDS
+	grow = -0.01
+	velocity = list(0, 0)
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
+	gravity = list(0, 0.95)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
+	rotation = 30
+	spin = generator(GEN_NUM, -20, 20)

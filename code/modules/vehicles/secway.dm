@@ -25,10 +25,10 @@
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/secway/process(delta_time)
+/obj/vehicle/ridden/secway/process(seconds_per_tick)
 	if(atom_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(DT_PROB(10, delta_time))
+	if(SPT_PROB(10, seconds_per_tick))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = src)

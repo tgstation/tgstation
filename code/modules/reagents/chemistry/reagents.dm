@@ -119,6 +119,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///The rate of evaporation in units per call
 	var/evaporation_rate = 0.5
 
+	///is this chemical exempt from istype restrictions
+	var/bypass_restriction = FALSE
+	///chemicals that aren't typepathed but are useless so we remove
+	var/restricted = FALSE
+
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
@@ -164,16 +169,19 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
 
+/datum/reagent/proc/evaporate(turf/exposed_turf, reac_volume)
+	return
+
 ///Called whenever a reagent is on fire, or is in a holder that is on fire. (WIP)
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * delta_time) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /*
 Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
@@ -205,13 +213,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, delta_time)
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * delta_time)
+	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
@@ -231,7 +239,7 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	return
 
 /// Called when an overdose starts
@@ -247,6 +255,10 @@ Primarily used in reagents/reaction_agents
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
+
+/datum/reagent/proc/generate_infusion_values(datum/reagents/chems)
+	if(!chems)
+		return
 
 /// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
 /datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -335,5 +347,5 @@ Primarily used in reagents/reaction_agents
 
 	return reagent_strings.Join(join_text)
 
-/datum/reagent/proc/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/proc/feed_interaction(mob/living/basic/chicken/target, volume)
 	return

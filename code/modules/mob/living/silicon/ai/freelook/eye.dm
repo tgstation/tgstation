@@ -112,7 +112,9 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai, destination)
+			if(!H.move_hologram(ai, destination))
+				H.clear_holo(ai)
+
 		if(ai.camera_light_on)
 			ai.light_cameras()
 		if(ai.master_multicam)

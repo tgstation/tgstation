@@ -1,0 +1,6 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - balance: "Removed black gloves and handcuffs from the rare maint pool"
+  - balance: "Full maint pill bottles are now in the rare maint pool"
+  - balance: "Maint oddities now spawn around once every 12 rounds instead of once every 50"

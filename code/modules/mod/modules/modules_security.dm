@@ -199,7 +199,7 @@
 	/// Our linked bodybag.
 	var/obj/structure/closet/body_bag/linked_bodybag
 
-/obj/item/mod/module/criminalcapture/on_process(delta_time)
+/obj/item/mod/module/criminalcapture/on_process(seconds_per_tick)
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 

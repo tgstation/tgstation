@@ -46,9 +46,10 @@
 		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
 		if(!admin)
 			if(can_rotate)
-				. += span_notice("Alt-click to adjust its direction.")
+				. += span_notice("Use your <b>hand</b> to adjust its direction.")
+				. += span_notice("Use a <b>screwdriver</b> to lock the rotation.")
 			else
-				. += span_notice("Use screwdriver to unlock the rotation.")
+				. += span_notice("Use <b>screwdriver</b> to unlock the rotation.")
 
 /obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)
@@ -170,13 +171,6 @@
 	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
-/obj/structure/reflector/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
-	else if(finished)
-		rotate(user)
-
-
 //TYPES OF REFLECTORS, SINGLE, DOUBLE, BOX
 
 //SINGLE
@@ -288,3 +282,44 @@
 
 /obj/item/circuit_component/reflector/input_received(datum/port/input/port)
 	attached_reflector?.set_angle(angle.value)
+
+// tgui menu
+
+/obj/structure/reflector/ui_interact(mob/user, datum/tgui/ui)
+	if(!finished)
+		user.balloon_alert(user, "nothing to rotate!")
+		return
+	if(!can_rotate)
+		user.balloon_alert(user, "can't rotate!")
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Reflector")
+		ui.open()
+
+/obj/structure/reflector/ui_data(mob/user)
+	var/list/data = list()
+	data["rotation_angle"] = rotation_angle
+	data["reflector_name"] = name
+
+	return data
+
+/obj/structure/reflector/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("rotate")
+			if (!can_rotate || admin)
+				return FALSE
+			var/new_angle = params["rotation_angle"]
+			if(!isnull(new_angle))
+				set_angle(SIMPLIFY_DEGREES(new_angle))
+			return TRUE
+		if("calculate")
+			if (!can_rotate || admin)
+				return FALSE
+			var/new_angle = rotation_angle + params["rotation_angle"]
+			if(!isnull(new_angle))
+				set_angle(SIMPLIFY_DEGREES(new_angle))
+			return TRUE

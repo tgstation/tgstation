@@ -16,7 +16,7 @@
 	resistance_flags = FLAMMABLE
 	var/mopcount = 0
 	///Maximum volume of reagents it can hold.
-	var/max_reagent_volume = 15
+	var/max_reagent_volume = 45
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
@@ -31,6 +31,9 @@
 	AddComponent(/datum/component/liquids_interaction, TYPE_PROC_REF(/obj/item/mop, attack_on_liquids_turf))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
+
+/obj/item/mop/attack_secondary(mob/living/victim, mob/living/user, params)
+
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src
@@ -66,8 +69,16 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
+
 ///Checks whether or not we should clean.
 /obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
+	var/turf/turf_to_clean = atom_to_clean
+
+	// Disable normal cleaning if there are liquids.
+	if(isturf(atom_to_clean) && turf_to_clean.liquids)
+		to_chat(cleaner, span_warning("It would be quite difficult to clean this with a pool of liquids on top!"))
+		return DO_NOT_CLEAN
+
 	if(clean_blacklist[atom_to_clean.type])
 		return DO_NOT_CLEAN
 	if(reagents.total_volume < 0.1)
@@ -97,7 +108,7 @@
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
-	max_reagent_volume = 10
+	max_reagent_volume = 100
 	icon_state = "advmop"
 	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -124,8 +135,8 @@
 	to_chat(user, span_notice("You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
-/obj/item/mop/advanced/process(delta_time)
-	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * delta_time)
+/obj/item/mop/advanced/process(seconds_per_tick)
+	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * seconds_per_tick)
 	if(amadd > 0)
 		reagents.add_reagent(refill_reagent, amadd)
 

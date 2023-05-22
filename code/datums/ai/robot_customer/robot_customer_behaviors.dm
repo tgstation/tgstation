@@ -1,7 +1,7 @@
 /datum/ai_behavior/find_seat
 	action_cooldown = 8 SECONDS
 
-/datum/ai_behavior/find_seat/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/find_seat/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
@@ -31,8 +31,8 @@
 		finish_action(controller, TRUE)
 		return
 
-	// DT_PROB 1.5 is about a 60% chance that the tourist will have vocalised at least once every minute.
-	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(1.5, delta_time))
+	// SPT_PROB 1.5 is about a 60% chance that the tourist will have vocalised at least once every minute.
+	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || SPT_PROB(1.5, seconds_per_tick))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
 		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
 
@@ -42,7 +42,7 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 0
 
-/datum/ai_behavior/order_food/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
@@ -64,19 +64,19 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 0
 
-/datum/ai_behavior/wait_for_food/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/wait_for_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	if(controller.blackboard[BB_CUSTOMER_EATING])
 		finish_action(controller, TRUE)
 		return
 
-	controller.blackboard[BB_CUSTOMER_PATIENCE] -= delta_time * 10 // Convert delta_time to a SECONDS equivalent.
+	controller.blackboard[BB_CUSTOMER_PATIENCE] -= seconds_per_tick * 10 // Convert seconds_per_tick to a SECONDS equivalent.
 	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
 		finish_action(controller, FALSE)
 		return
 
-	// DT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
-	if(DT_PROB(0.85, delta_time))
+	// SPT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
+	if(SPT_PROB(0.85, seconds_per_tick))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
@@ -124,7 +124,7 @@
 	var/datum/venue/attending_venue = controller.blackboard[venue_key]
 	set_movement_target(controller, attending_venue.restaurant_portal)
 
-/datum/ai_behavior/leave_venue/perform(delta_time, datum/ai_controller/controller, venue_key)
+/datum/ai_behavior/leave_venue/perform(seconds_per_tick, datum/ai_controller/controller, venue_key)
 	. = ..()
 	qdel(controller.pawn) //save the world, my final message, goodbye.
 	finish_action(controller, TRUE)

@@ -56,11 +56,6 @@
  * This should only be used internally. If you are directly creating more of these, you're
  * almost guaranteed to be doing something wrong.
  */
-/**
- * Render step that modfies an atom's color
- * Useful for creating coherent emissive blockers out of things like glass floors by lowering alpha statically using matrixes
- * Other stuff too I'm sure
- */
 /atom/movable/render_step/emissive_blocker
 	name = "emissive blocker"
 	plane = EMISSIVE_PLANE
@@ -69,3 +64,18 @@
 /atom/movable/render_step/emissive_blocker/Initialize(mapload, source)
 	. = ..()
 	src.color = GLOB.em_block_color
+
+
+/**
+ * Render step that makes the passed in render source GLOW
+ *
+ * Copies an appearance vis render_target and render_source on to the emissive plane
+ */
+/atom/movable/render_step/emissive
+	name = "emissive"
+	plane = EMISSIVE_PLANE
+	appearance_flags = EMISSIVE_APPEARANCE_FLAGS|RESET_TRANSFORM
+
+/atom/movable/render_step/emissive/Initialize(mapload, source)
+	. = ..()
+	src.color = GLOB.emissive_color

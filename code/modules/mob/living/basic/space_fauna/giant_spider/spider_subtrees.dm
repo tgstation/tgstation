@@ -1,7 +1,7 @@
 /// Search for a nearby location to put webs on
 /datum/ai_planning_subtree/find_unwebbed_turf
 
-/datum/ai_planning_subtree/find_unwebbed_turf/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/find_unwebbed_turf/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	controller.queue_behavior(/datum/ai_behavior/find_unwebbed_turf)
 
 /// Find an unwebbed nearby turf and store it
@@ -12,7 +12,7 @@
 	/// How far do we look for unwebbed turfs?
 	var/scan_range = 3
 
-/datum/ai_behavior/find_unwebbed_turf/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/find_unwebbed_turf/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/spider = controller.pawn
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
@@ -53,7 +53,7 @@
 	/// Key where the target turf is stored
 	var/target_key = BB_SPIDER_WEB_TARGET
 
-/datum/ai_planning_subtree/spin_web/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/spin_web/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/weakref/weak_action = controller.blackboard[action_key]
 	var/datum/action/cooldown/using_action = weak_action?.resolve()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
@@ -80,7 +80,7 @@
 	set_movement_target(controller, target_turf)
 	return ..()
 
-/datum/ai_behavior/spin_web/perform(delta_time, datum/ai_controller/controller, action_key, target_key)
+/datum/ai_behavior/spin_web/perform(seconds_per_tick, datum/ai_controller/controller, action_key, target_key)
 	. = ..()
 	var/datum/weakref/weak_action = controller.blackboard[action_key]
 	var/datum/action/cooldown/web_action = weak_action?.resolve()

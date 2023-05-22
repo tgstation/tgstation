@@ -41,7 +41,7 @@
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
 
-/obj/machinery/power/rad_collector/process(delta_time)
+/obj/machinery/power/rad_collector/process(seconds_per_tick)
 	if(!loaded_tank)
 		return
 	var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
@@ -50,7 +50,7 @@
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 		return
-	var/gasdrained = min(power_production_drain * drain_ratio * delta_time, tank_mix.gases[/datum/gas/plasma][MOLES])
+	var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[/datum/gas/plasma][MOLES])
 	tank_mix.gases[/datum/gas/plasma][MOLES] -= gasdrained
 	tank_mix.assert_gas(/datum/gas/tritium)
 	tank_mix.gases[/datum/gas/tritium][MOLES] += gasdrained

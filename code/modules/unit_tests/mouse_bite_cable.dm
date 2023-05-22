@@ -17,7 +17,7 @@
 	// relocate the rat
 	biter.forceMove(stage)
 
-	// Ai controlling processes expect a delta_time, supply a real-fake dt
+	// Ai controlling processes expect a seconds_per_tick, supply a real-fake dt
 	var/fake_dt = SSai_controllers.wait * 0.1
 	// Select behavior - this will queue finding the cable
 	biter.ai_controller.SelectBehaviors(fake_dt)

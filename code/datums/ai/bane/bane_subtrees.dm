@@ -1,5 +1,5 @@
 ///The bat is broken!
-/datum/ai_planning_subtree/bane_hunting/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bane_hunting/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/batman = controller.blackboard[BB_BANE_BATMAN]
 	if(!batman)
 		for(var/mob/living/possibly_the_dark_knight in oview(7, controller.pawn))

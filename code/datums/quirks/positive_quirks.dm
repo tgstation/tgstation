@@ -38,17 +38,17 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 
-/datum/quirk/drunkhealing/process(delta_time)
+/datum/quirk/drunkhealing/process(seconds_per_tick)
 	switch(quirk_holder.get_drunk_amount())
 		if (6 to 40)
-			quirk_holder.adjustBruteLoss(-0.1 * delta_time, FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			quirk_holder.adjustFireLoss(-0.05 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustBruteLoss(-0.1 * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustFireLoss(-0.05 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 		if (41 to 60)
-			quirk_holder.adjustBruteLoss(-0.4 * delta_time, FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			quirk_holder.adjustFireLoss(-0.2 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustBruteLoss(-0.4 * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustFireLoss(-0.2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 		if (61 to INFINITY)
-			quirk_holder.adjustBruteLoss(-0.8 * delta_time, FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			quirk_holder.adjustFireLoss(-0.4 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustBruteLoss(-0.8 * seconds_per_tick, FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			quirk_holder.adjustFireLoss(-0.4 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/quirk/empath
 	name = "Empath"

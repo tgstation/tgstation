@@ -301,6 +301,7 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = TRUE
+
 	else if(ignore_root_path)
 		for(var/current_path in pathlist)
 			for(var/subtype in subtypesof(current_path))
@@ -350,6 +351,7 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = pathlist[current_path]
+
 	else if(ignore_root_path)
 		for(var/current_path in pathlist)
 			for(var/subtype in subtypesof(current_path))

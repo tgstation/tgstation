@@ -160,11 +160,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(old_on != on)
 		update_appearance()
 
-/obj/machinery/telecomms/process(delta_time)
+/obj/machinery/telecomms/process(seconds_per_tick)
 	update_power()
 
 	if(traffic > 0)
-		traffic -= netspeed * delta_time
+		traffic -= netspeed * seconds_per_tick
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()

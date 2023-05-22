@@ -305,25 +305,17 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
 "bt" = (
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 2;
-	pixel_y = 8
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer{
+	pixel_y = 10
+	},
+/obj/item/healthanalyzer{
+	pixel_y = 10
 	},
 /turf/open/floor/iron/edge,
 /area/shuttle/syndicate/medical)

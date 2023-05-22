@@ -5276,6 +5276,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bWP" = (
@@ -7750,6 +7751,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cXw" = (
@@ -8740,7 +8742,7 @@
 "dra" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
@@ -11079,6 +11081,10 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/item/phone{
+	pixel_x = 10;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/corner{
 	dir = 1
@@ -15541,6 +15547,12 @@
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"fWk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/bot,
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "fWm" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/item/toy/plush/beeplushie{
@@ -15659,6 +15671,12 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/random/directional/east,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fYJ" = (
@@ -17407,6 +17425,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gFL" = (
@@ -21857,7 +21876,6 @@
 /turf/open/floor/plating,
 /area/station/security/range)
 "ilc" = (
-/obj/machinery/suit_storage_unit/atmos,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -22648,6 +22666,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"iwX" = (
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/storage/gas)
 "ixd" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -25313,11 +25336,14 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "joo" = (
-/obj/effect/landmark/start/station_engineer,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/structure/tank_dispenser,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "joq" = (
 /obj/machinery/door/firedoor,
@@ -30344,7 +30370,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
 "lbH" = (
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Featherbottom";
 	real_name = "Featherbottom"
 	},
@@ -34105,8 +34131,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mwN" = (
@@ -40586,11 +40614,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "oKx" = (
-/obj/structure/tank_dispenser,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "oKy" = (
@@ -45125,6 +45153,11 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
+"qsT" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "qsV" = (
 /obj/structure/table/reinforced,
 /obj/item/phone{
@@ -45835,7 +45868,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "qGo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -55160,19 +55192,17 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "tTo" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_alert{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_y = -32
 	},
-/turf/open/floor/iron/dark/corner,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage/gas)
 "tTu" = (
 /obj/structure/window/reinforced/spawner/directional/north{
@@ -57096,6 +57126,7 @@
 	pixel_x = 9
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/autolathe,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "uBC" = (
@@ -58505,11 +58536,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/table,
-/obj/item/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/machinery/computer/atmos_alert,
 /turf/open/floor/iron/checker,
 /area/station/engineering/atmos/storage/gas)
 "vbL" = (
@@ -62240,15 +62267,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wsQ" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /obj/machinery/light/directional/south,
-/obj/effect/landmark/event_spawn,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/corner,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage/gas)
 "wsS" = (
 /obj/machinery/door/airlock/external{
@@ -102205,7 +102232,7 @@ wFM
 xgD
 rMz
 xwP
-xwP
+fWk
 nDO
 dsI
 tUn
@@ -107041,7 +107068,7 @@ tCS
 fUg
 rlu
 qGo
-sHT
+qsT
 kbU
 uXd
 kST
@@ -109386,7 +109413,7 @@ uRL
 peM
 maS
 pIw
-pIw
+iwX
 hbR
 gxx
 qxE

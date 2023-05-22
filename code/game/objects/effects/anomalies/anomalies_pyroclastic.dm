@@ -7,9 +7,9 @@
 	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
-/obj/effect/anomaly/pyro/anomalyEffect(delta_time)
+/obj/effect/anomaly/pyro/anomalyEffect(seconds_per_tick)
 	..()
-	ticks += delta_time
+	ticks += seconds_per_tick
 	if(ticks < releasedelay)
 		return FALSE
 	else
@@ -64,7 +64,7 @@
 		var/mob/living/living = bumpee
 		living.dust()
 
-/obj/effect/anomaly/pyro/big/anomalyEffect(delta_time)
+/obj/effect/anomaly/pyro/big/anomalyEffect(seconds_per_tick)
 	. = ..()
 
 	if(!.)

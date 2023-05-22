@@ -22,6 +22,7 @@
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
+	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
 	return ..()
 
 /turf/open/floor/circuit/update_appearance(updates)

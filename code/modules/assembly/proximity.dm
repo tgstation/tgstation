@@ -98,10 +98,10 @@
 
 	return TRUE
 
-/obj/item/assembly/prox_sensor/process(delta_time)
+/obj/item/assembly/prox_sensor/process(seconds_per_tick)
 	if(!timing)
 		return
-	time -= delta_time
+	time -= seconds_per_tick
 	if(time <= 0)
 		timing = FALSE
 		toggle_scan(TRUE)

@@ -76,14 +76,14 @@
 	transfer_fingerprints_to(result)
 	return result
 
-/obj/effect/particle_effect/fluid/foam/process(delta_time)
-	var/ds_delta_time = delta_time SECONDS
-	lifetime -= ds_delta_time
+/obj/effect/particle_effect/fluid/foam/process(seconds_per_tick)
+	var/ds_seconds_per_tick = seconds_per_tick SECONDS
+	lifetime -= ds_seconds_per_tick
 	if(lifetime <= 0)
 		kill_foam()
 		return
 
-	var/fraction = (ds_delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+	var/fraction = (ds_seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	var/turf/location = loc
 	for(var/obj/object in location)
 		if(object == src)
@@ -94,9 +94,9 @@
 
 	var/hit = 0
 	for(var/mob/living/foamer in location)
-		hit += foam_mob(foamer, delta_time)
+		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
-		lifetime += ds_delta_time //this is so the decrease from mobs hit and the natural decrease don't cumulate.
+		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
 	reagents.expose(location, VAPOR, fraction)
 
@@ -105,25 +105,25 @@
  *
  * Arguments:
  * - [foaming][/mob/living]: The mob that this foam is acting on.
- * - delta_time: The amount of time that this foam is acting on them over.
+ * - seconds_per_tick: The amount of time that this foam is acting on them over.
  *
  * Returns:
  * - [TRUE]: If the foam was successfully applied to the mob. Used to scale how quickly foam dissipates according to the number of mobs it is applied to.
  * - [FALSE]: Otherwise.
  */
-/obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, delta_time)
+/obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(lifetime <= 0)
 		return FALSE
 	if(!istype(foaming))
 		return FALSE
 
-	delta_time = min(delta_time SECONDS, lifetime)
-	var/fraction = (delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+	seconds_per_tick = min(seconds_per_tick SECONDS, lifetime)
+	var/fraction = (seconds_per_tick * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	reagents.expose(foaming, VAPOR, fraction)
-	lifetime -= delta_time
+	lifetime -= seconds_per_tick
 	return TRUE
 
-/obj/effect/particle_effect/fluid/foam/spread(delta_time = 0.2 SECONDS)
+/obj/effect/particle_effect/fluid/foam/spread(seconds_per_tick = 0.2 SECONDS)
 	if(group.total_size > group.target_size)
 		return
 	var/turf/location = get_turf(src)
@@ -138,7 +138,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			foam_mob(foaming, delta_time)
+			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))
@@ -256,7 +256,7 @@
 		absorbed_plasma = 0
 	return deposit
 
-/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, delta_time)
+/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(!istype(foaming))
 		return
 	foaming.adjust_wet_stacks(2)

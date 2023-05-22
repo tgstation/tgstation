@@ -249,13 +249,15 @@
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	..()
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	for(var/i in 1 to 3)
 		new /obj/item/paper/fluff/jobs/security/court_judgement (src)
 	new /obj/item/pen (src)
 	new /obj/item/clothing/suit/costume/judgerobe (src)
 	new /obj/item/clothing/head/costume/powdered_wig (src)
 	new /obj/item/storage/briefcase(src)
+	new /obj/item/clothing/under/suit/black_really(src)
+	new /obj/item/clothing/neck/tie/red(src)
 
 /obj/structure/closet/secure_closet/contraband/armory
 	anchored = TRUE

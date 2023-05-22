@@ -181,7 +181,7 @@
 	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
 	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
 	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
-	returned_message += "\nNutrition level: [span_notice("[scanned_tray.nutrilevel] / [scanned_tray.maxnutri]")]"
+	returned_message += "\nNutrition level: [span_notice("[round(scanned_tray.reagents.total_volume)] / [scanned_tray.maxnutri]")]"
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "\nYield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]"
 
@@ -200,6 +200,7 @@
 	if(scanned_tray.myseed)
 		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
 		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
+		returned_message += "\nPlant Growth: [round(((scanned_tray.growth * (1.01 ** -scanned_tray.myseed.maturation)) / scanned_tray.myseed.harvest_age) * 100, 0.1)]%"
 		returned_message += scan_plant_chems(scanned_tray.myseed, TRUE)
 	else
 		returned_message += span_bold("No plant found.")
@@ -289,11 +290,11 @@
 		text += "\nYield: [span_notice("[scanned.yield]")]"
 	text += "\nMaturation speed: [span_notice("[scanned.maturation]")]"
 	if(scanned.yield != -1)
-		text += "- Production speed: [span_notice("[scanned.production]")]\n"
-	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
-	text += "- Lifespan: [span_notice("[scanned.lifespan]")]\n"
-	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
-	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
+		text += "\nProduction speed: [span_notice("[scanned.production]")]"
+	text += "\nEndurance: [span_notice("[scanned.endurance]")]"
+	text += "\nLifespan: [span_notice("[scanned.lifespan]")]"
+	text += "\nWeed Growth Rate: [span_notice("[scanned.weed_rate]")]"
+	text += "\nWeed Vulnerability: [span_notice("[scanned.weed_chance]")]"
 	if(scanned.rarity)
 		text += "\nSpecies Discovery Value: [span_notice("[scanned.rarity]")]"
 	var/all_removable_traits = ""
@@ -441,8 +442,8 @@
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
-	flags_1 = NONE
 	resistance_flags = FLAMMABLE
+	flags_1 = NONE
 
 /obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
@@ -499,7 +500,8 @@
 /obj/item/hatchet/wooden
 	desc = "A crude axe blade upon a short wooden handle."
 	icon_state = "woodhatchet"
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
 /obj/item/scythe

@@ -6,7 +6,7 @@
 /datum/ai_behavior/find_and_set
 	action_cooldown = 2 SECONDS
 
-/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range)
+/datum/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
 	. = ..()
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(find_this_thing)

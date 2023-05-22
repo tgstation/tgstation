@@ -32,16 +32,7 @@
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
-			mod = rand(1,4)
-			switch(mod)
-				if(1)
-					new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
-				if(2)
-					new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
-				if(3)
-					new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
-				if(4)
-					new /obj/item/disk/design_disk/modkit_disc/bounty(src)
+			new /obj/item/gun/magic/hook (src)
 		if(8)
 			new /obj/item/rod_of_asclepius(src)
 		if(9)
@@ -106,7 +97,13 @@
 	new /obj/item/crusher_trophy/tail_spike(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum
-	name = "bubblegum chest"
+	name = "\improper Ancient Sarcophagus"
+	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
+	icon_state = "necro_bubblegum"
+	lid_icon_state = "necro_bubblegum_lid"
+	lid_x = -26
+	lid_y = 2
+
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)

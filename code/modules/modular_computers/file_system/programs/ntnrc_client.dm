@@ -176,7 +176,7 @@
 			COOLDOWN_START(src, ping_cooldown, PING_COOLDOWN_TIME)
 			return TRUE
 
-/datum/computer_file/program/chatclient/process_tick(delta_time)
+/datum/computer_file/program/chatclient/process_tick(seconds_per_tick)
 	. = ..()
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
 	if(program_state != PROGRAM_STATE_KILLED)

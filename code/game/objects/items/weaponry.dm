@@ -692,6 +692,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
+	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
 	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
@@ -711,6 +712,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 	AddElement(/datum/element/kneecapping)
+	AddComponent(/datum/component/multi_hit, icon_state = "swipe", width = 3)
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -743,6 +745,31 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else if(!QDELETED(target) && !target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+
+/obj/item/melee/baseball_bat/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
+	// we obtain the relative direction from the bat itself to the target
+	var/relative_direction = get_cardinal_dir(direction_traveled, target_mob)
+	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
+	. = ..()
+	var/passed = TRUE
+	if(iscarbon(target_mob))
+		var/mob/living/carbon/target = target_mob
+		target.stamina.adjust(-force * 2)
+		if(target.stamina.current > 80 && !target.incapacitated())
+			passed = FALSE
+
+	if(passed)
+		if(homerun_ready)
+			user.visible_message(span_userdanger("It's a home run!"))
+			if(!QDELETED(target_mob))
+				target_mob.throw_at(throw_target, rand(8,10), 14, user)
+			SSexplosions.medturf += throw_target
+			playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+			homerun_ready = FALSE
+			return
+		else if(!QDELETED(target_mob) && !target_mob.anchored)
+			var/whack_speed = (prob(60) ? 1 : 4)
+			target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
@@ -816,6 +843,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "This bat is made of highly reflective, highly armored material."
 	icon_state = "baseball_bat_metal"
 	inhand_icon_state = "baseball_bat_metal"
+	custom_materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT * 3.5)
+	resistance_flags = NONE
 	force = 12
 	throwforce = 15
 	mob_thrower = TRUE
@@ -913,6 +942,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/gohei
 	name = "gohei"
 	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
+	resistance_flags = FLAMMABLE
 	force = 5
 	throwforce = 5
 	hitsound = SFX_SWING_HIT

@@ -135,3 +135,19 @@
 /// A cut-out proc for [/atom/proc/bullet_act] so living mobs can have their own armor behavior checks without causing issues with needing their own on_hit call
 /atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0
+
+/**
+ * Should be called when the atom is destroyed by fire
+ * This proc is terrible. I do not know why it exists.
+ * Please remove it at some point.
+ */
+/atom/proc/burn()
+	return
+
+/**
+ * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
+ * Can be hooked onto for extra behavior.
+ */
+/atom/proc/extinguish()
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)

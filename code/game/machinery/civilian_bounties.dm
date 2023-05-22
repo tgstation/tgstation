@@ -72,7 +72,7 @@
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
  */
-/obj/machinery/computer/piratepad_control/civilian/send()
+/obj/machinery/computer/piratepad_control/civilian/send(mob/user)
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
@@ -105,6 +105,9 @@
 
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
+
+
+		usr.client.prefs.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "completed a bounty", respects_roundcap = TRUE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -181,7 +184,7 @@
 		if("recalc")
 			recalc()
 		if("send")
-			start_sending()
+			start_sending(usr)
 		if("stop")
 			stop_sending()
 		if("pick")
@@ -303,7 +306,7 @@
 	QDEL_NULL(radio)
 	return COMPONENT_STOP_EXPORT // stops the radio from exporting, not the cube
 
-/obj/item/bounty_cube/process(delta_time)
+/obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
 		//set up our nag message

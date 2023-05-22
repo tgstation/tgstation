@@ -21,9 +21,8 @@
 /area/ruin/space/ks13/command/bridge)
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
 "ai" = (
@@ -204,9 +203,8 @@
 "cn" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
@@ -225,9 +223,8 @@
 /area/ruin/space/ks13/security/sec)
 "cu" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
@@ -257,15 +254,13 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
+/obj/machinery/power/apc/auto_name/directional/west{
 	environ = 0;
 	equipment = 0;
-	lighting = 0;
-	name = "Aft Solar APC";
-	pixel_x = -25;
-	start_charge = 0
+	lighting = 0
 	},
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "de" = (
@@ -837,9 +832,8 @@
 /obj/structure/rack,
 /obj/item/stock_parts/cell/lead,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_storage)
 "mb" = (
@@ -861,9 +855,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "mv" = (
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
@@ -948,9 +941,8 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nK" = (
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /obj/structure/table_frame,
 /obj/item/bot_assembly/medbot,
@@ -1182,9 +1174,8 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
@@ -1419,9 +1410,8 @@
 "qJ" = (
 /obj/structure/table_frame,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/hydro)
 "qK" = (
@@ -1807,9 +1797,8 @@
 "sA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
@@ -1877,9 +1866,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "sM" = (
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/hallway/starboard_bow)
@@ -1906,9 +1894,8 @@
 "sS" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -2110,9 +2097,8 @@
 /area/ruin/space/ks13/service/chapel)
 "ug" = (
 /obj/structure/table/glass,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
@@ -2677,9 +2663,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
 "xA" = (
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /obj/structure/rack,
 /obj/item/pushbroom,
@@ -2790,9 +2775,8 @@
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/jani)
 "yc" = (
@@ -3213,9 +3197,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "Am" = (
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron,
@@ -4085,9 +4068,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
 "EI" = (
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge_hall)
@@ -4869,9 +4851,8 @@
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
 "IY" = (
@@ -5066,9 +5047,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "JS" = (
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -5535,9 +5515,8 @@
 "MJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
@@ -5682,9 +5661,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
 "Ns" = (
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/bar)
@@ -5809,9 +5787,8 @@
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "Og" = (
@@ -5879,9 +5856,8 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
 "OA" = (
@@ -6049,9 +6025,8 @@
 /area/ruin/space/ks13/ai/corridor)
 "Pq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
@@ -6130,9 +6105,8 @@
 /obj/structure/frame/machine{
 	anchored = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/kitchen)
@@ -6150,9 +6124,8 @@
 /area/ruin/space/ks13/engineering/singulo)
 "PH" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
@@ -6203,9 +6176,8 @@
 /area/ruin/space/ks13/ai/corridor)
 "PX" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/dorms)
@@ -6492,9 +6464,8 @@
 /area/ruin/space/ks13/service/chapel)
 "RH" = (
 /obj/structure/table_frame,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
@@ -7061,9 +7032,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/science/ordnance)
 "Ug" = (
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
@@ -7630,9 +7600,8 @@
 /area/ruin/space/ks13/service/cafe)
 "Xi" = (
 /obj/machinery/computer/atmos_alert,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
@@ -7713,9 +7682,8 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "XJ" = (
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
@@ -7810,9 +7778,8 @@
 	},
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
@@ -8051,15 +8018,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "Zz" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
+/obj/machinery/power/apc/auto_name/directional/west{
 	environ = 0;
 	equipment = 0;
-	lighting = 0;
-	name = "Starboard Solar APC";
-	pixel_x = -25;
-	start_charge = 0
+	lighting = 0
 	},
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)

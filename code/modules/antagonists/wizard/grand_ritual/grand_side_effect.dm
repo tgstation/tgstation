@@ -315,11 +315,11 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/effect/abstract/local_food_rain/process(delta_time)
-	create_food(delta_time)
+/obj/effect/abstract/local_food_rain/process(seconds_per_tick)
+	create_food(seconds_per_tick)
 
-/obj/effect/abstract/local_food_rain/proc/create_food(delta_time)
-	var/to_create = rand(0, max_foods_per_second * delta_time)
+/obj/effect/abstract/local_food_rain/proc/create_food(seconds_per_tick)
+	var/to_create = rand(0, max_foods_per_second * seconds_per_tick)
 	if (to_create == 0)
 		return
 
@@ -331,7 +331,7 @@
 
 	while(to_create > 0 && length(valid_turfs) > 0)
 		to_create--
-		addtimer(CALLBACK(src, PROC_REF(drop_food), pick_n_take(valid_turfs)), rand(0, (1 SECONDS) * delta_time))
+		addtimer(CALLBACK(src, PROC_REF(drop_food), pick_n_take(valid_turfs)), rand(0, (1 SECONDS) * seconds_per_tick))
 
 /obj/effect/abstract/local_food_rain/proc/drop_food(turf/landing_zone)
 	podspawn(list(

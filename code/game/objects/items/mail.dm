@@ -216,6 +216,9 @@
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
 	can_install_electronics = FALSE
+	lid_icon_state = "maillid"
+	lid_x = -26
+	lid_y = 2
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()

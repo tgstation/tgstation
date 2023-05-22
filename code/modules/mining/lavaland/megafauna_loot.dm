@@ -283,10 +283,10 @@
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
 
-/obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
+/obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
-	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
+	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
 			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
@@ -592,10 +592,10 @@
 	. = ..()
 	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
 
-/mob/living/simple_animal/soulscythe/Life(delta_time, times_fired)
+/mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!stat)
-		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * delta_time))
+		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * seconds_per_tick))
 
 /obj/projectile/soulscythe
 	name = "soulslash"
@@ -858,6 +858,12 @@
 	var/open_force = 20
 	/// Throwforce when the saw is opened.
 	var/open_throwforce = 20
+	/// how much stamina does it cost to roll?
+	var/roll_stamcost = 20
+	/// how far are we rolling?
+	var/roll_range = 5
+	/// do you spin when dodgerolling
+	var/roll_orientation = TRUE
 
 /obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
@@ -877,6 +883,7 @@
 	. += span_notice("It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
 	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
 	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
+	. += span_notice("You can also right click to perform a roll! This has NO i-frames, do not try to dodge through attacks!")
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -930,6 +937,29 @@
 		existing_bleed.add_stacks(bleed_stacks_per_hit)
 	else
 		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed, bleed_stacks_per_hit)
+
+/*
+ * The dodge roll that is mandatory for a Fromsoft reference
+ *
+ */
+
+/obj/item/melee/cleaving_saw/AltClick(mob/user) //want blood born quick steps or dark souls rolls (completely cosmetic)
+	. = ..()
+	roll_orientation = !roll_orientation
+	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+
+/obj/item/melee/cleaving_saw/pre_attack_secondary(atom/A, mob/living/user, params)
+	return TRUE // Let's dance.
+
+/obj/item/melee/cleaving_saw/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+	if(user.IsImmobilized()) // no free dodgerolls
+		return
+	var/turf/where_to = get_turf(target)
+	user.stamina.adjust(-roll_stamcost)
+	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
+	user.throw_at(where_to, range = roll_range, speed = 2, force = MOVE_FORCE_NORMAL, spin = roll_orientation)
+	playsound(user, 'monkestation/sound/effects/body-armor-rolling.ogg', 50, FALSE)
+	return ..()
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

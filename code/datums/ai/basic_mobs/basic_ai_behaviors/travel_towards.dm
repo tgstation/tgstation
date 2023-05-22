@@ -15,7 +15,7 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/travel_towards/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/travel_towards/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	finish_action(controller, TRUE)
 
@@ -34,6 +34,6 @@
 		return FALSE
 	set_movement_target(controller, target_atom)
 
-/datum/ai_behavior/travel_towards_atom/perform(delta_time, datum/ai_controller/controller, atom/target_atom)
+/datum/ai_behavior/travel_towards_atom/perform(seconds_per_tick, datum/ai_controller/controller, atom/target_atom)
 	. = ..()
 	finish_action(controller, TRUE)

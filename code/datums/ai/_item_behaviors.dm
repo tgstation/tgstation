@@ -1,7 +1,7 @@
 ///This behavior is for obj/items, it is used to free themselves out of the hands of whoever is holding them
 /datum/ai_behavior/item_escape_grasp
 
-/datum/ai_behavior/item_escape_grasp/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/item_escape_grasp/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
 	var/mob/item_holder = item_pawn.loc
@@ -30,7 +30,7 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/item_move_close_and_attack/perform(delta_time, datum/ai_controller/controller, target_key, throw_count_key)
+/datum/ai_behavior/item_move_close_and_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, throw_count_key)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
 	var/datum/weakref/target_ref = controller.blackboard[target_key]

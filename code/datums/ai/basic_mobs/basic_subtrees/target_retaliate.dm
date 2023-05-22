@@ -7,7 +7,7 @@
 	/// Blackboard key in which to store selected target's hiding place
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
 
-/datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targetting_datum_key, hiding_place_key)
 
@@ -28,7 +28,7 @@
 	/// How far can we see stuff?
 	var/vision_range = 9
 
-/datum/ai_behavior/target_from_retaliate_list/perform(delta_time, datum/ai_controller/controller, shitlist_key, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, shitlist_key, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]

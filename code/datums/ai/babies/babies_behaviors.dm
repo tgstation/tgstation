@@ -10,7 +10,7 @@
 	/// Maximum number of children
 	var/max_children = 3
 
-/datum/ai_behavior/find_partner/perform(delta_time, datum/ai_controller/controller, target_key, partner_types_key, child_types_key)
+/datum/ai_behavior/find_partner/perform(seconds_per_tick, datum/ai_controller/controller, target_key, partner_types_key, child_types_key)
 	. = ..()
 
 	var/mob/pawn_mob = controller.pawn
@@ -56,7 +56,7 @@
 	set_movement_target(controller, target)
 	return TRUE
 
-/datum/ai_behavior/make_babies/perform(delta_time, datum/ai_controller/controller, target_key, child_types_key)
+/datum/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller, target_key, child_types_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/target = weak_target?.resolve()

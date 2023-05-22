@@ -73,7 +73,7 @@
 	},
 /area/ruin/powered/shuttle)
 "qd" = (
-/mob/living/simple_animal/hostile/tree,
+/mob/living/basic/tree,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "sF" = (

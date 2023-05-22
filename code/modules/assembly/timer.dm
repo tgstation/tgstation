@@ -63,10 +63,10 @@
 		timing = TRUE
 	update_appearance()
 
-/obj/item/assembly/timer/process(delta_time)
+/obj/item/assembly/timer/process(seconds_per_tick)
 	if(!timing)
 		return
-	time -= delta_time
+	time -= seconds_per_tick
 	if(time <= 0)
 		timing = FALSE
 		timer_end()

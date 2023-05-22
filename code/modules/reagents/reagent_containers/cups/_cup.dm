@@ -392,8 +392,8 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor_type = /datum/armor/bucket_wooden
 	resistance_flags = FLAMMABLE
+	armor_type = /datum/armor/bucket_wooden
 
 /datum/armor/bucket_wooden
 	melee = 10
@@ -416,6 +416,17 @@
 		return
 
 	return ..()
+
+/obj/item/reagent_containers/cup/bucket/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(istype(weapon, /obj/item/mop))
+		if(reagents.total_volume == volume)
+			to_chat(user, "The [src.name] can't hold anymore liquids")
+			return
+		var/obj/item/mop/attacked_mop = weapon
+		to_chat(user, "You wring out the [attacked_mop.name] into the [src.name].")
+		attacked_mop.reagents.trans_to(src, attacked_mop.max_reagent_volume * 0.25)
+		attacked_mop.reagents.remove_all(attacked_mop.max_reagent_volume)
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()
@@ -456,6 +467,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded

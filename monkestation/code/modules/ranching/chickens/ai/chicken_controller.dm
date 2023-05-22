@@ -26,7 +26,7 @@
 /datum/ai_controller/chicken/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	var/mob/living/simple_animal/chicken/living_pawn = new_pawn
+	var/mob/living/basic/chicken/living_pawn = new_pawn
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_paw))
@@ -135,7 +135,7 @@
 /datum/ai_controller/chicken/proc/on_hitby(datum/source, atom/movable/movable_hitter, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(istype(movable_hitter, /obj/item))
-		var/mob/living/simple_animal/chicken/living_pawn = pawn
+		var/mob/living/basic/chicken/living_pawn = pawn
 		var/obj/item/hitby_item = movable_hitter
 		var/mob/thrown_by = hitby_item.thrownby?.resolve()
 		var/mob/living/carbon/human/human_target = thrown_by
@@ -152,22 +152,22 @@
 	enemies[living_retaliate] += CHICKEN_HATRED_AMOUNT
 
 //When idle just kinda fuck around.
-/datum/idle_behavior/chicken/perform_idle_behavior(delta_time, datum/ai_controller/controller)
+/datum/idle_behavior/chicken/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/list/blackboard = controller.blackboard
 
-	if((!blackboard[BB_CHICKEN_READY_LAY]&& DT_PROB(10, delta_time) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
+	if((!blackboard[BB_CHICKEN_READY_LAY]&& SPT_PROB(10, seconds_per_tick) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
 		blackboard[BB_CHICKEN_READY_LAY] = TRUE
 
 	if(blackboard[BB_CHICKEN_READY_LAY])
 		controller.queue_behavior(/datum/ai_behavior/find_and_lay)
 
-	if(DT_PROB(10, delta_time) && controller.behavior_cooldowns[/datum/ai_behavior/eat_ground_food] < world.time)
+	if(SPT_PROB(10, seconds_per_tick) && controller.behavior_cooldowns[/datum/ai_behavior/eat_ground_food] < world.time)
 		if(locate(/obj/item/food) in view(5, controller.pawn))
 			controller.queue_behavior(/datum/ai_behavior/eat_ground_food)
 
-	if(blackboard[BB_CHICKEN_SPECALITY_ABILITY] && DT_PROB(living_pawn.ability_prob, delta_time) && blackboard[BB_CHICKEN_ABILITY_COOLDOWN] < world.time)
+	if(blackboard[BB_CHICKEN_SPECALITY_ABILITY] && SPT_PROB(living_pawn.ability_prob, seconds_per_tick) && blackboard[BB_CHICKEN_ABILITY_COOLDOWN] < world.time)
 		// this will be expanded in the future its just easier to leave it like this now
 		switch(blackboard[BB_CHICKEN_SPECALITY_ABILITY])
 			if(CHICKEN_REV)
@@ -177,11 +177,11 @@
 			if(CHICKEN_HONK)
 				controller.queue_behavior(/datum/ai_behavior/chicken_honk_target)
 
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
+	if(SPT_PROB(25, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 
-	if(blackboard[BB_CHICKEN_SHITLIST] && DT_PROB(50, delta_time))
+	if(blackboard[BB_CHICKEN_SHITLIST] && SPT_PROB(50, seconds_per_tick))
 		var/list/enemies = blackboard[BB_CHICKEN_SHITLIST]
 		if(enemies.len)
 			var/mob/living/picked = pick(enemies)

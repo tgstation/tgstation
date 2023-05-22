@@ -14,7 +14,7 @@
 				/obj/item/clothing/head/wig/natural = 4,
 				/obj/item/clothing/head/costume/fancy = 4,
 				/obj/item/clothing/head/beanie = 8,
-				/obj/item/clothing/head/beret = 5,
+				/obj/item/clothing/head/beret = 10,
 				/obj/item/clothing/mask/bandana = 3,
 				/obj/item/clothing/mask/bandana/striped = 3,
 				/obj/item/clothing/mask/bandana/skull = 3,

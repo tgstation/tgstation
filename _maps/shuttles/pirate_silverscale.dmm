@@ -85,6 +85,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "dI" = (
@@ -471,6 +472,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ae" = (
@@ -523,7 +525,7 @@
 /obj/docking_port/mobile/pirate{
 	dir = 4;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Silverscale Cruiser";
 	preferred_direction = 4
 	},
@@ -805,6 +807,7 @@
 	},
 /obj/item/multitool,
 /obj/effect/turf_decal/bot,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "RE" = (

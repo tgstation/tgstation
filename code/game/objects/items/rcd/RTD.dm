@@ -328,7 +328,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/delay = DECONSTRUCTION_TIME(cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
 
 	//resource sanity check before & after delay along with beam effects
 	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
@@ -359,7 +359,7 @@
 		qdel(decal)
 	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
 		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-	else // for every other turf we scarp away exposing base turf underneath
+	else //for every other turf we scrape away exposing base turf underneath
 		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
 

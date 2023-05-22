@@ -26,7 +26,7 @@
 		return
 	loops_needed = time
 
-/obj/item/mcobject/messaging/repeater/process(delta_time)
+/obj/item/mcobject/messaging/repeater/process(seconds_per_tick)
 	if(!processing)
 		return
 	if(loops_needed <= loops)

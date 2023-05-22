@@ -5,26 +5,26 @@
 	/// Target key to interrogate
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 
-/datum/ai_planning_subtree/sleep_with_no_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/sleep_with_no_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	controller.queue_behavior(sleep_behaviour, BB_BASIC_MOB_CURRENT_TARGET)
 
 /// Disables AI after a certain amount of time spent with no target, you will have to enable the AI again somewhere else
 /datum/ai_behavior/sleep_after_targetless_time
-	/// Turn off AI if we spend this many seconds without a target, don't use the macro because delta_time is already in seconds
+	/// Turn off AI if we spend this many seconds without a target, don't use the macro because seconds_per_tick is already in seconds
 	var/time_to_wait = 10
 
-/datum/ai_behavior/sleep_after_targetless_time/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/sleep_after_targetless_time/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
-	finish_action(controller, succeeded = !target, delta_time = delta_time)
+	finish_action(controller, succeeded = !target, seconds_per_tick = seconds_per_tick)
 
-/datum/ai_behavior/sleep_after_targetless_time/finish_action(datum/ai_controller/controller, succeeded, delta_time)
+/datum/ai_behavior/sleep_after_targetless_time/finish_action(datum/ai_controller/controller, succeeded, seconds_per_tick)
 	. = ..()
 	if (!succeeded)
 		controller.blackboard[BB_TARGETLESS_TIME] = 0
 		return
-	controller.blackboard[BB_TARGETLESS_TIME] += delta_time
+	controller.blackboard[BB_TARGETLESS_TIME] += seconds_per_tick
 	if (controller.blackboard[BB_TARGETLESS_TIME] > time_to_wait)
 		enter_sleep(controller)
 

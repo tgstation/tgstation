@@ -1,7 +1,10 @@
 /mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
-	. = ..()
+	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
-	H?.move_hologram(eye_user, loc)
+	if(!H?.move_hologram(eye_user, destination))
+		sprint = initial(sprint) // Reset sprint so it doesn't balloon in our calling proc
+		return
+	return ..()
 
 /obj/machinery/holopad/remove_eye_control(mob/living/user)
 	if(user.client)
@@ -63,9 +66,7 @@
 //cleans up ALL references :)
 /datum/holocall/Destroy()
 	QDEL_NULL(hangup)
-
-	if(!QDELETED(eye))
-		QDEL_NULL(eye)
+	QDEL_NULL(eye)
 
 	if(connected_holopad && !QDELETED(hologram))
 		hologram = null

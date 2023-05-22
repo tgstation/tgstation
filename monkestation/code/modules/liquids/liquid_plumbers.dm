@@ -124,7 +124,7 @@
 /obj/machinery/plumbing/floor_pump/proc/should_regulator_permit(turf/affected_turf)
 	CRASH("should_regulator_permit() must be overriden.")
 
-/obj/machinery/plumbing/floor_pump/process(delta_time)
+/obj/machinery/plumbing/floor_pump/process(seconds_per_tick)
 	var/was_pumping = is_pumping
 
 	if(!can_run())
@@ -157,17 +157,17 @@
 
 	// We're good, actually pump.
 	for(var/turf/affected_turf as anything in affected_turfs)
-		pump_turf(affected_turf, delta_time, multiplier)
+		pump_turf(affected_turf, seconds_per_tick, multiplier)
 
 /**
  * Pump out the liquids on a turf.
  *
  * Arguments:
  * * affected_turf - the turf to pump liquids out of.
- * * delta_time - machine process delta time
+ * * seconds_per_tick - machine process delta time
  * * multiplier - Multiplier to apply to final volume we want to pump.
  */
-/obj/machinery/plumbing/floor_pump/proc/pump_turf(turf/affected_turf, delta_time, multiplier)
+/obj/machinery/plumbing/floor_pump/proc/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
 	CRASH("pump_turf() must be overriden.")
 
 
@@ -188,10 +188,10 @@
 /obj/machinery/plumbing/floor_pump/input/should_regulator_permit(turf/affected_turf)
 	return affected_turf.liquids && affected_turf.liquids.liquid_group.expected_turf_height > height_regulator
 
-/obj/machinery/plumbing/floor_pump/input/pump_turf(turf/affected_turf, delta_time, multiplier)
+/obj/machinery/plumbing/floor_pump/input/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
 	if(!affected_turf.liquids || !affected_turf.liquids.liquid_group)
 		return
-	var/target_value = delta_time * (drain_flat + (affected_turf.liquids.liquid_group.total_reagent_volume * drain_percent)) * multiplier
+	var/target_value = seconds_per_tick * (drain_flat + (affected_turf.liquids.liquid_group.total_reagent_volume * drain_percent)) * multiplier
 	//Free space handling
 	var/free_space = reagents.maximum_volume - reagents.total_volume
 	if(target_value > free_space)
@@ -293,8 +293,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/plumbing/floor_pump/input/on/waste, 0
 		return FALSE
 	return TRUE
 
-/obj/machinery/plumbing/floor_pump/output/pump_turf(turf/affected_turf, delta_time, multiplier)
-	var/target_value = delta_time * (drain_flat + (reagents.total_volume * drain_percent)) * multiplier
+/obj/machinery/plumbing/floor_pump/output/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
+	var/target_value = seconds_per_tick * (drain_flat + (reagents.total_volume * drain_percent)) * multiplier
 	if(target_value > reagents.total_volume)
 		target_value = reagents.total_volume
 

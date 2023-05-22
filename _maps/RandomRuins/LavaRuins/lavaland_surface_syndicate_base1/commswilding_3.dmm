@@ -46,10 +46,8 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/power/apc/syndicate{
-	name = "Telecommunications APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -206,6 +204,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"L" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/secure/freezer/commsagent,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
 "P" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
@@ -242,6 +245,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/tile/iron/grimy,
+/obj/machinery/computer/records/medical/syndie{
+	dir = 2;
+	req_access = list("syndicate")
+	},
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/telecomms)
 "Z" = (
@@ -309,7 +316,7 @@ I
 C
 Z
 p
-j
+L
 G
 "}
 (7,1,1) = {"

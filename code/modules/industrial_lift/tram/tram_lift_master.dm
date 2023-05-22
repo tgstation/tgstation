@@ -142,7 +142,7 @@
 
 	START_PROCESSING(SStramprocess, src)
 
-/datum/lift_master/tram/process(delta_time)
+/datum/lift_master/tram/process(seconds_per_tick)
 	if(!travel_distance)
 		update_tram_doors(OPEN_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)

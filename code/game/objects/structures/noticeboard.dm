@@ -122,6 +122,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	custom_materials = list(
 		/datum/material/wood = MINERAL_MATERIAL_AMOUNT,
 	)
+	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/noticeboard
 	pixel_shift = 32
 

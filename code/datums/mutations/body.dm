@@ -9,8 +9,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/epilepsy/on_life(delta_time, times_fired)
-	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+/datum/mutation/human/epilepsy/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		trigger_seizure()
 
 /datum/mutation/human/epilepsy/proc/trigger_seizure()
@@ -84,8 +84,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/cough/on_life(delta_time, times_fired)
-	if(DT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
+/datum/mutation/human/cough/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
@@ -100,8 +100,8 @@
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
-/datum/mutation/human/paranoia/on_life(delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
+/datum/mutation/human/paranoia/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
 			owner.adjust_hallucinations(40 SECONDS)
@@ -154,8 +154,8 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
-/datum/mutation/human/tourettes/on_life(delta_time, times_fired)
-	if(DT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS && !owner.IsStun())
+/datum/mutation/human/tourettes/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -304,8 +304,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/fire/on_life(delta_time, times_fired)
-	if(DT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+/datum/mutation/human/fire/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
 
@@ -332,8 +332,8 @@
 	power_coeff = 1
 	var/warpchance = 0
 
-/datum/mutation/human/badblink/on_life(delta_time, times_fired)
-	if(DT_PROB(warpchance, delta_time))
+/datum/mutation/human/badblink/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(warpchance, seconds_per_tick))
 		var/warpmessage = pick(
 		span_warning("With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air."),
 		span_warning("[owner] does some sort of strange backflip into another dimension. It looks pretty painful."),
@@ -347,7 +347,7 @@
 		warpchance = 0
 		owner.visible_message(span_danger("[owner] appears out of nowhere!"))
 	else
-		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * delta_time
+		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * seconds_per_tick
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
@@ -359,8 +359,8 @@
 	/// The cooldown for the warning message
 	COOLDOWN_DECLARE(msgcooldown)
 
-/datum/mutation/human/acidflesh/on_life(delta_time, times_fired)
-	if(DT_PROB(13, delta_time))
+/datum/mutation/human/acidflesh/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, span_danger("Your acid flesh bubbles..."))
 			COOLDOWN_START(src, msgcooldown, 20 SECONDS)

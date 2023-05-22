@@ -126,7 +126,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/obj/machinery/recharger/process(delta_time)
+/obj/machinery/recharger/process(seconds_per_tick)
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
@@ -135,8 +135,8 @@
 		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
 			if(C.charge < C.maxcharge)
-				C.give(C.chargerate * recharge_coeff * delta_time / 2)
-				use_power(active_power_usage * recharge_coeff * delta_time)
+				C.give(C.chargerate * recharge_coeff * seconds_per_tick / 2)
+				use_power(active_power_usage * recharge_coeff * seconds_per_tick)
 				using_power = TRUE
 			update_appearance()
 
@@ -144,7 +144,7 @@
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)
 				R.stored_ammo += new R.ammo_type(R)
-				use_power(active_power_usage * recharge_coeff * delta_time)
+				use_power(active_power_usage * recharge_coeff * seconds_per_tick)
 				using_power = TRUE
 			update_appearance()
 			return

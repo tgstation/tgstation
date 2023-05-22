@@ -16,7 +16,7 @@
 	var/error = ""
 	var/executed = 0
 
-/datum/computer_file/program/ntnet_dos/process_tick(delta_time)
+/datum/computer_file/program/ntnet_dos/process_tick(seconds_per_tick)
 	dos_speed = 0
 	switch(ntnet_status)
 		if(1)

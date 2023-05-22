@@ -197,13 +197,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		begin_processing()
 
 
-/obj/machinery/defibrillator_mount/charging/process(delta_time)
+/obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
 	var/obj/item/stock_parts/cell/C = get_cell()
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(active_power_usage * delta_time)
-		C.give(40 * delta_time)
+		use_power(active_power_usage * seconds_per_tick)
+		C.give(40 * seconds_per_tick)
 		defib.update_power()
 
 //wallframe, for attaching the mounts easily

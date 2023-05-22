@@ -31,7 +31,7 @@
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
 	var/list/linked_seats = list()
 
-/datum/venue/process(delta_time)
+/datum/venue/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))

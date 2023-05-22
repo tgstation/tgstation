@@ -11,8 +11,22 @@
 #define ORGAN_EDIBLE (1<<4)
 ///Synthetic organ affected by an EMP. Deteriorates over time.
 #define ORGAN_SYNTHETIC_EMP (1<<5)
-// //Can't be removed using surgery
+///Can't be removed using surgery
 #define ORGAN_UNREMOVABLE (1<<6)
+/// Can't be seen by scanners, doesn't anger body purists
+#define ORGAN_HIDDEN (1<<7)
+
+// Flags for the bodypart_flags var on /obj/item/bodypart
+/// Bodypart cannot be dismembered or amputated
+#define BODYPART_UNREMOVABLE (1<<0)
+/// Bodypart is a pseudopart (like a chainsaw arm)
+#define BODYPART_PSEUDOPART (1<<1)
+/// Bodypart did not match the owner's default bodypart limb_id when surgically implanted
+#define BODYPART_IMPLANTED (1<<2)
+
+// Bodypart change blocking flags
+///Bodypart does not get replaced during set_species()
+#define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
 /// When the surgery step fails :(
 #define SURGERY_STEP_FAIL -1

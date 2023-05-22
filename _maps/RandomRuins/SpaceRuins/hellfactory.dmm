@@ -647,7 +647,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "cm" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cn" = (
@@ -909,7 +910,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "wv" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)

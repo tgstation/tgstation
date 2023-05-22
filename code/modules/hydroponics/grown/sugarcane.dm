@@ -10,11 +10,11 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
-	maturation = 3
+	maturation = 30
 	yield = 4
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)
-	mutatelist = list(/obj/item/seeds/bamboo)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/bamboo)
 
 /obj/item/food/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
@@ -43,7 +43,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "bamboo-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
+	possible_mutations = list()
 
 /obj/item/grown/log/bamboo
 	seed = /obj/item/seeds/bamboo

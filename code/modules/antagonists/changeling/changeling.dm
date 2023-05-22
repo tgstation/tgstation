@@ -259,16 +259,16 @@
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/on_life(datum/source, delta_time, times_fired)
+/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick, total_chem_storage * 0.5)
 
 	// If we're not dead - we go up to the full chem cap.
 	else
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick)
 
 /**
  * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], getting admin-healed restores our chemicals.

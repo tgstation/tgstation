@@ -5,9 +5,8 @@
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
 	setup_mood()
-
-	// All start without eyes, and get them via set species
-	become_blind(NO_EYES)
+	// This needs to be called very very early in human init (before organs / species are created at the minimum)
+	setup_organless_effects()
 
 	create_dna()
 	dna.species.create_fresh_body(src)
@@ -40,6 +39,15 @@
 	if (isdummy(src))
 		return
 	mob_mood = new /datum/mood(src)
+
+/// This proc is for holding effects applied when a mob is missing certain organs
+/// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
+/// Gaining said organs removes these effects
+/mob/living/carbon/human/proc/setup_organless_effects()
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
+	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code

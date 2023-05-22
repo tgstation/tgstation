@@ -141,15 +141,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 	else
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 	else
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(isMotion())
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 	else
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 

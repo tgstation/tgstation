@@ -1,17 +1,17 @@
-/mob/living/simple_animal/chicken/snowy
+/mob/living/basic/chicken/snowy
 	icon_suffix = "snowy"
 
 	breed_name = "Snow"
 	egg_type = /obj/item/food/egg/snowy
-	minbodytemp = 0
-	maxbodytemp = 40
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 40
 
 	book_desc = "These chickens require a sub-zero environment to live. They will melt if its not cold enough for them."
 /obj/item/food/egg/snowy
 	name = "Snowy Egg"
 	icon_state = "snowy"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/snowy
+	layer_hen_type = /mob/living/basic/chicken/snowy
 
 
 /obj/item/food/egg/snowy/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)

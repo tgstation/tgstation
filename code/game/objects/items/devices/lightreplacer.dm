@@ -138,7 +138,23 @@
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
 		return
-	Emag()
+	obj_flags |= EMAGGED
+	playsound(loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	update_appearance()
+
+/obj/item/lightreplacer/update_name(updates)
+	. = ..()
+	name = (obj_flags & EMAGGED) ? "shortcircuited [initial(name)]" : initial(name)
+
+/obj/item/lightreplacer/update_icon_state()
+	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? "-emagged" : "")]"
+	return ..()
+
+/obj/item/lightreplacer/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, obj_flags))
+		update_appearance()
+	return ..()
+
 
 /obj/item/lightreplacer/attack_self(mob/user)
 	for(var/obj/machinery/light/target in user.loc)
@@ -181,10 +197,6 @@
 	if(light_replaced && bluespace_toggle)
 		user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
 		playsound(src, 'sound/items/pshoom.ogg', 40, 1)
-
-/obj/item/lightreplacer/update_icon_state()
-	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? "-emagged" : "")]"
-	return ..()
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
@@ -246,15 +258,6 @@
 	Use(user)
 	to_chat(user, span_notice("You replace \the [target.fitting] with \the [src]."))
 	return TRUE
-
-/obj/item/lightreplacer/proc/Emag()
-	obj_flags ^= EMAGGED
-	playsound(src.loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if(obj_flags & EMAGGED)
-		name = "shortcircuited [initial(name)]"
-	else
-		name = initial(name)
-	update_appearance()
 
 /obj/item/lightreplacer/proc/can_use(mob/living/user)
 	src.add_fingerprint(user)

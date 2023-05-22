@@ -15,7 +15,7 @@
 	COOLDOWN_DECLARE(damage_warning_cooldown)
 	var/next_damage_warning = 0
 
-/datum/brain_trauma/magic/lumiphobia/on_life(delta_time, times_fired)
+/datum/brain_trauma/magic/lumiphobia/on_life(seconds_per_tick, times_fired)
 	..()
 	var/turf/T = owner.loc
 	if(!istype(T))
@@ -27,7 +27,7 @@
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))
 		to_chat(owner, span_warning("<b>The light burns you!</b>"))
 		COOLDOWN_START(src, damage_warning_cooldown, 10 SECONDS)
-	owner.take_overall_damage(burn = 1.5 * delta_time)
+	owner.take_overall_damage(burn = 1.5 * seconds_per_tick)
 
 /datum/brain_trauma/magic/poltergeist
 	name = "Poltergeist"
@@ -36,9 +36,9 @@
 	gain_text = span_warning("You feel a hateful presence close to you.")
 	lose_text = span_notice("You feel the hateful presence fade away.")
 
-/datum/brain_trauma/magic/poltergeist/on_life(delta_time, times_fired)
+/datum/brain_trauma/magic/poltergeist/on_life(seconds_per_tick, times_fired)
 	..()
-	if(!DT_PROB(2, delta_time))
+	if(!SPT_PROB(2, seconds_per_tick))
 		return
 
 	var/most_violent = -1 //So it can pick up items with 0 throwforce if there's nothing else
@@ -92,7 +92,7 @@
 	QDEL_NULL(stalker)
 	return ..()
 
-/datum/brain_trauma/magic/stalker/on_life(delta_time, times_fired)
+/datum/brain_trauma/magic/stalker/on_life(seconds_per_tick, times_fired)
 	// Dead and unconscious people are not interesting to the psychic stalker.
 	if(owner.stat != CONSCIOUS)
 		return
@@ -106,7 +106,7 @@
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50)
 		owner.visible_message(span_warning("[owner] is torn apart by invisible claws!"), span_userdanger("Ghostly claws tear your body apart!"))
 		owner.take_bodypart_damage(rand(20, 45), wound_bonus=CANT_WOUND)
-	else if(DT_PROB(30, delta_time))
+	else if(SPT_PROB(30, seconds_per_tick))
 		stalker.forceMove(get_step_towards(stalker, owner))
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)

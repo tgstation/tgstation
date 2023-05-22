@@ -9,7 +9,7 @@
  */
 /datum/ai_planning_subtree/carp_migration
 
-/datum/ai_planning_subtree/carp_migration/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/carp_migration/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
 	// If there's a rift nearby take a ride, then cancel everything else because it's not valid any more
@@ -44,7 +44,7 @@
  */
 /datum/ai_behavior/find_next_carp_migration_step
 
-/datum/ai_behavior/find_next_carp_migration_step/perform(delta_time, datum/ai_controller/controller, path_key, target_key)
+/datum/ai_behavior/find_next_carp_migration_step/perform(seconds_per_tick, datum/ai_controller/controller, path_key, target_key)
 	var/list/blackboard_points = controller.blackboard[path_key]
 	var/list/potential_migration_points = blackboard_points.Copy()
 	while (length(potential_migration_points))

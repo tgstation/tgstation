@@ -480,7 +480,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (CONFIG_GET(flag/irc_first_connection_alert))
 			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
-	check_ip_intel()
+	if(check_ip_intel() && CONFIG_GET(flag/vpn_kick))
+		to_chat_immediate(src, "Sorry the system has flagged you for using a vpn please remove the vpn and try connecting again.")
+		qdel(src)
+		return
 	validate_key_in_db()
 	// If we aren't already generating a ban cache, fire off a build request
 	// This way hopefully any users of request_ban_cache will never need to yield
@@ -623,6 +626,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/admin_rank = holder?.rank_names() || "Player"
 	if (!holder && !GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 		return
+
 	var/new_player
 	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
@@ -898,10 +902,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/check_ip_intel()
 	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
 	if (CONFIG_GET(string/ipintel_email))
+		var/failed = FALSE
 		var/datum/ipintel/res = get_ip_intel(address)
 		if (res.intel >= CONFIG_GET(number/ipintel_rating_bad))
-			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN."))
+			message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN, they will be removed from the server"))
+			failed = TRUE
 		ip_intel = res.intel
+		return failed
 
 /client/Click(atom/object, atom/location, control, params)
 	if(click_intercept_time)

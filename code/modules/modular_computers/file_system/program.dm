@@ -88,7 +88,7 @@
 	return TRUE
 
 // Called by Process() on device that runs us, once every tick.
-/datum/computer_file/program/proc/process_tick(delta_time)
+/datum/computer_file/program/proc/process_tick(seconds_per_tick)
 	return TRUE
 
 /**

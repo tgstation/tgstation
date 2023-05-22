@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/robot_customer/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/robot_customer/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(controller.blackboard[BB_CUSTOMER_LEAVING])
 		controller.queue_behavior(/datum/ai_behavior/leave_venue, BB_CUSTOMER_ATTENDING_VENUE)
 		return SUBTREE_RETURN_FINISH_PLANNING

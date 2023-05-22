@@ -480,6 +480,13 @@
 	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
 	credit_cost = CARGO_CRATE_VALUE * 25
 
+/datum/map_template/shuttle/emergency/hugcage
+	suffix = "hugcage"
+	name = "Hug Relaxation Shuttle"
+	description = "A small cozy shuttle with plenty of beds for tired or sensitive spacemen, and a box for pillow-fights."
+	admin_notes = "Has a sentience fun balloon for pets."
+	credit_cost = CARGO_CRATE_VALUE * 16
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -511,6 +518,11 @@
 	suffix = "kilo"
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
+
+/datum/map_template/shuttle/ferry/northstar
+	suffix = "northstar"
+	name = "north star transport ferry"
+	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
@@ -591,6 +603,13 @@
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
 
+/datum/map_template/shuttle/emergency/northstar
+	suffix = "northstar"
+	name = "North Star Emergency Shuttle"
+	description = "A rugged shuttle meant for long-distance transit from the tips of the frontier to Central Command and back. \
+	moderately comfortable and large, but cramped."
+	credit_cost = CARGO_CRATE_VALUE * 14
+
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
 	name = "CentCom Raven Cruiser"
@@ -661,6 +680,10 @@
 	suffix = "large"
 	name = "mining shuttle (Large)"
 
+/datum/map_template/shuttle/mining/northstar
+	suffix = "northstar"
+	name = "mining shuttle (North Star)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
@@ -676,6 +699,10 @@
 /datum/map_template/shuttle/mining_common/kilo
 	suffix = "kilo"
 	name = "lavaland shuttle (Kilo)"
+
+/datum/map_template/shuttle/mining_common/northstar
+	suffix = "northstar"
+	name = "lavaland shuttle (North Star)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
@@ -805,6 +832,14 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/arrival/northstar
+	suffix = "northstar"
+	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/cargo/northstar
+	suffix = "northstar"
+	name = "cargo ferry (North Star)"
 
 // Custom ERT shuttles
 /datum/map_template/shuttle/ert/bounty

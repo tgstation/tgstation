@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/faithless,
 		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/imp,
-		/mob/living/simple_animal/hostile/retaliate/bat,
+		/mob/living/basic/bat,
 		/mob/living/basic/ghost,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chicken,
+		/mob/living/basic/chicken,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/penguin,
 	)),

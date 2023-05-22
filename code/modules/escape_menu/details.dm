@@ -27,7 +27,7 @@ GLOBAL_DATUM(escape_menu_details, /atom/movable/screen/escape_menu/details)
 	STOP_PROCESSING(SSescape_menu, src)
 	return ..()
 
-/atom/movable/screen/escape_menu/details/process(delta_time)
+/atom/movable/screen/escape_menu/details/process(seconds_per_tick)
 	update_text()
 
 /atom/movable/screen/escape_menu/details/proc/update_text()

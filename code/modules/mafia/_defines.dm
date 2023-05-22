@@ -1,5 +1,25 @@
+///The amount of players required to start a Mafia game
+#define MAFIA_MIN_PLAYER_COUNT 6
 ///how many people can play mafia without issues (running out of spawns, procs not expecting more than this amount of people, etc)
 #define MAFIA_MAX_PLAYER_COUNT 12
+
+///The time spent during the first day, which is shorter due to not having a voting period.
+#define FIRST_DAY_PERIOD_LENGTH (20 SECONDS)
+///The length of a Day period
+#define DAY_PERIOD_LENGTH (1 MINUTES)
+///The length of a Voting period, when people decide who they want to put up for hanging that day.
+#define VOTING_PERIOD_LENGTH (30 SECONDS)
+///The length of the judgment period, where people vote on whether to lynch the person they voted up.
+#define JUDGEMENT_PERIOD_LENGTH (30 SECONDS)
+///The length of the lynch period, if the judged person is deemed guilty and is sentenced to death.
+#define LYNCH_PERIOD_LENGTH (5 SECONDS)
+///The length of the night period where people can do their night abilities and speak with their mafia team.
+#define NIGHT_PERIOD_LENGTH (40 SECONDS)
+///The length of the roundend report, where people can look over the round and the details.
+#define VICTORY_LAP_PERIOD_LENGTH (20 SECONDS)
+
+///How fast the game will speed up when half the players are gone.
+#define MAFIA_SPEEDUP_INCREASE 2
 
 #define MAFIA_TEAM_TOWN "town"
 #define MAFIA_TEAM_MAFIA "mafia"
@@ -41,6 +61,13 @@
 ///cannot perform any actions that night, preselected actions fail
 #define ROLE_ROLEBLOCKED (1<<5)
 
+///Flag that decides whether the Mafia ability can be used on other people.
+#define CAN_USE_ON_OTHERS (1<<0)
+///Flag that decides whether the Mafia ability can be used on themselves.
+#define CAN_USE_ON_SELF (1<<1)
+///Flag that decides whether the Mafia ability can be used on dead players. This overwrites the first two, and only allows for dead.
+#define CAN_USE_ON_DEAD (1<<2)
+
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
 #define MAFIA_PHASE_VOTING 3
@@ -59,15 +86,15 @@
 
 //in order of events + game end
 
-/// when the shutters fall, before the 45 second wait and night event resolution
+///Sends all signals that must go immediately as night starts.
 #define COMSIG_MAFIA_SUNDOWN "sundown"
-/// after the 45 second wait, for actions that must go first
-#define COMSIG_MAFIA_NIGHT_START "night_start"
-/// most night actions now resolve
+///Sends all signals that must go first, aka roleblocks.
+#define COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE "night_start"
+///Sends the signal that all regular actions must go, such as
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
 /// now killing happens from the roles that do that. the reason this is post action phase is to ensure doctors can protect and lawyers can block
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
-/// now undoing states like protection, actions that must happen last, etc. right before shutters raise and the day begins
+/// now clearing refs to prepare for the next day. Do not do any actions here, it's just for ref clearing.
 #define COMSIG_MAFIA_NIGHT_END "night_end"
 
 /// signal sent to roles when the game is confirmed ending

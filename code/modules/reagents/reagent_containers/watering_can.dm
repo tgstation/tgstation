@@ -36,9 +36,9 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/cup/watering_can/advanced/process(delta_time)
+/obj/item/reagent_containers/cup/watering_can/advanced/process(seconds_per_tick)
 	///How much to refill
-	var/refill_add = min(volume - reagents.total_volume, refill_rate * delta_time)
+	var/refill_add = min(volume - reagents.total_volume, refill_rate * seconds_per_tick)
 	if(refill_add > 0)
 		reagents.add_reagent(refill_reagent, refill_add)
 

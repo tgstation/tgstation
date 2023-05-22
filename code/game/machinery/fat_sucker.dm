@@ -132,7 +132,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process(delta_time)
+/obj/machinery/fat_sucker/process(seconds_per_tick)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -144,8 +144,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size * delta_time)
-	nutrients += bite_size * delta_time
+	C.adjust_nutrition(-bite_size * seconds_per_tick)
+	nutrients += bite_size * seconds_per_tick
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)

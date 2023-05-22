@@ -18,7 +18,7 @@
 #define THERMAL_PROTECTION_HAND_LEFT 0.025
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
-/mob/living/carbon/human/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(notransform)
 		return
 
@@ -27,24 +27,24 @@
 		return FALSE
 
 	//Body temperature stability and damage
-	dna.species.handle_body_temperature(src, delta_time, times_fired)
+	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
 
 	if(!IS_IN_STASIS(src))
 		if(.) //not dead
 
 			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life(delta_time, times_fired)
+				HM.on_life(seconds_per_tick, times_fired)
 
 		if(stat != DEAD)
 			//heart attack stuff
-			handle_heart(delta_time, times_fired)
-			handle_liver(delta_time, times_fired)
+			handle_heart(seconds_per_tick, times_fired)
+			handle_liver(seconds_per_tick, times_fired)
 
-		dna.species.spec_life(src, delta_time, times_fired) // for mutantraces
+		dna.species.spec_life(src, seconds_per_tick, times_fired) // for mutantraces
 	else
 		for(var/i in all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_stasis(delta_time, times_fired)
+			iter_wound.on_stasis(seconds_per_tick, times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
@@ -103,12 +103,12 @@
 			lun.check_breath(breath,src)
 
 /// Environment handlers for species
-/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	// If we are in a cryo bed do not process life functions
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
-	dna.species.handle_environment(src, environment, delta_time, times_fired)
+	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)
 
 /**
  * Adjust the core temperature of a mob
@@ -275,14 +275,14 @@
 
 	return min(1, thermal_protection)
 
-/mob/living/carbon/human/handle_random_events(delta_time, times_fired)
+/mob/living/carbon/human/handle_random_events(seconds_per_tick, times_fired)
 	//Puke if toxloss is too high
 	if(stat)
 		return
 	if(getToxLoss() < 45 || nutrition <= 20)
 		return
 
-	lastpuke += DT_PROB(30, delta_time)
+	lastpuke += SPT_PROB(30, seconds_per_tick)
 	if(lastpuke >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
 		vomit(20)
 		lastpuke = 0
@@ -301,17 +301,17 @@
 			return TRUE
 	return ..()
 
-/mob/living/carbon/human/proc/handle_heart(delta_time, times_fired)
+/mob/living/carbon/human/proc/handle_heart(seconds_per_tick, times_fired)
 	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())
 		return
 
 	if(we_breath)
-		adjustOxyLoss(4 * delta_time)
+		adjustOxyLoss(4 * seconds_per_tick)
 		Unconscious(80)
 	// Tissues die without blood circulation
-	adjustBruteLoss(1 * delta_time)
+	adjustBruteLoss(1 * seconds_per_tick)
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

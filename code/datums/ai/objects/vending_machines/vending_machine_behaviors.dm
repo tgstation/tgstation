@@ -10,7 +10,7 @@
 	set_movement_target(controller, controller.blackboard[target_key])
 
 
-/datum/ai_behavior/vendor_crush/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/vendor_crush/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	if(controller.blackboard[BB_VENDING_BUSY_TILTING])
 		return
@@ -40,7 +40,7 @@
 	///Time before machine can tilt again after untilting if last hit was a success
 	var/succes_tilt_cooldown = 5 SECONDS
 
-/datum/ai_behavior/vendor_rise_up/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/vendor_rise_up/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	vendor_pawn.visible_message(span_warning("[vendor_pawn] untilts itself!"))

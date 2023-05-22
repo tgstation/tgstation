@@ -110,8 +110,8 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
-	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
+/mob/living/carbon/human/reagent_check(datum/reagent/R, seconds_per_tick, times_fired)
+	return dna.species.handle_chemicals(R, src, seconds_per_tick, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)

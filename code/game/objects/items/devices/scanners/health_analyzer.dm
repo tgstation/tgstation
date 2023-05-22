@@ -196,11 +196,11 @@
 		var/obj/item/organ/internal/ears/ears = carbontarget.get_organ_slot(ORGAN_SLOT_EARS)
 		if(istype(ears))
 			if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, GENETIC_MUTATION))
-				render_list = "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
 			else if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, EAR_DAMAGE))
-				render_list = "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
 			else if(HAS_TRAIT(carbontarget, TRAIT_DEAF))
-				render_list = "<span class='alert ml-2'>Subject is deaf.\n</span>"
+				render_list += "<span class='alert ml-2'>Subject is deaf.\n</span>"
 			else
 				if(ears.damage)
 					render_list += "<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.\n</span>"
@@ -367,7 +367,7 @@
 		var/mob/living/carbon/carbontarget = target
 		var/cyberimp_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in carbontarget.organs)
-			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
+			if(CI.status == ORGAN_ROBOTIC && !(CI.organ_flags & ORGAN_HIDDEN))
 				cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
 		if(cyberimp_detect)
 			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"

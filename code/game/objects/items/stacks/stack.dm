@@ -448,16 +448,14 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	// If we're making a window, we have some special snowflake window checks to do.
-	if(ispath(recipe.result_type, /obj/structure/window))
-		var/obj/structure/window/result_path = recipe.result_type
-		if(!valid_window_location(dest_turf, builder.dir, is_fulltile = initial(result_path.fulltile)))
-			builder.balloon_alert(builder, "won't fit here!")
-			return FALSE
-
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
+
+	if(recipe.check_direction)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+			builder.balloon_alert(builder, "won't fit here!")
+			return FALSE
 
 	if(recipe.on_tram)
 		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
@@ -473,16 +471,9 @@
 			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
+	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
-			if(istype(object, /obj/structure/grille))
-				continue
-			if(istype(object, /obj/structure/table))
-				continue
-			if(istype(object, /obj/structure/window))
-				var/obj/structure/window/window_structure = object
-				if(!window_structure.fulltile)
-					continue
-			if(object.density || NO_BUILD & object.obj_flags)
+			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 

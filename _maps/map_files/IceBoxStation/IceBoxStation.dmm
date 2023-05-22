@@ -4309,8 +4309,8 @@
 /area/station/engineering/atmos/pumproom)
 "bup" = (
 /obj/structure/filingcabinet/chestdrawer,
-/mob/living/simple_animal/parrot/poly,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "buv" = (
@@ -7289,7 +7289,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
 	},
-/turf/open/floor/iron,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "cmL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12348,8 +12352,8 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "dOY" = (
@@ -13406,6 +13410,19 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/hos)
+"ehz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/half{
+	dir = 8
+	},
+/obj/machinery/composters,
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/station/service/hydroponics)
 "ehA" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Canteen"
@@ -16936,7 +16953,7 @@
 /area/station/engineering/supermatter/room)
 "fpJ" = (
 /obj/structure/fireaxecabinet/directional/west,
-/obj/machinery/suit_storage_unit/atmos,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "fpP" = (
@@ -19155,7 +19172,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "gbF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -19163,6 +19179,8 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/infuser,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gbH" = (
@@ -25623,7 +25641,8 @@
 "ijn" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
-/obj/machinery/power/apc/highcap/five_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/plating,
 /area/mine/storage)
 "ijp" = (
@@ -25884,7 +25903,7 @@
 /area/station/medical/chemistry)
 "inb" = (
 /obj/machinery/door/poddoor/incinerator_ordmix,
-/turf/open/openspace,
+/turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "inh" = (
 /obj/structure/stairs/west,
@@ -25919,8 +25938,8 @@
 /area/mine/laborcamp)
 "ioi" = (
 /obj/structure/bed/dogbed/lia,
-/mob/living/basic/carp/pet/lia,
 /obj/structure/cable,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
 "iol" = (
@@ -28315,9 +28334,11 @@
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "jaN" = (
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "jaO" = (
 /obj/machinery/door/airlock/atmos/glass{
@@ -32583,13 +32604,14 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ksO" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
+/obj/machinery/splicer,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ksU" = (
@@ -34964,7 +34986,8 @@
 /area/station/hallway/primary/starboard)
 "lfp" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/sm_apc/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "lfs" = (
@@ -36578,6 +36601,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lEK" = (
@@ -45188,6 +45212,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "opu" = (
@@ -49616,8 +49645,10 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/tank_dispenser{
+	pixel_x = -1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "pKu" = (
@@ -50888,10 +50919,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/cleanbot,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "qhy" = (
@@ -51278,6 +51309,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"qoU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics)
 "qoY" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
@@ -55165,12 +55206,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
@@ -59505,8 +59546,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/floorbot,
 /obj/effect/turf_decal/tile/blue,
+/mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "sUE" = (
@@ -64396,6 +64437,7 @@
 /obj/machinery/light_switch/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/autolathe,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "uzM" = (
@@ -69546,8 +69588,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "wij" = (
@@ -75712,10 +75754,10 @@
 /area/station/maintenance/disposal/incinerator)
 "ybI" = (
 /obj/structure/bed/dogbed/ian,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/basic/pet/dog/corgi/ian{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "ybN" = (
@@ -173820,7 +173862,7 @@ hmb
 hmb
 hlP
 ahI
-ahI
+qoU
 boV
 hmb
 hmb
@@ -175100,7 +175142,7 @@ xMq
 xMq
 xMq
 exw
-gAN
+ehz
 sCZ
 sCZ
 lmm

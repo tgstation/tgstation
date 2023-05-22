@@ -46,10 +46,13 @@
 		create_default_object()
 		return
 
-	var/atom/movable/detritus = pick(chasm_stuff)
+	var/atom/movable/detritus = determine_detritus(chasm_stuff)
 	detritus.forceMove(get_turf(src))
 	qdel(src)
 
+/// Returns the chosen detritus from the given list of things to choose from
+/obj/item/chasm_detritus/proc/determine_detritus(list/chasm_stuff)
+	return pick(chasm_stuff)
 
 /// Instantiates something in its place from the default_contents list.
 /obj/item/chasm_detritus/proc/create_default_object()
@@ -94,6 +97,14 @@
 
 	return chasm_contents
 
+/// Body detritus is selected in favor of bodies belonging to sentient mobs
+/// The first sentient body found in the list of contents is returned, otherwise 
+/// if none are sentient choose randomly.
+/obj/item/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
+	for(var/mob/fallen_mob as anything in chasm_stuff)	
+		if(fallen_mob.mind)
+			return fallen_mob
+	return ..()
 
 /obj/item/chasm_detritus/restricted/objects
 	default_contents_chance = 12.5
@@ -101,7 +112,7 @@
 
 
 /obj/item/chasm_detritus/restricted/bodies
-	default_contents_chance = 50
+	default_contents_chance = 12.5
 	default_contents_key = BODIES_ONLY
 	chasm_storage_restricted_type = /mob
 

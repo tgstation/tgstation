@@ -32,7 +32,7 @@
 // Look, I'm not happy about this either, but moving an object doesn't call Moved if it's inside something else.
 // There's good reason for this, but there's no element or similar yet to track it as far as I know.
 // SSobj runs infrequently, this is only ran while there's an attached circuit, its performance cost is negligible.
-/obj/item/usb_cable/process(delta_time)
+/obj/item/usb_cable/process(seconds_per_tick)
 	if (!check_in_range())
 		return PROCESS_KILL
 

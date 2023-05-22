@@ -152,9 +152,9 @@
 	to_chat(user, span_notice("You dump out [storage_source] onto [src]."))
 	return STORAGE_DUMP_HANDLED
 
-/obj/machinery/griddle/process(delta_time)
+/obj/machinery/griddle/process(seconds_per_tick)
 	for(var/obj/item/griddled_item as anything in griddled_objects)
-		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time) & COMPONENT_HANDLED_GRILLING)
+		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) & COMPONENT_HANDLED_GRILLING)
 			continue
 		griddled_item.fire_act(1000) //Hot hot hot!
 		if(prob(10))

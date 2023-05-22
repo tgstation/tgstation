@@ -49,7 +49,7 @@
 
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
-	sharpness = SHARP_POINTY 
+	sharpness = SHARP_POINTY
 
 /obj/item/light/bulb
 	name = "light bulb"
@@ -64,7 +64,7 @@
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
-	sharpness = SHARP_POINTY 
+	sharpness = SHARP_POINTY
 
 /obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
@@ -108,7 +108,7 @@
 		return
 	var/mob/living/moving_mob = moving_atom
 	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
-		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+		playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)
 
@@ -125,7 +125,7 @@
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
 		force = 5
-		sharpness = SHARP_POINTY 
+		sharpness = SHARP_POINTY
 		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))

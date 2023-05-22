@@ -20,11 +20,21 @@
 	)
 
 	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			src,
+			"Redeem Code",
+			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(start_redeem)),
+		)
+	)
+
+	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
 			src,
 			"Admin Help",
-			/* offset = */ 2,
+			/* offset = */ 3,
 		)
 	)
 
@@ -33,13 +43,16 @@
 			null,
 			src,
 			"Leave Body",
-			/* offset = */ 3,
+			/* offset = */ 4,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
 
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
+
+/datum/escape_menu/proc/start_redeem()
+	client?.redeem_code()
 
 /datum/escape_menu/proc/home_open_settings()
 	client?.prefs.ui_interact(client?.mob)
@@ -235,7 +248,7 @@
 
 	return TRUE
 
-/atom/movable/screen/escape_menu/home_button/admin_help/process(delta_time)
+/atom/movable/screen/escape_menu/home_button/admin_help/process(seconds_per_tick)
 	if (world.time - last_blink_time < blink_interval)
 		return
 

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/cockatrice
+/mob/living/basic/chicken/cockatrice
 	icon_suffix = "cockatrice"
 
 	breed_name_male = "Cockatrice"
@@ -7,7 +7,8 @@
 	ai_controller = /datum/ai_controller/chicken/hostile
 	health = 150
 	maxHealth = 150
-	harm_intent_damage = 10
+	melee_damage_upper = 10
+	melee_damage_lower = 8
 	obj_damage = 10
 
 	projectile_type = /obj/projectile/magic/venomous_spit
@@ -20,9 +21,9 @@
 	name = "Petrifying Egg"
 	icon_state = "cockatrice"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/cockatrice
+	layer_hen_type = /mob/living/basic/chicken/cockatrice
 
-/mob/living/simple_animal/chicken/cockatrice/Initialize(mapload)
+/mob/living/basic/chicken/cockatrice/Initialize(mapload)
 	. = ..()
 	if(gender == FEMALE)
 		ai_controller.blackboard[BB_CHICKEN_AGGRESSIVE] = FALSE

@@ -7,7 +7,7 @@
  * * BB_SONG_INSTRUMENT - set by this subtree, is the song datum the pawn plays music from.
  * * BB_SONG_LINES - not set by this subtree, is the song loaded into the song datum.
  */
-/datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/weakref/player_ref = controller.blackboard[BB_SONG_INSTRUMENT]
 	var/obj/item/instrument/song_player = player_ref?.resolve()
 
@@ -31,10 +31,10 @@
  * relevant blackboards:
  * * None!
  */
-/datum/ai_planning_subtree/generic_resist/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/generic_resist/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 
-	if(SHOULD_RESIST(living_pawn) && DT_PROB(RESIST_SUBTREE_PROB, delta_time))
+	if(SHOULD_RESIST(living_pawn) && SPT_PROB(RESIST_SUBTREE_PROB, seconds_per_tick))
 		controller.queue_behavior(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
 		return SUBTREE_RETURN_FINISH_PLANNING //IM NOT DOING ANYTHING ELSE BUT EXTINGUISH MYSELF, GOOD GOD HAVE MERCY.
 
@@ -46,7 +46,7 @@
  * relevant blackboards:
  * * BB_NEXT_HUNGRY - set by this subtree, is when the controller is next hungry
  */
-/datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	//inits the blackboard timer
 	if(!controller.blackboard[BB_NEXT_HUNGRY])
 		controller.blackboard[BB_NEXT_HUNGRY] = world.time + rand(0, 30 SECONDS)

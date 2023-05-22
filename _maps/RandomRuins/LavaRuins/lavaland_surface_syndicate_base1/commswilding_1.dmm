@@ -77,12 +77,11 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/power/apc/syndicate{
-	name = "Telecommunications APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/crate/secure/freezer/commsagent,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "s" = (
@@ -172,6 +171,10 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/telecomms)
 "W" = (
+/obj/machinery/computer/records/medical/syndie{
+	dir = 2;
+	req_access = list("syndicate")
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 

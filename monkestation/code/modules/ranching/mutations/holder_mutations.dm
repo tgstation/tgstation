@@ -1,5 +1,5 @@
 /datum/mutation/ranching/chicken/white
-	chicken_type = /mob/living/simple_animal/chicken
+	chicken_type = /mob/living/basic/chicken
 
 /datum/mutation/ranching/chicken/dreaming
-	chicken_type = /mob/living/simple_animal/chicken/dream
+	chicken_type = /mob/living/basic/chicken/dream

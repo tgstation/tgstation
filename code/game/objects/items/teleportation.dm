@@ -316,7 +316,7 @@
 
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
-	desc = "A reverse-engineered version of the Nanotrasen portable handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
+	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
@@ -357,8 +357,8 @@
 	attempt_teleport(user = user, triggered_by_emp = FALSE)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && charges < max_charges)
+/obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
+	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
@@ -424,6 +424,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
+		make_bloods(current_location, destination, user)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -459,6 +460,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
+		make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -490,6 +492,13 @@
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
+///Bleed and make blood splatters at tele start and end points
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+	var/mob/living/carbon/carbon_user = user
+	carbon_user.add_splatter_floor(old_location)
+	carbon_user.add_splatter_floor(new_location)
+	carbon_user.bleed(10)
+
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
 	default_raw_text = {"
@@ -502,6 +511,8 @@
 		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
+		<br>
+		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
