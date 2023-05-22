@@ -28725,6 +28725,10 @@
 "hAg" = (
 /turf/open/openspace,
 /area/station/maintenance/floor2/port)
+"hAh" = (
+/obj/effect/spawner/random/maintenance/two,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/floor1/port)
 "hAk" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
@@ -60819,10 +60823,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard/fore)
-"pRj" = (
-/obj/effect/spawner/random/maintenance/two,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/floor1/port)
 "pRk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -126661,7 +126661,7 @@ iun
 xgH
 kzE
 kzE
-pRj
+hAh
 kzE
 kzE
 kzE
@@ -127681,7 +127681,7 @@ xgH
 xgH
 xgH
 xgH
-xgH
+kzE
 kzE
 kzE
 kzE
