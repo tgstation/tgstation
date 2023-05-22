@@ -143,8 +143,11 @@
 	cutting_tool = null
 	paint_jobs = null
 
+	/// will this grave give you nightmares when opened
 	var/lead_tomb = FALSE
+	/// was this grave opened for the first time
 	var/first_open = FALSE
+	/// was a shovel used to close this grave
 	var/dug_closed = FALSE
 
 /obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -228,7 +231,7 @@
 			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
-			return 1
+			return TRUE
 
 		if(opened)
 			dug_closed = TRUE
@@ -240,24 +243,24 @@
 				to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
 				first_open = FALSE
 
-		return 1
+		return TRUE
 
 	//player is attempting to destroy the open grave with a shovel
 	else
 		if(!opened)
-			return 1
+			return TRUE
 
 		user.visible_message(
 			span_notice("[user] Is attempting to remove [src]."),
 			span_notice("You start removing [src]."),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
-			return 1
+			return TRUE
 
 		to_chat(user, span_notice("You remove \the [src]  completely."))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
-		return 1
+		return TRUE
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
