@@ -50,7 +50,7 @@ export const SparringContract = (props, context) => {
     right_sign,
     in_area,
     no_chaplains,
-	stakes_holy_match,
+    stakes_holy_match,
   } = data;
   const [weapon, setWeapon] = useLocalState(context, 'weapon', set_weapon);
   const [area, setArea] = useLocalState(context, 'area', set_area);
