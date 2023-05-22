@@ -35,6 +35,7 @@ type Info = {
   right_sign: string;
   in_area: BooleanLike;
   no_chaplains: BooleanLike;
+  stakes_holy_match: number;
   possible_areas: Array<string>;
 };
 
