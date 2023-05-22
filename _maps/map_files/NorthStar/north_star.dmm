@@ -60819,6 +60819,10 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard/fore)
+"pRj" = (
+/obj/effect/spawner/random/maintenance/two,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/floor1/port)
 "pRk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -126657,7 +126661,7 @@ iun
 xgH
 kzE
 kzE
-kzE
+pRj
 kzE
 kzE
 kzE
@@ -127686,8 +127690,8 @@ kzE
 kzE
 kzE
 kzE
-xgH
-xgH
+kzE
+eKk
 lWQ
 xgH
 rsd
@@ -127935,16 +127939,16 @@ fmb
 fmb
 fmb
 kzE
-kzE
+aAt
 pCb
 mHz
 ess
 ess
 mHz
 tFK
+aAt
 kzE
-kzE
-xgH
+jUq
 lWQ
 xgH
 xCO
@@ -128201,7 +128205,7 @@ ckd
 snO
 mfU
 kzE
-xgH
+tCB
 lWQ
 xgH
 xYB
@@ -128458,7 +128462,7 @@ qVF
 snO
 msN
 kzE
-xgH
+jUq
 hdA
 xgH
 xgH
