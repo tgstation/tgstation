@@ -12,6 +12,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
 
 	for(var/mob/living/carbon/target in GLOB.player_list)
+		if(!target.mind)
+			continue
 		if(IS_WIZARD(target) && !badmin)
 			// wizards are not only immune but can speak all languages to taunt their victims over the radio
 			target.grant_all_languages(source=LANGUAGE_BABEL)
@@ -44,6 +46,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	// silicon mobs are immune
 	if(!iscarbon(to_curse))
 		return
+	if(!to_curse.mind)
+		return
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_TRAIT(to_curse.mind, TRAIT_TOWER_OF_BABEL))
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
@@ -55,6 +59,8 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 /// Mainly so admin triggered tower of babel can be undone
 /proc/cure_curse_of_babel(mob/living/carbon/to_cure)
 	if(!iscarbon(to_cure))
+		return
+	if(!to_cure.mind)
 		return
 
 	// anyone who has this trait from another source is immune to being cursed by tower of babel
