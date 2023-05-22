@@ -1,5 +1,5 @@
-/proc/log_href(text)
-	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
+/proc/log_href(text, list/data)
+	logger.Log(LOG_CATEGORY_DEBUG_HREF, text, data)
 
 /**
  * Appends a tgui-related log entry. All arguments are optional.
@@ -31,4 +31,4 @@
 	// Insert message
 	if(message)
 		entry += "\n[message]"
-	WRITE_LOG(GLOB.tgui_log, entry)
+	logger.Log(LOG_CATEGORY_DEBUG_TGUI, entry)

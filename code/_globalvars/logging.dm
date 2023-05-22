@@ -46,11 +46,28 @@ GLOBAL_PROTECT(log_directory)
 GLOBAL_VAR(lua_log)
 GLOBAL_PROTECT(lua_log)
 
-GLOBAL_LIST_EMPTY(OOClog)
-GLOBAL_PROTECT(OOClog)
+#define DECLARE_LOG(log_name, start) DECLARE_LOG_NAMED(##log_name, "[copytext(#log_name, 1, length(#log_name) - 3)]", start)
+#define START_LOG TRUE
+#define DONT_START_LOG FALSE
 
-GLOBAL_VAR(perf_log)
-GLOBAL_PROTECT(perf_log)
+/// Populated by log declaration macros to set log file names and start messages
+/world/proc/_initialize_log_files(temp_log_override = null)
+	// Needs to be here to avoid compiler warnings
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
+// All individual log files.
+// These should be used where the log category cannot easily be a json log file.
+DECLARE_LOG(config_error_log, DONT_START_LOG)
+DECLARE_LOG(perf_log, DONT_START_LOG) // Declared here but name is set in time_track subsystem
+
+#ifdef REFERENCE_DOING_IT_LIVE
+DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
+#endif
+
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
+DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
+#endif
 
 GLOBAL_LIST_EMPTY(mechcomp_log)
 GLOBAL_PROTECT(mechcomp_log)

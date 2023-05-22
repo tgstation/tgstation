@@ -229,6 +229,20 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/each in materials)
 		materials[each] *= abs(_amount)
 	format()
+	var/list/data = list(
+		"machine_name" = machine_name,
+		"area_name" = AREACOORD(M),
+		"action" = action,
+		"amount" = abs(amount),
+		"noun" = noun,
+		"raw_materials" = get_raw_materials(""),
+		"direction" = amount < 0 ? "withdrawn" : "deposited",
+	)
+	logger.Log(
+		LOG_CATEGORY_SILO,
+		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")]",
+		data,
+	)
 
 /datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
 	if (other == src || action != other.action || noun != other.noun)

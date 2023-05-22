@@ -8,6 +8,81 @@
 GLOBAL_VAR(restart_counter)
 
 /**
+ * WORLD INITIALIZATION
+ * THIS IS THE INIT ORDER:
+ *
+ * BYOND =>
+ * - (secret init native) =>
+ *   - world.Genesis() =>
+ *     - world.init_byond_tracy()
+ *     - (Start native profiling)
+ *     - world.init_debugger()
+ *     - Master =>
+ *       - config *unloaded
+ *       - (all subsystems) PreInit()
+ *       - GLOB =>
+ *         - make_datum_reference_lists()
+ *   - (/static variable inits, reverse declaration order)
+ * - (all pre-mapped atoms) /atom/New()
+ * - world.New() =>
+ *   - config.Load()
+ *   - world.InitTgs() =>
+ *     - TgsNew() *may sleep
+ *     - GLOB.rev_data.load_tgs_info()
+ *   - world.ConfigLoaded() =>
+ *     - SSdbcore.InitializeRound()
+ *     - world.SetupLogs()
+ *     - load_admins()
+ *     - ...
+ *   - Master.Initialize() =>
+ *     - (all subsystems) Initialize()
+ *     - Master.StartProcessing() =>
+ *       - Master.Loop() =>
+ *         - Failsafe
+ *   - world.RunUnattendedFunctions()
+ *
+ * Now listen up because I want to make something clear:
+ * If something is not in this list it should almost definitely be handled by a subsystem Initialize()ing
+ * If whatever it is that needs doing doesn't fit in a subsystem you probably aren't trying hard enough tbhfam
+ *
+ * GOT IT MEMORIZED?
+ * - Dominion/Cyberboss
+ */
+
+/**
+ * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN MASTER/NEW() IS DONE
+ * NOWHERE THE FUCK ELSE
+ * I DON'T CARE HOW MANY LAYERS OF DEBUG/PROFILE/TRACE WE HAVE, YOU JUST HAVE TO DEAL WITH THIS PROC EXISTING
+ * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
+ * SO HELP ME GOD IF I FIND ABSTRACTION LAYERS OVER THIS!
+ */
+/world/proc/Genesis(tracy_initialized = FALSE)
+	RETURN_TYPE(/datum/controller/master)
+
+#ifdef USE_BYOND_TRACY
+#warn USE_BYOND_TRACY is enabled
+	if(!tracy_initialized)
+		init_byond_tracy()
+		Genesis(tracy_initialized = TRUE)
+		return
+#endif
+
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+
+	// Write everything to this log file until we get to SetupLogs() later
+	_initialize_log_files("data/logs/config_error.[GUID()].log")
+
+	// Init the debugger first so we can debug Master
+	init_debugger()
+
+	// Create the logger
+	logger = new
+
+	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
+	Master = new
+
+/**
  * World creation
  *
  * Here is where a round itself is actually begun and setup.
@@ -111,6 +186,14 @@ GLOBAL_VAR(restart_counter)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
+/// Returns a list of data about the world state, don't clutter
+/world/proc/get_world_state_for_logging()
+	var/data = list()
+	data["tick_usage"] = world.tick_usage
+	data["tick_lag"] = world.tick_lag
+	data["time"] = world.time
+	data["timestamp"] = logger.unix_timestamp_string()
+	return data
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -134,62 +217,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.logger.init_logging()
-	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
-	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
-	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
-	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
-	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
-	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
-	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
-	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
-	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
-	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
-	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
-	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
-	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
-	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
-	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
-	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
-	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
-	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
-	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
-	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
-	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
-	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
-	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
-	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
-	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
-	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
-	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
-	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
-	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
-	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
-	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
-
-#ifdef UNIT_TESTS
-	GLOB.test_log = "[GLOB.log_directory]/tests.log"
-	start_log(GLOB.test_log)
-#endif
-
-#ifdef REFERENCE_DOING_IT_LIVE
-	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
-	start_log(GLOB.harddel_log)
-#endif
-	start_log(GLOB.tgui_log)
-	start_log(GLOB.world_attack_log)
-	start_log(GLOB.world_econ_log)
-	start_log(GLOB.world_game_log)
-	start_log(GLOB.world_href_log)
-	start_log(GLOB.world_job_debug_log)
-	start_log(GLOB.world_manifest_log)
-	start_log(GLOB.world_mob_tag_log)
-	start_log(GLOB.world_qdel_log)
-	start_log(GLOB.world_runtime_log)
-	start_log(GLOB.world_shuttle_log)
-	start_log(GLOB.world_telecomms_log)
-	start_log(GLOB.world_uplink_log)
-	start_log(GLOB.world_pda_log)
+	logger.init_logging()
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
