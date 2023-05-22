@@ -825,7 +825,7 @@
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
 	else if(actually_paints && target.atom_colours[atom_colours] == paint_color)
-		balloon_alert(user, "[target.p_theyre(TRUE)] already of that color.")
+		balloon_alert(user, "[target.p_theyre()] already of that color.")
 		return FALSE
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
@@ -847,7 +847,7 @@
 			color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
-				balloon_alert(user, "A color that dark on this object? Surely not!")
+				balloon_alert(user, "a color that dark on this? surely not.")
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
