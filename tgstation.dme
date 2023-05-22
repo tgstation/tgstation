@@ -3930,6 +3930,7 @@
 #include "code\modules\mob\living\basic\festivus_pole.dm"
 #include "code\modules\mob\living\basic\health_adjustment.dm"
 #include "code\modules\mob\living\basic\tree.dm"
+#include "code\modules\mob\living\basic\farm_animals\chicken.dm"
 #include "code\modules\mob\living\basic\farm_animals\deer.dm"
 #include "code\modules\mob\living\basic\farm_animals\pig.dm"
 #include "code\modules\mob\living\basic\farm_animals\rabbit.dm"

@@ -90,6 +90,12 @@
 		"Hmm mmm mmm!",
 	)
 
+/datum/ai_planning_subtree/random_speech/chicken
+	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
+	speak_emote = list("clucks", "croons")
+	emote_hear = list("clucks.")
+	emote_see = list("pecks at the ground.","flaps her wings viciously.")
+
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
