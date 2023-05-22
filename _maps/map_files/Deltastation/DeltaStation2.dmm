@@ -41247,6 +41247,7 @@
 /obj/effect/turf_decal/box/red/corners{
 	dir = 8
 	},
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage)
 "jYC" = (
