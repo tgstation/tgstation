@@ -27994,12 +27994,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/starboard)
 "hqX" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/machine/telecomms/bus,
-/obj/item/circuitboard/machine/telecomms/processor,
-/turf/open/floor/iron/smooth,
-/area/station/tcommsat/computer)
+/obj/effect/spawner/random/maintenance/two,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/floor1/port)
 "hre" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/iron/dark/corner{
@@ -28725,10 +28722,6 @@
 "hAg" = (
 /turf/open/openspace,
 /area/station/maintenance/floor2/port)
-"hAh" = (
-/obj/effect/spawner/random/maintenance/two,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/floor1/port)
 "hAk" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
@@ -51393,6 +51386,13 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
+"nqC" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/telecomms/broadcaster,
+/obj/item/circuitboard/machine/telecomms/bus,
+/obj/item/circuitboard/machine/telecomms/processor,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "nqE" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Crystallizer"
@@ -126661,7 +126661,7 @@ iun
 xgH
 kzE
 kzE
-hAh
+hqX
 kzE
 kzE
 kzE
@@ -127939,14 +127939,14 @@ fmb
 fmb
 fmb
 kzE
-aAt
+xqs
 pCb
 mHz
 ess
 ess
 mHz
 tFK
-aAt
+mfU
 kzE
 jUq
 lWQ
@@ -128196,14 +128196,14 @@ kzE
 kzE
 kzE
 kzE
-xqs
+sGw
 snO
 dkH
 eht
 aAt
 ckd
 snO
-mfU
+nSn
 kzE
 tCB
 lWQ
@@ -128453,7 +128453,7 @@ xWl
 nPN
 nzb
 mNh
-sGw
+ngH
 snO
 dTR
 eIr
@@ -128710,7 +128710,7 @@ uVY
 nfn
 dRE
 mNh
-ngH
+aAt
 snO
 aAt
 aAt
@@ -128962,12 +128962,12 @@ cax
 mFW
 kSN
 jKt
-hqX
+jIG
 uVY
 dqB
 orK
 mNh
-nSn
+nqC
 snO
 vow
 kHz
