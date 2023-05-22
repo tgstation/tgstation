@@ -15,10 +15,10 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_harm_continuous = "pecks"
+	response_harm_simple = "peck"
+	attack_verb_continuous = "pecks"
+	attack_verb_simple = "peck"
 	health = 15
 	maxHealth = 15
 	pass_flags = PASSTABLE | PASSMOB
