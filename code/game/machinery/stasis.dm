@@ -20,7 +20,7 @@
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/op_computer
 
-/obj/machinery/stasis/Initialize()
+/obj/machinery/stasis/Initialize(mapload)
 	. = ..()
 	for(var/direction in GLOB.alldirs)
 		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
