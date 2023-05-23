@@ -57,7 +57,6 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 30
 	},
-/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "as" = (
@@ -2108,7 +2107,6 @@
 "iw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
-/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "iy" = (
@@ -5341,7 +5339,6 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
-/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "AJ" = (
