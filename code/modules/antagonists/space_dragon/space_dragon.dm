@@ -86,9 +86,11 @@
 		/datum/component/mind_linker, \
 		network_name = "Wavespeak", \
 		chat_color = "#635BAF", \
+		signals_which_destroy_us = list(COMSIG_LIVING_DEATH), \
 		speech_action_icon = 'icons/mob/actions/actions_space_dragon.dmi', \
 		speech_action_icon_state = "wavespeak", \
 	)
+	RegisterSignal(wavespeak, COMSIG_PARENT_QDELETING, PROC_REF(clear_wavespeak))
 
 /datum/antagonist/space_dragon/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/antag = mob_override || owner.current
@@ -116,6 +118,10 @@
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
+
+/datum/antagonist/space_dragon/proc/clear_wavespeak()
+	SIGNAL_HANDLER
+	wavespeak = null
 
 /**
  * Checks to see if we need to do anything with the current state of the dragon's rifts.
