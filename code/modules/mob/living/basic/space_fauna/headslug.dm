@@ -5,7 +5,7 @@
  */
 /mob/living/basic/headslug
 	name = "headslug"
-	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
+	desc = "A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus."
 	icon_state = "headslug"
 	icon_living = "headslug"
 	icon_dead = "headslug_dead"
@@ -38,6 +38,13 @@
 /mob/living/basic/headslug/Destroy()
 	UnregisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 	return ..()
+
+/mob/living/basic/examine(mob/user)
+	. = ..()
+	if(isnull(client))
+		. += span_notice("It appears to be moving around listlessly.")
+	else
+		. += span_warning("It's moving around intelligently!")
 
 /// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation. If so, it implants the egg and starts the countdown to death.
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)
