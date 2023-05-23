@@ -25,8 +25,9 @@
 			if(client.account_age <= CONFIG_GET(number/minimum_age))
 				client.interviewee = TRUE
 
-	if(client.ip_intel > 0.7 && !(client.ckey in GLOB.interviews.approved_ckeys))
-		client.interviewee = TRUE
+	if(client.ip_intel != "Disabled")
+		if(client.ip_intel > 0.7 && !(client.ckey in GLOB.interviews.approved_ckeys))
+			client.interviewee = TRUE
 
 	. = ..()
 	if(!. || !client)
