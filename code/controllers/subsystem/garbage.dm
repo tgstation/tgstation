@@ -273,11 +273,15 @@ SUBSYSTEM_DEF(garbage)
 
 #ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
 	var/refid = D
-#else
-	var/refid = text_ref(D)
-#endif
 	if (D.gc_destroyed <= 0)
-		D.gc_destroyed = queue_time
+		D.gc_destroyed = 1
+#else
+	var/static/uid = 0
+	uid = WRAP(uid+1, 1, (2**24)-1)
+	var/refid = text_ref(D)
+	if (D.gc_destroyed <= 0)
+		D.gc_destroyed = uid
+#endif
 	
 	var/list/queue = queues[level]
 
