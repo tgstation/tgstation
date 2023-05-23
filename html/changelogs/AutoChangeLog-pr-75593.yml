@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Shaft Miners are now alerted of Icemoon storms, Clowns are naive, and Curators are immune to the Tower of Babel again."
