@@ -50,7 +50,7 @@
 /obj/effect/mob_spawn/corpse/headcrab
 	mob_type = /mob/living/basic/headslug
 	icon = 'icons/mob/simple/animal.dmi'
-	icon_state = "headcrab_dead"
+	icon_state = "headslug_dead"
 
 /obj/effect/mob_spawn/corpse/headcrab/special(mob/living/basic/headslug/crab)
 	. = ..()
