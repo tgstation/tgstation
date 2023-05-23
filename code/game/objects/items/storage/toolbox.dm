@@ -23,7 +23,7 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
-	attack_style = /datum/attack_style
+	attack_style = /datum/attack_style/melee_weapon
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()

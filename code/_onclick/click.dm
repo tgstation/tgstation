@@ -306,7 +306,7 @@
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
-	if(close_enough && (!combat_mode || right_clicking) && !ismob(clicked_on))
+	if(close_enough && (!combat_mode || right_clicking) && !ismob(clicked_on)) // melbert todo : why did i put the right click check here?
 		changeNext_move(CLICK_CD_MELEE)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return

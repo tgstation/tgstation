@@ -155,7 +155,7 @@
 	var/obj/item/their_weapon = target.get_active_held_item()
 	var/disarmable_weapon = is_type_in_typecache(their_weapon, GLOB.shove_disarming_types)
 	// Checks if they're standing behind a turf we can wall shove them into (tables, walls, etc)
-	var/shove_dir = get_dir(target, living_pawn)
+	var/shove_dir = get_dir(living_pawn, target)
 	var/turf/turf_behind = get_step(target, shove_dir)
 	var/turf_can_be_shoved_into = turf_behind?.is_blocked_turf(source_atom = living_pawn)
 	// We only want to try and disarm the target if they're holding a weapon we can disarm or standing in front of a turf that we can shove them into.
@@ -188,7 +188,7 @@
 
 	// attack with weapon if we have one
 	if(living_pawn.CanReach(target, weapon))
-		var/fake_params = list2params(list(LEFT_CLICK = !disarm, RIGHT_CLICK = disarm)) // Sets up params for either attacking or disarming
+		var/fake_params = list2params(list((disarm ? RIGHT_CLICK : LEFT_CLICK) = TRUE)) // Sets up params for either attacking or disarming
 		living_pawn.ClickOn(target, fake_params)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
 
@@ -202,7 +202,7 @@
 			var/can_shoot = gun?.can_shoot() || FALSE
 			if(isgun(weapon) && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
 				living_pawn.ClickOn(real_target)
-				controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
+				controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot || prob(80)) // Only 20% likely to notice it didn't work
 				if(can_shoot)
 					controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else

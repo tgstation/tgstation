@@ -33,11 +33,6 @@
 
 	return ..()
 
-	/*
-	if(!right_click_attack_chain(attack_target, modifiers) && !dna?.species?.spec_click_on_without_item(src, attack_target, modifiers)) //Because species like monkeys dont use attack hand
-		attack_target.attack_hand(src, modifiers)
-	*/
-
 /mob/living/carbon/divert_to_attack_style(atom/attack_target, list/modifiers)
 	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb(attack_target) || get_active_hand()

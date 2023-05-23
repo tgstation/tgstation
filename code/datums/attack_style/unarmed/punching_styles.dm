@@ -17,7 +17,7 @@
 	var/datum/apply_damage_packet/new_packet = packet.copy_packet()
 	new_packet.damage *= bonus_stamina_damage_modifier
 	new_packet.damagetype = STAMINA
-	new_packet.execute(attacker)
+	new_packet.execute(smacked)
 
 /datum/attack_style/unarmed/generic_damage/limb_based/punch/ethereal
 	successful_hit_sound = 'sound/weapons/etherealhit.ogg'

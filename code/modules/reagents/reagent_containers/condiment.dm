@@ -41,7 +41,8 @@
 	return OXYLOSS
 
 /obj/item/reagent_containers/condiment/attack(mob/M, mob/user, def_zone)
-
+	if(user.combat_mode)
+		return ..()
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, span_warning("None of [src] left, oh no!"))
 		return FALSE

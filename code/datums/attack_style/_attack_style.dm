@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /proc/init_attack_styles()
 	var/list/styles = list()
-	for(var/style_type in typesof(/datum/attack_style))
+	for(var/style_type in subtypesof(/datum/attack_style))
 		styles[style_type] = new style_type()
 
 	return styles
@@ -74,7 +74,33 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.balloon_alert(attacker, "can't act while blocking!")
 		return FALSE
 
-	var/attack_direction = get_dir(attacker, get_turf(aimed_towards))
+	// This gives a little bit of leeway for angling attacks.
+	// If we straight up use dir, then the window for doing a NSEW attack is far smaller than the window for NE/SE/SW/NW attacks.
+	// But by using angle, we can use a slightly larger and equal range for all angles, each being 45 degrees.
+	var/attack_direction = NONE
+	var/click_angle = get_angle(attacker, aimed_towards)
+	switch(click_angle)
+		if(0 to 22.5, 337.5 to 360)
+			attack_direction = NORTH
+		if(22.5 to 67.5)
+			attack_direction = NORTHEAST
+		if(67.5 to 112.5)
+			attack_direction = EAST
+		if(112.5 to 157.5)
+			attack_direction = SOUTHEAST
+		if(157.5 to 202.5)
+			attack_direction = SOUTH
+		if(202.5 to 247.5)
+			attack_direction = SOUTHWEST
+		if(247.5 to 292.5)
+			attack_direction = WEST
+		if(292.5 to 337.5)
+			attack_direction = NORTHWEST
+		else
+			// ??? result, just default to dir
+			stack_trace("[attacker] clicking on [aimed_towards] resulted in invalid angle [click_angle].")
+			attack_direction = get_dir(attacker, aimed_towards)
+
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
 	if(reverse_for_lefthand)
 		// Determine which hand the attacker is attacking from
@@ -85,10 +111,17 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(which_hand % 2 == 1)
 			reverse_range(affecting)
 
+	// Make sure they don't move while swinging
+	var/pre_set_dir = attacker.set_dir_on_move
+	attacker.set_dir_on_move = FALSE
 	// Make sure they can't attack while swinging
 	attacker.changeNext_move(time_per_turf * length(affecting))
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
-	if(execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking) & ATTACK_STYLE_CANCEL)
+	var/attack_result = execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking)
+	// Restore this
+	attacker.set_dir_on_move = pre_set_dir
+	// Check the result.
+	if(attack_result & ATTACK_STYLE_CANCEL)
 		// Just apply a small second CD so they don't spam failed attacks
 		attacker.changeNext_move(0.33 SECONDS)
 		return FALSE
@@ -112,14 +145,17 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/midpoint = ROUND_UP(length(affecting) / 2)
 	var/started_holding = !isnull(weapon) && attacker.is_holding(weapon)
 	var/turf/starting_loc = attacker.loc
+	var/list/already_hit = list()
 	var/hitsound_played = FALSE
 	var/starting_dir = attacker.dir
-	var/pre_set_dir = attacker.set_dir_on_move
-	attacker.set_dir_on_move = FALSE
 	while(length(affecting))
 		var/turf/hitting = popleft(affecting)
-		// The two turfs which will never be blocked is the first and the midpoint
-		// All other turfs, though, will be checked
+		// - The midpoint is always hitable, this isn't very "sensible" but if this wasn't the case
+		// one would be completely immune to being attacked by standing on a dense object.
+		// - The first turf is always hitable, for similar reasons to above.
+		// - Every other turf, though, will block ongoing swings.
+		// Unfortunately this robs us of some cool interactions like not being able to fight in a 1 wide hallways
+		// with a wide arc weapon like a baseball bat, but maybe it's for the better?
 		if(affecting_index != 1 && affecting_index != midpoint)
 			var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
 			if(blocking_us)
@@ -127,7 +163,13 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 					span_warning("[attacker]'s attack collides with [blocking_us]!"),
 					span_warning("[blocking_us] blocks your attack partway!"),
 				)
-				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
+				if(blocking_us.uses_integrity)
+					log_combat(user, blocking_us, "hit mid-swing", attacking_item)
+					blocking_us.take_damage(weapon.force, weapon.damtype, MELEE, TRUE,
+						get_dir(attacker, blocking_us), weapon.armour_penetration)
+				else
+					blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
+
 				return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
 
 #ifdef TESTING
@@ -138,6 +180,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		var/list/mob/living/foes = list()
 		for(var/mob/living/foe_in_turf in hitting)
+			if(foe_in_turf in already_hit)
+				continue
+
 			var/foe_prio = rand(4, 8) // assign a random priority so it's non-deterministic
 			if(foe_in_turf == priority_target)
 				foe_prio = 10
@@ -155,6 +200,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		var/total_hit = 0
 		for(var/mob/living/smack_who as anything in foes)
+			already_hit += smack_who
 			var/new_results = finalize_attack(attacker, smack_who, weapon, right_clicking)
 			if(!(new_results & ATTACK_STYLE_HIT))
 				continue
@@ -188,21 +234,13 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 					return ATTACK_STYLE_CANCEL
 
 				starting_loc = attacker.loc
+				// unfortunately this doesn't work niced with attacks that reverse the direction...
 				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
 				affecting.Cut(1, affecting_index)
 
 	if(total_total_hit <= 0)
 		// counts as a miss if we don't hit anyone, duh
 		attack_flag |= ATTACK_STYLE_MISSED
-
-	/*
-	if(attack_flag & ATTACK_STYLE_HIT)
-		var/hitsound_to_use = get_hit_sound(weapon)
-		if(hitsound_to_use)
-			playsound(attacker, hitsound_to_use, hit_volume, TRUE)
-	*/
-
-	attacker.set_dir_on_move = pre_set_dir
 
 	if(attack_flag & ATTACK_STYLE_MISSED)
 		if(miss_sound)
@@ -224,10 +262,14 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// in the list of affecting turfs to play the attack animation over
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
 	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
-	// Attack animations play over the layer of the atom passed into it
-	// So in order we will select a living mob -> a movable -> the turf itself
-	// This ensures the effect plays on the relevant layer and is always visible
-	return (locate(/mob/living) in midpoint) || (locate(/atom/movable) in midpoint) || midpoint
+	for(var/atom/movable/thing in midpoint)
+		if(isProbablyWallMounted(thing))
+			continue
+		if(thing.invisibility > 0 || thing.alpha < 10)
+			continue
+		return thing
+
+	return midpoint
 
 /**
  * Finalize an attack on a single mob in one of the affected turfs

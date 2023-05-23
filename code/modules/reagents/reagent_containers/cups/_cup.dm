@@ -54,6 +54,8 @@
 	last_check_time = world.time
 
 /obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
+	if(user.combat_mode)
+		return ..()
 	if(!canconsume(target_mob, user))
 		return
 
