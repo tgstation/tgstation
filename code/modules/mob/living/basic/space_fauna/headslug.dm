@@ -51,7 +51,7 @@
 		return
 
 	if(!infect(victim))
-		balloon_alert("failed to implant egg!")
+		target.balloon_alert(src, "failed to implant egg!")
 		stack_trace("[origin.key] in [src] failed to implant egg in [victim], despite all checks suggesting it should have worked!")
 		return
 
