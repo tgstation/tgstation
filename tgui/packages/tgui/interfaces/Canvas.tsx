@@ -58,7 +58,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   componentDidUpdate() {
-    const grid_status = !!this.props.drawing_color && this.props.editable;
+    const grid_status = !!this.props.drawing_color && !!this.props.editable;
     // eslint-disable-next-line max-len
     if (
       (this.props.value !== undefined &&
@@ -88,7 +88,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
       return;
     }
     this.baseImageData = fromDM(this.props.value);
-    this.show_grid = !!this.props.drawing_color && this.props.editable;
+    this.show_grid = !!this.props.drawing_color && !!this.props.editable;
     this.modifiedElements = [];
 
     const canvas = this.canvasRef.current!;
