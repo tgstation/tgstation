@@ -1,26 +1,31 @@
 //This one's from bay12
 /obj/machinery/vending/runic_vendor
 	name = "\improper Runic Vending Machine"
-	desc = "All the fine parts you need in one vending machine!"
+	desc = "A magic vending machine."
+	icon_state = "RunicVendor"
+	panel_type = "panel10"
+	product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"
+	vend_reply = "Have an enchanted evening!"
+	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(
-		/obj/item/assembly/igniter = 6,
-		/obj/item/assembly/prox_sensor = 6,
-		/obj/item/assembly/signaler = 6,
-		/obj/item/assembly/timer = 6,
-		/obj/item/clothing/head/bio_hood = 6,
-		/obj/item/clothing/suit/bio_suit = 6,
-		/obj/item/clothing/under/rank/rnd/scientist = 6,
-		/obj/item/transfer_valve = 6,
+		/obj/item/clothing/head/wizard = 1,
+		/obj/item/clothing/suit/wizrobe = 1,
+		/obj/item/clothing/head/wizard/red = 1,
+		/obj/item/clothing/suit/wizrobe/red = 1,
+		/obj/item/clothing/head/wizard/yellow = 1,
+		/obj/item/clothing/suit/wizrobe/yellow = 1,
+		/obj/item/clothing/shoes/sandal/magic = 1,
+		/obj/item/staff = 2,
 	)
-	contraband = list(/obj/item/assembly/health = 3)
-	default_price = PAYCHECK_CREW
-	extra_price = PAYCHECK_CREW
-	payment_department = ACCOUNT_SCI
-	var/duration = 20 SECONDS
+	resistance_flags = FIRE_PROOF
+	default_price = 0 //Just in case, since it's primary use is storage.
+	light_mask = "RunicVendor-light-mask"
+	/// How long the vendor stays up before it decays.
+	var/time_to_decay = 20 SECONDS
 
 
 /obj/machinery/vending/runic_vendor/Initialize(mapload, obj/item/forcefield_projector/origin)
-	addtimer(CALLBACK(src, PROC_REF(decay)), duration, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(decay)), time_to_decay, TIMER_STOPPABLE)
 
 	. = ..()
 

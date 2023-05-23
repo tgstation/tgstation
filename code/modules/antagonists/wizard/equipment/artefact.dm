@@ -408,12 +408,13 @@
 	attack_verb_simple = list("sear", "club", "burn")
 	hitsound = 'sound/weapons/sear.ogg'
 
-	var/field_distance_limit = 7
-	/// Time it takes to materialize a forcefield.
-	var/creation_time = 1 SECONDS
-	/// Checks to make sure the projector isn't busy with making another forcefield.
-	var/force_proj_busy = FALSE
-	///Number of charges left
+	/// Range cap on where you can summon vendors.
+	var/max_summon_range = 7
+	/// Channeling time to summon a vendor.
+	var/summoning_time = 1 SECONDS
+	/// Checks if the staff is channeling a vendor already.
+	var/staff_is_busy_summoning = FALSE
+	///Number of summoning charges left.
 	var/summon_vendor_charges = 3
 
 /obj/item/runic_vendor_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -424,43 +425,42 @@
 	var/turf/T = get_turf(target)
 	if(istype(target, /obj/machinery/vending/runic_vendor))
 		var/obj/machinery/vending/runic_vendor/runic_explosion_target = target
-		user.balloon_alert(user, "you explode the vendor")
 		runic_explosion_target.runic_explosion()
 		return
 	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in T
 	if(vendor_on_turf)
-		user.balloon_alert(user, "you explode the vendor")
 		vendor_on_turf.runic_explosion()
 		return
-	if(get_dist(T,src) > field_distance_limit)
+	if(get_dist(T,src) > max_summon_range)
 		user.balloon_alert(user, "too far!")
 		return
 	if(get_turf(src) == T)
 		user.balloon_alert(user, "too close!")
 		return
-	if(force_proj_busy)
+	if(staff_is_busy_summoning)
 		user.balloon_alert(user, "already summoning!")
 		return
 	if(T.is_blocked_turf(TRUE))
+		user.balloon_alert(user, "blocked!")
 		return
-	if(creation_time)
-		force_proj_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
-			user.balloon_alert(user, "summoning...")
-			force_proj_busy = FALSE
+	if(summoning_time)
+		staff_is_busy_summoning = TRUE
+		user.balloon_alert(user, "summoning...")
+		if(!do_after(user, summoning_time, target = target))
+			staff_is_busy_summoning = FALSE
 			return
-		force_proj_busy = FALSE
+		staff_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
-		user.visible_message(span_warning("[user] projects a forcefield!"))
+		user.visible_message(span_warning("[user] summons a runic vendor!"))
 		new /obj/machinery/vending/runic_vendor(T)
 		summon_vendor_charges--
 		user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/runic_vendor_staff/attack_self(mob/user, modifiers)
 	. = ..()
+	user.balloon_alert(user, "recharging...")
 	if(!do_after(user, 5 SECONDS))
-		user.balloon_alert(user, "recharging...")
 		return
 	user.balloon_alert(user, "fully charged")
 	summon_vendor_charges = 3
@@ -473,9 +473,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/machinery/vending/runic_vendor))
 		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
-		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 2, 4, user)
+		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 4, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(vendor_on_turf)
-		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 2, 4, user)
+		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 4, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
