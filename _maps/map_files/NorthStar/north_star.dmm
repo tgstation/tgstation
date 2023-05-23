@@ -34507,7 +34507,7 @@
 /obj/machinery/light_switch/directional/south,
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/engine/cult,
-/area/station/service/chapel)
+/area/station/service/library/private)
 "jgx" = (
 /obj/effect/turf_decal/trimline/green/filled/arrow_cw,
 /obj/structure/railing{
@@ -78450,7 +78450,7 @@
 "uHB" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/engine/cult,
-/area/station/service/chapel)
+/area/station/service/library/private)
 "uHE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -82616,7 +82616,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/engine/cult,
-/area/station/service/chapel)
+/area/station/service/library/private)
 "vKH" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/decal/cleanable/oil,
@@ -329774,7 +329774,7 @@ fVV
 lGb
 ity
 rNo
-rNo
+rVQ
 rVQ
 lfw
 rVQ
