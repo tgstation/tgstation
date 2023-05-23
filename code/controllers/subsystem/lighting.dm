@@ -46,10 +46,9 @@ SUBSYSTEM_DEF(lighting)
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue
-			queue.Cut(1, i+1)
+			queue.Cut(1, i + 1)
 			i = 0
 			stoplag()
-			queue_length = length(queue)
 		else if (MC_TICK_CHECK)
 			break
 	if(i)
