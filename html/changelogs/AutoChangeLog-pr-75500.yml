@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "You receive damage from tritium only when there are enough moles to make it visible"
