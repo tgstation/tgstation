@@ -1,5 +1,5 @@
 /datum/component/player_sink
-	var/max_sinkage = 24
+	var/max_sinkage = 18
 	var/icon/sinker = icon('monkestation/icons/turf/ballpit.dmi', "sink")
 
 	///the filters name path for locating
