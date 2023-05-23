@@ -1,6 +1,13 @@
 /// Counter for number of chicken mobs in the universe. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicken_count, 0)
 
+/* ## Chickens
+*
+*
+* Not-entirely-flightless domesticated birds that lay eggs, which are then consumed by humans and other animals.
+*/
+
+
 /mob/living/basic/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -19,7 +26,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	response_harm_simple = "peck"
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "peck"
-	friendly_verb_continuous = "headbutts"	
+	friendly_verb_continuous = "headbutts"
 	friendly_verb_simple = "headbutt"
 	health = 15
 	maxHealth = 15
