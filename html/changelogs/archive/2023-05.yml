@@ -786,3 +786,45 @@
   - bugfix: bibles can convert other bibles
   TiviPlus:
   - qol: TTS no longer chokes on large amounts of one letter
+2023-05-23:
+  Comxy:
+  - bugfix: Removes spiderling from hostile gold spawns.
+  Epoc:
+  - rscadd: Toast sandwich
+  Furrior:
+  - admin: 'If you are on a downstream server using non-Latin fonts (e.g. Cyrillic)
+      for character/job names: The player panel encoding has been fixed so it should
+      show up properly for you now.'
+  Ghommie:
+  - bugfix: Fixed large paintings looking pretty off while flipped E/W.
+  Helg2:
+  - bugfix: fixed medical kiosk showing you that you have blood if you don't have
+      one.
+  JohnFulpWillard:
+  - bugfix: Borgs can be tipped over while flashed.
+  Rhials:
+  - qol: Ashwalker roundend reporting has been revamped. Glory to the Necropolis!
+  ShizCalev:
+  - bugfix: Fixed an item duplication bug involving snow tiles.
+  Singul0:
+  - bugfix: The buttons in HoP office of Icebox now actually works
+  Treach:
+  - bugfix: The Lavaland Syndicate base now has the correct plumbing constructor.
+  Watermelon914, Iamgoofball:
+  - bugfix: Fixed message garbling. TTS messages won't play in the wrong order anymore.
+  - qol: Added a way for players to change the volume of TTS.
+  Youtubeboy139:
+  - image: Added new Maintenance Drone Dispenser sprite
+  ZephyrTFA:
+  - server: All logs are now formatted in json, excluding perf and investigations
+  Zergspower:
+  - qol: Space Ruine Mechtransport - more modern redesign
+  jlsnow301:
+  - bugfix: Fixed an issue where TGUI say blinks on open, which should make it look
+      and feel faster.
+  orthography:
+  - bugfix: fixes the guide to mimery radial menu.
+  - refactor: refactors how the mime book works.
+  tf-4:
+  - refactor: Converted butterflies to the basic mob system
+  - rscadd: Butterflies can now be grown in cytology
