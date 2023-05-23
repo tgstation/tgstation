@@ -2,7 +2,7 @@
 /datum/attack_style/melee_weapon/swing
 	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
 	sprite_size_multiplier = 1.5
-	var/time_per_turf = 0.4 SECONDS
+	time_per_turf = 0.4 SECONDS
 
 /datum/attack_style/melee_weapon/swing/get_swing_description()
 	return "It swings in an arc of three tiles in the direction you are attacking."
@@ -95,8 +95,8 @@
 // Direct stabs out to turfs in front
 /datum/attack_style/melee_weapon/stab_out
 	reverse_for_lefthand = FALSE
+	time_per_turf = 0.2 SECONDS
 	var/stab_range = 1
-	var/stab_duration_per_turf = 0.2 SECONDS
 
 /datum/attack_style/melee_weapon/stab_out/get_swing_description()
 	return "It stabs out [stab_range] tiles in the direction you are attacking."
@@ -117,9 +117,9 @@
 
 /datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1])
-	var/stab_length = stab_duration_per_turf * length(affecting)
+	var/stab_length = stab_range * length(affecting)
 	attacker.do_attack_animation(affecting[1], no_effect = TRUE)
-	flick_overlay_global(attack_image, GLOB.clients, stab_length + stab_duration_per_turf)
+	flick_overlay_global(attack_image, GLOB.clients, stab_length + stab_range)
 	var/start_x = attack_image.pixel_x
 	var/start_y = attack_image.pixel_y
 	var/x_move = 0
@@ -151,7 +151,7 @@
 		easing = CUBIC_EASING|EASE_OUT,
 	)
 	animate(
-		time = stab_duration_per_turf,
+		time = stab_range,
 		alpha = 0,
 		easing = CIRCULAR_EASING|EASE_OUT,
 	)

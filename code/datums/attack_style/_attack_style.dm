@@ -39,6 +39,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
 	var/pacifism_completely_banned = FALSE
 
+	var/time_per_turf = 0 SECONDS
+
 /**
  * Process attack -> execute attack -> finalize attack
  *
@@ -62,7 +64,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  */
 /datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	SHOULD_NOT_SLEEP(TRUE)
 
 	weapon?.add_fingerprint(attacker)
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))
@@ -84,6 +85,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(which_hand % 2 == 1)
 			reverse_range(affecting)
 
+	// Make sure they can't attack while swinging
+	attacker.changeNext_move(time_per_turf * length(affecting))
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
 	if(execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking) & ATTACK_STYLE_CANCEL)
 		// Just apply a small second CD so they don't spam failed attacks
@@ -105,21 +108,33 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	var/attack_flag = NONE
 	var/total_total_hit = 0
-	for(var/turf/hitting as anything in affecting)
-		// Unfortunately this makes mobs in dense or blocks turfs invincible. Fix that
-		if(length(affecting) > 1)
+	var/affecting_index = 1
+	var/midpoint = ROUND_UP(length(affecting) / 2)
+	var/started_holding = !isnull(weapon) && attacker.is_holding(weapon)
+	var/turf/starting_loc = attacker.loc
+	var/hitsound_played = FALSE
+	var/starting_dir = attacker.dir
+	var/pre_set_dir = attacker.set_dir_on_move
+	attacker.set_dir_on_move = FALSE
+	while(length(affecting))
+		var/turf/hitting = popleft(affecting)
+		// The two turfs which will never be blocked is the first and the midpoint
+		// All other turfs, though, will be checked
+		if(affecting_index != 1 && affecting_index != midpoint)
 			var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
 			if(blocking_us)
 				attacker.visible_message(
-					span_warning("[attacker]'s swing collides with [blocking_us]!"),
-					span_warning("[blocking_us] blocks your swing partway!"),
+					span_warning("[attacker]'s attack collides with [blocking_us]!"),
+					span_warning("[blocking_us] blocks your attack partway!"),
 				)
 				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
 				return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
 
 #ifdef TESTING
-		apply_testing_color(hitting, affecting.Find(hitting))
+		apply_testing_color(hitting, affecting_index)
 #endif
+
+		affecting_index += 1
 
 		var/list/mob/living/foes = list()
 		for(var/mob/living/foe_in_turf in hitting)
@@ -151,19 +166,45 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		if(attack_flag & ATTACK_STYLE_CANCEL)
 			return ATTACK_STYLE_CANCEL
-		if(attack_flag & ATTACK_STYLE_BLOCKED)
-			break
+		if(attack_flag & (ATTACK_STYLE_HIT|ATTACK_STYLE_BLOCKED))
+			if(!hitsound_played)
+				hitsound_played = TRUE
+				var/hitsound_to_use = get_hit_sound(weapon)
+				if(hitsound_to_use)
+					playsound(attacker, hitsound_to_use, hit_volume, TRUE)
+			if(attack_flag & ATTACK_STYLE_BLOCKED)
+				break
+
+		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
+			stoplag(time_per_turf)
+			if(QDELETED(attacker))
+				return ATTACK_STYLE_CANCEL
+			if(started_holding && (QDELETED(weapon) || !attacker.is_holding(weapon)))
+				return ATTACK_STYLE_CANCEL
+			if(attacker.incapacitated())
+				return ATTACK_STYLE_CANCEL
+			if(attacker.loc != starting_loc)
+				if(!isturf(attacker.loc))
+					return ATTACK_STYLE_CANCEL
+
+				starting_loc = attacker.loc
+				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
+				affecting.Cut(1, affecting_index)
 
 	if(total_total_hit <= 0)
 		// counts as a miss if we don't hit anyone, duh
 		attack_flag |= ATTACK_STYLE_MISSED
 
+	/*
 	if(attack_flag & ATTACK_STYLE_HIT)
 		var/hitsound_to_use = get_hit_sound(weapon)
 		if(hitsound_to_use)
 			playsound(attacker, hitsound_to_use, hit_volume, TRUE)
+	*/
 
-	else if(attack_flag & ATTACK_STYLE_MISSED)
+	attacker.set_dir_on_move = pre_set_dir
+
+	if(attack_flag & ATTACK_STYLE_MISSED)
 		if(miss_sound)
 			playsound(attacker, miss_sound, miss_volume, TRUE)
 
@@ -294,7 +335,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(isnull(angle))
 		angle = -weapon_sprite_angle + get_angle(attacker, initial_loc)
 
-	var/image/attack_image = image(icon = weapon, loc = attacker.loc, layer = attacker.layer + 0.1)
+	var/image/attack_image = image(icon = weapon, loc = attacker, layer = attacker.layer + 0.1)
 	attack_image.transform = turn(attack_image.transform, angle)
 	attack_image.transform *= sprite_size_multiplier
 	attack_image.pixel_x = (initial_loc.x - attacker.x) * 16
