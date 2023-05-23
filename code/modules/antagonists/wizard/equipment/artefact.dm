@@ -390,3 +390,92 @@
 		whistle.whistler = null
 		whistle = null
 	return ..()
+
+/obj/item/runic_vendor_staff
+	name = "staff of runic vendormancy"
+	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
+	icon_state = "lavastaff"
+	inhand_icon_state = "lavastaff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 18
+	damtype = BURN
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	attack_verb_continuous = list("sears", "clubs", "burn")
+	attack_verb_simple = list("sear", "club", "burn")
+	hitsound = 'sound/weapons/sear.ogg'
+
+	var/field_distance_limit = 7
+	/// Time it takes to materialize a forcefield.
+	var/creation_time = 1 SECONDS
+	/// Checks to make sure the projector isn't busy with making another forcefield.
+	var/force_proj_busy = FALSE
+	///Number of charges left
+	var/summon_vendor_charges = 3
+
+/obj/item/runic_vendor_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!check_allowed_items(target, not_inside = TRUE))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	var/turf/T = get_turf(target)
+	if(istype(target, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/runic_explosion_target = target
+		user.balloon_alert(user, "you explode the vendor")
+		runic_explosion_target.runic_explosion()
+		return
+	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in T
+	if(vendor_on_turf)
+		user.balloon_alert(user, "you explode the vendor")
+		vendor_on_turf.runic_explosion()
+		return
+	if(get_dist(T,src) > field_distance_limit)
+		user.balloon_alert(user, "too far!")
+		return
+	if(get_turf(src) == T)
+		user.balloon_alert(user, "too close!")
+		return
+	if(force_proj_busy)
+		user.balloon_alert(user, "already summoning!")
+		return
+	if(T.is_blocked_turf(TRUE))
+		return
+	if(creation_time)
+		force_proj_busy = TRUE
+		if(!do_after(user, creation_time, target = target))
+			user.balloon_alert(user, "summoning...")
+			force_proj_busy = FALSE
+			return
+		force_proj_busy = FALSE
+	if(summon_vendor_charges)
+		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+		user.visible_message(span_warning("[user] projects a forcefield!"))
+		new /obj/machinery/vending/runic_vendor(T)
+		summon_vendor_charges--
+		user.changeNext_move(CLICK_CD_MELEE)
+
+/obj/item/runic_vendor_staff/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!do_after(user, 5 SECONDS))
+		user.balloon_alert(user, "recharging...")
+		return
+	user.balloon_alert(user, "fully charged")
+	summon_vendor_charges = 3
+
+/obj/item/runic_vendor_staff/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	var/turf/T = get_turf(target)
+	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in T
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(istype(target, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
+		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 2, 4, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(vendor_on_turf)
+		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 2, 4, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

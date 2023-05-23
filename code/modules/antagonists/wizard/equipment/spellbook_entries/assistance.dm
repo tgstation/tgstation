@@ -97,3 +97,9 @@
 	limit = 3
 	category = "Assistance"
 	refundable = TRUE
+
+/datum/spellbook_entry/item/vendormancer
+	name = "Staff of vendormancy"
+	desc = "A staff with the teachings of the first Runic Vendormancer."
+	item_path = /obj/item/runic_vendor_staff
+	category = "Assistance"
