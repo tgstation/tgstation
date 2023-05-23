@@ -36,6 +36,7 @@
 	icon_state = "lightspear"
 	inhand_icon_state = "lightspear"
 	icon_prefix = "lightspear"
+	worn_icon_state = "none"
 	lefthand_file = 'monkestation/icons/mob/inhands/polearms_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/polearms_righthand.dmi'
 	name = "hardlight spear"
