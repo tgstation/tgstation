@@ -212,7 +212,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"

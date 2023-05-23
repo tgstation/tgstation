@@ -223,7 +223,7 @@
 	 * Set this to null to make the item un-swingable, and by extent, un-usable in combat.
 	 * Generally don't do that unless it's stuff that would not function as a weapon, like an RCD.
 	 */
-	var/datum/attack_style/attack_style = /datum/attack_style
+	var/datum/attack_style/melee_weapon/attack_style = /datum/attack_style/melee_weapon
 
 	/**
 	 * How well can we block with this thing?
@@ -429,7 +429,7 @@
 
 	var/style_describer = attack_style?.get_swing_description()
 	if(style_describer)
-		. += style_describer
+		. += span_notice(style_describer)
 
 /obj/item/examine_more(mob/user)
 	. = ..()

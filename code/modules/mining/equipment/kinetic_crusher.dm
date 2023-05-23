@@ -24,7 +24,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 5
 	light_on = FALSE
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 
 	var/list/trophies = list()
 	var/charged = TRUE

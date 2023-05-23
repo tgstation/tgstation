@@ -160,7 +160,7 @@
 		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby. \
 			If this item is intended to be a weapon, implement an attack style.")
 
-	user.changeNext_move(attacking_item.attack_speed)
+	user.changeNext_move(attacking_item.attack_style?.cd || CLICK_CD_MELEE)
 	attacking_item.add_fingerprint(user)
 
 	var/attack_result = attacking_item.attack_wrapper(src, user, params)
@@ -265,7 +265,7 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	user.changeNext_move(attack_speed)
+	user.changeNext_move(attack_style?.cd || CLICK_CD_MELEE)
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 

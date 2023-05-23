@@ -21,7 +21,7 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	attack_style = /datum/attack_style/stab_out
+	attack_style = /datum/attack_style/melee_weapon/stab_out
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE

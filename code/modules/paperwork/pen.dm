@@ -31,7 +31,7 @@
 	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
-	attack_style = /datum/attack_style/stab_out
+	attack_style = /datum/attack_style/melee_weapon/stab_out
 
 /obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))

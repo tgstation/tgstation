@@ -770,7 +770,7 @@
 	attack_verb_continuous = list("sears", "clubs", "burn")
 	attack_verb_simple = list("sear", "club", "burn")
 	hitsound = 'sound/weapons/sear.ogg'
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/misc/asteroid/basalt
@@ -849,7 +849,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	// Melbert todo: This should be two styles
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to

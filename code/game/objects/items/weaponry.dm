@@ -699,7 +699,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing/diagonal_sprite
 	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
 	/// Are we ready to do a homerun?
@@ -978,7 +978,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	attack_style = /datum/attack_style/high_frequency_blade
+	attack_style = /datum/attack_style/melee_weapon/high_frequency_blade
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
@@ -1108,5 +1108,5 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	return ..()
 
-/datum/attack_style/high_frequency_blade
+/datum/attack_style/melee_weapon/high_frequency_blade
 	cd = CLICK_CD_HYPER_RAPID

@@ -82,7 +82,7 @@
 /obj/item/knife/kitchen
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
-	attack_style = /datum/attack_style/stab_out
+	attack_style = /datum/attack_style/melee_weapon/stab_out
 
 /obj/item/knife/plastic
 	name = "plastic knife"
@@ -105,7 +105,7 @@
 
 /obj/item/knife/kitchen/silicon
 	name = "Kitchen Toolset"
-	icon_state = "sili_knife"	
+	icon_state = "sili_knife"
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0

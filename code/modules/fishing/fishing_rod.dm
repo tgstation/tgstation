@@ -14,7 +14,7 @@
 	inhand_y_dimension = 64
 	force = 8
 	w_class = WEIGHT_CLASS_HUGE
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 
 	/// How far can you cast this
 	var/cast_range = 5

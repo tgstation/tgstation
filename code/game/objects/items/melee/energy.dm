@@ -14,7 +14,7 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style = /datum/attack_style/swing/esword
+	attack_style = /datum/attack_style/melee_weapon/swing/esword
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -154,7 +154,7 @@
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
 
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent(/datum/component/transforming, \

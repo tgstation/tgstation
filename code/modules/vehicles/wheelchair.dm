@@ -102,7 +102,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 

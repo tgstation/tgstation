@@ -165,7 +165,7 @@
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
-	attack_style = /datum/attack_style/rapid_attacks
+	attack_style = /datum/attack_style/melee_weapon/rapid_attacks
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -180,7 +180,7 @@
 	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
 
-/datum/attack_style/rapid_attacks
+/datum/attack_style/melee_weapon/rapid_attacks
 	cd = CLICK_CD_RAPID
 
 /obj/item/melee/supermatter_sword
@@ -457,3 +457,4 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+	attack_style = /datum/attack_style/melee_weapon/swing/diagonal_sprite

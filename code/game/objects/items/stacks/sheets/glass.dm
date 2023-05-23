@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/item_shard
-	attack_style = /datum/attack_style/stab_out
+	attack_style = /datum/attack_style/melee_weapon/stab_out
 	max_integrity = 40
 	sharpness = SHARP_EDGED
 	var/icon_prefix

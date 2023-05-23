@@ -194,7 +194,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
 	bare_wound_bonus = 20
-	attack_style = /datum/attack_style/swing
+	attack_style = /datum/attack_style/melee_weapon/swing
 	var/can_drop = FALSE
 	var/fake = FALSE
 

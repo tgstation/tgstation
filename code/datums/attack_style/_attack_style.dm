@@ -39,12 +39,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
 	var/pacifism_completely_banned = FALSE
 
-	var/time_per_turf = 0.4 SECONDS
-	var/weapon_sprite_angle = 0
-
-/datum/attack_style/proc/get_swing_description()
-	return "It swings at one tile in the direction you are attacking."
-
 /**
  * Process attack -> execute attack -> finalize attack
  *
@@ -182,43 +176,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	return list(get_step(attacker, attack_direction))
 
 /datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
-	if(isnull(weapon))
-		return
+	attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting))
 
-	var/num_turfs_to_move = length(affecting)
-	var/final_animation_length = time_per_turf * num_turfs_to_move
-	var/initial_angle = -weapon_sprite_angle + get_angle(attacker, affecting[1])
-	var/final_angle = -weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
-	var/image/attack_image = image(icon = weapon, loc = attacker.loc, layer = attacker.layer + 0.1)
-	attack_image.transform = turn(attack_image.transform, initial_angle)
-	attack_image.transform *= 1.5
-	attack_image.pixel_x = (affecting[1].x - attacker.x) * 16
-	attack_image.pixel_y = (affecting[1].y - attacker.y) * 16
-	var/matrix/final_transform = turn(attack_image.transform, final_angle - initial_angle)
-	var/final_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
-	var/final_y = (affecting[num_turfs_to_move].y - attacker.y) * 16
-
-	testing(span_notice(" \
-		Start : [initial_angle] - [attack_image.pixel_x] [attack_image.pixel_y], \
-		End : [final_angle] - [final_x] [final_y]"))
-	attacker.do_attack_animation(affecting[ROUND_UP(length(affecting) / 2)], no_effect = TRUE)
-	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf) // add a little extra time
-	animate(
-		attack_image,
-		time = final_animation_length,
-		transform = final_transform,
-		pixel_x = final_x,
-		pixel_y = final_y,
-		alpha = 175,
-		easing = CUBIC_EASING|EASE_OUT,
-	)
-	animate(
-		time = time_per_turf,
-		alpha = 0,
-		easing = CIRCULAR_EASING|EASE_OUT,
-	)
-
-/// Used in [proc/attack_effect_animation] to select some atom in the list of affecting turfs to play the attack animation over
+/// Can be used in [proc/attack_effect_animation] to select some atom
+/// in the list of affecting turfs to play the attack animation over
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
 	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
 	// Attack animations play over the layer of the atom passed into it
@@ -234,9 +195,35 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * You should call parent with this unless you know what you're doing and implementing your own attack business.
  */
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
+	return
 
+#ifdef TESTING
+/datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
+	hit.add_atom_colour(COLOR_RED, TEMPORARY_COLOUR_PRIORITY)
+	hit.maptext = MAPTEXT("[index]")
+	animate(hit, 1 SECONDS, color = null)
+	addtimer(CALLBACK(src, PROC_REF(clear_testing_color), hit), 1 SECONDS)
+#endif
+
+#ifdef TESTING
+/datum/attack_style/proc/clear_testing_color(turf/hit)
+	hit.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_RED)
+	hit.maptext = null
+#endif
+
+/datum/attack_style/melee_weapon
+	var/weapon_sprite_angle = 0
+	var/sprite_size_multiplier = 1
+
+/datum/attack_style/melee_weapon/proc/get_swing_description()
+	return "It swings at one tile in the direction you are attacking."
+
+/datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	ASSERT(istype(weapon))
+	return ..()
+
+/datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	. = NONE
 
 	var/go_to_attack = !right_clicking
@@ -301,19 +288,17 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE)
 	return .
 
-#ifdef TESTING
-/datum/attack_style/proc/apply_testing_color(turf/hit, index = -1)
-	hit.add_atom_colour(COLOR_RED, TEMPORARY_COLOUR_PRIORITY)
-	hit.maptext = MAPTEXT("[index]")
-	animate(hit, 1 SECONDS, color = null)
-	addtimer(CALLBACK(src, PROC_REF(clear_testing_color), hit), 1 SECONDS)
-#endif
+/// Creates an image for use in attack animations
+/datum/attack_style/melee_weapon/proc/create_attack_image(mob/living/attacker, obj/item/weapon, turf/initial_loc, angle)
+	if(isnull(angle))
+		angle = -weapon_sprite_angle + get_angle(attacker, initial_loc)
 
-#ifdef TESTING
-/datum/attack_style/proc/clear_testing_color(turf/hit)
-	hit.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_RED)
-	hit.maptext = null
-#endif
+	var/image/attack_image = image(icon = weapon, loc = attacker.loc, layer = attacker.layer + 0.1)
+	attack_image.transform = turn(attack_image.transform, angle)
+	attack_image.transform *= sprite_size_multiplier
+	attack_image.pixel_x = (initial_loc.x - attacker.x) * 16
+	attack_image.pixel_y = (initial_loc.y - attacker.y) * 16
+	return attack_image
 
 /**
  * Unarmed attack styles work slightly differently
@@ -336,7 +321,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	SHOULD_CALL_PARENT(FALSE)
-	CRASH("No narmed interaction for [type]!")
+	CRASH("No unarmed interaction for [type]!")
 
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting, override_effect)
 	var/selected_effect = override_effect || attack_effect
