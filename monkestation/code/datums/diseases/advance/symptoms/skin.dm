@@ -29,8 +29,8 @@ BONUS
 	var/eggsplosion
 	var/sneaky
 	threshold_descs = list(
-		"Transmission 8" = "Eggs and Egg Sacs contain all diseases on the host, instead of just the disease containing the symptom.",
-		"Transmission 12" = "Egg Sacs will 'explode' into eggs after a period of time, covering a larger area with infectious matter.",
+		"Transmission 6" = "Eggs and Egg Sacs contain all diseases on the host, instead of just the disease containing the symptom.",
+		"Transmission 10" = "Egg Sacs will 'explode' into eggs after a period of time, covering a larger area with infectious matter.",
 		"Resistance 8" = "Eggs and Egg Sacs contain more healing chems.",
 		"Stealth 5" = "Eggs and Egg Sacs become nearly transparent, making them more difficult to see.",
 		"Stage Speed 8" = "Egg Sacs fall off the host more frequently."

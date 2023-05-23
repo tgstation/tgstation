@@ -1,10 +1,10 @@
 /datum/symptom/necroseed
 	name = "Necropolis Seed"
 	desc = "An infantile form of the root of Lavaland's tendrils. Forms a symbiotic bond with the host, making them stronger and hardier, at the cost of speed. Should the disease be cured, the host will be severely weakened"
-	stealth = 0  // 0
-	resistance = 3  // 3
-	stage_speed = -10  // -10
-	transmittable = -3  // -3
+	stealth = 0
+	resistance = 3
+	stage_speed = -5
+	transmittable = -3
 	level = 8
 	base_message_chance = 5
 	severity = -1
@@ -14,9 +14,9 @@
 	var/chest = FALSE
 	var/fireproof = FALSE
 	threshold_descs = list(
-		"Stealth 8" = "Upon death, the host's soul will solidify into an unholy artifact, rendering them utterly unrevivable in the process.",
-		"Resistance 13" = "The area near the host roils with paralyzing tendrils.",
-		"Resistance 16" = "Host becomes Immune to heat and ash",
+		"Stealth 7" = "Upon death, the host's soul will solidify into an unholy artifact, rendering them utterly unrevivable in the process.",
+		"Resistance 12" = "The area near the host roils with paralyzing tendrils.",
+		"Resistance 15" = "Host becomes Immune to heat and ash",
 
 	)
 	var/list/cached_tentacle_turfs
@@ -26,11 +26,11 @@
 /datum/symptom/necroseed/Start(datum/disease/advance/advanced_disease)
 	if(!..())
 		return
-	if(advanced_disease.totalResistance() >= 13)
+	if(advanced_disease.totalResistance() >= 12)
 		tendrils = TRUE
-		if(advanced_disease.totalResistance() >= 16)
+		if(advanced_disease.totalResistance() >= 15)
 			fireproof = TRUE
-	if(advanced_disease.totalStealth() >= 8)
+	if(advanced_disease.totalStealth() >= 7)
 		chest = TRUE
 
 /datum/symptom/necroseed/Activate(datum/disease/advance/advanced_disease)
