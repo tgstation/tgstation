@@ -48,7 +48,7 @@
 
 /// Dead headcrab for changeling-themed ruins
 /obj/effect/mob_spawn/corpse/headcrab
-	mob_type = /mob/living/simple_animal/hostile/headcrab
+	mob_type = /mob/living/basic/headslug
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "headcrab_dead"
 

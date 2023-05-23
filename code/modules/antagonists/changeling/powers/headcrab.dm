@@ -40,7 +40,7 @@
 	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 3 SECONDS)
 
 /datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
-	var/mob/living/simple_animal/hostile/headcrab/crab = new(spawn_location)
+	var/mob/living/basic/headslug/crab = new(spawn_location)
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
 	crab.origin = stored_mind
