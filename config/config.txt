@@ -150,7 +150,7 @@ LOG_MANIFEST
 #LOG_JOB_DEBUG
 
 ## log all world.Topic() calls
-# LOG_WORLD_TOPIC
+LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)

@@ -25,6 +25,7 @@
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "h" = (
@@ -125,6 +126,7 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/docking_port/mobile/supply,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/shuttle/supply)
 "I" = (
@@ -153,6 +155,7 @@
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 

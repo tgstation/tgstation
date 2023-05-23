@@ -85,6 +85,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "dI" = (
@@ -471,6 +472,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ae" = (

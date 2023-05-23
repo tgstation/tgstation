@@ -275,6 +275,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aG" = (
@@ -676,6 +677,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "df" = (
