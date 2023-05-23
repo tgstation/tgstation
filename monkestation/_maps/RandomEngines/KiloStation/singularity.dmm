@@ -301,6 +301,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "zP" = (

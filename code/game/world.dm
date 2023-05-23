@@ -208,9 +208,12 @@ GLOBAL_VAR(restart_counter)
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
 
+	/// This is kinda wonky but we first split the topic
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)
+	if(input[1] == "TWITCH-API")
+		SStwitch.handle_topic(input)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
