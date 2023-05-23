@@ -6,6 +6,7 @@
 	desc = "Twitching and disgusting."
 	/// The mind of the original changeling that gave forth to the headslug mob.
 	var/datum/mind/origin
+	/// Tracks how long the egg has been growing.
 	var/time = 0
 
 /obj/item/organ/internal/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
