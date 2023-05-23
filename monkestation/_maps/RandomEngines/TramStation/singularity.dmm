@@ -36,7 +36,8 @@
 /area/station/engineering/supermatter/room)
 "hb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ix" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -741,8 +742,8 @@ WI
 WI
 WI
 WI
-zz
-zz
+WI
+WI
 "}
 (13,1,1) = {"
 Ho
@@ -754,6 +755,8 @@ JE
 Ho
 Ho
 Ho
+Zh
+Zh
 zz
 zz
 iY
@@ -763,8 +766,6 @@ Ou
 Ou
 zz
 iY
-zz
-zz
 "}
 (14,1,1) = {"
 Ho
@@ -776,6 +777,8 @@ JE
 wL
 Ho
 Zh
+Zh
+Zh
 zz
 zz
 by
@@ -785,8 +788,6 @@ FU
 FU
 ZS
 by
-zz
-zz
 "}
 (15,1,1) = {"
 Ho
@@ -798,6 +799,8 @@ JE
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -807,8 +810,6 @@ zz
 ZS
 yp
 ZS
-zz
-zz
 "}
 (16,1,1) = {"
 Om
@@ -820,6 +821,8 @@ RT
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -829,8 +832,6 @@ ZS
 zz
 ZS
 ZS
-zz
-zz
 "}
 (17,1,1) = {"
 lq
@@ -842,6 +843,8 @@ Gr
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -851,8 +854,6 @@ vK
 ZS
 zz
 ZS
-zz
-zz
 "}
 (18,1,1) = {"
 Om
@@ -864,6 +865,8 @@ Hk
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -873,8 +876,6 @@ ZS
 zz
 ZS
 ZS
-zz
-zz
 "}
 (19,1,1) = {"
 Ho
@@ -886,6 +887,8 @@ JE
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 Vm
@@ -895,8 +898,6 @@ zz
 AI
 yp
 ZS
-zz
-zz
 "}
 (20,1,1) = {"
 Ho
@@ -908,6 +909,8 @@ Rb
 Ho
 Ho
 Zh
+Zh
+Zh
 zz
 zz
 by
@@ -917,8 +920,6 @@ FU
 FU
 ZS
 by
-zz
-zz
 "}
 (21,1,1) = {"
 Ho
@@ -930,6 +931,8 @@ Gn
 Ho
 Ho
 Ho
+Zh
+Zh
 zz
 zz
 oy
@@ -939,8 +942,6 @@ Ou
 Ou
 zz
 oy
-zz
-zz
 "}
 (22,1,1) = {"
 Ho
@@ -961,8 +962,8 @@ WI
 WI
 WI
 WI
-zz
-zz
+WI
+WI
 "}
 (23,1,1) = {"
 Ho

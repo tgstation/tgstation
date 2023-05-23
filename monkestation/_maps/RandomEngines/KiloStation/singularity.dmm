@@ -3,6 +3,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/flashlight/lamp,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "dq" = (
@@ -18,9 +21,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "eo" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "eP" = (
 /obj/structure/lattice,
@@ -66,14 +69,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"iW" = (
+"is" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"iW" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "jl" = (
@@ -85,15 +91,17 @@
 "km" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "kM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "lg" = (
 /obj/structure/lattice,
@@ -105,7 +113,7 @@
 	name = "shuttle camera"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "lE" = (
 /obj/structure/closet/crate,
@@ -166,6 +174,11 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/blacklight/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "pa" = (
@@ -221,6 +234,7 @@
 /area/station/engineering/supermatter/room)
 "th" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "tB" = (
@@ -279,10 +293,13 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "yw" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/cable,
+/obj/machinery/camera/directional/north{
+	c_tag = "Departures Lounge";
+	name = "shuttle camera";
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "zs" = (
 /turf/closed/wall/r_wall,
@@ -323,6 +340,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"BT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "Cu" = (
 /obj/structure/cable,
 /obj/machinery/field/generator,
@@ -335,6 +361,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Eh" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "EK" = (
 /obj/structure/particle_accelerator/particle_emitter/left,
@@ -352,7 +383,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Fj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -363,7 +396,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "FB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -396,6 +431,13 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"IL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "JC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -409,6 +451,7 @@
 /obj/structure/chair/sofa/corp/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "KY" = (
@@ -419,7 +462,9 @@
 /area/station/engineering/supermatter/room)
 "Lc" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Le" = (
@@ -470,12 +515,12 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "NK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "NO" = (
@@ -486,8 +531,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "Pj" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "PO" = (
 /obj/effect/turf_decal/stripes/line{
@@ -527,7 +571,7 @@
 /area/station/engineering/supermatter/room)
 "RN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/cold/no_nightlight/directional/east,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "RV" = (
@@ -560,6 +604,7 @@
 /obj/structure/chair/sofa/corp{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "UA" = (
@@ -741,16 +786,16 @@ pa
 zP
 zs
 oN
-Zp
-Zp
-Zp
-Zp
-Zp
-Zp
-Zp
+IL
 km
+Zp
+Zp
+Zp
+Zp
+BT
 JC
-Ib
+is
+yw
 ob
 zs
 "}
@@ -763,8 +808,8 @@ zs
 zs
 hV
 Nv
-Ib
-pk
+iW
+eo
 qj
 VI
 VI
@@ -773,7 +818,7 @@ Uk
 Uk
 HV
 zs
-iW
+zH
 zs
 zs
 "}
@@ -785,9 +830,9 @@ oK
 oK
 re
 oK
-oK
-Ib
-pk
+Ii
+iW
+eo
 Fu
 VI
 VI
@@ -795,7 +840,7 @@ vD
 Uk
 Uk
 KY
-RL
+zs
 lt
 Pj
 zs
@@ -810,17 +855,17 @@ pJ
 pJ
 JH
 Ib
-NK
-zs
-rz
-rz
-rz
-rz
-rz
 zs
 zs
-zH
 zs
+zs
+zs
+zs
+zs
+zs
+zs
+fx
+Pj
 zs
 "}
 (9,1,1) = {"
@@ -833,17 +878,17 @@ hD
 hD
 Uw
 WU
-pk
-rz
+Eh
+WZ
+WZ
 WZ
 lg
 WZ
 WZ
 WZ
 WZ
-WZ
 Hs
-WZ
+lg
 WZ
 "}
 (10,1,1) = {"
@@ -856,8 +901,9 @@ oe
 oe
 NC
 Qj
-pk
-rz
+RL
+WZ
+WZ
 lg
 Ir
 Hs
@@ -867,20 +913,20 @@ eP
 Hs
 Ir
 WZ
-WZ
 "}
 (11,1,1) = {"
 rz
 Ib
 oK
 oK
-oK
-oK
-oK
+Ii
+Ii
+Ii
 aJ
-kM
-pk
-rz
+JC
+RL
+WZ
+WZ
 WZ
 Cu
 IJ
@@ -890,20 +936,20 @@ rP
 IJ
 Cu
 rP
-WZ
 "}
 (12,1,1) = {"
 pa
 UA
 oK
-oK
-oK
-oK
-Ib
-Ib
-Lc
+NK
 pk
-rz
+sz
+Qj
+Qj
+Lc
+RL
+WZ
+WZ
 WZ
 IJ
 Vk
@@ -913,20 +959,20 @@ lg
 Vk
 IJ
 Hs
-ug
 "}
 (13,1,1) = {"
 zs
 Ib
 Ib
-Ib
-Ib
+Zp
 PO
 Dm
-yw
+kM
 EK
-pk
-rz
+Ib
+RL
+WZ
+WZ
 WZ
 WZ
 lg
@@ -936,20 +982,20 @@ IJ
 lg
 WZ
 rP
-ug
 "}
 (14,1,1) = {"
 ic
 Ib
 oK
-oK
-oK
+pk
 Le
 UP
 PV
 LZ
-pk
-rz
+Ib
+RL
+WZ
+WZ
 WZ
 WZ
 IJ
@@ -959,20 +1005,20 @@ lg
 IJ
 WZ
 rP
-ug
 "}
 (15,1,1) = {"
 rz
 Ib
-Mb
-Mb
 oK
+pk
 Yj
 uW
 uW
 RV
-pk
-rz
+Ib
+RL
+WZ
+WZ
 WZ
 WZ
 lg
@@ -982,20 +1028,20 @@ IJ
 lg
 WZ
 rP
-ug
 "}
 (16,1,1) = {"
 rz
 Ib
 Mb
-Mb
-oK
-oK
-oK
-oK
-Fj
+NK
 pk
-rz
+sz
+sz
+sz
+Fj
+RL
+WZ
+WZ
 WZ
 IJ
 Vk
@@ -1005,20 +1051,20 @@ lg
 Vk
 IJ
 Hs
-ug
 "}
 (17,1,1) = {"
 rz
 Ib
 Mb
 Mb
-oK
-oK
-oK
-oK
-FB
 Ii
-rz
+Ii
+Ii
+Ii
+FB
+RL
+WZ
+WZ
 WZ
 Cu
 IJ
@@ -1028,7 +1074,6 @@ rP
 IJ
 Cu
 rP
-WZ
 "}
 (18,1,1) = {"
 ic
@@ -1038,10 +1083,11 @@ oK
 oK
 oK
 oK
-oK
-Ib
 Ii
-rz
+Ib
+RL
+WZ
+WZ
 lg
 NO
 Hs
@@ -1050,7 +1096,6 @@ rP
 rP
 Hs
 NO
-WZ
 WZ
 "}
 (19,1,1) = {"
@@ -1062,17 +1107,17 @@ xG
 oK
 re
 th
-Ib
+iW
 RN
-eo
 tB
 WZ
+WZ
+WZ
 lg
 WZ
 WZ
 WZ
 lg
-WZ
 WZ
 WZ
 "}
