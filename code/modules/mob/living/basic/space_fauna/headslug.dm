@@ -39,7 +39,7 @@
 	UnregisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 	return ..()
 
-/mob/living/basic/examine(mob/user)
+/mob/living/basic/headslug/examine(mob/user)
 	. = ..()
 	if(isnull(client))
 		. += span_notice("It appears to be moving around listlessly.")
