@@ -42,8 +42,14 @@ SUBSYSTEM_DEF(lighting)
 		else
 			i -= 1 // update_corners() has removed L from the list, move back so we don't overflow or skip the next element
 
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)
-			CHECK_TICK
+			if(!TICK_CHECK)
+				continue
+			queue.Cut(1, i+1)
+			i = 0
+			stoplag()
+			queue_length = length(queue)
 		else if (MC_TICK_CHECK)
 			break
 	if(i)
