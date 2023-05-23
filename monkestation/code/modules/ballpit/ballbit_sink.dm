@@ -7,16 +7,16 @@
 	var/current_size = 0
 
 /datum/component/player_sink/Initialize(...)
-	parent.RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(recheck_state))
-	parent.RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(remove_state))
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, TYPE_PROC_REF(/datum/component/player_sink, recheck_state))
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/datum/component/player_sink,remove_state))
 	START_PROCESSING(SSobj, src)
 	max_sinkage = rand(16,20)
 
 /datum/component/player_sink/UnregisterFromParent()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	parent.UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
-	parent.UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
 
 /datum/component/player_sink/proc/recheck_state(atom/movable/moved, atom/new_location)
 	if(!isopenturf(new_location) || !istype(new_location, /turf/open/ballpit))
