@@ -1,0 +1,4 @@
+author: "orthography"
+delete-after: True
+changes:
+  - bugfix: "adds more fire alarms to birdshot."
