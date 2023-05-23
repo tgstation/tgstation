@@ -33,6 +33,7 @@ const toMassPaintFormat = (data: PointData[]) => {
 class PaintCanvas extends Component<PaintCanvasProps> {
   canvasRef: RefObject<HTMLCanvasElement>;
   baseImageData: Color[][];
+  show_grid: boolean;
   modifiedElements: PointData[];
   onCanvasModified: (data: PointData[]) => void;
   drawing: boolean;
@@ -42,6 +43,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.modifiedElements = [];
+    this.show_grid = false;
     this.drawing = false;
     this.onCanvasModified = props.onCanvasModifiedHandler;
 
@@ -56,11 +58,13 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   componentDidUpdate() {
+    const grid_status = !!this.props.drawing_color && this.props.editable;
     // eslint-disable-next-line max-len
     if (
-      this.props.value !== undefined &&
-      JSON.stringify(this.baseImageData) !==
-        JSON.stringify(fromDM(this.props.value))
+      (this.props.value !== undefined &&
+        JSON.stringify(this.baseImageData) !==
+          JSON.stringify(fromDM(this.props.value))) ||
+      this.show_grid !== grid_status
     ) {
       this.syncCanvas();
     }
@@ -84,6 +88,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
       return;
     }
     this.baseImageData = fromDM(this.props.value);
+    this.show_grid = !!this.props.drawing_color && this.props.editable;
     this.modifiedElements = [];
 
     const canvas = this.canvasRef.current!;
@@ -94,6 +99,11 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         const color = element[y];
         ctx.fillStyle = color.toString();
         ctx.fillRect(x, y, 1, 1);
+        if (this.show_grid) {
+          ctx.strokeStyle = '#888888';
+          ctx.lineWidth = 0.05;
+          ctx.strokeRect(x, y, 1, 1);
+        }
       }
     }
   }
@@ -133,6 +143,9 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const ctx = canvas.getContext('2d')!;
     ctx.fillStyle = color;
     ctx.fillRect(x, y, 1, 1);
+    ctx.strokeStyle = '#888888';
+    ctx.lineWidth = 0.05;
+    ctx.strokeRect(x, y, 1, 1);
   }
 
   handleDrawing(event: MouseEvent) {
