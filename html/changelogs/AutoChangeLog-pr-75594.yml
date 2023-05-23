@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Capturing CTF control points no longer requires the active hand to be empty."
