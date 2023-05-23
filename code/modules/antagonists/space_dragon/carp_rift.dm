@@ -18,8 +18,8 @@
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
-	if(!(rift_location.area_flags & VALID_TERRITORY))
-		to_chat(owner, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
+	if(!(rift_location in dragon.chosen_rift_areas))
+		to_chat(owner, span_warning("You can't summon a rift here!"))
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
@@ -64,7 +64,7 @@
 	light_color = LIGHT_COLOR_PURPLE
 	light_range = 10
 	anchored = TRUE
-	density = FALSE
+	density = TRUE
 	plane = MASSIVE_OBJ_PLANE
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
@@ -77,7 +77,7 @@
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
 	/// The interval for adding additional space carp spawns to the rift.
-	var/carp_interval = 60
+	var/carp_interval = 45
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
@@ -95,10 +95,17 @@
 
 	AddComponent( \
 		/datum/component/aura_healing, \
-		range = 0, \
+		range = 1, \
 		simple_heal = 5, \
 		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
 		healing_color = COLOR_BLUE, \
+	)
+
+	AddComponent( \
+		/datum/component/gravity_aura, \
+		range = 15, \
+		requires_visibility = FALSE, \
+		gravity_strength = 1, \
 	)
 
 	START_PROCESSING(SSobj, src)

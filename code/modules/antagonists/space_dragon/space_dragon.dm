@@ -24,6 +24,8 @@
 	var/minion_to_spawn = /mob/living/basic/carp
 	/// What AI mobs to spawn from this dragon's rifts
 	var/ai_to_spawn = /mob/living/basic/carp
+	/// What areas are we allowed to place rifts in?
+	var/list/chosen_rift_areas = list()
 
 /datum/antagonist/space_dragon/greet()
 	. = ..()
@@ -36,9 +38,31 @@
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
 /datum/antagonist/space_dragon/forge_objectives()
+	// Areas that will prove challenging for the dragon and provocative to the crew.
+	var/list/area/allowed_areas = typecacheof(list(
+		/area/station/command,
+		/area/station/engineering,
+		/area/station/science,
+		/area/station/security,
+	))
+
+	var/list/possible_areas = get_sorted_areas().Copy()
+	for(var/area/possible_area as anything in possible_areas)
+		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors))
+			possible_areas -= possible_area
+
+	for(var/i in 1 to 5)
+		chosen_rift_areas += pick_n_take(possible_areas)
+
 	var/datum/objective/summon_carp/summon = new
 	summon.dragon = src
 	objectives += summon
+
+	summon.explanation_text = replacetext(summon.explanation_text, "%AREA1%", initial(chosen_rift_areas[1].name))
+	summon.explanation_text = replacetext(summon.explanation_text, "%AREA2%", initial(chosen_rift_areas[2].name))
+	summon.explanation_text = replacetext(summon.explanation_text, "%AREA3%", initial(chosen_rift_areas[3].name))
+	summon.explanation_text = replacetext(summon.explanation_text, "%AREA4%", initial(chosen_rift_areas[4].name))
+	summon.explanation_text = replacetext(summon.explanation_text, "%AREA5%", initial(chosen_rift_areas[5].name))
 
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
@@ -178,7 +202,7 @@
 
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon
-	explanation_text = "Summon and protect the rifts to flood the station with carp."
+	explanation_text = "Summon 3 rifts in order to flood the station with carp. Your possible rift locations are: %AREA1%, %AREA2%, %AREA3%, %AREA4%, and %AREA5%."
 
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
