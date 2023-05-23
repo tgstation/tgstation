@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()
 	check_danger(our_turf, environment, environment.temperature)
-	. = ..()
+	return ..()
 
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
 	//were already registered to an area. exit from here first before entering into an new area
