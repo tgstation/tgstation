@@ -329,7 +329,7 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/start_carp_speedboost(mob/living/target)
 	target.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 2))
 	target.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
-	addtimer(CALLBACK(src, .proc/end_carp_speedboost, target), 8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_carp_speedboost), target), 8 SECONDS)
 
 /**
  * Remove the speed boost from carps when hit by space dragon's flame breath
