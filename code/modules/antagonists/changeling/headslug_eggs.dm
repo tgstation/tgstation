@@ -17,12 +17,13 @@
 		Remove(owner)
 		qdel(src)
 
+/// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
 /obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
 	spawned_monkey.set_species(/datum/species/monkey)
 
-	for(var/obj/item/organ/I in src)
-		I.Insert(spawned_monkey, 1)
+	for(var/obj/item/organ/insertable in src)
+		insertable.Insert(spawned_monkey, 1)
 
 	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
 		origin.transfer_to(spawned_monkey)
@@ -36,6 +37,7 @@
 		var/datum/action/changeling/lesserform/transform = new()
 		changeling_datum.purchased_powers[transform.type] = transform
 		changeling_datum.regain_powers()
+
 	owner.investigate_log("has been gibbed by a changeling egg burst.", INVESTIGATE_DEATHS)
 	owner.gib()
 
