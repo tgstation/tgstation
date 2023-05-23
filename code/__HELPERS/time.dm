@@ -9,9 +9,10 @@
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time - SSticker.round_start_time
-	var/hour = round(wtime / 3600)
-	var/minute = round(wtime / 600)
-	var/second = round(wtime / 10)
+	var/hour = round(wtime / 36000)
+	var/minute = round(((wtime) - (hour * 36000)) / 600)
+	var/second = round(((wtime) - (hour * 36000) - (minute * 600)) / 10)
+
 
 	if(hour < 10)
 		hour = "0[hour]"
