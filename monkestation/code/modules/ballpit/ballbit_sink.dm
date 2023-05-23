@@ -7,7 +7,8 @@
 	var/current_size = 0
 
 /datum/component/player_sink/Initialize(...)
-	parent.RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, TYPE_PROC_REF(/datum/component/player_sink,recheck_state))
+	parent.RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(recheck_state))
+	parent.RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(remove_state))
 	START_PROCESSING(SSobj, src)
 
 /datum/component/player_sink/UnregisterFromParent()
@@ -23,6 +24,13 @@
 			if(filter)
 				parent.remove_filter("sinkable")
 			qdel(meh)
+
+/datum/component/player_sink/proc/remove_state()
+	var/datum/component/meh = parent.GetComponent(/datum/component/player_sink)
+	var/filter = parent.get_filter("sinkable")
+	if(filter)
+		parent.remove_filter("sinkable")
+	qdel(meh)
 
 /datum/component/player_sink/process(seconds_per_tick)
 	var/filter = parent.get_filter("sinkable")
