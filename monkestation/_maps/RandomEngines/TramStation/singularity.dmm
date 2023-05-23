@@ -101,7 +101,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "oy" = (
 /obj/structure/cable,
@@ -145,7 +146,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable/layer1,
-/turf/open/floor/iron,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ro" = (
 /obj/machinery/door/airlock/external,
@@ -277,6 +279,10 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"EX" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "FU" = (
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -314,6 +320,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/space/basic,
 /area/space/nearstation)
+"JJ" = (
+/obj/structure/cable,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "Lt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -770,7 +781,7 @@ iY
 (14,1,1) = {"
 Ho
 ix
-JE
+EX
 Pp
 JE
 JE
@@ -793,7 +804,7 @@ by
 Ho
 qR
 mz
-Pp
+JJ
 JE
 JE
 JE
