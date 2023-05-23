@@ -48,9 +48,3 @@
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "sammi"
 	squeak_override = list('monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
-
-/obj/item/toy/plush/cirno_plush
-	name = "Cirno Plush"
-	desc = "You can feel it staring into your soul."
-	icon = 'monkestation/icons/obj/plushes.dmi'
-	icon_state = "cirno-happy"

@@ -5288,6 +5288,7 @@
 #include "monkestation\code\game\objects\effects\countdown.dm"
 #include "monkestation\code\game\objects\effects\sprint_dust.dm"
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"
+#include "monkestation\code\game\objects\items\cirno_plush.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
 #include "monkestation\code\game\objects\items\plushies.dm"
 #include "monkestation\code\game\objects\items\stickers.dm"
