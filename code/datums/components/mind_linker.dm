@@ -135,6 +135,8 @@
 
 	qdel(src)
 
+/// Subtype of mind linker (I know) which is more active rather than passive,
+/// which involves the master linking people manually rather than people being added automatically.
 /datum/component/mind_linker/active_linking
 	/// The message sent to someone when linked up.
 	var/link_message

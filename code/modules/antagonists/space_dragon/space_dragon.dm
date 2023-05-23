@@ -21,7 +21,7 @@
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
 	/// What mob to spawn from ghosts using this dragon's rifts
-	var/minion_to_spawn = /mob/living/basic/carp
+	var/minion_to_spawn = /mob/living/basic/carp/advanced
 	/// What AI mobs to spawn from this dragon's rifts
 	var/ai_to_spawn = /mob/living/basic/carp
 	/// Wavespeak mind linker, to allow telepathy between dragon and carps
