@@ -57,6 +57,7 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 30
 	},
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "as" = (
@@ -1409,9 +1410,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/crumpled,
 /obj/item/ph_booklet,
-/obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/machinery/firealarm/directional/south,
+/obj/item/trash/bee,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -2106,7 +2108,7 @@
 "iw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "iy" = (
@@ -2922,6 +2924,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
+"lM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "lO" = (
 /obj/machinery/door/poddoor{
 	id = "proto"
@@ -4147,7 +4154,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "rV" = (
 /obj/machinery/light/small/directional/west,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "sc" = (
@@ -4978,6 +4985,7 @@
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/fifty,
 /obj/machinery/light/small/directional/east,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/delta/hall)
 "yk" = (
@@ -5096,7 +5104,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
-/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "zm" = (
@@ -5314,9 +5321,7 @@
 /turf/closed/mineral/plasma,
 /area/ruin/space/ancientstation/beta/hall)
 "Ay" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/fern,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
@@ -5336,6 +5341,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "AJ" = (
@@ -5585,6 +5591,7 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "CW" = (
@@ -5702,6 +5709,12 @@
 /obj/structure/canister_frame/machine/unfinished_canister_frame,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"DX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "Ed" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -6805,6 +6818,7 @@
 "Lr" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/closet/firecloset,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "Ls" = (
@@ -7423,9 +7437,7 @@
 	},
 /area/ruin/space/ancientstation/delta/biolab)
 "PZ" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/fern,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8261,7 +8273,7 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "Xh" = (
@@ -8506,7 +8518,6 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "Zi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/delta/hall)
 "Zl" = (
@@ -13802,8 +13813,8 @@ Gz
 Rt
 bE
 Ac
-Ij
-Ij
+lM
+dh
 CV
 bE
 IP
@@ -14195,7 +14206,7 @@ kw
 TT
 kw
 GZ
-ca
+DX
 Sa
 Ma
 hY
