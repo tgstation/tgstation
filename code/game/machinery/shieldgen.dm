@@ -942,6 +942,14 @@
 		LAZYREMOVE(connected_node.connected_through_us, (src))
 	return ..()
 
+/obj/machinery/modular_shield/module/examine(mob/user)
+	. = ..()
+
+	if(isnull(shield_generator) && isnull(connected_node))
+		. += "It can be loosened and rotated with a screwdriver and wrench. It can be connected to a node or generator with a multitool."
+		return
+	. += "It can be loosed and rotated with a screwdriver and wrench, rotating it will sever its connection."
+
 /obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
 
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
