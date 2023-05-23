@@ -128,10 +128,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				foe_prio = 10
 			else if(foe_in_turf == attacker)
 				foe_prio = -10
-			else if(foe_in_turf.faction & attacker.faction)
-				foe_prio = 1 // de-prio same factions
 			else if(foe_in_turf.stat != CONSCIOUS)
-				foe_prio = 2 // de-prio folk who can't fight back
+				foe_prio = 2 // very de-prio folk who can't fight back
+
+			if(length(foe_in_turf.faction & attacker.faction))
+				foe_prio -= 2 // de-prio same factions
 
 			foes[foe_in_turf] = foe_prio
 
