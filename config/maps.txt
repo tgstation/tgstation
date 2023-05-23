@@ -15,36 +15,39 @@ endmap
 
 map birdshot
 	#default
-	maxplayers 66
+	maxplayers 0
 	votable
 endmap
 
 map metastation
-	minplayers 25
-	#voteweight 0.5
+	minplayers 0
 	votable
 endmap
 
 map deltastation
-	minplayers 50
+	minplayers 0
 	votable
 endmap
 
 map icebox
-	minplayers 25
+	minplayers 0
 	votable
 endmap
 
 map tramstation
-	minplayers 35
+	minplayers 0
 	votable
 endmap
 
 map northstar
-	minplayers 50
+	minplayers 0
 	votable
 endmap
 
+map boxstation
+	minplayers 0
+	votable
+endmap
 
 map runtimestation
 endmap
