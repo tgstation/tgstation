@@ -247,17 +247,17 @@
 		parts += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
-	if(carp.len)
-		parts += "<span class='header'>The [name] was assisted by:</span>"
+
+	if(length(carp))
+		parts += "<br><span class='header'>The [name] was assisted by:</span>"
 		parts += "<ul class='playerlist'>"
-		if(length(carp))
-			var/list/players_to_carp_taken = list()
-			for(var/datum/mind/carp as anything in carp)
-				players_to_carp_taken[carp.key] += 1
-			for(var/carp_user in players_to_carp_taken)
-				parts += "<li>[carp_user], who played [players_to_carp_taken[carp_user]] carps</li>"
-		else
-			parts += "<li>No one!</li>"
+		var/list/players_to_carp_taken = list()
+		for(var/datum/mind/carpy as anything in carp)
+			players_to_carp_taken[carpy.key] += 1
+		var/list = ""
+		for(var/carp_user in players_to_carp_taken)
+			list += "<li><b>[carp_user]<b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
+		parts += list
 		parts += "</ul>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -13,6 +13,8 @@
 	. = ..()
 	if(!isnull(modified_turfs[target]))
 		return
+	if(HAS_TRAIT(target, TRAIT_FORCED_GRAVITY))
+		return
 	target.AddElement(/datum/element/forced_gravity, gravity_value)
 	modified_turfs[target] = gravity_value
 
