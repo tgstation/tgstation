@@ -20,7 +20,8 @@
 	. = ..()
 	if(isnull(modified_turfs[target]))
 		return
-	target.RemoveElement(/datum/element/forced_gravity, modified_turfs[target])
+	var/grav_value = modified_turfs[target] || 0
+	target.RemoveElement(/datum/element/forced_gravity, grav_value)
 	modified_turfs -= target
 
 // Subtype which pops up a balloon alert when a mob enters the field

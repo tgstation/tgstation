@@ -85,7 +85,7 @@
 	wavespeak = antag.AddComponent( \
 		/datum/component/mind_linker, \
 		network_name = "Wavespeak", \
-		chat_color = "#1100aa", \
+		chat_color = "#635BAF", \
 		speech_action_icon = 'icons/mob/actions/actions_space_dragon.dmi', \
 		speech_action_icon_state = "wavespeak", \
 	)

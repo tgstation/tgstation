@@ -103,8 +103,12 @@
 		healing_color = COLOR_BLUE, \
 	)
 
-	// atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity)
-	gravity_aura = new(/* host = */src, /* range = */15, /* ignore_if_not_on_turf = */TRUE, /* gravity = */1)
+	gravity_aura = new(
+		/* host = */src,
+		/* range = */15,
+		/* ignore_if_not_on_turf = */TRUE,
+		/* gravity = */1,
+	)
 
 	START_PROCESSING(SSobj, src)
 
