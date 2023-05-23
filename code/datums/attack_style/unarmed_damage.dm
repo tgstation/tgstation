@@ -210,23 +210,10 @@
  */
 /datum/attack_style/unarmed/generic_damage/mob_attack
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
+/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypartweapon)
 	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
-	. = ..()
-	if(. != default_attack_verb)
-		return
-
-	if(isanimal(attacker))
-		var/mob/living/simple_animal/animal = attacker
-		return animal.attack_verb_simple
-
-	if(isbasicmob(attacker))
-		var/mob/living/basic/animal = attacker
-		return animal.attack_verb_simple
-
-/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting, override_effect)
+/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, override_effect)
 	if(isanimal(attacker))
 		var/mob/living/simple_animal/animal = attacker
 		override_effect = animal.attack_vis_effect

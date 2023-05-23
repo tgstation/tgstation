@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 					span_warning("[blocking_us] blocks your attack partway!"),
 				)
 				if(blocking_us.uses_integrity)
-					log_combat(user, blocking_us, "hit mid-swing", attacking_item)
+					log_combat(attacker, blocking_us, "hit mid-swing", weapon)
 					blocking_us.take_damage(weapon.force, weapon.damtype, MELEE, TRUE,
 						get_dir(attacker, blocking_us), weapon.armour_penetration)
 				else
@@ -407,7 +407,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("No unarmed interaction for [type]!")
 
-/datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting, override_effect)
+/datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, override_effect)
 	var/selected_effect = override_effect || attack_effect
 	if(selected_effect)
 		attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), selected_effect)
