@@ -264,7 +264,7 @@
 
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find an air alarm at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
@@ -424,7 +424,7 @@
 
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
@@ -1177,7 +1177,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/obj/machinery/target = locate(/obj/machinery) in loc
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find a machine at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
@@ -1207,24 +1207,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "damaged_window"
 	layer = ABOVE_OBJ_LAYER
 	late = TRUE
-	/// Minimum roll of integrity damage in percents
-	var/integrity_min_factor = 0.2
-	/// Maximum roll of integrity damage in percents
-	var/integrity_max_factor = 0.8
+	/// Minimum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_min = 0.25
+	/// Maximum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_max = 0.85
 
 /obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
-
-	var/obj/structure/window/target = locate(/obj/structure/window) in loc
-	if(isnull(target))
-		var/area/target_area = get_area(target)
-		log_mapping("[src] failed to find a window at [AREACOORD(src)] ([target_area.type]).")
-	else
-		payload(target)
-
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/damaged_window/LateInitialize()
@@ -1232,8 +1224,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/obj/structure/window/target = locate(/obj/structure/window) in loc
 
 	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find a window at [AREACOORD(src)] ([target_area.type]).")
 		qdel(src)
 		return
+	else
+		payload(target)
 
 	target.update_appearance()
 	qdel(src)
@@ -1242,7 +1238,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(target.get_integrity() < target.max_integrity)
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
-	target.take_damage(rand(target.max_integrity * integrity_min_factor, target.max_integrity * integrity_max_factor))
+	target.take_damage(rand(target.max_integrity * integrity_damage_min, target.max_integrity * integrity_damage_max))
 
 //requests console helpers
 /obj/effect/mapping_helpers/requests_console
