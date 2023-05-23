@@ -22,7 +22,9 @@
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(try_attach))
 
 
-/turf/open/ballpit/proc/try_attach(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/turf/open/proc/try_attach(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(!istype(src, /turf/open/ballpit))
+		return
 	if(arrived.GetComponent(/datum/component/player_sink))
 		return
 	arrived.AddComponent(/datum/component/player_sink)
