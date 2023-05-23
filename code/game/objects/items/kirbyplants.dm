@@ -68,10 +68,6 @@
 	icon_state = "plant-25"
 	trimmable = FALSE
 
-/obj/item/kirbyplants/dead/rd
-	name = "RD's potted plant"
-	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
-
 /obj/item/kirbyplants/dead/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/seeds))
@@ -80,6 +76,10 @@
 			new /obj/item/kirbyplants(get_turf(src))
 			qdel(I)
 			qdel(src)
+
+/obj/item/kirbyplants/dead/rd
+	name = "RD's potted plant"
+	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
