@@ -338,9 +338,6 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
-"mS" = (
-/turf/open/space/basic,
-/area/template_noop)
 "nb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/stripes/line,
@@ -1605,8 +1602,8 @@ zP
 zP
 zP
 zP
-mS
-mS
+zP
+zP
 zP
 zP
 gZ
@@ -1628,8 +1625,8 @@ xZ
 Su
 ql
 zp
-mS
-mS
+zP
+zP
 zP
 zP
 gZ
