@@ -25,9 +25,9 @@
 	var/knockback_distance = 12
 	var/death = 10
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	..()
-	var/atom/throw_target = get_edge_target_turf(user, get_dir(target, user))
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(user, get_dir(pbtarget, user))
 	user.throw_at(throw_target, knockback_distance, 2)
 	if(prob(death))
 		user.gib()

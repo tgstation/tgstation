@@ -1,7 +1,7 @@
 /turf/open/ballpit
 	gender = PLURAL
 
-	name = "Ballpit"
+	name = "ballpit"
 	desc = "How deep does it go"
 	icon = 'goon/icons/turf/ballpit.dmi'
 	icon_state = "ballpitfloor"
