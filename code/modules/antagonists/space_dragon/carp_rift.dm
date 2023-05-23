@@ -19,12 +19,12 @@
 		return
 	var/area/rift_location = get_area(owner)
 	if(!(rift_location in dragon.chosen_rift_areas))
-		to_chat(owner, span_warning("You can't summon a rift here!"))
+		owner.balloon_alert(owner, "can't summon a rift here!")
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
-			to_chat(owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
+			owner.balloon_alert(owner, "already summoned a rift here!")
 			return
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
