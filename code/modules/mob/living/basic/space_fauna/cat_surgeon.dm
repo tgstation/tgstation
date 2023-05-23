@@ -31,10 +31,16 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/cat_butcherer
 
+	/// The stuff we drop on death.
+	var/static/list/drop_on_death = list(
+		/obj/effect/mob_spawn/corpse/human/cat_butcher,
+		/obj/item/circular_saw,
+	)
+
 /mob/living/basic/cat_butcherer/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/cat_butcher, l_hand = /obj/item/circular_saw, bloody_slots = ITEM_SLOT_GLOVES|ITEM_SLOT_OCLOTHING)
-	AddElement(/datum/element/death_drops, list(/obj/effect/mob_spawn/corpse/human/cat_butcher, /obj/item/circular_saw))
+	AddElement(/datum/element/death_drops, drop_on_death)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(after_attack))
 
 /mob/living/basic/cat_butcherer/Destroy()
