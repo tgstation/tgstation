@@ -75,7 +75,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "eC" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "An adorable stuffed toy that resembles a very determined seafaring lizardperson. To ten thousand leagues and below, little guy.";
 	name = "Drinks-The-Salt"
 	},

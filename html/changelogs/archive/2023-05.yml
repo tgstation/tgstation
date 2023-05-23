@@ -737,3 +737,94 @@
   - bugfix: fixed TTS not working when used by local servers
   YakumoChen:
   - qol: Bar bottles now work as makeshift rolling pins
+2023-05-20:
+  DaydreamIQ:
+  - bugfix: Space Dragon can no longer place their portals outside the station on
+      Tramstation
+  JohnFulpWillard:
+  - qol: Gym equipment was reworked. You now buckle yourself to weight machines to
+      use them, rather than clicking on it and getting stunned for a few seconds.
+      It also means it works like a chair now.
+  - qol: Gym equipment no longer breaks a sweat in no gravity.
+  MTandi:
+  - bugfix: fixed possible issues with apc, airalarm and damaged machinery/windows
+      helpers
+  Profakos:
+  - bugfix: fixes request console messages not being trimmed and encoded properly
+  ShizCalev:
+  - code_imp: Made a new unit test to find turfs with broken/missing icons! Rejoice!
+  - bugfix: Fixed a bunch of incorrect and missing turf icons.
+  orthography:
+  - bugfix: fixed Tramstation genetics pen chasms
+  san7890:
+  - refactor: Lizards (the animal (not the species of people)) are now a bit smarter.
+      Expect to see them avidly hunt down their prey, rather than languish around
+      and wait for it to come to them. Hungry buggers.
+  - image: We now actually implement the previously unused lizard gib animation for
+      those little buggers!
+  - refactor: Expect to see Killer Tomatoes be a bit smarter as they now are able
+      to juggle multiple targets, lock onto you, and barrel towards you. They're much
+      the same as before, but just a little bit more intelligent, which is especially
+      scary considering they're a fucking plant.
+  timothymtorres:
+  - code_imp: Add extra clothing options to equip mob outfits.  Replaced many one-letter
+      vars in file with better descriptions.
+2023-05-21:
+  MTandi:
+  - bugfix: made it impossible to change tram/elevator button styles that couldn't
+      be reverted back
+  - image: changed button styles, added tram/elevator button overlays
+  - refactor: refactored the way button sprites are applied, updated sprite names
+      to make more sense
+  - rscdel: removed unused button sprites
+  Thunder12345:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
+2023-05-22:
+  SyncIt21:
+  - bugfix: wire cutter's can carve out book's again.
+  - bugfix: bibles can convert other bibles
+  TiviPlus:
+  - qol: TTS no longer chokes on large amounts of one letter
+2023-05-23:
+  Comxy:
+  - bugfix: Removes spiderling from hostile gold spawns.
+  Epoc:
+  - rscadd: Toast sandwich
+  Furrior:
+  - admin: 'If you are on a downstream server using non-Latin fonts (e.g. Cyrillic)
+      for character/job names: The player panel encoding has been fixed so it should
+      show up properly for you now.'
+  Ghommie:
+  - bugfix: Fixed large paintings looking pretty off while flipped E/W.
+  Helg2:
+  - bugfix: fixed medical kiosk showing you that you have blood if you don't have
+      one.
+  JohnFulpWillard:
+  - bugfix: Borgs can be tipped over while flashed.
+  Rhials:
+  - qol: Ashwalker roundend reporting has been revamped. Glory to the Necropolis!
+  ShizCalev:
+  - bugfix: Fixed an item duplication bug involving snow tiles.
+  Singul0:
+  - bugfix: The buttons in HoP office of Icebox now actually works
+  Treach:
+  - bugfix: The Lavaland Syndicate base now has the correct plumbing constructor.
+  Watermelon914, Iamgoofball:
+  - bugfix: Fixed message garbling. TTS messages won't play in the wrong order anymore.
+  - qol: Added a way for players to change the volume of TTS.
+  Youtubeboy139:
+  - image: Added new Maintenance Drone Dispenser sprite
+  ZephyrTFA:
+  - server: All logs are now formatted in json, excluding perf and investigations
+  Zergspower:
+  - qol: Space Ruine Mechtransport - more modern redesign
+  jlsnow301:
+  - bugfix: Fixed an issue where TGUI say blinks on open, which should make it look
+      and feel faster.
+  orthography:
+  - bugfix: fixes the guide to mimery radial menu.
+  - refactor: refactors how the mime book works.
+  tf-4:
+  - refactor: Converted butterflies to the basic mob system
+  - rscadd: Butterflies can now be grown in cytology

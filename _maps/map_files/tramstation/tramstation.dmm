@@ -14238,7 +14238,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "dzF" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
@@ -19418,7 +19418,7 @@
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "fwY" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -25043,7 +25043,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Civilian - Recreational Area North-West"
 	},
-/obj/item/toy/plush/space_lizard_plushie,
+/obj/item/toy/plush/lizard_plushie/space/green,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hMs" = (
@@ -49272,7 +49272,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "qAy" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
@@ -67354,7 +67354,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
 "wSS" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "wTl" = (
