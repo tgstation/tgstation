@@ -265,7 +265,7 @@
 	. = ..()
 	if(machine_stat & BROKEN)
 		if(opened != APC_COVER_REMOVED)
-			. += "The cover is broken and can probably be pried off with enough force."
+			. += "The cover is broken and can probably be <i>pried</i> off with enough force."
 			return
 		if(terminal && has_electronics)
 			. += "The cover is missing but can be replaced using a new frame."
