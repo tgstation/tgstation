@@ -34,8 +34,25 @@
 	maximum_survivable_temperature = T20C + 120
 	light_color = "#d43229" // The ants that comprise the giant ant still glow red despite the sludge.
 
+	ai_controller = /datum/ai_controller/basic_controller/ant
+
 /mob/living/basic/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "clacks happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+
+/datum/ai_controller/basic_controller/ant
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/ant,
+	)
