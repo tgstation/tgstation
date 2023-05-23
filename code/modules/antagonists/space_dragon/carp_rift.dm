@@ -83,6 +83,8 @@
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
 	var/list/ckey_list = list()
 
+	var/datum/proximity_monitor/advanced/gravity/warns_on_entrance/gravity_aura
+
 /datum/armor/structure_carp_rift
 	energy = 100
 	bomb = 50
@@ -101,14 +103,14 @@
 		healing_color = COLOR_BLUE, \
 	)
 
-	AddComponent( \
-		/datum/component/gravity_aura, \
-		range = 15, \
-		requires_visibility = FALSE, \
-		gravity_strength = 1, \
-	)
+	// atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity)
+	gravity_aura = new(/* host = */src, /* range = */15, /* ignore_if_not_on_turf = */TRUE, /* gravity = */1)
 
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/carp_rift/Destroy()
+	QDEL_NULL(gravity_aura)
+	return ..()
 
 // Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
 // and favours more weaker explosives to destroy the portal

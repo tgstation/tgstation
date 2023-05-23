@@ -80,5 +80,6 @@
 
 /datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived)
 	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(source != host)
 		hasprox_receiver?.HasProximity(arrived)
