@@ -22,6 +22,9 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
+
+	ai_controller = /datum/ai_controller/basic_controller/headslug
+
 	/// The mind to transfer to our egg when it hatches
 	var/datum/mind/origin
 	/// Set to true once we've implanted our egg
@@ -80,4 +83,8 @@
 
 	return TRUE
 
-
+/// This is a bit neutered since these aren't intended to exist outside of player control, but it's a bit weird to just have these guys be completely stationary.
+/// No attacking or anything like that, though. Just something so they seem alive.
+/datum/ai_controller/basic_controller/headslug
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
