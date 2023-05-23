@@ -82,7 +82,7 @@
 	var/last_carp_inc = 0
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
 	var/list/ckey_list = list()
-
+	/// Gravity aura for the rift, makes all turfs nearby forced grav.
 	var/datum/proximity_monitor/advanced/gravity/warns_on_entrance/gravity_aura
 
 /datum/armor/structure_carp_rift
@@ -189,7 +189,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
+		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -236,12 +236,13 @@
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
 
-	if(!dragon)
+	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
 	newcarp.faction = dragon.owner.current.faction
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+	dragon.wavespeak?.link_mob(newcarp)
 
 	if(!is_listed)
 		ckey_list += user.ckey

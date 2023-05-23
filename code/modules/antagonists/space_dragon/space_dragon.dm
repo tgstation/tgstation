@@ -24,6 +24,8 @@
 	var/minion_to_spawn = /mob/living/basic/carp
 	/// What AI mobs to spawn from this dragon's rifts
 	var/ai_to_spawn = /mob/living/basic/carp
+	/// Wavespeak mind linker, to allow telepathy between dragon and carps
+	var/datum/component/mind_linker/wavespeak
 	/// What areas are we allowed to place rifts in?
 	var/list/chosen_rift_areas = list()
 
@@ -35,38 +37,42 @@
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/magic/demon_attack1.ogg', 80)
 
 /datum/antagonist/space_dragon/forge_objectives()
-	// Areas that will prove challenging for the dragon and provocative to the crew.
-	var/list/area/allowed_areas = typecacheof(list(
-		/area/station/command,
-		/area/station/engineering,
-		/area/station/science,
-		/area/station/security,
-	))
+	var/static/list/area/allowed_areas
+	if(!allowed_areas)
+		// Areas that will prove a challeng for the dragon and are provocative to the crew.
+		allowed_areas = typecacheof(list(
+			/area/station/command,
+			/area/station/engineering,
+			/area/station/science,
+			/area/station/security,
+		))
 
-	var/list/possible_areas = get_sorted_areas().Copy()
+	var/list/possible_areas = typecache_filter_list(get_sorted_areas(), allowed_areas)
 	for(var/area/possible_area as anything in possible_areas)
-		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors))
+		if(initial(possible_area.outdoors) || !(possible_area.area_flags & VALID_TERRITORY))
 			possible_areas -= possible_area
 
 	for(var/i in 1 to 5)
 		chosen_rift_areas += pick_n_take(possible_areas)
 
 	var/datum/objective/summon_carp/summon = new
-	summon.dragon = src
 	objectives += summon
-
-	summon.explanation_text = replacetext(summon.explanation_text, "%AREA1%", initial(chosen_rift_areas[1].name))
-	summon.explanation_text = replacetext(summon.explanation_text, "%AREA2%", initial(chosen_rift_areas[2].name))
-	summon.explanation_text = replacetext(summon.explanation_text, "%AREA3%", initial(chosen_rift_areas[3].name))
-	summon.explanation_text = replacetext(summon.explanation_text, "%AREA4%", initial(chosen_rift_areas[4].name))
-	summon.explanation_text = replacetext(summon.explanation_text, "%AREA5%", initial(chosen_rift_areas[5].name))
+	summon.owner = owner
+	summon.update_explanation_text()
 
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	rift_ability = new()
+	owner.special_role = ROLE_SPACE_DRAGON
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	return ..()
+
+/datum/antagonist/space_dragon/on_removal()
+	owner.special_role = null
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
@@ -76,6 +82,13 @@
 	antag.faction |= FACTION_CARP
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
+	wavespeak = antag.AddComponent( \
+		/datum/component/mind_linker, \
+		network_name = "Wavespeak", \
+		chat_color = "#1100aa", \
+		speech_action_icon = 'icons/mob/actions/actions_space_dragon.dmi', \
+		speech_action_icon_state = "wavespeak", \
+	)
 
 /datum/antagonist/space_dragon/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/antag = mob_override || owner.current
@@ -83,11 +96,14 @@
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
 	antag.faction -= FACTION_CARP
 	rift_ability?.Remove(antag)
+	QDEL_NULL(wavespeak)
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
 	carp = null
 	QDEL_NULL(rift_ability)
+	QDEL_NULL(wavespeak)
+	chosen_rift_areas.Cut()
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
@@ -156,11 +172,10 @@
 	objective_complete = TRUE
 	permanant_empower()
 	var/datum/objective/summon_carp/main_objective = locate() in objectives
-	if(main_objective)
-		main_objective.completed = TRUE
+	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
-	Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations")
-	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
+		Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations", has_important_message = TRUE)
+	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg', volume = 75)
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
 		rift.time_charged = rift.max_charge
@@ -201,8 +216,19 @@
 	owner.current.remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /datum/objective/summon_carp
-	var/datum/antagonist/space_dragon/dragon
-	explanation_text = "Summon 3 rifts in order to flood the station with carp. Your possible rift locations are: %AREA1%, %AREA2%, %AREA3%, %AREA4%, and %AREA5%."
+	explanation_text = "Summon 3 rifts in order to flood the station with carp."
+
+/datum/objective/summon_carp/update_explanation_text()
+	var/datum/antagonist/space_dragon/dragon_owner = owner.has_antag_datum(/datum/antagonist/space_dragon)
+	if(isnull(dragon_owner))
+		return
+
+	var/list/converted_names = list()
+	for(var/area/possible_area as anything in dragon_owner.chosen_rift_areas)
+		converted_names += possible_area.get_original_area_name()
+
+	explanation_text = initial(explanation_text)
+	explanation_text += " Your possible rift locations are: [english_list(converted_names)]"
 
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
@@ -223,5 +249,15 @@
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
 	if(carp.len)
 		parts += "<span class='header'>The [name] was assisted by:</span>"
-		parts += printplayerlist(carp)
+		parts += "<ul class='playerlist'>"
+		if(length(carp))
+			var/list/players_to_carp_taken = list()
+			for(var/datum/mind/carp as anything in carp)
+				players_to_carp_taken[carp.key] += 1
+			for(var/carp_user in players_to_carp_taken)
+				parts += "<li>[carp_user], who played [players_to_carp_taken[carp_user]] carps</li>"
+		else
+			parts += "<li>No one!</li>"
+		parts += "</ul>"
+
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

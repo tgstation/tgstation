@@ -179,19 +179,6 @@
 	if (was_dead)
 		RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
 
-/mob/living/simple_animal/hostile/space_dragon/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if(sanitize)
-		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	var/spanned_message = say_quote(message)
-	var/rendered = span_big("<font color=\"#1100aa\"><b>\[Carp Wavespeak\] [real_name]</b> [spanned_message]</font>")
-
-	for(var/mob in GLOB.mob_list)
-		if(istype(mob, /mob/living/simple_animal/hostile/carp/advanced) || istype(mob, /mob/living/simple_animal/hostile/space_dragon))
-			to_chat(mob, rendered)
-		if(isobserver(mob))
-			var/link = FOLLOW_LINK(mob, src)
-			to_chat(mob, "[link] [rendered]")
-
 /**
  * Allows space dragon to choose its own name.
  *
@@ -365,7 +352,7 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
-		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
+		playsound(src, 'sound/magic/demon_attack1.ogg', 60, TRUE)
 		visible_message(span_warning("[src] swallows [A] whole!"))
 		A.forceMove(src)
 		return TRUE
@@ -417,5 +404,11 @@
 		candidate.Paralyze(50)
 	addtimer(CALLBACK(src, PROC_REF(reset_status)), 4 + ((tiredness * tiredness_mult) / 10))
 	tiredness = tiredness + (gust_tiredness * tiredness_mult)
+
+/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag
+
+/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag/mind_initialize()
+	. = ..()
+	mind.add_antag_datum(/datum/antagonist/space_dragon)
 
 #undef DARKNESS_THRESHOLD
