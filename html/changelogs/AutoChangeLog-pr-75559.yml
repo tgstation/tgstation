@@ -1,5 +1,0 @@
-author: "Watermelon914, Iamgoofball"
-delete-after: True
-changes:
-  - bugfix: "Fixed message garbling. TTS messages won't play in the wrong order anymore."
-  - qol: "Added a way for players to change the volume of TTS."

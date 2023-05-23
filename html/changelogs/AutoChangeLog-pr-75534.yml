@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue where TGUI say blinks on open, which should make it look and feel faster."
