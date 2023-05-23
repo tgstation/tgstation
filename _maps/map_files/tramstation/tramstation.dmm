@@ -13507,6 +13507,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/office)
+"dlu" = (
+/obj/structure/lattice,
+/turf/closed/indestructible/grille,
+/area/space/nearstation)
 "dlL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -27542,10 +27546,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
-"iIZ" = (
-/obj/structure/lattice,
-/turf/closed/indestructible/grille,
-/area/space/nearstation)
 "iJd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -54088,6 +54088,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
+"soa" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/openspace,
+/area/space/nearstation)
 "soe" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -65746,11 +65751,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
-"wnE" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/openspace,
-/area/space/nearstation)
 "wnK" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -140478,7 +140478,7 @@ jhd
 jhd
 jhd
 jhd
-avE
+dlu
 jhd
 jhd
 jhd
@@ -140498,7 +140498,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -140735,7 +140735,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -140755,7 +140755,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -140992,7 +140992,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+pHM
 jhd
 jhd
 jhd
@@ -141506,7 +141506,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -141526,7 +141526,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -141763,7 +141763,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -141783,7 +141783,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -142022,8 +142022,8 @@ jhd
 jhd
 avE
 avE
-iIZ
-iIZ
+dlu
+dlu
 avE
 jhd
 jhd
@@ -142037,8 +142037,8 @@ jhd
 jhd
 jhd
 avE
-iIZ
-iIZ
+dlu
+dlu
 avE
 avE
 jhd
@@ -142534,7 +142534,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -142554,7 +142554,7 @@ avE
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -142820,10 +142820,10 @@ jhd
 jhd
 jhd
 jhd
-iIZ
-iIZ
-iIZ
-iIZ
+dlu
+dlu
+dlu
+dlu
 jhd
 jhd
 jhd
@@ -143049,10 +143049,10 @@ jhd
 jhd
 jhd
 avE
-iIZ
-iIZ
-iIZ
-iIZ
+dlu
+dlu
+dlu
+dlu
 avE
 jhd
 jhd
@@ -143064,10 +143064,10 @@ jhd
 jhd
 jhd
 avE
-iIZ
-iIZ
-iIZ
-iIZ
+dlu
+dlu
+dlu
+dlu
 avE
 jhd
 jhd
@@ -143310,7 +143310,7 @@ jhd
 jhd
 jhd
 jhd
-iIZ
+dlu
 jhd
 jhd
 jhd
@@ -143320,25 +143320,25 @@ jhd
 jhd
 jhd
 jhd
-iIZ
-jhd
-jhd
-jhd
-jhd
-avE
-jhd
-jhd
-jhd
+dlu
 jhd
 jhd
 jhd
 jhd
 avE
-iIZ
-iIZ
-iIZ
-iIZ
-iIZ
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
+avE
+dlu
+dlu
+dlu
+dlu
+dlu
 jhd
 jhd
 jhd
@@ -151845,8 +151845,8 @@ jFJ
 aaa
 aaa
 aac
-wnE
-wnE
+soa
+soa
 jhd
 jhd
 jhd
@@ -152103,7 +152103,7 @@ jFJ
 aaa
 jhd
 jhd
-wnE
+soa
 jhd
 jhd
 jhd
@@ -152360,7 +152360,7 @@ jFJ
 jhd
 jhd
 jhd
-wnE
+soa
 jhd
 jhd
 jhd
@@ -152874,7 +152874,7 @@ jFJ
 jhd
 jhd
 jhd
-wnE
+soa
 jhd
 jhd
 jhd
@@ -153388,7 +153388,7 @@ jFJ
 jhd
 jhd
 jhd
-wnE
+soa
 jhd
 jhd
 jhd
@@ -153645,7 +153645,7 @@ buB
 buB
 jhd
 jhd
-wnE
+soa
 jhd
 jhd
 jhd
