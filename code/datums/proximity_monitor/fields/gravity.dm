@@ -30,7 +30,7 @@
 	/// We track it so that we don't spam a player who is stutter stepping in and out with balloon alerts.
 	var/list/recently_warned
 
-/datum/proximity_monitor/advanced/field_edge_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_crossed(atom/movable/movable, turf/location)
 	. = ..()
 	if(!ismob(movable))
 		return
@@ -42,14 +42,14 @@
 	LAZYADD(recently_warned, movable_ref_key)
 	addtimer(CALLBACK(src, PROC_REF(clear_recent_warning), movable_ref_key), 4 SECONDS)
 
-/datum/proximity_monitor/advanced/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_uncrossed(atom/movable/movable, turf/location)
 	. = ..()
 	if(!ismob(movable))
 		return
-	if(movable_ref_key in recently_warned)
+	if(REF(movable) in recently_warned)
 		return
 
 	location.balloon_alert(movable, "gravity reverts...")
 
-/datum/proximity_monitor/advanced/proc/clear_recent_warning(movable_ref_key)
+/datum/proximity_monitor/advanced/gravity/warns_on_entrance/proc/clear_recent_warning(movable_ref_key)
 	LAZYREMOVE(recently_warned, movable_ref_key)
