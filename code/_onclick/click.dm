@@ -27,6 +27,12 @@
 		mod *= effect.nextmove_modifier()
 		adj += effect.nextmove_adjust()
 	next_move = world.time + ((num + adj)*mod)
+	// updates overlays to show attack is on cd
+	for(var/hand in hud_used?.hand_slots)
+		var/atom/movable/screen/inventory/hand/handy = hud_used.hand_slots[hand]
+		handy.update_appearance()
+		// if(handy % 2 == 0)
+		START_PROCESSING(SSfastprocess, handy)
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to

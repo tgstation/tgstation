@@ -49,8 +49,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	/// Screen objects that never exit view.
 	var/list/always_visible_inventory = list()
-	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
-	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
+	var/list/atom/movable/screen/inventory/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
+	var/list/atom/movable/screen/inventory/hand/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 
 	/// Assoc list of key => "plane master groups"
 	/// This is normally just the main window, but it'll occasionally contain things like spyglasses windows

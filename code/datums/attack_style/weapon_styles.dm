@@ -55,6 +55,7 @@
 	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
 	slowdown = 0.75
 	reverse_for_lefthand = FALSE
+	time_per_turf = 0.1 SECONDS
 	weapon_sprite_angle = 45
 
 /datum/attack_style/melee_weapon/swing/esword/get_swing_description()

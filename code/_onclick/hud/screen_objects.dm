@@ -192,15 +192,37 @@
 	add_overlay(object_overlay)
 
 /atom/movable/screen/inventory/hand
+	maptext_x = 8
+	maptext_y = 12
+
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
+	var/static/mutable_appearance/cd_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "dark64")
 	var/held_index = 0
+
+/atom/movable/screen/inventory/hand/process(seconds_per_tick)
+	if(hud?.mymob?.next_move > world.time)
+		update_maptext()
+		return
+
+	update_appearance()
+	return PROCESS_KILL
+
+/atom/movable/screen/inventory/hand/proc/update_maptext()
+	if(hud?.mymob?.next_move > world.time)
+		maptext = MAPTEXT("[round((hud.mymob.next_move - world.time) / 10, 0.2)]s")
+	else
+		maptext = null
+
+/atom/movable/screen/inventory/hand/update_appearance(updates)
+	. = ..()
+	update_maptext()
 
 /atom/movable/screen/inventory/hand/update_overlays()
 	. = ..()
 
 	if(!handcuff_overlay)
-		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
+		var/state = (held_index % 2 == 1) ?  "gabrielle" : "markus"
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
@@ -217,6 +239,9 @@
 
 	if(held_index == hud.mymob.active_hand_index)
 		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+
+	if(hud.mymob.next_move - 1 > world.time) // give it a bit of leeway
+		. += cd_overlay
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else

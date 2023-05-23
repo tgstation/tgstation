@@ -15,6 +15,12 @@
 
 	var/blocking_icon = 'icons/effects/blocking.dmi'
 
+/datum/status_effect/blocking/nextmove_modifier()
+	// Next move CD is 2x as long while blocking.
+	// You are unable to attack while blocking but this handles stuff like
+	// interfacing with your backpack or other actions.
+	return 2
+
 /datum/status_effect/blocking/on_creation(mob/living/new_owner, obj/item/new_blocker)
 	. = ..()
 	if(!.)
