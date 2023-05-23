@@ -14310,7 +14310,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/dead/rd,
 /obj/machinery/computer/security/telescreen/rd{
 	dir = 4;
 	pixel_x = -26

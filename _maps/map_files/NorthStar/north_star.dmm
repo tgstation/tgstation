@@ -309,7 +309,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/meeting_room)
 "adj" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/dead/rd,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)

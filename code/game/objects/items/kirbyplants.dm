@@ -63,10 +63,23 @@
 
 
 /obj/item/kirbyplants/dead
-	name = "RD's potted plant"
-	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+	name = "dead potted plant"
+	desc = "The unidentifiable plant remnants make you feel like planting something new in the pot."
 	icon_state = "plant-25"
 	trimmable = FALSE
+
+/obj/item/kirbyplants/dead/rd
+	name = "RD's potted plant"
+	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+
+/obj/item/kirbyplants/dead/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/seeds))
+		to_chat(user,span_notice("You start planting a new seed into the pot."))
+		if(do_after(user,3 SECONDS,target=src))
+			new /obj/item/kirbyplants(get_turf(src))
+			qdel(I)
+			qdel(src)
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
