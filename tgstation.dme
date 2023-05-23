@@ -5301,6 +5301,7 @@
 #include "monkestation\code\game\objects\items\effects\honk_platinum.dm"
 #include "monkestation\code\game\objects\items\effects\nugget.dm"
 #include "monkestation\code\game\objects\items\effects\washing_machine.dm"
+#include "monkestation\code\game\objects\items\guns\shotguns.dm"
 #include "monkestation\code\game\objects\items\guns\SRN.dm"
 #include "monkestation\code\game\objects\items\storage\boxes.dm"
 #include "monkestation\code\modules\admin\antag_tokens.dm"
