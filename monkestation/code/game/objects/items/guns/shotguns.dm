@@ -3,7 +3,7 @@
 	name = "six-barreled \"TRABUCO\" shotgun"
 	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
 	icon_state = "shotgun_brazil"
-	worn_icon_state = "none"
+	slot_flags = NONE
 	icon = 'monkestation/icons/obj/guns/48x32guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'

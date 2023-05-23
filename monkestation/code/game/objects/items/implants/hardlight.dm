@@ -43,7 +43,7 @@
 	desc = "A spear made out of hardened light."
 	force = 15
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = NONE
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 1
