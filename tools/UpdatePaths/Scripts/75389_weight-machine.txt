@@ -1,0 +1,1 @@
+/obj/structure/weightmachine/stacklifter : /obj/structure/weightmachine

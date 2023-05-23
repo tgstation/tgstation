@@ -24,7 +24,7 @@
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, \
 		speed = 7 SECONDS, \
 		effectiveness = 100, \

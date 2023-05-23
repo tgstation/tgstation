@@ -325,11 +325,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
 	atom_storage.max_slots = 7
-	atom_storage.set_holdable(list(
-		/obj/item/book,
-		/obj/item/spellbook,
-		/obj/item/storage/book,
-		))
+	atom_storage.set_holdable(list(/obj/item/book, /obj/item/spellbook))
 
 /*
  * Trays - Agouri
@@ -346,7 +342,7 @@
 	throw_range = 5
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/storage/bag/tray/Initialize(mapload)

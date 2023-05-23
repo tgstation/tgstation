@@ -430,7 +430,7 @@
 				var/list/new_material_content = list()
 				for(var/datum/material/current_material in A.custom_materials)
 					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
-						new_material_content[current_material] = (A.custom_materials[current_material] - 2000) * (A.rounds / initial(A.rounds)) + 2000
+						new_material_content[current_material] = (A.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (A.rounds / initial(A.rounds)) + SHEET_MATERIAL_AMOUNT
 					else
 						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
 				A.set_custom_materials(new_material_content)
@@ -447,7 +447,7 @@
 			qdel(A)
 			return TRUE
 		A.rounds = 0
-		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
 		A.update_appearance()
 		return TRUE
 	if(!fail_chat_override)

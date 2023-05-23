@@ -74,8 +74,7 @@
 /obj/effect/anomaly/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(countdown)
-	if(aSignal)
-		QDEL_NULL(aSignal)
+	QDEL_NULL(aSignal)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
@@ -88,13 +87,19 @@
 /obj/effect/anomaly/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
-		aSignal.forceMove(drop_location())
-		aSignal = null
+		if(isnull(aSignal))
+			stack_trace("An anomaly ([src]) exists that drops a core, yet has no core!")
+		else
+			aSignal.forceMove(drop_location())
+			aSignal = null
 	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
@@ -110,6 +115,7 @@
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
 	name = (has_core ? "stable " : "hollow ") + name
-	aSignal = has_core ? aSignal : null
+	if(!has_core)
+		drops_core = FALSE
+		QDEL_NULL(aSignal)
 	immobile = anchor
-

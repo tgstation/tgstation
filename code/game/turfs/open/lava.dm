@@ -109,7 +109,7 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -424,4 +424,9 @@
 /turf/open/lava/plasma/mafia
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
+	slowdown = 0
+
+//basketball specific lava (normal atmos, no slowdown)
+/turf/open/lava/smooth/basketball
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0

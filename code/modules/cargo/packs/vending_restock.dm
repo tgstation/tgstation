@@ -192,6 +192,7 @@
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
 					/obj/item/vending_refill/wardrobe/chem_wardrobe,
 					/obj/item/vending_refill/wardrobe/viro_wardrobe,
+					/obj/item/vending_refill/wardrobe/coroner_wardrobe,
 				)
 	crate_name = "medical department wardrobe supply crate"
 
