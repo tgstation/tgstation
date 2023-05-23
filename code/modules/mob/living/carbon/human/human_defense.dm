@@ -67,6 +67,10 @@
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message(span_danger("The [P.name] gets reflected by [src]!"), \
 								span_userdanger("The [P.name] gets reflected by [src]!"))
+				// Finds and plays the block_sound of item which reflected
+				for(var/obj/item/I in held_items)
+					if(I.IsReflect(def_zone))
+						playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 				// Find a turf near or on the original location to bounce to
 				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.

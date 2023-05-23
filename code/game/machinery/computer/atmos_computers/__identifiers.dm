@@ -30,6 +30,7 @@
 #define ATMOS_GAS_MONITOR_ORDNANCE_FREEZER "ordnancefreezer"
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
+#define ATMOS_GAS_MONITOR_ENGINE "engine"
 
 ///maps a chamber id to its air sensor
 #define CHAMBER_SENSOR_FROM_ID(chamber_id) ((chamber_id) + "_sensor")
@@ -67,4 +68,5 @@ GLOBAL_LIST_INIT(station_gas_chambers, list(
 	ATMOS_GAS_MONITOR_ORDNANCE_FREEZER = "Ordnance Freezer Chamber",
 	ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop",
 	ATMOS_GAS_MONITOR_WASTE = "Waste Loop",
+	ATMOS_GAS_MONITOR_ENGINE = "Supermatter Engine Chamber",
 ))

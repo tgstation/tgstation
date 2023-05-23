@@ -145,4 +145,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/alien_speed
+  variable = TRUE
+
+/datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE

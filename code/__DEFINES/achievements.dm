@@ -45,6 +45,7 @@
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 #define MEDAL_HEALTHY "Heart Healthy"
+#define MEDAL_GODS_WRATH "God's Wrath"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

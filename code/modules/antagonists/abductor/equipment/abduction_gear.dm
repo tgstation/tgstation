@@ -480,7 +480,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/melee/baton/abductor/proc/toggle(mob/living/user=usr)
 	if(!AbductorCheck(user))
@@ -842,7 +842,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestackamount = 1
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
-	can_buckle = 1
+	can_buckle = TRUE
+	buckle_lying = 90
 	/// Amount to inject per second
 	var/inject_am = 0.5
 
