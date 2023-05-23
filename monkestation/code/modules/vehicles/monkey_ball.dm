@@ -12,9 +12,7 @@
 
 /obj/vehicle/ridden/monkey_ball/Initialize(mapload)
 	. = ..()
-	var/datum/component/riding/riding_component = LoadComponent(/datum/component/riding)
-	riding_component.vehicle_move_delay = movedelay
-	riding_component.set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/monkey_ball)
 
 /obj/vehicle/ridden/monkey_ball/Destroy()
 	if(has_buckled_mobs())
@@ -44,3 +42,6 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1, mixer_channel = CHANNEL_MOB_SOUNDS)
 		last_bump = world.time + 1 SECONDS
 
+
+/datum/component/riding/vehicle/monkey_ball
+	ride_check_flags = RIDER_NEEDS_LEGS
