@@ -13507,10 +13507,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/office)
-"dlu" = (
-/obj/structure/lattice,
-/turf/closed/indestructible/grille,
-/area/space/nearstation)
 "dlL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -45736,6 +45732,11 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
+"pog" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "pot" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -46567,6 +46568,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
+"pBg" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/openspace,
+/area/space/nearstation)
 "pBj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -54088,11 +54094,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
-"soa" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/openspace,
-/area/space/nearstation)
 "soe" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -140478,7 +140479,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -140498,7 +140499,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -140735,7 +140736,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -140755,7 +140756,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -141506,7 +141507,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -141526,7 +141527,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -141763,7 +141764,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -141783,7 +141784,7 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
@@ -142022,9 +142023,9 @@ jhd
 jhd
 avE
 avE
-dlu
-dlu
-avE
+pog
+pog
+pBg
 jhd
 jhd
 jhd
@@ -142036,9 +142037,9 @@ jhd
 jhd
 jhd
 jhd
-avE
-dlu
-dlu
+pBg
+pog
+pog
 avE
 avE
 jhd
@@ -142277,7 +142278,7 @@ jhd
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -142297,7 +142298,7 @@ avE
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -142534,15 +142535,11 @@ jhd
 jhd
 jhd
 jhd
-dlu
+pog
 jhd
 jhd
 jhd
-avE
-jhd
-jhd
-jhd
-jhd
+pBg
 jhd
 jhd
 jhd
@@ -142550,11 +142547,15 @@ jhd
 jhd
 jhd
 jhd
-avE
 jhd
 jhd
 jhd
-dlu
+jhd
+pBg
+jhd
+jhd
+jhd
+pog
 jhd
 jhd
 jhd
@@ -142791,7 +142792,7 @@ jhd
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -142811,7 +142812,7 @@ avE
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -142820,10 +142821,10 @@ jhd
 jhd
 jhd
 jhd
-dlu
-dlu
-dlu
-dlu
+pog
+pog
+pog
+pog
 jhd
 jhd
 jhd
@@ -143049,11 +143050,11 @@ jhd
 jhd
 jhd
 avE
-dlu
-dlu
-dlu
-dlu
-avE
+pHM
+pog
+pog
+pog
+pBg
 jhd
 jhd
 jhd
@@ -143063,11 +143064,11 @@ jhd
 jhd
 jhd
 jhd
-avE
-dlu
-dlu
-dlu
-dlu
+pBg
+pog
+pog
+pog
+pHM
 avE
 jhd
 jhd
@@ -143305,27 +143306,12 @@ jhd
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
 jhd
-dlu
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-jhd
-dlu
-jhd
-jhd
-jhd
-jhd
-avE
+pog
 jhd
 jhd
 jhd
@@ -143333,12 +143319,27 @@ jhd
 jhd
 jhd
 jhd
-avE
-dlu
-dlu
-dlu
-dlu
-dlu
+jhd
+jhd
+pog
+jhd
+jhd
+jhd
+jhd
+pBg
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
+jhd
+pBg
+pog
+pog
+pHM
+pog
+pog
 jhd
 jhd
 jhd
@@ -143562,7 +143563,7 @@ jhd
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -143582,7 +143583,7 @@ jhd
 jhd
 jhd
 jhd
-avE
+pBg
 jhd
 jhd
 jhd
@@ -144076,7 +144077,7 @@ jhd
 jhd
 jhd
 jhd
-jhd
+avE
 tPE
 qnv
 tld
@@ -151845,8 +151846,8 @@ jFJ
 aaa
 aaa
 aac
-soa
-soa
+pBg
+pBg
 jhd
 jhd
 jhd
@@ -152103,7 +152104,7 @@ jFJ
 aaa
 jhd
 jhd
-soa
+pBg
 jhd
 jhd
 jhd
@@ -152360,7 +152361,7 @@ jFJ
 jhd
 jhd
 jhd
-soa
+pBg
 jhd
 jhd
 jhd
@@ -152874,7 +152875,7 @@ jFJ
 jhd
 jhd
 jhd
-soa
+pBg
 jhd
 jhd
 jhd
@@ -153388,7 +153389,7 @@ jFJ
 jhd
 jhd
 jhd
-soa
+pBg
 jhd
 jhd
 jhd
@@ -153645,7 +153646,7 @@ buB
 buB
 jhd
 jhd
-soa
+pBg
 jhd
 jhd
 jhd
@@ -153902,8 +153903,8 @@ kkg
 buB
 jhd
 jhd
-kFx
-kFx
+pBg
+pBg
 jhd
 jhd
 jhd
