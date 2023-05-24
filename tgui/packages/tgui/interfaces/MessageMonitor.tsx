@@ -171,12 +171,14 @@ const MainScreenAuth = (props, context) => {
             onClick={() => act('auth', { auth_password: auth_password })}
           />
           <Button
+            icon={status ? 'power-off' : 'times'}
             content={status ? 'ON' : 'OFF'}
             color={status ? 'green' : 'red'}
             onClick={() => act('turn_server')}
           />
           {is_malf === 1 && (
             <Button
+              icon="terminal"
               content="Hack"
               color="red"
               disabled
@@ -271,6 +273,7 @@ const MainScreenNotAuth = (props, context) => {
             onClick={() => act('auth', { auth_password: auth_password })}
           />
           <Button
+            icon={status ? 'power-off' : 'times'}
             content={status ? 'ON' : 'OFF'}
             color={status ? 'green' : 'red'}
             disabled
