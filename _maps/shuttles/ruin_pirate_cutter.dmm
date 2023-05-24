@@ -169,7 +169,9 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/red_rum/spawner/east,
+/obj/structure/sign/poster/contraband/red_rum{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "nN" = (

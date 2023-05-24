@@ -238,7 +238,9 @@
 /area/ruin/planetengi)
 "br" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/structure/sign/poster/official/build/spawner/west,
+/obj/structure/sign/poster/official/build{
+	pixel_x = -32
+	},
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "bs" = (
@@ -632,7 +634,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/pda_ad/spawner/south,
+/obj/structure/sign/poster/official/pda_ad{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "dg" = (
@@ -748,7 +752,9 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/grey_tide/spawner/north,
+/obj/structure/sign/poster/contraband/grey_tide{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "dC" = (

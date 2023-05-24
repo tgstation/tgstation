@@ -235,7 +235,9 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "jl" = (
-/obj/structure/sign/poster/contraband/space_cola/spawner/north,
+/obj/structure/sign/poster/contraband/space_cola{
+	pixel_y = 32
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
@@ -445,7 +447,8 @@
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
 "ui" = (
-/obj/structure/sign/poster/contraband/moffuchis_pizza/spawner/north{
+/obj/structure/sign/poster/contraband/moffuchis_pizza{
+	pixel_y = 32;
 	name = "Ray's Pizza";
 	desc = "Ray's Famous Original Pizza: Family style pizza for 2 centuries."
 	},
@@ -898,7 +901,9 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Kr" = (
-/obj/structure/sign/poster/official/bless_this_spess/spawner/north,
+/obj/structure/sign/poster/official/bless_this_spess{
+	pixel_y = 32
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)

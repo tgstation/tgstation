@@ -70,7 +70,9 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/structure/sign/poster/official/do_not_question/spawner/north,
+/obj/structure/sign/poster/official/do_not_question{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "D" = (

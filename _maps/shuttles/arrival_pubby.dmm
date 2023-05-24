@@ -28,7 +28,9 @@
 /area/shuttle/arrival)
 "g" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/official/enlist/spawner/north,
+/obj/structure/sign/poster/official/enlist{
+	pixel_y = 32
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "h" = (

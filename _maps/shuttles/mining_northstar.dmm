@@ -124,7 +124,9 @@
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 5
 	},
-/obj/structure/sign/poster/official/work_for_a_future/spawner/north,
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_y = 32
+	},
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)

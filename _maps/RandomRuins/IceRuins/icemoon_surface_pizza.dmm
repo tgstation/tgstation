@@ -21,7 +21,9 @@
 "bf" = (
 /obj/structure/table,
 /obj/item/plate/small,
-/obj/structure/sign/poster/official/moth_meth/spawner/north,
+/obj/structure/sign/poster/official/moth_meth{
+	pixel_y = 32
+	},
 /obj/item/reagent_containers/condiment/enzyme,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -342,7 +344,9 @@
 /area/ruin/pizzeria)
 "mN" = (
 /obj/structure/flora/bush/pointy/style_random,
-/obj/structure/sign/poster/official/moth_piping/spawner/north,
+/obj/structure/sign/poster/official/moth_piping{
+	pixel_y = 32
+	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "nr" = (
@@ -442,7 +446,9 @@
 /obj/item/screwdriver,
 /obj/item/crowbar/red,
 /obj/structure/rack,
-/obj/structure/sign/poster/official/moth_delam/spawner/north,
+/obj/structure/sign/poster/official/moth_delam{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
 "sY" = (
@@ -479,7 +485,9 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "vf" = (
-/obj/structure/sign/poster/contraband/syndiemoth/spawner/east,
+/obj/structure/sign/poster/contraband/syndiemoth{
+	pixel_x = 32
+	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "vO" = (

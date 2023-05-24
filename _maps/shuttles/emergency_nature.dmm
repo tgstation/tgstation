@@ -642,7 +642,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/sign/poster/official/pda_ad/spawner/south,
+/obj/structure/sign/poster/official/pda_ad{
+	pixel_y = -32
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zf" = (
@@ -938,7 +940,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/tools/spawner/north,
+/obj/structure/sign/poster/contraband/tools{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (

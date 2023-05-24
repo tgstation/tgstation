@@ -422,7 +422,9 @@
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/periodic_table/spawner/west,
+/obj/structure/sign/poster/official/periodic_table{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
@@ -2743,7 +2745,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/enlist/spawner/east,
+/obj/structure/sign/poster/official/enlist{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "ni" = (
@@ -6356,7 +6360,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/sign/poster/official/nanotrasen_logo/spawner/east,
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "DF" = (
@@ -6502,7 +6508,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/obey/spawner/west,
+/obj/structure/sign/poster/official/obey{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "EN" = (
@@ -7341,7 +7349,9 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/sign/poster/official/ian/spawner/west,
+/obj/structure/sign/poster/official/ian{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "KQ" = (
@@ -7475,7 +7485,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo/spawner/west,
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lw" = (
@@ -7614,7 +7626,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LR" = (
-/obj/structure/sign/poster/official/tactical_game_cards/spawner/north,
+/obj/structure/sign/poster/official/tactical_game_cards{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "LU" = (

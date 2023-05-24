@@ -34,7 +34,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/plasma_effects/spawner/south,
+/obj/structure/sign/poster/official/plasma_effects{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},

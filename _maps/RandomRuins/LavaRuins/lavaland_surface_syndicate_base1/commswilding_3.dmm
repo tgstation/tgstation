@@ -74,7 +74,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "t" = (
-/obj/structure/sign/poster/contraband/syndiemoth/spawner/west,
+/obj/structure/sign/poster/contraband/syndiemoth{
+	pixel_x = -32
+	},
 /obj/item/radio/intercom{
 	freerange = 1;
 	name = "Syndicate Radio Intercom";

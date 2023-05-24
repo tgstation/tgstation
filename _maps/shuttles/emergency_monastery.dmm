@@ -543,7 +543,9 @@
 	},
 /obj/item/storage/crayons,
 /obj/structure/table/wood,
-/obj/structure/sign/poster/official/soft_cap_pop_art/spawner/north,
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iI" = (
@@ -2005,7 +2007,9 @@
 	},
 /obj/structure/table/wood,
 /obj/item/soap/nanotrasen,
-/obj/structure/sign/poster/official/fruit_bowl/spawner/north,
+/obj/structure/sign/poster/official/fruit_bowl{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dr" = (

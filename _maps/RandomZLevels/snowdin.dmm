@@ -257,7 +257,9 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/kudzu/spawner/north,
+/obj/structure/sign/poster/contraband/kudzu{
+	pixel_y = 32
+	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
@@ -1340,7 +1342,9 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/east,
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = 32
+	},
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /turf/open/floor/carpet,
@@ -1730,7 +1734,9 @@
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "ft" = (
-/obj/structure/sign/poster/official/no_erp/spawner/west,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = -32
+	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -3474,7 +3480,9 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "km" = (
-/obj/structure/sign/poster/contraband/tools/spawner/east,
+/obj/structure/sign/poster/contraband/tools{
+	pixel_x = 32
+	},
 /obj/structure/closet/crate/preopen,
 /obj/item/tank/internals/plasma,
 /obj/item/tank/internals/plasma,
@@ -5218,7 +5226,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question/spawner/south,
+/obj/structure/sign/poster/official/do_not_question{
+	pixel_y = -32
+	},
 /obj/item/wirecutters,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
