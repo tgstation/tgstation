@@ -540,7 +540,7 @@
 	},
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/item/organ/internal/appendix,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
@@ -1045,7 +1045,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "ox" = (
@@ -1069,7 +1069,7 @@
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/item/organ/internal/lungs,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -2395,7 +2395,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "DL" = (
@@ -3362,7 +3362,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -3604,7 +3604,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "UH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/terminal/dangerous_research/front_desk{
 	dir = 1
 	},
@@ -3634,7 +3634,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Vd" = (
 /obj/structure/filingcabinet,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper/fluff/ruins/dangerous_research/manifest,
 /obj/effect/turf_decal/tile/dark_red/half,
@@ -3681,7 +3681,7 @@
 /obj/structure/closet{
 	name = "Outpost Security Locker"
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/ammo_box/c38,
@@ -3934,7 +3934,7 @@
 	},
 /obj/item/pen,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 8
 	},

@@ -1787,7 +1787,7 @@
 	pixel_y = -6
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Gl" = (

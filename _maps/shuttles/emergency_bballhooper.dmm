@@ -13,7 +13,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bx" = (
@@ -231,7 +231,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mV" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/bonesetter,
 /turf/open/floor/mineral/titanium/blue,
@@ -325,7 +325,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "td" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/restraints/handcuffs{
 	pixel_x = -5;
 	pixel_y = -7
@@ -537,7 +537,7 @@
 /turf/open/floor/iron/diagonal,
 /area/shuttle/escape)
 "DO" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/clothing/shoes/swagshoes,
@@ -610,7 +610,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "IJ" = (
@@ -627,7 +627,7 @@
 "Ja" = (
 /obj/structure/closet/emcloset,
 /obj/item/crowbar,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Jv" = (
@@ -926,7 +926,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "YS" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/chair/stool/directional/south{
 	can_buckle = 1;
