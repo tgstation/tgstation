@@ -431,4 +431,6 @@
 /datum/config_entry/flag/tts_force_html_audio
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/tts_default_to_blips
+
 /datum/config_entry/flag/give_tutorials_without_db
