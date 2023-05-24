@@ -544,9 +544,7 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/quirk/engineering_slogan{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "cW" = (

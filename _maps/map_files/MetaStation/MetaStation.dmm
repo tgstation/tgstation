@@ -23722,6 +23722,7 @@
 /area/station/security/office)
 "iDU" = (
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iEj" = (
@@ -49398,13 +49399,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
-"rJq" = (
-/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/tile/yellow,
-/turf/open/floor/iron/white,
-/area/station/medical/chemistry)
 "rJr" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Head of Personnel's Office"
@@ -61324,11 +61318,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "vPp" = (
-/obj/structure/sign/poster/random/directional/east{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/chemistry)
 "vPq" = (
 /obj/structure/chair{
 	dir = 8
@@ -92247,7 +92240,7 @@ dkx
 dkx
 dkx
 dVN
-rJq
+tqd
 aeF
 hNV
 lrZ
@@ -92504,7 +92497,7 @@ iqz
 iqz
 iqz
 dVN
-jtl
+vPp
 hZV
 hZV
 hZV
@@ -98434,7 +98427,7 @@ iKL
 nFa
 nFa
 nFa
-vPp
+nFa
 uGg
 lMJ
 aaa

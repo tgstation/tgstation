@@ -1,5 +1,12 @@
 # Changes posters to mapping direction helpers
 
+# Random Spawner
+
+/obj/structure/sign/poster/random{pixel_y = 32} : /obj/structure/sign/poster/random/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/random{pixel_y = -32} : /obj/structure/sign/poster/random/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/random{pixel_x = 32} : /obj/structure/sign/poster/random/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/random{pixel_x = -32} : /obj/structure/sign/poster/random/directional/west{@OLD;pixel_x=@SKIP}
+
 # Random Contraband Spawner
 
 /obj/structure/sign/poster/contraband/random{pixel_y = 32} : /obj/structure/sign/poster/contraband/random/directional/north{@OLD;pixel_y=@SKIP}
@@ -20,6 +27,13 @@
 /obj/structure/sign/poster/ripped{pixel_y = -32} : /obj/structure/sign/poster/ripped/directional/south{@OLD;pixel_y=@SKIP}
 /obj/structure/sign/poster/ripped{pixel_x = 32} : /obj/structure/sign/poster/ripped/directional/east{@OLD;pixel_x=@SKIP}
 /obj/structure/sign/poster/ripped{pixel_x = -32} : /obj/structure/sign/poster/ripped/directional/west{@OLD;pixel_x=@SKIP}
+
+# Corgi Tail Pin
+
+/obj/structure/sign/poster/party_game{pixel_y = 32} : /obj/structure/sign/poster/party_game/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/party_game{pixel_y = -32} : /obj/structure/sign/poster/party_game/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/party_game{pixel_x = 32} : /obj/structure/sign/poster/party_game/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/party_game{pixel_x = -32} : /obj/structure/sign/poster/party_game/directional/west{@OLD;pixel_x=@SKIP}
 
 # Contraband/Silly Posters
 
@@ -655,15 +669,15 @@
 /obj/structure/sign/poster/official/moth_delam{pixel_x = 32} : /obj/structure/sign/poster/official/moth_delam/directional/east{@OLD;pixel_x=@SKIP}
 /obj/structure/sign/poster/official/moth_delam{pixel_x = -32} : /obj/structure/sign/poster/official/moth_delam/directional/west{@OLD;pixel_x=@SKIP}
 
-/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/north{@OLD;pixel_y=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/south{@OLD;pixel_y=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{pixel_x = 32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/east{@OLD;pixel_x=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{pixel_x = -32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/west{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_payment{pixel_y = 32} : /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_payment{pixel_y = -32} : /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_payment{pixel_x = 32} : /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_payment{pixel_x = -32} : /obj/structure/sign/poster/fluff/lizards_gas_payment/directional/west{@OLD;pixel_x=@SKIP}
 
-/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/north{@OLD;pixel_y=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/south{@OLD;pixel_y=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{pixel_x = 32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/east{@OLD;pixel_x=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{pixel_x = -32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/west{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_power{pixel_y = 32} : /obj/structure/sign/poster/fluff/lizards_gas_power/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_power{pixel_y = -32} : /obj/structure/sign/poster/fluff/lizards_gas_power/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_power{pixel_x = 32} : /obj/structure/sign/poster/fluff/lizards_gas_power/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/fluff/lizards_gas_power{pixel_x = -32} : /obj/structure/sign/poster/fluff/lizards_gas_power/directional/west{@OLD;pixel_x=@SKIP}
 
 /obj/structure/sign/poster/official/festive{pixel_y = 32} : /obj/structure/sign/poster/official/festive/directional/north{@OLD;pixel_y=@SKIP}
 /obj/structure/sign/poster/official/festive{pixel_y = -32} : /obj/structure/sign/poster/official/festive/directional/south{@OLD;pixel_y=@SKIP}

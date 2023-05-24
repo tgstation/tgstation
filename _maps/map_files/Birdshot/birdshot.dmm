@@ -900,9 +900,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_y = 36
-	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "atx" = (
@@ -8096,9 +8094,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/department/engine/atmos)
 "dqK" = (
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 34
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/department/engine/atmos)
 "dqO" = (
@@ -56786,9 +56782,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "tZi" = (
-/obj/structure/sign/poster/contraband/got_wood{
-	pixel_y = 31
-	},
+/obj/structure/sign/poster/contraband/got_wood/directional/north,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "tZl" = (
@@ -61979,12 +61973,10 @@
 /area/station/medical/storage)
 "vFn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/no_erp/directional/east{
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/no_erp/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/starboard/central)
 "vFv" = (

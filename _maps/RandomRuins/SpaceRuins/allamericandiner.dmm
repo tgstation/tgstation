@@ -771,10 +771,8 @@
 /obj/item/storage/bag/trash,
 /obj/item/holosign_creator/janibarrier,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 26
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "Hp" = (
