@@ -111,4 +111,14 @@
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
 		ashies.eggs_created++
 
+/obj/structure/lavaland/ash_walker_fake
+	name = "necropolis tendril nest"
+	desc = "A vile tendril of corruption. It's surrounded by a nest of rapidly growing eggs..."
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
+	icon_state = "ash_walker_nest"
+	move_resist = INFINITY
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	max_integrity = 200
+
 #undef ASH_WALKER_SPAWN_THRESHOLD

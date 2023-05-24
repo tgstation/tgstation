@@ -120,6 +120,24 @@
 		. = TRUE
 	..()
 
+/datum/reagent/medicine/sansufentanyl
+	name = "Sansufentanyl"
+	description = "Temporary side effects include - nausea, dizziness, impaired motor coordination."
+	color = "#07e4d1"
+	ph = 6.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_confusion_up_to(3 SECONDS * REM * seconds_per_tick, 5 SECONDS)
+	affected_mob.adjust_dizzy_up_to(6 SECONDS * REM * seconds_per_tick, 12 SECONDS)
+	affected_mob.adjustStaminaLoss(1 * REM * seconds_per_tick)
+
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, "You feel confused and disoriented.")
+		if(prob(30))
+			SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
+	..()
+
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."

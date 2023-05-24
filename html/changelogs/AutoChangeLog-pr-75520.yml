@@ -1,4 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "fixed medical kiosk showing you that you have blood if you don't have one."
