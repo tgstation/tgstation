@@ -58,7 +58,7 @@
 		client.check_ip_intel()
 
 	if(client.ip_intel != "Disabled")
-		if(client.ip_intel > 0.7 && !(client.ckey in GLOB.interviews.approved_ckeys))
+		if(client.ip_intel >= CONFIG_GET(number/ipintel_rating_bad) && !(client.ckey in GLOB.interviews.approved_ckeys))
 			client.interviewee = TRUE
 
 	if(client.interviewee)
