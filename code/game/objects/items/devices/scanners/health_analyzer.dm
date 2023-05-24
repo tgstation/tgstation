@@ -566,12 +566,9 @@
 			</span>"
 
 	if(render_list == "")
-		if(istype(scanner))
-			// Only emit the cheerful scanner message if this scan came from a scanner
-			playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
-			to_chat(user, span_notice("\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no diseases!"))
-		else
-			to_chat(user, "<span class='notice ml-1'>No diseases detected in subject.</span>")
+		// Only emit the cheerful scanner message if this scan came from a scanner
+		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+		to_chat(user, span_notice("The patient has no diseases."))
 	else
 		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
@@ -593,7 +590,7 @@
 		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
 		return
 
-	diseasescan(user, user, src)
+	diseasescan(user, patient, src)
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
