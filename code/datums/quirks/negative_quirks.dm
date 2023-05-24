@@ -450,6 +450,16 @@
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
 
+/datum/quirk/softspoken
+	name = "Soft-Spoken"
+	desc = "You are soft-spoken, and your voice is hard to hear."
+	icon = FA_ICON_COMMENT_ALT
+	value = -2
+	mob_trait = TRAIT_SOFTSPOKEN
+	gain_text = span_danger("You feel like you're speaking more quietly.")
+	lose_text = span_notice("You feel like you're speaking louder.")
+	medical_record_text = "Patient is soft-spoken and difficult to hear."
+
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
