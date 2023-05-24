@@ -21081,7 +21081,9 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/moth_piping/directional/north,
+/obj/structure/sign/poster/official/moth_piping{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "hMn" = (
@@ -30801,7 +30803,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/wtf_is_co2/directional/north,
+/obj/structure/sign/poster/official/wtf_is_co2{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "laf" = (
@@ -37431,7 +37435,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "nte" = (
-/obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{
+	pixel_y = 32
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -43498,7 +43504,9 @@
 "pCL" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/sink/directional/east,
-/obj/structure/sign/poster/official/cleanliness/directional/south,
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = -32
+	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -49409,8 +49417,9 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
 "rJq" = (
-/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
-	pixel_x = 32
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_x = 32;
+	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/white,
@@ -50148,7 +50157,9 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "rUL" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
 /obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
@@ -54515,7 +54526,9 @@
 "tuo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible/layer5,
 /obj/machinery/light/no_nightlight/directional/south,
-/obj/structure/sign/poster/official/wtf_is_co2/directional/south,
+/obj/structure/sign/poster/official/wtf_is_co2{
+	pixel_y = -32
+	},
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -55812,7 +55825,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/structure/sign/poster/official/safety_internals/directional/south,
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -58514,7 +58529,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "uNq" = (
-/obj/structure/sign/poster/official/get_your_legs/directional/north,
+/obj/structure/sign/poster/official/get_your_legs{
+	pixel_y = 32
+	},
 /obj/structure/chair/sofa/right/brown,
 /obj/item/toy/plush/moth{
 	name = "Mender Moff"
@@ -68008,7 +68025,9 @@
 /area/station/medical/surgery/theatre)
 "yis" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/sign/poster/official/safety_report/directional/south,
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = -32
+	},
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "yiN" = (

@@ -665,7 +665,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -1997,7 +1999,9 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hh" = (
-/obj/structure/sign/poster/official/fruit_bowl/directional/north,
+/obj/structure/sign/poster/official/fruit_bowl{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hi" = (
@@ -2017,7 +2021,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hl" = (
-/obj/structure/sign/poster/official/here_for_your_safety/directional/north,
+/obj/structure/sign/poster/official/here_for_your_safety{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hm" = (
@@ -2028,7 +2034,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hn" = (
-/obj/structure/sign/poster/official/high_class_martini/directional/north,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ho" = (
@@ -2163,7 +2171,9 @@
 /area/awaymission/cabin)
 "hI" = (
 /obj/effect/landmark/awaystart,
-/obj/structure/sign/poster/official/report_crimes/directional/south,
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_y = -32
+	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -3043,7 +3053,9 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "lz" = (
-/obj/structure/sign/poster/official/cleanliness/directional/south,
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = -32
+	},
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "lC" = (
@@ -3988,7 +4000,9 @@
 	},
 /area/awaymission/cabin/caves)
 "AC" = (
-/obj/structure/sign/poster/official/no_erp/directional/south,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -4065,7 +4079,9 @@
 	},
 /area/awaymission/cabin/caves)
 "Fq" = (
-/obj/structure/sign/poster/official/space_cops/directional/north,
+/obj/structure/sign/poster/official/space_cops{
+	pixel_y = 32
+	},
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;

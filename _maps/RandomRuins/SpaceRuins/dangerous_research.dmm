@@ -1323,7 +1323,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rd" = (
-/obj/structure/sign/poster/official/safety_report/directional/south,
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = -32
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -1521,7 +1523,9 @@
 /area/ruin/space/has_grav/dangerous_research)
 "tz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/work_for_a_future/directional/north,
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
@@ -2402,7 +2406,9 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "DX" = (
-/obj/structure/sign/poster/official/moth_piping/directional/north,
+/obj/structure/sign/poster/official/moth_piping{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
@@ -3531,7 +3537,9 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "TH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/syndiemoth/directional/north,
+/obj/structure/sign/poster/contraband/syndiemoth{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
 	},

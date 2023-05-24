@@ -181,7 +181,9 @@
 /obj/structure/table,
 /obj/machinery/coffeemaker,
 /obj/item/reagent_containers/cup/coffeepot/bluespace,
-/obj/structure/sign/poster/contraband/donut_corp/directional/north,
+/obj/structure/sign/poster/contraband/donut_corp{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -782,7 +784,9 @@
 /area/shuttle/escape)
 "GK" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/sign/poster/official/help_others/directional/north,
+/obj/structure/sign/poster/official/help_others{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -929,7 +933,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/help_others/directional/south,
+/obj/structure/sign/poster/official/help_others{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
