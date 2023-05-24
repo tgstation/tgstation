@@ -254,7 +254,7 @@
 	name = "Mutated"
 	desc = "You've already had experience as a labrat for the Nanotrasen Genetic Project."
 	icon = FA_ICON_DNA
-	value = 6
+	value = 8
 	gain_text = span_notice("You remember one of your genes was altered.")
 	lose_text = span_notice("You seem to have lost your mutation.")
 	medical_record_text = "Patient's DNA shows signs of genetic tampering."
