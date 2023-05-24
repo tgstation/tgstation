@@ -257,7 +257,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/kudzu/directional/north{
+/obj/structure/sign/poster/contraband/kudzu{
 	pixel_y = 32
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -5226,7 +5226,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question/directional/south{
+/obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
 	},
 /obj/item/wirecutters,

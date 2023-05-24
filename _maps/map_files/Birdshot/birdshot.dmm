@@ -34430,7 +34430,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "mBC" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north{
+/obj/structure/sign/poster/official/soft_cap_pop_art{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
@@ -52917,7 +52917,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "sKS" = (
-/obj/structure/sign/poster/official/pda_ad/directional/north{
+/obj/structure/sign/poster/official/pda_ad{
 	pixel_y = 32
 	},
 /obj/structure/tank_holder/extinguisher,

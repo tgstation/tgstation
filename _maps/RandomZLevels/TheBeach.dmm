@@ -974,7 +974,7 @@
 /area/awaymission/beach)
 "sG" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/smoke/directional/south{
+/obj/structure/sign/poster/contraband/smoke{
 	pixel_y = -32
 	},
 /obj/machinery/vending/cigarette/beach,

@@ -634,7 +634,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/pda_ad/directional/south{
+/obj/structure/sign/poster/official/pda_ad{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -752,7 +752,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/grey_tide/directional/north{
+/obj/structure/sign/poster/contraband/grey_tide{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/icemoon,
