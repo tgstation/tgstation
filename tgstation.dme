@@ -1912,7 +1912,6 @@
 #include "code\game\objects\items\devices\forcefieldprojector.dm"
 #include "code\game\objects\items\devices\geiger_counter.dm"
 #include "code\game\objects\items\devices\gps.dm"
-#include "code\game\objects\items\devices\html_audio_test_objects.dm"
 #include "code\game\objects\items\devices\laserpointer.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\megaphone.dm"
