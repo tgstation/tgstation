@@ -958,9 +958,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "Ha" = (
-/obj/structure/sign/poster/official/terragov{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/terragov/directional/east,
 /obj/structure/safe{
 	open = 1
 	},
