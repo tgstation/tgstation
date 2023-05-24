@@ -211,11 +211,11 @@
 	name = "Bilingual"
 	desc = "Over the years you've picked up an extra language!"
 	icon = FA_ICON_GLOBE
-	value = 0
+	value = 4
 	gain_text = span_notice("Some of the words of the people around you certainly aren't common. Good thing you studied for this.")
 	lose_text = span_notice("You seem to have forgotten your second language.")
 	medical_record_text = "Patient speaks multiple languages. Showoff."
-	var/possible_languages = list(
+	var/list/possible_languages = list(
 		/datum/language/aphasia,
 		/datum/language/beachbum,
 		/datum/language/calcic,
@@ -224,7 +224,6 @@
 		/datum/language/moffic,
 		/datum/language/monkey,
 		/datum/language/mushroom,
-		/datum/language/narsie,
 		/datum/language/nekomimetic,
 		/datum/language/piratespeak,
 		/datum/language/shadowtongue,
@@ -243,8 +242,8 @@
 	//prevents yourself from learning a language you already have
 	for(var/datum/language/spoken as anything in possible_languages)
 		if(human_holder.has_language(spoken))
-			possible_languages -= list(spoken)
-	extra_language = possible_languages[rand(1, length(possible_languages))]
+			possible_languages -= spoken
+	extra_language = pick(possible_languages)
 	human_holder.grant_language(extra_language)
 
 /datum/quirk/bilingual/remove()
@@ -255,33 +254,32 @@
 	name = "Mutated"
 	desc = "You've already had experience as a labrat for the Nanotrasen Genetic Project."
 	icon = FA_ICON_DNA
-	value = 0
+	value = 6
 	gain_text = span_notice("You remember one of your genes was altered.")
 	lose_text = span_notice("You seem to have lost your mutation.")
 	medical_record_text = "Patient's DNA shows signs of genetic tampering."
-	var/possible_genes = list(
-		/datum/mutation/human/temperature_adaptation,
-		/datum/mutation/human/antenna,
-		/datum/mutation/human/self_amputation,
-		/datum/mutation/human/dwarfism,
-		/datum/mutation/human/insulated,
-		/datum/mutation/human/gigantism,
-		/datum/mutation/human/chameleon,
-		/datum/mutation/human/geladikinesis,
-		/datum/mutation/human/olfaction,
-		/datum/mutation/human/clever,
-		/datum/mutation/human/telepathy,
-		/datum/mutation/human/tongue_spike,
-		/datum/mutation/human/shock,
-		/datum/mutation/human/void,
-		/datum/mutation/human/webbing
-	)
 	var/selected_gene
 
 /datum/quirk/mutated/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	//prevents yourself from learning a language you already have
-	selected_gene = possible_genes[rand(1, length(possible_genes))]
+	//picks a gene based on weight
+	selected_gene = pick_weight(list(
+		/datum/mutation/human/temperature_adaptation = 4,
+		/datum/mutation/human/antenna = 15,
+		/datum/mutation/human/self_amputation = 3,
+		/datum/mutation/human/dwarfism = 15,
+		/datum/mutation/human/insulated = 4,
+		/datum/mutation/human/gigantism = 10,
+		/datum/mutation/human/chameleon = 4,
+		/datum/mutation/human/geladikinesis = 10,
+		/datum/mutation/human/olfaction = 3,
+		/datum/mutation/human/clever = 5,
+		/datum/mutation/human/telepathy = 15,
+		/datum/mutation/human/tongue_spike = 7,
+		/datum/mutation/human/shock = 2,
+		/datum/mutation/human/void = 3,
+		/datum/mutation/human/webbing = 7
+	))
 	human_holder.dna.add_mutation(selected_gene)
 
 /datum/quirk/mutated/remove()
