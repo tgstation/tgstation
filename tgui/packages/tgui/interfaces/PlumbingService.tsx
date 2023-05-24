@@ -107,7 +107,7 @@ export const PlumbingService = (props, context) => {
                   <ColorItem />
                   <LayerSelect />
                   <MatterItem />
-                  {silo_upgraded ? <SiloItem /> : ''}
+                  {!!silo_upgraded && <SiloItem />}
                 </Stack.Item>
                 <Stack.Item>
                   <LayerIconSection />
