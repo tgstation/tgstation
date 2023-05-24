@@ -140,11 +140,21 @@
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
-	if(stat)
-		if(HAS_TRAIT(user, TRAIT_NAIVE))
-			. += pick("It seems tired and shagged out after a long squawk.", "It seems to be pining for the fjords.", "It's resting. It's a beautiful bird. Lovely plumage.")
-		else
-			. += pick("This parrot is no more.","This is a late parrot.","This is an ex-parrot.")
+	if(stat != DEAD)
+		return
+
+	if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+		. += pick(
+			"It seems tired and shagged out after a long squawk.",
+			"It seems to be pining for the fjords.",
+			"It's resting. It's a beautiful bird. Lovely plumage.",
+		)
+	else
+		. += pick(
+			"This parrot is no more.",
+			"This is a late parrot.",
+			"This is an ex-parrot.",
+		)
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)

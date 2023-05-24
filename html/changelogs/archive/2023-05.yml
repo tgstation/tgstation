@@ -828,3 +828,63 @@
   tf-4:
   - refactor: Converted butterflies to the basic mob system
   - rscadd: Butterflies can now be grown in cytology
+2023-05-24:
+  Cheshify:
+  - bugfix: The North Star got a few minor requested tweaks
+  DaydreamIQ:
+  - balance: Hulk damage to portals lowered to 30 (Was 150)
+  Ghommie:
+  - bugfix: Capturing CTF control points no longer requires the active hand to be
+      empty.
+  - bugfix: Fixes the sparring contract. You can now spar with no stakes and just
+      for fun.
+  Guillaume Prata:
+  - balance: Plasmamen won't spawn with breathing masks anymore as their helmet has
+      maskless internals support now. Enjoy your moustache's accent plasmacooks!
+  JohnFulpWillard:
+  - bugfix: Shaft Miners are now alerted of Icemoon storms, Clowns are naive, and
+      Curators are immune to the Tower of Babel again.
+  Jolly:
+  - bugfix: '[MetaStation] The abandoned sec couch should now be covered by nearstation.'
+  - bugfix: '[MetaStation] Lattice adjacent to the newly added fitness room is now
+      covered by nearstation.'
+  MTandi:
+  - qol: RPD and Pipe Pispenser UI tweaks for better navigation
+  - code_imp: RPD and Pipe Dispenser UI now on TS
+  - bugfix: You receive damage from tritium only when there are enough moles to make
+      it visible
+  MTandi, coiledlamb:
+  - rscadd: Added test tubes and racks for them
+  - balance: All 30u bottles now have 50u volume and chem master/pandemic spawn tubes
+      instead of bottles
+  Peliex:
+  - refactor: honeycomb is now edible
+  - bugfix: all-in-one grinder now notifies the user when trying to dump an empty
+      bag
+  - bugfix: all-in-one grinder now accepts honeycomb from plant bags
+  Rhials:
+  - bugfix: The windows on the waystation ruin now only have one grille underneath,
+      rather than two.
+  Ryll/Shaps:
+  - bugfix: Godmode now prevents people from suffering forced wounds
+  Watermelon914:
+  - bugfix: Fixed bypassing component cooldowns with module components.
+  YehnBeep:
+  - bugfix: Fixed missing construction access on North Star and Birdshot. Non-engineer
+      builders can ask for this access again and get to those build projects.
+  - bugfix: Fixed some maintenance doors requiring different accesses than the room's
+      main doors in the North Star's engineering department.
+  carlarctg:
+  - bugfix: Fixes ducky shoes having clown shoe slowdown
+  mc-oofert:
+  - balance: You can no longer augment golems
+  - balance: You can no longer amputate undismemberable traits
+  orthography:
+  - rscadd: Interdyne has released a new medication to treat those who are in the
+      wrong timeline!
+  - rscadd: Interdyne has also realized this is VERY profitable! They've begun arming
+      their operatives with an autoinjector.
+  - bugfix: fixed northstar tcomms to use proper rather than birdshot
+  - bugfix: adds more fire alarms to birdshot.
+  timothymtorres:
+  - rscadd: Add two new basketball teams and stadiums - Ash Gladiators and Beach Bums

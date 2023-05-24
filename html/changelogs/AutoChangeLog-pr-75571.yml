@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "Adds a eye-dropper-like right-click function to the painting canvas UI. Right-Click a pixel on the canvas while holding a painting tool to have it copy its color."
+  - qol: "Also adds a right-click function to the color palette at the bottom of the UI to allow users to set its colors without having to alternate between the game window and the UI."
+  - qol: "Lastly, a tooltip has been added near the top-left corner of the same UI to let players know of these features."

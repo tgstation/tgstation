@@ -1,5 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - bugfix: "Fixed missing construction access on North Star and Birdshot. Non-engineer builders can ask for this access again and get to those build projects."
-  - bugfix: "Fixed some maintenance doors requiring different accesses than the room's main doors in the North Star's engineering department."

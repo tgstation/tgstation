@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Drawing small graffiti like paw/foot/claw prints, small brush dots and short lines should cost half as many charges off your spraycan or crayon."
+  - balance: "The cost of recoloring graffiti decals is now consistent with that of drawing them."
+  - balance: "Trying to suicide with an empty spraycan will now fail, because it's empty. It's just that simple."
