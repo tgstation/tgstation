@@ -513,3 +513,42 @@
 	base_icon_state = "sepia"
 	desc = "Well, the flow of time is normal on these tiles, weird."
 	floor_tile = /obj/item/stack/tile/iron/sepia
+
+/turf/open/floor/iron/broken
+	name = "broken tiling"
+	desc = "A segment of broken flooring."
+	icon = 'icons/obj/brokentiling.dmi'
+	base_icon_state = "corner"
+	icon_state = "corner"
+	baseturfs = /turf/open/floor/plating
+	layer = CATWALK_LAYER
+	overfloor_placed = TRUE
+	underfloor_accessibility = UNDERFLOOR_VISIBLE
+
+/turf/open/floor/iron/broken/Initialize(mapload)
+	. = ..()
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", TURF_LAYER)
+	update_appearance()
+
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/singular, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/pile, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/side, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/corner, 0)
+
+/turf/open/floor/iron/broken/singular
+	base_icon_state = "singular"
+	icon_state = "singular"
+	tiled_dirt = FALSE
+
+/turf/open/floor/iron/broken/pile
+	base_icon_state = "pile"
+	icon_state = "pile"
+	tiled_dirt = FALSE
+
+/turf/open/floor/iron/broken/side
+	base_icon_state = "side"
+	icon_state = "side"
+
+/turf/open/floor/iron/broken/corner
+	base_icon_state = "corner"
+	icon_state = "corner"
