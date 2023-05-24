@@ -28,7 +28,7 @@
 /area/shuttle/arrival)
 "g" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/official/enlist{
+/obj/structure/sign/poster/official/enlist/directional/south{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,

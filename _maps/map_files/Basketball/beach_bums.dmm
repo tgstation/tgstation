@@ -26,14 +26,14 @@
 /area/centcom/basketball)
 "bA" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/sign/poster/contraband/have_a_puff{
+/obj/structure/sign/poster/contraband/have_a_puff/directional/south{
 	pixel_x = 32
 	},
 /turf/open/water/beach/biodome,
 /area/centcom/basketball)
 "cc" = (
 /obj/structure/flora/bush/stalky/style_random,
-/obj/structure/sign/poster/contraband/have_a_puff{
+/obj/structure/sign/poster/contraband/have_a_puff/directional/south{
 	pixel_x = -32
 	},
 /turf/open/water/beach/biodome,
@@ -327,7 +327,7 @@
 /area/centcom/basketball)
 "zU" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/sign/poster/contraband/have_a_puff{
+/obj/structure/sign/poster/contraband/have_a_puff/directional/south{
 	pixel_x = -32
 	},
 /turf/open/water/beach/biodome,

@@ -543,7 +543,7 @@
 	},
 /obj/item/storage/crayons,
 /obj/structure/table/wood,
-/obj/structure/sign/poster/official/soft_cap_pop_art{
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
@@ -2007,7 +2007,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/soap/nanotrasen,
-/obj/structure/sign/poster/official/fruit_bowl{
+/obj/structure/sign/poster/official/fruit_bowl/directional/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,

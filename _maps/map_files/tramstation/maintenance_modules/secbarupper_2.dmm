@@ -133,7 +133,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket,
-/obj/structure/sign/poster/official/nanotrasen_logo{
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/smooth,

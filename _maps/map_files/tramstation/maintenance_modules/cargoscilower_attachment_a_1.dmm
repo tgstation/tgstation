@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/kudzu{
+/obj/structure/sign/poster/contraband/kudzu/directional/south{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/smooth,
@@ -10,7 +10,7 @@
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/south{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/smooth,

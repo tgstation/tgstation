@@ -1014,7 +1014,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/crew)
 "ds" = (
-/obj/structure/sign/poster/official/do_not_question,
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bridge)
 "dt" = (

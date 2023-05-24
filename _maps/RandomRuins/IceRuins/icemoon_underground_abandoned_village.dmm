@@ -93,7 +93,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kl" = (
-/obj/structure/sign/poster/official/nanotrasen_logo,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "ks" = (
@@ -173,7 +173,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pH" = (
-/obj/structure/sign/poster/official/work_for_a_future,
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered)
 "pI" = (

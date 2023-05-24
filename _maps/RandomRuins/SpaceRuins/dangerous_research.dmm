@@ -123,7 +123,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "bP" = (
 /obj/structure/bed,
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/south{
 	pixel_x = 32
 	},
 /obj/effect/spawner/random/contraband/narcotics,
@@ -220,7 +220,7 @@
 /obj/item/food/donkpocket/spicy,
 /obj/item/food/ready_donk,
 /obj/item/food/ready_donk/mac_n_cheese,
-/obj/structure/sign/poster/contraband/donk_co{
+/obj/structure/sign/poster/contraband/donk_co/directional/south{
 	pixel_x = -32
 	},
 /obj/machinery/light/dim/directional/west,
@@ -1108,7 +1108,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "pi" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/south{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -1323,7 +1323,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rd" = (
-/obj/structure/sign/poster/official/safety_report{
+/obj/structure/sign/poster/official/safety_report/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1523,7 +1523,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "tz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/directional/south{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -1722,7 +1722,7 @@
 	pixel_y = 13
 	},
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_1,
-/obj/structure/sign/poster/contraband/tea_over_tizira{
+/obj/structure/sign/poster/contraband/tea_over_tizira/directional/south{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -2406,7 +2406,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "DX" = (
-/obj/structure/sign/poster/official/moth_piping{
+/obj/structure/sign/poster/official/moth_piping/directional/south{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3181,7 +3181,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/andromeda_bitters{
+/obj/structure/sign/poster/contraband/andromeda_bitters/directional/south{
 	pixel_x = 32
 	},
 /turf/open/floor/wood/parquet,
@@ -3537,7 +3537,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "TH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/syndiemoth{
+/obj/structure/sign/poster/contraband/syndiemoth/directional/south{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/dark_red/half{

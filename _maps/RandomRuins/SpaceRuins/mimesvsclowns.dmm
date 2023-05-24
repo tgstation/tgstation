@@ -228,7 +228,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "KI" = (
-/obj/structure/sign/poster/contraband/microwave,
+/obj/structure/sign/poster/contraband/microwave/directional/south,
 /turf/closed/wall,
 /area/ruin)
 "KV" = (
@@ -240,7 +240,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Mx" = (
-/obj/structure/sign/poster/contraband/missing_gloves,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/south,
 /turf/closed/wall,
 /area/ruin)
 "Pq" = (
@@ -250,7 +250,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Qb" = (
-/obj/structure/sign/poster/contraband/masked_men,
+/obj/structure/sign/poster/contraband/masked_men/directional/south,
 /turf/closed/wall,
 /area/ruin)
 "Qh" = (

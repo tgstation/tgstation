@@ -1757,7 +1757,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)
 "PB" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south{
 	pixel_x = 4
 	},
 /turf/closed/wall/mineral/wood,

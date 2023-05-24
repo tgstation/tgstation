@@ -169,7 +169,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/red_rum{
+/obj/structure/sign/poster/contraband/red_rum/directional/south{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
