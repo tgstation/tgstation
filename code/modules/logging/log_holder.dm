@@ -54,7 +54,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	var/list/data = list(
 		"round_id" = GLOB.round_id,
 		"logging_start_timestamp" = logging_start_timestamp,
-		)
+	)
 
 	var/list/tree = list()
 	data["tree"] = tree
@@ -90,7 +90,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 				"timestamp" = entry.timestamp,
 				"data" = entry.data,
 				"semver" = entry.semver_store,
-				))
+			))
 		category_data["entries"] = entries
 		category_data["entry_count"] = category.entry_count
 
@@ -109,7 +109,6 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	switch(action)
 		if("re-render")
-			log_admin("[key_name(usr)] forced a log re-render.", list("last_data_update" = last_data_update))
 			cache_ui_data()
 			update_static_data_for_all_viewers()
 			return TRUE
