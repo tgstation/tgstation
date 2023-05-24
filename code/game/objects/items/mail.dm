@@ -432,40 +432,29 @@
 		return FALSE
 	mail_type = lowertext(mail_type)
 
-	var/mail_armed = tgui_alert(user, "Is it gonna be armed?", "Mail Counterfeiting", list("Yes", "No"))
+	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No"))
 	if(isnull(mail_armed))
 		return FALSE
 	if(loc != user)
 		return FALSE
 
 	var/list/mail_recipients = list("Anyone")
-	var/list/mail_recipients_input_list = list("Anyone")
-	var/list/recipients_dupes = list()
+	var/list/mail_recipients_for_input = list("Anyone")
+	var/list/used_names = list()
 	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
 		if(isnull(person.mind_ref))
 			continue
 		mail_recipients += person.mind_ref
-		if(recipients_dupes[person.name] == null)
-			if(mail_recipients_input_list.Find(person.name))
-				recipients_dupes[person.name] = 1
-				mail_recipients_input_list += "[person.name] (1)"
-			else
-				mail_recipients_input_list += "[person.name]"
-		else
-			recipients_dupes[person.name] += 1
-			var/i = recipients_dupes[person.name]
-			mail_recipients_input_list += "[person.name] ([i])"
+		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
 		
-	
-	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_input_list)
+	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_for_input)
 	if(isnull(recipient))
 		return FALSE
 	if(!(src in user.contents))
 		return FALSE
 	
-	
-	var/index = mail_recipients_input_list.Find(recipient)
-	
+	var/index = mail_recipients_for_input.Find(recipient)
+
 	var/obj/item/mail/traitor/shady_mail
 	if(mail_type == "mail")
 		shady_mail = new /obj/item/mail/traitor
