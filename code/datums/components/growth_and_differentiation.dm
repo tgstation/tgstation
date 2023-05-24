@@ -41,7 +41,7 @@
 	src.optional_checks = optional_checks
 	src.optional_grow_behavior = optional_grow_behavior
 
-	RegisterSignal(target, COMSIG_COMPONENT_KILL, PROC_REF(kill_processes))
+	RegisterSignal(parent, COMSIG_COMPONENT_KILL, PROC_REF(kill_processes))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
