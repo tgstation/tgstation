@@ -1,3 +1,5 @@
+#define NO_TOOL "fold"
+
 /obj/item/spess_knife
 	name = "spess knife"
 	desc = "Unleash the cosmic ingenuity at your fingertips. It seamlessly shifts forms, revealing hidden talents that might just save the day. Who knows what secrets lie within this celestial tool?"
@@ -29,7 +31,7 @@
 		disabled = TRUE, \
 	)
 	options = list(
-		NONE = image(icon = 'icons/obj/tools.dmi', icon_state = initial(icon_state)),
+		NO_TOOL = image(icon = 'icons/obj/tools.dmi', icon_state = initial(icon_state)),
 		TOOL_KNIFE = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_KNIFE]"),
 		TOOL_SCREWDRIVER = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_SCREWDRIVER]"),
 		TOOL_WIRECUTTER = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_WIRECUTTER]"),
@@ -41,7 +43,7 @@
 	var/new_tool_behaviour = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
 	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
 		return
-	if(new_tool_behaviour == NONE)
+	if(new_tool_behaviour == NO_TOOL)
 		tool_behaviour = null
 	else
 		tool_behaviour = new_tool_behaviour
@@ -141,8 +143,10 @@
 		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
 
 	if(tool_behaviour)
-		inhand_icon_state = initial(inhand_icon_state) += "_unfolded"
+		inhand_icon_state = initial(inhand_icon_state) + "_unfolded"
 	else
 		inhand_icon_state = initial(inhand_icon_state)
 
 	return ..()
+
+#undef NO_TOOL
