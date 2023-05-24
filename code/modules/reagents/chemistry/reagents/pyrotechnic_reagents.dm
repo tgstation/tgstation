@@ -32,7 +32,7 @@
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.myseed?.adjust_instability(-round(volume))
 
@@ -192,7 +192,7 @@
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// why, just why
+// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	if(!(mytray.myseed?.resistance_flags & FIRE_PROOF))
 		mytray.adjust_plant_health(-round(volume * 6))

@@ -55,11 +55,11 @@
 		return
 
 	switch(rand(100))
-		if(66  to 100)
+		if(66 to 100)
 			mytray.mutatespecie()
 		if(33 to 65)
 			mytray.mutateweed()
-		if(1   to 32)
+		if(1 to 32)
 			mytray.mutatepest(user)
 		else
 			if(prob(20))
