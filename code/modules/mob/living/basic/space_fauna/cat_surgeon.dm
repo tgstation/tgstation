@@ -51,14 +51,16 @@
 
 	var/mob/living/carbon/human/attacked = target
 	var/obj/item/organ/external/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/external/tail/cat)
-	if(!QDELETED(tail))
-		visible_message(
-			span_warning("[src] severs [attacked]'s tail off in one swift swipe!"),
-			span_warning("You sever [attacked]'s tail off."),
-		)
-		tail.Remove(attacked)
-		var/obj/item/organ/external/tail/cat/dropped_tail = new(target.drop_location())
-		dropped_tail.color = attacked.hair_color
+	if(QDELETED(tail))
+		return
+
+	visible_message(
+		span_warning("[src] severs [attacked]'s tail off in one swift swipe!"),
+		span_warning("You sever [attacked]'s tail off."),
+	)
+	tail.Remove(attacked)
+	tail.forceMove(drop_location())
+	dropped_tail.color = attacked.hair_color
 
 /datum/ai_controller/basic_controller/cat_butcherer
 	blackboard = list(
