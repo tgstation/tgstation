@@ -1100,9 +1100,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "ek" = (
@@ -1412,7 +1412,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/machinery/firealarm/directional/south,
 /obj/item/trash/bee,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/bacteria,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -4454,7 +4454,6 @@
 	pixel_x = 2
 	},
 /obj/item/petri_dish/oldstation,
-/obj/item/food/breadslice/moldy/bacteria,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
@@ -4483,8 +4482,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "uA" = (
@@ -4620,8 +4619,8 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "vy" = (
@@ -5020,9 +5019,9 @@
 "yt" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/small/broken/directional/west,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "yu" = (
@@ -5403,8 +5402,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Bk" = (
@@ -6918,8 +6917,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Md" = (
@@ -7407,7 +7406,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "PS" = (
@@ -8230,7 +8229,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "WS" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "WW" = (
@@ -14203,9 +14202,9 @@ kw
 TT
 kw
 GZ
-DX
+ca
 Sa
-Ma
+DX
 hY
 hc
 iD
