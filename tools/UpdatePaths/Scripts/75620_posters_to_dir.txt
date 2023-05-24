@@ -1,0 +1,665 @@
+# Changes posters to mapping direction helpers
+
+# Contraband/Silly Posters
+
+/obj/structure/sign/poster/contraband/free_tonto{dir = 1} : /obj/structure/sign/poster/contraband/free_tonto/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_tonto/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{dir = 4} : /obj/structure/sign/poster/contraband/free_tonto/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{dir = 8} : /obj/structure/sign/poster/contraband/free_tonto/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/atmosia_independence{dir = 1} : /obj/structure/sign/poster/contraband/atmosia_independence/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{dir = @UNSET} : /obj/structure/sign/poster/contraband/atmosia_independence/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{dir = 4} : /obj/structure/sign/poster/contraband/atmosia_independence/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{dir = 8} : /obj/structure/sign/poster/contraband/atmosia_independence/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/fun_police{dir = 1} : /obj/structure/sign/poster/contraband/fun_police/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{dir = @UNSET} : /obj/structure/sign/poster/contraband/fun_police/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{dir = 4} : /obj/structure/sign/poster/contraband/fun_police/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{dir = 8} : /obj/structure/sign/poster/contraband/fun_police/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 1} : /obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = @UNSET} : /obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 4} : /obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 8} : /obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 1} : /obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 4} : /obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 8} : /obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/clown{dir = 1} : /obj/structure/sign/poster/contraband/clown/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{dir = @UNSET} : /obj/structure/sign/poster/contraband/clown/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{dir = 4} : /obj/structure/sign/poster/contraband/clown/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{dir = 8} : /obj/structure/sign/poster/contraband/clown/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/smoke{dir = 1} : /obj/structure/sign/poster/contraband/smoke/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{dir = @UNSET} : /obj/structure/sign/poster/contraband/smoke/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{dir = 4} : /obj/structure/sign/poster/contraband/smoke/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{dir = 8} : /obj/structure/sign/poster/contraband/smoke/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/grey_tide{dir = 1} : /obj/structure/sign/poster/contraband/grey_tide/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{dir = @UNSET} : /obj/structure/sign/poster/contraband/grey_tide/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{dir = 4} : /obj/structure/sign/poster/contraband/grey_tide/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{dir = 8} : /obj/structure/sign/poster/contraband/grey_tide/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/missing_gloves{dir = 1} : /obj/structure/sign/poster/contraband/missing_gloves/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{dir = @UNSET} : /obj/structure/sign/poster/contraband/missing_gloves/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{dir = 4} : /obj/structure/sign/poster/contraband/missing_gloves/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{dir = 8} : /obj/structure/sign/poster/contraband/missing_gloves/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/hacking_guide{dir = 1} : /obj/structure/sign/poster/contraband/hacking_guide/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{dir = @UNSET} : /obj/structure/sign/poster/contraband/hacking_guide/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{dir = 4} : /obj/structure/sign/poster/contraband/hacking_guide/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{dir = 8} : /obj/structure/sign/poster/contraband/hacking_guide/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rip_badger{dir = 1} : /obj/structure/sign/poster/contraband/rip_badger/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{dir = @UNSET} : /obj/structure/sign/poster/contraband/rip_badger/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{dir = 4} : /obj/structure/sign/poster/contraband/rip_badger/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{dir = 8} : /obj/structure/sign/poster/contraband/rip_badger/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 1} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = @UNSET} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 4} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 8} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/donut_corp{dir = 1} : /obj/structure/sign/poster/contraband/donut_corp/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{dir = @UNSET} : /obj/structure/sign/poster/contraband/donut_corp/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{dir = 4} : /obj/structure/sign/poster/contraband/donut_corp/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{dir = 8} : /obj/structure/sign/poster/contraband/donut_corp/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/eat{dir = 1} : /obj/structure/sign/poster/contraband/eat/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{dir = @UNSET} : /obj/structure/sign/poster/contraband/eat/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{dir = 4} : /obj/structure/sign/poster/contraband/eat/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{dir = 8} : /obj/structure/sign/poster/contraband/eat/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tools{dir = 1} : /obj/structure/sign/poster/contraband/tools/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{dir = @UNSET} : /obj/structure/sign/poster/contraband/tools/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{dir = 4} : /obj/structure/sign/poster/contraband/tools/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{dir = 8} : /obj/structure/sign/poster/contraband/tools/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/power{dir = 1} : /obj/structure/sign/poster/contraband/power/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{dir = @UNSET} : /obj/structure/sign/poster/contraband/power/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{dir = 4} : /obj/structure/sign/poster/contraband/power/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{dir = 8} : /obj/structure/sign/poster/contraband/power/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_cube{dir = 1} : /obj/structure/sign/poster/contraband/space_cube/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_cube/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{dir = 4} : /obj/structure/sign/poster/contraband/space_cube/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{dir = 8} : /obj/structure/sign/poster/contraband/space_cube/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/communist_state{dir = 1} : /obj/structure/sign/poster/contraband/communist_state/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{dir = @UNSET} : /obj/structure/sign/poster/contraband/communist_state/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{dir = 4} : /obj/structure/sign/poster/contraband/communist_state/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{dir = 8} : /obj/structure/sign/poster/contraband/communist_state/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lamarr{dir = 1} : /obj/structure/sign/poster/contraband/lamarr/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{dir = @UNSET} : /obj/structure/sign/poster/contraband/lamarr/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{dir = 4} : /obj/structure/sign/poster/contraband/lamarr/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{dir = 8} : /obj/structure/sign/poster/contraband/lamarr/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 1} : /obj/structure/sign/poster/contraband/borg_fancy_1/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{dir = @UNSET} : /obj/structure/sign/poster/contraband/borg_fancy_1/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 4} : /obj/structure/sign/poster/contraband/borg_fancy_1/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 8} : /obj/structure/sign/poster/contraband/borg_fancy_1/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 1} : /obj/structure/sign/poster/contraband/borg_fancy_2/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{dir = @UNSET} : /obj/structure/sign/poster/contraband/borg_fancy_2/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 4} : /obj/structure/sign/poster/contraband/borg_fancy_2/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 8} : /obj/structure/sign/poster/contraband/borg_fancy_2/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/kss13{dir = 1} : /obj/structure/sign/poster/contraband/kss13/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{dir = @UNSET} : /obj/structure/sign/poster/contraband/kss13/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{dir = 4} : /obj/structure/sign/poster/contraband/kss13/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{dir = 8} : /obj/structure/sign/poster/contraband/kss13/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rebels_unite{dir = 1} : /obj/structure/sign/poster/contraband/rebels_unite/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{dir = @UNSET} : /obj/structure/sign/poster/contraband/rebels_unite/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{dir = 4} : /obj/structure/sign/poster/contraband/rebels_unite/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{dir = 8} : /obj/structure/sign/poster/contraband/rebels_unite/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/c20r{dir = 1} : /obj/structure/sign/poster/contraband/c20r/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{dir = @UNSET} : /obj/structure/sign/poster/contraband/c20r/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{dir = 4} : /obj/structure/sign/poster/contraband/c20r/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{dir = 8} : /obj/structure/sign/poster/contraband/c20r/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/have_a_puff{dir = 1} : /obj/structure/sign/poster/contraband/have_a_puff/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{dir = @UNSET} : /obj/structure/sign/poster/contraband/have_a_puff/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{dir = 4} : /obj/structure/sign/poster/contraband/have_a_puff/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{dir = 8} : /obj/structure/sign/poster/contraband/have_a_puff/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/revolver{dir = 1} : /obj/structure/sign/poster/contraband/revolver/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{dir = @UNSET} : /obj/structure/sign/poster/contraband/revolver/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{dir = 4} : /obj/structure/sign/poster/contraband/revolver/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{dir = 8} : /obj/structure/sign/poster/contraband/revolver/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/d_day_promo{dir = 1} : /obj/structure/sign/poster/contraband/d_day_promo/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{dir = @UNSET} : /obj/structure/sign/poster/contraband/d_day_promo/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{dir = 4} : /obj/structure/sign/poster/contraband/d_day_promo/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{dir = 8} : /obj/structure/sign/poster/contraband/d_day_promo/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 1} : /obj/structure/sign/poster/contraband/syndicate_pistol/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndicate_pistol/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 4} : /obj/structure/sign/poster/contraband/syndicate_pistol/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 8} : /obj/structure/sign/poster/contraband/syndicate_pistol/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/energy_swords{dir = 1} : /obj/structure/sign/poster/contraband/energy_swords/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{dir = @UNSET} : /obj/structure/sign/poster/contraband/energy_swords/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{dir = 4} : /obj/structure/sign/poster/contraband/energy_swords/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{dir = 8} : /obj/structure/sign/poster/contraband/energy_swords/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/red_rum{dir = 1} : /obj/structure/sign/poster/contraband/red_rum/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{dir = @UNSET} : /obj/structure/sign/poster/contraband/red_rum/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{dir = 4} : /obj/structure/sign/poster/contraband/red_rum/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{dir = 8} : /obj/structure/sign/poster/contraband/red_rum/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/cc64k_ad{dir = 1} : /obj/structure/sign/poster/contraband/cc64k_ad/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{dir = @UNSET} : /obj/structure/sign/poster/contraband/cc64k_ad/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{dir = 4} : /obj/structure/sign/poster/contraband/cc64k_ad/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{dir = 8} : /obj/structure/sign/poster/contraband/cc64k_ad/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/punch_shit{dir = 1} : /obj/structure/sign/poster/contraband/punch_shit/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{dir = @UNSET} : /obj/structure/sign/poster/contraband/punch_shit/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{dir = 4} : /obj/structure/sign/poster/contraband/punch_shit/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{dir = 8} : /obj/structure/sign/poster/contraband/punch_shit/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/the_griffin{dir = 1} : /obj/structure/sign/poster/contraband/the_griffin/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{dir = @UNSET} : /obj/structure/sign/poster/contraband/the_griffin/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{dir = 4} : /obj/structure/sign/poster/contraband/the_griffin/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{dir = 8} : /obj/structure/sign/poster/contraband/the_griffin/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lizard{dir = 1} : /obj/structure/sign/poster/contraband/lizard/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{dir = @UNSET} : /obj/structure/sign/poster/contraband/lizard/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{dir = 4} : /obj/structure/sign/poster/contraband/lizard/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{dir = 8} : /obj/structure/sign/poster/contraband/lizard/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/free_drone{dir = 1} : /obj/structure/sign/poster/contraband/free_drone/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_drone/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{dir = 4} : /obj/structure/sign/poster/contraband/free_drone/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{dir = 8} : /obj/structure/sign/poster/contraband/free_drone/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 1} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = @UNSET} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 4} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 8} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 1} : /obj/structure/sign/poster/contraband/robust_softdrinks/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{dir = @UNSET} : /obj/structure/sign/poster/contraband/robust_softdrinks/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 4} : /obj/structure/sign/poster/contraband/robust_softdrinks/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 8} : /obj/structure/sign/poster/contraband/robust_softdrinks/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/shamblers_juice{dir = 1} : /obj/structure/sign/poster/contraband/shamblers_juice/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{dir = @UNSET} : /obj/structure/sign/poster/contraband/shamblers_juice/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{dir = 4} : /obj/structure/sign/poster/contraband/shamblers_juice/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{dir = 8} : /obj/structure/sign/poster/contraband/shamblers_juice/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/pwr_game{dir = 1} : /obj/structure/sign/poster/contraband/pwr_game/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{dir = @UNSET} : /obj/structure/sign/poster/contraband/pwr_game/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{dir = 4} : /obj/structure/sign/poster/contraband/pwr_game/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{dir = 8} : /obj/structure/sign/poster/contraband/pwr_game/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/starkist{dir = 1} : /obj/structure/sign/poster/contraband/starkist/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{dir = @UNSET} : /obj/structure/sign/poster/contraband/starkist/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{dir = 4} : /obj/structure/sign/poster/contraband/starkist/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{dir = 8} : /obj/structure/sign/poster/contraband/starkist/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_cola{dir = 1} : /obj/structure/sign/poster/contraband/space_cola/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_cola/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{dir = 4} : /obj/structure/sign/poster/contraband/space_cola/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{dir = 8} : /obj/structure/sign/poster/contraband/space_cola/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_up{dir = 1} : /obj/structure/sign/poster/contraband/space_up/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_up/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{dir = 4} : /obj/structure/sign/poster/contraband/space_up/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{dir = 8} : /obj/structure/sign/poster/contraband/space_up/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/kudzu{dir = 1} : /obj/structure/sign/poster/contraband/kudzu/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{dir = @UNSET} : /obj/structure/sign/poster/contraband/kudzu/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{dir = 4} : /obj/structure/sign/poster/contraband/kudzu/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{dir = 8} : /obj/structure/sign/poster/contraband/kudzu/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/masked_men{dir = 1} : /obj/structure/sign/poster/contraband/masked_men/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{dir = @UNSET} : /obj/structure/sign/poster/contraband/masked_men/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{dir = 4} : /obj/structure/sign/poster/contraband/masked_men/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{dir = 8} : /obj/structure/sign/poster/contraband/masked_men/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/free_key{dir = 1} : /obj/structure/sign/poster/contraband/free_key/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_key/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{dir = 4} : /obj/structure/sign/poster/contraband/free_key/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{dir = 8} : /obj/structure/sign/poster/contraband/free_key/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/bountyhunters{dir = 1} : /obj/structure/sign/poster/contraband/bountyhunters/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{dir = @UNSET} : /obj/structure/sign/poster/contraband/bountyhunters/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{dir = 4} : /obj/structure/sign/poster/contraband/bountyhunters/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{dir = 8} : /obj/structure/sign/poster/contraband/bountyhunters/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 1} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = @UNSET} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 4} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 8} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/got_wood{dir = 1} : /obj/structure/sign/poster/contraband/got_wood/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{dir = @UNSET} : /obj/structure/sign/poster/contraband/got_wood/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{dir = 4} : /obj/structure/sign/poster/contraband/got_wood/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{dir = 8} : /obj/structure/sign/poster/contraband/got_wood/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 1} : /obj/structure/sign/poster/contraband/moffuchis_pizza/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = @UNSET} : /obj/structure/sign/poster/contraband/moffuchis_pizza/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 4} : /obj/structure/sign/poster/contraband/moffuchis_pizza/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 8} : /obj/structure/sign/poster/contraband/moffuchis_pizza/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/donk_co{dir = 1} : /obj/structure/sign/poster/contraband/donk_co/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{dir = @UNSET} : /obj/structure/sign/poster/contraband/donk_co/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{dir = 4} : /obj/structure/sign/poster/contraband/donk_co/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{dir = 8} : /obj/structure/sign/poster/contraband/donk_co/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 1} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = @UNSET} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 4} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 8} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 1} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = @UNSET} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 4} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 8} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 1} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = @UNSET} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 4} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 8} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 1} : /obj/structure/sign/poster/contraband/gorlex_recruitment/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = @UNSET} : /obj/structure/sign/poster/contraband/gorlex_recruitment/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 4} : /obj/structure/sign/poster/contraband/gorlex_recruitment/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 8} : /obj/structure/sign/poster/contraband/gorlex_recruitment/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 1} : /obj/structure/sign/poster/contraband/self_ai_liberation/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{dir = @UNSET} : /obj/structure/sign/poster/contraband/self_ai_liberation/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 4} : /obj/structure/sign/poster/contraband/self_ai_liberation/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 8} : /obj/structure/sign/poster/contraband/self_ai_liberation/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/arc_slimes{dir = 1} : /obj/structure/sign/poster/contraband/arc_slimes/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{dir = @UNSET} : /obj/structure/sign/poster/contraband/arc_slimes/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{dir = 4} : /obj/structure/sign/poster/contraband/arc_slimes/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{dir = 8} : /obj/structure/sign/poster/contraband/arc_slimes/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/imperial_propaganda/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/imperial_propaganda/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/imperial_propaganda/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/imperial_propaganda/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/soviet_propaganda/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/soviet_propaganda/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/soviet_propaganda/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/soviet_propaganda/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 1} : /obj/structure/sign/poster/contraband/andromeda_bitters/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{dir = @UNSET} : /obj/structure/sign/poster/contraband/andromeda_bitters/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 4} : /obj/structure/sign/poster/contraband/andromeda_bitters/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 8} : /obj/structure/sign/poster/contraband/andromeda_bitters/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/blasto_detergent{dir = 1} : /obj/structure/sign/poster/contraband/blasto_detergent/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{dir = @UNSET} : /obj/structure/sign/poster/contraband/blasto_detergent/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{dir = 4} : /obj/structure/sign/poster/contraband/blasto_detergent/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{dir = 8} : /obj/structure/sign/poster/contraband/blasto_detergent/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/eistee{dir = 1} : /obj/structure/sign/poster/contraband/eistee/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{dir = @UNSET} : /obj/structure/sign/poster/contraband/eistee/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{dir = 4} : /obj/structure/sign/poster/contraband/eistee/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{dir = 8} : /obj/structure/sign/poster/contraband/eistee/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/little_fruits{dir = 1} : /obj/structure/sign/poster/contraband/little_fruits/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{dir = @UNSET} : /obj/structure/sign/poster/contraband/little_fruits/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{dir = 4} : /obj/structure/sign/poster/contraband/little_fruits/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{dir = 8} : /obj/structure/sign/poster/contraband/little_fruits/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/jumbo_bar{dir = 1} : /obj/structure/sign/poster/contraband/jumbo_bar/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{dir = @UNSET} : /obj/structure/sign/poster/contraband/jumbo_bar/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{dir = 4} : /obj/structure/sign/poster/contraband/jumbo_bar/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{dir = 8} : /obj/structure/sign/poster/contraband/jumbo_bar/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/calada_jelly{dir = 1} : /obj/structure/sign/poster/contraband/calada_jelly/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{dir = @UNSET} : /obj/structure/sign/poster/contraband/calada_jelly/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{dir = 4} : /obj/structure/sign/poster/contraband/calada_jelly/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{dir = 8} : /obj/structure/sign/poster/contraband/calada_jelly/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/triumphal_arch{dir = 1} : /obj/structure/sign/poster/contraband/triumphal_arch/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{dir = @UNSET} : /obj/structure/sign/poster/contraband/triumphal_arch/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{dir = 4} : /obj/structure/sign/poster/contraband/triumphal_arch/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{dir = 8} : /obj/structure/sign/poster/contraband/triumphal_arch/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/mothic_rations{dir = 1} : /obj/structure/sign/poster/contraband/mothic_rations/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{dir = @UNSET} : /obj/structure/sign/poster/contraband/mothic_rations/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{dir = 4} : /obj/structure/sign/poster/contraband/mothic_rations/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{dir = 8} : /obj/structure/sign/poster/contraband/mothic_rations/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/wildcat{dir = 1} : /obj/structure/sign/poster/contraband/wildcat/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{dir = @UNSET} : /obj/structure/sign/poster/contraband/wildcat/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{dir = 4} : /obj/structure/sign/poster/contraband/wildcat/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{dir = 8} : /obj/structure/sign/poster/contraband/wildcat/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/babel_device{dir = 1} : /obj/structure/sign/poster/contraband/babel_device/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{dir = @UNSET} : /obj/structure/sign/poster/contraband/babel_device/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{dir = 4} : /obj/structure/sign/poster/contraband/babel_device/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{dir = 8} : /obj/structure/sign/poster/contraband/babel_device/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/pizza_imperator{dir = 1} : /obj/structure/sign/poster/contraband/pizza_imperator/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{dir = @UNSET} : /obj/structure/sign/poster/contraband/pizza_imperator/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{dir = 4} : /obj/structure/sign/poster/contraband/pizza_imperator/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{dir = 8} : /obj/structure/sign/poster/contraband/pizza_imperator/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/thunderdrome{dir = 1} : /obj/structure/sign/poster/contraband/thunderdrome/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{dir = @UNSET} : /obj/structure/sign/poster/contraband/thunderdrome/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{dir = 4} : /obj/structure/sign/poster/contraband/thunderdrome/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{dir = 8} : /obj/structure/sign/poster/contraband/thunderdrome/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rush_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/rush_propaganda/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/rush_propaganda/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/rush_propaganda/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/rush_propaganda/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 1} : /obj/structure/sign/poster/contraband/tipper_cream_soda/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = @UNSET} : /obj/structure/sign/poster/contraband/tipper_cream_soda/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 4} : /obj/structure/sign/poster/contraband/tipper_cream_soda/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 8} : /obj/structure/sign/poster/contraband/tipper_cream_soda/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 1} : /obj/structure/sign/poster/contraband/tea_over_tizira/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{dir = @UNSET} : /obj/structure/sign/poster/contraband/tea_over_tizira/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 4} : /obj/structure/sign/poster/contraband/tea_over_tizira/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 8} : /obj/structure/sign/poster/contraband/tea_over_tizira/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndiemoth{dir = 1} : /obj/structure/sign/poster/contraband/syndiemoth/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndiemoth/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{dir = 4} : /obj/structure/sign/poster/contraband/syndiemoth/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{dir = 8} : /obj/structure/sign/poster/contraband/syndiemoth/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/microwave{dir = 1} : /obj/structure/sign/poster/contraband/microwave/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{dir = @UNSET} : /obj/structure/sign/poster/contraband/microwave/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{dir = 4} : /obj/structure/sign/poster/contraband/microwave/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{dir = 8} : /obj/structure/sign/poster/contraband/microwave/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/blood_geometer{dir = 1} : /obj/structure/sign/poster/contraband/blood_geometer/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{dir = @UNSET} : /obj/structure/sign/poster/contraband/blood_geometer/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{dir = 4} : /obj/structure/sign/poster/contraband/blood_geometer/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{dir = 8} : /obj/structure/sign/poster/contraband/blood_geometer/spawner/west{@OLD;dir=@SKIP}
+
+# Official/NT Posters
+
+/obj/structure/sign/poster/official/here_for_your_safety{dir = 1} : /obj/structure/sign/poster/official/here_for_your_safety/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{dir = @UNSET} : /obj/structure/sign/poster/official/here_for_your_safety/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{dir = 4} : /obj/structure/sign/poster/official/here_for_your_safety/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{dir = 8} : /obj/structure/sign/poster/official/here_for_your_safety/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/nanotrasen_logo{dir = 1} : /obj/structure/sign/poster/official/nanotrasen_logo/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{dir = @UNSET} : /obj/structure/sign/poster/official/nanotrasen_logo/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{dir = 4} : /obj/structure/sign/poster/official/nanotrasen_logo/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{dir = 8} : /obj/structure/sign/poster/official/nanotrasen_logo/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/cleanliness{dir = 1} : /obj/structure/sign/poster/official/cleanliness/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{dir = @UNSET} : /obj/structure/sign/poster/official/cleanliness/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{dir = 4} : /obj/structure/sign/poster/official/cleanliness/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{dir = 8} : /obj/structure/sign/poster/official/cleanliness/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/help_others{dir = 1} : /obj/structure/sign/poster/official/help_others/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{dir = @UNSET} : /obj/structure/sign/poster/official/help_others/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{dir = 4} : /obj/structure/sign/poster/official/help_others/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{dir = 8} : /obj/structure/sign/poster/official/help_others/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/build{dir = 1} : /obj/structure/sign/poster/official/build/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{dir = @UNSET} : /obj/structure/sign/poster/official/build/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{dir = 4} : /obj/structure/sign/poster/official/build/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{dir = 8} : /obj/structure/sign/poster/official/build/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/bless_this_spess{dir = 1} : /obj/structure/sign/poster/official/bless_this_spess/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{dir = @UNSET} : /obj/structure/sign/poster/official/bless_this_spess/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{dir = 4} : /obj/structure/sign/poster/official/bless_this_spess/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{dir = 8} : /obj/structure/sign/poster/official/bless_this_spess/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/science{dir = 1} : /obj/structure/sign/poster/official/science/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{dir = @UNSET} : /obj/structure/sign/poster/official/science/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{dir = 4} : /obj/structure/sign/poster/official/science/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{dir = 8} : /obj/structure/sign/poster/official/science/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/ian{dir = 1} : /obj/structure/sign/poster/official/ian/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{dir = @UNSET} : /obj/structure/sign/poster/official/ian/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{dir = 4} : /obj/structure/sign/poster/official/ian/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{dir = 8} : /obj/structure/sign/poster/official/ian/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/obey{dir = 1} : /obj/structure/sign/poster/official/obey/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{dir = @UNSET} : /obj/structure/sign/poster/official/obey/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{dir = 4} : /obj/structure/sign/poster/official/obey/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{dir = 8} : /obj/structure/sign/poster/official/obey/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/walk{dir = 1} : /obj/structure/sign/poster/official/walk/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{dir = @UNSET} : /obj/structure/sign/poster/official/walk/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{dir = 4} : /obj/structure/sign/poster/official/walk/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{dir = 8} : /obj/structure/sign/poster/official/walk/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/state_laws{dir = 1} : /obj/structure/sign/poster/official/state_laws/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{dir = @UNSET} : /obj/structure/sign/poster/official/state_laws/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{dir = 4} : /obj/structure/sign/poster/official/state_laws/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{dir = 8} : /obj/structure/sign/poster/official/state_laws/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/love_ian{dir = 1} : /obj/structure/sign/poster/official/love_ian/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{dir = @UNSET} : /obj/structure/sign/poster/official/love_ian/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{dir = 4} : /obj/structure/sign/poster/official/love_ian/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{dir = 8} : /obj/structure/sign/poster/official/love_ian/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/space_cops{dir = 1} : /obj/structure/sign/poster/official/space_cops/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{dir = @UNSET} : /obj/structure/sign/poster/official/space_cops/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{dir = 4} : /obj/structure/sign/poster/official/space_cops/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{dir = 8} : /obj/structure/sign/poster/official/space_cops/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/ue_no{dir = 1} : /obj/structure/sign/poster/official/ue_no/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{dir = @UNSET} : /obj/structure/sign/poster/official/ue_no/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{dir = 4} : /obj/structure/sign/poster/official/ue_no/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{dir = 8} : /obj/structure/sign/poster/official/ue_no/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/get_your_legs{dir = 1} : /obj/structure/sign/poster/official/get_your_legs/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{dir = @UNSET} : /obj/structure/sign/poster/official/get_your_legs/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{dir = 4} : /obj/structure/sign/poster/official/get_your_legs/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{dir = 8} : /obj/structure/sign/poster/official/get_your_legs/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/do_not_question{dir = 1} : /obj/structure/sign/poster/official/do_not_question/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{dir = @UNSET} : /obj/structure/sign/poster/official/do_not_question/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{dir = 4} : /obj/structure/sign/poster/official/do_not_question/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{dir = 8} : /obj/structure/sign/poster/official/do_not_question/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/work_for_a_future{dir = 1} : /obj/structure/sign/poster/official/work_for_a_future/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{dir = @UNSET} : /obj/structure/sign/poster/official/work_for_a_future/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{dir = 4} : /obj/structure/sign/poster/official/work_for_a_future/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{dir = 8} : /obj/structure/sign/poster/official/work_for_a_future/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 1} : /obj/structure/sign/poster/official/soft_cap_pop_art/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{dir = @UNSET} : /obj/structure/sign/poster/official/soft_cap_pop_art/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 4} : /obj/structure/sign/poster/official/soft_cap_pop_art/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 8} : /obj/structure/sign/poster/official/soft_cap_pop_art/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/safety_internals{dir = 1} : /obj/structure/sign/poster/official/safety_internals/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{dir = @UNSET} : /obj/structure/sign/poster/official/safety_internals/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{dir = 4} : /obj/structure/sign/poster/official/safety_internals/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{dir = 8} : /obj/structure/sign/poster/official/safety_internals/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/safety_eye_protection{dir = 1} : /obj/structure/sign/poster/official/safety_eye_protection/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{dir = @UNSET} : /obj/structure/sign/poster/official/safety_eye_protection/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{dir = 4} : /obj/structure/sign/poster/official/safety_eye_protection/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{dir = 8} : /obj/structure/sign/poster/official/safety_eye_protection/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/safety_report{dir = 1} : /obj/structure/sign/poster/official/safety_report/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{dir = @UNSET} : /obj/structure/sign/poster/official/safety_report/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{dir = 4} : /obj/structure/sign/poster/official/safety_report/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{dir = 8} : /obj/structure/sign/poster/official/safety_report/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/report_crimes{dir = 1} : /obj/structure/sign/poster/official/report_crimes/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{dir = @UNSET} : /obj/structure/sign/poster/official/report_crimes/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{dir = 4} : /obj/structure/sign/poster/official/report_crimes/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{dir = 8} : /obj/structure/sign/poster/official/report_crimes/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/ion_rifle{dir = 1} : /obj/structure/sign/poster/official/ion_rifle/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{dir = @UNSET} : /obj/structure/sign/poster/official/ion_rifle/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{dir = 4} : /obj/structure/sign/poster/official/ion_rifle/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{dir = 8} : /obj/structure/sign/poster/official/ion_rifle/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/foam_force_ad{dir = 1} : /obj/structure/sign/poster/official/foam_force_ad/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{dir = @UNSET} : /obj/structure/sign/poster/official/foam_force_ad/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{dir = 4} : /obj/structure/sign/poster/official/foam_force_ad/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{dir = 8} : /obj/structure/sign/poster/official/foam_force_ad/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 1} : /obj/structure/sign/poster/official/cohiba_robusto_ad/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = @UNSET} : /obj/structure/sign/poster/official/cohiba_robusto_ad/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 4} : /obj/structure/sign/poster/official/cohiba_robusto_ad/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 8} : /obj/structure/sign/poster/official/cohiba_robusto_ad/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 1} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = @UNSET} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 4} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 8} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/fruit_bowl{dir = 1} : /obj/structure/sign/poster/official/fruit_bowl/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{dir = @UNSET} : /obj/structure/sign/poster/official/fruit_bowl/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{dir = 4} : /obj/structure/sign/poster/official/fruit_bowl/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{dir = 8} : /obj/structure/sign/poster/official/fruit_bowl/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/pda_ad{dir = 1} : /obj/structure/sign/poster/official/pda_ad/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{dir = @UNSET} : /obj/structure/sign/poster/official/pda_ad/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{dir = 4} : /obj/structure/sign/poster/official/pda_ad/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{dir = 8} : /obj/structure/sign/poster/official/pda_ad/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/enlist{dir = 1} : /obj/structure/sign/poster/official/enlist/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{dir = @UNSET} : /obj/structure/sign/poster/official/enlist/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{dir = 4} : /obj/structure/sign/poster/official/enlist/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{dir = 8} : /obj/structure/sign/poster/official/enlist/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/nanomichi_ad{dir = 1} : /obj/structure/sign/poster/official/nanomichi_ad/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{dir = @UNSET} : /obj/structure/sign/poster/official/nanomichi_ad/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{dir = 4} : /obj/structure/sign/poster/official/nanomichi_ad/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{dir = 8} : /obj/structure/sign/poster/official/nanomichi_ad/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/twelve_gauge{dir = 1} : /obj/structure/sign/poster/official/twelve_gauge/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{dir = @UNSET} : /obj/structure/sign/poster/official/twelve_gauge/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{dir = 4} : /obj/structure/sign/poster/official/twelve_gauge/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{dir = 8} : /obj/structure/sign/poster/official/twelve_gauge/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/high_class_martini{dir = 1} : /obj/structure/sign/poster/official/high_class_martini/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{dir = @UNSET} : /obj/structure/sign/poster/official/high_class_martini/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{dir = 4} : /obj/structure/sign/poster/official/high_class_martini/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{dir = 8} : /obj/structure/sign/poster/official/high_class_martini/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/the_owl{dir = 1} : /obj/structure/sign/poster/official/the_owl/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{dir = @UNSET} : /obj/structure/sign/poster/official/the_owl/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{dir = 4} : /obj/structure/sign/poster/official/the_owl/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{dir = 8} : /obj/structure/sign/poster/official/the_owl/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/no_erp{dir = 1} : /obj/structure/sign/poster/official/no_erp/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{dir = @UNSET} : /obj/structure/sign/poster/official/no_erp/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{dir = 4} : /obj/structure/sign/poster/official/no_erp/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{dir = 8} : /obj/structure/sign/poster/official/no_erp/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/wtf_is_co2{dir = 1} : /obj/structure/sign/poster/official/wtf_is_co2/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{dir = @UNSET} : /obj/structure/sign/poster/official/wtf_is_co2/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{dir = 4} : /obj/structure/sign/poster/official/wtf_is_co2/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{dir = 8} : /obj/structure/sign/poster/official/wtf_is_co2/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/dick_gum{dir = 1} : /obj/structure/sign/poster/official/dick_gum/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{dir = @UNSET} : /obj/structure/sign/poster/official/dick_gum/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{dir = 4} : /obj/structure/sign/poster/official/dick_gum/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{dir = 8} : /obj/structure/sign/poster/official/dick_gum/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 1} : /obj/structure/sign/poster/official/there_is_no_gas_giant/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = @UNSET} : /obj/structure/sign/poster/official/there_is_no_gas_giant/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 4} : /obj/structure/sign/poster/official/there_is_no_gas_giant/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 8} : /obj/structure/sign/poster/official/there_is_no_gas_giant/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/periodic_table{dir = 1} : /obj/structure/sign/poster/official/periodic_table/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{dir = @UNSET} : /obj/structure/sign/poster/official/periodic_table/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{dir = 4} : /obj/structure/sign/poster/official/periodic_table/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{dir = 8} : /obj/structure/sign/poster/official/periodic_table/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/plasma_effects{dir = 1} : /obj/structure/sign/poster/official/plasma_effects/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{dir = @UNSET} : /obj/structure/sign/poster/official/plasma_effects/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{dir = 4} : /obj/structure/sign/poster/official/plasma_effects/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{dir = 8} : /obj/structure/sign/poster/official/plasma_effects/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/terragov{dir = 1} : /obj/structure/sign/poster/official/terragov/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{dir = @UNSET} : /obj/structure/sign/poster/official/terragov/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{dir = 4} : /obj/structure/sign/poster/official/terragov/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{dir = 8} : /obj/structure/sign/poster/official/terragov/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 1} : /obj/structure/sign/poster/official/corporate_perks_vacation/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{dir = @UNSET} : /obj/structure/sign/poster/official/corporate_perks_vacation/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 4} : /obj/structure/sign/poster/official/corporate_perks_vacation/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 8} : /obj/structure/sign/poster/official/corporate_perks_vacation/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/jim_nortons{dir = 1} : /obj/structure/sign/poster/official/jim_nortons/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{dir = @UNSET} : /obj/structure/sign/poster/official/jim_nortons/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{dir = 4} : /obj/structure/sign/poster/official/jim_nortons/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{dir = 8} : /obj/structure/sign/poster/official/jim_nortons/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/twenty_four_seven{dir = 1} : /obj/structure/sign/poster/official/twenty_four_seven/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{dir = @UNSET} : /obj/structure/sign/poster/official/twenty_four_seven/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{dir = 4} : /obj/structure/sign/poster/official/twenty_four_seven/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{dir = 8} : /obj/structure/sign/poster/official/twenty_four_seven/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/tactical_game_cards{dir = 1} : /obj/structure/sign/poster/official/tactical_game_cards/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{dir = @UNSET} : /obj/structure/sign/poster/official/tactical_game_cards/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{dir = 4} : /obj/structure/sign/poster/official/tactical_game_cards/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{dir = 8} : /obj/structure/sign/poster/official/tactical_game_cards/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/midtown_slice{dir = 1} : /obj/structure/sign/poster/official/midtown_slice/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{dir = @UNSET} : /obj/structure/sign/poster/official/midtown_slice/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{dir = 4} : /obj/structure/sign/poster/official/midtown_slice/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{dir = 8} : /obj/structure/sign/poster/official/midtown_slice/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/moth_hardhat{dir = 1} : /obj/structure/sign/poster/official/moth_hardhat/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{dir = @UNSET} : /obj/structure/sign/poster/official/moth_hardhat/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{dir = 4} : /obj/structure/sign/poster/official/moth_hardhat/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{dir = 8} : /obj/structure/sign/poster/official/moth_hardhat/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/moth_piping{dir = 1} : /obj/structure/sign/poster/official/moth_piping/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{dir = @UNSET} : /obj/structure/sign/poster/official/moth_piping/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{dir = 4} : /obj/structure/sign/poster/official/moth_piping/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{dir = 8} : /obj/structure/sign/poster/official/moth_piping/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/moth_meth{dir = 1} : /obj/structure/sign/poster/official/moth_meth/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{dir = @UNSET} : /obj/structure/sign/poster/official/moth_meth/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{dir = 4} : /obj/structure/sign/poster/official/moth_meth/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{dir = 8} : /obj/structure/sign/poster/official/moth_meth/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/moth_epi{dir = 1} : /obj/structure/sign/poster/official/moth_epi/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{dir = @UNSET} : /obj/structure/sign/poster/official/moth_epi/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{dir = 4} : /obj/structure/sign/poster/official/moth_epi/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{dir = 8} : /obj/structure/sign/poster/official/moth_epi/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/moth_delam{dir = 1} : /obj/structure/sign/poster/official/moth_delam/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{dir = @UNSET} : /obj/structure/sign/poster/official/moth_delam/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{dir = 4} : /obj/structure/sign/poster/official/moth_delam/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{dir = 8} : /obj/structure/sign/poster/official/moth_delam/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/lizards_gas_payment{dir = 1} : /obj/structure/sign/poster/official/lizards_gas_payment/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{dir = @UNSET} : /obj/structure/sign/poster/official/lizards_gas_payment/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{dir = 4} : /obj/structure/sign/poster/official/lizards_gas_payment/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{dir = 8} : /obj/structure/sign/poster/official/lizards_gas_payment/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/lizards_gas_power{dir = 1} : /obj/structure/sign/poster/official/lizards_gas_power/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{dir = @UNSET} : /obj/structure/sign/poster/official/lizards_gas_power/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{dir = 4} : /obj/structure/sign/poster/official/lizards_gas_power/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{dir = 8} : /obj/structure/sign/poster/official/lizards_gas_power/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/festive{dir = 1} : /obj/structure/sign/poster/official/festive/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{dir = @UNSET} : /obj/structure/sign/poster/official/festive/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{dir = 4} : /obj/structure/sign/poster/official/festive/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{dir = 8} : /obj/structure/sign/poster/official/festive/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/boombox{dir = 1} : /obj/structure/sign/poster/official/boombox/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{dir = @UNSET} : /obj/structure/sign/poster/official/boombox/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{dir = 4} : /obj/structure/sign/poster/official/boombox/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{dir = 8} : /obj/structure/sign/poster/official/boombox/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/download{dir = 1} : /obj/structure/sign/poster/official/download/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{dir = @UNSET} : /obj/structure/sign/poster/official/download/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{dir = 4} : /obj/structure/sign/poster/official/download/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{dir = 8} : /obj/structure/sign/poster/official/download/spawner/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/official/singletank_bomb{dir = 1} : /obj/structure/sign/poster/official/singletank_bomb/spawner/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{dir = @UNSET} : /obj/structure/sign/poster/official/singletank_bomb/spawner/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{dir = 4} : /obj/structure/sign/poster/official/singletank_bomb/spawner/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{dir = 8} : /obj/structure/sign/poster/official/singletank_bomb/spawner/west{@OLD;dir=@SKIP}
