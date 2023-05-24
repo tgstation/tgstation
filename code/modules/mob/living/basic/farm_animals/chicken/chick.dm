@@ -29,8 +29,6 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-	footstep_type = FOOTSTEP_MOB_CLAW
-
 	/// What we grow into.
 	var/grow_as = /mob/living/basic/chicken
 
@@ -43,8 +41,9 @@
 
 	AddElement(/datum/element/pet_bonus, "chirps!")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 
-	if(!isnull(growth_path))
+	if(!isnull(grow_as))
 		AddComponent(\
 			/datum/component/growth_and_differentiation,\
 			growth_time = null,\
