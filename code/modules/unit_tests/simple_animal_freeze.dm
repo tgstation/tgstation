@@ -32,8 +32,6 @@
 		/mob/living/simple_animal/bot/secbot/honkbot,
 		/mob/living/simple_animal/bot/secbot/pingsky,
 		/mob/living/simple_animal/bot/vibebot,
-		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chick/holo,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/crab/coffee,
 		/mob/living/simple_animal/crab/evil,

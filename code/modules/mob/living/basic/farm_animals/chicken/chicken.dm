@@ -66,7 +66,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	if(GLOB.chicken_count <= MAX_CHICKENS && fertile && prob(25))
 		egg.AddComponent(\
 			/datum/component/fertile_egg,\
-			embryo_type = /mob/living/simple_animal/chick,\
+			embryo_type = /mob/living/basic/chick,\
 			minimum_growth_rate = 1,\
 			maximum_growth_rate = 2,\
 			total_growth_required = 200,\
