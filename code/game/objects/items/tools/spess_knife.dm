@@ -6,8 +6,6 @@
 	worn_icon_state = "spess_knife"
 	belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"
-	///Inhand icons for unfolded knife states
-	var/inhand_icon_state_unfolded = "spess_knife_unfolded"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -31,7 +29,7 @@
 		disabled = TRUE, \
 	)
 	options = list(
-		"fold" = image(icon = 'icons/obj/tools.dmi', icon_state = initial(icon_state)),
+		NONE = image(icon = 'icons/obj/tools.dmi', icon_state = initial(icon_state)),
 		TOOL_KNIFE = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_KNIFE]"),
 		TOOL_SCREWDRIVER = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_SCREWDRIVER]"),
 		TOOL_WIRECUTTER = image(icon = 'icons/obj/tools.dmi', icon_state = "[initial(icon_state)]_[TOOL_WIRECUTTER]"),
@@ -43,7 +41,7 @@
 	var/new_tool_behaviour = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
 	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
 		return
-	if(new_tool_behaviour == "fold")
+	if(new_tool_behaviour == NONE)
 		tool_behaviour = null
 	else
 		tool_behaviour = new_tool_behaviour
@@ -85,11 +83,6 @@
 	butchering.butchering_enabled = tool_behaviour == TOOL_KNIFE
 	RemoveElement(/datum/element/eyestab)
 	switch(tool_behaviour)
-		if(null)
-			force = 0
-			sharpness = NONE
-			hitsound = initial(hitsound)
-			usesound = initial(usesound)
 		if(TOOL_KNIFE)
 			force = 8
 			sharpness = SHARP_EDGED
@@ -148,7 +141,7 @@
 		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
 
 	if(tool_behaviour)
-		inhand_icon_state = inhand_icon_state_unfolded
+		inhand_icon_state = initial(inhand_icon_state) += "_unfolded"
 	else
 		inhand_icon_state = initial(inhand_icon_state)
 
