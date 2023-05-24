@@ -48258,7 +48258,7 @@
 /area/station/maintenance/floor2/port/aft)
 "mFB" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/simple_animal/chicken,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "mFD" = (

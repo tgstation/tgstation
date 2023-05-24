@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/bat,
 	/mob/living/basic/butterfly,
 	/mob/living/basic/carp/pet/cayenne,
+	/mob/living/basic/chicken,
 	/mob/living/basic/cow,
 	/mob/living/basic/giant_spider/sgt_araneus,
 	/mob/living/basic/lizard,
@@ -12,13 +13,12 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
-	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/parrot,
-	/mob/living/simple_animal/sloth,
 	/mob/living/simple_animal/hostile/retaliate/goat,
-	/mob/living/simple_animal/chicken,
-	/mob/living/simple_animal/hostile/retaliate/snake,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/simple_animal/hostile/retaliate/snake,
+	/mob/living/simple_animal/parrot,
+	/mob/living/simple_animal/pet,
+	/mob/living/simple_animal/sloth,
 )))
 
 /datum/round_event_control/wizard/petsplosion //the horror
