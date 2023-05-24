@@ -24,7 +24,9 @@
 		X << 'sound/items/bikehorn.ogg'
 		to_chat(X, mentor_msg)
 
-	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
+	to_chat(src,
+		type = MESSAGE_TYPE_MENTORCHAT,
+		html = "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 
 
 	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
