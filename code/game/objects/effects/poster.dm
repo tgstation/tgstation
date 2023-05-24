@@ -291,6 +291,8 @@
 	name = "ripped poster"
 	desc = "You can't make out anything from the poster's original print. It's ruined."
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
+
 /obj/structure/sign/poster/random
 	name = "random poster" // could even be ripped
 	icon_state = "random_anything"

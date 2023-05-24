@@ -1,5 +1,26 @@
 # Changes posters to mapping direction helpers
 
+# Random Contraband Spawner
+
+/obj/structure/sign/poster/contraband/random{pixel_y = 32} : /obj/structure/sign/poster/contraband/random/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/contraband/random{pixel_y = -32} : /obj/structure/sign/poster/contraband/random/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/contraband/random{pixel_x = 32} : /obj/structure/sign/poster/contraband/random/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/contraband/random{pixel_x = -32} : /obj/structure/sign/poster/contraband/random/directional/west{@OLD;pixel_x=@SKIP}
+
+# Random Official Spawner
+
+/obj/structure/sign/poster/official/random{pixel_y = 32} : /obj/structure/sign/poster/official/random/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/official/random{pixel_y = -32} : /obj/structure/sign/poster/official/random/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/official/random{pixel_x = 32} : /obj/structure/sign/poster/official/random/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/official/random{pixel_x = -32} : /obj/structure/sign/poster/official/random/directional/west{@OLD;pixel_x=@SKIP}
+
+# Ripped
+
+/obj/structure/sign/poster/ripped{pixel_y = 32} : /obj/structure/sign/poster/ripped/directional/north{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/ripped{pixel_y = -32} : /obj/structure/sign/poster/ripped/directional/south{@OLD;pixel_y=@SKIP}
+/obj/structure/sign/poster/ripped{pixel_x = 32} : /obj/structure/sign/poster/ripped/directional/east{@OLD;pixel_x=@SKIP}
+/obj/structure/sign/poster/ripped{pixel_x = -32} : /obj/structure/sign/poster/ripped/directional/west{@OLD;pixel_x=@SKIP}
+
 # Contraband/Silly Posters
 
 /obj/structure/sign/poster/contraband/free_tonto{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_tonto/directional/north{@OLD;pixel_y=@SKIP}
