@@ -1,3 +1,10 @@
+/// The number of entries to store per category, don't make this too large or you'll start to see performance issues
+#define CONFIG_MAX_CACHED_LOG_ENTRIES 1000
+
+/// The number of *minimum* ticks between each log re-render, making this small will cause performance issues
+/// Admins can still manually request a re-render
+#define LOG_UPDATE_TIMEOUT 5 SECONDS
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
