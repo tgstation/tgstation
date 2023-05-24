@@ -123,7 +123,6 @@
 		/mob/living/simple_animal/hostile/boss,
 		/mob/living/simple_animal/hostile/boss/paper_wizard,
 		/mob/living/simple_animal/hostile/boss/paper_wizard/copy,
-		/mob/living/simple_animal/hostile/cat_butcherer,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/construct/artificer,
 		/mob/living/simple_animal/hostile/construct/artificer/angelic,
