@@ -1314,14 +1314,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/moth_delam, 32)
 	desc = "A crudely-made poster asking the reader to please pay for any items they may wish to leave the station with."
 	icon_state = "gas_payment"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/lizards_gas_payment, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/fluff/lizards_gas_payment, 32)
 
 /obj/structure/sign/poster/fluff/lizards_gas_power
 	name = "Conserve Power"
 	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
 	icon_state = "gas_power"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/lizards_gas_power, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/fluff/lizards_gas_power, 32)
 
 /obj/structure/sign/poster/official/festive
 	name = "Festive Notice Poster"
