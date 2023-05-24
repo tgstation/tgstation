@@ -5268,6 +5268,7 @@
 #include "monkestation\code\datums\announcers\duke.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\multi_hit.dm"
+#include "monkestation\code\datums\diseases\advance\advance.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\necropolis.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\skin.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
