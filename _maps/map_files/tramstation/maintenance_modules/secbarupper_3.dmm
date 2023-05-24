@@ -154,11 +154,11 @@
 /area/station/maintenance/department/security)
 "sF" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/asteroid)
 "tc" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/asteroid)
 "tn" = (
