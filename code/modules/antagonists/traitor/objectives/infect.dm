@@ -9,11 +9,12 @@
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
 	abstract_type = /datum/traitor_objective/target_player
-
-	progression_minimum = 20 MINUTES
+	objective_period = 30 MINUTES
+	maximum_objectives_in_period = 1
+	progression_minimum = 30 MINUTES
 
 	progression_reward = list(8 MINUTES, 14 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = 1
 
 
 	var/heads_of_staff = FALSE
