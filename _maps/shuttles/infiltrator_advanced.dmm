@@ -1691,7 +1691,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/cc64k_ad{
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/plastitanium,

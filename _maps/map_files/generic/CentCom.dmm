@@ -7626,7 +7626,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LR" = (
-/obj/structure/sign/poster/official/tactical_game_cards{
+/obj/structure/sign/poster/official/tactical_game_cards/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/red,

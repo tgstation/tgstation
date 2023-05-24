@@ -7710,7 +7710,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
+/obj/structure/sign/poster/official/safety_internals/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -8393,7 +8393,7 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/cleanliness{
+/obj/structure/sign/poster/official/cleanliness/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/cafeteria,

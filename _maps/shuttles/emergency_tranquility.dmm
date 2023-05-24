@@ -43,7 +43,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/sign/poster/official/there_is_no_gas_giant{
+/obj/structure/sign/poster/official/there_is_no_gas_giant/directional/south{
 	pixel_y = -32
 	},
 /obj/structure/bookcase/random/nonfiction,
@@ -53,7 +53,7 @@
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/soft_cap_pop_art{
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/stone,
@@ -79,7 +79,7 @@
 	dir = 6
 	},
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -89,7 +89,7 @@
 	dir = 10
 	},
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/high_class_martini{
+/obj/structure/sign/poster/official/high_class_martini/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -468,7 +468,7 @@
 	color = "#A47449";
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/blood_geometer{
+/obj/structure/sign/poster/contraband/blood_geometer/directional/north{
 	pixel_y = 32
 	},
 /turf/open/water,
@@ -926,7 +926,7 @@
 /area/shuttle/escape)
 "qm" = (
 /obj/structure/closet/cardboard,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north{
 	pixel_y = 32
 	},
 /obj/item/clothing/suit/hooded/wintercoat/custom,
@@ -1069,7 +1069,7 @@
 "sW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/poster/official/jim_nortons{
+/obj/structure/sign/poster/official/jim_nortons/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -1145,7 +1145,7 @@
 "uK" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi{
+/obj/structure/sign/poster/official/moth_epi/directional/north{
 	pixel_y = 32
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -1612,7 +1612,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/ion_rifle{
+/obj/structure/sign/poster/official/ion_rifle/directional/north{
 	pixel_y = 32
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -1721,7 +1721,7 @@
 	color = "#A47449";
 	dir = 4
 	},
-/obj/structure/sign/poster/official/festive{
+/obj/structure/sign/poster/official/festive/directional/south{
 	pixel_y = -32
 	},
 /turf/open/water,
@@ -2747,7 +2747,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "ZF" = (
-/obj/structure/sign/poster/official/fruit_bowl{
+/obj/structure/sign/poster/official/fruit_bowl/directional/north{
 	pixel_y = 32
 	},
 /obj/structure/bookcase/random,

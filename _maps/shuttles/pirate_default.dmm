@@ -708,7 +708,7 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
-/obj/structure/sign/poster/contraband/bountyhunters{
+/obj/structure/sign/poster/contraband/bountyhunters/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/pod/light,

@@ -5149,7 +5149,7 @@
 /obj/item/paper_bin,
 /obj/machinery/light/small/directional/west,
 /obj/item/pen,
-/obj/structure/sign/poster/official/enlist{
+/obj/structure/sign/poster/official/enlist/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -7877,7 +7877,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{
+/obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/south{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/white,
@@ -12986,7 +12986,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/plasma_effects{
+/obj/structure/sign/poster/official/plasma_effects/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -13053,7 +13053,7 @@
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "dip" = (
-/obj/structure/sign/poster/contraband/hacking_guide{
+/obj/structure/sign/poster/contraband/hacking_guide/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -14415,7 +14415,7 @@
 /area/station/commons/toilet/restrooms)
 "dAX" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/directional/south{
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/components/tank/air{
@@ -16448,7 +16448,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/sign/poster/contraband/borg_fancy_2{
+/obj/structure/sign/poster/contraband/borg_fancy_2/directional/south{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -16930,7 +16930,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/security)
 "eiW" = (
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /obj/machinery/vending/wardrobe/det_wardrobe,
@@ -17251,7 +17251,7 @@
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
-/obj/structure/sign/poster/official/moth_delam{
+/obj/structure/sign/poster/official/moth_delam/directional/south{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -27458,7 +27458,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/contraband/self_ai_liberation{
+/obj/structure/sign/poster/contraband/self_ai_liberation/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -28979,7 +28979,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/official/periodic_table{
+/obj/structure/sign/poster/official/periodic_table/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -33567,7 +33567,7 @@
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -34561,7 +34561,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/under/costume/maid,
 /obj/item/clothing/head/costume/kitty,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -34982,7 +34982,7 @@
 /area/station/medical/chemistry)
 "iJJ" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/delivery,
@@ -35309,7 +35309,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "iNY" = (
-/obj/structure/sign/poster/official/help_others{
+/obj/structure/sign/poster/official/help_others/directional/south{
 	pixel_x = -32;
 	pixel_y = -32
 	},
@@ -40832,7 +40832,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "kdM" = (
-/obj/structure/sign/poster/official/do_not_question{
+/obj/structure/sign/poster/official/do_not_question/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -40932,7 +40932,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/safety_eye_protection{
+/obj/structure/sign/poster/official/safety_eye_protection/directional/south{
 	pixel_x = -32;
 	pixel_y = -32
 	},
@@ -42244,7 +42244,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "kws" = (
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/directional/south{
 	pixel_y = -32
 	},
 /obj/structure/chair/sofa/bench{
@@ -45016,7 +45016,7 @@
 /area/station/hallway/primary/fore)
 "lhp" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/south{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -51462,7 +51462,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/science{
+/obj/structure/sign/poster/official/science/directional/north{
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -51614,7 +51614,7 @@
 "mQz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -53147,7 +53147,7 @@
 /area/station/maintenance/department/science)
 "nnk" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -53952,7 +53952,7 @@
 /obj/item/cultivator,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/plant_analyzer,
-/obj/structure/sign/poster/contraband/kudzu{
+/obj/structure/sign/poster/contraband/kudzu/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
@@ -54866,7 +54866,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
+/obj/structure/sign/poster/official/safety_internals/directional/north{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -56704,7 +56704,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/bless_this_spess{
+/obj/structure/sign/poster/official/bless_this_spess/directional/north{
 	pixel_x = -32;
 	pixel_y = 32
 	},
@@ -56977,7 +56977,7 @@
 /area/station/service/library/artgallery)
 "olD" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/official/ian{
+/obj/structure/sign/poster/official/ian/directional/south{
 	pixel_y = -32
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -57773,7 +57773,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/contraband/free_drone{
+/obj/structure/sign/poster/contraband/free_drone/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
@@ -57933,7 +57933,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/safety_internals{
+/obj/structure/sign/poster/official/safety_internals/directional/south{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -59449,7 +59449,7 @@
 /obj/item/plunger,
 /obj/item/plunger,
 /obj/effect/turf_decal/siding/yellow,
-/obj/structure/sign/poster/official/periodic_table{
+/obj/structure/sign/poster/official/periodic_table/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -60352,7 +60352,7 @@
 /turf/open/floor/iron,
 /area/station/science/circuits)
 "phB" = (
-/obj/structure/sign/poster/official/cleanliness{
+/obj/structure/sign/poster/official/cleanliness/directional/north{
 	pixel_y = 32
 	},
 /obj/item/radio/intercom/directional/east,
@@ -62051,7 +62051,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/structure/sign/poster/official/wtf_is_co2{
+/obj/structure/sign/poster/official/wtf_is_co2/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -62718,7 +62718,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pLe" = (
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -63565,7 +63565,7 @@
 "pUi" = (
 /obj/structure/chair/office,
 /obj/item/cardboard_cutout,
-/obj/structure/sign/poster/contraband/tools{
+/obj/structure/sign/poster/contraband/tools/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/neutral/half{
@@ -69029,7 +69029,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/poster/contraband/free_drone{
+/obj/structure/sign/poster/contraband/free_drone/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -71744,7 +71744,7 @@
 "rWy" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/directional/south{
 	pixel_y = -32
 	},
 /obj/machinery/light/small/directional/south,
@@ -73106,7 +73106,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/revolver{
+/obj/structure/sign/poster/contraband/revolver/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/landmark/start/hangover,
@@ -74946,7 +74946,7 @@
 "sLf" = (
 /obj/machinery/computer/mechpad,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/build{
+/obj/structure/sign/poster/official/build/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -76116,7 +76116,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/blue,
@@ -80485,7 +80485,7 @@
 "udV" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/contraband/arc_slimes{
+/obj/structure/sign/poster/contraband/arc_slimes/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -80699,7 +80699,7 @@
 /area/station/maintenance/starboard/aft)
 "uhC" = (
 /obj/effect/spawner/random/vending/colavend,
-/obj/structure/sign/poster/official/ian{
+/obj/structure/sign/poster/official/ian/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
@@ -82587,7 +82587,7 @@
 "uFH" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north{
 	pixel_y = 32
 	},
 /obj/item/circuitboard/machine/holopad,
@@ -87648,7 +87648,7 @@
 "vTX" = (
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/directional/south{
 	pixel_y = -32
 	},
 /obj/structure/cable,
@@ -89304,7 +89304,7 @@
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/sign/poster/official/space_cops{
+/obj/structure/sign/poster/official/space_cops/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -90493,7 +90493,7 @@
 /area/station/hallway/primary/central/fore)
 "wBl" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/sign/poster/official/do_not_question{
+/obj/structure/sign/poster/official/do_not_question/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -90756,7 +90756,7 @@
 	dir = 1
 	},
 /obj/item/stack/sheet/glass,
-/obj/structure/sign/poster/contraband/borg_fancy_1{
+/obj/structure/sign/poster/contraband/borg_fancy_1/directional/south{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -95573,7 +95573,7 @@
 /area/station/maintenance/department/electrical)
 "xTk" = (
 /obj/structure/closet/secure_closet/security/sec,
-/obj/structure/sign/poster/official/do_not_question{
+/obj/structure/sign/poster/official/do_not_question/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,

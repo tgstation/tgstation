@@ -145,7 +145,7 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/structure/sign/poster/official/build{
+/obj/structure/sign/poster/official/build/directional/north{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
