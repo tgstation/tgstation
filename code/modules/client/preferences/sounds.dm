@@ -37,8 +37,25 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts_blips"
 	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
 
+/datum/preference/toggle/sound_tts_blips/create_default_value()
+	if(CONFIG_GET(flag/tts_default_to_blips))
+		return TRUE
+	else
+		return FALSE
+
+
+/datum/preference/toggle/sound_tts_use_byond_audio
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_use_byond_audio"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = TRUE
+
+/datum/preference/toggle/sound_tts_use_byond_audio/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	return !CONFIG_GET(flag/tts_force_html_audio)
 /datum/preference/numeric/sound_tts_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts_volume"

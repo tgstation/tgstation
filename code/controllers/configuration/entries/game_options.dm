@@ -428,4 +428,7 @@
 	default = 4
 	min_val = 1
 
+/datum/config_entry/flag/tts_force_html_audio
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/give_tutorials_without_db

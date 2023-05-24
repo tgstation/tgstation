@@ -49,6 +49,14 @@ export const sound_tts_blips: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const sound_tts_use_byond_audio: FeatureToggle = {
+  name: 'Use BYOND Sound Engine for TTS',
+  category: 'SOUND',
+  description:
+    'When enabled, text to speech will use the BYOND audio engine, which provides sound positioning and environmental effects at the cost of increasing lag and reducing performance for some people.',
+  component: CheckboxInput,
+};
+
 export const sound_tts_volume: Feature<number> = {
   name: 'TTS Volume',
   category: 'SOUND',
