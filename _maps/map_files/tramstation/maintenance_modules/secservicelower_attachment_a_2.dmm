@@ -70,7 +70,7 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/structure/sign/poster/official/do_not_question{
+/obj/structure/sign/poster/official/do_not_question/spawner/south{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,

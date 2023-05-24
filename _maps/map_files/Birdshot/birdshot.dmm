@@ -900,7 +900,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
+/obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/south{
 	pixel_y = 36
 	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -3528,7 +3528,7 @@
 /area/station/hallway/primary/starboard)
 "bAI" = (
 /obj/structure/chair/office,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/spawner/south{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -8098,7 +8098,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/department/engine/atmos)
 "dqK" = (
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
+/obj/structure/sign/poster/official/cohiba_robusto_ad/spawner/south{
 	pixel_y = 34
 	},
 /turf/open/floor/iron/diagonal,
@@ -34430,7 +34430,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "mBC" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
+/obj/structure/sign/poster/official/soft_cap_pop_art/spawner/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
@@ -52917,7 +52917,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "sKS" = (
-/obj/structure/sign/poster/official/pda_ad{
+/obj/structure/sign/poster/official/pda_ad/spawner/south{
 	pixel_y = 32
 	},
 /obj/structure/tank_holder/extinguisher,
@@ -53602,7 +53602,7 @@
 /area/station/security)
 "sVp" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
+/obj/structure/sign/poster/official/corporate_perks_vacation/spawner/south{
 	pixel_x = 32
 	},
 /obj/item/newspaper,
@@ -56794,7 +56794,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "tZi" = (
-/obj/structure/sign/poster/contraband/got_wood{
+/obj/structure/sign/poster/contraband/got_wood/spawner/south{
 	pixel_y = 31
 	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -61987,7 +61987,7 @@
 /area/station/medical/storage)
 "vFn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/no_erp/spawner/south{
 	pixel_x = 32;
 	pixel_y = 4
 	},

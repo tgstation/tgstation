@@ -265,7 +265,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/mailroom)
 "CW" = (
-/obj/structure/sign/poster/official/obey,
+/obj/structure/sign/poster/official/obey/spawner/south,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "DR" = (
@@ -414,7 +414,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "Qx" = (
-/obj/structure/sign/poster/official/obey,
+/obj/structure/sign/poster/official/obey/spawner/south,
 /turf/closed/wall/r_wall,
 /area/ruin/powered/mailroom)
 "QU" = (

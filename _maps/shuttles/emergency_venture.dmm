@@ -693,7 +693,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/structure/sign/poster/official/moth_epi{
+/obj/structure/sign/poster/official/moth_epi/spawner/south{
 	pixel_y = -32
 	},
 /obj/machinery/light/directional/south,

@@ -101,7 +101,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "fB" = (
-/obj/structure/sign/poster/contraband/communist_state,
+/obj/structure/sign/poster/contraband/communist_state/spawner/south,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "gk" = (
@@ -581,7 +581,7 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Qi" = (
-/obj/structure/sign/poster/contraband/soviet_propaganda,
+/obj/structure/sign/poster/contraband/soviet_propaganda/spawner/south,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ql" = (
@@ -656,7 +656,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "WM" = (
-/obj/structure/sign/poster/contraband/kss13,
+/obj/structure/sign/poster/contraband/kss13/spawner/south,
 /turf/closed/indestructible/riveted/plastinum,
 /area/centcom/basketball)
 "Xm" = (

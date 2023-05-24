@@ -224,7 +224,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/corporate_perks_vacation{
+/obj/structure/sign/poster/official/corporate_perks_vacation/spawner/south{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/edge{
@@ -701,7 +701,7 @@
 	},
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/spawner/south{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/smooth,
@@ -1137,7 +1137,7 @@
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/sign/poster/official/cleanliness{
+/obj/structure/sign/poster/official/cleanliness/spawner/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/freezer,
@@ -2836,7 +2836,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/cleanliness{
+/obj/structure/sign/poster/official/cleanliness/spawner/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/freezer,
@@ -2899,7 +2899,7 @@
 "qb" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
-/obj/structure/sign/poster/official/do_not_question{
+/obj/structure/sign/poster/official/do_not_question/spawner/south{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/smooth,
@@ -2990,7 +2990,7 @@
 "qw" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
+/obj/structure/sign/poster/official/work_for_a_future/spawner/south{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/smooth,
@@ -3929,7 +3929,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/high_class_martini{
+/obj/structure/sign/poster/official/high_class_martini/spawner/south{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/edge{
@@ -4646,7 +4646,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/report_crimes{
+/obj/structure/sign/poster/official/report_crimes/spawner/south{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/smooth,
@@ -7524,7 +7524,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/no_erp/spawner/south{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/smooth,
