@@ -898,7 +898,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 
 /client/proc/check_ip_intel()
-	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
+	///we cant sleep here as it voids the ability for us to be added to the interview que
 	if (CONFIG_GET(string/ipintel_email))
 		var/failed = FALSE
 		var/datum/ipintel/res = get_ip_intel(address)
