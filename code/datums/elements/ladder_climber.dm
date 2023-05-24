@@ -20,6 +20,5 @@
 	if(!istype(target, /obj/structure/ladder))
 		return
 
-	var/obj/structure/ladder/laddy = target
-	INVOKE_ASYNC(laddy, PROC_REF(use), climber) // something in here sleeps and it's way too deep in the logic to find
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/obj/structure/ladder, use), climber) // something in here sleeps and it's way too deep in the logic to find
 	return COMPONENT_HOSTILE_NO_ATTACK
