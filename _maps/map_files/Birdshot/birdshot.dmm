@@ -68807,9 +68807,7 @@
 	pixel_x = 11
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
