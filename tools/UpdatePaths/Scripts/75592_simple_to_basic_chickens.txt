@@ -1,1 +1,4 @@
 /mob/living/simple_animal/chicken : /mob/living/basic/chicken{@OLD}
+
+## Updating for (INSERT PR NUMBER HERE) (OR CHECK THE BLAME IN CASE I FORGET)
+/mob/living/simple_animal/chick : /mob/living/basic/chick{@OLD}
