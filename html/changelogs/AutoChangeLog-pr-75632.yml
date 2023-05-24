@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - server: "qdel statistics are once again logged in qdel.log, instead of the otherwise typical json logging system"
