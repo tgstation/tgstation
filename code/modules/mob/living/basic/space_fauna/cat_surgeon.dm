@@ -46,8 +46,8 @@
 /mob/living/basic/cat_butcherer/proc/after_attack(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(target) && prob(65))
-		return // only a 35% chance of dismemberment
+	if(!iscarbon(target) || !prob(35))
+		return
 
 	var/mob/living/carbon/human/attacked = target
 	var/obj/item/organ/external/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/external/tail/cat)
