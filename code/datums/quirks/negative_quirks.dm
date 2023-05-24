@@ -535,6 +535,28 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
+/datum/quirk/item_quirk/parole
+	name = "Paroled Convict"
+	desc = "You were recently released from prison. You're still on parole, so you have to be on your best behavior."
+	icon = FA_ICON_HANDS_BOUND
+	value = -4
+	gain_text = span_danger("You're on parole, maybe see about getting out of that jumper.")
+	lose_text = span_notice("Seems like your tracking chip has deactivated.")
+	medical_record_text = "Patient has a tracking chip implanted in their body."
+	hardcore_value = 3
+
+/datum/quirk/item_quirk/parole/add_unique(client/client_source)
+	var/obj/item/implant/tracking/parole_implant = new(quirk_holder)
+	parole_implant.implant(quirk_holder, null, TRUE, TRUE)
+
+	// Give them a parole jumper.
+	for(var/obj/item/clothing/old_clothes as anything in ITEM_SLOT_ICLOTHING)
+		qdel(old_clothes)
+	var/obj/item/clothing/jumpsuit/prisoner/parole_jumper = new(quirk_holder)
+	quirk_holder.equip_in_one_of_slots(parole_jumper, ITEM_SLOT_ICLOTHING)
+
+
+
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
