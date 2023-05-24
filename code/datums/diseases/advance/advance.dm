@@ -137,6 +137,7 @@
 	infect(infectee, make_copy)
 	return TRUE
 
+
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act(seconds_per_tick, times_fired)
 	. = ..()
