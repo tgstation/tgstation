@@ -104,6 +104,3 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE 1
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
-
-/// Sent from /atom/movable/proc/change_loc() (atom/old_loc)
-#define COMSIG_MOVABLE_LOC_CHANGED "movable_loc_changed"
