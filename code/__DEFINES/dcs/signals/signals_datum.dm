@@ -7,6 +7,9 @@
 #define COMSIG_COMPONENT_ADDED "component_added"
 /// before a component is removed from a datum because of ClearFromParent: (/datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"
+/// when a datum wants to kill its component for any reason: (/datum/component)
+#define COMSIG_COMPONENT_KILL "component_kill"
+
 /// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 /// you should only be using this if you want to block deletion
 /// that's the only functional difference between it and COMSIG_PARENT_QDELETING, outside setting QDELETING to detect

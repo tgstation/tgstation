@@ -6,8 +6,6 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 *
 * Not-entirely-flightless domesticated birds that lay eggs, which are then consumed by humans and other animals.
 */
-
-
 /mob/living/basic/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -93,3 +91,4 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/chicken,
 	)
+

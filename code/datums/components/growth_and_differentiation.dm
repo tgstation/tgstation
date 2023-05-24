@@ -2,10 +2,7 @@
  * ### Growth and Differentiation Component: Used to randomly "grow" a creature into a new entity over its lifespan.
  *
  * If we are passed a typepath, we will 100% grow into that type. However, if we are not passed a typepath, we will pick one from a subtype of the parent we were applied to!
- *
- * Used for spiderlings to turn them into giant spiders.
  */
-
 /datum/component/growth_and_differentiation
 	/// What this mob turns into when fully grown.
 	var/growth_path
@@ -44,6 +41,8 @@
 	src.optional_checks = optional_checks
 	src.optional_grow_behavior = optional_grow_behavior
 
+	RegisterSignal(target, COMSIG_COMPONENT_KILL, PROC_REF(kill_processes))
+
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
@@ -52,11 +51,17 @@
 	return setup_growth_tracking()
 
 /datum/component/growth_and_differentiation/Destroy(force, silent)
-	. = ..()
 	deltimer(timer_id)
+	return ..()
 
 /datum/component/growth_and_differentiation/UnregisterFromParent()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/// In case the mob decides that we shouldn't grow anymore (permanently), we don't really wanna waste up the tick doing useless work. Let's stop everything and qdel ourselves.
+/datum/component/growth_and_differentiation/proc/kill_processes()
+	UnregisterFromParent()
+	STOP_PROCESSING(SSdcs, src)
+	qdel(src)
 
 /// What we invoke when the round starts so we can set up our timer.
 /datum/component/growth_and_differentiation/proc/comp_on_round_start()
