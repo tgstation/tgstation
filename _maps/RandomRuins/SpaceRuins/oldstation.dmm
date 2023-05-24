@@ -524,6 +524,11 @@
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/hall)
+"cc" = (
+/obj/item/stack/rods,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/dorms)
 "cd" = (
 /obj/machinery/door/airlock/command{
 	name = "Beta Station Access"
@@ -1060,15 +1065,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
-"ef" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/backpack/old,
-/obj/structure/closet,
-/obj/effect/spawner/random/clothing/backpack,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "eg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1213,12 +1209,16 @@
 "eB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/autolathe,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/south{
 	name = "Research Shutters Control";
 	id = "oldstation_rnd"
 	},
+/obj/structure/table,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/servo,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eF" = (
@@ -2606,6 +2606,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "kE" = (
@@ -2863,6 +2864,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"lz" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "lA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3554,14 +3561,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "oj" = (
-/obj/structure/table,
-/obj/item/stock_parts/servo,
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "ok" = (
@@ -3768,21 +3771,19 @@
 /area/ruin/space/ancientstation/charlie/dorms)
 "pl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/shard,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3790,7 +3791,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "po" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard,
 /turf/open/floor/iron,
@@ -4522,6 +4522,12 @@
 	},
 /turf/open/floor/engine/n2,
 /area/ruin/space/ancientstation/beta/atmos)
+"uE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/autolathe,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "uG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -5711,6 +5717,11 @@
 /obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"Ea" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/dorms)
 "Ed" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -5931,11 +5942,6 @@
 /obj/item/stack/rods,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"FE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/iv_drip,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/delta/rnd)
 "FG" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -8230,6 +8236,9 @@
 "WS" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/trash/garbage,
+/obj/structure/fluff/broken_flooring{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "WW" = (
@@ -8518,6 +8527,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Zl" = (
 /obj/machinery/atmospherics/components/binary/pump/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Zm" = (
@@ -8571,7 +8581,6 @@
 /area/ruin/space/ancientstation/beta/hall)
 "ZI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mirror/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -8579,6 +8588,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/unlocked,
 /obj/effect/mapping_helpers/apc/away_general_access,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "ZJ" = (
@@ -10310,7 +10320,7 @@ JA
 Cj
 fY
 oO
-Bz
+lz
 Kw
 oT
 FG
@@ -12234,7 +12244,7 @@ wb
 bR
 aG
 nk
-ef
+mz
 gZ
 kN
 kD
@@ -12305,7 +12315,7 @@ bN
 bN
 pi
 pk
-ns
+Ea
 aG
 UP
 UP
@@ -12503,7 +12513,7 @@ Aa
 kP
 bT
 kp
-pj
+cc
 mc
 UP
 Uu
@@ -14202,7 +14212,7 @@ kw
 TT
 kw
 GZ
-ca
+uE
 Sa
 DX
 hY
@@ -14794,7 +14804,7 @@ bD
 Ed
 kw
 JP
-FE
+kw
 jW
 sJ
 wx
