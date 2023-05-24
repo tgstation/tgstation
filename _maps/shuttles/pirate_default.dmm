@@ -696,9 +696,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/structure/sign/poster/contraband/revolver{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/revolver/spawner/east,
 /obj/item/storage/backpack/duffelbag/syndie/x4{
 	pixel_y = 8
 	},
@@ -708,9 +706,7 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
-/obj/structure/sign/poster/contraband/bountyhunters{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/bountyhunters/spawner/north,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (

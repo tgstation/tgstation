@@ -3528,9 +3528,7 @@
 /area/station/hallway/primary/starboard)
 "bAI" = (
 /obj/structure/chair/office,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/spawner/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
@@ -34430,9 +34428,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "mBC" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/spawner/north,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "mBQ" = (
@@ -52917,9 +52913,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "sKS" = (
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/pda_ad/spawner/north,
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
@@ -53602,9 +53596,7 @@
 /area/station/security)
 "sVp" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/corporate_perks_vacation/spawner/east,
 /obj/item/newspaper,
 /obj/item/newspaper{
 	pixel_y = 5
@@ -61987,8 +61979,7 @@
 /area/station/medical/storage)
 "vFn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = 32;
+/obj/structure/sign/poster/official/no_erp/spawner/east{
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/siding/wood{
