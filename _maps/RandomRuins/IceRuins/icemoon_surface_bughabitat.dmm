@@ -178,7 +178,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "uB" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/structure/chair/pew/left{
 	dir = 8
 	},
@@ -205,7 +205,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "xq" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26"
 	},
@@ -322,7 +322,7 @@
 /obj/item/stack/ducts/fifty{
 	amount = 23
 	},
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Nv" = (

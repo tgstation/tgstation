@@ -25043,7 +25043,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Civilian - Recreational Area North-West"
 	},
-/obj/item/toy/plush/space_lizard_plushie,
+/obj/item/toy/plush/lizard_plushie/space/green,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hMs" = (

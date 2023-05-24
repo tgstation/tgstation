@@ -1,0 +1,4 @@
+author: "DaydreamIQ"
+delete-after: True
+changes:
+  - balance: "Hulk damage to portals lowered to 30 (Was 150)"

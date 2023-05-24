@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - balance: "You can no longer augment golems"
+  - balance: "You can no longer amputate undismemberable traits"

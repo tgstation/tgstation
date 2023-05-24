@@ -18,6 +18,10 @@
 		/datum/surgery_step/sever_limb,
 	)
 
+/datum/surgery/amputation/can_start(mob/user, mob/living/patient)
+	if(HAS_TRAIT(target, TRAIT_NODISMEMBER))
+		return FALSE
+	return ..()
 
 /datum/surgery_step/sever_limb
 	name = "sever limb (circular saw)"
