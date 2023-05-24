@@ -342,12 +342,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "uk" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "uF" = (
@@ -396,9 +392,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "yG" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "yJ" = (
@@ -699,9 +693,7 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "MH" = (
@@ -772,9 +764,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Rh" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/mineral/titanium/purple,

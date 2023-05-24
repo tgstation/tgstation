@@ -10,10 +10,10 @@
 
 # Tinted frosted
 
-/obj/structure/window/reinforced/tinted/frost{dir = 1} : /obj/structure/window/reinforced/tinted/frost/spawner/directional/north{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/tinted/frost{dir = @UNSET} : /obj/structure/window/reinforced/tinted/frost/spawner/directional/south{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/tinted/frost{dir = 4} : /obj/structure/window/reinforced/tinted/frost/spawner/directional/east{@OLD;dir=@SKIP}
-/obj/structure/window/reinforced/tinted/frost{dir = 8} : /obj/structure/window/reinforced/tinted/frost/spawner/directional/west{@OLD;dir=@SKIP}
+/obj/structure/window/reinforced/tinted/frosted{dir = 1} : /obj/structure/window/reinforced/tinted/frosted/spawner/directional/north{@OLD;dir=@SKIP}
+/obj/structure/window/reinforced/tinted/frosted{dir = @UNSET} : /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south{@OLD;dir=@SKIP}
+/obj/structure/window/reinforced/tinted/frosted{dir = 4} : /obj/structure/window/reinforced/tinted/frosted/spawner/directional/east{@OLD;dir=@SKIP}
+/obj/structure/window/reinforced/tinted/frosted{dir = 8} : /obj/structure/window/reinforced/tinted/frosted/spawner/directional/west{@OLD;dir=@SKIP}
 
 # Unanchored
 

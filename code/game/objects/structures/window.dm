@@ -444,7 +444,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 /obj/structure/window/unanchored
 	anchored = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
@@ -577,7 +577,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner, 0)
 
 /obj/structure/window/plasma
 	name = "plasma window"
@@ -642,13 +642,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	name = "tinted window"
 	icon_state = "twindow"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/spawner, 0)
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spawner, 0)
 
 /* Full Tile Windows (more atom_integrity) */
 
