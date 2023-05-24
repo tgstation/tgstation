@@ -89,6 +89,8 @@
 /obj/effect/decal/cleanable/dirt/dust
 	name = "dust"
 	desc = "A thin layer of dust coating the floor."
+	icon_state = "dust"
+	base_icon_state = "dust"
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
