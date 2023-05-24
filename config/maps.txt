@@ -44,6 +44,10 @@ map northstar
 	votable
 endmap
 
+map boxstation
+	minplayers 0
+	votable
+endmap
 map runtimestation
 endmap
 
