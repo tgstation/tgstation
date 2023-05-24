@@ -526,12 +526,12 @@
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
-	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
+	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a prosthetic!"
 	icon = "tg-prosthetic-leg"
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it's randomized at roundstart
+	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it could be randomized at roundstart
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 	/// The slot to replace, in string form
 	var/slot_string = "limb"
@@ -539,6 +539,7 @@
 	var/obj/item/bodypart/old_limb
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
+	//I still gotta change this to work with the preferences
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/prosthetic
