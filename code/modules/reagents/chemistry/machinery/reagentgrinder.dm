@@ -173,14 +173,23 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
+		if(!I.contents.len)
+			to_chat(user, span_notice("[I] is empty!"))
+			return TRUE
+
 		var/list/inserted = list()
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
-			else
-				to_chat(user, span_notice("You fill [src] to the brim."))
+			inserted = list()
+		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+
+		if(!I.contents.len)
+			to_chat(user, span_notice("You empty [I] into [src]."))
+		else
+			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)

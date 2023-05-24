@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Milk no longer harms the potency of mushrooms. Apparently it's good for them?"
+  - balance: "Radium now does slightly more tox damage than Uranium"
+  - code_imp: "Removed a ton of boilerplate from chem hydro interactions"

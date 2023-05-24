@@ -662,6 +662,7 @@
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
+		/obj/item/storage/pill_bottle/sansufentanyl = 2,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
 		/obj/item/reagent_containers/cup/bottle/cold = 1,
 		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,
