@@ -5115,6 +5115,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
+"bEK" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "bEL" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -47812,6 +47819,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
+"phx" = (
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "phB" = (
 /obj/machinery/vending/coffee,
 /obj/structure/sign/poster/official/science{
@@ -232740,7 +232752,7 @@ hVc
 jII
 dnq
 ylU
-pua
+bEK
 jII
 bln
 hcL
@@ -232995,7 +233007,7 @@ iIA
 iIA
 eAV
 jII
-okb
+phx
 ylU
 dnq
 jII
