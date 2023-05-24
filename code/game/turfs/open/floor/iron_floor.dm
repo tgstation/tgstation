@@ -524,6 +524,7 @@
 	layer = CATWALK_LAYER
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	tiled_dirt = FALSE
 
 /turf/open/floor/iron/broken/Initialize(mapload)
 	. = ..()
@@ -538,12 +539,10 @@ MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/corner, 0)
 /turf/open/floor/iron/broken/singular
 	base_icon_state = "singular"
 	icon_state = "singular"
-	tiled_dirt = FALSE
 
 /turf/open/floor/iron/broken/pile
 	base_icon_state = "pile"
 	icon_state = "pile"
-	tiled_dirt = FALSE
 
 /turf/open/floor/iron/broken/side
 	base_icon_state = "side"
