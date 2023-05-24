@@ -52,8 +52,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "p" = (
-/mob/living/simple_animal/hostile/lightgeist{
-	AIStatus = 1;
+/mob/living/basic/lightgeist{
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
@@ -89,8 +88,7 @@
 /area/ruin/unpowered/gaia)
 "B" = (
 /obj/structure/flora/grass/jungle/a/style_random,
-/mob/living/simple_animal/hostile/lightgeist{
-	AIStatus = 1;
+/mob/living/basic/lightgeist{
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
