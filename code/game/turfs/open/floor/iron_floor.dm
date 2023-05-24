@@ -552,3 +552,20 @@ MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/corner, 0)
 /turf/open/floor/iron/broken/corner
 	base_icon_state = "corner"
 	icon_state = "corner"
+
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/singular/airless, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/pile/airless, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/side/airless, 0)
+MAPPING_DIRECTIONAL_HELPERS(/turf/open/floor/iron/broken/corner/airless, 0)
+
+/turf/open/floor/iron/broken/singular/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/broken/pile/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/broken/side/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/broken/corner/airless
+	initial_gas_mix = AIRLESS_ATMOS
