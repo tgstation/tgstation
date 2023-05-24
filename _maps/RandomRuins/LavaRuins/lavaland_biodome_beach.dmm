@@ -343,9 +343,7 @@
 /area/ruin/powered/beach)
 "kb" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "kd" = (
@@ -729,9 +727,7 @@
 /area/ruin/powered/beach)
 "zK" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/starkist{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/starkist/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "zT" = (
@@ -937,9 +933,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Gf" = (
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "GA" = (

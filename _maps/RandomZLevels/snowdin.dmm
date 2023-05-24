@@ -257,9 +257,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/kudzu{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/kudzu/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
@@ -5226,9 +5224,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/item/wirecutters,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8

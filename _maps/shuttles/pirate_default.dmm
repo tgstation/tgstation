@@ -708,9 +708,7 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
-/obj/structure/sign/poster/contraband/bountyhunters{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/bountyhunters/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (

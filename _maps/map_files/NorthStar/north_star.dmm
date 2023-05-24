@@ -9193,9 +9193,7 @@
 /area/station/engineering/engine_smes)
 "cjm" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/structure/sign/poster/official/moth_meth{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/moth_meth/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10368,9 +10366,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/south,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/fore)
 "cBa" = (
@@ -10602,9 +10598,7 @@
 /obj/item/clothing/suit/toggle/owlwings/griffinwings,
 /obj/item/clothing/under/costume/griffin,
 /obj/item/clothing/shoes/griffin,
-/obj/structure/sign/poster/contraband/the_griffin{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/the_griffin/directional/north,
 /obj/structure/closet/cabinet,
 /turf/open/floor/wood/parquet,
 /area/station/maintenance/floor2/port/aft)
@@ -33672,9 +33666,7 @@
 /area/station/service/theater)
 "iUe" = (
 /obj/machinery/computer/pandemic,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/periodic_table/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
@@ -42917,9 +42909,7 @@
 "lmV" = (
 /obj/machinery/vending/cola/pwr_game,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/pwr_game/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "lmW" = (
@@ -46630,9 +46620,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/port/aft)
 "mjj" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/south,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -55132,9 +55120,7 @@
 /area/station/maintenance/floor4/starboard/fore)
 "olZ" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/sign/poster/contraband/grey_tide{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/grey_tide/directional/north,
 /turf/open/floor/iron/dark/corner,
 /area/station/commons/storage/primary)
 "omh" = (
@@ -59192,9 +59178,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north,
 /turf/open/floor/wood,
 /area/station/maintenance/floor1/port/aft)
 "psJ" = (
@@ -61489,9 +61473,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -67031,9 +67013,7 @@
 /area/station/service/hydroponics)
 "ruE" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/contraband/have_a_puff{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/have_a_puff/directional/north,
 /obj/machinery/vending/snack/blue,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
@@ -70967,9 +70947,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "sBY" = (
-/obj/structure/sign/poster/contraband/hacking_guide{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/duct,
@@ -71154,9 +71132,7 @@
 	pixel_y = 4
 	},
 /obj/item/knife/butcher,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "sFt" = (
@@ -74219,9 +74195,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "tvB" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/pwr_game/directional/north,
 /turf/open/floor/wood,
 /area/station/maintenance/floor2/starboard)
 "tvH" = (
