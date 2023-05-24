@@ -1089,3 +1089,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait for rocks to randomly drop ore
 #define FOOD_JOB_MINER "food_job_miner"
 #define GLUED_ITEM_TRAIT "glued-item"
+#define TRAIT_BELT_SATCHEL "belt_satchel"
