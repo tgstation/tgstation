@@ -46,25 +46,24 @@
 	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_REFRESH_ORGANS)
 
 // The best stuff there is. For testing/debugging.
-/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
+/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_waterlevel(round(volume))
+	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,5))
 	mytray.adjust_weedlevel(-rand(1,5))
-	if(chems.has_reagent(type, 3))
-		switch(rand(100))
-			if(66  to 100)
-				mytray.mutatespecie()
-			if(33 to 65)
-				mytray.mutateweed()
-			if(1   to 32)
-				mytray.mutatepest(user)
-			else
-				if(prob(20))
-					mytray.visible_message(span_warning("Nothing happens..."))
+	if(volume < 3)
+		return
+
+	switch(rand(100))
+		if(66 to 100)
+			mytray.mutatespecie()
+		if(33 to 65)
+			mytray.mutateweed()
+		if(1 to 32)
+			mytray.mutatepest(user)
+		else
+			if(prob(20))
+				mytray.visible_message(span_warning("Nothing happens..."))
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.heal_bodypart_damage(5 * REM * seconds_per_tick, 5 * REM * seconds_per_tick, 0, FALSE, affected_bodytype)
@@ -167,12 +166,9 @@
 	return TRUE
 
 // Healing
-/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
-	mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
+/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 3))
+	mytray.adjust_toxic(-round(volume * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -907,10 +903,7 @@
 		description += " It appears to be pulsing with a warm pink light."
 
 // FEED ME SEYMOUR
-/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
+/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.spawnplant()
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead
