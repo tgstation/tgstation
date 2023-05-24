@@ -1203,9 +1203,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "ql" = (
 /obj/item/trash/cheesie,
-/obj/structure/sign/poster/ripped{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/ripped/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1

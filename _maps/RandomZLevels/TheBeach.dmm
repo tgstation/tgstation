@@ -534,9 +534,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
-/obj/structure/sign/poster/ripped{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/ripped/directional/east,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "bW" = (
