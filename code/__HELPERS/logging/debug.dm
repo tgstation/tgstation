@@ -35,8 +35,9 @@
 	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
 
 /// Logging for hard deletes
-/proc/log_qdel(text, list/data)
-	logger.Log(LOG_CATEGORY_DEBUG_QDEL, text, data)
+/// Done once, at roundend. Really just a text file
+/proc/log_qdel(text)
+	WRITE_LOG(GLOB.world_qdel_log, "QDEL: [text]")
 
 /* Log to the logfile only. */
 /proc/log_runtime(text, list/data)
