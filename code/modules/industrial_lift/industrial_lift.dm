@@ -482,11 +482,13 @@ GLOBAL_LIST_EMPTY(lifts)
 		mover.loc = (mover_new_loc = get_step(mover, movement_direction))
 		mover_new_area = mover_new_loc.loc
 
+
 		if(mover_old_area != mover_new_area)
 			mover_old_area.Exited(mover, movement_direction)
 			mover_new_area.Entered(mover, mover_new_area)
 
 		mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
+
 
 	return TRUE
 
