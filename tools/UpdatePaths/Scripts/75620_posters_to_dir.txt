@@ -2,664 +2,664 @@
 
 # Contraband/Silly Posters
 
-/obj/structure/sign/poster/contraband/free_tonto{dir = 1} : /obj/structure/sign/poster/contraband/free_tonto/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_tonto{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_tonto/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_tonto{dir = 4} : /obj/structure/sign/poster/contraband/free_tonto/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_tonto{dir = 8} : /obj/structure/sign/poster/contraband/free_tonto/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/atmosia_independence{dir = 1} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/atmosia_independence{dir = @UNSET} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/atmosia_independence{dir = 4} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/atmosia_independence{dir = 8} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/fun_police{dir = 1} : /obj/structure/sign/poster/contraband/fun_police/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/fun_police{dir = @UNSET} : /obj/structure/sign/poster/contraband/fun_police/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/fun_police{dir = 4} : /obj/structure/sign/poster/contraband/fun_police/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/fun_police{dir = 8} : /obj/structure/sign/poster/contraband/fun_police/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 1} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = @UNSET} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 4} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lusty_xenomorph{dir = 8} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 1} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 4} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_recruitment{dir = 8} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/clown{dir = 1} : /obj/structure/sign/poster/contraband/clown/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/clown{dir = @UNSET} : /obj/structure/sign/poster/contraband/clown/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/clown{dir = 4} : /obj/structure/sign/poster/contraband/clown/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/clown{dir = 8} : /obj/structure/sign/poster/contraband/clown/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/smoke{dir = 1} : /obj/structure/sign/poster/contraband/smoke/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/smoke{dir = @UNSET} : /obj/structure/sign/poster/contraband/smoke/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/smoke{dir = 4} : /obj/structure/sign/poster/contraband/smoke/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/smoke{dir = 8} : /obj/structure/sign/poster/contraband/smoke/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/grey_tide{dir = 1} : /obj/structure/sign/poster/contraband/grey_tide/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/grey_tide{dir = @UNSET} : /obj/structure/sign/poster/contraband/grey_tide/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/grey_tide{dir = 4} : /obj/structure/sign/poster/contraband/grey_tide/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/grey_tide{dir = 8} : /obj/structure/sign/poster/contraband/grey_tide/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/missing_gloves{dir = 1} : /obj/structure/sign/poster/contraband/missing_gloves/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/missing_gloves{dir = @UNSET} : /obj/structure/sign/poster/contraband/missing_gloves/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/missing_gloves{dir = 4} : /obj/structure/sign/poster/contraband/missing_gloves/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/missing_gloves{dir = 8} : /obj/structure/sign/poster/contraband/missing_gloves/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/hacking_guide{dir = 1} : /obj/structure/sign/poster/contraband/hacking_guide/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/hacking_guide{dir = @UNSET} : /obj/structure/sign/poster/contraband/hacking_guide/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/hacking_guide{dir = 4} : /obj/structure/sign/poster/contraband/hacking_guide/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/hacking_guide{dir = 8} : /obj/structure/sign/poster/contraband/hacking_guide/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/rip_badger{dir = 1} : /obj/structure/sign/poster/contraband/rip_badger/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rip_badger{dir = @UNSET} : /obj/structure/sign/poster/contraband/rip_badger/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rip_badger{dir = 4} : /obj/structure/sign/poster/contraband/rip_badger/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rip_badger{dir = 8} : /obj/structure/sign/poster/contraband/rip_badger/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 1} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = @UNSET} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 4} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{dir = 8} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/donut_corp{dir = 1} : /obj/structure/sign/poster/contraband/donut_corp/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donut_corp{dir = @UNSET} : /obj/structure/sign/poster/contraband/donut_corp/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donut_corp{dir = 4} : /obj/structure/sign/poster/contraband/donut_corp/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donut_corp{dir = 8} : /obj/structure/sign/poster/contraband/donut_corp/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/eat{dir = 1} : /obj/structure/sign/poster/contraband/eat/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eat{dir = @UNSET} : /obj/structure/sign/poster/contraband/eat/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eat{dir = 4} : /obj/structure/sign/poster/contraband/eat/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eat{dir = 8} : /obj/structure/sign/poster/contraband/eat/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/tools{dir = 1} : /obj/structure/sign/poster/contraband/tools/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tools{dir = @UNSET} : /obj/structure/sign/poster/contraband/tools/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tools{dir = 4} : /obj/structure/sign/poster/contraband/tools/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tools{dir = 8} : /obj/structure/sign/poster/contraband/tools/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/power{dir = 1} : /obj/structure/sign/poster/contraband/power/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/power{dir = @UNSET} : /obj/structure/sign/poster/contraband/power/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/power{dir = 4} : /obj/structure/sign/poster/contraband/power/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/power{dir = 8} : /obj/structure/sign/poster/contraband/power/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/space_cube{dir = 1} : /obj/structure/sign/poster/contraband/space_cube/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cube{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_cube/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cube{dir = 4} : /obj/structure/sign/poster/contraband/space_cube/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cube{dir = 8} : /obj/structure/sign/poster/contraband/space_cube/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/communist_state{dir = 1} : /obj/structure/sign/poster/contraband/communist_state/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/communist_state{dir = @UNSET} : /obj/structure/sign/poster/contraband/communist_state/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/communist_state{dir = 4} : /obj/structure/sign/poster/contraband/communist_state/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/communist_state{dir = 8} : /obj/structure/sign/poster/contraband/communist_state/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/lamarr{dir = 1} : /obj/structure/sign/poster/contraband/lamarr/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lamarr{dir = @UNSET} : /obj/structure/sign/poster/contraband/lamarr/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lamarr{dir = 4} : /obj/structure/sign/poster/contraband/lamarr/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lamarr{dir = 8} : /obj/structure/sign/poster/contraband/lamarr/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 1} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_1{dir = @UNSET} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 4} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_1{dir = 8} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 1} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_2{dir = @UNSET} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 4} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/borg_fancy_2{dir = 8} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/kss13{dir = 1} : /obj/structure/sign/poster/contraband/kss13/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kss13{dir = @UNSET} : /obj/structure/sign/poster/contraband/kss13/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kss13{dir = 4} : /obj/structure/sign/poster/contraband/kss13/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kss13{dir = 8} : /obj/structure/sign/poster/contraband/kss13/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/rebels_unite{dir = 1} : /obj/structure/sign/poster/contraband/rebels_unite/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rebels_unite{dir = @UNSET} : /obj/structure/sign/poster/contraband/rebels_unite/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rebels_unite{dir = 4} : /obj/structure/sign/poster/contraband/rebels_unite/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rebels_unite{dir = 8} : /obj/structure/sign/poster/contraband/rebels_unite/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/c20r{dir = 1} : /obj/structure/sign/poster/contraband/c20r/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/c20r{dir = @UNSET} : /obj/structure/sign/poster/contraband/c20r/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/c20r{dir = 4} : /obj/structure/sign/poster/contraband/c20r/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/c20r{dir = 8} : /obj/structure/sign/poster/contraband/c20r/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/have_a_puff{dir = 1} : /obj/structure/sign/poster/contraband/have_a_puff/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/have_a_puff{dir = @UNSET} : /obj/structure/sign/poster/contraband/have_a_puff/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/have_a_puff{dir = 4} : /obj/structure/sign/poster/contraband/have_a_puff/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/have_a_puff{dir = 8} : /obj/structure/sign/poster/contraband/have_a_puff/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/revolver{dir = 1} : /obj/structure/sign/poster/contraband/revolver/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/revolver{dir = @UNSET} : /obj/structure/sign/poster/contraband/revolver/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/revolver{dir = 4} : /obj/structure/sign/poster/contraband/revolver/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/revolver{dir = 8} : /obj/structure/sign/poster/contraband/revolver/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/d_day_promo{dir = 1} : /obj/structure/sign/poster/contraband/d_day_promo/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/d_day_promo{dir = @UNSET} : /obj/structure/sign/poster/contraband/d_day_promo/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/d_day_promo{dir = 4} : /obj/structure/sign/poster/contraband/d_day_promo/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/d_day_promo{dir = 8} : /obj/structure/sign/poster/contraband/d_day_promo/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 1} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_pistol{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 4} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndicate_pistol{dir = 8} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/energy_swords{dir = 1} : /obj/structure/sign/poster/contraband/energy_swords/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/energy_swords{dir = @UNSET} : /obj/structure/sign/poster/contraband/energy_swords/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/energy_swords{dir = 4} : /obj/structure/sign/poster/contraband/energy_swords/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/energy_swords{dir = 8} : /obj/structure/sign/poster/contraband/energy_swords/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/red_rum{dir = 1} : /obj/structure/sign/poster/contraband/red_rum/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/red_rum{dir = @UNSET} : /obj/structure/sign/poster/contraband/red_rum/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/red_rum{dir = 4} : /obj/structure/sign/poster/contraband/red_rum/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/red_rum{dir = 8} : /obj/structure/sign/poster/contraband/red_rum/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/cc64k_ad{dir = 1} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cc64k_ad{dir = @UNSET} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cc64k_ad{dir = 4} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cc64k_ad{dir = 8} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/punch_shit{dir = 1} : /obj/structure/sign/poster/contraband/punch_shit/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/punch_shit{dir = @UNSET} : /obj/structure/sign/poster/contraband/punch_shit/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/punch_shit{dir = 4} : /obj/structure/sign/poster/contraband/punch_shit/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/punch_shit{dir = 8} : /obj/structure/sign/poster/contraband/punch_shit/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/the_griffin{dir = 1} : /obj/structure/sign/poster/contraband/the_griffin/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_griffin{dir = @UNSET} : /obj/structure/sign/poster/contraband/the_griffin/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_griffin{dir = 4} : /obj/structure/sign/poster/contraband/the_griffin/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_griffin{dir = 8} : /obj/structure/sign/poster/contraband/the_griffin/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/lizard{dir = 1} : /obj/structure/sign/poster/contraband/lizard/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lizard{dir = @UNSET} : /obj/structure/sign/poster/contraband/lizard/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lizard{dir = 4} : /obj/structure/sign/poster/contraband/lizard/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/lizard{dir = 8} : /obj/structure/sign/poster/contraband/lizard/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/free_drone{dir = 1} : /obj/structure/sign/poster/contraband/free_drone/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_drone{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_drone/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_drone{dir = 4} : /obj/structure/sign/poster/contraband/free_drone/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_drone{dir = 8} : /obj/structure/sign/poster/contraband/free_drone/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 1} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = @UNSET} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 4} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{dir = 8} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 1} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/robust_softdrinks{dir = @UNSET} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 4} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/robust_softdrinks{dir = 8} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/shamblers_juice{dir = 1} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/shamblers_juice{dir = @UNSET} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/shamblers_juice{dir = 4} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/shamblers_juice{dir = 8} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/pwr_game{dir = 1} : /obj/structure/sign/poster/contraband/pwr_game/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pwr_game{dir = @UNSET} : /obj/structure/sign/poster/contraband/pwr_game/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pwr_game{dir = 4} : /obj/structure/sign/poster/contraband/pwr_game/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pwr_game{dir = 8} : /obj/structure/sign/poster/contraband/pwr_game/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/starkist{dir = 1} : /obj/structure/sign/poster/contraband/starkist/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/starkist{dir = @UNSET} : /obj/structure/sign/poster/contraband/starkist/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/starkist{dir = 4} : /obj/structure/sign/poster/contraband/starkist/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/starkist{dir = 8} : /obj/structure/sign/poster/contraband/starkist/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/space_cola{dir = 1} : /obj/structure/sign/poster/contraband/space_cola/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cola{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_cola/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cola{dir = 4} : /obj/structure/sign/poster/contraband/space_cola/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_cola{dir = 8} : /obj/structure/sign/poster/contraband/space_cola/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/space_up{dir = 1} : /obj/structure/sign/poster/contraband/space_up/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_up{dir = @UNSET} : /obj/structure/sign/poster/contraband/space_up/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_up{dir = 4} : /obj/structure/sign/poster/contraband/space_up/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/space_up{dir = 8} : /obj/structure/sign/poster/contraband/space_up/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/kudzu{dir = 1} : /obj/structure/sign/poster/contraband/kudzu/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kudzu{dir = @UNSET} : /obj/structure/sign/poster/contraband/kudzu/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kudzu{dir = 4} : /obj/structure/sign/poster/contraband/kudzu/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/kudzu{dir = 8} : /obj/structure/sign/poster/contraband/kudzu/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/masked_men{dir = 1} : /obj/structure/sign/poster/contraband/masked_men/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/masked_men{dir = @UNSET} : /obj/structure/sign/poster/contraband/masked_men/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/masked_men{dir = 4} : /obj/structure/sign/poster/contraband/masked_men/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/masked_men{dir = 8} : /obj/structure/sign/poster/contraband/masked_men/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/free_key{dir = 1} : /obj/structure/sign/poster/contraband/free_key/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_key{dir = @UNSET} : /obj/structure/sign/poster/contraband/free_key/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_key{dir = 4} : /obj/structure/sign/poster/contraband/free_key/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/free_key{dir = 8} : /obj/structure/sign/poster/contraband/free_key/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/bountyhunters{dir = 1} : /obj/structure/sign/poster/contraband/bountyhunters/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/bountyhunters{dir = @UNSET} : /obj/structure/sign/poster/contraband/bountyhunters/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/bountyhunters{dir = 4} : /obj/structure/sign/poster/contraband/bountyhunters/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/bountyhunters{dir = 8} : /obj/structure/sign/poster/contraband/bountyhunters/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 1} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = @UNSET} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 4} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{dir = 8} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/got_wood{dir = 1} : /obj/structure/sign/poster/contraband/got_wood/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/got_wood{dir = @UNSET} : /obj/structure/sign/poster/contraband/got_wood/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/got_wood{dir = 4} : /obj/structure/sign/poster/contraband/got_wood/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/got_wood{dir = 8} : /obj/structure/sign/poster/contraband/got_wood/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 1} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = @UNSET} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 4} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/moffuchis_pizza{dir = 8} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/donk_co{dir = 1} : /obj/structure/sign/poster/contraband/donk_co/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donk_co{dir = @UNSET} : /obj/structure/sign/poster/contraband/donk_co/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donk_co{dir = 4} : /obj/structure/sign/poster/contraband/donk_co/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/donk_co{dir = 8} : /obj/structure/sign/poster/contraband/donk_co/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 1} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = @UNSET} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 4} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/cybersun_six_hundred{dir = 8} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 1} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = @UNSET} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 4} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{dir = 8} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 1} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = @UNSET} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 4} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/waffle_corp_rifles{dir = 8} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 1} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = @UNSET} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 4} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/gorlex_recruitment{dir = 8} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 1} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/self_ai_liberation{dir = @UNSET} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 4} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/self_ai_liberation{dir = 8} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/arc_slimes{dir = 1} : /obj/structure/sign/poster/contraband/arc_slimes/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/arc_slimes{dir = @UNSET} : /obj/structure/sign/poster/contraband/arc_slimes/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/arc_slimes{dir = 4} : /obj/structure/sign/poster/contraband/arc_slimes/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/arc_slimes{dir = 8} : /obj/structure/sign/poster/contraband/arc_slimes/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/imperial_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/imperial_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/soviet_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/soviet_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 1} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/andromeda_bitters{dir = @UNSET} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 4} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/andromeda_bitters{dir = 8} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/blasto_detergent{dir = 1} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blasto_detergent{dir = @UNSET} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blasto_detergent{dir = 4} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blasto_detergent{dir = 8} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/eistee{dir = 1} : /obj/structure/sign/poster/contraband/eistee/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eistee{dir = @UNSET} : /obj/structure/sign/poster/contraband/eistee/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eistee{dir = 4} : /obj/structure/sign/poster/contraband/eistee/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/eistee{dir = 8} : /obj/structure/sign/poster/contraband/eistee/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/little_fruits{dir = 1} : /obj/structure/sign/poster/contraband/little_fruits/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/little_fruits{dir = @UNSET} : /obj/structure/sign/poster/contraband/little_fruits/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/little_fruits{dir = 4} : /obj/structure/sign/poster/contraband/little_fruits/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/little_fruits{dir = 8} : /obj/structure/sign/poster/contraband/little_fruits/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/jumbo_bar{dir = 1} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/jumbo_bar{dir = @UNSET} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/jumbo_bar{dir = 4} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/jumbo_bar{dir = 8} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/calada_jelly{dir = 1} : /obj/structure/sign/poster/contraband/calada_jelly/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/calada_jelly{dir = @UNSET} : /obj/structure/sign/poster/contraband/calada_jelly/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/calada_jelly{dir = 4} : /obj/structure/sign/poster/contraband/calada_jelly/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/calada_jelly{dir = 8} : /obj/structure/sign/poster/contraband/calada_jelly/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/triumphal_arch{dir = 1} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/triumphal_arch{dir = @UNSET} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/triumphal_arch{dir = 4} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/triumphal_arch{dir = 8} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/mothic_rations{dir = 1} : /obj/structure/sign/poster/contraband/mothic_rations/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/mothic_rations{dir = @UNSET} : /obj/structure/sign/poster/contraband/mothic_rations/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/mothic_rations{dir = 4} : /obj/structure/sign/poster/contraband/mothic_rations/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/mothic_rations{dir = 8} : /obj/structure/sign/poster/contraband/mothic_rations/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/wildcat{dir = 1} : /obj/structure/sign/poster/contraband/wildcat/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/wildcat{dir = @UNSET} : /obj/structure/sign/poster/contraband/wildcat/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/wildcat{dir = 4} : /obj/structure/sign/poster/contraband/wildcat/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/wildcat{dir = 8} : /obj/structure/sign/poster/contraband/wildcat/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/babel_device{dir = 1} : /obj/structure/sign/poster/contraband/babel_device/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/babel_device{dir = @UNSET} : /obj/structure/sign/poster/contraband/babel_device/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/babel_device{dir = 4} : /obj/structure/sign/poster/contraband/babel_device/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/babel_device{dir = 8} : /obj/structure/sign/poster/contraband/babel_device/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/pizza_imperator{dir = 1} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pizza_imperator{dir = @UNSET} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pizza_imperator{dir = 4} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/pizza_imperator{dir = 8} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/thunderdrome{dir = 1} : /obj/structure/sign/poster/contraband/thunderdrome/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/thunderdrome{dir = @UNSET} : /obj/structure/sign/poster/contraband/thunderdrome/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/thunderdrome{dir = 4} : /obj/structure/sign/poster/contraband/thunderdrome/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/thunderdrome{dir = 8} : /obj/structure/sign/poster/contraband/thunderdrome/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/rush_propaganda{dir = 1} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rush_propaganda{dir = @UNSET} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rush_propaganda{dir = 4} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/rush_propaganda{dir = 8} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 1} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = @UNSET} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 4} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tipper_cream_soda{dir = 8} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 1} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tea_over_tizira{dir = @UNSET} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 4} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/tea_over_tizira{dir = 8} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/syndiemoth{dir = 1} : /obj/structure/sign/poster/contraband/syndiemoth/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndiemoth{dir = @UNSET} : /obj/structure/sign/poster/contraband/syndiemoth/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndiemoth{dir = 4} : /obj/structure/sign/poster/contraband/syndiemoth/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/syndiemoth{dir = 8} : /obj/structure/sign/poster/contraband/syndiemoth/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/microwave{dir = 1} : /obj/structure/sign/poster/contraband/microwave/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/microwave{dir = @UNSET} : /obj/structure/sign/poster/contraband/microwave/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/microwave{dir = 4} : /obj/structure/sign/poster/contraband/microwave/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/microwave{dir = 8} : /obj/structure/sign/poster/contraband/microwave/directional/west{@OLD;dir=@SKIP}
-
-/obj/structure/sign/poster/contraband/blood_geometer{dir = 1} : /obj/structure/sign/poster/contraband/blood_geometer/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blood_geometer{dir = @UNSET} : /obj/structure/sign/poster/contraband/blood_geometer/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blood_geometer{dir = 4} : /obj/structure/sign/poster/contraband/blood_geometer/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/contraband/blood_geometer{dir = 8} : /obj/structure/sign/poster/contraband/blood_geometer/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_tonto/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_tonto/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_tonto/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_tonto{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_tonto/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/atmosia_independence{pixel_y = 32} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{pixel_y = -32} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{pixel_y = 32} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/atmosia_independence{pixel_y = -32} : /obj/structure/sign/poster/contraband/atmosia_independence/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/fun_police{pixel_y = 32} : /obj/structure/sign/poster/contraband/fun_police/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{pixel_y = -32} : /obj/structure/sign/poster/contraband/fun_police/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{pixel_y = 32} : /obj/structure/sign/poster/contraband/fun_police/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/fun_police{pixel_y = -32} : /obj/structure/sign/poster/contraband/fun_police/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lusty_xenomorph{pixel_y = 32} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{pixel_y = -32} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{pixel_y = 32} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lusty_xenomorph{pixel_y = -32} : /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndicate_recruitment{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_recruitment{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndicate_recruitment/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/clown{pixel_y = 32} : /obj/structure/sign/poster/contraband/clown/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{pixel_y = -32} : /obj/structure/sign/poster/contraband/clown/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{pixel_y = 32} : /obj/structure/sign/poster/contraband/clown/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/clown{pixel_y = -32} : /obj/structure/sign/poster/contraband/clown/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/smoke{pixel_y = 32} : /obj/structure/sign/poster/contraband/smoke/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{pixel_y = -32} : /obj/structure/sign/poster/contraband/smoke/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{pixel_y = 32} : /obj/structure/sign/poster/contraband/smoke/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/smoke{pixel_y = -32} : /obj/structure/sign/poster/contraband/smoke/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/grey_tide{pixel_y = 32} : /obj/structure/sign/poster/contraband/grey_tide/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{pixel_y = -32} : /obj/structure/sign/poster/contraband/grey_tide/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{pixel_y = 32} : /obj/structure/sign/poster/contraband/grey_tide/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/grey_tide{pixel_y = -32} : /obj/structure/sign/poster/contraband/grey_tide/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/missing_gloves{pixel_y = 32} : /obj/structure/sign/poster/contraband/missing_gloves/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{pixel_y = -32} : /obj/structure/sign/poster/contraband/missing_gloves/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{pixel_y = 32} : /obj/structure/sign/poster/contraband/missing_gloves/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/missing_gloves{pixel_y = -32} : /obj/structure/sign/poster/contraband/missing_gloves/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/hacking_guide{pixel_y = 32} : /obj/structure/sign/poster/contraband/hacking_guide/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{pixel_y = -32} : /obj/structure/sign/poster/contraband/hacking_guide/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{pixel_y = 32} : /obj/structure/sign/poster/contraband/hacking_guide/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/hacking_guide{pixel_y = -32} : /obj/structure/sign/poster/contraband/hacking_guide/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rip_badger{pixel_y = 32} : /obj/structure/sign/poster/contraband/rip_badger/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{pixel_y = -32} : /obj/structure/sign/poster/contraband/rip_badger/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{pixel_y = 32} : /obj/structure/sign/poster/contraband/rip_badger/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rip_badger{pixel_y = -32} : /obj/structure/sign/poster/contraband/rip_badger/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{pixel_y = 32} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{pixel_y = -32} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{pixel_y = 32} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris{pixel_y = -32} : /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/donut_corp{pixel_y = 32} : /obj/structure/sign/poster/contraband/donut_corp/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{pixel_y = -32} : /obj/structure/sign/poster/contraband/donut_corp/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{pixel_y = 32} : /obj/structure/sign/poster/contraband/donut_corp/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donut_corp{pixel_y = -32} : /obj/structure/sign/poster/contraband/donut_corp/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/eat{pixel_y = 32} : /obj/structure/sign/poster/contraband/eat/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{pixel_y = -32} : /obj/structure/sign/poster/contraband/eat/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{pixel_y = 32} : /obj/structure/sign/poster/contraband/eat/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eat{pixel_y = -32} : /obj/structure/sign/poster/contraband/eat/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tools{pixel_y = 32} : /obj/structure/sign/poster/contraband/tools/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{pixel_y = -32} : /obj/structure/sign/poster/contraband/tools/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{pixel_y = 32} : /obj/structure/sign/poster/contraband/tools/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tools{pixel_y = -32} : /obj/structure/sign/poster/contraband/tools/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/power{pixel_y = 32} : /obj/structure/sign/poster/contraband/power/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{pixel_y = -32} : /obj/structure/sign/poster/contraband/power/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{pixel_y = 32} : /obj/structure/sign/poster/contraband/power/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/power{pixel_y = -32} : /obj/structure/sign/poster/contraband/power/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_cube{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_cube/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_cube/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_cube/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cube{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_cube/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/communist_state{pixel_y = 32} : /obj/structure/sign/poster/contraband/communist_state/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{pixel_y = -32} : /obj/structure/sign/poster/contraband/communist_state/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{pixel_y = 32} : /obj/structure/sign/poster/contraband/communist_state/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/communist_state{pixel_y = -32} : /obj/structure/sign/poster/contraband/communist_state/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lamarr{pixel_y = 32} : /obj/structure/sign/poster/contraband/lamarr/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{pixel_y = -32} : /obj/structure/sign/poster/contraband/lamarr/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{pixel_y = 32} : /obj/structure/sign/poster/contraband/lamarr/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lamarr{pixel_y = -32} : /obj/structure/sign/poster/contraband/lamarr/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/borg_fancy_1{pixel_y = 32} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{pixel_y = -32} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{pixel_y = 32} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_1{pixel_y = -32} : /obj/structure/sign/poster/contraband/borg_fancy_1/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/borg_fancy_2{pixel_y = 32} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{pixel_y = -32} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{pixel_y = 32} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/borg_fancy_2{pixel_y = -32} : /obj/structure/sign/poster/contraband/borg_fancy_2/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/kss13{pixel_y = 32} : /obj/structure/sign/poster/contraband/kss13/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{pixel_y = -32} : /obj/structure/sign/poster/contraband/kss13/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{pixel_y = 32} : /obj/structure/sign/poster/contraband/kss13/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kss13{pixel_y = -32} : /obj/structure/sign/poster/contraband/kss13/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rebels_unite{pixel_y = 32} : /obj/structure/sign/poster/contraband/rebels_unite/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{pixel_y = -32} : /obj/structure/sign/poster/contraband/rebels_unite/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{pixel_y = 32} : /obj/structure/sign/poster/contraband/rebels_unite/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rebels_unite{pixel_y = -32} : /obj/structure/sign/poster/contraband/rebels_unite/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/c20r{pixel_y = 32} : /obj/structure/sign/poster/contraband/c20r/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{pixel_y = -32} : /obj/structure/sign/poster/contraband/c20r/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{pixel_y = 32} : /obj/structure/sign/poster/contraband/c20r/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/c20r{pixel_y = -32} : /obj/structure/sign/poster/contraband/c20r/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = 32} : /obj/structure/sign/poster/contraband/have_a_puff/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = -32} : /obj/structure/sign/poster/contraband/have_a_puff/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = 32} : /obj/structure/sign/poster/contraband/have_a_puff/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/have_a_puff{pixel_y = -32} : /obj/structure/sign/poster/contraband/have_a_puff/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/revolver{pixel_y = 32} : /obj/structure/sign/poster/contraband/revolver/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{pixel_y = -32} : /obj/structure/sign/poster/contraband/revolver/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{pixel_y = 32} : /obj/structure/sign/poster/contraband/revolver/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/revolver{pixel_y = -32} : /obj/structure/sign/poster/contraband/revolver/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/d_day_promo{pixel_y = 32} : /obj/structure/sign/poster/contraband/d_day_promo/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{pixel_y = -32} : /obj/structure/sign/poster/contraband/d_day_promo/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{pixel_y = 32} : /obj/structure/sign/poster/contraband/d_day_promo/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/d_day_promo{pixel_y = -32} : /obj/structure/sign/poster/contraband/d_day_promo/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndicate_pistol{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndicate_pistol{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/energy_swords{pixel_y = 32} : /obj/structure/sign/poster/contraband/energy_swords/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{pixel_y = -32} : /obj/structure/sign/poster/contraband/energy_swords/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{pixel_y = 32} : /obj/structure/sign/poster/contraband/energy_swords/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/energy_swords{pixel_y = -32} : /obj/structure/sign/poster/contraband/energy_swords/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/red_rum{pixel_y = 32} : /obj/structure/sign/poster/contraband/red_rum/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{pixel_y = -32} : /obj/structure/sign/poster/contraband/red_rum/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{pixel_y = 32} : /obj/structure/sign/poster/contraband/red_rum/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/red_rum{pixel_y = -32} : /obj/structure/sign/poster/contraband/red_rum/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/cc64k_ad{pixel_y = 32} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{pixel_y = -32} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{pixel_y = 32} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cc64k_ad{pixel_y = -32} : /obj/structure/sign/poster/contraband/cc64k_ad/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/punch_shit{pixel_y = 32} : /obj/structure/sign/poster/contraband/punch_shit/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{pixel_y = -32} : /obj/structure/sign/poster/contraband/punch_shit/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{pixel_y = 32} : /obj/structure/sign/poster/contraband/punch_shit/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/punch_shit{pixel_y = -32} : /obj/structure/sign/poster/contraband/punch_shit/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/the_griffin{pixel_y = 32} : /obj/structure/sign/poster/contraband/the_griffin/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{pixel_y = -32} : /obj/structure/sign/poster/contraband/the_griffin/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{pixel_y = 32} : /obj/structure/sign/poster/contraband/the_griffin/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_griffin{pixel_y = -32} : /obj/structure/sign/poster/contraband/the_griffin/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/lizard{pixel_y = 32} : /obj/structure/sign/poster/contraband/lizard/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{pixel_y = -32} : /obj/structure/sign/poster/contraband/lizard/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{pixel_y = 32} : /obj/structure/sign/poster/contraband/lizard/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/lizard{pixel_y = -32} : /obj/structure/sign/poster/contraband/lizard/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/free_drone{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_drone/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_drone/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_drone/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_drone{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_drone/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{pixel_y = 32} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{pixel_y = -32} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{pixel_y = 32} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{pixel_y = -32} : /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/robust_softdrinks{pixel_y = 32} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{pixel_y = -32} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{pixel_y = 32} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/robust_softdrinks{pixel_y = -32} : /obj/structure/sign/poster/contraband/robust_softdrinks/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/shamblers_juice{pixel_y = 32} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{pixel_y = -32} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{pixel_y = 32} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/shamblers_juice{pixel_y = -32} : /obj/structure/sign/poster/contraband/shamblers_juice/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/pwr_game{pixel_y = 32} : /obj/structure/sign/poster/contraband/pwr_game/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{pixel_y = -32} : /obj/structure/sign/poster/contraband/pwr_game/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{pixel_y = 32} : /obj/structure/sign/poster/contraband/pwr_game/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pwr_game{pixel_y = -32} : /obj/structure/sign/poster/contraband/pwr_game/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/starkist{pixel_y = 32} : /obj/structure/sign/poster/contraband/starkist/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{pixel_y = -32} : /obj/structure/sign/poster/contraband/starkist/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{pixel_y = 32} : /obj/structure/sign/poster/contraband/starkist/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/starkist{pixel_y = -32} : /obj/structure/sign/poster/contraband/starkist/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_cola{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_cola/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_cola/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_cola/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_cola{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_cola/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/space_up{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_up/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_up/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{pixel_y = 32} : /obj/structure/sign/poster/contraband/space_up/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/space_up{pixel_y = -32} : /obj/structure/sign/poster/contraband/space_up/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/kudzu{pixel_y = 32} : /obj/structure/sign/poster/contraband/kudzu/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{pixel_y = -32} : /obj/structure/sign/poster/contraband/kudzu/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{pixel_y = 32} : /obj/structure/sign/poster/contraband/kudzu/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/kudzu{pixel_y = -32} : /obj/structure/sign/poster/contraband/kudzu/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/masked_men{pixel_y = 32} : /obj/structure/sign/poster/contraband/masked_men/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{pixel_y = -32} : /obj/structure/sign/poster/contraband/masked_men/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{pixel_y = 32} : /obj/structure/sign/poster/contraband/masked_men/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/masked_men{pixel_y = -32} : /obj/structure/sign/poster/contraband/masked_men/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/free_key{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_key/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_key/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{pixel_y = 32} : /obj/structure/sign/poster/contraband/free_key/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/free_key{pixel_y = -32} : /obj/structure/sign/poster/contraband/free_key/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/bountyhunters{pixel_y = 32} : /obj/structure/sign/poster/contraband/bountyhunters/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{pixel_y = -32} : /obj/structure/sign/poster/contraband/bountyhunters/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{pixel_y = 32} : /obj/structure/sign/poster/contraband/bountyhunters/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/bountyhunters{pixel_y = -32} : /obj/structure/sign/poster/contraband/bountyhunters/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{pixel_y = 32} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{pixel_y = -32} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{pixel_y = 32} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth{pixel_y = -32} : /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/got_wood{pixel_y = 32} : /obj/structure/sign/poster/contraband/got_wood/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{pixel_y = -32} : /obj/structure/sign/poster/contraband/got_wood/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{pixel_y = 32} : /obj/structure/sign/poster/contraband/got_wood/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/got_wood{pixel_y = -32} : /obj/structure/sign/poster/contraband/got_wood/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/moffuchis_pizza{pixel_y = 32} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{pixel_y = -32} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{pixel_y = 32} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/moffuchis_pizza{pixel_y = -32} : /obj/structure/sign/poster/contraband/moffuchis_pizza/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/donk_co{pixel_y = 32} : /obj/structure/sign/poster/contraband/donk_co/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{pixel_y = -32} : /obj/structure/sign/poster/contraband/donk_co/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{pixel_y = 32} : /obj/structure/sign/poster/contraband/donk_co/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/donk_co{pixel_y = -32} : /obj/structure/sign/poster/contraband/donk_co/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{pixel_y = 32} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{pixel_y = -32} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{pixel_y = 32} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/cybersun_six_hundred{pixel_y = -32} : /obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{pixel_y = 32} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{pixel_y = -32} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{pixel_y = 32} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{pixel_y = -32} : /obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{pixel_y = 32} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{pixel_y = -32} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{pixel_y = 32} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/waffle_corp_rifles{pixel_y = -32} : /obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/gorlex_recruitment{pixel_y = 32} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{pixel_y = -32} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{pixel_y = 32} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/gorlex_recruitment{pixel_y = -32} : /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/self_ai_liberation{pixel_y = 32} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{pixel_y = -32} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{pixel_y = 32} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/self_ai_liberation{pixel_y = -32} : /obj/structure/sign/poster/contraband/self_ai_liberation/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/arc_slimes{pixel_y = 32} : /obj/structure/sign/poster/contraband/arc_slimes/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{pixel_y = -32} : /obj/structure/sign/poster/contraband/arc_slimes/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{pixel_y = 32} : /obj/structure/sign/poster/contraband/arc_slimes/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/arc_slimes{pixel_y = -32} : /obj/structure/sign/poster/contraband/arc_slimes/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/imperial_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/imperial_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/imperial_propaganda/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/soviet_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/soviet_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/soviet_propaganda/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/andromeda_bitters{pixel_y = 32} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{pixel_y = -32} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{pixel_y = 32} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/andromeda_bitters{pixel_y = -32} : /obj/structure/sign/poster/contraband/andromeda_bitters/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/blasto_detergent{pixel_y = 32} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{pixel_y = -32} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{pixel_y = 32} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blasto_detergent{pixel_y = -32} : /obj/structure/sign/poster/contraband/blasto_detergent/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/eistee{pixel_y = 32} : /obj/structure/sign/poster/contraband/eistee/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{pixel_y = -32} : /obj/structure/sign/poster/contraband/eistee/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{pixel_y = 32} : /obj/structure/sign/poster/contraband/eistee/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/eistee{pixel_y = -32} : /obj/structure/sign/poster/contraband/eistee/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/little_fruits{pixel_y = 32} : /obj/structure/sign/poster/contraband/little_fruits/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{pixel_y = -32} : /obj/structure/sign/poster/contraband/little_fruits/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{pixel_y = 32} : /obj/structure/sign/poster/contraband/little_fruits/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/little_fruits{pixel_y = -32} : /obj/structure/sign/poster/contraband/little_fruits/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/jumbo_bar{pixel_y = 32} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{pixel_y = -32} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{pixel_y = 32} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/jumbo_bar{pixel_y = -32} : /obj/structure/sign/poster/contraband/jumbo_bar/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/calada_jelly{pixel_y = 32} : /obj/structure/sign/poster/contraband/calada_jelly/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{pixel_y = -32} : /obj/structure/sign/poster/contraband/calada_jelly/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{pixel_y = 32} : /obj/structure/sign/poster/contraband/calada_jelly/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/calada_jelly{pixel_y = -32} : /obj/structure/sign/poster/contraband/calada_jelly/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/triumphal_arch{pixel_y = 32} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{pixel_y = -32} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{pixel_y = 32} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/triumphal_arch{pixel_y = -32} : /obj/structure/sign/poster/contraband/triumphal_arch/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/mothic_rations{pixel_y = 32} : /obj/structure/sign/poster/contraband/mothic_rations/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{pixel_y = -32} : /obj/structure/sign/poster/contraband/mothic_rations/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{pixel_y = 32} : /obj/structure/sign/poster/contraband/mothic_rations/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/mothic_rations{pixel_y = -32} : /obj/structure/sign/poster/contraband/mothic_rations/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/wildcat{pixel_y = 32} : /obj/structure/sign/poster/contraband/wildcat/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{pixel_y = -32} : /obj/structure/sign/poster/contraband/wildcat/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{pixel_y = 32} : /obj/structure/sign/poster/contraband/wildcat/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/wildcat{pixel_y = -32} : /obj/structure/sign/poster/contraband/wildcat/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/babel_device{pixel_y = 32} : /obj/structure/sign/poster/contraband/babel_device/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{pixel_y = -32} : /obj/structure/sign/poster/contraband/babel_device/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{pixel_y = 32} : /obj/structure/sign/poster/contraband/babel_device/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/babel_device{pixel_y = -32} : /obj/structure/sign/poster/contraband/babel_device/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/pizza_imperator{pixel_y = 32} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{pixel_y = -32} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{pixel_y = 32} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/pizza_imperator{pixel_y = -32} : /obj/structure/sign/poster/contraband/pizza_imperator/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/thunderdrome{pixel_y = 32} : /obj/structure/sign/poster/contraband/thunderdrome/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{pixel_y = -32} : /obj/structure/sign/poster/contraband/thunderdrome/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{pixel_y = 32} : /obj/structure/sign/poster/contraband/thunderdrome/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/thunderdrome{pixel_y = -32} : /obj/structure/sign/poster/contraband/thunderdrome/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/rush_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{pixel_y = 32} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/rush_propaganda{pixel_y = -32} : /obj/structure/sign/poster/contraband/rush_propaganda/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tipper_cream_soda{pixel_y = 32} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{pixel_y = -32} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{pixel_y = 32} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tipper_cream_soda{pixel_y = -32} : /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/tea_over_tizira{pixel_y = 32} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{pixel_y = -32} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{pixel_y = 32} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/tea_over_tizira{pixel_y = -32} : /obj/structure/sign/poster/contraband/tea_over_tizira/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/syndiemoth{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndiemoth/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndiemoth/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{pixel_y = 32} : /obj/structure/sign/poster/contraband/syndiemoth/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/syndiemoth{pixel_y = -32} : /obj/structure/sign/poster/contraband/syndiemoth/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/microwave{pixel_y = 32} : /obj/structure/sign/poster/contraband/microwave/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{pixel_y = -32} : /obj/structure/sign/poster/contraband/microwave/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{pixel_y = 32} : /obj/structure/sign/poster/contraband/microwave/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/microwave{pixel_y = -32} : /obj/structure/sign/poster/contraband/microwave/directional/west{@OLD;dir=@SKIP}
+
+/obj/structure/sign/poster/contraband/blood_geometer{pixel_y = 32} : /obj/structure/sign/poster/contraband/blood_geometer/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{pixel_y = -32} : /obj/structure/sign/poster/contraband/blood_geometer/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{pixel_y = 32} : /obj/structure/sign/poster/contraband/blood_geometer/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/contraband/blood_geometer{pixel_y = -32} : /obj/structure/sign/poster/contraband/blood_geometer/directional/west{@OLD;dir=@SKIP}
 
 # Official/NT Posters
 
-/obj/structure/sign/poster/official/here_for_your_safety{dir = 1} : /obj/structure/sign/poster/official/here_for_your_safety/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/here_for_your_safety{dir = @UNSET} : /obj/structure/sign/poster/official/here_for_your_safety/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/here_for_your_safety{dir = 4} : /obj/structure/sign/poster/official/here_for_your_safety/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/here_for_your_safety{dir = 8} : /obj/structure/sign/poster/official/here_for_your_safety/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{pixel_y = 32} : /obj/structure/sign/poster/official/here_for_your_safety/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{pixel_y = -32} : /obj/structure/sign/poster/official/here_for_your_safety/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{pixel_y = 32} : /obj/structure/sign/poster/official/here_for_your_safety/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/here_for_your_safety{pixel_y = -32} : /obj/structure/sign/poster/official/here_for_your_safety/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/nanotrasen_logo{dir = 1} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanotrasen_logo{dir = @UNSET} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanotrasen_logo{dir = 4} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanotrasen_logo{dir = 8} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{pixel_y = 32} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{pixel_y = -32} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{pixel_y = 32} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanotrasen_logo{pixel_y = -32} : /obj/structure/sign/poster/official/nanotrasen_logo/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/cleanliness{dir = 1} : /obj/structure/sign/poster/official/cleanliness/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cleanliness{dir = @UNSET} : /obj/structure/sign/poster/official/cleanliness/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cleanliness{dir = 4} : /obj/structure/sign/poster/official/cleanliness/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cleanliness{dir = 8} : /obj/structure/sign/poster/official/cleanliness/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{pixel_y = 32} : /obj/structure/sign/poster/official/cleanliness/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{pixel_y = -32} : /obj/structure/sign/poster/official/cleanliness/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{pixel_y = 32} : /obj/structure/sign/poster/official/cleanliness/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cleanliness{pixel_y = -32} : /obj/structure/sign/poster/official/cleanliness/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/help_others{dir = 1} : /obj/structure/sign/poster/official/help_others/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/help_others{dir = @UNSET} : /obj/structure/sign/poster/official/help_others/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/help_others{dir = 4} : /obj/structure/sign/poster/official/help_others/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/help_others{dir = 8} : /obj/structure/sign/poster/official/help_others/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{pixel_y = 32} : /obj/structure/sign/poster/official/help_others/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{pixel_y = -32} : /obj/structure/sign/poster/official/help_others/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{pixel_y = 32} : /obj/structure/sign/poster/official/help_others/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/help_others{pixel_y = -32} : /obj/structure/sign/poster/official/help_others/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/build{dir = 1} : /obj/structure/sign/poster/official/build/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/build{dir = @UNSET} : /obj/structure/sign/poster/official/build/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/build{dir = 4} : /obj/structure/sign/poster/official/build/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/build{dir = 8} : /obj/structure/sign/poster/official/build/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{pixel_y = 32} : /obj/structure/sign/poster/official/build/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{pixel_y = -32} : /obj/structure/sign/poster/official/build/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{pixel_y = 32} : /obj/structure/sign/poster/official/build/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/build{pixel_y = -32} : /obj/structure/sign/poster/official/build/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/bless_this_spess{dir = 1} : /obj/structure/sign/poster/official/bless_this_spess/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/bless_this_spess{dir = @UNSET} : /obj/structure/sign/poster/official/bless_this_spess/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/bless_this_spess{dir = 4} : /obj/structure/sign/poster/official/bless_this_spess/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/bless_this_spess{dir = 8} : /obj/structure/sign/poster/official/bless_this_spess/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{pixel_y = 32} : /obj/structure/sign/poster/official/bless_this_spess/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{pixel_y = -32} : /obj/structure/sign/poster/official/bless_this_spess/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{pixel_y = 32} : /obj/structure/sign/poster/official/bless_this_spess/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/bless_this_spess{pixel_y = -32} : /obj/structure/sign/poster/official/bless_this_spess/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/science{dir = 1} : /obj/structure/sign/poster/official/science/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/science{dir = @UNSET} : /obj/structure/sign/poster/official/science/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/science{dir = 4} : /obj/structure/sign/poster/official/science/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/science{dir = 8} : /obj/structure/sign/poster/official/science/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{pixel_y = 32} : /obj/structure/sign/poster/official/science/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{pixel_y = -32} : /obj/structure/sign/poster/official/science/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{pixel_y = 32} : /obj/structure/sign/poster/official/science/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/science{pixel_y = -32} : /obj/structure/sign/poster/official/science/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/ian{dir = 1} : /obj/structure/sign/poster/official/ian/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ian{dir = @UNSET} : /obj/structure/sign/poster/official/ian/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ian{dir = 4} : /obj/structure/sign/poster/official/ian/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ian{dir = 8} : /obj/structure/sign/poster/official/ian/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{pixel_y = 32} : /obj/structure/sign/poster/official/ian/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{pixel_y = -32} : /obj/structure/sign/poster/official/ian/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{pixel_y = 32} : /obj/structure/sign/poster/official/ian/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ian{pixel_y = -32} : /obj/structure/sign/poster/official/ian/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/obey{dir = 1} : /obj/structure/sign/poster/official/obey/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/obey{dir = @UNSET} : /obj/structure/sign/poster/official/obey/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/obey{dir = 4} : /obj/structure/sign/poster/official/obey/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/obey{dir = 8} : /obj/structure/sign/poster/official/obey/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{pixel_y = 32} : /obj/structure/sign/poster/official/obey/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{pixel_y = -32} : /obj/structure/sign/poster/official/obey/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{pixel_y = 32} : /obj/structure/sign/poster/official/obey/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/obey{pixel_y = -32} : /obj/structure/sign/poster/official/obey/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/walk{dir = 1} : /obj/structure/sign/poster/official/walk/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/walk{dir = @UNSET} : /obj/structure/sign/poster/official/walk/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/walk{dir = 4} : /obj/structure/sign/poster/official/walk/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/walk{dir = 8} : /obj/structure/sign/poster/official/walk/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{pixel_y = 32} : /obj/structure/sign/poster/official/walk/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{pixel_y = -32} : /obj/structure/sign/poster/official/walk/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{pixel_y = 32} : /obj/structure/sign/poster/official/walk/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/walk{pixel_y = -32} : /obj/structure/sign/poster/official/walk/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/state_laws{dir = 1} : /obj/structure/sign/poster/official/state_laws/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/state_laws{dir = @UNSET} : /obj/structure/sign/poster/official/state_laws/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/state_laws{dir = 4} : /obj/structure/sign/poster/official/state_laws/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/state_laws{dir = 8} : /obj/structure/sign/poster/official/state_laws/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{pixel_y = 32} : /obj/structure/sign/poster/official/state_laws/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{pixel_y = -32} : /obj/structure/sign/poster/official/state_laws/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{pixel_y = 32} : /obj/structure/sign/poster/official/state_laws/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/state_laws{pixel_y = -32} : /obj/structure/sign/poster/official/state_laws/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/love_ian{dir = 1} : /obj/structure/sign/poster/official/love_ian/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/love_ian{dir = @UNSET} : /obj/structure/sign/poster/official/love_ian/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/love_ian{dir = 4} : /obj/structure/sign/poster/official/love_ian/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/love_ian{dir = 8} : /obj/structure/sign/poster/official/love_ian/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{pixel_y = 32} : /obj/structure/sign/poster/official/love_ian/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{pixel_y = -32} : /obj/structure/sign/poster/official/love_ian/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{pixel_y = 32} : /obj/structure/sign/poster/official/love_ian/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/love_ian{pixel_y = -32} : /obj/structure/sign/poster/official/love_ian/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/space_cops{dir = 1} : /obj/structure/sign/poster/official/space_cops/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/space_cops{dir = @UNSET} : /obj/structure/sign/poster/official/space_cops/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/space_cops{dir = 4} : /obj/structure/sign/poster/official/space_cops/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/space_cops{dir = 8} : /obj/structure/sign/poster/official/space_cops/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{pixel_y = 32} : /obj/structure/sign/poster/official/space_cops/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{pixel_y = -32} : /obj/structure/sign/poster/official/space_cops/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{pixel_y = 32} : /obj/structure/sign/poster/official/space_cops/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/space_cops{pixel_y = -32} : /obj/structure/sign/poster/official/space_cops/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/ue_no{dir = 1} : /obj/structure/sign/poster/official/ue_no/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ue_no{dir = @UNSET} : /obj/structure/sign/poster/official/ue_no/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ue_no{dir = 4} : /obj/structure/sign/poster/official/ue_no/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ue_no{dir = 8} : /obj/structure/sign/poster/official/ue_no/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{pixel_y = 32} : /obj/structure/sign/poster/official/ue_no/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{pixel_y = -32} : /obj/structure/sign/poster/official/ue_no/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{pixel_y = 32} : /obj/structure/sign/poster/official/ue_no/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ue_no{pixel_y = -32} : /obj/structure/sign/poster/official/ue_no/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/get_your_legs{dir = 1} : /obj/structure/sign/poster/official/get_your_legs/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/get_your_legs{dir = @UNSET} : /obj/structure/sign/poster/official/get_your_legs/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/get_your_legs{dir = 4} : /obj/structure/sign/poster/official/get_your_legs/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/get_your_legs{dir = 8} : /obj/structure/sign/poster/official/get_your_legs/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{pixel_y = 32} : /obj/structure/sign/poster/official/get_your_legs/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{pixel_y = -32} : /obj/structure/sign/poster/official/get_your_legs/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{pixel_y = 32} : /obj/structure/sign/poster/official/get_your_legs/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/get_your_legs{pixel_y = -32} : /obj/structure/sign/poster/official/get_your_legs/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/do_not_question{dir = 1} : /obj/structure/sign/poster/official/do_not_question/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/do_not_question{dir = @UNSET} : /obj/structure/sign/poster/official/do_not_question/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/do_not_question{dir = 4} : /obj/structure/sign/poster/official/do_not_question/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/do_not_question{dir = 8} : /obj/structure/sign/poster/official/do_not_question/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{pixel_y = 32} : /obj/structure/sign/poster/official/do_not_question/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{pixel_y = -32} : /obj/structure/sign/poster/official/do_not_question/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{pixel_y = 32} : /obj/structure/sign/poster/official/do_not_question/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/do_not_question{pixel_y = -32} : /obj/structure/sign/poster/official/do_not_question/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/work_for_a_future{dir = 1} : /obj/structure/sign/poster/official/work_for_a_future/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/work_for_a_future{dir = @UNSET} : /obj/structure/sign/poster/official/work_for_a_future/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/work_for_a_future{dir = 4} : /obj/structure/sign/poster/official/work_for_a_future/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/work_for_a_future{dir = 8} : /obj/structure/sign/poster/official/work_for_a_future/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{pixel_y = 32} : /obj/structure/sign/poster/official/work_for_a_future/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{pixel_y = -32} : /obj/structure/sign/poster/official/work_for_a_future/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{pixel_y = 32} : /obj/structure/sign/poster/official/work_for_a_future/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/work_for_a_future{pixel_y = -32} : /obj/structure/sign/poster/official/work_for_a_future/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 1} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/soft_cap_pop_art{dir = @UNSET} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 4} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/soft_cap_pop_art{dir = 8} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{pixel_y = 32} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{pixel_y = -32} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{pixel_y = 32} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/soft_cap_pop_art{pixel_y = -32} : /obj/structure/sign/poster/official/soft_cap_pop_art/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/safety_internals{dir = 1} : /obj/structure/sign/poster/official/safety_internals/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_internals{dir = @UNSET} : /obj/structure/sign/poster/official/safety_internals/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_internals{dir = 4} : /obj/structure/sign/poster/official/safety_internals/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_internals{dir = 8} : /obj/structure/sign/poster/official/safety_internals/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{pixel_y = 32} : /obj/structure/sign/poster/official/safety_internals/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{pixel_y = -32} : /obj/structure/sign/poster/official/safety_internals/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{pixel_y = 32} : /obj/structure/sign/poster/official/safety_internals/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_internals{pixel_y = -32} : /obj/structure/sign/poster/official/safety_internals/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/safety_eye_protection{dir = 1} : /obj/structure/sign/poster/official/safety_eye_protection/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_eye_protection{dir = @UNSET} : /obj/structure/sign/poster/official/safety_eye_protection/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_eye_protection{dir = 4} : /obj/structure/sign/poster/official/safety_eye_protection/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_eye_protection{dir = 8} : /obj/structure/sign/poster/official/safety_eye_protection/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{pixel_y = 32} : /obj/structure/sign/poster/official/safety_eye_protection/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{pixel_y = -32} : /obj/structure/sign/poster/official/safety_eye_protection/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{pixel_y = 32} : /obj/structure/sign/poster/official/safety_eye_protection/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_eye_protection{pixel_y = -32} : /obj/structure/sign/poster/official/safety_eye_protection/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/safety_report{dir = 1} : /obj/structure/sign/poster/official/safety_report/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_report{dir = @UNSET} : /obj/structure/sign/poster/official/safety_report/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_report{dir = 4} : /obj/structure/sign/poster/official/safety_report/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/safety_report{dir = 8} : /obj/structure/sign/poster/official/safety_report/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{pixel_y = 32} : /obj/structure/sign/poster/official/safety_report/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{pixel_y = -32} : /obj/structure/sign/poster/official/safety_report/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{pixel_y = 32} : /obj/structure/sign/poster/official/safety_report/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/safety_report{pixel_y = -32} : /obj/structure/sign/poster/official/safety_report/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/report_crimes{dir = 1} : /obj/structure/sign/poster/official/report_crimes/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/report_crimes{dir = @UNSET} : /obj/structure/sign/poster/official/report_crimes/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/report_crimes{dir = 4} : /obj/structure/sign/poster/official/report_crimes/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/report_crimes{dir = 8} : /obj/structure/sign/poster/official/report_crimes/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{pixel_y = 32} : /obj/structure/sign/poster/official/report_crimes/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{pixel_y = -32} : /obj/structure/sign/poster/official/report_crimes/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{pixel_y = 32} : /obj/structure/sign/poster/official/report_crimes/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/report_crimes{pixel_y = -32} : /obj/structure/sign/poster/official/report_crimes/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/ion_rifle{dir = 1} : /obj/structure/sign/poster/official/ion_rifle/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ion_rifle{dir = @UNSET} : /obj/structure/sign/poster/official/ion_rifle/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ion_rifle{dir = 4} : /obj/structure/sign/poster/official/ion_rifle/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/ion_rifle{dir = 8} : /obj/structure/sign/poster/official/ion_rifle/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{pixel_y = 32} : /obj/structure/sign/poster/official/ion_rifle/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{pixel_y = -32} : /obj/structure/sign/poster/official/ion_rifle/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{pixel_y = 32} : /obj/structure/sign/poster/official/ion_rifle/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/ion_rifle{pixel_y = -32} : /obj/structure/sign/poster/official/ion_rifle/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/foam_force_ad{dir = 1} : /obj/structure/sign/poster/official/foam_force_ad/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/foam_force_ad{dir = @UNSET} : /obj/structure/sign/poster/official/foam_force_ad/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/foam_force_ad{dir = 4} : /obj/structure/sign/poster/official/foam_force_ad/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/foam_force_ad{dir = 8} : /obj/structure/sign/poster/official/foam_force_ad/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{pixel_y = 32} : /obj/structure/sign/poster/official/foam_force_ad/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{pixel_y = -32} : /obj/structure/sign/poster/official/foam_force_ad/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{pixel_y = 32} : /obj/structure/sign/poster/official/foam_force_ad/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/foam_force_ad{pixel_y = -32} : /obj/structure/sign/poster/official/foam_force_ad/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 1} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = @UNSET} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 4} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/cohiba_robusto_ad{dir = 8} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{pixel_y = 32} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{pixel_y = -32} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{pixel_y = 32} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/cohiba_robusto_ad{pixel_y = -32} : /obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 1} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = @UNSET} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 4} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/anniversary_vintage_reprint{dir = 8} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{pixel_y = 32} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{pixel_y = -32} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{pixel_y = 32} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/anniversary_vintage_reprint{pixel_y = -32} : /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/fruit_bowl{dir = 1} : /obj/structure/sign/poster/official/fruit_bowl/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/fruit_bowl{dir = @UNSET} : /obj/structure/sign/poster/official/fruit_bowl/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/fruit_bowl{dir = 4} : /obj/structure/sign/poster/official/fruit_bowl/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/fruit_bowl{dir = 8} : /obj/structure/sign/poster/official/fruit_bowl/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{pixel_y = 32} : /obj/structure/sign/poster/official/fruit_bowl/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{pixel_y = -32} : /obj/structure/sign/poster/official/fruit_bowl/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{pixel_y = 32} : /obj/structure/sign/poster/official/fruit_bowl/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/fruit_bowl{pixel_y = -32} : /obj/structure/sign/poster/official/fruit_bowl/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/pda_ad{dir = 1} : /obj/structure/sign/poster/official/pda_ad/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/pda_ad{dir = @UNSET} : /obj/structure/sign/poster/official/pda_ad/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/pda_ad{dir = 4} : /obj/structure/sign/poster/official/pda_ad/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/pda_ad{dir = 8} : /obj/structure/sign/poster/official/pda_ad/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{pixel_y = 32} : /obj/structure/sign/poster/official/pda_ad/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{pixel_y = -32} : /obj/structure/sign/poster/official/pda_ad/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{pixel_y = 32} : /obj/structure/sign/poster/official/pda_ad/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/pda_ad{pixel_y = -32} : /obj/structure/sign/poster/official/pda_ad/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/enlist{dir = 1} : /obj/structure/sign/poster/official/enlist/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/enlist{dir = @UNSET} : /obj/structure/sign/poster/official/enlist/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/enlist{dir = 4} : /obj/structure/sign/poster/official/enlist/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/enlist{dir = 8} : /obj/structure/sign/poster/official/enlist/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{pixel_y = 32} : /obj/structure/sign/poster/official/enlist/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{pixel_y = -32} : /obj/structure/sign/poster/official/enlist/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{pixel_y = 32} : /obj/structure/sign/poster/official/enlist/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/enlist{pixel_y = -32} : /obj/structure/sign/poster/official/enlist/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/nanomichi_ad{dir = 1} : /obj/structure/sign/poster/official/nanomichi_ad/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanomichi_ad{dir = @UNSET} : /obj/structure/sign/poster/official/nanomichi_ad/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanomichi_ad{dir = 4} : /obj/structure/sign/poster/official/nanomichi_ad/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/nanomichi_ad{dir = 8} : /obj/structure/sign/poster/official/nanomichi_ad/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{pixel_y = 32} : /obj/structure/sign/poster/official/nanomichi_ad/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{pixel_y = -32} : /obj/structure/sign/poster/official/nanomichi_ad/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{pixel_y = 32} : /obj/structure/sign/poster/official/nanomichi_ad/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/nanomichi_ad{pixel_y = -32} : /obj/structure/sign/poster/official/nanomichi_ad/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/twelve_gauge{dir = 1} : /obj/structure/sign/poster/official/twelve_gauge/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twelve_gauge{dir = @UNSET} : /obj/structure/sign/poster/official/twelve_gauge/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twelve_gauge{dir = 4} : /obj/structure/sign/poster/official/twelve_gauge/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twelve_gauge{dir = 8} : /obj/structure/sign/poster/official/twelve_gauge/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{pixel_y = 32} : /obj/structure/sign/poster/official/twelve_gauge/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{pixel_y = -32} : /obj/structure/sign/poster/official/twelve_gauge/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{pixel_y = 32} : /obj/structure/sign/poster/official/twelve_gauge/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twelve_gauge{pixel_y = -32} : /obj/structure/sign/poster/official/twelve_gauge/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/high_class_martini{dir = 1} : /obj/structure/sign/poster/official/high_class_martini/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/high_class_martini{dir = @UNSET} : /obj/structure/sign/poster/official/high_class_martini/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/high_class_martini{dir = 4} : /obj/structure/sign/poster/official/high_class_martini/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/high_class_martini{dir = 8} : /obj/structure/sign/poster/official/high_class_martini/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{pixel_y = 32} : /obj/structure/sign/poster/official/high_class_martini/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{pixel_y = -32} : /obj/structure/sign/poster/official/high_class_martini/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{pixel_y = 32} : /obj/structure/sign/poster/official/high_class_martini/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/high_class_martini{pixel_y = -32} : /obj/structure/sign/poster/official/high_class_martini/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/the_owl{dir = 1} : /obj/structure/sign/poster/official/the_owl/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/the_owl{dir = @UNSET} : /obj/structure/sign/poster/official/the_owl/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/the_owl{dir = 4} : /obj/structure/sign/poster/official/the_owl/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/the_owl{dir = 8} : /obj/structure/sign/poster/official/the_owl/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{pixel_y = 32} : /obj/structure/sign/poster/official/the_owl/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{pixel_y = -32} : /obj/structure/sign/poster/official/the_owl/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{pixel_y = 32} : /obj/structure/sign/poster/official/the_owl/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/the_owl{pixel_y = -32} : /obj/structure/sign/poster/official/the_owl/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/no_erp{dir = 1} : /obj/structure/sign/poster/official/no_erp/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/no_erp{dir = @UNSET} : /obj/structure/sign/poster/official/no_erp/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/no_erp{dir = 4} : /obj/structure/sign/poster/official/no_erp/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/no_erp{dir = 8} : /obj/structure/sign/poster/official/no_erp/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{pixel_y = 32} : /obj/structure/sign/poster/official/no_erp/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{pixel_y = -32} : /obj/structure/sign/poster/official/no_erp/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{pixel_y = 32} : /obj/structure/sign/poster/official/no_erp/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/no_erp{pixel_y = -32} : /obj/structure/sign/poster/official/no_erp/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/wtf_is_co2{dir = 1} : /obj/structure/sign/poster/official/wtf_is_co2/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/wtf_is_co2{dir = @UNSET} : /obj/structure/sign/poster/official/wtf_is_co2/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/wtf_is_co2{dir = 4} : /obj/structure/sign/poster/official/wtf_is_co2/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/wtf_is_co2{dir = 8} : /obj/structure/sign/poster/official/wtf_is_co2/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{pixel_y = 32} : /obj/structure/sign/poster/official/wtf_is_co2/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{pixel_y = -32} : /obj/structure/sign/poster/official/wtf_is_co2/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{pixel_y = 32} : /obj/structure/sign/poster/official/wtf_is_co2/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/wtf_is_co2{pixel_y = -32} : /obj/structure/sign/poster/official/wtf_is_co2/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/dick_gum{dir = 1} : /obj/structure/sign/poster/official/dick_gum/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/dick_gum{dir = @UNSET} : /obj/structure/sign/poster/official/dick_gum/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/dick_gum{dir = 4} : /obj/structure/sign/poster/official/dick_gum/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/dick_gum{dir = 8} : /obj/structure/sign/poster/official/dick_gum/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{pixel_y = 32} : /obj/structure/sign/poster/official/dick_gum/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{pixel_y = -32} : /obj/structure/sign/poster/official/dick_gum/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{pixel_y = 32} : /obj/structure/sign/poster/official/dick_gum/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/dick_gum{pixel_y = -32} : /obj/structure/sign/poster/official/dick_gum/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 1} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = @UNSET} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 4} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/there_is_no_gas_giant{dir = 8} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{pixel_y = 32} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{pixel_y = -32} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{pixel_y = 32} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/there_is_no_gas_giant{pixel_y = -32} : /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/periodic_table{dir = 1} : /obj/structure/sign/poster/official/periodic_table/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/periodic_table{dir = @UNSET} : /obj/structure/sign/poster/official/periodic_table/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/periodic_table{dir = 4} : /obj/structure/sign/poster/official/periodic_table/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/periodic_table{dir = 8} : /obj/structure/sign/poster/official/periodic_table/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{pixel_y = 32} : /obj/structure/sign/poster/official/periodic_table/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{pixel_y = -32} : /obj/structure/sign/poster/official/periodic_table/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{pixel_y = 32} : /obj/structure/sign/poster/official/periodic_table/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/periodic_table{pixel_y = -32} : /obj/structure/sign/poster/official/periodic_table/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/plasma_effects{dir = 1} : /obj/structure/sign/poster/official/plasma_effects/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/plasma_effects{dir = @UNSET} : /obj/structure/sign/poster/official/plasma_effects/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/plasma_effects{dir = 4} : /obj/structure/sign/poster/official/plasma_effects/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/plasma_effects{dir = 8} : /obj/structure/sign/poster/official/plasma_effects/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{pixel_y = 32} : /obj/structure/sign/poster/official/plasma_effects/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{pixel_y = -32} : /obj/structure/sign/poster/official/plasma_effects/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{pixel_y = 32} : /obj/structure/sign/poster/official/plasma_effects/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/plasma_effects{pixel_y = -32} : /obj/structure/sign/poster/official/plasma_effects/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/terragov{dir = 1} : /obj/structure/sign/poster/official/terragov/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/terragov{dir = @UNSET} : /obj/structure/sign/poster/official/terragov/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/terragov{dir = 4} : /obj/structure/sign/poster/official/terragov/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/terragov{dir = 8} : /obj/structure/sign/poster/official/terragov/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{pixel_y = 32} : /obj/structure/sign/poster/official/terragov/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{pixel_y = -32} : /obj/structure/sign/poster/official/terragov/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{pixel_y = 32} : /obj/structure/sign/poster/official/terragov/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/terragov{pixel_y = -32} : /obj/structure/sign/poster/official/terragov/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 1} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/corporate_perks_vacation{dir = @UNSET} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 4} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/corporate_perks_vacation{dir = 8} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{pixel_y = 32} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{pixel_y = -32} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{pixel_y = 32} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/corporate_perks_vacation{pixel_y = -32} : /obj/structure/sign/poster/official/corporate_perks_vacation/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/jim_nortons{dir = 1} : /obj/structure/sign/poster/official/jim_nortons/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/jim_nortons{dir = @UNSET} : /obj/structure/sign/poster/official/jim_nortons/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/jim_nortons{dir = 4} : /obj/structure/sign/poster/official/jim_nortons/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/jim_nortons{dir = 8} : /obj/structure/sign/poster/official/jim_nortons/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{pixel_y = 32} : /obj/structure/sign/poster/official/jim_nortons/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{pixel_y = -32} : /obj/structure/sign/poster/official/jim_nortons/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{pixel_y = 32} : /obj/structure/sign/poster/official/jim_nortons/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/jim_nortons{pixel_y = -32} : /obj/structure/sign/poster/official/jim_nortons/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/twenty_four_seven{dir = 1} : /obj/structure/sign/poster/official/twenty_four_seven/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twenty_four_seven{dir = @UNSET} : /obj/structure/sign/poster/official/twenty_four_seven/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twenty_four_seven{dir = 4} : /obj/structure/sign/poster/official/twenty_four_seven/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/twenty_four_seven{dir = 8} : /obj/structure/sign/poster/official/twenty_four_seven/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{pixel_y = 32} : /obj/structure/sign/poster/official/twenty_four_seven/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{pixel_y = -32} : /obj/structure/sign/poster/official/twenty_four_seven/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{pixel_y = 32} : /obj/structure/sign/poster/official/twenty_four_seven/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/twenty_four_seven{pixel_y = -32} : /obj/structure/sign/poster/official/twenty_four_seven/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/tactical_game_cards{dir = 1} : /obj/structure/sign/poster/official/tactical_game_cards/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/tactical_game_cards{dir = @UNSET} : /obj/structure/sign/poster/official/tactical_game_cards/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/tactical_game_cards{dir = 4} : /obj/structure/sign/poster/official/tactical_game_cards/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/tactical_game_cards{dir = 8} : /obj/structure/sign/poster/official/tactical_game_cards/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{pixel_y = 32} : /obj/structure/sign/poster/official/tactical_game_cards/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{pixel_y = -32} : /obj/structure/sign/poster/official/tactical_game_cards/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{pixel_y = 32} : /obj/structure/sign/poster/official/tactical_game_cards/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/tactical_game_cards{pixel_y = -32} : /obj/structure/sign/poster/official/tactical_game_cards/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/midtown_slice{dir = 1} : /obj/structure/sign/poster/official/midtown_slice/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/midtown_slice{dir = @UNSET} : /obj/structure/sign/poster/official/midtown_slice/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/midtown_slice{dir = 4} : /obj/structure/sign/poster/official/midtown_slice/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/midtown_slice{dir = 8} : /obj/structure/sign/poster/official/midtown_slice/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{pixel_y = 32} : /obj/structure/sign/poster/official/midtown_slice/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{pixel_y = -32} : /obj/structure/sign/poster/official/midtown_slice/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{pixel_y = 32} : /obj/structure/sign/poster/official/midtown_slice/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/midtown_slice{pixel_y = -32} : /obj/structure/sign/poster/official/midtown_slice/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/moth_hardhat{dir = 1} : /obj/structure/sign/poster/official/moth_hardhat/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_hardhat{dir = @UNSET} : /obj/structure/sign/poster/official/moth_hardhat/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_hardhat{dir = 4} : /obj/structure/sign/poster/official/moth_hardhat/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_hardhat{dir = 8} : /obj/structure/sign/poster/official/moth_hardhat/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{pixel_y = 32} : /obj/structure/sign/poster/official/moth_hardhat/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{pixel_y = -32} : /obj/structure/sign/poster/official/moth_hardhat/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{pixel_y = 32} : /obj/structure/sign/poster/official/moth_hardhat/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_hardhat{pixel_y = -32} : /obj/structure/sign/poster/official/moth_hardhat/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/moth_piping{dir = 1} : /obj/structure/sign/poster/official/moth_piping/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_piping{dir = @UNSET} : /obj/structure/sign/poster/official/moth_piping/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_piping{dir = 4} : /obj/structure/sign/poster/official/moth_piping/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_piping{dir = 8} : /obj/structure/sign/poster/official/moth_piping/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{pixel_y = 32} : /obj/structure/sign/poster/official/moth_piping/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{pixel_y = -32} : /obj/structure/sign/poster/official/moth_piping/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{pixel_y = 32} : /obj/structure/sign/poster/official/moth_piping/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_piping{pixel_y = -32} : /obj/structure/sign/poster/official/moth_piping/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/moth_meth{dir = 1} : /obj/structure/sign/poster/official/moth_meth/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_meth{dir = @UNSET} : /obj/structure/sign/poster/official/moth_meth/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_meth{dir = 4} : /obj/structure/sign/poster/official/moth_meth/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_meth{dir = 8} : /obj/structure/sign/poster/official/moth_meth/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{pixel_y = 32} : /obj/structure/sign/poster/official/moth_meth/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{pixel_y = -32} : /obj/structure/sign/poster/official/moth_meth/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{pixel_y = 32} : /obj/structure/sign/poster/official/moth_meth/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_meth{pixel_y = -32} : /obj/structure/sign/poster/official/moth_meth/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/moth_epi{dir = 1} : /obj/structure/sign/poster/official/moth_epi/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_epi{dir = @UNSET} : /obj/structure/sign/poster/official/moth_epi/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_epi{dir = 4} : /obj/structure/sign/poster/official/moth_epi/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_epi{dir = 8} : /obj/structure/sign/poster/official/moth_epi/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{pixel_y = 32} : /obj/structure/sign/poster/official/moth_epi/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{pixel_y = -32} : /obj/structure/sign/poster/official/moth_epi/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{pixel_y = 32} : /obj/structure/sign/poster/official/moth_epi/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_epi{pixel_y = -32} : /obj/structure/sign/poster/official/moth_epi/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/moth_delam{dir = 1} : /obj/structure/sign/poster/official/moth_delam/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_delam{dir = @UNSET} : /obj/structure/sign/poster/official/moth_delam/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_delam{dir = 4} : /obj/structure/sign/poster/official/moth_delam/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/moth_delam{dir = 8} : /obj/structure/sign/poster/official/moth_delam/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{pixel_y = 32} : /obj/structure/sign/poster/official/moth_delam/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{pixel_y = -32} : /obj/structure/sign/poster/official/moth_delam/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{pixel_y = 32} : /obj/structure/sign/poster/official/moth_delam/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/moth_delam{pixel_y = -32} : /obj/structure/sign/poster/official/moth_delam/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/lizards_gas_payment{dir = 1} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{dir = @UNSET} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{dir = 4} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_payment{dir = 8} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_payment{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_payment/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/lizards_gas_power{dir = 1} : /obj/structure/sign/poster/official/lizards_gas_power/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{dir = @UNSET} : /obj/structure/sign/poster/official/lizards_gas_power/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{dir = 4} : /obj/structure/sign/poster/official/lizards_gas_power/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/lizards_gas_power{dir = 8} : /obj/structure/sign/poster/official/lizards_gas_power/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = 32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/lizards_gas_power{pixel_y = -32} : /obj/structure/sign/poster/official/lizards_gas_power/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/festive{dir = 1} : /obj/structure/sign/poster/official/festive/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/festive{dir = @UNSET} : /obj/structure/sign/poster/official/festive/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/festive{dir = 4} : /obj/structure/sign/poster/official/festive/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/festive{dir = 8} : /obj/structure/sign/poster/official/festive/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{pixel_y = 32} : /obj/structure/sign/poster/official/festive/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{pixel_y = -32} : /obj/structure/sign/poster/official/festive/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{pixel_y = 32} : /obj/structure/sign/poster/official/festive/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/festive{pixel_y = -32} : /obj/structure/sign/poster/official/festive/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/boombox{dir = 1} : /obj/structure/sign/poster/official/boombox/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/boombox{dir = @UNSET} : /obj/structure/sign/poster/official/boombox/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/boombox{dir = 4} : /obj/structure/sign/poster/official/boombox/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/boombox{dir = 8} : /obj/structure/sign/poster/official/boombox/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{pixel_y = 32} : /obj/structure/sign/poster/official/boombox/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{pixel_y = -32} : /obj/structure/sign/poster/official/boombox/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{pixel_y = 32} : /obj/structure/sign/poster/official/boombox/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/boombox{pixel_y = -32} : /obj/structure/sign/poster/official/boombox/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/download{dir = 1} : /obj/structure/sign/poster/official/download/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/download{dir = @UNSET} : /obj/structure/sign/poster/official/download/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/download{dir = 4} : /obj/structure/sign/poster/official/download/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/download{dir = 8} : /obj/structure/sign/poster/official/download/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{pixel_y = 32} : /obj/structure/sign/poster/official/download/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{pixel_y = -32} : /obj/structure/sign/poster/official/download/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{pixel_y = 32} : /obj/structure/sign/poster/official/download/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/download{pixel_y = -32} : /obj/structure/sign/poster/official/download/directional/west{@OLD;dir=@SKIP}
 
-/obj/structure/sign/poster/official/singletank_bomb{dir = 1} : /obj/structure/sign/poster/official/singletank_bomb/directional/north{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/singletank_bomb{dir = @UNSET} : /obj/structure/sign/poster/official/singletank_bomb/directional/south{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/singletank_bomb{dir = 4} : /obj/structure/sign/poster/official/singletank_bomb/directional/east{@OLD;dir=@SKIP}
-/obj/structure/sign/poster/official/singletank_bomb{dir = 8} : /obj/structure/sign/poster/official/singletank_bomb/directional/west{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{pixel_y = 32} : /obj/structure/sign/poster/official/singletank_bomb/directional/north{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{pixel_y = -32} : /obj/structure/sign/poster/official/singletank_bomb/directional/south{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{pixel_y = 32} : /obj/structure/sign/poster/official/singletank_bomb/directional/east{@OLD;dir=@SKIP}
+/obj/structure/sign/poster/official/singletank_bomb{pixel_y = -32} : /obj/structure/sign/poster/official/singletank_bomb/directional/west{@OLD;dir=@SKIP}
