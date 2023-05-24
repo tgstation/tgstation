@@ -22,11 +22,12 @@
 	light_mask = "RunicVendor-light-mask"
 	/// How long the vendor stays up before it decays.
 	var/time_to_decay = 20 SECONDS
+	var/pulse_distance = 2
 
 
-/obj/machinery/vending/runic_vendor/Initialize(mapload, obj/item/forcefield_projector/origin)
+/obj/machinery/vending/runic_vendor/Initialize(mapload)
 	addtimer(CALLBACK(src, PROC_REF(decay)), time_to_decay, TIMER_STOPPABLE)
-
+	runic_pulse()
 	. = ..()
 
 /obj/machinery/vending/runic_vendor/Destroy()
@@ -38,6 +39,24 @@
 	explosion(src, devastation_range = -1, light_impact_range = 2)
 	qdel(src)
 	return
+
+/obj/machinery/vending/runic_vendor/proc/runic_pulse()//atom/movable/considered_atom as mob|obj)
+	var/pulse_locs = spiral_range_turfs(pulse_distance, get_turf(src))
+	var/list/hit_things = list()
+	for(var/turf/T in pulse_locs)
+		for(var/mob/living/L in T.contents)
+			if(!L == src)
+				return
+			hit_things += L
+			visible_message(span_boldwarning("[L] is knocked back by the gust!"))
+			to_chat(L, span_userdanger("You're knocked back by the gust!"))
+			var/atom/target = get_edge_target_turf(L, get_dir(src, get_step_away(L, src)))
+			if(isliving(L))
+				to_chat(L, span_userdanger("The field repels you with tremendous force!"))
+				playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
+				L.throw_at(target, 20, 4)
+	return
+
 
 /obj/machinery/vending/runic_vendor/screwdriver_act(mob/living/user, obj/item/I)
 	explosion(src, devastation_range = -1, light_impact_range = 2)

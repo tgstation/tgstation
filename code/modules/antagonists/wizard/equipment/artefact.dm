@@ -473,9 +473,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/machinery/vending/runic_vendor))
 		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
-		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 4, user)
+		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 20, 4, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(vendor_on_turf)
-		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 4, user)
+		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 20, 4, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
