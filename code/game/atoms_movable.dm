@@ -56,6 +56,9 @@
 	/// We do it like this to prevent people trying to mutate them and to save memory on holding the lists ourselves
 	var/spatial_grid_key
 
+	///the spatial grid cell we were last put into, if any
+	var/datum/spatial_grid_cell/grid_loc
+
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
@@ -201,7 +204,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -213,7 +216,7 @@
 	//This absolutely must be after moveToNullspace()
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
-	LAZYCLEARLIST(important_recursive_contents)
+	LAZYNULL(important_recursive_contents)
 
 
 	vis_locs = null //clears this atom out of all viscontents
@@ -576,7 +579,7 @@
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
-	change_loc(new_loc)
+	loc = new_loc
 	Moved(old_loc, direction, TRUE, momentum_change = FALSE)
 
 ////////////////////////////////////////
@@ -632,7 +635,7 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
-	change_loc(newloc)
+	loc = newloc
 
 	. = TRUE
 
@@ -776,16 +779,26 @@
 	moving_from_pull = null
 
 /**
- * changes src's loc to new_loc, and calls relevant update procs and sends signals for that.
- * should be called in all movement procs to update loc! dont do so at your own peril!
- */
-/atom/movable/proc/change_loc(atom/new_loc)
+ * Called after a successful Move(). By this point, we've already moved.
+ * Arguments:
+ * * old_loc is the location prior to the move. Can be null to indicate nullspace.
+ * * movement_dir is the direction the movement took place. Can be NONE if it was some sort of teleport.
+ * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
+ * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
+ * * momentum_change represents whether this movement is due to a "new" force if TRUE or an already "existing" force if FALSE
+ **/
+/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/atom/old_loc = loc
-	loc = new_loc
+	if (!inertia_moving && momentum_change)
+		newtonian_move(movement_dir)
+	// If we ain't moving diagonally right now, update our parallax
+	// We don't do this all the time because diag movements should trigger one call to this, not two
+	// Waste of cpu time, and it fucks the animate
+	if (!moving_diagonally && client_mobs_in_contents)
+		update_parallax_contents()
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_CHANGED, old_loc)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
 		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src)
@@ -812,28 +825,6 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
-
-/**
- * Called after a successful Move(). By this point, we've already moved.
- * Arguments:
- * * old_loc is the location prior to the move. Can be null to indicate nullspace.
- * * movement_dir is the direction the movement took place. Can be NONE if it was some sort of teleport.
- * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
- * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
- * * momentum_change represents whether this movement is due to a "new" force if TRUE or an already "existing" force if FALSE
- **/
-/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if (!inertia_moving && momentum_change)
-		newtonian_move(movement_dir)
-	// If we ain't moving diagonally right now, update our parallax
-	// We don't do this all the time because diag movements should trigger one call to this, not two
-	// Waste of cpu time, and it fucks the animate
-	if (!moving_diagonally && client_mobs_in_contents)
-		update_parallax_contents()
-
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	return TRUE
 
@@ -1087,7 +1078,7 @@
 
 		moving_diagonally = 0
 
-		change_loc(destination)
+		loc = destination
 
 		if(!same_loc)
 			if(is_multi_tile && isturf(destination))
@@ -1125,7 +1116,7 @@
 		. = TRUE
 
 		if (oldloc)
-			change_loc(null)
+			loc = null
 			var/area/old_area = get_area(oldloc)
 			if(is_multi_tile && isturf(oldloc))
 				for(var/atom/old_loc as anything in locs)

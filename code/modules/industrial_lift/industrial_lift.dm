@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		mover_old_loc = mover.loc
 		mover_old_area = mover_old_loc.loc
 
-		mover.change_loc((mover_new_loc = get_step(mover, movement_direction)))
+		mover.loc = (mover_new_loc = get_step(mover, movement_direction))
 		mover_new_area = mover_new_loc.loc
 
 		if(mover_old_area != mover_new_area)
