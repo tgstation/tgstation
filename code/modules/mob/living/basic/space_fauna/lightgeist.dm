@@ -55,7 +55,7 @@
 	medsensor.show_to(src)
 
 	AddElement(/datum/element/simple_flying)
-
+	AddElement(/datum/element/ladder_climber)
 	AddComponent(\
 		/datum/component/healing_touch,\
 		heal_brute = melee_damage_upper,\
