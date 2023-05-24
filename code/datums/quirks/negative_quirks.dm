@@ -462,6 +462,17 @@
 	hardcore_value = 6
 	mail_goodies = list(/obj/effect/spawner/random/decoration/flower, /obj/effect/spawner/random/contraband/cannabis) // flower power
 
+/datum/quirk/bighands
+	name = "Big Hands"
+	desc = "You have big hands, it sure does make it hard to use a lot of things."
+	icon = FA_ICON_HAND_DOTS
+	value = -6
+	mob_trait = TRAIT_CHUNKYFINGERS
+	gain_text = span_danger("Your hands are huge! You can't use small things anymore!")
+	lose_text = span_notice("Your hands are back to normal.")
+	medical_record_text = "Patient has unusually large hands. Made me question my masculinity..."
+	hardcore_value = 5
+
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
