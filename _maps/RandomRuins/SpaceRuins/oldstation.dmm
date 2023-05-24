@@ -197,7 +197,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "aS" = (
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
+/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/bridge)
 "aT" = (
@@ -250,7 +250,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bb" = (
-/obj/structure/sign/poster/contraband/pwr_game/directional/south,
+/obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/hall)
 "bc" = (
@@ -376,7 +376,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "by" = (
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
+/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bz" = (
@@ -514,7 +514,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "cb" = (
-/obj/structure/sign/poster/official/science/directional/south,
+/obj/structure/sign/poster/official/science,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/hall)
 "cd" = (
@@ -646,7 +646,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "ct" = (
-/obj/structure/sign/poster/official/science/directional/south,
+/obj/structure/sign/poster/official/science,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/delta/hall)
 "cv" = (
@@ -1462,7 +1462,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "fd" = (
-/obj/structure/sign/poster/contraband/donut_corp/directional/south,
+/obj/structure/sign/poster/contraband/donut_corp,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/sec)
 "fe" = (
@@ -1512,7 +1512,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "fp" = (
-/obj/structure/sign/poster/official/here_for_your_safety/directional/south,
+/obj/structure/sign/poster/official/here_for_your_safety,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/sec)
 "fq" = (
@@ -1980,7 +1980,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "gX" = (
-/obj/structure/sign/poster/official/build/directional/south,
+/obj/structure/sign/poster/official/build,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/engie)
 "gY" = (
@@ -3066,7 +3066,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "kM" = (
-/obj/structure/sign/poster/official/work_for_a_future/directional/south,
+/obj/structure/sign/poster/official/work_for_a_future,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/dorms)
 "kN" = (
@@ -6883,7 +6883,7 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/periodic_table/directional/south{
+/obj/structure/sign/poster/official/periodic_table{
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -7710,7 +7710,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals/directional/south{
+/obj/structure/sign/poster/official/safety_internals{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -8313,8 +8313,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/engie)
 "XN" = (
-/obj/structure/sign/poster/contraband/space_cola/directional/south,
-/obj/structure/sign/poster/contraband/space_cola/directional/south,
+/obj/structure/sign/poster/contraband/space_cola,
+/obj/structure/sign/poster/contraband/space_cola,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/sec)
 "XU" = (
@@ -8393,7 +8393,7 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/cafeteria,
@@ -8472,7 +8472,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "YO" = (
-/obj/structure/sign/poster/contraband/lamarr/directional/south,
+/obj/structure/sign/poster/contraband/lamarr,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/biolab)
 "YW" = (

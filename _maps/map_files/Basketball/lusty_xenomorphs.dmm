@@ -27,7 +27,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "cz" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/south,
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
 /obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/engine,
 /area/centcom/basketball)
@@ -511,7 +511,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Qi" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/south,
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/engine,
 /area/centcom/basketball)

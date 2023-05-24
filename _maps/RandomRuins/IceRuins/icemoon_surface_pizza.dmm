@@ -21,7 +21,7 @@
 "bf" = (
 /obj/structure/table,
 /obj/item/plate/small,
-/obj/structure/sign/poster/official/moth_meth/directional/south{
+/obj/structure/sign/poster/official/moth_meth{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/condiment/enzyme,
@@ -344,7 +344,7 @@
 /area/ruin/pizzeria)
 "mN" = (
 /obj/structure/flora/bush/pointy/style_random,
-/obj/structure/sign/poster/official/moth_piping/directional/south{
+/obj/structure/sign/poster/official/moth_piping{
 	pixel_y = 32
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -446,7 +446,7 @@
 /obj/item/screwdriver,
 /obj/item/crowbar/red,
 /obj/structure/rack,
-/obj/structure/sign/poster/official/moth_delam/directional/south{
+/obj/structure/sign/poster/official/moth_delam{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -485,7 +485,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "vf" = (
-/obj/structure/sign/poster/contraband/syndiemoth/directional/south{
+/obj/structure/sign/poster/contraband/syndiemoth{
 	pixel_x = 32
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,

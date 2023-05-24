@@ -91,7 +91,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "z" = (
-/obj/structure/sign/poster/contraband/bountyhunters/directional/south,
+/obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
 "A" = (

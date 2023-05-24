@@ -1902,7 +1902,7 @@
 /area/station/commons/vacant_room/office)
 "axz" = (
 /obj/effect/spawner/random/vending/colavend,
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -9193,7 +9193,7 @@
 /area/station/engineering/engine_smes)
 "cjm" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/structure/sign/poster/official/moth_meth/directional/south{
+/obj/structure/sign/poster/official/moth_meth{
 	pixel_y = -32
 	},
 /obj/structure/cable,
@@ -9913,7 +9913,7 @@
 	},
 /area/station/engineering/atmos/hfr_room)
 "ctd" = (
-/obj/structure/sign/poster/contraband/pwr_game/directional/south,
+/obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "cti" = (
@@ -10368,7 +10368,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/safety_internals/directional/south{
+/obj/structure/sign/poster/official/safety_internals{
 	pixel_y = -32
 	},
 /turf/open/floor/pod/light,
@@ -10602,7 +10602,7 @@
 /obj/item/clothing/suit/toggle/owlwings/griffinwings,
 /obj/item/clothing/under/costume/griffin,
 /obj/item/clothing/shoes/griffin,
-/obj/structure/sign/poster/contraband/the_griffin/directional/south{
+/obj/structure/sign/poster/contraband/the_griffin{
 	pixel_y = 32
 	},
 /obj/structure/closet/cabinet,
@@ -13616,7 +13616,7 @@
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
 "duX" = (
-/obj/structure/sign/poster/official/moth_hardhat/directional/south{
+/obj/structure/sign/poster/official/moth_hardhat{
 	pixel_x = 32
 	},
 /obj/structure/rack,
@@ -15169,7 +15169,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/commons/dorms/room4)
 "dQn" = (
-/obj/structure/sign/poster/contraband/power/directional/south,
+/obj/structure/sign/poster/contraband/power,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "dQs" = (
@@ -28048,7 +28048,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
 "hrC" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol/directional/south,
+/obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "hrO" = (
@@ -33672,7 +33672,7 @@
 /area/station/service/theater)
 "iUe" = (
 /obj/machinery/computer/pandemic,
-/obj/structure/sign/poster/official/periodic_table/directional/south{
+/obj/structure/sign/poster/official/periodic_table{
 	pixel_y = 32
 	},
 /obj/machinery/camera/autoname/directional/north,
@@ -34000,7 +34000,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/port/aft)
 "iYH" = (
-/obj/structure/sign/poster/official/moth_hardhat/directional/south{
+/obj/structure/sign/poster/official/moth_hardhat{
 	pixel_x = 32
 	},
 /obj/structure/rack,
@@ -36812,7 +36812,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/station/service/library)
 "jLh" = (
-/obj/structure/sign/poster/contraband/lamarr/directional/south,
+/obj/structure/sign/poster/contraband/lamarr,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "jLi" = (
@@ -37239,7 +37239,7 @@
 	},
 /area/station/medical/chemistry)
 "jQf" = (
-/obj/structure/sign/poster/contraband/eat/directional/south{
+/obj/structure/sign/poster/contraband/eat{
 	pixel_x = 32
 	},
 /turf/open/floor/pod/light,
@@ -40201,7 +40201,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "kEu" = (
-/obj/structure/sign/poster/contraband/atmosia_independence/directional/south{
+/obj/structure/sign/poster/contraband/atmosia_independence{
 	pixel_x = -32
 	},
 /turf/open/floor/pod/light,
@@ -41055,7 +41055,7 @@
 	},
 /area/station/commons/storage/primary)
 "kPm" = (
-/obj/structure/sign/poster/contraband/atmosia_independence/directional/south{
+/obj/structure/sign/poster/contraband/atmosia_independence{
 	pixel_x = -32
 	},
 /obj/machinery/light/small/directional/west,
@@ -41289,7 +41289,7 @@
 "kSn" = (
 /obj/machinery/iv_drip,
 /obj/structure/mirror/directional/south,
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
 	},
 /obj/machinery/camera/autoname/directional/east,
@@ -42596,7 +42596,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "ljL" = (
-/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/south,
+/obj/structure/sign/poster/contraband/moffuchis_pizza,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "ljZ" = (
@@ -42917,7 +42917,7 @@
 "lmV" = (
 /obj/machinery/vending/cola/pwr_game,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/contraband/pwr_game/directional/south{
+/obj/structure/sign/poster/contraband/pwr_game{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/white,
@@ -46630,7 +46630,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/port/aft)
 "mjj" = (
-/obj/structure/sign/poster/official/do_not_question/directional/south{
+/obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
@@ -46828,7 +46828,7 @@
 	},
 /area/station/commons/fitness/recreation)
 "mmi" = (
-/obj/structure/sign/poster/contraband/clown/directional/south,
+/obj/structure/sign/poster/contraband/clown,
 /turf/closed/wall,
 /area/station/service/theater)
 "mmq" = (
@@ -47685,7 +47685,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
 "mwR" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/south{
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = -32
 	},
 /turf/open/floor/pod/light,
@@ -51969,7 +51969,7 @@
 "nwM" = (
 /obj/machinery/iv_drip,
 /obj/structure/mirror/directional/south,
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
@@ -55132,7 +55132,7 @@
 /area/station/maintenance/floor4/starboard/fore)
 "olZ" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/sign/poster/contraband/grey_tide/directional/south{
+/obj/structure/sign/poster/contraband/grey_tide{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/corner,
@@ -56647,7 +56647,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/got_wood/directional/south{
+/obj/structure/sign/poster/contraband/got_wood{
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
@@ -57621,7 +57621,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "oTK" = (
-/obj/structure/sign/poster/contraband/robust_softdrinks/directional/south,
+/obj/structure/sign/poster/contraband/robust_softdrinks,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "oTQ" = (
@@ -59192,7 +59192,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/south{
+/obj/structure/sign/poster/contraband/moffuchis_pizza{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -61489,7 +61489,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/report_crimes/directional/south{
+/obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
 /obj/structure/disposalpipe/segment{
@@ -63759,7 +63759,7 @@
 /obj/item/storage/pill_bottle/lsd{
 	pixel_x = 5
 	},
-/obj/structure/sign/poster/contraband/red_rum/directional/south{
+/obj/structure/sign/poster/contraband/red_rum{
 	pixel_x = 32
 	},
 /turf/open/floor/pod/light,
@@ -66322,7 +66322,7 @@
 /obj/item/food/pizza/dank{
 	pixel_y = 6
 	},
-/obj/structure/sign/poster/contraband/pwr_game/directional/south{
+/obj/structure/sign/poster/contraband/pwr_game{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet/purple,
@@ -67031,7 +67031,7 @@
 /area/station/service/hydroponics)
 "ruE" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/contraband/have_a_puff/directional/south{
+/obj/structure/sign/poster/contraband/have_a_puff{
 	pixel_y = 32
 	},
 /obj/machinery/vending/snack/blue,
@@ -70625,7 +70625,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/floor2/starboard/fore)
 "sxM" = (
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = -32
 	},
 /obj/machinery/holopad,
@@ -70952,7 +70952,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/starboard/fore)
 "sBU" = (
-/obj/structure/sign/poster/contraband/eat/directional/south{
+/obj/structure/sign/poster/contraband/eat{
 	pixel_x = -32
 	},
 /turf/open/floor/carpet/royalblue,
@@ -70967,7 +70967,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "sBY" = (
-/obj/structure/sign/poster/contraband/hacking_guide/directional/south{
+/obj/structure/sign/poster/contraband/hacking_guide{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -71154,7 +71154,7 @@
 	pixel_y = 4
 	},
 /obj/item/knife/butcher,
-/obj/structure/sign/poster/official/cleanliness/directional/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
 	},
 /turf/open/floor/pod/light,
@@ -73283,7 +73283,7 @@
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/rd)
 "til" = (
-/obj/structure/sign/poster/contraband/grey_tide/directional/south,
+/obj/structure/sign/poster/contraband/grey_tide,
 /turf/closed/wall,
 /area/station/maintenance/floor3/port/aft)
 "tiC" = (
@@ -74219,7 +74219,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "tvB" = (
 /obj/structure/table/wood,
-/obj/structure/sign/poster/contraband/pwr_game/directional/south{
+/obj/structure/sign/poster/contraband/pwr_game{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -75874,7 +75874,7 @@
 /area/station/hallway/floor2/fore)
 "tTT" = (
 /obj/machinery/chem_dispenser,
-/obj/structure/sign/poster/official/periodic_table/directional/south{
+/obj/structure/sign/poster/official/periodic_table{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark/textured,
@@ -82746,7 +82746,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/ce)
 "vMX" = (
-/obj/structure/sign/poster/official/plasma_effects/directional/south{
+/obj/structure/sign/poster/official/plasma_effects{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -83544,7 +83544,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/red_rum/directional/south{
+/obj/structure/sign/poster/contraband/red_rum{
 	pixel_x = 32
 	},
 /obj/effect/landmark/start/assistant,
@@ -85404,7 +85404,7 @@
 /area/station/maintenance/floor2/starboard)
 "wvo" = (
 /obj/machinery/chem_dispenser,
-/obj/structure/sign/poster/official/periodic_table/directional/south{
+/obj/structure/sign/poster/official/periodic_table{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark/textured,
@@ -88860,7 +88860,7 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard/fore)
 "xnw" = (
-/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/south{
+/obj/structure/sign/poster/contraband/moffuchis_pizza{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet/royalblue,

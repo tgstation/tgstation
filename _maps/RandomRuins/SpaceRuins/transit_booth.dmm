@@ -85,7 +85,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/south{
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
 	pixel_y = 35
 	},
 /turf/open/floor/iron/dark,
@@ -458,7 +458,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/high_class_martini/directional/south{
+/obj/structure/sign/poster/official/high_class_martini{
 	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,

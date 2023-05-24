@@ -422,7 +422,7 @@
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/periodic_table/directional/south{
+/obj/structure/sign/poster/official/periodic_table{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/white,
@@ -2745,7 +2745,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/enlist/directional/south{
+/obj/structure/sign/poster/official/enlist{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -6360,7 +6360,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/south{
+/obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -6508,7 +6508,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/obey/directional/south{
+/obj/structure/sign/poster/official/obey{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -6892,7 +6892,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Ie" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south,
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
 "Io" = (
@@ -7349,7 +7349,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/sign/poster/official/ian/directional/south{
+/obj/structure/sign/poster/official/ian{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -7485,7 +7485,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/south{
+/obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -7626,7 +7626,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LR" = (
-/obj/structure/sign/poster/official/tactical_game_cards/directional/south{
+/obj/structure/sign/poster/official/tactical_game_cards{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/red,
@@ -7848,7 +7848,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "Nk" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol/directional/south,
+/obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
 "Nl" = (

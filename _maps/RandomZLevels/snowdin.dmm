@@ -257,7 +257,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/kudzu/directional/south{
+/obj/structure/sign/poster/contraband/kudzu{
 	pixel_y = 32
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -1342,7 +1342,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/south{
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = 32
 	},
 /obj/structure/table/wood,
@@ -1734,7 +1734,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "ft" = (
-/obj/structure/sign/poster/official/no_erp/directional/south{
+/obj/structure/sign/poster/official/no_erp{
 	pixel_x = -32
 	},
 /obj/machinery/holopad,
@@ -3480,7 +3480,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "km" = (
-/obj/structure/sign/poster/contraband/tools/directional/south{
+/obj/structure/sign/poster/contraband/tools{
 	pixel_x = 32
 	},
 /obj/structure/closet/crate/preopen,
@@ -5226,7 +5226,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/do_not_question/directional/south{
+/obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
 	},
 /obj/item/wirecutters,
