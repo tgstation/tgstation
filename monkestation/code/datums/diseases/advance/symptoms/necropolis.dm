@@ -1,10 +1,10 @@
 /datum/symptom/necroseed
 	name = "Necropolis Seed"
 	desc = "An infantile form of the root of Lavaland's tendrils. Forms a symbiotic bond with the host, making them stronger and hardier, at the cost of speed. Should the disease be cured, the host will be severely weakened"
-	stealth = 0
-	resistance = 3
-	stage_speed = -5
-	transmittable = -3
+	stealth = 50 //0
+	resistance = 53 //3
+	stage_speed = 50 //-5
+	transmittable = 50 //-3
 	level = 8
 	base_message_chance = 5
 	severity = -1

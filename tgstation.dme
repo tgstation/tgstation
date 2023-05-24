@@ -5271,6 +5271,7 @@
 #include "monkestation\code\datums\diseases\advance\advance.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\necropolis.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\skin.dm"
+#include "monkestation\code\datums\diseases\advance\symptoms\symptoms.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
 #include "monkestation\code\datums\quirks\positive_quirks.dm"

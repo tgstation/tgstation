@@ -90,9 +90,6 @@
 /datum/symptom/proc/OnRemove(datum/disease/advance/A)
 	return
 
-/datum/symptom/proc/OnDeath(datum/disease/advance/advanced_disease)    //What happens when the host dies.
-	return !neutered
-
 /**
  * Returns a list for all of the traits of this symptom.
  *
