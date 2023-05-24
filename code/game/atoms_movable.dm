@@ -56,9 +56,6 @@
 	/// We do it like this to prevent people trying to mutate them and to save memory on holding the lists ourselves
 	var/spatial_grid_key
 
-	///the spatial grid cell we were last put into, if any
-	var/datum/spatial_grid_cell/grid_loc
-
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
