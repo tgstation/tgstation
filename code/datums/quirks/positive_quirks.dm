@@ -244,7 +244,7 @@
 		if(human_holder.has_language(spoken))
 			possible_languages -= spoken
 	extra_language = pick(possible_languages)
-	human_holder.grant_language(extra_language)
+	human_holder.grant_language(extra_language, TRUE, TRUE, LANGUAGE_QUIRK)
 
 /datum/quirk/bilingual/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder

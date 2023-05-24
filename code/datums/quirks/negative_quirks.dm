@@ -453,12 +453,22 @@
 /datum/quirk/softspoken
 	name = "Soft-Spoken"
 	desc = "You are soft-spoken, and your voice is hard to hear."
-	icon = FA_ICON_COMMENT_ALT
+	icon = FA_ICON_COMMENT
 	value = -2
 	mob_trait = TRAIT_SOFTSPOKEN
 	gain_text = span_danger("You feel like you're speaking more quietly.")
 	lose_text = span_notice("You feel like you're speaking louder.")
 	medical_record_text = "Patient is soft-spoken and difficult to hear."
+
+/datum/quirk/clumsy
+	name = "Clumsy"
+	desc = "You're clumsy, a goofball, a silly dude. You big loveable himbo/bimbo you! Hope you weren't planning on using your hands for anything that takes even a LICK of dexterity."
+	icon = FA_ICON_FACE_DIZZY
+	value = -8
+	mob_trait = TRAIT_CLUMSY
+	gain_text = span_danger("You feel your IQ sink like your brain is liquid.")
+	lose_text = span_notice("You feel like your IQ went up to at least average.")
+	medical_record_text = "Patient is so unbelievably fucking stupid. I've seen clowns with better fine motor skills."
 
 /datum/quirk/nonviolent
 	name = "Pacifist"
