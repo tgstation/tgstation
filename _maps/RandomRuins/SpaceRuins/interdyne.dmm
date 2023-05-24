@@ -482,7 +482,7 @@
 "ri" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/south{
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/plastitanium/red,

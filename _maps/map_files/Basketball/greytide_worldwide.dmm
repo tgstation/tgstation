@@ -99,7 +99,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "fp" = (
-/obj/structure/sign/poster/contraband/grey_tide/spawner/south,
+/obj/structure/sign/poster/contraband/grey_tide,
 /turf/closed/wall/r_wall,
 /area/centcom/basketball)
 "fu" = (
@@ -719,7 +719,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Yp" = (
-/obj/structure/sign/poster/contraband/hacking_guide/spawner/south,
+/obj/structure/sign/poster/contraband/hacking_guide,
 /turf/closed/wall/r_wall,
 /area/centcom/basketball)
 "YH" = (

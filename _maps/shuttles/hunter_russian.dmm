@@ -93,7 +93,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/sign/poster/contraband/communist_state/spawner/south{
+/obj/structure/sign/poster/contraband/communist_state{
 	pixel_x = -32
 	},
 /turf/open/floor/pod/dark,
@@ -102,7 +102,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/fugitive_capture,
-/obj/structure/sign/poster/contraband/bountyhunters/spawner/south{
+/obj/structure/sign/poster/contraband/bountyhunters{
 	pixel_x = -32
 	},
 /turf/open/floor/pod/dark,
@@ -124,7 +124,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/soviet_propaganda/spawner/south{
+/obj/structure/sign/poster/contraband/soviet_propaganda{
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -609,7 +609,7 @@
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/kss13/spawner/south{
+/obj/structure/sign/poster/contraband/kss13{
 	pixel_y = -32
 	},
 /turf/open/floor/pod/dark,

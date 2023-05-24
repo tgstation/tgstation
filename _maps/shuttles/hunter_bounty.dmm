@@ -44,7 +44,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "k" = (
-/obj/structure/sign/poster/contraband/bountyhunters/spawner/south,
+/obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
 "l" = (

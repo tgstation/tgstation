@@ -74,7 +74,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
 "t" = (
-/obj/structure/sign/poster/contraband/syndiemoth/spawner/south{
+/obj/structure/sign/poster/contraband/syndiemoth{
 	pixel_x = -32
 	},
 /obj/item/radio/intercom{

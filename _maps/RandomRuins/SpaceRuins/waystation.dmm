@@ -368,7 +368,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
-/obj/structure/sign/poster/contraband/missing_gloves/spawner/south{
+/obj/structure/sign/poster/contraband/missing_gloves{
 	pixel_y = 32
 	},
 /obj/machinery/power/smes{
@@ -1679,7 +1679,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
 "CY" = (
-/obj/structure/sign/poster/official/here_for_your_safety/spawner/south,
+/obj/structure/sign/poster/official/here_for_your_safety,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/waystation/securestorage)
 "Dc" = (

@@ -72,7 +72,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aq" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/south,
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ar" = (
@@ -342,7 +342,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol/spawner/south,
+/obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bh" = (
@@ -582,7 +582,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bR" = (
-/obj/structure/sign/poster/contraband/tools/spawner/south,
+/obj/structure/sign/poster/contraband/tools,
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bS" = (
@@ -616,7 +616,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bX" = (
-/obj/structure/sign/poster/contraband/c20r/spawner/south,
+/obj/structure/sign/poster/contraband/c20r,
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bY" = (

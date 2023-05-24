@@ -172,7 +172,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "mM" = (
-/obj/structure/sign/poster/contraband/c20r/spawner/south,
+/obj/structure/sign/poster/contraband/c20r,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "nE" = (
@@ -195,7 +195,7 @@
 /turf/open/floor/carpet,
 /area/centcom/basketball)
 "rU" = (
-/obj/structure/sign/poster/official/twelve_gauge/spawner/south,
+/obj/structure/sign/poster/official/twelve_gauge,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "su" = (
@@ -348,7 +348,7 @@
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "EW" = (
-/obj/structure/sign/poster/contraband/revolver/spawner/south,
+/obj/structure/sign/poster/contraband/revolver,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Gh" = (
@@ -425,7 +425,7 @@
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "LV" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol/spawner/south,
+/obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ma" = (
@@ -510,7 +510,7 @@
 /area/centcom/basketball)
 "Uv" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/sign/poster/contraband/eat/spawner/south,
+/obj/structure/sign/poster/contraband/eat,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Vr" = (

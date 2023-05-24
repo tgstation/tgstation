@@ -1832,8 +1832,9 @@
 /obj/machinery/air_sensor{
 	chamber_id = "lavalandsyndieco2"
 	},
-/obj/structure/sign/poster/official/wtf_is_co2/spawner/north{
-	pixel_y = 32
+/obj/structure/sign/poster/official/wtf_is_co2{
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)

@@ -4033,7 +4033,7 @@
 /turf/closed/wall,
 /area/station/commons/vacant_room)
 "auG" = (
-/obj/structure/sign/poster/official/safety_report/spawner/south{
+/obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
 	},
 /obj/machinery/camera{
@@ -6389,7 +6389,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/cleanliness/spawner/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/white,
@@ -6398,7 +6398,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cleanliness/spawner/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/white,
@@ -6619,7 +6619,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/enlist/spawner/south{
+/obj/structure/sign/poster/official/enlist{
 	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
@@ -7560,7 +7560,7 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/sign/poster/official/get_your_legs/spawner/south{
+/obj/structure/sign/poster/official/get_your_legs{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -8246,7 +8246,7 @@
 /area/station/cargo/miningdock/cafeteria)
 "bvI" = (
 /obj/machinery/vending/wardrobe/engi_wardrobe,
-/obj/structure/sign/poster/official/safety_eye_protection/spawner/south{
+/obj/structure/sign/poster/official/safety_eye_protection{
 	pixel_x = 32
 	},
 /turf/open/floor/iron,
@@ -8984,7 +8984,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/build/spawner/south{
+/obj/structure/sign/poster/official/build{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
@@ -10230,7 +10230,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/poster/contraband/d_day_promo/spawner/south{
+/obj/structure/sign/poster/contraband/d_day_promo{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -14500,7 +14500,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/left)
 "dFY" = (
-/obj/structure/sign/poster/official/here_for_your_safety/spawner/south{
+/obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_y = -32
 	},
 /obj/structure/table/reinforced,
@@ -16994,7 +16994,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/structure/sign/poster/official/safety_internals/spawner/south{
+/obj/structure/sign/poster/official/safety_internals{
 	pixel_x = -32
 	},
 /obj/machinery/camera/directional/west{
@@ -17300,7 +17300,7 @@
 /area/station/science/lower)
 "eHG" = (
 /obj/machinery/firealarm/directional/north,
-/obj/structure/sign/poster/official/cleanliness/spawner/south{
+/obj/structure/sign/poster/official/cleanliness{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/freezer,
@@ -19024,7 +19024,7 @@
 	c_tag = "Service - Kitchen West"
 	},
 /obj/machinery/grill,
-/obj/structure/sign/poster/official/work_for_a_future/spawner/south{
+/obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -31;
 	pixel_y = 4
 	},
@@ -20868,7 +20868,7 @@
 /area/station/science/lower)
 "gdF" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
-/obj/structure/sign/poster/official/dick_gum/spawner/south{
+/obj/structure/sign/poster/official/dick_gum{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/grimy,
@@ -20877,7 +20877,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/structure/sign/poster/contraband/atmosia_independence/spawner/south{
+/obj/structure/sign/poster/contraband/atmosia_independence{
 	pixel_y = 32
 	},
 /obj/machinery/conveyor_switch/oneway{
@@ -23957,7 +23957,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "hmZ" = (
-/obj/structure/sign/poster/official/space_cops/spawner/south{
+/obj/structure/sign/poster/official/space_cops{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -24810,7 +24810,7 @@
 /obj/item/storage/secure/safe/hos{
 	pixel_x = 35
 	},
-/obj/structure/sign/poster/official/space_cops/spawner/south{
+/obj/structure/sign/poster/official/space_cops{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
@@ -30604,7 +30604,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "jNj" = (
-/obj/structure/sign/poster/official/do_not_question/spawner/south{
+/obj/structure/sign/poster/official/do_not_question{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40039,7 +40039,7 @@
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 5
 	},
-/obj/structure/sign/poster/official/do_not_question/spawner/south{
+/obj/structure/sign/poster/official/do_not_question{
 	pixel_y = 32
 	},
 /obj/machinery/button/flasher{
@@ -41630,7 +41630,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/safety_report/spawner/south{
+/obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -42580,7 +42580,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "nZW" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph/spawner/south{
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -42995,7 +42995,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/report_crimes/spawner/south{
+/obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -43374,7 +43374,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/sign/poster/official/safety_internals/spawner/south{
+/obj/structure/sign/poster/official/safety_internals{
 	pixel_y = 32
 	},
 /obj/structure/reagent_dispensers/watertank/high,
@@ -45594,7 +45594,7 @@
 /obj/structure/table,
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/sign/poster/official/here_for_your_safety/spawner/south{
+/obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -47130,7 +47130,7 @@
 /area/station/service/hydroponics)
 "pKW" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/sign/poster/official/here_for_your_safety/spawner/south{
+/obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/dark,
@@ -48864,7 +48864,7 @@
 /area/station/engineering/atmos)
 "qsm" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/sign/poster/official/safety_report/spawner/south{
+/obj/structure/sign/poster/official/safety_report{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -57472,7 +57472,7 @@
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/structure/sign/poster/official/obey/spawner/south{
+/obj/structure/sign/poster/official/obey{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/white,
@@ -60565,7 +60565,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "uyn" = (
-/obj/structure/sign/poster/official/love_ian/spawner/south{
+/obj/structure/sign/poster/official/love_ian{
 	pixel_x = -32
 	},
 /obj/machinery/light/directional/west,
@@ -68189,7 +68189,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "xmH" = (
-/obj/structure/sign/poster/official/report_crimes/spawner/south{
+/obj/structure/sign/poster/official/report_crimes{
 	pixel_y = -32
 	},
 /turf/open/floor/wood,

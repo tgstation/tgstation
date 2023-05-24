@@ -57,7 +57,7 @@
 "aw" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/space_cube/spawner/south{
+/obj/structure/sign/poster/contraband/space_cube{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -212,7 +212,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "be" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke/spawner/south{
+/obj/structure/sign/poster/contraband/smoke{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
@@ -430,7 +430,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bZ" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/south{
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/loading_area{
@@ -503,7 +503,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/hacking_guide/spawner/south{
+/obj/structure/sign/poster/contraband/hacking_guide{
 	pixel_x = 32
 	},
 /turf/open/floor/plating{
@@ -828,7 +828,7 @@
 /obj/structure/table/wood,
 /obj/item/pen,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal_2,
-/obj/structure/sign/poster/contraband/c20r/spawner/south{
+/obj/structure/sign/poster/contraband/c20r{
 	pixel_y = -32
 	},
 /turf/open/floor/wood{
@@ -1156,7 +1156,7 @@
 "eU" = (
 /obj/machinery/space_heater,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/build/spawner/south{
+/obj/structure/sign/poster/official/build{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -2460,7 +2460,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kx" = (
-/obj/structure/sign/poster/official/nanotrasen_logo/spawner/south{
+/obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -2817,7 +2817,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke/spawner/south{
+/obj/structure/sign/poster/contraband/smoke{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/dark,
@@ -4399,7 +4399,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "xq" = (
 /obj/item/radio/off,
-/obj/structure/sign/poster/official/safety_report/spawner/south{
+/obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -6382,7 +6382,7 @@
 /area/awaymission/moonoutpost19/mines)
 "HH" = (
 /obj/machinery/vending/snack,
-/obj/structure/sign/poster/contraband/eat/spawner/south{
+/obj/structure/sign/poster/contraband/eat{
 	pixel_y = 32
 	},
 /turf/open/floor/iron{

@@ -287,7 +287,7 @@
 /area/ruin/space)
 "ij" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/south,
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "ja" = (
@@ -510,7 +510,7 @@
 /area/ruin/space)
 "td" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/moth_meth/spawner/south,
+/obj/structure/sign/poster/official/moth_meth,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "tm" = (
@@ -612,7 +612,7 @@
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
 "xm" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment/spawner/south,
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "xI" = (
@@ -624,7 +624,7 @@
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
 "xT" = (
-/obj/structure/sign/poster/contraband/soviet_propaganda/spawner/south,
+/obj/structure/sign/poster/contraband/soviet_propaganda,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "ya" = (
@@ -716,7 +716,7 @@
 /area/ruin/space)
 "Cp" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics/spawner/south,
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Cv" = (
@@ -872,7 +872,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "HG" = (
-/obj/structure/sign/poster/contraband/gorlex_recruitment/spawner/south,
+/obj/structure/sign/poster/contraband/gorlex_recruitment,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "HI" = (
@@ -1054,7 +1054,7 @@
 /area/ruin/space)
 "QN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/soviet_propaganda/spawner/south,
+/obj/structure/sign/poster/contraband/soviet_propaganda,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Rt" = (
@@ -1222,7 +1222,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "VX" = (
-/obj/structure/sign/poster/contraband/bountyhunters/spawner/south,
+/obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "Xn" = (

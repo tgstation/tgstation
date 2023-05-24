@@ -642,7 +642,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/sign/poster/official/pda_ad/spawner/south{
+/obj/structure/sign/poster/official/pda_ad{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/white,
@@ -776,7 +776,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Db" = (
-/obj/structure/sign/poster/official/help_others/spawner/south,
+/obj/structure/sign/poster/official/help_others,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "DD" = (
@@ -940,7 +940,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/tools/spawner/south{
+/obj/structure/sign/poster/contraband/tools{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -1063,7 +1063,7 @@
 	dir = 1
 	},
 /obj/structure/chair,
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/spawner/south{
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
 	pixel_x = 30
 	},
 /turf/open/floor/iron{
