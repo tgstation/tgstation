@@ -43,10 +43,6 @@
 	AddElement(/datum/element/death_drops, drop_on_death)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(after_attack))
 
-/mob/living/basic/cat_butcherer/Destroy()
-	UnregisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
-	return ..()
-
 /mob/living/basic/cat_butcherer/proc/after_attack(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
 
