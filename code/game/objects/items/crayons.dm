@@ -847,7 +847,7 @@
 			color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
-				balloon_alert(user, "a color that dark on this? surely not.")
+				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
