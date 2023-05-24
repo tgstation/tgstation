@@ -907,6 +907,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			failed = TRUE
 		ip_intel = res.intel
+
+		if(ip_intel >= CONFIG_GET(number/ipintel_rating_bad) && !(ckey in GLOB.interviews.approved_ckeys))
+			interviewee = TRUE
 		return failed
 
 /client/Click(atom/object, atom/location, control, params)
