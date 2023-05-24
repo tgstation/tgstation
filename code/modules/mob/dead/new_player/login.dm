@@ -25,10 +25,6 @@
 			if(client.account_age <= CONFIG_GET(number/minimum_age))
 				client.interviewee = TRUE
 
-	if(client.ip_intel != "Disabled")
-		if(client.ip_intel > 0.7 && !(client.ckey in GLOB.interviews.approved_ckeys))
-			client.interviewee = TRUE
-
 	. = ..()
 	if(!. || !client)
 		return FALSE
@@ -56,6 +52,15 @@
 	// The parent call for Login() may do a bunch of stuff, like add verbs.
 	// Delaying the register_for_interview until the very end makes sure it can clean everything up
 	// and set the player's client up for interview.
+
+	///guh
+	if(client.ip_intel == "Disabled")
+		client.check_ip_intel()
+
+	if(client.ip_intel != "Disabled")
+		if(client.ip_intel > 0.7 && !(client.ckey in GLOB.interviews.approved_ckeys))
+			client.interviewee = TRUE
+
 	if(client.interviewee)
 		register_for_interview()
 		return
