@@ -406,9 +406,9 @@
 	tool.play_tool_sound(src, 50)
 	update_icon_state()
 	if(panel_open)
-		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
+		balloon_alert(user, "hatch opened")
 		return TRUE
-	to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+	balloon_alert(user, "hatch closed")
 	return TRUE
 
 /obj/machinery/modular_shield/module/multitool_act(mob/living/user, obj/item/tool)
