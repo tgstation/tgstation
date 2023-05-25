@@ -2883,7 +2883,7 @@
 	network = list("labor")
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/security)
+/area/lavaland/surface/outdoors)
 "pZ" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -3464,7 +3464,7 @@
 "tL" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/production)
+/area/lavaland/surface/outdoors)
 "tM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3502,12 +3502,6 @@
 	dir = 8
 	},
 /area/mine/laborcamp)
-"ub" = (
-/obj/machinery/camera/autoname/directional/east{
-	network = list("labor")
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/production)
 "ui" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22240,7 +22234,7 @@ pU
 pU
 tL
 pU
-ub
+pV
 pU
 pU
 uU

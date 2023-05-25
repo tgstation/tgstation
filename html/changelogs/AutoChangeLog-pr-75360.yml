@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Add extra clothing options to equip mob outfits.  Replaced many one-letter vars in file with better descriptions."
