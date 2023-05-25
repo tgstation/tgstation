@@ -13,12 +13,12 @@
 	// Changeling eggs grow in dead people
 	time += seconds_per_tick * 10
 	if(time >= EGG_INCUBATION_TIME)
-		Pop()
+		pop()
 		Remove(owner)
 		qdel(src)
 
 /// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
-/obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
+/obj/item/organ/internal/body_egg/changeling_egg/proc/pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
 	spawned_monkey.set_species(/datum/species/monkey)
 
