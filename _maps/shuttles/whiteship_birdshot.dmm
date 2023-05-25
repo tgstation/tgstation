@@ -1,12 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ar" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/cold/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/abandoned/crew)
 "aW" = (
 /obj/structure/table/greyscale,
 /obj/machinery/recharger{
@@ -88,8 +87,8 @@
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/crew)
 "cm" = (
-/obj/machinery/light/small/broken/directional/east,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "cq" = (
@@ -343,8 +342,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "kS" = (
-/obj/machinery/light/small/directional/south,
 /obj/structure/cable,
+/obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "lq" = (
@@ -404,13 +403,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/cargo)
-"nh" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/catwalk_floor,
-/area/shuttle/abandoned/crew)
 "nm" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -854,12 +846,12 @@
 /area/shuttle/abandoned/cargo)
 "Fn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/broken/directional/south,
 /obj/machinery/firealarm/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
 "Ft" = (
@@ -1108,7 +1100,6 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
 "MO" = (
-/obj/machinery/light/small/broken/directional/east,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1142,7 +1133,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
 "NP" = (
-/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -1188,7 +1178,6 @@
 /turf/open/floor/iron/textured,
 /area/shuttle/abandoned/cargo)
 "Pm" = (
-/obj/machinery/light/small/directional/north,
 /obj/structure/cable,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/catwalk_floor,
@@ -1410,8 +1399,8 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/pod)
 "Wi" = (
-/obj/machinery/light/small/directional/east,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "Wu" = (
@@ -1482,12 +1471,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
-"Yo" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/built/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
 "YJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1508,7 +1491,7 @@
 	can_move_docking_ports = 1;
 	dir = 2;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Patrol Bee";
 	port_direction = 8;
 	preferred_direction = 4;
@@ -1702,7 +1685,7 @@ kQ
 cq
 Pu
 Pu
-ar
+Pu
 kQ
 Vp
 AV
@@ -1712,7 +1695,7 @@ fT
 AV
 Vp
 kQ
-Yo
+sC
 sC
 sC
 xn
@@ -1819,11 +1802,11 @@ kQ
 eb
 FL
 dw
-FL
+ar
 FL
 Cz
 FL
-nh
+FL
 FL
 FL
 dw
@@ -1841,15 +1824,15 @@ eK
 ne
 eb
 nm
-Wi
+nm
 nm
 hq
 nm
 Ll
 nm
+kS
 nm
 nm
-cm
 nm
 eb
 Yg
@@ -1863,7 +1846,7 @@ NK
 NK
 NK
 Na
-kS
+nm
 DT
 DR
 DT
@@ -1886,7 +1869,7 @@ NK
 pP
 NK
 FL
-nm
+cm
 DT
 Qr
 Db
@@ -1896,7 +1879,7 @@ pr
 QU
 VS
 pC
-nm
+Wi
 FL
 bH
 Pz

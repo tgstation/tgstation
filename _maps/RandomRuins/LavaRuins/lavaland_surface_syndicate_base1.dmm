@@ -95,11 +95,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
-"aQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/arrivals)
 "aS" = (
 /obj/structure/closet/secure_closet/medical1{
 	req_access = list("syndicate")
@@ -168,7 +163,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "bP" = (
-/obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
@@ -2721,6 +2715,7 @@
 	},
 /obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/arrivals)
 "zy" = (
@@ -3249,15 +3244,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
-"FE" = (
-/obj/machinery/light/small/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/main)
 "FL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
@@ -3451,7 +3437,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -5675,7 +5660,7 @@ pa
 pa
 ae
 dQ
-FE
+Qz
 hd
 hy
 hy
@@ -5726,7 +5711,7 @@ ae
 oP
 fH
 Bd
-he
+pT
 hz
 hz
 hz
@@ -5896,7 +5881,7 @@ oi
 jy
 zw
 MI
-aQ
+nX
 mT
 mT
 ab

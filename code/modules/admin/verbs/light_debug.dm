@@ -34,7 +34,7 @@
 	if(!source_atom.render_target)
 		source_atom.render_target = "light_debug_[uid]"
 		uid++
-	var/atom/movable/render_step/color/above_light = new(null, source_atom.render_target, "#ffffff23")
+	var/atom/movable/render_step/color/above_light = new(null, source_atom, "#ffffff23")
 	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, source_atom)
 	source_atom.add_overlay(above_light)
 	QDEL_NULL(above_light)
@@ -52,7 +52,7 @@
 	REMOVE_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, REF(src))
 	source_atom.remove_filter("debug_light")
 	// Removes the glow overlay via stupid, sorry
-	var/atom/movable/render_step/color/above_light = new(null, source_atom.render_target, "#ffffff23")
+	var/atom/movable/render_step/color/above_light = new(null, source_atom, "#ffffff23")
 	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, source_atom)
 	source_atom.cut_overlay(above_light)
 	QDEL_NULL(above_light)

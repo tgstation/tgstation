@@ -168,7 +168,7 @@
 "rX" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /obj/structure/lattice/catwalk,
-/turf/template_noop,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/syndicate_lava_base/testlab)
 "sa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -230,10 +230,6 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/ruin/syndicate_lava_base/testlab)
-"EO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "GD" = (
 /obj/item/stack/sheet/plasmarglass,
@@ -435,7 +431,7 @@ Ys
 xT
 em
 kE
-EO
+CD
 aA
 aA
 "}

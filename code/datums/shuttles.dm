@@ -600,11 +600,14 @@
 	suffix = "cere"
 	name = "NT Heavy Salvage Vessel"
 	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
+	passed_over = TRUE
 
+#warn syndi got redesigned, mistake_feasible, and lavaland_surface_syndicate_base1, go over it again (cries)
 /datum/map_template/shuttle/whiteship/birdshot
 	suffix = "birdshot"
 	name = "NT Patrol Bee"
 	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an agressive and deadly Gelatinous Cube"
+	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
@@ -782,6 +785,7 @@
 /datum/map_template/shuttle/mining/northstar
 	suffix = "northstar"
 	name = "mining shuttle (North Star)"
+	passed_over = TRUE
 
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"

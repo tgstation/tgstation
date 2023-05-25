@@ -15,7 +15,7 @@
 "ac" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "ad" = (
@@ -806,7 +806,6 @@
 	name = "Cargo Blast Door Toggle"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/broken/directional/south,
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/ten,
 /obj/item/stack/sheet/glass{
@@ -814,6 +813,7 @@
 	},
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/bulbs,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Ko" = (
@@ -828,7 +828,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "Mc" = (
@@ -894,7 +893,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/broken/directional/south,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/catwalk_floor/iron_dark,
