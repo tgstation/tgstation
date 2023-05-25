@@ -75,7 +75,7 @@
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
 	icon_state = pick("dirt-flat-0","dirt-flat-1","dirt-flat-2","dirt-flat-3")
-	var/obj/structure/fluff/broken_flooring/broken_flooring = locate(/obj/structure/fluff/broken_flooring) in loc
+	var/obj/structure/broken_flooring/broken_flooring = locate(/obj/structure/broken_flooring) in loc
 	if(!isnull(broken_flooring))
 		return
 	var/turf/T = get_turf(src)
