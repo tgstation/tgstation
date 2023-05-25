@@ -82,12 +82,12 @@
 
 /**
  * Get a list of turfs in a perimeter given the `center_atom` and `radius`.
- * Automatically rounds down decimals and does not accept negative radius as they dont play well with it.
+ * Automatically rounds down decimals and does not accept values less than positive 1 as they dont play well with it.
  * Is efficient on large circles but ugly on small ones
  * Uses [Jesko`s method to the midpoint circle Algorithm](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm).
  */
 /proc/get_perimeter(atom/center, radius)
-	if(radius < 0)
+	if(radius < 1)
 		return
 	var/rounded_radius = round(radius)
 	var/x = center.x
