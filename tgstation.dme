@@ -1564,6 +1564,7 @@
 #include "code\game\machinery\mechlaunchpad.dm"
 #include "code\game\machinery\medical_kiosk.dm"
 #include "code\game\machinery\medipen_refiller.dm"
+#include "code\game\machinery\modular_shield.dm"
 #include "code\game\machinery\navbeacon.dm"
 #include "code\game\machinery\PDApainter.dm"
 #include "code\game\machinery\prisongate.dm"
