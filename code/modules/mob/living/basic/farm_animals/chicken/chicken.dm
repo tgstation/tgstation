@@ -42,6 +42,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	. = ..()
 	GLOB.chicken_count++
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "clucks happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
