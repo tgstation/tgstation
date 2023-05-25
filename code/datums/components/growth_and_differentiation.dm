@@ -54,8 +54,7 @@
 
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
-		for(var/signal in src.signals_to_kill_on)
-			RegisterSignal(parent, signal, PROC_REF(kill_processes))
+		RegisterSignals(parent, src.signals_to_kill_on.Copy(), PROC_REF(kill_processes))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -70,8 +69,8 @@
 
 /datum/component/growth_and_differentiation/UnregisterFromParent()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
-	for(var/signal in signals_to_kill_on)
-		UnregisterSignal(parent, signal)
+	if(!isnull(signals_to_kill_on))
+		UnregisterSignal(parent, signals_to_kill_on)
 
 /// In case the mob decides that we shouldn't grow anymore (permanently), we don't really wanna waste up the tick doing useless work. Let's stop everything and qdel ourselves.
 /datum/component/growth_and_differentiation/proc/kill_processes()
