@@ -411,11 +411,11 @@
 	to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 	return TRUE
 
-	//rather than automatically checking for connections its probably alot less
-	//expensive to just make the players manually multi tool sync each part
 /obj/machinery/modular_shield/module/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 
+	//rather than automatically checking for connections its probably alot less
+	//expensive to just make the players manually multi tool sync each part
 	try_connect(user)
 	return TRUE
 
