@@ -15,6 +15,8 @@
 	var/lower_growth_value
 	/// Integer - The upper bound for the percentage we have to grow before we can differentiate.
 	var/upper_growth_value
+	/// List of signals we kill on ourselves when we grow.
+	var/list/signals_to_kill_on
 	/// Optional callback for checks to see if we're okay to grow.
 	var/datum/callback/optional_checks
 	/// Optional callback in case we wish to override the default grow() behavior. Assume we supersede the change_mob_type() call if we have this set.
@@ -29,7 +31,16 @@
 	/// and will actively try to grow the mob (only barred by optional checks).
 	var/ready_to_grow = FALSE
 
-/datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks, optional_grow_behavior)
+/datum/component/growth_and_differentiation/Initialize(
+	growth_time,
+	growth_path,
+	growth_probability,
+	lower_growth_value,
+	upper_growth_value,
+	signals_to_kill_on,
+	optional_checks,
+	optional_grow_behavior,
+)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -41,7 +52,10 @@
 	src.optional_checks = optional_checks
 	src.optional_grow_behavior = optional_grow_behavior
 
-	RegisterSignal(parent, COMSIG_COMPONENT_KILL, PROC_REF(kill_processes))
+	if(islist(signals_to_kill_on))
+		src.signals_to_kill_on = signals_to_kill_on
+		for(var/signal in signals_to_kill_on)
+			RegisterSignal(parent, signal, PROC_REF(kill_processes))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -56,6 +70,8 @@
 
 /datum/component/growth_and_differentiation/UnregisterFromParent()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	for(var/signal in signals_to_kill_on)
+		UnregisterSignal(parent, signal)
 
 /// In case the mob decides that we shouldn't grow anymore (permanently), we don't really wanna waste up the tick doing useless work. Let's stop everything and qdel ourselves.
 /datum/component/growth_and_differentiation/proc/kill_processes()

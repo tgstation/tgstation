@@ -51,19 +51,12 @@
 			growth_probability = 100,\
 			lower_growth_value = 0.5,\
 			upper_growth_value = 1,\
+			signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
 			optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		)
 
-/mob/living/basic/chick/Login()
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_COMPONENT_KILL)
-
 /// We don't grow into a chicken if we're not conscious or if we have a client (in case of schenanigans).
 /mob/living/basic/chick/proc/ready_to_grow()
-	if(!isnull(client))
-		SEND_SIGNAL(src, COMSIG_COMPONENT_KILL) // juuuuuust in case
-		return FALSE
-
 	if(stat == CONSCIOUS)
 		return TRUE
 
