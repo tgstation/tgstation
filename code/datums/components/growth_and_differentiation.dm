@@ -54,7 +54,7 @@
 
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
-		RegisterSignals(parent, src.signals_to_kill_on.Copy(), PROC_REF(kill_processes))
+		RegisterSignals(parent, src.signals_to_kill_on.Copy(), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -64,19 +64,9 @@
 	return setup_growth_tracking()
 
 /datum/component/growth_and_differentiation/Destroy(force, silent)
+	STOP_PROCESSING(SSdcs, src)
 	deltimer(timer_id)
 	return ..()
-
-/datum/component/growth_and_differentiation/UnregisterFromParent()
-	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
-	if(!isnull(signals_to_kill_on))
-		UnregisterSignal(parent, signals_to_kill_on)
-
-/// In case the mob decides that we shouldn't grow anymore (permanently), we don't really wanna waste up the tick doing useless work. Let's stop everything and qdel ourselves.
-/datum/component/growth_and_differentiation/proc/kill_processes()
-	UnregisterFromParent()
-	STOP_PROCESSING(SSdcs, src)
-	qdel(src)
 
 /// What we invoke when the round starts so we can set up our timer.
 /datum/component/growth_and_differentiation/proc/comp_on_round_start()
