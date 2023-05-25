@@ -52,7 +52,7 @@
 	var/light_mask = "elev-light-mask"
 
 	/// The soundloop of elevator music
-	var/datum/looping_sound/local_forecast/elevator_music
+	var/datum/looping_sound/elevator_music/elevator_music
 	/// Will the elevator music play?
 	var/elevator_music_toggle = TRUE
 
