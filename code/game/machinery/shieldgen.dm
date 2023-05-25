@@ -950,25 +950,30 @@
 		return
 	. += "It can be loosed and rotated with a screwdriver and wrench, rotating it will sever its connection."
 
-/obj/machinery/modular_shield/module/attackby(obj/item/I, mob/user, params)
+/obj/machinery/modular_shield/module/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
 
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		panel_open = !(panel_open)
-		I.play_tool_sound(src, 50)
-		update_icon_state()
-		if(panel_open)
-			to_chat(user, span_notice("You open the maintenance hatch of [src]."))
-			return TRUE
-		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+	panel_open = !(panel_open)
+	tool.play_tool_sound(src, 50)
+	update_icon_state()
+	if(panel_open)
+		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
 		return TRUE
+	to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+	return TRUE
 
 	//rather than automatically checking for connections its probably alot less
 	//expensive to just make the players manually multi tool sync each part
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		try_connect(user)
-		return TRUE
+/obj/machinery/modular_shield/module/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
 
-	if(default_change_direction_wrench(user, I))
+	try_connect(user)
+	return TRUE
+
+/obj/machinery/modular_shield/module/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(default_change_direction_wrench(user, tool))
 		if(shield_generator)
 			LAZYREMOVE(shield_generator.connected_modules, (src))
 			shield_generator.calculate_boost()
@@ -980,14 +985,18 @@
 		connected_turf = get_step(loc, dir)
 		return TRUE
 
-	if(default_deconstruction_crowbar(I))
+/obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(default_deconstruction_crowbar(tool))
 		return TRUE
-	return ..()
+
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
 	connected_turf = get_step(loc, dir)
 
+///checks for a valid machine in front of us and connects to it
 /obj/machinery/modular_shield/module/proc/try_connect(user)
 
 	if(shield_generator || connected_node)
@@ -1183,7 +1192,8 @@
 	density = FALSE
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
-	//our parent
+
+	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator
 
 
@@ -1194,6 +1204,7 @@
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
 
+//Damage from atmos
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(isnull(shield_generator))
 		qdel(src)
@@ -1202,7 +1213,7 @@
 	shield_generator.shield_drain(round(air.return_volume() / 400))//400 integer determines how much damage the shield takes from hot atmos (higher value = less damage)
 
 
-//How the shield loses strength
+//Damage from direct attacks
 /obj/structure/emergency_shield/modular/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(damage_type == BRUTE || damage_type == BURN)
@@ -1212,6 +1223,7 @@
 
 		shield_generator.shield_drain(damage_amount)//can add or subtract a flat value to buff or nerf crowd damage
 
+//Damage from emp
 /obj/structure/emergency_shield/modular/emp_act(severity)
 	if(isnull(shield_generator))
 		qdel(src)
