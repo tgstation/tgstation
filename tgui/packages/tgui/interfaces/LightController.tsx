@@ -1,13 +1,15 @@
 import { useBackend, useLocalState } from '../backend';
 import { round } from '../../common/math';
-import { classes } from '../../common/react';
+import { BooleanLike, classes } from '../../common/react';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
-const NORTH = 1;
-const SOUTH = 2;
-const EAST = 4;
-const WEST = 8;
+enum Direction {
+  North = 1,
+  South = 2,
+  East = 4,
+  West = 8,
+}
 
 type LightDetails = {
   name: string;
@@ -25,13 +27,12 @@ type LightTemplate = {
   id: TemplateID;
 };
 
-
 interface CategoryList {
   [key: string]: TemplateID[];
 }
 
 type Data = {
-  on: boolean;
+  on: BooleanLike;
   direction: number;
   light_info: LightDetails;
   templates: LightTemplate[];
@@ -42,7 +43,13 @@ type Data = {
 
 export const LightController = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { light_info, templates, default_id, default_category, category_ids } = data;
+  const {
+    light_info,
+    templates = [],
+    default_id,
+    default_category,
+    category_ids,
+  } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
     context,
     'currentTemplate',
@@ -54,42 +61,44 @@ export const LightController = (props, context) => {
     default_category
   );
 
+  const category_keys = category_ids ? Object.keys(category_ids) : [];
 
   return (
-    <Window
-      title={light_info.name + ": Lighting"}
-      width={600}
-      height={400}>
+    <Window title={light_info.name + ': Lighting'} width={600} height={400}>
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
             <Section fitted fill scrollable width="170px">
               <Tabs fluid centered>
-                {Object.keys(category_ids).map(
-                  (category, index) => (
-                    <Tabs.Tab
-                      key={category}
-                      selected={currentCategory === category}
-                      onClick={() => setCurrentCategory(category)}>
-                      <Box fontSize="14px" bold textColor={"#eee"}>
-                        {category}
-                      </Box>
-                    </Tabs.Tab>
-                  ))}
+                {category_keys.map((category, index) => (
+                  <Tabs.Tab
+                    key={category}
+                    selected={currentCategory === category}
+                    onClick={() => setCurrentCategory(category)}>
+                    <Box fontSize="14px" bold textColor="#eee">
+                      {category}
+                    </Box>
+                  </Tabs.Tab>
+                ))}
               </Tabs>
               <Tabs vertical>
-                {category_ids[currentCategory].map(
-                  (id) => (
-                    <Tabs.Tab
-                      key={id}
-                      selected={currentTemplate === id}
-                      onClick={() => setCurrentTemplate(id)}>
-                      <Box fontSize="14px" textColor={"#cee"}>
-                        {templates[id].light_info.name}
-                      </Box>
-                      <Box ml={0.1} className={classes(['lights32x32', "light_fantastic_" + id])} />
-                    </Tabs.Tab>
-                  ))}
+                {category_ids[currentCategory].map((id) => (
+                  <Tabs.Tab
+                    key={id}
+                    selected={currentTemplate === id}
+                    onClick={() => setCurrentTemplate(id)}>
+                    <Box fontSize="14px" textColor="#cee">
+                      {templates[id].light_info.name}
+                    </Box>
+                    <Box
+                      ml={0.1}
+                      className={classes([
+                        'lights32x32',
+                        'light_fantastic_' + id,
+                      ])}
+                    />
+                  </Tabs.Tab>
+                ))}
               </Tabs>
             </Section>
           </Stack.Item>
@@ -104,10 +113,10 @@ export const LightController = (props, context) => {
 };
 
 type LightControlProps = {
-  info : LightDetails;
+  info: LightDetails;
 };
 
-const LightControl = (props : LightControlProps, context) => {
+const LightControl = (props: LightControlProps, context) => {
   const { act, data } = useBackend<Data>(context);
   const { on } = data;
   const { info } = props;
@@ -126,16 +135,19 @@ const LightControl = (props : LightControlProps, context) => {
                 fontSize="16px"
                 icon="brush"
                 textColor={info.color}
-                onClick={() => act("change_color")}
-                content={info.color}
-                />
+                onClick={() => act('change_color')}>
+                {info.color}
+              </Button>
               <Button
                 fontSize="16px"
-                color={on ? "good" : "bad"}
+                color={on ? 'good' : 'bad'}
                 icon="power-off"
-                onClick={() => act("set_on", {
-                value: !on,
-                })} />
+                onClick={() =>
+                  act('set_on', {
+                    value: !on,
+                  })
+                }
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -160,25 +172,29 @@ const LightControl = (props : LightControlProps, context) => {
             color="blue"
             minValue={0}
             maxValue={10}
-            onChange={(e, value) => act("set_range", {
-              value: value,
-            })}
+            onChange={(e, value) =>
+              act('set_range', {
+                value: value,
+              })
+            }
             step={0.1}
             stepPixelSize={5}
-            />
+          />
           <Slider
             unit="intensity"
             value={info.power}
             color="olive"
             minValue={-1}
             maxValue={5}
-            format={(value) => { return round(value, 2); }}
-            onChange={(e, value) => act("set_power", {
-              value: value,
-            })}
+            format={(value) => round(value, 2)}
+            onChange={(e, value) =>
+              act('set_power', {
+                value: value,
+              })
+            }
             step={0.1}
             stepPixelSize={10}
-            />
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -186,10 +202,10 @@ const LightControl = (props : LightControlProps, context) => {
 };
 
 type LightInfoProps = {
-  light : LightTemplate;
+  light: LightTemplate;
 };
 
-const LightInfo = (props : LightInfoProps, context) => {
+const LightInfo = (props: LightInfoProps, context) => {
   const { act } = useBackend(context);
   const { light } = props;
   const { light_info } = light;
@@ -207,18 +223,18 @@ const LightInfo = (props : LightInfoProps, context) => {
               </Box>
             </Stack.Item>
             <Stack.Item>
-              <Button
-                  fontSize="16px"
-                  icon="brush"
-                  textColor={light_info.color}
-                  content={light_info.color}
-                  />
+              <Button fontSize="16px" icon="brush" textColor={light_info.color}>
+                {light_info.color}
+              </Button>
               <Button
                 fontSize="16px"
                 icon="upload"
-                onClick={() => act("mirror_template", {
-                  id: light.id,
-                })} />
+                onClick={() =>
+                  act('mirror_template', {
+                    id: light.id,
+                  })
+                }
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -230,7 +246,7 @@ const LightInfo = (props : LightInfoProps, context) => {
             minValue={0}
             maxValue={10}
             step={0}
-            />
+          />
           <Slider
             unit="intensity"
             value={light_info.power}
@@ -238,7 +254,7 @@ const LightInfo = (props : LightInfoProps, context) => {
             minValue={-1}
             maxValue={5}
             step={0}
-            />
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -250,23 +266,23 @@ const DirectionSelect = () => {
   return (
     <Stack align="start" mt={0.5}>
       <Stack.Item align="center">
-        <DirectionButton icon="arrow-left" dir={WEST} />
+        <DirectionButton icon="arrow-left" dir={Direction.West} />
       </Stack.Item>
       <Stack.Item>
         <Stack vertical>
           <Stack.Item>
-            <DirectionButton icon="arrow-up" dir={NORTH} />
+            <DirectionButton icon="arrow-up" dir={Direction.North} />
           </Stack.Item>
           <Stack.Item>
             <Box backgroundColor="grey" width="18px" height="18px" ml="2px" />
           </Stack.Item>
           <Stack.Item>
-            <DirectionButton icon="arrow-down" dir={SOUTH} />
+            <DirectionButton icon="arrow-down" dir={Direction.South} />
           </Stack.Item>
         </Stack>
       </Stack.Item>
       <Stack.Item align="center">
-        <DirectionButton icon="arrow-right" dir={EAST} />
+        <DirectionButton icon="arrow-right" dir={Direction.East} />
       </Stack.Item>
     </Stack>
   );
@@ -277,20 +293,19 @@ type DirectedButtonProps = {
   icon: string;
 };
 
-const DirectionButton = (props : DirectedButtonProps, context) => {
+const DirectionButton = (props: DirectedButtonProps, context) => {
   const { act, data } = useBackend<Data>(context);
   const { direction } = data;
-  const {
-    dir,
-    icon,
-  } = props;
+  const { dir, icon } = props;
   return (
     <Button
       icon={icon}
       selected={direction & dir}
-      onClick={() => act('set_dir', {
+      onClick={() =>
+        act('set_dir', {
           value: dir,
-      })}
+        })
+      }
     />
   );
 };
@@ -298,9 +313,7 @@ const DirectionButton = (props : DirectedButtonProps, context) => {
 const AngleSelect = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { light_info } = data;
-  const {
-    angle,
-  } = light_info;
+  const { angle } = light_info;
   return (
     <Knob
       mt={0.5}
@@ -311,9 +324,11 @@ const AngleSelect = (props, context) => {
       size={2.2}
       step={5}
       stepPixelSize={10}
-      onChange={(e, value) => act('set_angle', {
-        value: value,
-      })}
-      />
+      onChange={(e, value) =>
+        act('set_angle', {
+          value: value,
+        })
+      }
+    />
   );
 };
