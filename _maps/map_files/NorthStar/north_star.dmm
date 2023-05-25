@@ -56535,9 +56535,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/station/tcommsat/server)
 "oFL" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port)
 "oFM" = (
@@ -87886,10 +87884,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/aft)
 "xat" = (

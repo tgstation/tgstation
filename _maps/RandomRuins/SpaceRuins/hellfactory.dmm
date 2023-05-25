@@ -714,7 +714,7 @@
 /obj/effect/turf_decal{
 	dir = 5
 	},
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cz" = (

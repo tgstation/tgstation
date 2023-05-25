@@ -89,6 +89,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/singular, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/pile, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/side, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/corner, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/plating, 0)
 
 /obj/structure/fluff/broken_flooring/singular
 	icon_state = "singular"
@@ -101,6 +102,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/broken_flooring/corner, 0)
 
 /obj/structure/fluff/broken_flooring/corner
 	icon_state = "corner"
+
+/obj/structure/fluff/broken_flooring/plating
+	icon_state = "plating"
 
 /**
  * Ash drake status spawn on either side of the necropolis gate in lavaland.

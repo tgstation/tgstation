@@ -436,10 +436,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "hx" = (
 /obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/north,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
@@ -719,9 +716,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "lO" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/south,
 /turf/open/space/basic,
 /area/template_noop)
 "lU" = (
@@ -1046,10 +1041,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "rB" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/east,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/space/basic,
@@ -1718,9 +1710,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "AU" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/space/basic,
 /area/template_noop)
 "Bh" = (
@@ -2011,14 +2001,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Gn" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/north,
+/obj/structure/fluff/broken_flooring/pile/directional/west,
 /turf/open/space/basic,
 /area/template_noop)
 "Gt" = (
@@ -2696,10 +2680,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Qu" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/space/basic,
 /area/template_noop)
 "QA" = (
@@ -2771,10 +2752,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "RQ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/space/basic,
 /area/template_noop)
 "RS" = (

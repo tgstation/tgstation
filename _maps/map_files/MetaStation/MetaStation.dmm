@@ -2856,9 +2856,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "bbp" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bbt" = (
@@ -31426,10 +31424,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "llW" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "lma" = (
@@ -62355,10 +62350,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "wgq" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "wgs" = (
@@ -64262,7 +64254,7 @@
 /area/station/cargo/storage)
 "wRl" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)

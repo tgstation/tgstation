@@ -794,9 +794,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "ark" = (
@@ -3605,9 +3603,7 @@
 /area/station/hallway/secondary/command)
 "bBw" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -4062,9 +4058,7 @@
 /area/station/engineering/main)
 "bJw" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "bJL" = (
@@ -4210,10 +4204,7 @@
 /area/station/science/ordnance/testlab)
 "bNP" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -4982,10 +4973,7 @@
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "cdq" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "cdt" = (
@@ -5797,10 +5785,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "cxO" = (
@@ -7338,10 +7323,7 @@
 /area/station/maintenance/department/medical/central)
 "dbU" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dbY" = (
@@ -7565,10 +7547,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "dgo" = (
@@ -7966,10 +7945,7 @@
 "dof" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "dog" = (
@@ -8687,10 +8663,7 @@
 /area/station/security/tram)
 "dBy" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -9308,10 +9281,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "dOb" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "dOd" = (
@@ -9407,9 +9377,7 @@
 /area/station/maintenance/department/medical/central)
 "dPV" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dQA" = (
@@ -10170,10 +10138,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "eeq" = (
@@ -10314,9 +10279,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ein" = (
@@ -10636,10 +10599,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "eoC" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "eoK" = (
@@ -10939,10 +10899,7 @@
 /area/station/security/execution/transfer)
 "etf" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "eto" = (
@@ -11200,9 +11157,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "exW" = (
@@ -14431,9 +14386,7 @@
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fFV" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "fFY" = (
@@ -14905,7 +14858,7 @@
 /turf/open/floor/plating/airless,
 /area/station/security/execution/education)
 "fNv" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -15210,10 +15163,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -17494,10 +17444,7 @@
 /area/station/ai_monitored/security/armory)
 "gKE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -17921,9 +17868,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/start/assistant,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "gRj" = (
@@ -17955,10 +17900,7 @@
 /area/station/maintenance/department/medical/central)
 "gRX" = (
 /obj/machinery/newscaster/directional/south,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "gSa" = (
@@ -18554,9 +18496,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "hbt" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
@@ -18670,10 +18610,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hcE" = (
@@ -19186,10 +19123,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "hlg" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hln" = (
@@ -20395,7 +20329,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "hFO" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
@@ -20601,7 +20535,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small/directional/east,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hKR" = (
@@ -21091,9 +21025,7 @@
 /area/station/security/execution/transfer)
 "hUk" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "hUq" = (
@@ -21140,7 +21072,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "hVM" = (
@@ -21660,10 +21592,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "idF" = (
@@ -21983,9 +21912,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "ikk" = (
@@ -23205,10 +23132,7 @@
 /area/station/security/prison/mess)
 "iGO" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iGS" = (
@@ -23449,7 +23373,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "iKo" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_x = 32;
 	spawn_loot_chance = 50
@@ -24056,10 +23980,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "iVJ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "iVK" = (
@@ -24084,10 +24005,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/item/flashlight,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
@@ -24169,7 +24087,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iXi" = (
@@ -25431,10 +25349,7 @@
 /turf/open/floor/iron/small,
 /area/station/command/teleporter)
 "jwh" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_x = -32;
 	spawn_loot_chance = 50
@@ -25595,9 +25510,7 @@
 	},
 /area/station/command/heads_quarters/captain/private)
 "jzp" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "jAb" = (
@@ -26312,9 +26225,7 @@
 /area/station/hallway/primary/central/fore)
 "jLP" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "jLR" = (
@@ -26520,7 +26431,7 @@
 /area/station/command/heads_quarters/captain/private)
 "jPg" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "jPm" = (
@@ -27185,7 +27096,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "kbc" = (
@@ -27552,10 +27463,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kiG" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/machinery/recharge_station,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/plating,
@@ -28708,9 +28616,7 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "kEe" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -29047,9 +28953,7 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "kIY" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -29449,10 +29353,7 @@
 "kQb" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "kQe" = (
@@ -29760,7 +29661,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "kWs" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "kWF" = (
@@ -30201,10 +30102,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/commons)
 "ldF" = (
@@ -30354,9 +30252,7 @@
 "leN" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_recreation)
 "leP" = (
@@ -32455,10 +32351,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "lRa" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "lRc" = (
@@ -33029,9 +32922,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/robot_debris,
 /obj/item/crowbar,
 /obj/effect/mapping_helpers/broken_floor,
@@ -33113,10 +33004,7 @@
 	pixel_x = 6;
 	pixel_y = 17
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "maX" = (
@@ -34280,9 +34168,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "myt" = (
@@ -34300,10 +34186,7 @@
 /area/station/medical/virology)
 "myW" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mzc" = (
@@ -35027,10 +34910,7 @@
 /area/station/security/processing)
 "mLF" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "mLH" = (
@@ -35088,10 +34968,7 @@
 /area/station/command/heads_quarters/qm)
 "mME" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mMF" = (
@@ -35591,10 +35468,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
@@ -35782,9 +35656,7 @@
 /area/station/science/ordnance/burnchamber)
 "naC" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
@@ -35990,10 +35862,7 @@
 "nfs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "nfy" = (
@@ -36940,10 +36809,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -37636,10 +37502,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/firealarm/directional/east,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "nJG" = (
@@ -37844,10 +37707,7 @@
 "nPc" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "nPd" = (
@@ -39406,9 +39266,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /obj/structure/sign/departments/restroom/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
@@ -39439,7 +39297,7 @@
 /area/station/engineering/atmos)
 "osY" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "otf" = (
@@ -39479,10 +39337,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "otX" = (
@@ -39933,10 +39788,7 @@
 /area/station/command/heads_quarters/cmo)
 "oCM" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "oDc" = (
@@ -40173,7 +40025,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/plating,
@@ -40953,10 +40805,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "oVK" = (
@@ -40992,10 +40841,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
 "oWk" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -41312,7 +41158,7 @@
 "pcT" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "pdo" = (
@@ -41633,9 +41479,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/cafeteria)
 "pjb" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "pjn" = (
@@ -41863,7 +41707,7 @@
 /turf/open/floor/iron/textured_half,
 /area/station/commons/fitness/recreation)
 "pnt" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -42241,7 +42085,7 @@
 /turf/open/floor/iron,
 /area/station/security/tram)
 "psX" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "ptj" = (
@@ -42557,10 +42401,7 @@
 /area/station/science/xenobiology)
 "pyh" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pyp" = (
@@ -42790,9 +42631,7 @@
 "pBx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "pBy" = (
@@ -42997,10 +42836,7 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/ordnance/storage)
 "pFk" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -43132,10 +42968,7 @@
 /area/station/commons/storage/tools)
 "pHn" = (
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "pHo" = (
@@ -43204,10 +43037,7 @@
 	dir = 9
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pIp" = (
@@ -43804,10 +43634,7 @@
 "pSq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "pSr" = (
@@ -44235,10 +44062,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "pYr" = (
@@ -44733,10 +44557,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qgx" = (
@@ -45123,7 +44944,7 @@
 "qmb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qme" = (
@@ -45643,10 +45464,7 @@
 /area/station/hallway/secondary/entry)
 "qvM" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "qvQ" = (
@@ -46237,10 +46055,7 @@
 /turf/open/floor/iron,
 /area/station/science/lower)
 "qEO" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -46476,10 +46291,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qJa" = (
@@ -46492,7 +46304,7 @@
 "qJj" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/commons)
 "qJq" = (
@@ -47521,7 +47333,7 @@
 /area/station/service/hydroponics/garden/monastery)
 "qZG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qZR" = (
@@ -47736,10 +47548,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "rdC" = (
@@ -47975,7 +47784,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "rho" = (
@@ -49802,10 +49611,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater)
 "rKv" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "rKC" = (
@@ -50020,9 +49826,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "rOG" = (
@@ -50498,10 +50302,7 @@
 /area/station/maintenance/port/aft)
 "rWA" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "rWE" = (
@@ -50521,10 +50322,7 @@
 /area/station/cargo/drone_bay)
 "rWO" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "rWW" = (
@@ -50668,10 +50466,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "rZG" = (
@@ -51847,7 +51642,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "srW" = (
@@ -52127,9 +51922,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -52557,7 +52350,7 @@
 "sEp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "sEr" = (
@@ -53144,10 +52937,7 @@
 /area/station/service/hydroponics)
 "sPx" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "sPE" = (
@@ -53466,9 +53256,7 @@
 	pixel_x = -8;
 	pixel_y = 17
 	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "sTk" = (
@@ -55569,10 +55357,7 @@
 "tDq" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/commons)
 "tDB" = (
@@ -56699,10 +56484,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "tXP" = (
@@ -57495,7 +57277,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "ujr" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -57927,9 +57709,7 @@
 "uqL" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "uqO" = (
@@ -58295,10 +58075,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "uxL" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "uya" = (
@@ -58324,9 +58101,7 @@
 "uyA" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "uyE" = (
@@ -59214,9 +58989,7 @@
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/west,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "uME" = (
@@ -59298,9 +59071,7 @@
 /area/station/hallway/secondary/spacebridge)
 "uNQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "uNR" = (
@@ -59690,7 +59461,7 @@
 "uUq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/newscaster/directional/south,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "uUE" = (
@@ -59994,9 +59765,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio/intercom/directional/south,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "uYY" = (
@@ -60220,10 +59989,7 @@
 /area/space/nearstation)
 "vdm" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "vdp" = (
@@ -60732,10 +60498,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/aft)
 "vlb" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "vln" = (
@@ -61083,10 +60846,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/service/bar)
 "vqb" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32
 	},
@@ -61097,10 +60857,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "vqp" = (
@@ -62761,7 +62518,7 @@
 /area/station/maintenance/port/aft)
 "vRx" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/commons)
 "vRz" = (
@@ -63808,10 +63565,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wfV" = (
@@ -64734,9 +64488,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "wuH" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
@@ -65031,10 +64783,7 @@
 "wAn" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "wAt" = (
@@ -65374,17 +65123,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "wGh" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wGq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wGu" = (
@@ -65884,9 +65630,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "wOd" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/fluff/broken_flooring/plating/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "wOh" = (
@@ -66288,10 +66032,7 @@
 /area/station/security/prison/work)
 "wTu" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "wTv" = (
@@ -66667,10 +66408,7 @@
 /area/station/hallway/primary/central/aft)
 "wYL" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wYM" = (
@@ -67727,9 +67465,7 @@
 /turf/open/misc/sandy_dirt,
 /area/station/medical/medbay/lobby)
 "xmg" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -69480,10 +69216,7 @@
 "xJG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xJR" = (
@@ -69893,10 +69626,7 @@
 "xPf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xPj" = (
@@ -70212,10 +69942,7 @@
 	dir = 10
 	},
 /obj/effect/spawner/random/trash,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xTo" = (
@@ -70932,10 +70659,7 @@
 "ycj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/fluff/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "ycm" = (
@@ -70953,10 +70677,7 @@
 /turf/open/floor/noslip/tram_plate,
 /area/station/maintenance/department/medical/central)
 "ycy" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
