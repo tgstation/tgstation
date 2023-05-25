@@ -95,6 +95,7 @@
 	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
 	emote_hear = list("clucks.", "croons.")
 	emote_see = list("pecks at the ground.","flaps her wings viciously.")
+
 /datum/ai_planning_subtree/random_speech/chick
 	speech_chance = 4
 	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
