@@ -10,6 +10,7 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	icon_dead = "spiderling_dead"
+	density = FALSE
 	faction = list(FACTION_SPIDER)
 	speed = 1
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
@@ -19,7 +20,6 @@
 	mob_size = MOB_SIZE_TINY
 
 	unique_name = TRUE
-	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
 
 	// we have _some_ bite
 	melee_damage_lower = 2

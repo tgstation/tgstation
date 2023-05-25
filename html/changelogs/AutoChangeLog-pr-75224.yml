@@ -1,4 +1,0 @@
-author: "Profakos, sprites by CoiledLamb"
-delete-after: True
-changes:
-  - qol: "Most request console varedits have been moved to mapping helpers."
