@@ -390,6 +390,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"cE" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "ep" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
@@ -913,10 +923,10 @@ ab
 aa
 ab
 aL
-au
+aR
 fK
-au
-sN
+aR
+cE
 aR
 aU
 ab
