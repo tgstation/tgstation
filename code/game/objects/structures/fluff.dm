@@ -69,12 +69,15 @@
 	layer = CATWALK_LAYER
 
 /obj/structure/fluff/broken_flooring/Initialize(mapload)
-	.=..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/fluff/broken_flooring/LateInitialize()
 	. = ..()
-	for(var/obj/O in get_turf(src))
+	var/turf/turf = get_turf(src)
+	if(!istype(/turf/open/floor/plating))
+		return // Do not hide objects as they're likely already hidden
+	for(var/obj/O in turf)
 		if(O.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, UNDERFLOOR_VISIBLE)
 
