@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Chickens have been refactored into basic mobs, expect them to be a tad bit smarter."
