@@ -75,10 +75,10 @@
 /obj/structure/fluff/broken_flooring/LateInitialize()
 	. = ..()
 	var/turf/turf = get_turf(src)
-	if(!istype(turf, /turf/open/floor/plating))
+	if(!istype(turf, /turf/open/floor/plating)) // Render as trash above the current tile
 		plane = GAME_PLANE
 		layer = LOW_OBJ_LAYER
-		return // Do not hide objects as they're likely already hidden
+		return
 	for(var/obj/O in turf)
 		if(O.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, UNDERFLOOR_VISIBLE)
