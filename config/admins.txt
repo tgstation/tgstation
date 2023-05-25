@@ -6,3 +6,4 @@
 
 Shodo = Host
 SawyBawy = Game Master
+Unofficial_AI = Game Master
