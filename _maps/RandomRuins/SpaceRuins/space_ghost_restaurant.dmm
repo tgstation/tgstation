@@ -85,7 +85,7 @@
 /area/space/nearstation)
 "nr" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
 /area/space/nearstation)
 "nT" = (
@@ -135,7 +135,7 @@
 /area/ruin/space/space_ghost_restaurant)
 "Ak" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/template_noop,
 /area/space/nearstation)
 "AT" = (
@@ -208,7 +208,7 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
 "Kj" = (
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/broken_flooring/pile/directional/east,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
@@ -253,7 +253,7 @@
 /turf/open/floor/carpet/donk,
 /area/ruin/space/space_ghost_restaurant)
 "Oy" = (
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "Py" = (

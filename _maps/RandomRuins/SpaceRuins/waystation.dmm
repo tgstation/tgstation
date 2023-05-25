@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ai" = (
-/obj/structure/fluff/broken_flooring/pile/directional/west,
+/obj/structure/broken_flooring/pile/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "ar" = (
@@ -1169,7 +1169,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "sm" = (
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "su" = (
@@ -1197,7 +1197,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
 "tf" = (
-/obj/structure/fluff/broken_flooring/pile/directional/north,
+/obj/structure/broken_flooring/pile/directional/north,
 /turf/template_noop,
 /area/template_noop)
 "tg" = (
@@ -1550,7 +1550,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
 "zV" = (
-/obj/structure/fluff/broken_flooring/pile/directional/west,
+/obj/structure/broken_flooring/pile/directional/west,
 /turf/closed/mineral/random/low_chance,
 /area/ruin/space)
 "zZ" = (
