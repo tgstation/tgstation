@@ -798,9 +798,9 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
-		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src)
+		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src, movement_dir)
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_ABSTRACT_ENTERED, src, old_loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_ABSTRACT_ENTERED, src, old_loc, old_locs)
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
