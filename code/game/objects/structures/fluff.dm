@@ -65,6 +65,8 @@
 	desc = "A segment of broken flooring."
 	icon = 'icons/obj/brokentiling.dmi'
 	icon_state = "corner"
+	plane = FLOOR_PLANE
+	layer = CATWALK_LAYER
 /**
  * Ash drake status spawn on either side of the necropolis gate in lavaland.
  */
