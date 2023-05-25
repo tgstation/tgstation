@@ -1,6 +1,0 @@
-author: "Peliex"
-delete-after: True
-changes:
-  - refactor: "honeycomb is now edible"
-  - bugfix: "all-in-one grinder now notifies the user when trying to dump an empty bag"
-  - bugfix: "all-in-one grinder now accepts honeycomb from plant bags"

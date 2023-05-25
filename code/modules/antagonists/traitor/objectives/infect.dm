@@ -9,11 +9,12 @@
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
 	abstract_type = /datum/traitor_objective/target_player
-
-	progression_minimum = 20 MINUTES
+	objective_period = 30 MINUTES
+	maximum_objectives_in_period = 1
+	progression_minimum = 30 MINUTES
 
 	progression_reward = list(8 MINUTES, 14 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = 1
 
 
 	var/heads_of_staff = FALSE
@@ -87,6 +88,10 @@
 		var/datum/antagonist/traitor/traitor = possible_target.has_antag_datum(/datum/antagonist/traitor)
 		if(traitor && traitor.uplink_handler.telecrystals >= 0)
 			continue
+		var/mob/living/carbon/human/targets_current = possible_target.current
+		var/datum/disease/chronic_illness/illness = locate() in targets_current.diseases
+		if(illness)
+			continue
 		if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
 			continue
 		//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
@@ -151,10 +156,14 @@
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	inject(affected_mob, user)
 	if(used == 0)
-		var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-		affected_mob.ForceContractDisease(hms)
-		used = 1
-		SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
+		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
+		if(do_after(user, 1.5 SECONDS))
+			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+			affected_mob.ForceContractDisease(hms)
+			used = 1
+			inject(affected_mob, user)
+			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
+	else
+		inject(affected_mob, user)
 

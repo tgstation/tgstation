@@ -1,5 +1,0 @@
-author: "MTandi, coiledlamb"
-delete-after: True
-changes:
-  - rscadd: "Added test tubes and racks for them"
-  - balance: "All 30u bottles now have 50u volume and chem master/pandemic spawn tubes instead of bottles"

@@ -14,6 +14,8 @@
 
 #define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
 
+#define INFINITE_CHARGES -1
+
 /*
  * Crayons
  */
@@ -49,7 +51,7 @@
 	/// Dictates how large of an area we cover with our paint
 	var/paint_mode = PAINT_NORMAL
 
-	/// Number of times this item can be used, -1 for unlimited
+	/// Number of times this item can be used, INFINITE_CHARGES for unlimited
 	var/charges = 30
 	/// Number of remaining charges
 	var/charges_left
@@ -83,7 +85,12 @@
 	/// Whether to play a sound after using
 	var/post_noise = FALSE
 
-	/// List of selectable graffiti options
+	/**
+	 * List of selectable graffiti options
+	 * If an associated value is present, the graffiti has its own cost
+	 * otherwise it'll be the default value.
+	 * Ditto with the other other lists below.
+	*/
 	var/static/list/graffiti = list(
 		"amyjon",
 		"antilizard",
@@ -138,7 +145,7 @@
 		"largebrush",
 		"scroll",
 		"shotgun",
-		"smallbrush",
+		"smallbrush" = CRAYON_COST_SMALL,
 		"snake",
 		"splatter",
 		"stickman",
@@ -148,14 +155,14 @@
 	)
 	/// List of selectable orientable options
 	var/static/list/oriented = list(
-		"arrow",
+		"arrow" = CRAYON_COST_SMALL,
 		"body",
-		"chevron",
-		"clawprint",
-		"footprint",
+		"chevron" = CRAYON_COST_SMALL,
+		"clawprint" = CRAYON_COST_SMALL,
+		"footprint" = CRAYON_COST_SMALL,
 		"line",
-		"pawprint",
-		"shortline",
+		"pawprint" = CRAYON_COST_SMALL,
+		"shortline" = CRAYON_COST_SMALL,
 		"thinline",
 	)
 	/// List of selectable rune options
@@ -181,10 +188,10 @@
 	)
 	/// List of selectable large options
 	var/static/list/graffiti_large_h = list(
-		"furrypride",
-		"paint",
-		"secborg",
-		"yiffhell",
+		"furrypride" = CRAYON_COST_LARGE,
+		"paint" = CRAYON_COST_LARGE,
+		"secborg" = CRAYON_COST_LARGE,
+		"yiffhell" = CRAYON_COST_LARGE,
 	)
 	/// Combined lists
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
@@ -216,7 +223,7 @@
 	update_appearance()
 
 /obj/item/toy/crayon/proc/refill()
-	if(charges == -1)
+	if(charges == INFINITE_CHARGES)
 		charges_left = 100
 	else
 		charges_left = charges
@@ -237,15 +244,13 @@
 
 /obj/item/toy/crayon/proc/use_charges(mob/user, amount = 1, requires_full = TRUE)
 	// Returns number of charges actually used
-	if(charges == -1)
-		. = amount
+	if(charges == INFINITE_CHARGES)
 		refill()
-	else
-		if(check_empty(user, amount, requires_full))
-			return 0
-		else
-			. = min(charges_left, amount)
-			charges_left -= .
+		return TRUE
+	if(check_empty(user, amount, requires_full))
+		return FALSE
+	charges_left -= min(charges_left, amount)
+	return TRUE
 
 /obj/item/toy/crayon/proc/check_empty(mob/user, amount = 1, requires_full = TRUE)
 	// When eating a crayon, check_empty() can be called twice producing
@@ -253,8 +258,8 @@
 	if(QDELETED(src))
 		return TRUE
 
-	// -1 is unlimited charges
-	if(charges == -1)
+	// INFINITE_CHARGES is unlimited charges
+	if(charges == INFINITE_CHARGES)
 		return FALSE
 	if(!charges_left)
 		balloon_alert(user, "empty!")
@@ -387,28 +392,16 @@
 /// Attempts to color the target. Returns how many charges were used.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
-	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
-
-	var/cost = 1
-	if(paint_mode == PAINT_LARGE_HORIZONTAL)
-		cost = 5
-	if(istype(target, /obj/item/canvas))
-		cost = 0
-	if(ishuman(user))
-		if (istagger)
-			cost *= 0.5
-	if(check_empty(user, cost))
-		return 0
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
 	if(!isturf(target))
-		return 0
+		return
 
 	if(!isValidSurface(target))
 		target.balloon_alert(user, "can't use there!")
-		return 0
+		return
 
 	var/drawing = drawtype
 	switch(drawtype)
@@ -431,6 +424,14 @@
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
+	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
+	var/cost = all_drawables[drawing] || CRAYON_COST_DEFAULT
+	if(istype(target, /obj/item/canvas))
+		cost = 0
+	if (istagger)
+		cost *= 0.5
+	if(check_empty(user, cost))
+		return
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
@@ -478,14 +479,11 @@
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(!instant)
-		if(!do_after(user, 50, target = target))
-			return 0
+	if(!instant && !do_after(user, 50, target = target))
+		return
 
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
-		return 0
-	. = charges_used
+	if(!use_charges(user, cost))
+		return
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
@@ -536,22 +534,20 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
-	return .
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
 
 	if(!proximity)
-		return .
+		return
 
 	if (isitem(target))
 		. |= AFTERATTACK_PROCESSED_ITEM
 
 	if (!check_allowed_items(target))
-		return .
+		return
 
 	use_on(target, user, params)
-	return .
 
 /obj/item/toy/crayon/attack(mob/target, mob/user)
 	if(!edible || (target != user))
@@ -651,7 +647,7 @@
 	paint_color = "#FFFFFF"
 	crayon_color = "mime"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/invisible = 1.5)
-	charges = -1
+	charges = INFINITE_CHARGES
 	dye_color = DYE_MIME
 
 /obj/item/toy/crayon/rainbow
@@ -661,7 +657,7 @@
 	crayon_color = "rainbow"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent = 1.5)
 	drawtype = RANDOM_ANY // just the default starter.
-	charges = -1
+	charges = INFINITE_CHARGES
 	dye_color = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
@@ -765,7 +761,8 @@
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
-	if(is_capped || !actually_paints)
+	var/used = min(charges_left, 10)
+	if(is_capped || !actually_paints || !use_charges(user, 10, FALSE))
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
 		user.say("MEDIOCRE!!", forced = "spraycan suicide")
 		return SHAME
@@ -779,7 +776,6 @@
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
-	var/used = use_charges(user, 10, FALSE)
 	reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
 	return OXYLOSS
 
@@ -792,19 +788,20 @@
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
-	if(charges_left)
-		. += "It has [charges_left] use\s left."
-	else
-		. += "It is empty."
+	if(charges != INFINITE_CHARGES)
+		if(charges_left)
+			. += "It's roughly [PERCENT(charges_left/charges)]% full."
+		else
+			. += "It is empty."
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, params)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return 0
+		return
 
 	if(check_empty(user))
-		return 0
+		return
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -823,28 +820,31 @@
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target
 			human_target.update_lips("spray_face", paint_color)
-		. = use_charges(user, 10, FALSE)
+		use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
-		return .
+	else if(actually_paints && target.atom_colours[atom_colours] == paint_color)
+		balloon_alert(user, "[target.p_theyre()] already of that color.")
+		return FALSE
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
-		. = use_charges(user, 2, requires_full = FALSE)
+		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
-		return .
+		return
 
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
+		var/color_is_dark = FALSE
 		if(actually_paints)
-			var/color_is_dark = is_color_dark(paint_color)
+			color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
@@ -858,14 +858,14 @@
 					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
-			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
-		. = use_charges(user, 2, requires_full = FALSE)
+		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
+			use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
-		return 0
+		return
 
 	return ..()
 
@@ -920,37 +920,21 @@
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"
 	desc = "A metallic container containing shiny synthesised paint."
-	charges = -1
+	charges = INFINITE_CHARGES
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
-	if (!proximity)
-		return
-
-	if (isitem(target))
-		. = AFTERATTACK_PROCESSED_ITEM
-
-	if (!check_allowed_items(target))
-		return .
-
-	var/diff = use_on(target, user, params)
+/obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE)
 	if(!iscyborg(user))
 		to_chat(user, span_notice("How did you get this?"))
 		qdel(src)
-		return .
+		return FALSE
 
 	var/mob/living/silicon/robot/borgy = user
-
-	if(!diff)
-		return .
 	// 25 is our cost per unit of paint, making it cost 25 energy per
 	// normal tag, 50 per window, and 250 per attack
-	var/cost = diff * 25
-	// Cyborgs shouldn't be able to use modules without a cell. But if they do
-	// it's free.
-	if(borgy.cell)
-		borgy.cell.use(cost)
+	if(!borgy.cell?.use(amount * 25))
+		return FALSE
+	return ..()
 
-	return .
 
 /obj/item/toy/crayon/spraycan/hellcan
 	name = "hellcan"
@@ -1002,7 +986,7 @@
 
 /obj/item/toy/crayon/spraycan/infinite
 	name = "infinite spraycan"
-	charges = -1
+	charges = INFINITE_CHARGES
 	desc = "Now with 30% more bluespace technology."
 
 #undef RANDOM_GRAFFITI
@@ -1020,3 +1004,5 @@
 #undef PAINT_NORMAL
 #undef PAINT_LARGE_HORIZONTAL
 #undef PAINT_LARGE_HORIZONTAL_ICON
+
+#undef INFINITE_CHARGES
