@@ -602,7 +602,6 @@
 	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
 	passed_over = TRUE
 
-#warn syndi got redesigned, mistake_feasible, and lavaland_surface_syndicate_base1, go over it again (cries)
 /datum/map_template/shuttle/whiteship/birdshot
 	suffix = "birdshot"
 	name = "NT Patrol Bee"
