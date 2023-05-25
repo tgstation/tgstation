@@ -56,7 +56,12 @@
 	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	var/hunter_backstory = pick(HUNTER_PACK_COPS, HUNTER_PACK_RUSSIAN, HUNTER_PACK_BOUNTY, HUNTER_PACK_PSYKER)
+	var/hunter_backstory = pick(
+		HUNTER_PACK_COPS,
+		HUNTER_PACK_RUSSIAN,
+		HUNTER_PACK_BOUNTY,
+		HUNTER_PACK_PSYKER,
+	)
 	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
@@ -125,7 +130,7 @@
 
 	for(var/turf/shuttle_turf in ship.get_affected_turfs(placement_turf))
 		for(var/obj/effect/mob_spawn/ghost_role/human/fugitive/spawner in shuttle_turf)
-			if(length(candidates) > 0)
+			if(length(candidates))
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate

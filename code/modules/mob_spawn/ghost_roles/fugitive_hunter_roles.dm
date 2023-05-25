@@ -7,9 +7,6 @@
 	show_flavor = FALSE
 	var/back_story = "error"
 
-/obj/effect/mob_spawn/ghost_role/human/fugitive/Initialize(mapload)
-	. = ..()
-
 /obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	var/datum/antagonist/fugitive_hunter/fughunter = new
