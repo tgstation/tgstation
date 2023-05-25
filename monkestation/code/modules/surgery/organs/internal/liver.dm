@@ -6,5 +6,5 @@
 	organ_flags = ORGAN_SYNTHETIC
 	status = ORGAN_ROBOTIC
 	alcohol_tolerance = 0
-	toxTolerance = 0
+	liver_resistance = 0
 	toxTolerance = 1 //while the organ isn't damaged by doing its job, it doesnt do it very well
