@@ -320,6 +320,11 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
 
+/obj/item/clothing/accessory/armband/prisoner
+	name = "prisoner armband"
+	desc = "An armband, worn by paroled prisoners to identify them at a glance."
+	icon_state = "prisonerband"
+
 //////////////
 //OBJECTION!//
 //////////////

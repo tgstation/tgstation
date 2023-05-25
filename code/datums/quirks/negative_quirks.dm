@@ -539,20 +539,24 @@
 	name = "Paroled Convict"
 	desc = "You were recently released from prison. You're still on parole, so you have to be on your best behavior."
 	icon = FA_ICON_HANDS_BOUND
-	value = -4
+	value = -2
 	gain_text = span_danger("You're on parole, maybe see about getting out of that jumper.")
 	lose_text = span_notice("Seems like your tracking chip has deactivated.")
 	medical_record_text = "Patient has a tracking chip implanted in their body."
-	hardcore_value = 3
+	hardcore_value = 2
 
 /datum/quirk/item_quirk/parole/add_unique(client/client_source)
 	var/obj/item/implant/tracking/parole_implant = new(quirk_holder)
 	parole_implant.implant(quirk_holder, null, TRUE, TRUE)
-	// Give them a parole jumper.
+	// Give them a parole band.
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.equip_to_appropriate_slot(jumper)
-
-
+	var/obj/item/clothing/under/uniform = human_holder.w_uniform
+	var/obj/item/clothing/accessory/old_accessory = uniform.attached_accessory
+	if(old_accessory)
+		old_accessory.detach(uniform)
+		qdel(old_accessory)
+	uniform.attach_accessory(new /obj/item/clothing/accessory/armband/prisoner(human_holder))
+	uniform.update_appearance()
 
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
