@@ -824,7 +824,7 @@
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
-	else if(actually_paints && (target.color == paint_color || target.atom_colours?[WASHABLE_COLOUR_PRIORITY] == paint_color))
+	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
 		balloon_alert(user, "[target.p_theyre()] already that color!")
 		return FALSE
 
