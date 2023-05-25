@@ -22,3 +22,6 @@
 /obj/structure/fluff/broken_flooring{icon_state = "plating";dir = @UNSET} : /obj/structure/fluff/broken_flooring/plating/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
 /obj/structure/fluff/broken_flooring{icon_state = "plating";dir = 4} : /obj/structure/fluff/broken_flooring/plating/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
 /obj/structure/fluff/broken_flooring{icon_state = "plating";dir = 8} : /obj/structure/fluff/broken_flooring/plating/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+
+# Dust had dirt icon before
+/obj/effect/decal/cleanable/dirt/dust : /obj/effect/decal/cleanable/dirt{@OLD}

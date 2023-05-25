@@ -4606,15 +4606,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
-"qB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
-/area/ruin/space/ancientstation/delta/biolab)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2{
 	dir = 4
@@ -6509,7 +6500,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "HJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -6750,7 +6741,7 @@
 	pixel_y = -8;
 	pixel_x = 13
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "Jx" = (
@@ -15315,14 +15306,14 @@ aa
 aa
 vA
 PZ
-qB
-qB
+Ob
+Ob
 EH
-qB
+Ob
 HN
 HJ
 NA
-qB
+Ob
 Ob
 Ay
 vA

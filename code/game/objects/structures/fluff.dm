@@ -75,7 +75,7 @@
 /obj/structure/fluff/broken_flooring/LateInitialize()
 	. = ..()
 	var/turf/turf = get_turf(src)
-	if(!istype(/turf/open/floor/plating))
+	if(!istype(turf, /turf/open/floor/plating))
 		return // Do not hide objects as they're likely already hidden
 	for(var/obj/O in turf)
 		if(O.flags_1 & INITIALIZED_1)
