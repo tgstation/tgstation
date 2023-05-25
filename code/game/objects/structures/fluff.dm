@@ -76,6 +76,8 @@
 	. = ..()
 	var/turf/turf = get_turf(src)
 	if(!istype(turf, /turf/open/floor/plating))
+		plane = GAME_PLANE
+		layer = LOW_OBJ_LAYER
 		return // Do not hide objects as they're likely already hidden
 	for(var/obj/O in turf)
 		if(O.flags_1 & INITIALIZED_1)
