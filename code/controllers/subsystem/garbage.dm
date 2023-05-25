@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(garbage)
 		if (I.no_hint)
 			entry["Total No Hint"] = I.no_respect_force
 
-	log_qdel(data = del_log)
+	log_qdel("", del_log)
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
