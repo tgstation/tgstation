@@ -54,7 +54,7 @@
 
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
-		for(var/signal in signals_to_kill_on)
+		for(var/signal in src.signals_to_kill_on)
 			RegisterSignal(parent, signal, PROC_REF(kill_processes))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
