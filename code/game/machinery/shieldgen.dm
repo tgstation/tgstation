@@ -1015,7 +1015,7 @@
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
 			LAZYOR(shield_generator.connected_modules, (src))
-			balloon_alert(user, "connected to generator through node")
+			balloon_alert(user, "connected to generator")
 			update_icon_state()
 			if(istype(src, /obj/machinery/modular_shield/module/node))
 				var/obj/machinery/modular_shield/module/node/connected_node = src
