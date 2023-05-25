@@ -1007,7 +1007,7 @@
 		shield_generator.calculate_boost()
 		return
 
-	connected_node	= (locate(/obj/machinery/modular_shield/module/node) in connected_turf)
+	connected_node = (locate(/obj/machinery/modular_shield/module/node) in connected_turf)
 
 	if(connected_node)
 
