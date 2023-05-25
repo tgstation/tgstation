@@ -12,6 +12,14 @@
 	var/max_height_offset = 5
 	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
 	var/placement_offset = -15
+	/// If the plate will shatter when thrown
+	var/fragile = TRUE
+
+/obj/item/plate/Initialize(mapload)
+	. = ..()
+
+	if(fragile)
+		AddElement(/datum/element/shatters_when_thrown)
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
@@ -72,30 +80,6 @@
 	SIGNAL_HANDLER
 	ItemRemovedFromPlate(moved_item)
 
-#define PLATE_SHARD_PIECES 5
-
-/obj/item/plate/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(.)
-		return
-	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
-	var/scatter_turf = get_turf(hit_atom)
-
-	for(var/obj/item/scattered_item as anything in contents)
-		ItemRemovedFromPlate(scattered_item)
-		scattered_item.forceMove(scatter_turf)
-		var/list/scatter_vector = scatter_gen.Rand()
-		scattered_item.pixel_x = scatter_vector[1]
-		scattered_item.pixel_y = scatter_vector[2]
-
-	for(var/iteration in 1 to PLATE_SHARD_PIECES)
-		var/obj/item/plate_shard/shard = new(scatter_turf)
-		shard.icon_state = "[shard.base_icon_state][iteration]"
-		shard.pixel_x = rand(-4, 4)
-		shard.pixel_y = rand(-4, 4)
-	playsound(scatter_turf, 'sound/items/ceramic_break.ogg', 60, TRUE)
-	qdel(src)
-
 /obj/item/plate/large
 	name = "buffet plate"
 	desc = "A large plate made for the professional catering industry but also apppreciated by mukbangers and other persons of considerable size and heft."
@@ -121,9 +105,12 @@
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED
+	/// How many variants of shard there are
+	var/variants = 5
 
 /obj/item/plate_shard/Initialize(mapload)
 	. = ..()
+
 	AddComponent(/datum/component/caltrop, min_damage = force)
 
-#undef PLATE_SHARD_PIECES
+	icon_state = "[base_icon_state][pick(1,variants)]"
