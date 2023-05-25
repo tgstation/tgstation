@@ -158,7 +158,7 @@
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
 	if(used == 0)
 		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 1.5 SECONDS))
+		if(do_after(user, 1.5 SECONDS, affected_mob))
 			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
 			affected_mob.ForceContractDisease(hms)
 			used = 1
