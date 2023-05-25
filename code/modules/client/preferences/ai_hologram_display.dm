@@ -10,67 +10,40 @@
 
 	values["Random"] = icon('icons/mob/silicon/ai.dmi', "ai-empty")
 
-	for (var/screen in GLOB.ai_hologram_display_screens - "Portrait" - "Random")
+	for(var/screen in GLOB.ai_hologram_display_screens - "Portrait" - "Random")
 		values[screen] = icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(screen))
-
-
 
 	var/mob/living/carbon/human/dummy/ai_dummy = new
 	var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
 	if(dummy_appearance)
 		qdel(ai_dummy)
-		hologram_appearance = dummy_appearance
-
+		//hologram_appearance = dummy_appearance
+		values["Human"] = dummy_appearance
 
 	values["Bear"] = icon('icons/mob/simple/animal.dmi', "bear")
+	values["Carp"] = icon('icons/mob/simple/carp.dmi', "carp")
+	values["Chicken"] = icon('icons/mob/simple/animal.dmi', "chicken_brown")
+	values["Corgi"] = icon('icons/mob/simple/pets.dmi', "corgi")
+	values["Cow"] = icon('icons/mob/simple/animal.dmi', "cow")
+	values["Crab"] = icon('icons/mob/simple/animal.dmi', "crab")
+	values["Fox"] = icon('icons/mob/simple/pets.dmi', "fox")
+	values["Goat"] = icon('icons/mob/simple/animal.dmi', "goat")
+	values["Cat"] = icon('icons/mob/simple/pets.dmi', "cat")
+	values["Cat 2"] = icon('icons/mob/simple/pets.dmi', "cat2")
+	values["Poly"] = icon('icons/mob/simple/animal.dmi', "parrot_fly")
+	values["Pug"] = icon('icons/mob/simple/pets.dmi', "pug")
+	values["Spider"] = icon('icons/mob/simple/animal.dmi', "guard")
 
+	values["Default"] = icon('icons/mob/silicon/ai.dmi', "default")
+	values["Floating Face"] = icon('icons/mob/silicon/ai.dmi', "floating face")
+	values["Xeno Queen"] = icon('icons/mob/nonhuman-player/alien.dmi', "alienq")
+	values["Horror"] = icon('icons/mob/silicon/ai.dmi', "horror")
+	values["Clock"] = icon('icons/mob/silicon/ai.dmi', "clock")
+	values["Default"] = icon('icons/mob/silicon/ai.dmi', "default")
 
-	if("Animal")
-		var/list/icon_list = list(
-		"bear" = 'icons/mob/simple/animal.dmi',
-		"carp" = 'icons/mob/simple/carp.dmi',
-		"chicken" = 'icons/mob/simple/animal.dmi',
-		"corgi" = 'icons/mob/simple/pets.dmi',
-		"cow" = 'icons/mob/simple/animal.dmi',
-		"crab" = 'icons/mob/simple/animal.dmi',
-		"fox" = 'icons/mob/simple/pets.dmi',
-		"goat" = 'icons/mob/simple/animal.dmi',
-		"cat" = 'icons/mob/simple/pets.dmi',
-		"cat2" = 'icons/mob/simple/pets.dmi',
-		"poly" = 'icons/mob/simple/animal.dmi',
-		"pug" = 'icons/mob/simple/pets.dmi',
-		"spider" = 'icons/mob/simple/animal.dmi'
-		)
+	hologram_appearance = mutable_appearance(icon_list[input], working_state)
 
-
-		if("poly")
-			working_state = "parrot_fly"
-		if("chicken")
-			working_state = "chicken_brown"
-		if("spider")
-			working_state = "guard"
-		else
-			working_state = input
-		hologram_appearance = mutable_appearance(icon_list[input], working_state)
-
-		var/list/icon_list = list(
-			"default" = 'icons/mob/silicon/ai.dmi',
-			"floating face" = 'icons/mob/silicon/ai.dmi',
-			"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
-			"horror" = 'icons/mob/silicon/ai.dmi',
-			"clock" = 'icons/mob/silicon/ai.dmi'
-			)
-
-		if("xeno queen")
-			working_state = "alienq"
-
-		hologram_appearance = mutable_appearance(icon_list[input], working_state)
-
-
-
-
-
-
+	hologram_appearance = mutable_appearance(icon_list[input], working_state)
 
 
 
