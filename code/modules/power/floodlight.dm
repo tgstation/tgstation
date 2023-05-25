@@ -150,8 +150,10 @@
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
 	register_context()
 
-/obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, is_dark_color)
+/obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
 	SIGNAL_HANDLER
+	if(!spraycan.actually_paints)
+		return
 
 	if(setting > FLOODLIGHT_OFF)
 		update_light_state()

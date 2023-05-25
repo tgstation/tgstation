@@ -163,3 +163,6 @@
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
+
+/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
+#define COMSIG_AFTER_INJECT "after_inject"
