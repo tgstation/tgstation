@@ -54,7 +54,7 @@
 
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
-		RegisterSignals(parent, src.signals_to_kill_on.Copy(), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src))
+		RegisterSignals(parent, src.signals_to_kill_on.Copy(), GLOBAL_PROC_REF(qdel), src)
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -123,9 +123,10 @@
 		optional_grow_behavior.Invoke()
 		return
 
-	var/mob/living/new_mob = growth_path
-	if(!ispath(new_mob))
+	if(!ispath(growth_path, /mob/living))
 		CRASH("Growth and Differentiation Component: Growth path was not a mob type! If you wanted to do something special, please put it in the optional_grow_behavior callback instead!")
+
+	var/mob/living/new_mob = growth_path
 
 	var/new_mob_name = initial(new_mob.name)
 
