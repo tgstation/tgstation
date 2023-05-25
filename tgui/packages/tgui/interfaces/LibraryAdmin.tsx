@@ -67,12 +67,16 @@ const BookListing = (props, context) => {
   );
 };
 
-type Page = {
+type Book = {
   author: string;
   category: string;
   title: string;
   id: number;
   deleted: boolean;
+};
+
+type DisplayBook = Book & {
+  key: number;
 };
 
 type DisplayData = {
@@ -87,7 +91,7 @@ type DisplayData = {
   view_raw: boolean;
   show_deleted: boolean;
   history: HistoryArray;
-  pages: Page[];
+  pages: Book[];
 };
 
 const SearchAndDisplay = (props, context) => {
@@ -115,13 +119,13 @@ const SearchAndDisplay = (props, context) => {
     view_raw,
     show_deleted,
   } = data;
-  const records = flow([
-    map((record, i) => ({
-      ...record,
+  const books = flow([
+    map<Book, DisplayBook>((book, i) => ({
+      ...book,
       // Generate a unique id
       key: i,
     })),
-    sortBy((record) => record.key),
+    sortBy<DisplayBook>((book) => book.key),
   ])(pages);
   return (
     <Section>
@@ -237,31 +241,31 @@ const SearchAndDisplay = (props, context) => {
           <Table.Cell fontSize={1.5}>C-Key</Table.Cell>
           <Table.Cell fontSize={1.5}>Un/Delete</Table.Cell>
         </Table.Row>
-        {records.map((record) => (
-          <Table.Row key={record.key}>
+        {books.map((book) => (
+          <Table.Row key={book.key}>
             <Table.Cell>
               <Button
                 onClick={() =>
                   act('view_book', {
-                    book_id: record.id,
+                    book_id: book.id,
                   })
                 }
                 icon="book-reader">
-                {record.id}
+                {book.id}
               </Button>
             </Table.Cell>
-            <Table.Cell>{record.category}</Table.Cell>
-            <Table.Cell>{record.title}</Table.Cell>
-            <Table.Cell>{record.author}</Table.Cell>
-            <Table.Cell>{record.author_ckey}</Table.Cell>
+            <Table.Cell>{book.category}</Table.Cell>
+            <Table.Cell>{book.title}</Table.Cell>
+            <Table.Cell>{book.author}</Table.Cell>
+            <Table.Cell>{book.author_ckey}</Table.Cell>
             <Table.Cell>
-              {record.deleted ? (
+              {book.deleted ? (
                 <Button
                   onClick={() => {
-                    setModifyTarget(record.id);
+                    setModifyTarget(book.id);
                     setModifyMethod(ModifyTypes.Restore);
                     act('get_history', {
-                      book_id: record.id,
+                      book_id: book.id,
                     });
                   }}
                   icon="undo"
@@ -271,10 +275,10 @@ const SearchAndDisplay = (props, context) => {
               ) : (
                 <Button
                   onClick={() => {
-                    setModifyTarget(record.id);
+                    setModifyTarget(book.id);
                     setModifyMethod(ModifyTypes.Delete);
                     act('get_history', {
-                      book_id: record.id,
+                      book_id: book.id,
                     });
                   }}
                   icon="hammer"
