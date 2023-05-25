@@ -77,7 +77,7 @@ const SearchAndDisplay = (props, context) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? "ID" : book_id}
+                placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
                 onChange={(e, value) =>

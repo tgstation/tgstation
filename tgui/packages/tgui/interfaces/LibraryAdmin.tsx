@@ -110,6 +110,7 @@ const SearchAndDisplay = (props, context) => {
     category,
     author,
     author_ckey,
+    pages,
     params_changed,
     view_raw,
     show_deleted,
@@ -121,7 +122,7 @@ const SearchAndDisplay = (props, context) => {
       key: i,
     })),
     sortBy((record) => record.key),
-  ])(data.pages);
+  ])(pages);
   return (
     <Section>
       <Stack justify="space-between">
@@ -344,9 +345,13 @@ const ModifyPage = (props, context) => {
   return (
     <Window.Content scrollable>
       <NoticeBox warning>
-        Heads Up! We do not allow you to fully delete books in game<br />
-        What you&apos;re doing here is a &quot;don&apos;t show this to anyone&quot; button<br />
-        If you for whatever reason need to fully wipe a book, please speak to your database administrator
+        Heads Up! We do not allow you to fully delete books in game
+        <br />
+        What you&apos;re doing here is a &quot;don&apos;t show this to
+        anyone&quot; button
+        <br />
+        If you for whatever reason need to fully wipe a book, please speak to
+        your database administrator
       </NoticeBox>
       <Stack>
         <Stack.Item fontSize="25px" pb={2}>
