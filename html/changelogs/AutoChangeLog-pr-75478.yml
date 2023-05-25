@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[MetaStation] The abandoned sec couch should now be covered by nearstation."
-  - bugfix: "[MetaStation] Lattice adjacent to the newly added fitness room is now covered by nearstation."
