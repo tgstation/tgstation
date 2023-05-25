@@ -210,10 +210,10 @@
 
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
+		/mob/living/basic/lightgeist,
 		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/lightgeist,
+		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
+		/mob/living/simple_animal/pet/gondola,
 	)
 	return pick(mob_list)
