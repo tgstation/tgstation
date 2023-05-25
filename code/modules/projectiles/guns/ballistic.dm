@@ -402,7 +402,7 @@
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
 
-	if(!chambered.is_cased_ammo)
+	if(magazine && !chambered.is_cased_ammo)
 		magazine.stored_ammo -= chambered
 
 	return ..()

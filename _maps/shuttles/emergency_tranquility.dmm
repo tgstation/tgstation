@@ -851,7 +851,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/mob/living/simple_animal/butterfly{
+/mob/living/basic/butterfly{
 	name = "Peacekeeper Henry"
 	},
 /turf/open/floor/grass,
@@ -882,7 +882,7 @@
 /obj/item/stamp/denied{
 	pixel_x = 8
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_y = -5;
 	pixel_x = 8
 	},
@@ -2205,7 +2205,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Relaxation Technician James"
 	},
 /obj/structure/flora/bush/flowers_br,
@@ -2272,7 +2272,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Pi" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/bar/all_access,
 /obj/machinery/light/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)
@@ -2549,7 +2549,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "UJ" = (
-/mob/living/simple_animal/butterfly{
+/mob/living/basic/butterfly{
 	name = "Peacekeeper Henry"
 	},
 /turf/open/floor/grass,
@@ -2642,7 +2642,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "WM" = (

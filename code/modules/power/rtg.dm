@@ -89,6 +89,8 @@
 	else
 		overload()
 
+	return TRUE
+
 /obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 

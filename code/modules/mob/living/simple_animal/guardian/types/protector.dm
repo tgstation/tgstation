@@ -30,6 +30,8 @@
 	if(toggle)
 		visible_message(span_danger("The explosion glances off [src]'s energy shielding!"))
 
+	return TRUE
+
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)

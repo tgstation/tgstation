@@ -340,7 +340,9 @@ Possible to do for anyone motivated enough:
 				if(usr.loc == loc)
 					var/input = text2num(params["headcall"])
 					var/headcall = input == 1 ? TRUE : FALSE
-					new /datum/holocall(usr, src, callnames[result], headcall)
+					var/datum/holocall/holo_call = new(usr, src, callnames[result], headcall)
+					if(QDELETED(holo_call)) //can delete itself if the target pad was destroyed
+						return FALSE
 					calling = TRUE
 					return TRUE
 			else
@@ -879,7 +881,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		render_target = "holoray#[uid]"
 		uid++
 	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)
-	glow = new(src, render_target)
+	glow = new(null, src)
 	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
 	glow.pixel_x = 32
 	glow.pixel_y = 32

@@ -1086,6 +1086,11 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
+"Ts" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/girder,
+/turf/open/floor/iron/dark/smooth_large/airless,
+/area/ruin/space)
 "Tu" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/airless,
@@ -2354,8 +2359,8 @@ AE
 Ef
 Ef
 YI
-YI
-YI
+Ts
+Ts
 nl
 cq
 nl

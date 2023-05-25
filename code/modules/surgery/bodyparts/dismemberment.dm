@@ -133,9 +133,6 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
-	if(length(bodypart_traits))
-		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
-
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
@@ -248,7 +245,6 @@
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
-		arm_owner.hand_bodyparts[held_index] = null
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
@@ -327,13 +323,12 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
-		if(held_index > new_limb_owner.hand_bodyparts.len)
-			new_limb_owner.hand_bodyparts.len = held_index
-		new_limb_owner.hand_bodyparts[held_index] = src
+		new_limb_owner.on_added_hand(src, held_index)
 		if(new_limb_owner.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -355,7 +350,7 @@
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE)
+		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason
@@ -366,9 +361,6 @@
 	update_bodypart_damage_state()
 	if(can_be_disabled)
 		update_disabled()
-
-	if(length(bodypart_traits))
-		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
