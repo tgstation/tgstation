@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(garbage)
 		if (I.no_respect_force)
 			entry["Total Ignored Force"] = I.no_respect_force
 		if (I.no_hint)
-			entry["Total No Hint"] = I.no_respect_force
+			entry["Total No Hint"] = I.no_hint
 
 	log_qdel("", del_log)
 
