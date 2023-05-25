@@ -132,6 +132,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		return // We're already handling this
 
 	if(below_turf)
+		if(HAS_TRAIT(dropped_thing, TRAIT_CHASM_DESTROYED))
+			qdel(dropped_thing)
+			return
+
 		// send to the turf below
 		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
 		below_turf.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
@@ -165,6 +169,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 	//Make sure the item is still there after our sleep
 	if(!dropped_thing || QDELETED(dropped_thing))
+		return
+
+	if(HAS_TRAIT(dropped_thing, TRAIT_CHASM_DESTROYED))
+		qdel(dropped_thing)
 		return
 
 	if(!storage)

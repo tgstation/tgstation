@@ -326,6 +326,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
 
+
+// If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
+#define FLAG_ANTAG_CAN_BE_INDUCTED (1 << 0)
+
 #define HUNTER_PACK_COPS "cop_hunters"
 #define HUNTER_PACK_RUSSIAN "russian_hunters"
 #define HUNTER_PACK_BOUNTY "bounty_hunters"

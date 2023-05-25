@@ -268,7 +268,7 @@
 	time = 1 SECONDS
 	tool_paths = list(
 		/obj/item/clothing/suit/hooded/chaplain_hoodie,
-		/obj/item/storage/book/bible,
+		/obj/item/book/bible,
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING

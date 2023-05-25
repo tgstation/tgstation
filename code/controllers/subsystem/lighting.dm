@@ -30,80 +30,84 @@ SUBSYSTEM_DEF(lighting)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
-	var/list/queue = sources_queue
-	// This can change when sleeping. I hate sleep()
-	var/queue_length = length(queue)
+	var/list/queue
 	var/i = 0
-	for(i = 1; i <= queue_length; i++)
-		var/datum/light_source/L = queue[i]
 
+	// UPDATE SOURCE QUEUE
+	queue = sources_queue
+	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
+		i += 1
+
+		var/datum/light_source/L = queue[i]
 		L.update_corners()
-		L.needs_update = LIGHTING_NO_UPDATE
+		if(!QDELETED(L))
+			L.needs_update = LIGHTING_NO_UPDATE
+		else
+			i -= 1 // update_corners() has removed L from the list, move back so we don't overflow or skip the next element
 
 		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue
-			queue.Cut(1, i+1)
+			queue.Cut(1, i + 1)
 			i = 0
 			stoplag()
-			queue_length = length(queue)
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
-	if (i && queue_length)
-		queue.Cut(1, i) // we get a postincrement from the final loop, so we don't want +1 here
+	if(i)
+		queue.Cut(1, i + 1)
 		i = 0
 
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
+	// UPDATE CORNERS QUEUE
 	queue = corners_queue
-	queue_length = length(queue)
-	for(i = 1; i <= queue_length; i++)
-		var/datum/lighting_corner/C = queue[i]
+	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
+		i += 1
 
+		var/datum/lighting_corner/C = queue[i]
 		C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
 		C.update_objects()
 
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
-				continue 
-			queue.Cut(1, i+1)
+				continue
+			queue.Cut(1, i + 1)
 			i = 0
 			stoplag()
-			queue_length = length(queue)
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
-	if (i && queue_length)
-		queue.Cut(1, i)
+	if(i)
+		queue.Cut(1, i+1)
 		i = 0
-
 
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
+	// UPDATE OBJECTS QUEUE
 	queue = objects_queue
-	queue_length = length(queue)
-	for(i = 1; i <= queue_length; i++)
+	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
+		i += 1
+
 		var/datum/lighting_object/O = queue[i]
-
-		if (QDELETED(O))
+		if(QDELETED(O))
 			continue
-
 		O.update()
 		O.needs_update = FALSE
 
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue
-			queue.Cut(1, i+1)
+			queue.Cut(1, i + 1)
 			i = 0
 			stoplag()
-			queue_length = length(queue)
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			break
-	if (i && queue_length)
-		queue.Cut(1, i)
+	if(i)
+		queue.Cut(1, i + 1)
 
 
 /datum/controller/subsystem/lighting/Recover()

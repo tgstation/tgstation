@@ -7,16 +7,12 @@
 	dir = 8
 	},
 /area/ruin/space)
-"ah" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/frame/computer{
-	dir = 1;
-	anchored = 1
-	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/dim/directional/south,
-/turf/open/floor/iron/smooth_edge,
+"bF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/floor/broken,
+/turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
 "bI" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -59,15 +55,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
+"cj" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/cable,
+/obj/machinery/light/floor/broken,
+/turf/open/floor/pod/light,
+/area/ruin/space/has_grav/derelictsulaco)
 "cl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
-"ct" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
 "cu" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -114,14 +111,6 @@
 	dir = 8
 	},
 /area/ruin/space)
-"dA" = (
-/obj/structure/alien/weeds,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
 "dD" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb,
@@ -166,6 +155,10 @@
 	},
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
+"eV" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/derelictsulaco)
 "eZ" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
@@ -197,13 +190,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"fV" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/barricade/sandbags,
-/obj/structure/cable,
-/obj/item/light/tube/broken,
-/turf/open/floor/pod/light,
-/area/ruin/space/has_grav/derelictsulaco)
 "gg" = (
 /obj/structure/barricade/sandbags,
 /obj/effect/turf_decal/tile/red{
@@ -283,14 +269,6 @@
 	},
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
-"in" = (
-/obj/structure/frame/computer{
-	dir = 1;
-	anchored = 1
-	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/space/has_grav/derelictsulaco)
 "iu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -304,13 +282,6 @@
 	anchored = 1
 	},
 /turf/open/floor/circuit,
-/area/ruin/space/has_grav/derelictsulaco)
-"iQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/floor/broken,
-/turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
 "jn" = (
 /turf/open/floor/pod/light,
@@ -340,15 +311,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
-/area/ruin/space/has_grav/derelictsulaco)
-"jM" = (
-/obj/structure/alien/weeds,
-/obj/machinery/camera/directional/west{
-	network = list()
-	},
-/obj/effect/decal/remains/xeno/larva,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "kb" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -497,11 +459,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
-"nf" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/derelictsulaco)
 "nn" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -517,6 +474,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
+/area/ruin/space/has_grav/derelictsulaco)
+"of" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -657,6 +619,13 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
+"un" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/barricade/sandbags,
+/obj/structure/cable,
+/obj/item/light/tube/broken,
+/turf/open/floor/pod/light,
+/area/ruin/space/has_grav/derelictsulaco)
 "ur" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Office"
@@ -686,13 +655,6 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
-"vh" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/robot_debris/limb,
-/obj/effect/decal/cleanable/blood,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "vi" = (
@@ -731,6 +693,11 @@
 	anchored = 1
 	},
 /turf/open/floor/pod/light,
+/area/ruin/space/has_grav/derelictsulaco)
+"wl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
 "wR" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -811,6 +778,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/derelictsulaco)
+"zt" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/derelictsulaco)
 "zw" = (
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
@@ -831,6 +807,14 @@
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/derelictsulaco)
+"zR" = (
+/obj/structure/alien/weeds,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/derelictsulaco)
 "zZ" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/terminal/sulaco/overwatch/main{
@@ -843,11 +827,6 @@
 /obj/structure/closet,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
-"Be" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
-/obj/effect/turf_decal/tile/red/half,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/space/has_grav/derelictsulaco)
 "Bk" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
@@ -859,11 +838,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
-"BA" = (
-/obj/structure/alien/weeds,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
 "BQ" = (
 /mob/living/simple_animal/pet/cat{
 	name = "Jonesy";
@@ -871,6 +845,19 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
+/area/ruin/space/has_grav/derelictsulaco)
+"BW" = (
+/obj/structure/frame/computer{
+	dir = 1;
+	anchored = 1
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/space/has_grav/derelictsulaco)
+"Cf" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "Cs" = (
 /obj/machinery/door/airlock/command/glass{
@@ -885,6 +872,17 @@
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"CV" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 25;
+	equipment = 0;
+	environ = 0;
+	lighting = 0
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictsulaco)
 "DJ" = (
 /obj/item/storage/medkit,
 /turf/open/floor/iron/smooth,
@@ -921,6 +919,17 @@
 /obj/item/chair/plastic,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
+"EY" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/frame/computer{
+	dir = 1;
+	anchored = 1
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/space/has_grav/derelictsulaco)
 "Fo" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -933,6 +942,15 @@
 "FA" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictsulaco)
+"FF" = (
+/obj/structure/alien/weeds,
+/obj/machinery/camera/directional/west{
+	network = list()
+	},
+/obj/effect/decal/remains/xeno/larva,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "FK" = (
@@ -1006,16 +1024,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
-"HH" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/computer/terminal/sulaco/map,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron/smooth_edge{
-	dir = 1
-	},
 /area/ruin/space/has_grav/derelictsulaco)
 "HY" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -1140,6 +1148,12 @@
 /obj/item/megaphone/command,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
+"Ls" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/storage/lockbox/dueling,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/space/has_grav/derelictsulaco)
 "Lv" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -1162,6 +1176,11 @@
 	anchored = 1
 	},
 /turf/open/floor/carpet,
+/area/ruin/space/has_grav/derelictsulaco)
+"LZ" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Mb" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -1214,10 +1233,6 @@
 /obj/item/stack/tile/iron/smooth_half,
 /turf/template_noop,
 /area/template_noop)
-"Nf" = (
-/obj/structure/alien/weeds,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
 "Ng" = (
 /obj/machinery/camera/directional/south{
 	network = list()
@@ -1235,12 +1250,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/derelictsulaco)
-"NX" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/cable,
-/obj/machinery/light/floor/broken,
-/turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "Oo" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1370,15 +1379,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/template_noop,
 /area/template_noop)
-"RR" = (
-/obj/item/radio/intercom/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/derelictsulaco)
 "RZ" = (
 /obj/effect/decal/cleanable/robot_debris/up,
 /turf/open/floor/iron/smooth,
@@ -1472,11 +1472,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
-"Uk" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/derelictsulaco)
 "UH" = (
 /obj/structure/alien/weeds,
 /obj/structure/rack,
@@ -1558,12 +1553,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"WQ" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/energy/dueling,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/space/has_grav/derelictsulaco)
 "Xg" = (
 /obj/structure/cable,
 /obj/machinery/power/floodlight{
@@ -1583,16 +1572,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"XK" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 25;
-	equipment = 0;
-	environ = 0;
-	lighting = 0
-	},
-/obj/effect/mapping_helpers/apc/unlocked,
-/turf/open/floor/plating/airless,
+"XU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Yh" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -1606,6 +1591,16 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/has_grav/derelictsulaco)
+"Ys" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/computer/terminal/sulaco/map,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -1633,6 +1628,11 @@
 	dir = 8
 	},
 /area/ruin/space)
+"YG" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/derelictsulaco)
 "YQ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2156,7 +2156,7 @@ Hj
 lr
 rW
 SW
-WQ
+Ls
 VT
 Ki
 lf
@@ -2191,7 +2191,7 @@ xL
 WC
 cl
 ym
-in
+BW
 VT
 Ki
 lf
@@ -2223,7 +2223,7 @@ VT
 ZX
 FQ
 zw
-vh
+XU
 RZ
 YQ
 jq
@@ -2297,7 +2297,7 @@ gi
 rA
 QP
 cu
-Be
+Cf
 zH
 VT
 hi
@@ -2358,7 +2358,7 @@ lf
 hi
 hi
 VT
-HH
+Ys
 mi
 tq
 eU
@@ -2368,7 +2368,7 @@ ib
 wb
 DJ
 cW
-ah
+EY
 VT
 hi
 hi
@@ -2398,7 +2398,7 @@ rM
 KC
 uP
 yU
-NX
+cj
 SA
 ZP
 Qp
@@ -2499,7 +2499,7 @@ UH
 JT
 Lv
 Bk
-jM
+FF
 Bk
 Bk
 jI
@@ -2507,7 +2507,7 @@ dJ
 Yh
 mg
 HC
-BA
+of
 gx
 VT
 ub
@@ -2580,7 +2580,7 @@ Pq
 Bk
 Ou
 VT
-XK
+CV
 Tg
 VT
 lf
@@ -2643,7 +2643,7 @@ EQ
 Bk
 mS
 sR
-fV
+un
 EK
 zA
 Bk
@@ -2686,7 +2686,7 @@ Lv
 Aa
 VT
 Lr
-ct
+wl
 VT
 VT
 fd
@@ -2720,7 +2720,7 @@ VT
 VT
 VT
 VT
-nf
+YG
 BQ
 Lz
 VT
@@ -2748,10 +2748,10 @@ iF
 yS
 VT
 wR
-Uk
+LZ
 hU
 VT
-RR
+zt
 SD
 tL
 Cs
@@ -2783,11 +2783,11 @@ pF
 pF
 VT
 vl
-dA
+zR
 TL
 ur
 tL
-iQ
+bF
 LY
 VT
 Ss
@@ -2818,7 +2818,7 @@ fd
 fd
 VT
 Ie
-Nf
+eV
 dM
 VT
 PZ

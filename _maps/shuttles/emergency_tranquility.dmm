@@ -32,18 +32,6 @@
 	},
 /turf/open/water/jungle,
 /area/shuttle/escape)
-"aN" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/lighter,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/shuttle/escape)
 "ba" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -79,6 +67,25 @@
 	layer = 4.1
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"br" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449";
+	layer = 3.1
+	},
+/obj/structure/flora/bush/large/style_2{
+	pixel_x = -6;
+	pixel_y = -16
+	},
+/obj/structure/flora/rock/pile/jungle{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "bB" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -123,10 +130,22 @@
 	},
 /turf/open/water/jungle,
 /area/shuttle/escape)
-"cl" = (
-/obj/machinery/computer/crew,
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/turf/open/floor/iron/dark/small,
+"bW" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "ct" = (
 /obj/structure/table/wood,
@@ -137,6 +156,13 @@
 	dir = 8
 	},
 /turf/open/floor/sepia,
+/area/shuttle/escape)
+"cw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "cD" = (
 /obj/structure/table/reinforced,
@@ -153,11 +179,6 @@
 "cM" = (
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
-"cU" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/light/directional/south,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "dI" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -169,17 +190,6 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"ec" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 2;
-	layer = 3.1
-	},
-/obj/machinery/microwave,
-/obj/structure/table/wood,
-/turf/open/floor/stone,
 /area/shuttle/escape)
 "er" = (
 /obj/effect/turf_decal/siding/wood,
@@ -338,6 +348,22 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
+"gA" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"gI" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/light/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "hd" = (
 /obj/structure/chair/sofa/left/brown,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -404,11 +430,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"hN" = (
-/obj/structure/closet/radiation,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "hP" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -441,10 +462,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"iv" = (
-/mob/living/simple_animal/bot/hygienebot,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "iz" = (
 /obj/structure/chair{
@@ -602,12 +619,6 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"lA" = (
-/obj/machinery/status_display/evac/directional/west,
-/obj/machinery/keycard_auth/directional/south,
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "lF" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -619,6 +630,12 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"lM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "lQ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -683,6 +700,9 @@
 	icon_state = "plant-03"
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"nj" = (
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "nq" = (
 /obj/effect/turf_decal/siding/wood{
@@ -822,20 +842,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"pf" = (
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 6;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/mob/living/simple_animal/butterfly{
-	name = "Peacekeeper Henry"
-	},
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "pn" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -886,23 +892,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
-"qu" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood,
-/obj/item/toy/cards/deck{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/toy/cards/deck/kotahi{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/item/toy/figure/dsquad{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/turf/open/floor/carpet/red,
-/area/shuttle/escape)
 "qw" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
@@ -919,12 +908,43 @@
 "qU" = (
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
-"rz" = (
-/obj/structure/railing/corner{
-	dir = 8
+"rD" = (
+/obj/structure/closet/cardboard,
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_y = 32
 	},
-/obj/effect/turf_decal/trimline/blue/line,
-/turf/open/floor/iron/dark/small,
+/obj/item/clothing/suit/hooded/wintercoat/custom,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "rK" = (
 /obj/machinery/vending/wallmed/directional/south,
@@ -945,17 +965,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/herringbone,
-/area/shuttle/escape)
-"rT" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/vending/coffee,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "rV" = (
 /obj/structure/bookcase/random,
@@ -1040,8 +1049,16 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ti" = (
-/obj/structure/closet/secure_closet/bar,
-/turf/open/floor/stone,
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/lighter,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "tB" = (
 /obj/structure/railing/corner{
@@ -1066,6 +1083,11 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
+"uj" = (
+/obj/machinery/computer/crew,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "ux" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -1089,6 +1111,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"uM" = (
+/obj/structure/closet/secure_closet/bar/all_access,
+/turf/open/floor/stone,
 /area/shuttle/escape)
 "uR" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1145,11 +1171,27 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"vF" = (
+/mob/living/basic/butterfly{
+	name = "Peacekeeper Henry"
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "vI" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"vR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "vT" = (
 /obj/structure/railing{
@@ -1185,13 +1227,6 @@
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"wr" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "wA" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -1212,22 +1247,9 @@
 	},
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
-"xE" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured_half,
+"wY" = (
+/mob/living/simple_animal/bot/hygienebot,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "xK" = (
 /obj/structure/chair/pew/left{
@@ -1258,6 +1280,20 @@
 	layer = 4.1
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"xY" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/mob/living/basic/butterfly{
+	name = "Peacekeeper Henry"
+	},
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "yj" = (
 /obj/machinery/recharge_station,
@@ -1369,15 +1405,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
-"zF" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/dark,
-/obj/effect/turf_decal/trimline/blue/line,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark/small,
-/area/shuttle/escape)
 "zI" = (
 /obj/structure/railing/corner{
 	dir = 4;
@@ -1396,6 +1423,16 @@
 /mob/living/simple_animal/bot/cleanbot,
 /obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"Af" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/mob/living/basic/chicken{
+	name = "Relaxation Technician James"
+	},
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "At" = (
 /obj/structure/table/wood,
@@ -1435,53 +1472,11 @@
 "AQ" = (
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
-"Bc" = (
-/obj/structure/closet/cardboard,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 32
-	},
-/obj/item/clothing/suit/hooded/wintercoat/custom,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "Bf" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"Bl" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "Bn" = (
 /obj/structure/railing/corner,
@@ -1601,17 +1596,6 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"Fa" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/computer/operating{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Fc" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -1672,16 +1656,6 @@
 	pixel_y = -32
 	},
 /turf/open/water,
-/area/shuttle/escape)
-"FI" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "FS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1760,6 +1734,13 @@
 /obj/structure/flora/grass/jungle/b/style_2,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"Gr" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "Gs" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
@@ -1788,6 +1769,12 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"GP" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "GR" = (
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -1828,6 +1815,32 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/escape)
+"HJ" = (
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen/fourcolor{
+	pixel_x = -4
+	},
+/obj/item/stamp{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8
+	},
+/obj/item/stamp/head/qm{
+	pixel_y = -5;
+	pixel_x = 8
+	},
+/obj/structure/table/reinforced{
+	color = "#c1b6a5"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "HL" = (
 /obj/structure/railing/corner{
 	dir = 2;
@@ -1845,6 +1858,14 @@
 	dir = 5
 	},
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"HX" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/stasis,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Ih" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1934,14 +1955,20 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/escape)
+"Jv" = (
+/obj/structure/railing{
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "JG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/shuttle/escape)
-"JJ" = (
-/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "JS" = (
 /turf/open/floor/iron/stairs/left,
@@ -2150,15 +2177,21 @@
 	dir = 8
 	},
 /area/shuttle/escape)
-"Oh" = (
+"Of" = (
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/chicken{
-	name = "Relaxation Technician James"
-	},
-/obj/structure/flora/bush/flowers_br,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"Og" = (
+/obj/structure/closet/radiation,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Oi" = (
 /obj/structure/flora/bush/sunny{
@@ -2220,14 +2253,6 @@
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"Pj" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/stasis,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Pq" = (
 /obj/machinery/computer/security,
 /obj/structure/plaque/static_plaque/golden/captain{
@@ -2253,32 +2278,6 @@
 	},
 /turf/open/water/jungle,
 /area/shuttle/escape)
-"Qx" = (
-/obj/item/paper_bin{
-	pixel_x = -4
-	},
-/obj/item/pen/fourcolor{
-	pixel_x = -4
-	},
-/obj/item/stamp{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/stamp/denied{
-	pixel_x = 8
-	},
-/obj/item/stamp/head/qm{
-	pixel_y = -5;
-	pixel_x = 8
-	},
-/obj/structure/table/reinforced{
-	color = "#c1b6a5"
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "Qz" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/line{
@@ -2286,16 +2285,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"QE" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
-	},
-/obj/structure/hedge{
-	icon_state = "hedge-8"
-	},
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "QK" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2331,6 +2320,17 @@
 	pixel_x = 2
 	},
 /turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"Ry" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/vending/coffee,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "RD" = (
 /obj/machinery/computer/emergency_shuttle{
@@ -2391,6 +2391,23 @@
 	layer = 3.1
 	},
 /turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Ss" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/item/toy/cards/deck{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/toy/cards/deck/kotahi{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "St" = (
 /obj/structure/railing{
@@ -2469,6 +2486,17 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"Tn" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 2;
+	layer = 3.1
+	},
+/obj/machinery/microwave,
+/obj/structure/table/wood,
+/turf/open/floor/stone,
+/area/shuttle/escape)
 "Tq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -2525,12 +2553,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"UJ" = (
-/mob/living/simple_animal/butterfly{
-	name = "Peacekeeper Henry"
-	},
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "UU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -2543,12 +2565,6 @@
 	dir = 9
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape)
-"Vx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "VR" = (
 /obj/structure/railing{
@@ -2590,17 +2606,6 @@
 "Wo" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"Wx" = (
-/obj/structure/railing/corner{
-	dir = 1;
-	color = "#A47449"
-	},
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "WM" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/box,
@@ -2618,6 +2623,10 @@
 	dir = 8
 	},
 /turf/open/floor/glass,
+/area/shuttle/escape)
+"Xi" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "Xt" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2659,24 +2668,25 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"Ys" = (
-/obj/structure/railing/corner{
-	dir = 8;
-	color = "#A47449";
-	layer = 3.1
+"Ym" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
 	},
-/obj/structure/flora/bush/large/style_2{
-	pixel_x = -6;
-	pixel_y = -16
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
-/obj/structure/flora/rock/pile/jungle{
-	pixel_x = -3;
-	pixel_y = -6
-	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Yw" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/turf/open/floor/grass,
+/obj/structure/hedge{
+	icon_state = "hedge-8"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "YB" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -2720,16 +2730,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"Zr" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "ZF" = (
 /obj/structure/sign/poster/official/fruit_bowl{
@@ -2913,9 +2913,9 @@ fL
 ux
 fC
 ZJ
-ec
+Tn
 yj
-Bl
+Xi
 ux
 eW
 hx
@@ -2963,7 +2963,7 @@ ux
 cD
 IH
 hT
-ti
+uM
 ux
 IZ
 ux
@@ -3021,7 +3021,7 @@ QR
 JG
 qU
 RM
-qu
+Ss
 ux
 ux
 QV
@@ -3041,7 +3041,7 @@ Pg
 MF
 pP
 AQ
-QE
+Yw
 Tw
 XW
 nq
@@ -3083,7 +3083,7 @@ ux
 zf
 Fv
 ux
-iv
+wY
 Qq
 sY
 sY
@@ -3133,7 +3133,7 @@ ux
 sW
 NC
 ux
-rT
+Ry
 vT
 iM
 aj
@@ -3144,10 +3144,10 @@ nz
 MO
 nv
 vT
-Wx
-Ys
+Of
+br
 jl
-Zr
+vR
 ux
 oy
 NC
@@ -3160,7 +3160,7 @@ oe
 Sz
 Na
 sU
-UJ
+vF
 kn
 IV
 Oj
@@ -3173,7 +3173,7 @@ ag
 ag
 nA
 bS
-cU
+gI
 oe
 oe
 Sz
@@ -3213,7 +3213,7 @@ Jp
 Kr
 ag
 HL
-pf
+xY
 Zh
 Or
 nE
@@ -3247,7 +3247,7 @@ HS
 Fg
 kh
 Ci
-FI
+Ym
 ux
 UF
 pe
@@ -3283,7 +3283,7 @@ ux
 zf
 Ty
 ux
-iv
+wY
 si
 mc
 mc
@@ -3331,11 +3331,11 @@ fe
 (24,1,1) = {"
 Wo
 ux
-hN
+Og
 ux
 bG
 Kt
-Oh
+Af
 Gp
 Gl
 Ih
@@ -3349,7 +3349,7 @@ Hu
 NV
 SA
 ux
-Bc
+rD
 ux
 Wo
 "}
@@ -3385,7 +3385,7 @@ fL
 fL
 ux
 nG
-JJ
+nj
 iY
 wp
 er
@@ -3395,7 +3395,7 @@ Sl
 gz
 xK
 qn
-aN
+ti
 KI
 ux
 fL
@@ -3435,7 +3435,7 @@ fL
 fL
 fL
 ux
-xE
+bW
 GM
 GM
 Sz
@@ -3445,7 +3445,7 @@ TV
 Sz
 Gh
 wm
-Fa
+gA
 ux
 fL
 fL
@@ -3520,7 +3520,7 @@ Sz
 ux
 uK
 VZ
-Pj
+HX
 ux
 fL
 fL
@@ -3563,13 +3563,13 @@ fL
 ux
 Pq
 yo
-rz
+Gr
 EW
 GK
 Jo
-Vx
+lM
 KK
-lA
+GP
 ux
 fL
 fL
@@ -3586,7 +3586,7 @@ fL
 fL
 fL
 ux
-cl
+uj
 XX
 ll
 VR
@@ -3613,7 +3613,7 @@ fL
 Sz
 LG
 XX
-zF
+Jv
 OM
 GK
 Jo
@@ -3642,7 +3642,7 @@ Hq
 SH
 Az
 eN
-wr
+cw
 eH
 Gg
 ux
@@ -3668,7 +3668,7 @@ wi
 BC
 eu
 vy
-Qx
+HJ
 ux
 Wo
 fL

@@ -32,16 +32,6 @@
 	},
 /turf/open/floor/vault/rock,
 /area/centcom/central_command_areas/holding)
-"aU" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/stairs/medium,
-/area/centcom/central_command_areas/holding)
-"aY" = (
-/obj/machinery/light/warm/directional/west,
-/turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/centcom/central_command_areas/holding)
 "bl" = (
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
@@ -54,6 +44,11 @@
 /obj/item/paper_bin,
 /obj/item/pen/fountain,
 /turf/open/floor/catwalk_floor,
+/area/centcom/central_command_areas/holding)
+"ch" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "cj" = (
 /obj/effect/turf_decal/siding/wood{
@@ -130,21 +125,9 @@
 "dg" = (
 /turf/closed/wall/mineral/wood,
 /area/centcom/central_command_areas/holding)
-"dj" = (
-/obj/structure/table/wood/fancy/royalblack,
-/obj/item/storage/book/bible,
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/holding)
 "dy" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/tile,
-/area/centcom/central_command_areas/holding)
-"dE" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/bamboo/tatami/purple{
-	dir = 8
-	},
 /area/centcom/central_command_areas/holding)
 "ea" = (
 /obj/machinery/light/small/directional/south,
@@ -172,14 +155,20 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
+"ef" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "eg" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
-"fk" = (
-/obj/structure/closet/crate/freezer/blood,
+"eA" = (
+/obj/structure/table/wood,
+/obj/item/toy/plush/goatplushie,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/sepia,
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "fu" = (
 /obj/effect/turf_decal/siding/wood{
@@ -210,14 +199,6 @@
 /turf/open/floor/bamboo/tatami/purple{
 	dir = 8
 	},
-/area/centcom/central_command_areas/holding)
-"gc" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/chair/sofa/corp/left{
-	pixel_y = 6
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "gd" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -294,11 +275,6 @@
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"hz" = (
-/obj/structure/bookcase/random/reference,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "hH" = (
 /obj/item/flashlight/lantern,
 /turf/open/misc/sandy_dirt,
@@ -316,6 +292,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
+"ih" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
+"iv" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/sofa/corp/left{
+	pixel_y = 6
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "iB" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -331,6 +319,10 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood/large,
+/area/centcom/central_command_areas/holding)
+"iI" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "iQ" = (
 /obj/machinery/gibber,
@@ -411,11 +403,11 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
-"ku" = (
-/obj/structure/table/wood,
-/obj/item/toy/plush/goatplushie,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/carpet/black,
+"kz" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
 /area/centcom/central_command_areas/holding)
 "kI" = (
 /turf/closed/indestructible/fakedoor{
@@ -444,15 +436,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
-"kY" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/sepia,
-/area/centcom/central_command_areas/holding)
 "lh" = (
 /obj/structure/toilet,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
@@ -468,14 +451,16 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"lp" = (
-/obj/structure/flora/rock/pile/jungle/style_random{
-	pixel_x = -12;
-	pixel_y = 15
+"lt" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
 	},
-/turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
+"lv" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "lx" = (
 /obj/machinery/light/small/directional/north,
@@ -508,12 +493,6 @@
 "lP" = (
 /turf/open/floor/bamboo/tatami/black,
 /area/centcom/central_command_areas/holding)
-"mb" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/bamboo/tatami/black{
-	dir = 4
-	},
-/area/centcom/central_command_areas/holding)
 "mj" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/sepia,
@@ -531,17 +510,6 @@
 "nA" = (
 /obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/holding)
-"nJ" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/chair/sofa/corp/left{
-	dir = 4;
-	pixel_x = -4
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "os" = (
 /obj/machinery/shower/directional/south,
@@ -590,25 +558,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
-"oZ" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/chili,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/soymilk,
-/obj/item/reagent_containers/condiment/soymilk,
-/obj/item/storage/fancy/egg_box,
-/obj/item/food/grown/citrus/lime,
-/obj/item/food/grown/citrus/orange,
-/obj/item/food/grown/citrus/lemon,
-/obj/item/food/grown/watermelon,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "pp" = (
 /obj/effect/landmark/holding_facility,
 /turf/open/floor/wood/large,
@@ -635,12 +584,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/catwalk_floor,
-/area/centcom/central_command_areas/holding)
-"pC" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/bamboo/tatami/black{
-	dir = 1
-	},
 /area/centcom/central_command_areas/holding)
 "pK" = (
 /obj/effect/turf_decal/siding/wood{
@@ -744,16 +687,52 @@
 	},
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
+"rk" = (
+/obj/structure/flora/rock/pile/jungle/style_random{
+	pixel_x = -12;
+	pixel_y = 15
+	},
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/centcom/central_command_areas/holding)
+"rx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/toy/gun{
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/balloon/syndicate{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/item/clothing/under/misc/syndicate_souvenir{
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/sepia,
+/area/centcom/central_command_areas/holding)
 "rz" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/holding)
-"rO" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
-/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "rQ" = (
 /obj/machinery/duct,
@@ -778,31 +757,39 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
+"sa" = (
+/obj/structure/rack,
+/obj/item/nullrod/claymore{
+	damtype = "stamina";
+	force = 30;
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/nullrod/claymore/darkblade{
+	damtype = "stamina";
+	force = 30;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/holding)
 "sc" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)
-"sl" = (
-/obj/structure/reagent_dispensers/plumbed,
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
-"sQ" = (
-/obj/machinery/vending/dinnerware,
-/obj/machinery/light/warm/directional/north,
-/turf/open/floor/iron/sepia,
-/area/centcom/central_command_areas/holding)
-"sW" = (
+"tf" = (
 /obj/effect/turf_decal/siding/wood{
-	dir = 1
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
+/obj/structure/chair/sofa/corp/left{
+	dir = 4;
+	pixel_x = -4
 	},
-/obj/machinery/light/warm/directional/east,
-/turf/open/floor/stone,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "ts" = (
 /obj/item/food/meat/slab/chicken,
@@ -822,6 +809,16 @@
 /obj/item/food/meat/slab/monkey,
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/catwalk_floor,
+/area/centcom/central_command_areas/holding)
+"ua" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/stairs/medium,
+/area/centcom/central_command_areas/holding)
+"ut" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/bamboo/tatami/black{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "uv" = (
 /obj/structure/toilet/greyscale{
@@ -883,11 +880,34 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
+"vR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/basket,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/sepia,
+/area/centcom/central_command_areas/holding)
 "vS" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fountain,
 /turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
+"wz" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/holding)
+"wI" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "wU" = (
 /turf/open/floor/wood/parquet,
@@ -899,10 +919,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
-"xi" = (
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "xj" = (
@@ -918,6 +934,12 @@
 /turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},
+/area/centcom/central_command_areas/holding)
+"xr" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "xw" = (
 /obj/structure/bookcase/random/nonfiction,
@@ -951,12 +973,6 @@
 	},
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
-"yb" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "yg" = (
 /obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/misc/beach/sand,
@@ -973,23 +989,25 @@
 	},
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
+"yu" = (
+/obj/structure/bookcase/random/reference,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "yz" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/misc/beach/sand,
 /area/centcom/central_command_areas/holding)
-"yJ" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 4;
-	pixel_x = -8;
-	pixel_y = 1
+"zv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/obj/item/reagent_containers/cup/beaker{
-	pixel_x = 7;
-	pixel_y = -4
+/obj/effect/turf_decal/siding/wood,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
 	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/carpet/black,
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
 "zB" = (
 /obj/machinery/vending/coffee{
@@ -1010,11 +1028,6 @@
 /obj/structure/flora/bush/pale/style_random,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/holding)
-"Ad" = (
-/obj/structure/bookcase/random/fiction,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "Af" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1042,20 +1055,6 @@
 /obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)
-"Aq" = (
-/obj/structure/rack,
-/obj/item/nullrod/claymore/saber/red{
-	damtype = "stamina";
-	force = 30
-	},
-/obj/item/nullrod/claymore/katana{
-	damtype = "stamina";
-	force = 30;
-	pixel_x = -8;
-	pixel_y = -1
-	},
-/turf/open/floor/wood/parquet,
-/area/centcom/central_command_areas/holding)
 "Ar" = (
 /obj/structure/sink/kitchen/directional/west,
 /obj/item/reagent_containers/cup/bucket,
@@ -1077,39 +1076,6 @@
 /turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},
-/area/centcom/central_command_areas/holding)
-"AT" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/toy/gun{
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/toy/balloon/syndicate{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/item/clothing/under/misc/syndicate_souvenir{
-	pixel_y = -5
-	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Bn" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1141,29 +1107,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)
-"Ca" = (
-/obj/structure/chair/comfy/black{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "Cb" = (
 /obj/machinery/vending/hydroseeds,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/tile,
-/area/centcom/central_command_areas/holding)
-"Cr" = (
-/obj/structure/bed/dogbed/cayenne{
-	name = "Paprika's bed"
-	},
-/mob/living/basic/carp/pet/cayenne{
-	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
-	faction = list("neutral");
-	name = "Paprika";
-	real_name = "Paprika"
-	},
-/obj/machinery/light/warm/directional/south,
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "CD" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1193,11 +1140,6 @@
 /obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
-"Dk" = (
-/obj/structure/closet/crate/freezer/blood,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/sepia,
-/area/centcom/central_command_areas/holding)
 "Do" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -1214,6 +1156,19 @@
 	dir = 1
 	},
 /area/centcom/central_command_areas/holding)
+"Du" = (
+/obj/structure/bed/dogbed/cayenne{
+	name = "Paprika's bed"
+	},
+/mob/living/basic/carp/pet/cayenne{
+	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
+	faction = list("neutral");
+	name = "Paprika";
+	real_name = "Paprika"
+	},
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "Dv" = (
 /mob/living/basic/cow{
 	name = "Yuna"
@@ -1228,6 +1183,25 @@
 	dir = 4
 	},
 /turf/open/floor/wood/large,
+/area/centcom/central_command_areas/holding)
+"DU" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/chili,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/storage/fancy/egg_box,
+/obj/item/food/grown/citrus/lime,
+/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/citrus/lemon,
+/obj/item/food/grown/watermelon,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "DZ" = (
 /obj/structure/kitchenspike,
@@ -1250,6 +1224,10 @@
 	},
 /turf/open/floor/bamboo/tatami,
 /area/centcom/central_command_areas/holding)
+"Ev" = (
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "Ey" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1267,6 +1245,20 @@
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
+/area/centcom/central_command_areas/holding)
+"EH" = (
+/obj/structure/rack,
+/obj/item/nullrod/claymore/saber/red{
+	damtype = "stamina";
+	force = 30
+	},
+/obj/item/nullrod/claymore/katana{
+	damtype = "stamina";
+	force = 30;
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "EJ" = (
 /obj/item/mop,
@@ -1294,6 +1286,11 @@
 	pixel_y = 6
 	},
 /turf/open/floor/stone,
+/area/centcom/central_command_areas/holding)
+"FQ" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "FU" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1360,6 +1357,11 @@
 	},
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
+"GP" = (
+/obj/structure/bookcase/random/fiction,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "GU" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/large,
@@ -1402,6 +1404,12 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
+"HT" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/water{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/centcom/central_command_areas/holding)
 "HU" = (
 /turf/open/misc/asteroid/basalt/wasteland{
@@ -1511,6 +1519,20 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
+"Jv" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4;
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "Jz" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
@@ -1578,6 +1600,20 @@
 /obj/structure/musician/piano,
 /turf/open/misc/beach/sand,
 /area/centcom/central_command_areas/holding)
+"Kh" = (
+/obj/structure/rack,
+/obj/item/nullrod/claymore/saber{
+	damtype = "stamina";
+	force = 30;
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/nullrod/claymore/katana{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/holding)
 "Ki" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -1593,11 +1629,6 @@
 /turf/open/floor/bamboo/tatami{
 	dir = 8
 	},
-/area/centcom/central_command_areas/holding)
-"KX" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "Lw" = (
 /obj/item/bedsheet/syndie{
@@ -1665,30 +1696,12 @@
 /obj/item/food/grown/soybeans,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"MW" = (
+"MU" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
 	pixel_y = 6
 	},
 /turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
-"MX" = (
-/obj/structure/rack,
-/obj/item/nullrod/claymore/saber{
-	damtype = "stamina";
-	force = 30;
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/nullrod/claymore/katana{
-	damtype = "stamina";
-	force = 30
-	},
-/turf/open/floor/wood/parquet,
-/area/centcom/central_command_areas/holding)
-"Nf" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/stairs/medium,
 /area/centcom/central_command_areas/holding)
 "Nh" = (
 /obj/item/kirbyplants{
@@ -1752,6 +1765,10 @@
 	},
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
+"Ow" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/stairs/medium,
+/area/centcom/central_command_areas/holding)
 "Oy" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -1802,11 +1819,6 @@
 /obj/machinery/defibrillator_mount/directional/south,
 /obj/machinery/stasis,
 /turf/open/floor/iron/sepia,
-/area/centcom/central_command_areas/holding)
-"QV" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "QW" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -1878,9 +1890,20 @@
 "Sc" = (
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
-"So" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/carpet/black,
+"SB" = (
+/obj/structure/rack,
+/obj/item/nullrod/scythe/vibro{
+	damtype = "stamina";
+	force = 30;
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/nullrod/claymore/glowing{
+	damtype = "stamina";
+	force = 30
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "Tc" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1892,6 +1915,12 @@
 "Tj" = (
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/holding)
+"Tl" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/book/bible,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "Tr" = (
 /obj/structure/chair/wood{
@@ -1924,20 +1953,11 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
-"TS" = (
-/obj/structure/rack,
-/obj/item/nullrod/scythe/vibro{
-	damtype = "stamina";
-	force = 30;
-	pixel_x = 5;
-	pixel_y = -2
+"TX" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
 	},
-/obj/item/nullrod/claymore/glowing{
-	damtype = "stamina";
-	force = 30
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood/parquet,
+/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "Ua" = (
 /turf/open/floor/bamboo/tatami{
@@ -1952,6 +1972,12 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/figure/ninja,
 /turf/open/floor/bamboo/tatami{
+	dir = 4
+	},
+/area/centcom/central_command_areas/holding)
+"UD" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/bamboo/tatami/black{
 	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
@@ -2020,10 +2046,6 @@
 "VE" = (
 /obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
-/area/centcom/central_command_areas/holding)
-"VF" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "VO" = (
 /obj/structure/chair/wood{
@@ -2145,23 +2167,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
-"Yb" = (
-/obj/structure/rack,
-/obj/item/nullrod/claymore{
-	damtype = "stamina";
-	force = 30;
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/nullrod/claymore/darkblade{
-	damtype = "stamina";
-	force = 30;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood/parquet,
-/area/centcom/central_command_areas/holding)
 "Yd" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/clothing/mask/animal/pig,
@@ -2177,14 +2182,9 @@
 /obj/item/toy/spinningtoy,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
-"Yl" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/basket,
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/machinery/light/small/directional/west,
+"YL" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/warm/directional/north,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "YQ" = (
@@ -2460,12 +2460,12 @@ gy
 wV
 Ea
 dg
-MW
-yJ
+MU
+Jv
 Nt
 JV
-oZ
-sl
+DU
+Ev
 dg
 ts
 FE
@@ -2579,7 +2579,7 @@ MR
 dg
 dg
 oG
-aY
+HT
 oG
 LK
 Ed
@@ -2608,12 +2608,12 @@ CG
 CG
 Ho
 dg
-ku
+eA
 AE
 Gy
 Bo
 iF
-QV
+ef
 dg
 oG
 oG
@@ -2754,7 +2754,7 @@ Zj
 HU
 Zj
 CG
-sQ
+YL
 zN
 hO
 hO
@@ -2836,7 +2836,7 @@ pt
 pN
 hO
 hO
-sW
+zv
 Bw
 yz
 Bw
@@ -2905,7 +2905,7 @@ Vj
 mw
 DL
 ht
-KX
+ch
 dg
 ic
 mw
@@ -3017,7 +3017,7 @@ mw
 mw
 ht
 kl
-Ad
+GP
 XP
 mw
 mw
@@ -3048,7 +3048,7 @@ ML
 mw
 mw
 FU
-aU
+ua
 lI
 mw
 mw
@@ -3121,12 +3121,12 @@ dg
 fV
 mw
 mw
-Yl
+vR
 Gw
 XP
 xw
 Am
-Ca
+lt
 Am
 VO
 XP
@@ -3162,10 +3162,10 @@ Ey
 Dh
 XP
 xw
-So
+ih
 dg
-xi
-Cr
+iI
+Du
 dg
 iH
 mw
@@ -3195,12 +3195,12 @@ dg
 fV
 mw
 mw
-AT
+rx
 GX
 XP
 xw
 Am
-yb
+TX
 Am
 NU
 XP
@@ -3270,7 +3270,7 @@ ML
 mw
 mw
 FU
-Nf
+Ow
 lI
 mw
 mw
@@ -3313,7 +3313,7 @@ mw
 mw
 ZV
 kl
-hz
+yu
 XP
 mw
 mw
@@ -3419,7 +3419,7 @@ pp
 pp
 cn
 XP
-gc
+iv
 mw
 mw
 ht
@@ -3531,7 +3531,7 @@ LK
 CG
 CG
 CG
-VF
+wz
 mw
 zN
 VD
@@ -3609,7 +3609,7 @@ mw
 mw
 zN
 VD
-lp
+rk
 zN
 mw
 mw
@@ -3651,7 +3651,7 @@ dg
 iH
 GU
 dg
-nJ
+tf
 QZ
 dg
 rj
@@ -3666,7 +3666,7 @@ Ed
 (39,1,1) = {"
 Ed
 CG
-dj
+Tl
 mw
 mw
 mw
@@ -3818,7 +3818,7 @@ Zb
 gp
 Zb
 dg
-dE
+kz
 xM
 bl
 CL
@@ -3860,9 +3860,9 @@ CL
 CL
 rR
 dg
-fk
+FQ
 DI
-rO
+xr
 dg
 jR
 NU
@@ -3870,9 +3870,9 @@ NU
 NU
 NU
 dg
-kY
+wI
 DI
-Dk
+lv
 dg
 VE
 qi
@@ -3971,7 +3971,7 @@ bl
 xM
 ee
 dg
-Yb
+sa
 wU
 wU
 WX
@@ -3983,7 +3983,7 @@ Rf
 oY
 Uf
 wU
-TS
+SB
 dg
 qi
 ZU
@@ -4008,7 +4008,7 @@ Yd
 PV
 Tj
 dg
-Aq
+EH
 wU
 Uf
 oY
@@ -4020,7 +4020,7 @@ NF
 oY
 Uf
 wU
-MX
+Kh
 dg
 Ez
 Ez
@@ -4086,11 +4086,11 @@ LK
 LK
 LK
 CG
-pC
+ut
 lP
 Oa
 lP
-mb
+UD
 CG
 LK
 LK

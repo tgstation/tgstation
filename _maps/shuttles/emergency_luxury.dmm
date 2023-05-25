@@ -8,24 +8,12 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"bJ" = (
-/turf/open/floor/holofloor/beach/coast_t{
-	dir = 4
-	},
-/area/shuttle/escape/luxury)
 "bS" = (
 /obj/item/food/jelliedtoast/cherry{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
-/area/shuttle/escape/luxury)
-"bU" = (
-/obj/structure/chair/wood{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "bY" = (
 /obj/structure/grille/broken,
@@ -36,12 +24,6 @@
 "cI" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/brig)
-"cK" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "cP" = (
@@ -99,6 +81,10 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"fb" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
 "fg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -115,16 +101,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"gG" = (
-/obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	id = "gimmemoney";
-	dir = 4
-	},
-/turf/closed/indestructible/opsglass{
-	desc = "A durable looking window made of an alloy of of plasma and titanium.";
-	name = "plastitanium window"
-	},
-/area/shuttle/escape/luxury)
 "gL" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/vomit/old,
@@ -210,6 +186,9 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
+"jH" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "jJ" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
@@ -276,6 +255,13 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
+"lK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
 "md" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -316,6 +302,14 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
+"nj" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/delivery,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/glass/waterbottle,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "np" = (
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/holofloor/beach/water,
@@ -326,6 +320,16 @@
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
+/area/shuttle/escape/luxury)
+"nS" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 4;
+	id = "gimmemoney"
+	},
+/turf/closed/indestructible/opsglass{
+	desc = "A durable looking window made of an alloy of of plasma and titanium.";
+	name = "plastitanium window"
+	},
 /area/shuttle/escape/luxury)
 "od" = (
 /obj/item/food/honkdae{
@@ -359,15 +363,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"qo" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/structure/window/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "qt" = (
 /obj/item/food/cakeslice/chocolate{
 	pixel_y = 1
@@ -427,6 +422,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
+"si" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
 "sr" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -456,9 +457,6 @@
 /obj/item/clothing/head/collectable/paper,
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
-"sU" = (
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "ty" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -500,6 +498,13 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"wc" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 4;
+	id = "gimmemoney"
+	},
+/turf/closed/indestructible/syndicate,
 /area/shuttle/escape/luxury)
 "xq" = (
 /obj/effect/spawner/random/maintenance/six,
@@ -547,14 +552,6 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"yB" = (
-/obj/structure/chair/stool/bar{
-	name = "buckleable bar stool";
-	can_buckle = 1;
-	dir = 1
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
 "ze" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/storage/box/drinkingglasses,
@@ -586,14 +583,14 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
-"zM" = (
-/obj/structure/chair/stool/bar{
-	name = "buckleable bar stool";
-	can_buckle = 1;
-	dir = 8
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
+"Av" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/preopen,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "AB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/glass,
@@ -610,13 +607,13 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
-"AZ" = (
+"Bb" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 8
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Bj" = (
 /obj/structure/window/reinforced/spawner/directional/east{
@@ -641,14 +638,6 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
-"Cs" = (
-/obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate/preopen,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "CQ" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -729,6 +718,12 @@
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
+"Er" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
 "Ex" = (
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
 /area/shuttle/escape/luxury)
@@ -743,14 +738,18 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"EJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Fl" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/gun/ballistic/revolver/russian,
 /turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"FC" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "FD" = (
 /obj/item/food/cherrycupcake{
@@ -803,6 +802,15 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
+"In" = (
+/obj/effect/spawner/random/maintenance/eight,
+/obj/structure/closet/crate/preopen,
+/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "IB" = (
 /obj/effect/spawner/random/maintenance/six,
 /obj/structure/closet/crate/trashcart/filled,
@@ -843,6 +851,14 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
+"Kc" = (
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	dir = 8;
+	name = "buckleable bar stool"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
 "Ky" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/storage/box/fireworks/dangerous,
@@ -854,6 +870,11 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
+"KQ" = (
+/turf/open/floor/holofloor/beach{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
 "KU" = (
 /obj/item/food/kebab/tofu{
 	pixel_y = 6
@@ -861,18 +882,22 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"Lc" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
 "Li" = (
 /obj/structure/window/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"Lu" = (
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/titanium/blue,
+"Lk" = (
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/shuttle/escape/luxury)
+"LA" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "LO" = (
 /obj/machinery/light/directional/south,
@@ -907,14 +932,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"Nh" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "Nm" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/glass,
@@ -925,12 +942,6 @@
 /obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
-"NC" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "Oc" = (
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/closet/crate/engineering/electrical,
@@ -954,22 +965,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"OE" = (
-/obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate/preopen,
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"OL" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet/red,
-/area/shuttle/escape/brig)
 "OU" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/carpet/red,
@@ -1095,14 +1090,6 @@
 "SN" = (
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
-"SQ" = (
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/mop,
-/obj/item/reagent_containers/cup/glass/waterbottle,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "SU" = (
 /obj/structure/table/wood/fancy/black,
 /obj/machinery/recharger,
@@ -1136,6 +1123,20 @@
 /obj/item/reagent_containers/pill/maintenance,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"UD" = (
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	dir = 1;
+	name = "buckleable bar stool"
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"UK" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "UX" = (
 /obj/item/food/bearsteak{
 	pixel_y = 6
@@ -1150,6 +1151,21 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
+"VA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"VL" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape/brig)
 "VO" = (
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/closet/crate/engineering,
@@ -1164,6 +1180,11 @@
 "We" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"Wt" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "Wx" = (
 /obj/machinery/vending/wallmed/directional/north,
@@ -1236,11 +1257,6 @@
 "YV" = (
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
-"Zp" = (
-/obj/item/kirbyplants/random,
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
 "ZL" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/delivery,
@@ -1303,7 +1319,7 @@ xq
 qQ
 YQ
 AN
-SQ
+nj
 JV
 iD
 xy
@@ -1318,7 +1334,7 @@ CQ
 (4,1,1) = {"
 CQ
 ZL
-OE
+In
 zk
 Ow
 XY
@@ -1341,7 +1357,7 @@ CQ
 CQ
 jc
 VO
-Cs
+Av
 CQ
 fg
 TM
@@ -1405,7 +1421,7 @@ CQ
 "}
 (8,1,1) = {"
 JV
-NC
+UK
 XU
 Nm
 ly
@@ -1422,14 +1438,14 @@ Ez
 yk
 kJ
 qC
-Nh
+Bb
 CQ
 "}
 (9,1,1) = {"
 jy
-sU
+jH
 Br
-AZ
+EJ
 ji
 fJ
 bg
@@ -1444,7 +1460,7 @@ AB
 ty
 kJ
 Yb
-qo
+VA
 JV
 "}
 (10,1,1) = {"
@@ -1458,22 +1474,22 @@ Ex
 Ex
 Ex
 Yj
-gG
-gG
-gG
-gG
+nS
+nS
+nS
+nS
 Yj
-gG
-gG
-gG
-Yj
+nS
+nS
+nS
+wc
 Yj
 "}
 (11,1,1) = {"
 DE
 la
 la
-OL
+lK
 Gq
 YF
 ze
@@ -1488,7 +1504,7 @@ Du
 JB
 jJ
 jJ
-Zp
+Wt
 Ex
 "}
 (12,1,1) = {"
@@ -1501,7 +1517,7 @@ oA
 oA
 oA
 MC
-yB
+UD
 jJ
 SN
 SN
@@ -1517,13 +1533,13 @@ Ex
 Gq
 cI
 la
-cK
+VL
 Gq
 ra
 oA
 oA
 DK
-yB
+UD
 jJ
 We
 Qy
@@ -1545,7 +1561,7 @@ oA
 oA
 oA
 rt
-yB
+UD
 jJ
 We
 Pe
@@ -1567,7 +1583,7 @@ xV
 DK
 Ky
 Fl
-yB
+UD
 jJ
 We
 xY
@@ -1586,9 +1602,9 @@ jJ
 jJ
 jJ
 jJ
-zM
-zM
-zM
+Kc
+Kc
+Kc
 jJ
 jJ
 We
@@ -1721,7 +1737,7 @@ cP
 jJ
 jJ
 jJ
-bU
+LA
 Ex
 TD
 TD
@@ -1767,10 +1783,10 @@ dm
 dm
 hM
 Ex
-bJ
-bJ
-bJ
-bJ
+KQ
+KQ
+KQ
+KQ
 Ex
 AT
 WF
@@ -1789,10 +1805,10 @@ WF
 WF
 vL
 Ex
-FC
-YV
-YV
-Lc
+si
+Lk
+Lk
+Er
 Ex
 Ex
 Ex
@@ -1801,10 +1817,10 @@ Ex
 "}
 (26,1,1) = {"
 Ex
-Lu
+fb
 dm
 dm
-Lu
+fb
 Ex
 mE
 WF

@@ -286,12 +286,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"bA" = (
-/obj/structure/chair/stool/directional/south,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "bB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
@@ -623,6 +617,20 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/syndicate)
+"cL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cM" = (
@@ -2031,6 +2039,12 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
+/area/awaymission/moonoutpost19/arrivals)
+"ic" = (
+/mob/living/basic/lizard{
+	name = "Newt"
+	},
+/turf/open/floor/carpet/royalblue,
 /area/awaymission/moonoutpost19/arrivals)
 "ie" = (
 /obj/structure/alien/weeds,
@@ -3699,6 +3713,19 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
+"sZ" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "ta" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
@@ -4576,16 +4603,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"yf" = (
-/obj/machinery/airalarm/directional/east{
-	req_access = "150"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airalarm/unlocked,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "yl" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -4626,20 +4643,6 @@
 /obj/structure/fluff/meteor/large,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
-"yv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "yw" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -7253,6 +7256,12 @@
 /obj/structure/fluff/meteor,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
+"NT" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "NV" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/drip,
@@ -7372,19 +7381,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"Pt" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "Pu" = (
 /obj/effect/decal/cleanable/xenoblood{
 	desc = "It's green and acidic. Nothing good could come of this..."
@@ -8574,6 +8570,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"Xy" = (
+/obj/machinery/airalarm/directional/east{
+	req_access = "150"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "Xz" = (
 /obj/structure/closet/firecloset{
 	name = "fire-proof closet"
@@ -8815,12 +8821,6 @@
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/mines)
-"Zn" = (
-/mob/living/simple_animal/hostile/lizard{
-	name = "Newt"
-	},
-/turf/open/floor/carpet/royalblue,
-/area/awaymission/moonoutpost19/arrivals)
 "Zo" = (
 /turf/open/floor/pod/light,
 /area/awaymission/moonoutpost19/tent)
@@ -41509,7 +41509,7 @@ hJ
 Gp
 hI
 xb
-Zn
+ic
 Am
 hJ
 UP
@@ -42396,9 +42396,9 @@ JA
 aF
 aA
 aV
-yv
+cL
 bq
-bA
+NT
 Cf
 at
 UX
@@ -43424,9 +43424,9 @@ Hh
 aB
 aA
 aZ
-Pt
+sZ
 bu
-yf
+Xy
 wR
 at
 Vd
