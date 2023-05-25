@@ -4,8 +4,7 @@
 
 # Anything in here will be blocked from IC interactions, dead chat, and OOC
 [shared]
-"blockedinshared" = "This message is not allowed anywhere, please use a different weird test phrase."
-
+"blockedinshared" = "blocked"
 # Anything in here is blocked just from IC interactions, such as chat or names, but is allowed in dead chat and OOC
 [ic]
 "blockedinic" = "This message is not allowed IC, please use a different weird test phrase."
@@ -27,4 +26,5 @@
 [soft_ic_outside_pda]
 "testsoftestblocks" = "Stop saying debug phrases ICly."
 
+# This is for regex fragments exclusively
 [shared_regex]
