@@ -224,7 +224,10 @@
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
 
-//splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously
+/**
+ * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
+ * This proc is also more faster because it doesn't deal with mobs, copying evidences or refreshing atom storages
+ */
 /datum/component/material_container/proc/split_stack(obj/item/stack/target, amount)
 	if(!target.use(amount, TRUE, FALSE))
 		return null
