@@ -75,6 +75,9 @@
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
 	icon_state = pick("dirt-flat-0","dirt-flat-1","dirt-flat-2","dirt-flat-3")
+	var/obj/structure/fluff/broken_flooring/broken_flooring = locate(/obj/structure/fluff/broken_flooring) in loc
+	if(!isnull(broken_flooring))
+		return
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
@@ -92,6 +95,10 @@
 	desc = "A thin layer of dust coating the floor."
 	icon_state = "dust"
 	base_icon_state = "dust"
+
+/obj/effect/decal/cleanable/dirt/dust/Initialize(mapload)
+	. = ..()
+	icon_state = base_icon_state
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
