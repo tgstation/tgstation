@@ -37,9 +37,9 @@
 	growth_probability,
 	lower_growth_value,
 	upper_growth_value,
-	signals_to_kill_on,
-	optional_checks,
-	optional_grow_behavior,
+	list/signals_to_kill_on,
+	datum/callback/optional_checks,
+	datum/callback/optional_grow_behavior,
 )
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
