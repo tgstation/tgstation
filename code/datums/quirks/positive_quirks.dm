@@ -232,7 +232,7 @@
 		/datum/language/terrum,
 		/datum/language/uncommon,
 		/datum/language/voltaic,
-		/datum/language/xenocommon
+		/datum/language/xenocommon,
 	)
 	var/extra_language
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
