@@ -68,11 +68,10 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	return ..()
 
 /datum/proximity_monitor/advanced/elevator_music_area/field_turf_crossed(mob/entered, turf/location)
-	if (!istype(entered))
+	if (!istype(entered) || !entered.mind)
 		return
-	if (!entered.mind)
-		return
-	if ((entered in tracked_mobs))
+
+	if (entered in tracked_mobs)
 		return
 
 	if (entered.client?.prefs.read_preference(/datum/preference/toggle/sound_elevator))
@@ -93,7 +92,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 /// Remove references on mob deletion
 /datum/proximity_monitor/advanced/elevator_music_area/proc/mob_destroyed(mob/former_mob)
 	SIGNAL_HANDLER
-	if ((former_mob in tracked_mobs))
+	if (former_mob in tracked_mobs)
 		qdel(tracked_mobs[former_mob])
 		tracked_mobs -= former_mob
 
