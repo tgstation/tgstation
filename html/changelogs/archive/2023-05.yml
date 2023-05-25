@@ -888,3 +888,35 @@
   - bugfix: adds more fire alarms to birdshot.
   timothymtorres:
   - rscadd: Add two new basketball teams and stadiums - Ash Gladiators and Beach Bums
+2023-05-25:
+  Chadley:
+  - bugfix: fixes the HMS objective.
+  Ghommie:
+  - balance: Drawing small graffiti like paw/foot/claw prints, small brush dots and
+      short lines should cost half as many charges off your spraycan or crayon.
+  - balance: The cost of recoloring graffiti decals is now consistent with that of
+      drawing them.
+  - balance: Trying to suicide with an empty spraycan will now fail, because it's
+      empty. It's just that simple.
+  - qol: Adds a eye-dropper-like right-click function to the painting canvas UI. Right-Click
+      a pixel on the canvas while holding a painting tool to have it copy its color.
+  - qol: Also adds a right-click function to the color palette at the bottom of the
+      UI to allow users to set its colors without having to alternate between the
+      game window and the UI.
+  - qol: Lastly, a tooltip has been added near the top-left corner of the same UI
+      to let players know of these features.
+  LemonInTheDark:
+  - server: qdel statistics are once again logged in qdel.log, instead of the otherwise
+      typical json logging system
+  Melbert:
+  - balance: Milk no longer harms the potency of mushrooms. Apparently it's good for
+      them?
+  - balance: Radium now does slightly more tox damage than Uranium
+  - code_imp: Removed a ton of boilerplate from chem hydro interactions
+  SyncIt21:
+  - bugfix: out of bounds when updating lights in lighting subsystem
+  san7890:
+  - refactor: Chickens have been refactored into basic mobs, expect them to be a tad
+      bit smarter.
+  - code_imp: Cat Surgeons are a bit more smarter about attacking threats to the world
+      around them on their endless pursuit for those felinid tails.
