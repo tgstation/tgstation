@@ -48,7 +48,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
-		human_holder.grant_language(/datum/language/uncommon, TRUE, TRUE, LANGUAGE_QUIRK)
+		human_holder.grant_language(/datum/language/uncommon, understood = TRUE, spoken =  TRUE, source =  LANGUAGE_QUIRK)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -352,35 +352,6 @@
 	SIGNAL_HANDLER
 
 	quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/bald)
-
-/datum/quirk/item_quirk/fashionista
-	name = "Fashionista"
-	desc = "You're a fashionista, and you know it. You're always on the lookout for the latest trends, and you're always dressed to impress. In this case, the latest trend are scarfs."
-	icon = FA_ICON_SHIRT
-	value = 0
-	gain_text = span_notice("You're a fashionista, and you know it.")
-	lose_text = span_notice("You're not a fashionista anymore, and you know it.")
-	medical_record_text = "Patient is wearing a scarf in the middle of summer. Douche."
-
-///datum/quirk/item_quirk/fashionista/add_unique(client/client_source)
-	//var/scarf_type = client_source?.prefs.read_preference(/datum/preference/choiced/glasses) || "Regular"
-	//var/obj/item/clothing/glasses/scarf_type
-	//switch(glasses_name)
-		//if ("Thin")
-		//	glasses_type = /obj/item/clothing/glasses/regular/thin
-		//if ("Circle")
-		//	glasses_type = /obj/item/clothing/glasses/regular/circle
-		//if ("Hipster")
-		//	glasses_type = /obj/item/clothing/glasses/regular/hipster
-		//else
-		//	glasses_type = /obj/item/clothing/glasses/regular
-
-	//give_item_to_holder(glasses_type, list(
-	//	LOCATION_EYES = ITEM_SLOT_EYES,
-	//	LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-	//	LOCATION_HANDS = ITEM_SLOT_HANDS,
-	//))
-
 
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
