@@ -22,7 +22,9 @@
 
 	for(var/client/X in GLOB.mentors | GLOB.admins)
 		X << 'sound/items/bikehorn.ogg'
-		to_chat(X, mentor_msg)
+		to_chat(X
+		type = MESSAGE_TYPE_MENTORCHAT,
+		html = mentor_msg)
 
 	to_chat(src,
 		type = MESSAGE_TYPE_MENTORCHAT,
