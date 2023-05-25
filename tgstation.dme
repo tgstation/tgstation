@@ -1169,6 +1169,7 @@
 #include "code\datums\elements\content_barfer.dm"
 #include "code\datums\elements\crackable.dm"
 #include "code\datums\elements\crusher_loot.dm"
+#include "code\datums\elements\cuffsnapping.dm"
 #include "code\datums\elements\cult_eyes.dm"
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\curse_announcement.dm"
