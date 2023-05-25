@@ -43,10 +43,7 @@
 	var/mob/living/basic/headslug/crab = new(spawn_location)
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
-	crab.origin = stored_mind
-	if(!crab.origin)
-		return
-	crab.origin.active = TRUE
-	crab.origin.transfer_to(crab)
+
+	stored_mind.transfer_to(crab)
 	spawn_location.transfer_observers_to(crab)
 	to_chat(crab, span_warning("You burst out of the remains of your former body in a shower of gore!"))

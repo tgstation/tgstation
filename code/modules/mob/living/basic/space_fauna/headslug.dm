@@ -25,8 +25,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/headslug
 
-	/// The mind to transfer to our egg when it hatches
-	var/datum/mind/origin
 	/// Set to true once we've implanted our egg
 	var/egg_lain = FALSE
 
@@ -54,7 +52,7 @@
 		return
 
 	var/mob/living/carbon/victim = target
-	if(victim.stat != DEAD)
+	if(victim.stat == DEAD)
 		return
 	if(HAS_TRAIT(victim, TRAIT_XENO_HOST))
 		target.balloon_alert(src, "already pregnant!") // Maybe the worst balloon alert in the codebase
@@ -62,7 +60,7 @@
 
 	if(!infect(victim))
 		target.balloon_alert(src, "failed to implant egg!")
-		stack_trace("[origin.key] in [src] failed to implant egg in [victim], despite all checks suggesting it should have worked!")
+		stack_trace("[key] in [src] failed to implant egg in [victim], despite all checks suggesting it should have worked!")
 		return
 
 	egg_lain = TRUE
@@ -75,10 +73,7 @@
 	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
 	egg.Insert(victim)
 
-	if(origin)
-		egg.origin = origin
-	else if(mind) // Let's make this a feature
-		egg.origin = mind
+	egg.origin = mind
 
 	for(var/obj/item/organ/target in src)
 		target.forceMove(egg)
