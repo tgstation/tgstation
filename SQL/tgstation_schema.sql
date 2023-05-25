@@ -255,7 +255,7 @@ CREATE TABLE `library` (
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
   KEY `idx_lib_del_title` (`deleted`,`title`),
-  KEY `idx_lib_search` (`deleted`,`author`,`title`,`category`)
+  KEY `idx_lib_search` (`deleted`,`author`,`title`,`category`),
   KEY `idx_admin_lib_search` (`author`,`title`,`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
