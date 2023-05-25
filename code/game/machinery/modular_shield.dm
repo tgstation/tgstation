@@ -459,9 +459,6 @@
 		LAZYOR(shield_generator.connected_modules, (src))
 		balloon_alert(user, "connected to generator")
 		update_icon_state()
-		if(istype(src, /obj/machinery/modular_shield/module/node))
-			var/obj/machinery/modular_shield/module/node/connected_node = src
-			connected_node.connect_connected_through_us()
 		shield_generator.calculate_boost()
 		return
 
@@ -475,9 +472,6 @@
 			LAZYOR(shield_generator.connected_modules, (src))
 			balloon_alert(user, "connected to generator")
 			update_icon_state()
-			if(istype(src, /obj/machinery/modular_shield/module/node))
-				var/obj/machinery/modular_shield/module/node/connected_node = src
-				connected_node.connect_connected_through_us()
 			shield_generator.calculate_boost()
 			return
 		balloon_alert(user, "connected to node")
@@ -514,6 +508,15 @@
 	shield_generator.calculate_boost()
 	shield_generator = null
 	update_icon_state()
+
+//after trying to connect to a machine infront of us, we will try to link anything connected to us to a generator
+/obj/machinery/modular_shield/module/node/try_connect(user)
+	. = ..()
+
+	if(isnull(shield_generator))
+		return
+	connect_connected_through_us()
+	shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/node/Destroy()
 	. = ..()
