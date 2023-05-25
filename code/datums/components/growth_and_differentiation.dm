@@ -119,7 +119,7 @@
 		return
 
 	var/mob/living/new_mob = growth_path
-	if(!istype(new_mob))
+	if(!ispath(new_mob))
 		CRASH("Growth and Differentiation Component: Growth path was not a mob type! If you wanted to do something special, please put it in the optional_grow_behavior callback instead!")
 
 	var/new_mob_name = initial(new_mob.name)

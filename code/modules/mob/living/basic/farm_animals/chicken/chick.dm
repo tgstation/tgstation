@@ -60,7 +60,7 @@
 
 /// We don't grow into a chicken if we're not conscious or if we have a client (in case of schenanigans).
 /mob/living/basic/chick/proc/ready_to_grow()
-	if(isnull(client))
+	if(!isnull(client))
 		SEND_SIGNAL(src, COMSIG_COMPONENT_KILL) // juuuuuust in case
 		return FALSE
 
