@@ -210,6 +210,8 @@ Medical HUD! Basic mode needs suit sensors on.
 			holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
+			if(DISEASE_SEVERITY_UNCURABLE)
+				holder.icon_state = "hudill6"
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
 			if(DISEASE_SEVERITY_DANGEROUS)
@@ -479,7 +481,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_CAMERA_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(chassis_camera.is_emp_scrambled)
+	if(chassis_camera?.is_emp_scrambled)
 		holder.icon_state = "hudcamera_empd"
 		return
 	holder.icon_state = "hudcamera"

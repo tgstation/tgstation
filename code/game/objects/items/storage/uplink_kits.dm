@@ -87,8 +87,10 @@
 			new /obj/item/sbeacondrop/bomb(src) // 11 tc
 			new /obj/item/grenade/syndieminibomb(src) // 6 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
-			new /obj/item/clothing/suit/space/syndicate/black/red(src) // outfit 1 tc
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 
 		if(KIT_MURDER)
@@ -120,8 +122,10 @@
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
 			new /obj/item/sbeacondrop(src) // 10 tc
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
@@ -409,13 +413,10 @@
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	if(prob(50))
-		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
-	else
-		new /obj/item/clothing/head/helmet/space/syndicate(src)
-		new /obj/item/clothing/suit/space/syndicate(src)
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -641,6 +642,103 @@
 	new /obj/item/pinata/syndie(src)
 	new /obj/item/storage/belt/grenade(src)
 	new /obj/item/storage/belt/military/snack(src)
+
+/obj/item/storage/box/syndie_kit/induction_kit
+	name = "syndicate induction kit"
+	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
+
+/obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
+	// Basic weaponry, so they have something to use.
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
+	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/pen/edagger(src) // 2 TC
+	// The necessary equipment to help secure that disky.
+	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
+	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
+	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
+	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	// Tacticool gear
+	new /obj/item/clothing/shoes/combat(src)
+	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/book/manual/nuclear(src) // Very important
+	// The most important part of the kit, the implant that gives them the syndicate faction.
+	new /obj/item/implanter/induction_implant(src)
+	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
+	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
+	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
+
+/obj/item/implanter/induction_implant
+	name = "implanter (nuclear operative)"
+	desc = "A sterile automatic implant injector. You can see a tiny, somehow legible sticker on the side: 'NOT A BRAINWASH DEVICE'"
+	imp_type = /obj/item/implant/nuclear_operative
+
+/obj/item/implant/nuclear_operative
+	name = "nuclear operative implant"
+	desc = "Registers you as a member of a Syndicate nuclear operative team."
+	implant_color = "r"
+
+/obj/item/implant/nuclear_operative/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Suspicious Implant<BR>
+				<b>Life:</b> UNKNOWN <BR>
+				<b>Implant Details:</b> <BR>
+				<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."}
+	return dat
+
+/obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(!. || !ishuman(target) || !(target.mind))
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+
+	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
+		if(human_target == user)
+			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
+			human_target.Stun(10 SECONDS)
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 10)
+			return FALSE
+		else
+			to_chat(user, span_notice("You finish implanting [human_target], but you don't really notice a difference. Huh."))
+			to_chat(human_target, span_userdanger("Nothing seems to really happen, but you start to feel a little ill.."))
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
+			return FALSE
+
+	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
+	var/allowed = FALSE
+	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
+		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
+			allowed = TRUE
+
+	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
+		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
+		return FALSE
+
+	var/datum/antagonist/nukeop/nuke_datum = new()
+	nuke_datum.send_to_spawnpoint = FALSE
+	nuke_datum.nukeop_outfit = null
+	human_target.mind?.add_antag_datum(nuke_datum)
+	human_target.faction |= ROLE_SYNDICATE
+	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
+	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
+	return TRUE
+
+/obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(!. || !isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
+	living_target.faction -= ROLE_SYNDICATE
+	to_chat(target, span_notice("You feel a little less nuclear."))
+	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
+	return TRUE
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

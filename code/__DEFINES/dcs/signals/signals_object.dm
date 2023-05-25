@@ -9,8 +9,9 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
-/// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
+/// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
 
 // /obj/machinery signals
 
@@ -171,7 +172,7 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
-///from /obj/item/storage/book/bible/afterattack(): (mob/user, proximity)
+///from /obj/item/book/bible/afterattack(): (mob/user, proximity)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)

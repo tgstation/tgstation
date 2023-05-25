@@ -90,6 +90,9 @@
 	fire = 100
 	acid = 100
 
+/obj/structure/carp_rift/hulk_damage()
+	return 30
+
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
 

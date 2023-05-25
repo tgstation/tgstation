@@ -7,6 +7,7 @@
 		NOTRANSSTING,
 		NO_UNDERWEAR,
 		NOEYEHOLES,
+		NOAUGMENTS,
 	)
 	inherent_traits = list(
 		TRAIT_GENELESS,

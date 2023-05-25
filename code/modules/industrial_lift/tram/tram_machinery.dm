@@ -639,7 +639,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
 	update_sign()
-	process()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
 /obj/machinery/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
@@ -721,12 +721,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/button/tram
 	name = "tram request"
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "tramctrl"
-	skin = "tramctrl"
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
-	light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
