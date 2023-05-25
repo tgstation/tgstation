@@ -252,16 +252,16 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleOpen = (data: ByondOpen) => {
+    setTimeout(() => {
+      this.innerRef.current?.focus();
+    }, 0);
+
     const { channel } = data;
     // Catches the case where the modal is already open
     if (this.channelIterator.isSay()) {
       this.channelIterator.set(channel);
     }
     this.setState({ buttonContent: this.channelIterator.current() });
-
-    setTimeout(() => {
-      this.innerRef.current?.focus();
-    }, 1);
 
     windowOpen(this.channelIterator.current());
   };

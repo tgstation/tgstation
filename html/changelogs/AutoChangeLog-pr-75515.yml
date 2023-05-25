@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Lizards (the animal (not the species of people)) are now a bit smarter. Expect to see them avidly hunt down their prey, rather than languish around and wait for it to come to them. Hungry buggers."
-  - image: "We now actually implement the previously unused lizard gib animation for those little buggers!"

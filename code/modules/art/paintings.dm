@@ -129,11 +129,11 @@
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
 	var/obj/item/painting_implement = user.get_active_held_item()
+	if(!painting_implement)
+		return
 	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
 	.["paint_tool_palette"] = null
-	if(!painting_implement)
-		return
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
@@ -170,6 +170,26 @@
 		if("select_color")
 			var/obj/item/painting_implement = user.get_active_held_item()
 			painting_implement?.set_painting_tool_color(params["selected_color"])
+			. = TRUE
+		if("select_color_from_coords")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
+			painting_implement.set_painting_tool_color(grid[x][y])
+			. = TRUE
+		if("change_palette")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			//I'd have this done inside the signal, but that'd have to be asynced,
+			//while we want the UI to be updated after the color is chosen, not before.
+			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
+				return FALSE
+			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
+			. = TRUE
 		if("finalize")
 			. = TRUE
 			finalize(user)
@@ -652,6 +672,8 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
+	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

@@ -79,70 +79,44 @@ const PlumbingTypeSection = (props, context) => {
   );
 };
 
-const StaticSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { silo_upgraded } = data;
-  return (
-    <Section>
-      <MatterItem />
-      {silo_upgraded ? <SiloItem /> : ''}
-      <ColorItem space />
-    </Section>
-  );
-};
-
-const LayerSection = (props, context) => {
-  return (
-    <Section>
-      <LayerSelect />
-    </Section>
-  );
-};
-
 const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { layer_icon } = data;
   return (
-    <Section
-      backgroundColor="green"
+    <Box
+      m={1}
+      className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
-        width: '50px',
-        height: '50px',
-      }}>
-      <Box
-        className={classes(['plumbing-tgui32x32', layer_icon])}
-        style={{
-          transform: 'scale(1.5) translate(9%, 9.5%)',
-        }}
-      />
-    </Section>
+        transform: 'scale(2)',
+      }}
+    />
   );
 };
 
 export const PlumbingService = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={480} height={575}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <StaticSection />
+            <Section>
+              <Stack>
+                <Stack.Item>
+                  <ColorItem />
+                  <LayerSelect />
+                  <MatterItem />
+                  {!!silo_upgraded && <SiloItem />}
+                </Stack.Item>
+                <Stack.Item>
+                  <LayerIconSection />
+                </Stack.Item>
+              </Stack>
+            </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <Stack vertical fill>
-                  <Stack.Item>
-                    <LayerSection />
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <LayerIconSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow>
-                <PlumbingTypeSection />
-              </Stack.Item>
-            </Stack>
+            <PlumbingTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>

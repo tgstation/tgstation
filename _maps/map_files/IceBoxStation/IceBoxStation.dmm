@@ -1691,7 +1691,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aCH" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Ruins-The-Analog"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -13471,7 +13471,7 @@
 "egY" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "medsecprivacy";
+	id = "hop";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -59075,7 +59075,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "medsecprivacy";
+	id = "hop";
 	name = "Privacy Shutters"
 	},
 /obj/structure/desk_bell{
@@ -59089,7 +59089,8 @@
 	req_access = list("hop")
 	},
 /obj/machinery/flasher/directional/south{
-	pixel_y = -23
+	pixel_y = -23;
+	id = "hopflash"
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
