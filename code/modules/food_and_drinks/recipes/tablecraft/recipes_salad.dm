@@ -34,19 +34,6 @@
 	result = /obj/item/food/salad/validsalad
 	category = CAT_SALAD
 
-/datum/crafting_recipe/food/monkeysdelight
-	name = "Monkeys delight"
-	reqs = list(
-		/datum/reagent/consumable/flour = 5,
-		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/monkeycube = 1,
-		/obj/item/food/grown/banana = 1
-	)
-	result = /obj/item/food/soup/monkeysdelight
-	category = CAT_SALAD
-
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
 	reqs = list(

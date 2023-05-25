@@ -63,17 +63,21 @@
 
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act(delta_time, times_fired)
+/datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(has_cure())
-		if(DT_PROB(cure_chance, delta_time))
-			update_stage(max(stage - 1, 1))
-
-		if(disease_flags & CURABLE && DT_PROB(cure_chance, delta_time))
-			cure()
-			return FALSE
-	else if(DT_PROB(stage_prob*slowdown, delta_time))
+		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
+			src.stage = 1
+			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
+			return
+		else
+			if(SPT_PROB(cure_chance, seconds_per_tick))
+				update_stage(max(stage - 1, 1))
+			if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+				cure()
+				return FALSE
+	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
@@ -83,7 +87,7 @@
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
-	if(!(disease_flags & CURABLE))
+	if(!(disease_flags & CURABLE | CHRONIC))
 		return FALSE
 
 	. = cures.len
@@ -191,6 +195,8 @@
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)
 	switch(severity)
+		if(DISEASE_SEVERITY_UNCURABLE)
+			return 0
 		if(DISEASE_SEVERITY_POSITIVE)
 			return 1
 		if(DISEASE_SEVERITY_NONTHREAT)

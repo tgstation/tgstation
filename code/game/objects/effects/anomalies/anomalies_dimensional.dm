@@ -21,7 +21,7 @@
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
 
-/obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
+/obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
 	. = ..()
 	transmute_area()
 

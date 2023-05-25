@@ -220,17 +220,17 @@
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
 
-/obj/item/fish/emulsijack/process(delta_time)
+/obj/item/fish/emulsijack/process(seconds_per_tick)
 	var/emulsified = FALSE
 	var/obj/structure/aquarium/aquarium = loc
 	if(istype(aquarium))
 		for(var/obj/item/fish/victim in aquarium)
 			if(istype(victim, /obj/item/fish/emulsijack))
 				continue //no team killing
-			victim.adjust_health((victim.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
+			victim.adjust_health((victim.health - 3) * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 			emulsified = TRUE
 	if(emulsified)
-		adjust_health((health + 3) * delta_time)
+		adjust_health((health + 3) * seconds_per_tick)
 		last_feeding = world.time //emulsijack feeds on the emulsion!
 	..()
 

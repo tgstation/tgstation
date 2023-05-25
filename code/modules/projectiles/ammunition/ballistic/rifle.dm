@@ -7,6 +7,11 @@
 	caliber = CALIBER_A762
 	projectile_type = /obj/projectile/bullet/a762
 
+/obj/item/ammo_casing/a762/surplus
+	name = "7.62 surplus bullet casing"
+	desc = "A surplus 7.62 bullet casing."
+	projectile_type = /obj/projectile/bullet/a762/surplus
+
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/projectile/bullet/a762/enchanted
 

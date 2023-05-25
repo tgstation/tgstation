@@ -34,6 +34,7 @@
 #define MEDAL_RUST_ASCENSION "Rust"
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_BLADE_ASCENSION "Blade"
+#define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
@@ -44,6 +45,7 @@
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 #define MEDAL_HEALTHY "Heart Healthy"
+#define MEDAL_GODS_WRATH "God's Wrath"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
@@ -120,6 +122,9 @@
 
 // DB ID for intento score
 #define INTENTO_SCORE "Intento Score"
+
+// DB ID for style point count
+#define STYLE_SCORE "Style Score"
 
 // Tourist related achievements and scores
 

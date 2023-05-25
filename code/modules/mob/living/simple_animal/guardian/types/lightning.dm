@@ -53,7 +53,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	removechains()
 
-/mob/living/simple_animal/hostile/guardian/lightning/process(delta_time)
+/mob/living/simple_animal/hostile/guardian/lightning/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, shock_cooldown))
 		return
 	if(successfulshocks > 5)

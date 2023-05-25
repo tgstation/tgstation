@@ -25,7 +25,7 @@
 /area/station/maintenance/department/security)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -60,7 +60,7 @@
 /area/station/maintenance/department/security)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)

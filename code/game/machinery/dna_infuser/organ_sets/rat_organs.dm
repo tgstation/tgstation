@@ -140,7 +140,7 @@
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)
@@ -167,7 +167,7 @@
 	offerer.say("For you, it's on the mouse.")
 	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
-/obj/item/organ/internal/tongue/rat/on_life(delta_time, times_fired)
+/obj/item/organ/internal/tongue/rat/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(prob(5))
 		owner.emote("squeaks")

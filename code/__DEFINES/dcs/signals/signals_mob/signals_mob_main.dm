@@ -56,6 +56,8 @@
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+/// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
+#define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -80,8 +82,10 @@
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
 
 
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
+///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+#define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
@@ -169,12 +173,31 @@
 #define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
 	/// Prevents the automute system checking this client for repeated messages.
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
+///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
+#define COMSIG_MOB_MINED "mob_mined"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+/// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+#define COMSIG_MOB_PRE_FLASHED_CARBON "mob_pre_flashed_carbon"
+	/// Return to override deviation to be full deviation (fail the flash, usually)
+	#define DEVIATION_OVERRIDE_FULL (1<<0)
+	/// Return to override deviation to be partial deviation
+	#define DEVIATION_OVERRIDE_PARTIAL (1<<1)
+	/// Return to override deviation to be no deviation
+	#define DEVIATION_OVERRIDE_NONE (1<<2)
+	/// Return to stop the flash entirely
+	#define STOP_FLASH (1<<3)
+/// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+#define COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON "mob_success_flashed_carbon"
 
 /// from mob/get_status_tab_items(): (list/items)
 #define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"
+
+/// from /mob/living/carbon/human/can_equip(): (mob/living/carbon/human/source_human, obj/item/equip_target, slot)
+#define COMSIG_HUMAN_EQUIPPING_ITEM "mob_equipping_item"
+	/// cancels the equip.
+	#define COMPONENT_BLOCK_EQUIP (1<<0)
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"

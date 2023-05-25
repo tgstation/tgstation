@@ -168,7 +168,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define LAVA_PROOF (1<<0)
 /// 100% immune to fire damage (but not necessarily to lava or heat)
 #define FIRE_PROOF (1<<1)
+/// atom is flammable and can have the burning component
 #define FLAMMABLE (1<<2)
+/// currently burning
 #define ON_FIRE (1<<3)
 /// acid can't even appear on it, let alone melt it.
 #define UNACIDABLE (1<<4)

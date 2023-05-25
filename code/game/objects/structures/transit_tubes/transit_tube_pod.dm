@@ -54,8 +54,11 @@
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)
 	. = ..()
-	if(!QDELETED(src))
-		empty_pod()
+	if(QDELETED(src))
+		return TRUE
+
+	empty_pod()
+	return TRUE
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
 	switch(severity)

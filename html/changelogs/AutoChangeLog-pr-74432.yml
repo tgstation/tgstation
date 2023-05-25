@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "thermo machines can be ctrl dragged again"
-  - qol: "alt click cycles between min, median & max temperature ranges"
-  - refactor: "removed useless init code"

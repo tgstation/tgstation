@@ -20,7 +20,7 @@
 	return !length(L)
 
 //insert and place at its position a new node in the heap
-/datum/heap/proc/insert(atom/A)
+/datum/heap/proc/insert(A)
 
 	L.Add(A)
 	swim(length(L))
@@ -70,7 +70,7 @@
 		return index * 2
 
 //Replaces a given node so it verify the heap condition
-/datum/heap/proc/resort(atom/A)
+/datum/heap/proc/resort(A)
 	var/index = L.Find(A)
 
 	swim(index)

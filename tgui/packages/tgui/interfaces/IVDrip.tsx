@@ -52,42 +52,55 @@ export const IVDrip = (props, context) => {
       <Window.Content>
         <Section fill>
           <LabeledList>
-            {hasContainer || hasInternalStorage ? (
-              <LabeledList.Item
-                label="Container"
-                buttons={
-                  !hasInternalStorage &&
-                  !!canRemoveContainer && (
-                    <Button
-                      my={1}
-                      width={8}
-                      lineHeight={2}
-                      align="center"
-                      icon="eject"
-                      content="Eject"
-                      onClick={() => act('eject')}
-                    />
-                  )
-                }>
-                <ProgressBar
-                  value={containerCurrentVolume}
-                  minValue={0}
-                  maxValue={containerMaxVolume}
-                  color={containerReagentColor}>
-                  <span
-                    style={{
-                      'text-shadow': '1px 1px 0 black',
-                    }}>
-                    {`${containerCurrentVolume} of ${containerMaxVolume} units`}
-                  </span>
-                </ProgressBar>
+            {mode === MODE.injecting && injectFromPlumbing ? ( // Plumbing drip injects with the rate from network
+              <LabeledList.Item label="Flow Rate">
+                Controlled by the plumbing network
               </LabeledList.Item>
             ) : (
-              <LabeledList.Item label="Container">
-                <Tooltip content="Click the drip with a container in hand to attach.">
-                  <NoticeBox my={0.7}>No container attached.</NoticeBox>
-                </Tooltip>
-              </LabeledList.Item>
+              !!canAdjustTransfer && (
+                <LabeledList.Item
+                  label="Flow Rate"
+                  buttons={
+                    <Box>
+                      <Button
+                        width={4}
+                        lineHeight={2}
+                        align="center"
+                        icon="angles-left"
+                        onClick={() =>
+                          act('changeRate', {
+                            rate: minTransferRate,
+                          })
+                        }
+                      />
+                      <Button
+                        width={4}
+                        lineHeight={2}
+                        align="center"
+                        icon="angles-right"
+                        onClick={() =>
+                          act('changeRate', {
+                            rate: maxTransferRate,
+                          })
+                        }
+                      />
+                    </Box>
+                  }>
+                  <Slider
+                    step={transferStep}
+                    my={1}
+                    value={transferRate}
+                    minValue={minTransferRate}
+                    maxValue={maxTransferRate}
+                    unit="units/sec."
+                    onDrag={(e, value) =>
+                      act('changeRate', {
+                        rate: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+              )
             )}
             <LabeledList.Item
               label="Direction"
@@ -111,6 +124,44 @@ export const IVDrip = (props, context) => {
                   : 'Reagents from container'
                 : 'Blood into container'}
             </LabeledList.Item>
+            {hasContainer || hasInternalStorage ? (
+              <LabeledList.Item
+                label="Container"
+                buttons={
+                  !hasInternalStorage &&
+                  !!canRemoveContainer && (
+                    <Button
+                      my={1}
+                      width={8}
+                      lineHeight={2}
+                      align="center"
+                      icon="eject"
+                      content="Eject"
+                      onClick={() => act('eject')}
+                    />
+                  )
+                }>
+                <ProgressBar
+                  py={0.3}
+                  value={containerCurrentVolume}
+                  minValue={0}
+                  maxValue={containerMaxVolume}
+                  color={containerReagentColor}>
+                  <span
+                    style={{
+                      'text-shadow': '1px 1px 0 black',
+                    }}>
+                    {`${containerCurrentVolume} of ${containerMaxVolume} units`}
+                  </span>
+                </ProgressBar>
+              </LabeledList.Item>
+            ) : (
+              <LabeledList.Item label="Container">
+                <Tooltip content="Click the drip with a container in hand to attach.">
+                  <NoticeBox my={0.7}>No container attached.</NoticeBox>
+                </Tooltip>
+              </LabeledList.Item>
+            )}
             {hasObjectAttached ? (
               <LabeledList.Item
                 label="Object"
@@ -133,36 +184,10 @@ export const IVDrip = (props, context) => {
             ) : (
               <LabeledList.Item label="Object">
                 <Tooltip content="Drag the cursor from the drip and drop it on an object to connect.">
-                  <NoticeBox my={0.7}>No object hasObjectAttached.</NoticeBox>
+                  <NoticeBox my={0.7}>No object attached.</NoticeBox>
                 </Tooltip>
               </LabeledList.Item>
             )}
-            {!!hasObjectAttached &&
-              (mode === MODE.injecting && injectFromPlumbing ? ( // Plumbing drip injects with the rate from network
-                <LabeledList.Item label="Transfer Rate">
-                  Controlled by the plumbing network
-                </LabeledList.Item>
-              ) : (
-                (!!hasContainer || !!hasInternalStorage) &&
-                !!canAdjustTransfer && (
-                  <LabeledList.Item
-                    label="Transfer Rate"
-                    buttons={'Units / Second'}>
-                    <Slider
-                      step={transferStep}
-                      my={1}
-                      value={transferRate}
-                      minValue={minTransferRate}
-                      maxValue={maxTransferRate}
-                      onDrag={(e, value) =>
-                        act('changeRate', {
-                          rate: value,
-                        })
-                      }
-                    />
-                  </LabeledList.Item>
-                )
-              ))}
           </LabeledList>
         </Section>
       </Window.Content>

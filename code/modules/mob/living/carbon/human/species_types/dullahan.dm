@@ -75,7 +75,7 @@
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
 
-/datum/species/dullahan/spec_life(mob/living/carbon/human/human, delta_time, times_fired)
+/datum/species/dullahan/spec_life(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if(QDELETED(my_head))
 		my_head = null
 		human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)

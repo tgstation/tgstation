@@ -24,6 +24,9 @@
 	caliber = CALIBER_45
 	projectile_type = /obj/projectile/bullet/c45
 
+/obj/item/ammo_casing/c45/spent
+	projectile_type = null
+
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."

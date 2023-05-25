@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
@@ -30,7 +30,8 @@
 	var/click_cooldown_override = 0
 	///the visual effect appearing when the ammo is fired.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
-	var/heavy_metal = TRUE
+	///Does this leave a casing behind?
+	var/is_cased_ammo = TRUE
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
 
@@ -130,7 +131,7 @@
 	return ..()
 
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
-	if(!heavy_metal)
+	if(!is_cased_ammo)
 		return
 	update_appearance()
 	SpinAnimation(10, 1)

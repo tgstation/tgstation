@@ -28,7 +28,7 @@
 /area/station/maintenance/starboard/greater)
 "q" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/spawner/random/entertainment/money_small,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Privacy Shutter";
@@ -89,8 +89,8 @@
 /area/station/maintenance/starboard/greater)
 "R" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/spawner/random/engineering/tool,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Privacy Shutter";

@@ -245,10 +245,9 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north{
 	coverlocked = 0;
-	locked = 0;
-	network_id = null;
 	start_charge = 60
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /obj/structure/cable,
 /obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
 /obj/effect/spawner/random/contraband/cannabis/lizardsgas,
@@ -340,7 +339,6 @@
 "Io" = (
 /obj/machinery/power/smes{
 	charge = 2e+006;
-	network_id = null;
 	output_level = 0
 	},
 /obj/structure/cable,
@@ -442,7 +440,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "QQ" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "How the fuck did he get in there?!";
 	name = "Zingo"
 	},
@@ -469,7 +467,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ua" = (
-/mob/living/simple_animal/hostile/lizard/space{
+/mob/living/basic/lizard/space{
 	desc = "How are you ALIVE?!";
 	name = "Blarpo"
 	},

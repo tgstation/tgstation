@@ -12,6 +12,7 @@
 
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
@@ -24,6 +25,7 @@
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
+		/obj/item/food/chococoin,
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/implanter,

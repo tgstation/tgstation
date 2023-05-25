@@ -126,7 +126,7 @@ jobs:
         #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
         run: |
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
-        
+
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
@@ -227,7 +227,7 @@ jobs:
         env:
           DM_EXE: "C:\\byond\\bin\\dm.exe"
       - name: Check client Compatibility
-        uses: MrStonedOne/byond-client-compatibility-check@v3
+        uses: tgstation/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}

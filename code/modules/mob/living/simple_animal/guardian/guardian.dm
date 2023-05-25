@@ -424,6 +424,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
+	return TRUE
+
 /mob/living/simple_animal/hostile/guardian/gib()
 	death(TRUE)
 

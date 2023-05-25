@@ -84,7 +84,7 @@
 		lost_wearer(src, wearer)
 
 // Handle recharging, if we want to
-/datum/component/shielded/process(delta_time)
+/datum/component/shielded/process(seconds_per_tick)
 	if(current_charges >= max_charges)
 		STOP_PROCESSING(SSdcs, src)
 		return

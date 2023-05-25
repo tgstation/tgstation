@@ -28,7 +28,7 @@
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
-	controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return // Just move on to the next planning subtree.
 
 /**
@@ -87,7 +87,7 @@
 	// If we get past this point someone has finally added a non-binary dog
 
 /datum/pet_command/good_boy/execute_action(datum/ai_controller/controller)
-	controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
 		return SUBTREE_RETURN_FINISH_PLANNING

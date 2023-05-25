@@ -49,13 +49,13 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 
-/obj/machinery/plumbing/synthesizer/process(delta_time)
+/obj/machinery/plumbing/synthesizer/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || !reagent_id || !amount)
 		return
-	if(reagents.total_volume >= amount*delta_time*0.5) //otherwise we get leftovers, and we need this to be precise
+	if(reagents.total_volume >= amount*seconds_per_tick*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
-	reagents.add_reagent(reagent_id, amount*delta_time*0.5)
-	use_power(active_power_usage * amount * delta_time * 0.5)
+	reagents.add_reagent(reagent_id, amount*seconds_per_tick*0.5)
+	use_power(active_power_usage * amount * seconds_per_tick * 0.5)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

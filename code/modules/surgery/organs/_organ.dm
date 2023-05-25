@@ -186,13 +186,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process(delta_time, times_fired)
+/obj/item/organ/process(seconds_per_tick, times_fired)
 	return
 
-/obj/item/organ/proc/on_death(delta_time, times_fired)
+/obj/item/organ/proc/on_death(seconds_per_tick, times_fired)
 	return
 
-/obj/item/organ/proc/on_life(delta_time, times_fired)
+/obj/item/organ/proc/on_life(seconds_per_tick, times_fired)
 	CRASH("Oh god oh fuck something is calling parent organ life")
 
 /obj/item/organ/examine(mob/user)
@@ -327,16 +327,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		ears.Insert(src)
 	ears.set_organ_damage(0)
 
-/obj/item/organ/proc/handle_failing_organs(delta_time)
+/obj/item/organ/proc/handle_failing_organs(seconds_per_tick)
 	return
 
 /** organ_failure
  * generic proc for handling dying organs
  *
  * Arguments:
- * delta_time - seconds since last tick
+ * seconds_per_tick - seconds since last tick
  */
-/obj/item/organ/proc/organ_failure(delta_time)
+/obj/item/organ/proc/organ_failure(seconds_per_tick)
 	return
 
 /** get_availability

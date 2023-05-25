@@ -5,6 +5,7 @@
  * Also fireproof for some reason.
  */
 /obj/item/pitchfork
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "pitchfork0"
 	base_icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'

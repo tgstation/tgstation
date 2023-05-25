@@ -25,10 +25,10 @@
 		max_integrity = atom_integrity
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/statue/petrified/process(delta_time)
+/obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer -= delta_time
+	timer -= seconds_per_tick
 	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)

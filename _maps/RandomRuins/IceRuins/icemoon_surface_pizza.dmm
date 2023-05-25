@@ -260,9 +260,8 @@
 /area/ruin/pizzeria/kitchen)
 "jY" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/decal/cleanable/ash,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -563,9 +562,8 @@
 /area/ruin/pizzeria/kitchen)
 "yS" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

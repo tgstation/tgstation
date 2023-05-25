@@ -153,7 +153,7 @@
 /area/ruin/space/unpowered)
 "kC" = (
 /obj/machinery/light/directional/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -224,7 +224,7 @@
 "nR" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/unpowered)
 "pi" = (
@@ -279,7 +279,7 @@
 "us" = (
 /obj/effect/spawner/random/engineering/tool,
 /obj/machinery/light/directional/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -636,7 +636,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "SY" = (
