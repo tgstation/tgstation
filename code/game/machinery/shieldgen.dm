@@ -1024,7 +1024,7 @@
 			return
 		balloon_alert(user, "connected to node")
 		return
-	balloon_alert(user, "failed to find connection!")
+	balloon_alert(user, "no connection!")
 
 
 
