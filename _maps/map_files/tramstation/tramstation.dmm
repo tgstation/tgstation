@@ -64224,6 +64224,11 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
+"vJa" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/drone_dispenser,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "vJg" = (
 /obj/structure/bodycontainer/morgue/beeper_off{
 	dir = 8
@@ -65057,12 +65062,9 @@
 /turf/open/floor/iron/white,
 /area/station/service/theater)
 "vYW" = (
-/obj/machinery/mineral/stacking_machine{
-	input_dir = 8;
-	output_dir = 2
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/mineral/stacking_machine,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal)
 "vYX" = (
@@ -68143,6 +68145,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"xlO" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "xlT" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -177770,9 +177775,9 @@ hwM
 dzu
 kcF
 soq
-abM
-abM
-abM
+vJa
+xlO
+xlO
 abM
 abM
 abM
