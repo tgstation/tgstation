@@ -548,13 +548,9 @@
 /datum/quirk/item_quirk/parole/add_unique(client/client_source)
 	var/obj/item/implant/tracking/parole_implant = new(quirk_holder)
 	parole_implant.implant(quirk_holder, null, TRUE, TRUE)
-
 	// Give them a parole jumper.
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	for(var/obj/item/clothing/old_clothes as anything in ITEM_SLOT_ICLOTHING)
-		qdel(old_clothes)
-	var/obj/item/clothing/under/rank/prisoner/jumper = new (human_holder)
-	human_holder.equip_in_one_of_slots(jumper, ITEM_SLOT_ICLOTHING)
+	human_holder.equip_to_appropriate_slot(jumper)
 
 
 

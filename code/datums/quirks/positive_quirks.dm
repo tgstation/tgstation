@@ -250,42 +250,6 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.remove_language(extra_language)
 
-/datum/quirk/mutated
-	name = "Mutated"
-	desc = "You've already had experience as a labrat for the Nanotrasen Genetic Project."
-	icon = FA_ICON_DNA
-	value = 8
-	gain_text = span_notice("You remember one of your genes was altered.")
-	lose_text = span_notice("You seem to have lost your mutation.")
-	medical_record_text = "Patient's DNA shows signs of genetic tampering."
-	var/selected_gene
-
-/datum/quirk/mutated/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	//picks a gene based on weight
-	selected_gene = pick_weight(list(
-		/datum/mutation/human/temperature_adaptation = 4,
-		/datum/mutation/human/antenna = 15,
-		/datum/mutation/human/self_amputation = 3,
-		/datum/mutation/human/dwarfism = 15,
-		/datum/mutation/human/insulated = 4,
-		/datum/mutation/human/gigantism = 10,
-		/datum/mutation/human/chameleon = 4,
-		/datum/mutation/human/geladikinesis = 10,
-		/datum/mutation/human/olfaction = 3,
-		/datum/mutation/human/clever = 5,
-		/datum/mutation/human/telepathy = 15,
-		/datum/mutation/human/tongue_spike = 7,
-		/datum/mutation/human/shock = 2,
-		/datum/mutation/human/void = 3,
-		/datum/mutation/human/webbing = 7
-	))
-	human_holder.dna.add_mutation(selected_gene)
-
-/datum/quirk/mutated/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.dna.remove_mutation(selected_gene)
-
 /datum/quirk/item_quirk/poster_boy
 	name = "Poster Boy"
 	desc = "You have some great posters! Hang them up and make everyone have a great time."
