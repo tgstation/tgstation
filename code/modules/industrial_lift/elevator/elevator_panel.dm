@@ -83,7 +83,7 @@
 	link_with_lift(log_error = TRUE)
 
 /// Link with associated lift objects, only log failure to find a lift in LateInit because those are mapped in
-/obj/machinery/elevator_control_panel/proc/link_with_lift(log_error)
+/obj/machinery/elevator_control_panel/proc/link_with_lift(log_error = FALSE)
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
 		if (log_error)
