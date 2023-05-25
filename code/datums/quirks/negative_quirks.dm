@@ -547,7 +547,7 @@
 
 /datum/quirk/item_quirk/parole/add_unique(client/client_source)
 	var/obj/item/implant/tracking/parole_implant = new(quirk_holder)
-	parole_implant.implant(quirk_holder, null, TRUE, TRUE)
+	parole_implant.implant(quirk_holder, silent = TRUE, force = TRUE)
 	// Give them a parole band.
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/clothing/under/uniform = human_holder.w_uniform
