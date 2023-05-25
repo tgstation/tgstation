@@ -348,3 +348,7 @@
 		data["history"] += list(entry.serialize())
 
 	return data
+
+#undef BOOK_ADMIN_DELETE
+#undef BOOK_ADMIN_RESTORE
+#undef BOOK_ADMIN_REPORT
