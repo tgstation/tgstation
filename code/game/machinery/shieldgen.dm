@@ -687,18 +687,24 @@
 	LAZYNULL(inside_shield)
 	calculate_regeneration()
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
 
 	if(default_deconstruction_screwdriver(user,"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
-		"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  W))
-		return
+		"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  tool))
+		return TRUE
 
-	if(default_deconstruction_crowbar(W) && !(active) && !(recovering))
-		return
+/obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
+
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
-		return
+		return TRUE
 
 	return ..()
 
