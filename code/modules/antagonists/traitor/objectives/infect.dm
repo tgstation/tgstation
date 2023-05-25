@@ -143,6 +143,9 @@
 		//don't take an objective target of someone who is already dead
 		fail_objective()
 
+/datum/traitor_objective/target_player/infect/fail_objective(penalty_cost, trigger_update)
+	. = ..()
+	ehms.locked = TRUE
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector
 	name = "EHMS autoinjector"
@@ -150,20 +153,24 @@
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
-	var/used = 0
+	var/used = FALSE
+	var/locked = FALSE
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	if(used == 0)
-		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 1.5 SECONDS, affected_mob))
-			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-			affected_mob.ForceContractDisease(hms)
-			used = 1
+	if(locked == FALSE)
+		if(used == FALSE)
+			to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
+			if(do_after(user, 1.5 SECONDS, affected_mob))
+				var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+				affected_mob.ForceContractDisease(hms)
+				used = TRUE
+				inject(affected_mob, user)
+				SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
+		else
 			inject(affected_mob, user)
-			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
 	else
-		inject(affected_mob, user)
+		to_chat(user, span_warning("The injector is locked."))
 
