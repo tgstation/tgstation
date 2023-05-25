@@ -43,7 +43,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 
-	if(!isnull(grow_as))
+	if(!isnull(grow_as)) // we don't have a set time to grow up beyond whatever RNG dictates, and if we somehow get a client, all growth halts.
 		AddComponent(\
 			/datum/component/growth_and_differentiation,\
 			growth_time = null,\
@@ -55,12 +55,9 @@
 			optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		)
 
-/// We don't grow into a chicken if we're not conscious or if we have a client (in case of schenanigans).
+/// We don't grow into a chicken if we're not conscious.
 /mob/living/basic/chick/proc/ready_to_grow()
-	if(stat == CONSCIOUS)
-		return TRUE
-
-	return FALSE
+	return (stat == CONSCIOUS)
 
 /// Variant of chick that just spawns in the holodeck so you can pet it. Doesn't grow up.
 /mob/living/basic/chick/permanent
