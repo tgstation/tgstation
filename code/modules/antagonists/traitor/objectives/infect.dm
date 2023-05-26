@@ -148,7 +148,6 @@
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
 	var/used = 0
-	var/locked = 0
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
