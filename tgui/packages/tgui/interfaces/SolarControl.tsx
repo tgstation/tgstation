@@ -35,7 +35,7 @@ export const SolarControl = (props, context) => {
   } = data;
   const supplyData = history.supply.map((value, i) => [i, value]);
   const capacityData = history.capacity.map((value, i) => [i, value]);
-  const maxValue = Math.max(...history.capacity, ...history.supply);
+  const maxValue = Math.max(1, ...history.capacity, ...history.supply);
 
   return (
     <Window width={330} height={330}>
