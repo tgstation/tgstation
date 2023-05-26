@@ -31,8 +31,8 @@ type LinkedMachinery = {
 const MachineScreen = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { network, machine } = data;
-  const { linked_machinery = [] } = machine
-  
+  const { linked_machinery = [] } = machine;
+
   return (
     <Stack fill vertical>
       <Stack.Item>
