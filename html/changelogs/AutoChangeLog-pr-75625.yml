@@ -1,0 +1,6 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "[MetaStation] - One of the chem heaters in the pharmacy is no longer nudged and awkwardly four pixels to the right."
+  - bugfix: "[TramStation] - The chem heater in the Xenobiology lab was replaced with the proper one that every other station uses."
+  - image: "The chem heater sprite was nudged a SINGLE pixel to the right. This should, hopefully, make them appear more centered."
