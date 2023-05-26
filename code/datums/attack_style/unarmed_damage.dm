@@ -2,8 +2,6 @@
  * Unarmed attacks which generically apply damage to the mob it hits.
  */
 /datum/attack_style/unarmed/generic_damage
-	pacifism_completely_banned = TRUE // It's called generic damage for a reason
-
 	/// Type damage this attack does.
 	var/attack_type = BRUTE
 	/// The verb used for an unarmed attack when using this limb, "punch".
@@ -20,6 +18,9 @@
 	var/attack_penetration_modifier = 0
 	/// If TRUE, attacks on limbs which are at max damage will be dismembered
 	var/can_dismember_limbs = FALSE
+
+/datum/attack_style/unarmed/generic_damage/check_pacifism(mob/living/attacker, obj/item/weapon)
+	return TRUE
 
 /datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
 	return -1

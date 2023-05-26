@@ -208,3 +208,24 @@
 			to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
 	else
 		return ..()
+
+// Attack style for desword
+/datum/attack_style/melee_weapon/swing/requires_wield/desword
+	cd = CLICK_CD_MELEE * 1.25
+	reverse_for_lefthand = FALSE
+	weapon_sprite_angle = 45
+
+/datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description()
+	return "It swings out to all adjacent tiles besides directly behind you. It must be active to swing."
+
+/datum/attack_style/melee_weapon/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+	var/behind_us = REVERSE_DIR(attack_direction)
+	var/list/cone_turfs = list()
+	for(var/around_dir in GLOB.alldirs)
+		if(around_dir & behind_us)
+			continue
+		var/turf/found_turf = get_step(attacker, around_dir)
+		if(istype(found_turf))
+			cone_turfs += found_turf
+
+	return cone_turfs

@@ -19,26 +19,21 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// Hitsound played on a successful attack hit
 	/// If null, uses item hitsound.
 	var/successful_hit_sound
-
+	/// Volume of hitsound
 	var/hit_volume = 50
 	/// Hitsound played on if the attack fails to hit anyone
 	var/miss_sound = 'sound/weapons/fwoosh.ogg'
-
+	/// Volume of miss sound
 	var/miss_volume = 50
 	/// Click CD imparted by successful attacks
 	/// Failed attacks still apply a click CD, but reduced
 	var/cd = CLICK_CD_MELEE
-	/// Movement slowdown applied on a successful attack
+	/// Movement slowdown applied on an attack
 	var/slowdown = 1
-	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
-	/// Used primarily for attacks like swings, where instead of travelling right to left they would instead go left to right
-	var/reverse_for_lefthand = TRUE
 	/// The number of mobs that can be hit per hit turf
 	var/hits_per_turf_allowed = 1
-	/// If TRUE, pacifists are completely disallowed from using this attack style
-	/// If FALSE, pacifism is still checked, but it checks weapon force instead - any weapon with force > 0 will be disallowed
-	var/pacifism_completely_banned = FALSE
-
+	/// How long does it take for the attack to travel between turfs?
+	/// Essentually, this is "swing speed". Does nothing for attacks which only hit a single turf.
 	var/time_per_turf = 0 SECONDS
 
 /**
@@ -66,7 +61,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	weapon?.add_fingerprint(attacker)
-	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && (pacifism_completely_banned || weapon?.force > 0))
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && check_pacifism(attacker, weapon))
 		attacker.balloon_alert(attacker, "you don't want to attack!")
 		return FALSE
 
@@ -102,14 +97,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			attack_direction = get_dir(attacker, aimed_towards)
 
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
-	if(reverse_for_lefthand)
-		// Determine which hand the attacker is attacking from
-		// If they are not holding the weapon passed / the weapon is null, default to active hand
-		var/which_hand = (!isnull(weapon) && attacker.get_held_index_of_item(weapon)) || attacker.active_hand_index
-
-		// Left hand will reverse the turfs list order
-		if(which_hand % 2 == 1)
-			reverse_range(affecting)
 
 	// Make sure they don't move while swinging
 	var/pre_set_dir = attacker.set_dir_on_move
@@ -139,15 +126,30 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	attack_effect_animation(attacker, weapon, affecting)
 
+	// This is storing the flag to return when the attack is finished executing
 	var/attack_flag = NONE
+	// The total number of mobs hit across all turfs (where "total_hit" is the total hit on a single turf)
 	var/total_total_hit = 0
+	// The index of the turf we're currently hitting
 	var/affecting_index = 1
+	// The midpoint of the affected turf list
 	var/midpoint = ROUND_UP(length(affecting) / 2)
+	// This tracks if this attack was initiated with a weapon,
+	// so we can check if it's still being held for swings that have travel time
 	var/started_holding = !isnull(weapon) && attacker.is_holding(weapon)
+	// This tracks the loc the swing started at,
+	// so we can re-generate the affecting turfs list for swings that have travel time if the attacker moves
 	var/turf/starting_loc = attacker.loc
-	var/list/already_hit = list()
+	// A list of mobs that have already been hit by this attack to prevent double dipping
+	var/list/mob/living/already_hit = list()
+	// Tracks whether a hitsound has been played,
+	// primarily for attacks with travel time so a hit is played on first strike
 	var/hitsound_played = FALSE
+	// The dir the attacker was facing when the attack started,
+	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir
+
+	// Main attack loop starts here.
 	while(length(affecting))
 		var/turf/hitting = popleft(affecting)
 		// - The midpoint is always hitable, this isn't very "sensible" but if this wasn't the case
@@ -178,6 +180,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		affecting_index += 1
 
+		// Gathers up all mobs in the turf being struck. Each mob will have a priority assigned.
+		// Intuitively an attacker will not want to attack certain mobs, such as their friends, or unconscious people over conscious people.
+		// While this doesn't completley mitigate the chance of friendly fire, it does make it less likely.
 		var/list/mob/living/foes = list()
 		for(var/mob/living/foe_in_turf in hitting)
 			if(foe_in_turf in already_hit)
@@ -196,9 +201,12 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 			foes[foe_in_turf] = foe_prio
 
+		// Sorts by priority
 		sortTim(foes, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
 
 		var/total_hit = 0
+		// Here is where we go into finalize attack, to actually cause damage.
+		// This is where attack swings enter attack chain.
 		for(var/mob/living/smack_who as anything in foes)
 			already_hit += smack_who
 			var/new_results = finalize_attack(attacker, smack_who, weapon, right_clicking)
@@ -206,23 +214,29 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				continue
 			attack_flag |= new_results
 			total_hit++
-			total_total_hit++
 			if(total_hit >= hits_per_turf_allowed)
 				break
 
+		total_total_hit += total_hit
+		// Immediately check if the attack was cancelled from the attack chain.
+		// Cancel = completely stop everything, return no other flags, do not pass go, do not collect $200.
 		if(attack_flag & ATTACK_STYLE_CANCEL)
 			return ATTACK_STYLE_CANCEL
+		// A hit or block was made, so we can play a hitsound if one is set.
 		if(attack_flag & (ATTACK_STYLE_HIT|ATTACK_STYLE_BLOCKED))
 			if(!hitsound_played)
 				hitsound_played = TRUE
 				var/hitsound_to_use = get_hit_sound(weapon)
 				if(hitsound_to_use)
 					playsound(attacker, hitsound_to_use, hit_volume, TRUE)
+			// However, if the attack was a block and not a hit, we stop at this turf.
 			if(attack_flag & ATTACK_STYLE_BLOCKED)
 				break
 
+		// Finally, we handle travel time.
 		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
 			stoplag(time_per_turf)
+			// Sanity checking
 			if(QDELETED(attacker))
 				return ATTACK_STYLE_CANCEL
 			if(started_holding && (QDELETED(weapon) || !attacker.is_holding(weapon)))
@@ -233,10 +247,12 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				if(!isturf(attacker.loc))
 					return ATTACK_STYLE_CANCEL
 
+				// At this point we've moved a turf but can continue attacking, so we'll
+				// soft restart the swing from this point at the new turf.
 				starting_loc = attacker.loc
-				// unfortunately this doesn't work niced with attacks that reverse the direction...
-				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
-				affecting.Cut(1, affecting_index)
+				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking).Cut(1, affecting_index)
+
+	// All relevant turfs have been hit so we're wrapping up the attack at this point
 
 	if(total_total_hit <= 0)
 		// counts as a miss if we don't hit anyone, duh
@@ -248,13 +264,46 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	return attack_flag
 
+/**
+ * Gets the soound to play when the attack successfully hits another mob
+ *
+ * * weapon - The weapon being used, can be null or a non-held item depending on the attack style
+ */
 /datum/attack_style/proc/get_hit_sound(obj/item/weapon)
 	return successful_hit_sound || weapon?.hitsound
 
+/**
+ * Used to determine what turfs this attack is going to hit when executed.
+ *
+ * * attacker - The mob doing the attacking
+ * * attack_direction - The direction the attack is coming from
+ * * right_clicking - Whether the attack was initiated via right click
+ *
+ * Return a list of turfs with nulls filtered out
+ */
 /datum/attack_style/proc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	RETURN_TYPE(/list)
 	return list(get_step(attacker, attack_direction))
 
+/**
+ * Called when the attacker has the pacifism trait.
+ *
+ * * attacker - The mob doing the attacking
+ * * weapon - The weapon being used, can be null or a non-held item depending on the attack style
+ *
+ * Return TRUE to stop the attack
+ * Return FALSE to allow the attack
+ */
+/datum/attack_style/proc/check_pacifism(mob/living/attacker, obj/item/weapon)
+	return FALSE
+
+/**
+ * Plays an animation for the attack.
+ *
+ * * attacker - The mob doing the attacking
+ * * weapon - The weapon being used, can be null or a non-held item depending on the attack style
+ * * affecting - The list of turfs being affected by the attack
+ */
 /datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting))
 
@@ -274,9 +323,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /**
  * Finalize an attack on a single mob in one of the affected turfs
  *
- * Similar to melee attack chain, but with some guff cut out.
- *
- * You should call parent with this unless you know what you're doing and implementing your own attack business.
+ * * attacker - The mob doing the attacking
+ * * smacked - The mob being attacked
+ * * weapon - The weapon being used, can be null or a non-held item depending on the attack style
+ * * right_clicking - Whether the attack was initiated via right click
  */
 /datum/attack_style/proc/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	PROTECTED_PROC(TRUE)
@@ -297,8 +347,13 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 #endif
 
 /datum/attack_style/melee_weapon
+	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
 	var/weapon_sprite_angle = 0
+	/// The attack effect is scaled by this amount
 	var/sprite_size_multiplier = 1
+
+/datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
+	return weapon.force > 0
 
 /datum/attack_style/melee_weapon/proc/get_swing_description()
 	return "It swings at one tile in the direction you are attacking."
@@ -307,6 +362,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	ASSERT(istype(weapon))
 	return ..()
 
+/// This is essentially the same as item melee attack chain, but with some guff not necessary for combat cut out.
 /datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	. = NONE
 
@@ -340,8 +396,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
 		return . | ATTACK_STYLE_CANCEL
 
-	// Hitsound happens here
-
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
@@ -352,8 +406,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	. |= smacked.attacked_by(weapon, attacker)
 	log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
 
-	// Attack animation
-
+	// Any of these flags means there is no after attack
 	if(. & (ATTACK_STYLE_BLOCKED|ATTACK_STYLE_CANCEL|ATTACK_STYLE_SKIPPED))
 		return .
 
@@ -392,7 +445,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * But since we have no weapon for these, we kinda hvae to do it ourselves.
  */
 /datum/attack_style/unarmed
-	reverse_for_lefthand = FALSE
 	successful_hit_sound = 'sound/weapons/punch1.ogg'
 	miss_sound = 'sound/weapons/punchmiss.ogg'
 

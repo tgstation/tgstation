@@ -344,3 +344,26 @@
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
 	inhand_icon_state = "lightblade"
+
+// Attack style for eswords
+/datum/attack_style/melee_weapon/swing/esword
+	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
+	slowdown = 0.75
+	reverse_for_lefthand = FALSE
+	time_per_turf = 0.1 SECONDS
+	weapon_sprite_angle = 45
+
+/datum/attack_style/melee_weapon/swing/esword/get_swing_description()
+	return ..() + " It must be active to swing. Right-clicking will swing in the opposite direction."
+
+/datum/attack_style/melee_weapon/swing/esword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+	. = ..()
+	if(right_clicking)
+		reverse_range(.)
+
+/datum/attack_style/melee_weapon/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	if(!weapon.blade_active)
+		attacker.balloon_alert(attacker, "activate your weapon!")
+		return FALSE
+
+	return ..()

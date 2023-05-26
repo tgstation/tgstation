@@ -1,6 +1,5 @@
 // Direct stabs out to turfs in front
 /datum/attack_style/melee_weapon/stab_out
-	reverse_for_lefthand = FALSE
 	time_per_turf = 0.2 SECONDS
 	var/stab_range = 1
 
