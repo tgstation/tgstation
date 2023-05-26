@@ -3720,12 +3720,12 @@
 	icon_state = "telepole"
 
 /datum/reagent/consumable/ethanol/telepole/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
 
 /datum/reagent/consumable/ethanol/telepole/on_mob_end_metabolize(mob/living/affected_mob)
 	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-	..()
+	return ..()
 
 /datum/reagent/consumable/ethanol/telepole/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()

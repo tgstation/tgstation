@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "runtime when turning scrubber's on via  the air alarm UI"
-  - refactor: "`atmos_conditions_changed()` now starts atmos processing based on it's turf air contents"
