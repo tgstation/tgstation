@@ -132,4 +132,4 @@
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()
-	allowed += list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/cane)
+	allowed += list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/cane)

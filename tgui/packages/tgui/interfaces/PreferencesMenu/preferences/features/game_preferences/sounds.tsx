@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, FeatureToggle, Feature, FeatureNumberInput } from '../base';
 
 export const sound_ambience: FeatureToggle = {
   name: 'Enable ambience',
@@ -32,6 +32,28 @@ export const sound_instruments: FeatureToggle = {
   category: 'SOUND',
   description: 'When enabled, be able hear instruments in game.',
   component: CheckboxInput,
+};
+
+export const sound_tts: FeatureToggle = {
+  name: 'Enable TTS',
+  category: 'SOUND',
+  description: 'When enabled, be able to hear text-to-speech sounds in game.',
+  component: CheckboxInput,
+};
+
+export const sound_tts_blips: FeatureToggle = {
+  name: 'Use Blips instead of TTS',
+  category: 'SOUND',
+  description:
+    'When enabled, text to speech will be replaced with blip sounds based on the voice. Does nothing if you disable TTS.',
+  component: CheckboxInput,
+};
+
+export const sound_tts_volume: Feature<number> = {
+  name: 'TTS Volume',
+  category: 'SOUND',
+  description: 'The volume that the text-to-speech sounds will play at.',
+  component: FeatureNumberInput,
 };
 
 export const sound_jukebox: FeatureToggle = {

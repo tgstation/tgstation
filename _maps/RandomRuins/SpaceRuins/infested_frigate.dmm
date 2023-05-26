@@ -1158,9 +1158,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "tJ" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/glass,
 /obj/structure/table_frame,
 /obj/item/shard,
@@ -2958,9 +2956,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "VQ" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/structure/table/glass,
 /obj/item/surgical_drapes,
 /obj/effect/spawner/random/medical/surgery_tool_advanced,

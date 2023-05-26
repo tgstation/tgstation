@@ -17,9 +17,7 @@
 	tiled_dirt = FALSE
 	// Not actually broken, just should never break...yeah.
 	broken = TRUE
-
-/turf/open/floor/plating/abductor/broken_states()
-	return list("alienpod1")
+	damaged_dmi = null
 
 /turf/open/floor/plating/abductor/Initialize(mapload)
 	. = ..()
@@ -30,6 +28,7 @@
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
+	damaged_dmi = null
 
 /turf/open/floor/plating/abductor2/break_tile()
 	return //unbreakable
