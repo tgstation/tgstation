@@ -650,7 +650,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "ct" = (
 /obj/structure/sign/poster/official/science,
@@ -1701,6 +1701,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/structure/fluff/broken_flooring{
+	icon_state = "side";
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -3451,6 +3455,10 @@
 "nQ" = (
 /obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "nS" = (
@@ -3734,6 +3742,9 @@
 "oT" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "side"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "oU" = (
@@ -5546,6 +5557,10 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "BT" = (
 /obj/machinery/door/firedoor,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Ca" = (
@@ -5975,6 +5990,10 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile";
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "FJ" = (
@@ -6073,6 +6092,22 @@
 	amount = 25
 	},
 /turf/open/floor/plating/rust,
+/area/ruin/space/ancientstation/charlie/hall)
+"Gf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile";
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "Gi" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
@@ -8047,6 +8082,15 @@
 "Uu" = (
 /turf/closed/mineral/plasma,
 /area/space/nearstation)
+"Uw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "side";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/hall)
 "UC" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass,
@@ -8082,6 +8126,15 @@
 "UJ" = (
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
+"UL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/broken_flooring{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/hall)
 "UP" = (
 /turf/closed/mineral/random,
 /area/space/nearstation)
@@ -13135,8 +13188,8 @@ aa
 Al
 cK
 cK
-KM
-cW
+Gf
+UL
 eJ
 yl
 et
@@ -13202,7 +13255,7 @@ Al
 cK
 cK
 cs
-FV
+Uw
 eJ
 XX
 eu
