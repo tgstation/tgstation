@@ -3,6 +3,7 @@
 #define BOOK_ADMIN_REPORT "reported"
 
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker
+	interface_type = "LibraryAdmin"
 	/// When a user clicks view, do we display the raw text, or process it with markdown
 	var/view_raw = FALSE
 	/// If we should show deleted entries or not
@@ -11,7 +12,6 @@
 	var/ckey = ""
 	/// List mapping requested book ids to a list of their edit logs
 	var/list/book_history = list()
-	interface_type = "LibraryAdmin"
 
 
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/can_db_request()
@@ -150,7 +150,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/view_book(id, mob/show_to)
 	if (!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Could not connect to the DB")
+		message_admins("Failed to establish database connection.")
 		return
 
 	var/datum/db_query/query_library_view = SSdbcore.NewQuery(
@@ -206,14 +206,15 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/hide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Could not connect to the DB")
+		message_admins("Failed to establish database connection.")
 		return
 	if(IsAdminAdvancedProcCall())
-		stack_trace("Proc call lead to hide_book being called, blocked")
-		message_admins("Proc call lead to hide_book being called, blocked")
+		log_admin("Proc call lead to hide_book being called, blocked")
+		message_admins("Proc call lead to hide_book being called, someone may be attempting to perms escalate. Blocked")
 		return
 	if(!check_rights_for(admin, R_BAN))
-		stack_trace("[admin.ckey] tried to hide a book without the required perms")
+		log_admin("[admin.ckey] tried to hide a book without the required perms")
+		message_admins("[admin.ckey] tried to hide a book without the required perms")
 		return
 
 	var/log_reason = "([admin.ckey]) hid book #[id][reason ? ": \"[reason]\"" : ""]"
@@ -241,7 +242,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/unhide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Could not connect to the DB")
+		message_admins("Failed to establish database connection.")
 		return
 	if(IsAdminAdvancedProcCall())
 		stack_trace("Proc call lead to unhide_book being called, blocked")
