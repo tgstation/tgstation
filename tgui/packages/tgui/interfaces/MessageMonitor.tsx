@@ -70,19 +70,19 @@ const RequestLogsScreen = (props, context) => {
               <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
             {requests?.map((request) => (
-              <Table.Row key={request.ref}>
-                <Table.Cell>
+              <tr key={request.ref} className="Table__row candystripe">
+                <td>
                   <Button
                     icon="trash"
                     color="red"
                     onClick={() => act('delete_request', { ref: request.ref })}
                   />
-                </Table.Cell>
-                <Table.Cell>{request.message}</Table.Cell>
-                <Table.Cell>{request.stamp}</Table.Cell>
-                <Table.Cell>{request.send_dpt}</Table.Cell>
-                <Table.Cell>{request.id_auth}</Table.Cell>
-              </Table.Row>
+                </td>
+                <td>{request.message}</td>
+                <td>{request.stamp}</td>
+                <td>{request.send_dpt}</td>
+                <td>{request.id_auth}</td>
+              </tr>
             ))}
           </Table>
         </Section>
@@ -116,18 +116,18 @@ const MessageLogsScreen = (props, context) => {
               <Table.Cell>Message</Table.Cell>
             </Table.Row>
             {messages?.map((message) => (
-              <Table.Row key={message.ref}>
-                <Table.Cell>
+              <tr key={message.ref} className="Table__row candystripe">
+                <td>
                   <Button
                     icon="trash"
                     color="red"
                     onClick={() => act('delete_message', { ref: message.ref })}
                   />
-                </Table.Cell>
-                <Table.Cell>{message.sender}</Table.Cell>
-                <Table.Cell>{message.recipient}</Table.Cell>
-                <Table.Cell>{message.message}</Table.Cell>
-              </Table.Row>
+                </td>
+                <td>{message.sender}</td>
+                <td>{message.recipient}</td>
+                <td>{message.message}</td>
+              </tr>
             ))}
           </Table>
         </Section>
