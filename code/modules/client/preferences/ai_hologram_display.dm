@@ -8,17 +8,13 @@
 /datum/preference/choiced/ai_hologram_display/init_possible_values()
 	var/list/values = list()
 
-	values["Random"] = icon('icons/mob/silicon/ai.dmi', "ai-empty")
+	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
 
-	for(var/screen in GLOB.ai_hologram_display_screens - "Portrait" - "Random")
-		values[screen] = icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(screen))
-
-	var/mob/living/carbon/human/dummy/ai_dummy = new
-	var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-	if(dummy_appearance)
-		qdel(ai_dummy)
-		//hologram_appearance = dummy_appearance
-		values["Human"] = dummy_appearance
+	//var/mob/living/carbon/human/dummy/ai_dummy = new
+	//var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+	//if(dummy_appearance)
+	//	qdel(ai_dummy)
+	//	values["Human"] = dummy_appearance
 
 	values["Bear"] = icon('icons/mob/simple/animal.dmi', "bear")
 	values["Carp"] = icon('icons/mob/simple/carp.dmi', "carp")
@@ -40,12 +36,6 @@
 	values["Horror"] = icon('icons/mob/silicon/ai.dmi', "horror")
 	values["Clock"] = icon('icons/mob/silicon/ai.dmi', "clock")
 	values["Default"] = icon('icons/mob/silicon/ai.dmi', "default")
-
-	hologram_appearance = mutable_appearance(icon_list[input], working_state)
-
-	hologram_appearance = mutable_appearance(icon_list[input], working_state)
-
-
 
 	return values
 
