@@ -10,6 +10,11 @@ enum Screen {
   Hacked,
 }
 
+enum ServerStatus {
+  Offline,
+  Online,
+}
+
 type Data = {
   screen: Screen;
   status: BooleanLike;
@@ -330,15 +335,15 @@ export const MessageMonitor = (props, context) => {
     <Window width={700} height={400}>
       <Window.Content>
         <Stack vertical fill>
-          {server_status === 1 ? (
+          {server_status === ServerStatus.Online ? (
             <>
               <Stack.Item>
-                {error_message !== '' && (
+                {!!error_message && (
                   <NoticeBox color="red">{error_message}</NoticeBox>
                 )}
               </Stack.Item>
               <Stack.Item>
-                {success_message !== '' && (
+                {!!success_message && (
                   <NoticeBox color="green">{success_message}</NoticeBox>
                 )}
               </Stack.Item>
@@ -349,7 +354,7 @@ export const MessageMonitor = (props, context) => {
                   (screen === Screen.Hacked && <HackedScreen />)}
               </Stack.Item>
               <Stack.Item>
-                {notice_message !== '' && (
+                {!!notice_message && (
                   <NoticeBox color="yellow">{notice_message}</NoticeBox>
                 )}
               </Stack.Item>
