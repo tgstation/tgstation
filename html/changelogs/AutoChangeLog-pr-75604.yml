@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "The Canvas UI now shows a grid while the user is painting."
