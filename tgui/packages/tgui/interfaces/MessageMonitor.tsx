@@ -41,7 +41,7 @@ type Message = {
 
 const RequestLogsScreen = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { requests } = data;
+  const { requests = [] } = data;
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -88,7 +88,7 @@ const RequestLogsScreen = (props, context) => {
 
 const MessageLogsScreen = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { messages } = data;
+  const { messages = [] } = data;
   return (
     <Stack fill vertical>
       <Stack.Item grow>
