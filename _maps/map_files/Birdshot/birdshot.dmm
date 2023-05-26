@@ -151,7 +151,7 @@
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/service)
 "aes" = (
@@ -789,28 +789,20 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "aqW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/sofa/bench/right{
-	dir = 1
-	},
-/obj/effect/landmark/start/hangover,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "ark" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/item/storage/medkit/fire{
 	pixel_x = 3;
 	pixel_y = 3
@@ -1448,7 +1440,7 @@
 /area/station/hallway/primary/central/fore)
 "aIr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/vending/tool,
 /turf/open/floor/iron/dark/side{
@@ -2209,7 +2201,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "aYd" = (
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
@@ -3543,7 +3535,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "bAK" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
@@ -3612,15 +3604,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "bBw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/machinery/duct,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -4038,7 +4025,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "bIf" = (
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
@@ -4051,7 +4038,7 @@
 	},
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/misc/sandy_dirt,
 /area/station/science/research)
 "bIG" = (
@@ -4074,14 +4061,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "bJw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "bJL" = (
@@ -4156,7 +4139,7 @@
 /area/station/science/ordnance)
 "bLT" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
@@ -4227,14 +4210,10 @@
 /area/station/science/ordnance/testlab)
 "bNP" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
 	},
-/obj/structure/cable,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -5003,7 +4982,10 @@
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "cdq" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "cdt" = (
@@ -5036,7 +5018,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/disposal/incinerator)
 "cea" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "ced" = (
@@ -5815,7 +5797,10 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "cxO" = (
@@ -6367,7 +6352,7 @@
 "cHO" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
@@ -7077,7 +7062,7 @@
 /area/station/science/lower)
 "cVV" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = 1;
@@ -7353,7 +7338,10 @@
 /area/station/maintenance/department/medical/central)
 "dbU" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dbY" = (
@@ -7566,7 +7554,7 @@
 /area/station/engineering/atmos)
 "dfN" = (
 /obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/cargo/storage)
 "dgn" = (
@@ -7576,20 +7564,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "dgo" = (
@@ -7898,9 +7877,7 @@
 /area/station/security/checkpoint/customs/auxiliary)
 "dmw" = (
 /obj/machinery/atmospherics/components/tank/plasma,
-/obj/structure/window/reinforced/plasma/spawner{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -7930,6 +7907,11 @@
 	dir = 1
 	},
 /area/station/security/prison/safe)
+"dnd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "dnj" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -7986,15 +7968,11 @@
 /area/station/security/brig)
 "dof" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "dog" = (
@@ -8582,7 +8560,7 @@
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/service/chapel/office)
 "dzl" = (
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -8711,15 +8689,11 @@
 /turf/open/floor/iron,
 /area/station/security/tram)
 "dBy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/machinery/duct,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -9337,7 +9311,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "dOb" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "dOd" = (
@@ -9433,7 +9410,9 @@
 /area/station/maintenance/department/medical/central)
 "dPV" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dQA" = (
@@ -9676,7 +9655,7 @@
 /obj/machinery/computer/atmos_control/nitrogen_tank{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark/side{
 	dir = 9
@@ -9693,7 +9672,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
@@ -9751,7 +9730,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark/side{
 	dir = 9
@@ -9772,7 +9751,7 @@
 /obj/machinery/computer/atmos_control/oxygen_tank{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/side{
@@ -9834,7 +9813,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/computer/atmos_alert{
 	dir = 1
@@ -9848,7 +9827,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/head/utility/welding{
@@ -9866,7 +9845,7 @@
 /obj/machinery/computer/atmos_control/air_tank{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/side{
@@ -10193,16 +10172,11 @@
 "eem" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "eeq" = (
@@ -10342,20 +10316,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ein" = (
@@ -10486,7 +10450,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "elm" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
@@ -10532,7 +10496,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "elO" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating/rust,
 /area/station/maintenance/department/engine/atmos)
@@ -10543,7 +10507,7 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "elR" = (
 /obj/structure/table,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -10570,7 +10534,7 @@
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "emf" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -10675,7 +10639,10 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "eoC" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "eoK" = (
@@ -10975,7 +10942,10 @@
 /area/station/security/execution/transfer)
 "etf" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "eto" = (
@@ -11232,16 +11202,10 @@
 "exR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "exW" = (
@@ -11253,9 +11217,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "eyo" = (
-/obj/structure/window/reinforced/plasma/spawner{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/computer/atmos_control/nocontrol/incinerator{
 	dir = 8
 	},
@@ -11465,7 +11427,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/atmos)
 "eBQ" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/noslip,
 /area/station/maintenance/department/medical/central)
@@ -14046,7 +14008,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "fAr" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/noslip,
 /area/station/maintenance/port/aft)
@@ -14086,7 +14048,7 @@
 /area/station/medical/medbay/central)
 "fAM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/table/reinforced/titaniumglass,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -14146,7 +14108,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/table/reinforced/titaniumglass,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/bag/construction,
@@ -14155,7 +14117,7 @@
 	},
 /area/station/engineering/atmos)
 "fAZ" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/structure/crate_empty,
@@ -14469,14 +14431,10 @@
 	},
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fFV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "fFY" = (
@@ -14948,14 +14906,7 @@
 /turf/open/floor/plating/airless,
 /area/station/security/execution/education)
 "fNv" = (
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -15260,7 +15211,10 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -17122,7 +17076,7 @@
 /area/station/maintenance/fore/lesser)
 "gDs" = (
 /obj/structure/lattice,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "gDC" = (
@@ -17540,15 +17494,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "gKE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -17970,25 +17920,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/assistant,
-/obj/structure/broken_flooring/plating/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/chair/sofa/bench/right{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/start/assistant,
-/obj/structure/fluff/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "gRj" = (
@@ -18020,7 +17956,10 @@
 /area/station/maintenance/department/medical/central)
 "gRX" = (
 /obj/machinery/newscaster/directional/south,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "gSa" = (
@@ -18310,7 +18249,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/disposaloutlet{
 	dir = 8;
@@ -18616,13 +18555,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "hbt" = (
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
 	},
-/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
@@ -18735,18 +18670,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hcE" = (
@@ -19259,7 +19187,10 @@
 /area/station/ai_monitored/command/nuke_storage)
 "hlg" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hln" = (
@@ -19543,7 +19474,7 @@
 /area/station/service/hydroponics/garden/monastery)
 "hpQ" = (
 /obj/structure/closet/crate/coffin,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
@@ -20465,7 +20396,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "hFO" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
@@ -20671,7 +20602,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small/directional/east,
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hKR" = (
@@ -20870,7 +20801,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "hOy" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/stripes/box,
 /obj/structure/sign/warning/pods/directional/north,
 /turf/open/floor/iron,
@@ -21161,7 +21092,9 @@
 /area/station/security/execution/transfer)
 "hUk" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "hUq" = (
@@ -21204,26 +21137,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/sofa/bench/right{
-	dir = 1
-	},
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "hVM" = (
@@ -21627,7 +21545,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "icl" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/small,
 /area/station/medical/medbay/lobby)
@@ -21741,19 +21659,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "idF" = (
@@ -22071,17 +21982,11 @@
 /area/station/maintenance/starboard/fore)
 "ike" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "ikk" = (
@@ -22745,7 +22650,7 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/item/clothing/head/utility/welding{
 	pixel_x = -5;
@@ -23300,14 +23205,11 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "iGO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iGS" = (
@@ -23329,9 +23231,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "iHy" = (
-/obj/structure/window/reinforced/plasma/spawner{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -23548,7 +23448,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "iKo" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_x = 32;
 	spawn_loot_chance = 50
@@ -24001,7 +23901,7 @@
 /area/station/service/library)
 "iTB" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -24155,7 +24055,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "iVJ" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "iVK" = (
@@ -24180,7 +24083,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /obj/item/flashlight,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
@@ -24262,7 +24168,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iXi" = (
@@ -24771,7 +24677,7 @@
 "jfT" = (
 /obj/structure/cable,
 /obj/structure/closet/crate/coffin,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -25524,7 +25430,10 @@
 /turf/open/floor/iron/small,
 /area/station/command/teleporter)
 "jwh" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_x = -32;
 	spawn_loot_chance = 50
@@ -25685,7 +25594,9 @@
 	},
 /area/station/command/heads_quarters/captain/private)
 "jzp" = (
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "jAb" = (
@@ -26219,7 +26130,7 @@
 "jIm" = (
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "jIx" = (
@@ -26400,7 +26311,9 @@
 /area/station/hallway/primary/central/fore)
 "jLP" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "jLR" = (
@@ -26436,7 +26349,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/arrows{
 	dir = 8
 	},
@@ -26605,14 +26518,8 @@
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
 "jPg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "jPm" = (
@@ -27262,7 +27169,7 @@
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
 "kaL" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "kaW" = (
@@ -27276,16 +27183,8 @@
 "kba" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "kbc" = (
@@ -27652,7 +27551,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kiG" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/machinery/recharge_station,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/plating,
@@ -28493,7 +28395,7 @@
 /turf/open/floor/plating/rust,
 /area/station/maintenance/fore/lesser)
 "kyr" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/wood,
@@ -28805,7 +28707,9 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "kEe" = (
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -29142,13 +29046,9 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "kIY" = (
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
 	},
-/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -29275,7 +29175,7 @@
 /area/station/security/tram)
 "kKB" = (
 /obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/large/style_random{
 	pixel_x = -13;
 	pixel_y = -1
@@ -29547,15 +29447,11 @@
 /area/station/maintenance/port/fore)
 "kQb" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "kQe" = (
@@ -29863,7 +29759,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "kWs" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "kWF" = (
@@ -29970,7 +29866,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/purple/end{
 	dir = 1
 	},
@@ -29982,7 +29878,7 @@
 /area/station/science/cytology)
 "kYZ" = (
 /obj/structure/window/spawner/directional/east,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/cargo/storage)
 "kZf" = (
@@ -30188,7 +30084,7 @@
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/window/spawner/directional/east,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
@@ -30224,7 +30120,7 @@
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
@@ -30246,12 +30142,8 @@
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/plating,
 /area/station/service/janitor)
@@ -30304,7 +30196,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/commons)
 "ldF" = (
@@ -30453,15 +30348,10 @@
 /area/station/cargo/miningoffice)
 "leN" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/plating/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_recreation)
 "leP" = (
@@ -31945,7 +31835,7 @@
 "lHt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "lHJ" = (
@@ -32560,7 +32450,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "lRa" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "lRc" = (
@@ -33130,20 +33023,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/effect/decal/cleanable/robot_debris,
-/obj/item/crowbar,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /obj/effect/decal/cleanable/robot_debris,
 /obj/item/crowbar,
 /obj/effect/mapping_helpers/broken_floor,
@@ -33225,7 +33108,10 @@
 	pixel_x = 6;
 	pixel_y = 17
 	},
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "maX" = (
@@ -33425,9 +33311,7 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/maintenance/starboard/greater)
 "mfK" = (
-/obj/structure/window/reinforced/plasma/spawner{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -34396,7 +34280,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "myt" = (
@@ -34406,21 +34292,18 @@
 /area/station/security/processing)
 "myM" = (
 /obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "myW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mzc" = (
@@ -34554,7 +34437,7 @@
 /area/station/commons/vacant_room/office)
 "mBQ" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -34658,7 +34541,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "mDy" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/misc/sandy_dirt,
@@ -35126,7 +35009,7 @@
 /area/station/security/checkpoint/supply)
 "mLm" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -35144,7 +35027,10 @@
 /area/station/security/processing)
 "mLF" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "mLH" = (
@@ -35201,14 +35087,11 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "mME" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mMF" = (
@@ -35705,19 +35588,13 @@
 	},
 /area/station/science/xenobiology)
 "mWT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
-/obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/structure/tank_dispenser,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
@@ -35905,14 +35782,9 @@
 /area/station/science/ordnance/burnchamber)
 "naC" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
 	},
-/obj/structure/cable,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
@@ -36118,7 +35990,10 @@
 "nfs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "nfy" = (
@@ -37065,7 +36940,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -37758,7 +37636,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/firealarm/directional/east,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "nJG" = (
@@ -37962,15 +37843,11 @@
 /area/station/security/warden)
 "nPc" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "nPd" = (
@@ -39529,7 +39406,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /obj/structure/sign/departments/restroom/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
@@ -39559,14 +39438,8 @@
 /turf/open/floor/iron/smooth_half,
 /area/station/engineering/atmos)
 "osY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "otf" = (
@@ -39602,20 +39475,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "otQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "otX" = (
@@ -39884,7 +39751,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "ozo" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "ozt" = (
@@ -40065,14 +39932,11 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/command/heads_quarters/cmo)
 "oCM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "oDc" = (
@@ -40301,25 +40165,15 @@
 /area/station/security/prison/rec)
 "oHg" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/rock/pile/style_2,
 /turf/open/misc/sandy_dirt,
 /area/station/science/research)
 "oHy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/camera/autoname/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/plating,
@@ -41096,19 +40950,13 @@
 /area/station/security/checkpoint/escape)
 "oVo" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "oVK" = (
@@ -41144,7 +40992,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
 "oWk" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -41460,15 +41311,8 @@
 /area/station/science/ordnance/testlab)
 "pcT" = (
 /obj/item/kirbyplants/random,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "pdo" = (
@@ -41789,7 +41633,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/cafeteria)
 "pjb" = (
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "pjn" = (
@@ -41872,7 +41718,7 @@
 /area/station/hallway/secondary/recreation)
 "pkh" = (
 /obj/effect/spawner/random/decoration/showcase,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/corporate_showroom)
 "pks" = (
@@ -42017,7 +41863,7 @@
 /turf/open/floor/iron/textured_half,
 /area/station/commons/fitness/recreation)
 "pnt" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -42395,7 +42241,7 @@
 /turf/open/floor/iron,
 /area/station/security/tram)
 "psX" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "ptj" = (
@@ -42711,7 +42557,10 @@
 /area/station/science/xenobiology)
 "pyh" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pyp" = (
@@ -42838,7 +42687,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/abandoned_gambling_den/gaming)
 "pAo" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
@@ -42939,16 +42788,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "pBx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "pBy" = (
@@ -43153,13 +42997,10 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/ordnance/storage)
 "pFk" = (
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
 	},
-/obj/structure/fluff/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -43252,7 +43093,7 @@
 /area/station/tcommsat/server)
 "pGK" = (
 /obj/structure/window/spawner/directional/east,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/sandy_dirt,
 /area/station/hallway/secondary/entry)
@@ -43291,7 +43132,10 @@
 /area/station/commons/storage/tools)
 "pHn" = (
 /obj/structure/cable,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "pHo" = (
@@ -43360,7 +43204,10 @@
 	dir = 9
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pIp" = (
@@ -43955,16 +43802,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "pSq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "pSr" = (
@@ -44392,7 +44235,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "pYr" = (
@@ -44887,7 +44733,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "qgx" = (
@@ -45274,7 +45123,7 @@
 "qmb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qme" = (
@@ -45712,7 +45561,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "qtW" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
@@ -45794,7 +45643,10 @@
 /area/station/hallway/secondary/entry)
 "qvM" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "qvQ" = (
@@ -45911,7 +45763,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "qxX" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/large/style_random{
 	pixel_x = -21;
 	pixel_y = -3
@@ -46378,13 +46230,10 @@
 /turf/open/floor/iron,
 /area/station/science/lower)
 "qEO" = (
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
 	},
-/obj/structure/fluff/broken_flooring/pile/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -46620,7 +46469,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qJa" = (
@@ -46632,15 +46484,8 @@
 /area/station/service/cafeteria)
 "qJj" = (
 /obj/machinery/airalarm/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/airalarm/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/commons)
 "qJq" = (
@@ -47668,14 +47513,8 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/monastery)
 "qZG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "qZR" = (
@@ -47888,17 +47727,12 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "rdy" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "rdC" = (
@@ -48134,7 +47968,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "rho" = (
@@ -49494,7 +49328,7 @@
 /area/station/hallway/secondary/entry)
 "rDx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
@@ -49783,7 +49617,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
 "rHw" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "rHy" = (
@@ -49961,7 +49795,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater)
 "rKv" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "rKC" = (
@@ -50173,19 +50010,12 @@
 /area/station/hallway/secondary/recreation)
 "rOD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "rOG" = (
@@ -50661,7 +50491,10 @@
 /area/station/maintenance/port/aft)
 "rWA" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "rWE" = (
@@ -50681,7 +50514,10 @@
 /area/station/cargo/drone_bay)
 "rWO" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "rWW" = (
@@ -50824,17 +50660,11 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "rZG" = (
@@ -50908,7 +50738,7 @@
 /area/station/science/ordnance/freezerchamber)
 "sbr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
@@ -51587,7 +51417,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/security/execution/transfer)
 "slq" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -52009,17 +51839,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/recreation)
 "srW" = (
@@ -52298,19 +52119,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/structure/steam_vent,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /obj/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -52736,16 +52548,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "sEp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "sEr" = (
@@ -53331,14 +53136,11 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sPx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "sPE" = (
@@ -53611,7 +53413,7 @@
 /area/station/cargo/sorting)
 "sSV" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/fore/greater)
@@ -53657,7 +53459,9 @@
 	pixel_x = -8;
 	pixel_y = 17
 	},
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "sTk" = (
@@ -55463,7 +55267,7 @@
 /area/station/maintenance/department/medical/central)
 "tzz" = (
 /obj/structure/disposalpipe/trunk,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/disposaloutlet{
 	dir = 4;
 	name = "Cargo Deliveries"
@@ -55758,7 +55562,10 @@
 "tDq" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/commons)
 "tDB" = (
@@ -56885,7 +56692,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "tXP" = (
@@ -57678,7 +57488,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "ujr" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -58110,7 +57920,9 @@
 "uqL" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash,
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "uqO" = (
@@ -58404,7 +58216,7 @@
 /area/station/command/corporate_dock)
 "uwH" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
@@ -58476,7 +58288,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "uxL" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "uya" = (
@@ -58501,15 +58316,10 @@
 /area/station/hallway/primary/starboard)
 "uyA" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "uyE" = (
@@ -58979,7 +58789,7 @@
 /area/station/hallway/secondary/recreation)
 "uFQ" = (
 /obj/structure/closet/crate/coffin,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "uFV" = (
@@ -59397,7 +59207,9 @@
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/west,
-/obj/structure/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "uME" = (
@@ -59478,14 +59290,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/spacebridge)
 "uNQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "uNR" = (
@@ -59873,16 +59681,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "uUq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/newscaster/directional/south,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/newscaster/directional/south,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "uUE" = (
@@ -60184,18 +59985,11 @@
 "uYO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/radio/intercom/directional/south,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio/intercom/directional/south,
-/obj/structure/fluff/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "uYY" = (
@@ -60418,14 +60212,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "vdm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "vdp" = (
@@ -60934,7 +60725,10 @@
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/aft)
 "vlb" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "vln" = (
@@ -61282,7 +61076,10 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/service/bar)
 "vqb" = (
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = -32
 	},
@@ -61293,7 +61090,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "vqp" = (
@@ -62953,14 +62753,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "vRx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/commons)
 "vRz" = (
@@ -64007,7 +63801,10 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wfV" = (
@@ -64323,7 +64120,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "wlm" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/large/style_random{
 	pixel_x = -17;
@@ -64930,7 +64727,9 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "wuH" = (
-/obj/structure/broken_flooring/singular/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
@@ -65224,15 +65023,11 @@
 /area/station/security/detectives_office)
 "wAn" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
 "wAt" = (
@@ -65572,22 +65367,17 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "wGh" = (
-/obj/structure/broken_flooring/corner/directional/south,
+/obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wGq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wGu" = (
@@ -65746,7 +65536,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/misc/sandy_dirt,
 /area/station/hallway/secondary/entry)
 "wJH" = (
@@ -66087,7 +65877,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "wOd" = (
-/obj/structure/broken_flooring/plating/directional/south,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "wOh" = (
@@ -66488,14 +66280,11 @@
 /turf/open/floor/iron/textured_half,
 /area/station/security/prison/work)
 "wTu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "wTv" = (
@@ -66871,7 +66660,10 @@
 /area/station/hallway/primary/central/aft)
 "wYL" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "wYM" = (
@@ -67268,7 +67060,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "xeo" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -67928,14 +67720,9 @@
 /turf/open/misc/sandy_dirt,
 /area/station/medical/medbay/lobby)
 "xmg" = (
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
 	},
-/obj/structure/fluff/broken_flooring/singular/directional/south,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -68107,7 +67894,7 @@
 /turf/open/floor/iron/small,
 /area/station/ai_monitored/command/storage/eva)
 "xoW" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -68286,7 +68073,7 @@
 /turf/closed/wall,
 /area/station/maintenance/hallway/abandoned_command)
 "xqL" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/jungle/a/style_random,
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/sandy_dirt,
@@ -68366,7 +68153,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xsa" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -69013,9 +68800,7 @@
 	pixel_x = 11
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -69684,16 +69469,12 @@
 /turf/closed/wall,
 /area/station/security/courtroom)
 "xJG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xJR" = (
@@ -70102,15 +69883,11 @@
 /area/station/hallway/primary/aft)
 "xPf" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/pile/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xPj" = (
@@ -70426,12 +70203,15 @@
 	dir = 10
 	},
 /obj/effect/spawner/random/trash,
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xTo" = (
 /obj/structure/cable,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -71143,7 +70923,10 @@
 "ycj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
 "ycm" = (
@@ -71161,7 +70944,10 @@
 /turf/open/floor/noslip/tram_plate,
 /area/station/maintenance/department/medical/central)
 "ycy" = (
-/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
@@ -71367,7 +71153,7 @@
 /area/station/hallway/primary/port)
 "yeO" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "yeP" = (
@@ -71527,9 +71313,7 @@
 "ygK" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
@@ -71584,7 +71368,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
@@ -71605,9 +71389,7 @@
 "yig" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/ai_module/reset/purge{
 	pixel_x = -4;
 	pixel_y = 7
@@ -109065,8 +108847,8 @@ ssz
 ssz
 xQI
 qRO
-xGw
-xGw
+dnd
+dnd
 yiV
 rUR
 qTv
