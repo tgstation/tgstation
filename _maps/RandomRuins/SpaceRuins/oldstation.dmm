@@ -4910,6 +4910,15 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
+"tP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured_edge{
+	dir = 8
+	},
+/area/ruin/space/ancientstation/delta/biolab)
 "tT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/machine,
@@ -6500,7 +6509,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "HJ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/curtain,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -6741,7 +6750,7 @@
 	pixel_y = -8;
 	pixel_x = 13
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "Jx" = (
@@ -15306,14 +15315,14 @@ aa
 aa
 vA
 PZ
-Ob
-Ob
+tP
+tP
 EH
-Ob
+tP
 HN
 HJ
 NA
-Ob
+tP
 Ob
 Ay
 vA

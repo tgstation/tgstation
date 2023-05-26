@@ -313,6 +313,13 @@
 	dir = 5
 	},
 /area/shuttle/escape)
+"kc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
+/area/shuttle/escape)
 "kh" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1233,7 +1240,7 @@
 /area/shuttle/escape)
 "NW" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Of" = (
@@ -1968,7 +1975,7 @@ CR
 WQ
 WQ
 NW
-JN
+kc
 Hu
 WQ
 sn

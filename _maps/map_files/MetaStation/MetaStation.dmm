@@ -482,7 +482,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "ajG" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -1451,7 +1451,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "aCT" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "aCW" = (
@@ -5101,8 +5101,8 @@
 /area/station/science/xenobiology)
 "bSR" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /mob/living/simple_animal/bot/mulebot{
@@ -5154,7 +5154,7 @@
 /area/station/command/heads_quarters/rd)
 "bTY" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
@@ -6863,7 +6863,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "cBR" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -8187,7 +8187,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "ddZ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -9466,7 +9466,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "dDl" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/office/light,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
@@ -12055,7 +12055,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "euZ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
@@ -13018,7 +13018,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "eQR" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet,
 /obj/item/surgicaldrill,
 /obj/machinery/airalarm/directional/south,
@@ -13697,7 +13697,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "few" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair{
 	dir = 8
 	},
@@ -14472,7 +14472,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "frP" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
@@ -15785,7 +15785,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fSS" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
@@ -16101,7 +16101,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "fZz" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/lights/mixed,
 /obj/item/cigbutt/cigarbutt,
@@ -21227,7 +21227,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/shower)
 "hPd" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/box,
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/sign/poster/contraband/lizard{
@@ -23959,7 +23959,7 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "iJh" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/blue{
 	desc = "An old pair of nitrile gloves, with no sterile properties.";
@@ -25711,7 +25711,7 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "jlt" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/showcase/machinery/cloning_pod{
 	desc = "An old decommissioned scanner, permanently scuttled.";
 	icon_state = "scanner";
@@ -26606,7 +26606,7 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "jyP" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "jyQ" = (
@@ -28282,7 +28282,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kfj" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
@@ -32505,7 +32505,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "lJG" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
@@ -33956,7 +33956,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "mkk" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -35531,7 +35531,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "mLL" = (
@@ -35883,7 +35883,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "mSI" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/patient_stretcher,
 /obj/item/food/pizzaslice/moldy/bacteria,
 /turf/open/floor/iron/white,
@@ -40118,7 +40118,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "osA" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/aft)
 "osC" = (
@@ -41338,7 +41338,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "oNH" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/pillbottles,
@@ -41859,7 +41859,7 @@
 /obj/item/dice/d20,
 /obj/item/dice,
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/dice,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -43351,7 +43351,7 @@
 /obj/structure/table,
 /obj/item/plate,
 /obj/item/flashlight/flare/candle,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio{
 	desc = "An old handheld radio. You could use it, if you really wanted to.";
 	icon_state = "radio";
@@ -44714,7 +44714,7 @@
 /area/station/science/xenobiology)
 "pZl" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/food_or_drink/booze{
 	spawn_random_offset = 1
 	},
@@ -44842,7 +44842,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/pumproom)
 "qcN" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "qcP" = (
@@ -45778,7 +45778,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "qtp" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/skub{
 	name = "medicinal skub"
@@ -46083,7 +46083,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "qAp" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/reagent_containers/pill/maintenance,
 /obj/item/reagent_containers/pill/maintenance,
@@ -46581,7 +46581,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "qIO" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic,
@@ -50416,7 +50416,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/burnchamber)
 "rZg" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/roller,
 /obj/item/roller,
@@ -51838,7 +51838,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "sAx" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
@@ -53730,7 +53730,7 @@
 	pixel_x = -3;
 	pixel_y = -1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
@@ -53836,7 +53836,7 @@
 /obj/structure/rack,
 /obj/item/poster/random_contraband,
 /obj/effect/spawner/random/maintenance,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tiA" = (
@@ -57412,7 +57412,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "uvs" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
@@ -58608,7 +58608,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "uPo" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/patient_stretcher,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -60388,7 +60388,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "vxq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/maintenance/three,
 /obj/structure/closet/crate/medical,
 /turf/open/floor/iron/white,
@@ -60490,7 +60490,7 @@
 /area/station/cargo/warehouse)
 "vzp" = (
 /obj/effect/spawner/random/entertainment/arcade,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "vzx" = (
@@ -63778,7 +63778,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "wIL" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/showcase/machinery/oldpod{
 	desc = "An old NT branded sleeper, decommissioned after the lead acetate incident. None of the functional machinery remains inside.";
 	name = "decommissioned sleeper"
@@ -66033,7 +66033,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "xyb" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/iron/white,
@@ -67574,7 +67574,7 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "yaS" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/surgery,
 /obj/structure/light_construct/directional/west,
@@ -67817,7 +67817,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "yeY" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
