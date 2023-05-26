@@ -73,7 +73,7 @@
  * Formats the string to have an appropiate size and text color
  */
 /datum/action/command_spiders/proc/format_message(mob/living/user, message)
-	return span_spiderbroodmother(("<b>Command from [user]:</b> [message]"))
+	return span_spiderbroodmother("<b>Command from [user]:</b> [message]")
 
 /**
  * Sends a small message to all currently living spiders.
