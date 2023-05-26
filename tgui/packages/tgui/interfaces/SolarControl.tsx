@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Chart, Section, Stack } from '../components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Chart, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -135,6 +135,7 @@ export const SolarControl = (props, context) => {
               />
             </LabeledList.Item>
             <LabeledList.Item label="Azimuth">
+              <Icon mr={1} name="arrow-up" rotation={azimuth_current} />
               {(tracking_state === 0 || tracking_state === 1) && (
                 <NumberInput
                   width="52px"
