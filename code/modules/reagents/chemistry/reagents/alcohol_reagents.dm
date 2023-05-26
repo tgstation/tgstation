@@ -3755,16 +3755,11 @@
 
 /datum/reagent/consumable/ethanol/pod_tesla/on_mob_metabolize(mob/living/affected_mob)
 	..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-	ADD_TRAIT(affected_mob, TRAIT_TESLA_SHOCKIMMUNE, type)
-	ADD_TRAIT(affected_mob, TRAIT_FEARLESS, type)
+	ADD_TRAITS(affected_mob, TRAIT_SHOCKIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_FEARLESS, type)
 
 
 /datum/reagent/consumable/ethanol/pod_tesla/on_mob_end_metabolize(mob/living/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_FEARLESS, type)
-	REMOVE_TRAIT(affected_mob, TRAIT_TESLA_SHOCKIMMUNE, type)
-	..()
+	REMOVE_TRAITS(affected_mob, TRAIT_SHOCKIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/pod_tesla/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
