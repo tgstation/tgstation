@@ -941,6 +941,8 @@
 	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		to_chat(user, span_notice("You fail to secure [src]."))
 		return CANT_UNFASTEN
+	if(locate(/obj/structure/table) in loc)
+		pixel_y = !anchored ? 6 : 0
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
