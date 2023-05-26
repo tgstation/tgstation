@@ -20,6 +20,8 @@
 	var/mob/camera/blob/overmind = null
 	/// If this is related to anything else
 	var/independent = FALSE
+	/// The factory blob tile that generated this blob minion
+	var/obj/structure/blob/special/factory/factory
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
@@ -35,6 +37,7 @@
 		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/death()
+	factory = null
 	if(overmind)
 		overmind.blob_mobs -= src
 	overmind = null

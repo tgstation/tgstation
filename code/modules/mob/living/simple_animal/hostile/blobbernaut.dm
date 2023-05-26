@@ -21,8 +21,6 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
-	/// The factory blob tile that generated this blobbernaut
-	var/obj/structure/blob/special/factory/factory = null
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
@@ -101,7 +99,6 @@
 	if(factory)
 		factory.naut = null //remove this naut from its factory
 		factory.max_integrity = initial(factory.max_integrity)
-		factory = null
 	flick("blobbernaut_death", src)
 	return ..()
 

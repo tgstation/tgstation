@@ -7,7 +7,13 @@
 	health_regen = BLOB_FACTORY_HP_REGEN
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
-	max_spores = BLOB_FACTORY_MAX_SPORES
+	///How many spores this factory can have.
+	var/max_spores = BLOB_FACTORY_MAX_SPORES
+	///The list of spores
+	var/list/spores = list()
+	COOLDOWN_DECLARE(spore_delay)
+	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
+	///Its Blobbernaut, if it has spawned any.
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut
 
 /obj/structure/blob/special/factory/scannerreport()
@@ -20,6 +26,10 @@
 		overmind.factory_blobs += src
 
 /obj/structure/blob/special/factory/Destroy()
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
+		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
+		spore.death()
+	spores = null
 	if(naut)
 		naut.factory = null
 		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
@@ -29,11 +39,17 @@
 		overmind.factory_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/factory/produce_spores()
-	if(naut)
-		return
-	return ..()
-
 /obj/structure/blob/special/factory/Be_Pulsed()
 	. = ..()
-	produce_spores()
+	if(naut)
+		return
+	if(spores.len >= max_spores)
+		return
+	if(!COOLDOWN_FINISHED(src, spore_delay))
+		return
+	COOLDOWN_START(src, spore_delay, spore_cooldown)
+	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new (loc, src)
+	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
+		BS.overmind = overmind
+		BS.update_icons()
+		overmind.blob_mobs.Add(BS)
