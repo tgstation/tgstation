@@ -192,7 +192,7 @@ There are several things that need to be remembered:
 		var/feature_y_offset = 0
 		for (var/obj/item/bodypart/arm/my_hand as anything in hand_bodyparts)
 			var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
-			if (glove_offset && glove_offset["y"] > feature_y_offset)
+			if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 				feature_y_offset = glove_offset["y"]
 
 		gloves_overlay.pixel_y += feature_y_offset

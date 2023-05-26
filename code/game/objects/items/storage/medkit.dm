@@ -79,6 +79,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
@@ -502,6 +503,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/stimulant(src)
 
+/obj/item/storage/pill_bottle/sansufentanyl
+	name = "bottle of experimental medication"
+	desc = "A bottle of pills developed by Interdyne Pharmaceuticals. They're used to treat Hereditary Manifold Sickness."
+
+/obj/item/storage/pill_bottle/sansufentanyl/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/pill/sansufentanyl(src)
+
 /obj/item/storage/pill_bottle/mining
 	name = "bottle of patches"
 	desc = "Contains patches used to treat brute and burn damage."
@@ -718,3 +727,31 @@
 /obj/item/storage/organbox/preloaded/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)
+
+/obj/item/storage/test_tube_rack
+	name = "test tube rack"
+	desc = "A wooden rack for storing test tubes."
+	icon_state = "rack"
+	base_icon_state = "rack"
+	icon = 'icons/obj/medical/chemical.dmi'
+	inhand_icon_state = "contsolid"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/test_tube_rack/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.max_slots = 8
+	atom_storage.screen_max_columns = 4
+	atom_storage.screen_max_rows = 2
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/cup/tube,
+	))
+
+/obj/item/storage/test_tube_rack/attack_self(mob/user)
+	emptyStorage()
+
+/obj/item/storage/test_tube_rack/update_icon_state()
+	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
+	return ..()

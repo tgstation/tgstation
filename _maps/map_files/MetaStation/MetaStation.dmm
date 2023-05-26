@@ -685,8 +685,9 @@
 	name = "couch";
 	dir = 1
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "aok" = (
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -30882,7 +30883,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
 "lbH" = (
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Featherbottom";
 	real_name = "Featherbottom"
 	},
@@ -39894,7 +39895,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "onU" = (
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
@@ -44467,10 +44468,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"pTz" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "pTS" = (
 /turf/closed/wall,
 /area/station/service/bar)
@@ -104783,7 +104780,7 @@ rrt
 lMJ
 dwJ
 aaa
-pTz
+lMJ
 aaa
 nvn
 qWw
@@ -105040,7 +105037,7 @@ aaa
 aaa
 rrt
 aaa
-pTz
+lMJ
 aaa
 szp
 szp

@@ -10,6 +10,8 @@
 	var/mid_length_vary = 0
 	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
 	var/each_once = FALSE
+	/// Whether if the sounds should be played in order or not. Defaults to FALSE.
+	var/in_order = FALSE
 	/// Override for volume of start sound.
 	var/start_volume
 	/// (soundfile) Played before starting the mid_sounds loop.
@@ -50,6 +52,8 @@
 	var/loop_started = FALSE
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
+	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
+	var/audio_index = 1
 
 	// Args
 	/// Do we skip the starting sounds?
@@ -169,6 +173,12 @@
 			. = pick_weight(.)
 		return .
 
+	if(in_order)
+		. = play_from
+		audio_index++
+		if(audio_index > length(play_from))
+			audio_index = 1
+		return .[audio_index]
 
 	if(!length(cut_list))
 		cut_list = shuffle(play_from.Copy())

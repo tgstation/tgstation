@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Species that have longer arms than normal can now properly set their glove offset to go low and meet their hand."

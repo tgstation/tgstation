@@ -21,7 +21,6 @@
 	var/menu_description = "Normal spiderling."
 
 	unique_name = TRUE
-	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
 
 	// we have _some_ bite
 	melee_damage_lower = 1
