@@ -942,7 +942,7 @@
 		to_chat(user, span_notice("You fail to secure [src]."))
 		return CANT_UNFASTEN
 	if(locate(/obj/structure/table) in loc)
-		pixel_y = !anchored ? 6 : 0
+		pixel_y = !anchored ? 8 : 0 // Table height
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
