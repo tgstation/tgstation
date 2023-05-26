@@ -313,13 +313,6 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"kc" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/checker,
-/area/shuttle/escape)
 "kh" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -445,6 +438,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"nj" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "nS" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -589,6 +586,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"sF" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "tk" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
@@ -673,6 +677,13 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
+/area/shuttle/escape)
+"vY" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "wp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -858,10 +869,6 @@
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"Dd" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "Dg" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -913,13 +920,6 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"FA" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "FX" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/surgery{
@@ -989,13 +989,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/checker,
-/area/shuttle/escape)
-"Hp" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/survival_pod/spawner,
-/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Hq" = (
 /obj/machinery/door/airlock/grunge{
@@ -1389,6 +1382,27 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Rl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/e_gun/mini,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/door/window/survival_pod{
+	dir = 4;
+	name = "Emergency Weapons";
+	req_access = list("command")
+	},
+/obj/structure/rack,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
 "RO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
@@ -1412,6 +1426,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
+"Su" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "Sy" = (
 /obj/structure/sign/warning/vacuum/external/directional/south,
@@ -1597,27 +1618,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"YN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/energy/e_gun/mini{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun/mini,
-/obj/item/gun/energy/e_gun/mini{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod/spawner,
-/obj/machinery/door/window/survival_pod{
-	dir = 4;
-	name = "Emergency Weapons";
-	req_access = list("command")
-	},
-/obj/structure/rack,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape)
 "ZE" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Bridge Hall"
@@ -1730,7 +1730,7 @@ vf
 MZ
 Lj
 Gw
-YN
+Rl
 mx
 WQ
 nS
@@ -1777,7 +1777,7 @@ uX
 uX
 uX
 ne
-Hp
+vY
 fz
 pb
 If
@@ -1829,7 +1829,7 @@ uX
 uX
 uX
 ne
-Hp
+vY
 cC
 oe
 Yt
@@ -1881,7 +1881,7 @@ uX
 uX
 uX
 ne
-Hp
+vY
 QL
 kt
 LA
@@ -1975,7 +1975,7 @@ CR
 WQ
 WQ
 NW
-kc
+Su
 Hu
 WQ
 sn
@@ -2354,7 +2354,7 @@ WQ
 HV
 WQ
 iz
-Dd
+nj
 kz
 yB
 Ao
@@ -2401,12 +2401,12 @@ uX
 uX
 uX
 ne
-Hp
+vY
 vm
 rr
 WQ
 Oy
-FA
+sF
 Dx
 YM
 JS
@@ -2453,7 +2453,7 @@ uX
 uX
 uX
 ne
-Hp
+vY
 zh
 WO
 WQ
@@ -2505,7 +2505,7 @@ uX
 uX
 uX
 ne
-Hp
+vY
 Gr
 Qu
 sp

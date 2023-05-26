@@ -89,6 +89,7 @@
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
+#define LOG_CATEGORY_QDEL "qdel"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -107,7 +108,6 @@
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
-#define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
 #define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
@@ -139,6 +139,12 @@
 #define LOG_CATEGORY_PDA "pda"
 #define LOG_CATEGORY_PDA_CHAT "pda-chat"
 #define LOG_CATEGORY_PDA_COMMENT "pda-comment"
+
+// Flags that apply to the entry_flags var on logging categories
+// These effect how entry datums process the inputs passed into them
+/// Enables data list usage for readable log entries
+/// You'll likely want to disable internal formatting to make this work properly
+#define ENTRY_USE_DATA_W_READABLE (1<<0)
 
 #define SCHEMA_VERSION "schema-version"
 

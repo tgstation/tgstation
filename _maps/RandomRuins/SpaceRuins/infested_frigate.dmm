@@ -434,14 +434,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"hx" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/broken_flooring/plating/directional/north,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -715,10 +707,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"lO" = (
-/obj/structure/broken_flooring/pile/directional/south,
-/turf/open/space/basic,
-/area/template_noop)
 "lU" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "u_madman_l"
@@ -1040,12 +1028,6 @@
 /obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
-"rB" = (
-/obj/structure/broken_flooring/plating/directional/east,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "rL" = (
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
@@ -1059,6 +1041,21 @@
 	},
 /obj/item/clothing/head/utility/welding,
 /obj/effect/decal/cleanable/plastic,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"sb" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/table/glass,
+/obj/item/surgical_drapes,
+/obj/effect/spawner/random/medical/surgery_tool_advanced,
+/obj/item/reagent_containers/hypospray/medipen{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/hypospray/medipen,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white"
+	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "so" = (
@@ -1148,20 +1145,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"tJ" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/glass,
-/obj/structure/table_frame,
-/obj/item/shard,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/effect/spawner/random/medical/minor_healing,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "tO" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -1578,6 +1561,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"zn" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/space/basic,
+/area/template_noop)
 "zE" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -1709,10 +1697,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"AU" = (
-/obj/structure/broken_flooring/singular/directional/south,
-/turf/open/space/basic,
-/area/template_noop)
 "Bh" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -1813,6 +1797,10 @@
 /obj/effect/mob_spawn/corpse/human/engineer,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"Ec" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
 "Eg" = (
 /obj/item/stack/rods,
 /turf/open/space/basic,
@@ -2000,11 +1988,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
-"Gn" = (
-/obj/structure/broken_flooring/plating/directional/north,
-/obj/structure/broken_flooring/pile/directional/west,
-/turf/open/space/basic,
-/area/template_noop)
 "Gt" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/exotic/languagebook,
@@ -2091,6 +2074,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"HB" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "HQ" = (
 /obj/machinery/iv_drip,
 /obj/item/clothing/mask/facehugger/dead,
@@ -2454,6 +2441,14 @@
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"MQ" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "MW" = (
 /obj/effect/turf_decal{
 	icon_state = "arrows_red";
@@ -2473,6 +2468,18 @@
 	},
 /obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"Nj" = (
+/obj/structure/window/spawner/directional/west,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/table_frame,
+/obj/item/shard,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "Nu" = (
 /obj/effect/decal/cleanable/glass{
@@ -2679,10 +2686,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"Qu" = (
-/obj/structure/broken_flooring/pile/directional/east,
-/turf/open/space/basic,
-/area/template_noop)
 "QA" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -2751,10 +2754,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"RQ" = (
-/obj/structure/broken_flooring/singular/directional/east,
-/turf/open/space/basic,
-/area/template_noop)
 "RS" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -2922,6 +2921,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"Vh" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "Vo" = (
 /obj/structure/cable,
 /obj/effect/turf_decal{
@@ -2933,23 +2938,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/operating,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
-"VQ" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/table/glass,
-/obj/item/surgical_drapes,
-/obj/effect/spawner/random/medical/surgery_tool_advanced,
-/obj/item/reagent_containers/hypospray/medipen{
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/hypospray/medipen,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white"
-	},
-/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "VR" = (
@@ -3004,6 +2992,10 @@
 /obj/effect/spawner/random/special_lighter,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"WB" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
 "WG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -3047,6 +3039,10 @@
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"Xf" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "Xm" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs{
 	icon_state = "xgibbl3"
@@ -3682,7 +3678,7 @@ fM
 fl
 fl
 sT
-Gn
+zn
 xi
 KB
 wP
@@ -3704,18 +3700,18 @@ fl
 fl
 fl
 fl
-RQ
+HB
 fl
 Or
 fl
-rB
+Vh
 zN
 gP
 Lf
 wP
-VQ
+sb
 Ff
-tJ
+Nj
 wP
 Tb
 wP
@@ -3734,7 +3730,7 @@ RY
 fl
 fl
 fl
-lO
+WB
 fl
 pq
 wq
@@ -3763,7 +3759,7 @@ fl
 fl
 Eg
 fl
-hx
+MQ
 Ft
 Qm
 wP
@@ -3780,13 +3776,13 @@ fl
 "}
 (22,1,1) = {"
 fl
-AU
+Ec
 fl
 fl
 qF
 aB
 fl
-Qu
+Xf
 fl
 fl
 fl
@@ -3843,7 +3839,7 @@ fl
 fl
 fl
 fl
-AU
+Ec
 vj
 ug
 Nu
@@ -4109,7 +4105,7 @@ fl
 fl
 fl
 fl
-AU
+Ec
 fl
 fl
 fl
