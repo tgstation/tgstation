@@ -62,16 +62,16 @@ const MachineScreen = (props, context) => {
               <Table.Cell>Machine</Table.Cell>
             </Table.Row>
             {machine.linked_machinery?.map((lm) => (
-              <Table.Row key={lm.ref}>
-                <Table.Cell>{lm.ref}</Table.Cell>
-                <Table.Cell>{lm.id}</Table.Cell>
-                <Table.Cell>
+              <tr key={lm.ref} className="Table__row candystripe">
+                <td>{lm.ref}</td>
+                <td>{lm.id}</td>
+                <td>
                   <Button
                     content={lm.name}
                     onClick={() => act('view_machine', { id: lm.id })}
                   />
-                </Table.Cell>
-              </Table.Row>
+                </td>
+              </tr>
             ))}
           </Table>
         </Section>
@@ -125,16 +125,16 @@ const MainScreen = (props, context) => {
               <Table.Cell>Machine</Table.Cell>
             </Table.Row>
             {machinery?.map((machine) => (
-              <Table.Row key={machine.ref}>
-                <Table.Cell>{machine.ref}</Table.Cell>
-                <Table.Cell>{machine.id}</Table.Cell>
-                <Table.Cell>
+              <tr key={machine.ref} className="Table__row candystripe">
+                <td>{machine.ref}</td>
+                <td>{machine.id}</td>
+                <td>
                   <Button
                     content={machine.name}
                     onClick={() => act('view_machine', { id: machine.id })}
                   />
-                </Table.Cell>
-              </Table.Row>
+                </td>
+              </tr>
             ))}
           </Table>
         </Section>
