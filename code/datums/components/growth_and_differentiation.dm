@@ -54,7 +54,7 @@
 
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
-		RegisterSignals(parent, src.signals_to_kill_on.Copy(), GLOBAL_PROC_REF(qdel), src)
+		RegisterSignals(parent, src.signals_to_kill_on, PROC_REF(stop_component_processing_entirely))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -67,6 +67,11 @@
 	STOP_PROCESSING(SSdcs, src)
 	deltimer(timer_id)
 	return ..()
+
+/// Wrapper for qdel() so we can pass it in RegisterSignals(). I hate it here too.
+/datum/component/growth_and_differentiation/proc/stop_component_processing_entirely()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// What we invoke when the round starts so we can set up our timer.
 /datum/component/growth_and_differentiation/proc/comp_on_round_start()
