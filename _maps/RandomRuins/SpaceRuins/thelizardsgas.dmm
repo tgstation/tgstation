@@ -440,7 +440,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "QQ" = (
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "How the fuck did he get in there?!";
 	name = "Zingo"
 	},

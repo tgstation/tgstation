@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - bugfix: "Coroner envirohelm (plasmaman helmet of coroner) now doesn't show as errors when using flashlight mode."

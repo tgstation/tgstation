@@ -1420,7 +1420,7 @@
 /area/ruin/powered/beach)
 "Xa" = (
 /obj/item/melee/skateboard/hoverboard,
-/mob/living/simple_animal/chicken{
+/mob/living/basic/chicken{
 	name = "Chicken Joe"
 	},
 /turf/open/misc/beach/sand,
