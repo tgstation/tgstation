@@ -941,10 +941,10 @@
 	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		to_chat(user, span_notice("You fail to secure [src]."))
 		return CANT_UNFASTEN
-	if(locate(/obj/structure/table) in loc)
-		pixel_y = !anchored ? 8 : 0 // Table height
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
+	if(locate(/obj/structure/table) in loc)
+		pixel_y = anchored ? 8 : 0 // Table height
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN
