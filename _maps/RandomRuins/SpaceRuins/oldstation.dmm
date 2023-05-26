@@ -5416,6 +5416,7 @@
 	icon_state = "side";
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "CR" = (
