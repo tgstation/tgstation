@@ -553,7 +553,6 @@
 	icon_state = "test_tube"
 	fill_icon_state = "tube"
 	inhand_icon_state = "atoxinbottle"
-	worn_icon = "icons/mob/clothing/belt.dmi"
 	worn_icon_state = "beaker"
 	possible_transfer_amounts = list(5, 10, 15, 30)
 	volume = 30
