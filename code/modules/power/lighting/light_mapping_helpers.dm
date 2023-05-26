@@ -73,6 +73,9 @@
 	status = LIGHT_EMPTY
 	update(0)
 
+/obj/machinery/light/small/dim
+	brightness = 2.4
+
 /obj/machinery/light/small/red
 	bulb_colour = "#FF3232"
 	no_low_power = TRUE
@@ -145,6 +148,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/built, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
 
 // ---- Red bulbs
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/dim, 0)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red, 0)
 
 // ---- Red dim bulbs

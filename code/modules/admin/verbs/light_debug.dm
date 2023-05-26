@@ -1,7 +1,4 @@
 
-#warn IDEAS!
-// Half power maint lights, cull some maint lights
-
 /proc/debug_sources()
 	GLOB.light_debug_enabled = TRUE
 	var/list/sum = list()

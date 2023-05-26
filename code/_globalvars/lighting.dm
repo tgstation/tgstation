@@ -38,6 +38,10 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 	/// This lets us do subtypes more nicely
 	var/ignore_type = /datum/light_template
 
+/datum/light_template/New()
+	. = ..()
+	id = replacetext("[type]", "/", "-")
+
 /// Links a light template to an atom, making the atom match the template
 /datum/light_template/proc/mirror_onto(atom/light_holder)
 	light_holder.set_light(range, power, color, l_angle = angle)
@@ -74,72 +78,65 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 
 /datum/light_template/read_light/standard_bar
 	name = "Light Bar"
-	id = "light_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light
 
 /datum/light_template/read_light/warm_bar
 	name = "Warm Bar"
-	id = "warm_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/warm
 
 /datum/light_template/read_light/cold_bar
 	name = "Cold Bar"
-	id = "cold_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/cold
 
 /datum/light_template/read_light/red_bar
 	name = "Red Bar"
-	id = "red_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/red
 
 /datum/light_template/read_light/blacklight_bar
 	name = "Black Bar"
-	id = "black_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/blacklight
 
 /datum/light_template/read_light/dim_bar
 	name = "Dim Bar"
-	id = "dim_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/dim
 
 /datum/light_template/read_light/very_dim_bar
 	name = "Very Dim Bar"
-	id = "very_dim_bar"
 	category = "Bar"
 	path_to_read = /obj/machinery/light/very_dim
 
 /datum/light_template/read_light/standard_bulb
 	name = "Light Bulb"
-	id = "light_bulb"
 	category = "Bulb"
 	path_to_read = /obj/machinery/light/small
 
+/datum/light_template/read_light/dim_bulb
+	name = "Dim Bulb"
+	category = "Bulb"
+	path_to_read = /obj/machinery/light/small/dim
+
 /datum/light_template/read_light/red_bulb
 	name = "Red Bulb"
-	id = "red_bulb"
 	category = "Bulb"
 	path_to_read = /obj/machinery/light/small/red
 
 /datum/light_template/read_light/dimred_bulb
 	name = "Dim-Red Bulb"
-	id = "dimred_bulb"
 	category = "Bulb"
 	path_to_read = /obj/machinery/light/small/red/dim
 
 /datum/light_template/read_light/blacklight_bulb
 	name = "Black Bulb"
-	id = "black_bulb"
 	category = "Bulb"
 	path_to_read = /obj/machinery/light/small/blacklight
 
 /datum/light_template/read_light/standard_floor
 	name = "Floor Light"
-	id = "floor_light"
 	category = "Misc"
 	path_to_read = /obj/machinery/light/floor
