@@ -527,6 +527,9 @@
 "cc" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "cd" = (
@@ -3780,6 +3783,10 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "side";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pm" = (
@@ -3787,6 +3794,9 @@
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/broken_flooring{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pn" = (
@@ -10906,7 +10916,7 @@ aa
 Jg
 aa
 Jg
-dH
+my
 Jg
 aa
 Jg
@@ -11764,7 +11774,7 @@ aa
 Jg
 Jg
 IT
-dH
+my
 Ua
 aa
 IT
