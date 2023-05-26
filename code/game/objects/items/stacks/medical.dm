@@ -2,7 +2,6 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/medical/stack_medical.dmi'
-	worn_icon = null
 	worn_icon_state = "nothing"
 	amount = 6
 	max_amount = 6
