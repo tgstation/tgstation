@@ -157,17 +157,17 @@
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
 	if(check_holidays(PRIDE_WEEK))
-		color = get_holiday_color(src, STRIPE_VERTICAL)
+		color = get_holiday_color(src, COLOR_STRIPE_VERTICAL)
 	else
 		color = "#EFB341"
 	return ..()
 
 /// Given an atom, will return what color it should be to match the event/holiday
-/turf/proc/get_holiday_color(atom/thing_to_color, axis = STRIPE_HORIZONTAL)
+/turf/proc/get_holiday_color(atom/thing_to_color, axis = COLOR_STRIPE_HORIZONTAL)
 	switch(axis)
-		if(STRIPE_HORIZONTAL)
+		if(COLOR_STRIPE_HORIZONTAL)
 			return GLOB.holiday_colors[(thing_to_color.y % GLOB.holiday_colors.len) + 1]
-		if(STRIPE_VERTICAL)
+		if(COLOR_STRIPE_VERTICAL)
 			return GLOB.holiday_colors[(thing_to_color.x % GLOB.holiday_colors.len) + 1]
 		else
 			stack_trace("Atom requested holiday color without correct argument.")

@@ -95,7 +95,7 @@
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
 
-/// Generate horizontal stripes for turf decals
-#define STRIPE_HORIZONTAL 0
-/// Generate vertical stripes for turf decals
-#define STRIPE_VERTICAL 1
+/// Generate horizontal striped color turf decals (holidays and rainbow tile)
+#define COLOR_STRIPE_HORIZONTAL 0
+/// Generate vertical striped color turf decals (holidays and rainbow tile)
+#define COLOR_STRIPE_VERTICAL 1

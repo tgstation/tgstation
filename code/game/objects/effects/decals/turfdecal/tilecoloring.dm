@@ -13,8 +13,8 @@
 
 	else if(check_holidays(PRIDE_WEEK))
 		if(istype(src, /obj/effect/turf_decal/tile/neutral/tram))
-			color = get_holiday_color(src, STRIPE_VERTICAL)
-		else color = get_holiday_color(src, STRIPE_HORIZONTAL)
+			color = get_holiday_color(src, COLOR_STRIPE_VERTICAL)
+		else color = get_holiday_color(src, COLOR_STRIPE_HORIZONTAL)
 		// It looks garish at different alphas, and it's not possible to get a
 		// consistent color palette without this.
 		alpha = DECAL_ALPHA
@@ -170,7 +170,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday)
 
 /obj/effect/turf_decal/tile/holiday/Initialize(mapload)
-	color = get_holiday_color(src, STRIPE_HORIZONTAL)
+	color = get_holiday_color(src, COLOR_STRIPE_HORIZONTAL)
 	alpha = DECAL_ALPHA
 	return ..()
 
@@ -188,20 +188,20 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday)
 
 	else if(check_holidays(PRIDE_WEEK))
 		if(istype(src, /obj/effect/turf_decal/trimline/tram))
-			color = get_holiday_color(src, STRIPE_VERTICAL)
-		else color = get_holiday_color(src, STRIPE_HORIZONTAL)
+			color = get_holiday_color(src, COLOR_STRIPE_VERTICAL)
+		else color = get_holiday_color(src, COLOR_STRIPE_HORIZONTAL)
 	return ..()
 
 /obj/effect/turf_decal/trimline/tram/filled/corner/Initialize(mapload)
 	if(check_holidays(PRIDE_WEEK))
-		color = get_holiday_color(src, STRIPE_VERTICAL)
+		color = get_holiday_color(src, COLOR_STRIPE_VERTICAL)
 	else
 		color = "#ffc875"
 	return ..()
 
 /obj/effect/turf_decal/trimline/tram/filled/line/Initialize(mapload)
 	if(check_holidays(PRIDE_WEEK))
-		color = get_holiday_color(src, STRIPE_VERTICAL)
+		color = get_holiday_color(src, COLOR_STRIPE_VERTICAL)
 	else
 		color = "#ffc875"
 	return ..()
