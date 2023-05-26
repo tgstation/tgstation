@@ -16,7 +16,7 @@
 /obj/structure/broken_flooring/LateInitialize()
 	. = ..()
 	var/turf/turf = get_turf(src)
-	if(!isplatingturf()) // Render as trash if not on plating
+	if(!isplatingturf(turf)) // Render as trash if not on plating
 		plane = GAME_PLANE
 		layer = LOW_OBJ_LAYER
 		return
