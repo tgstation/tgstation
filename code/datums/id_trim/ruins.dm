@@ -26,7 +26,7 @@
 	assignment = "Charlie Station Engineer"
 
 /// Trim for the oldstation ruin/Charlie station to access APCs and other equipment
-/datum/id_trim/away/old/apc
+/datum/id_trim/away/old/equipment
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP)
 	assignment = "Engine Equipment Access"
 

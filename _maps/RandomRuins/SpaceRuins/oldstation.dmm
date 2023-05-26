@@ -4067,14 +4067,6 @@
 /obj/structure/curtain,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
-"sy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/engie)
 "sA" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/gravity)
@@ -6088,7 +6080,7 @@
 	},
 /obj/item/paper/fluff/ruins/oldstation/apc_note,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/item/card/id/away/old/apc,
+/obj/item/card/id/away/old/equipment,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "HG" = (
@@ -11882,7 +11874,7 @@ fE
 fe
 em
 if
-sy
+em
 ce
 Ox
 iU
