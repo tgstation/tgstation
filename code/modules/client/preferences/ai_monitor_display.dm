@@ -8,10 +8,7 @@
 /datum/preference/choiced/ai_monitor_display/init_possible_values()
 	var/list/values = list()
 
-	values["Random"] = icon('icons/mob/silicon/ai.dmi', "ai-empty")
-
-	for (var/screen in GLOB.ai_monitor_display_screens - "Portrait" - "Random")
-		values[screen] = icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(screen))
+	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
 
 	return values
 
