@@ -39,7 +39,3 @@
 	category = LOG_CATEGORY_DEBUG_ASSET
 	config_flag = /datum/config_entry/flag/log_asset
 	master_category = /datum/log_category/debug
-
-/datum/log_category/debug_qdel
-	category = LOG_CATEGORY_DEBUG_QDEL
-	master_category = /datum/log_category/debug
