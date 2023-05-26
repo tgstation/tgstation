@@ -15437,6 +15437,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"dWT" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/drone_dispenser,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "dXc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -62875,6 +62880,9 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/theater)
+"vlZ" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "vmk" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -65062,12 +65070,9 @@
 /turf/open/floor/iron/white,
 /area/station/service/theater)
 "vYW" = (
-/obj/machinery/mineral/stacking_machine{
-	input_dir = 8;
-	output_dir = 2
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/mineral/stacking_machine,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal)
 "vYX" = (
@@ -177780,9 +177785,9 @@ hwM
 dzu
 kcF
 soq
-abM
-abM
-abM
+dWT
+vlZ
+vlZ
 abM
 abM
 abM
