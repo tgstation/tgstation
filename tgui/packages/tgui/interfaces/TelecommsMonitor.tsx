@@ -31,6 +31,8 @@ type LinkedMachinery = {
 const MachineScreen = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { network, machine } = data;
+  const { linked_machinery = [] } = machine
+  
   return (
     <Stack fill vertical>
       <Stack.Item>
@@ -80,7 +82,7 @@ const MachineScreen = (props, context) => {
 
 const MainScreen = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { machinery, network } = data;
+  const { machinery = [], network } = data;
   const [networkId, setNetworkId] = useLocalState(
     context,
     'networkId',
@@ -149,7 +151,7 @@ export const TelecommsMonitor = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            {error_message !== '' && <NoticeBox>{error_message}</NoticeBox>}
+            {!!error_message && <NoticeBox>{error_message}</NoticeBox>}
           </Stack.Item>
           <Stack.Item grow>
             {(screen === Screen.Main && <MainScreen />) ||
