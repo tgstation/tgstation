@@ -392,7 +392,7 @@
 	///History of power supply
 	var/list/history = list()
 	///Size of history, should be equal or bigger than the solar cycle
-	var/record_size = 120
+	var/record_size = 0
 	///Interval between records
 	var/record_interval = 60 SECONDS
 	///History record timer
@@ -405,8 +405,6 @@
 	if(powernet)
 		set_panels(azimuth_target)
 	azimuth_rate = SSsun.base_rotation
-	/// History contains full sun cycle
-	record_size = ROUND_UP(360 / (azimuth_rate * abs(SSsun.azimuth_mod)))
 	record_interval = SSsun.wait
 	history["supply"] = list()
 	history["capacity"] = list()
@@ -439,6 +437,9 @@
 
 ///Record the generated power supply and capacity for history
 /obj/machinery/power/solar_control/proc/record()
+	if(record_size == 0)
+		record_size = 1 + ROUND_UP(360 / (azimuth_rate * abs(SSsun.azimuth_mod))) //History contains full sun cycle
+
 	if(world.time >= next_record)
 		next_record = world.time + record_interval
 
