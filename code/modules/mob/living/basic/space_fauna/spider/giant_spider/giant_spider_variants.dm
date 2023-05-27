@@ -10,8 +10,8 @@
 	icon_living = "ambush"
 	icon_dead = "ambush_dead"
 	gender = FEMALE
-	maxHealth = 100
-	health = 100
+	maxHealth = 125
+	health = 125
 	obj_damage = 45
 	melee_damage_lower = 25
 	melee_damage_upper = 30
@@ -40,8 +40,8 @@
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	gender = FEMALE
-	maxHealth = 125
-	health = 125
+	maxHealth = 160
+	health = 160
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	obj_damage = 45
@@ -68,8 +68,8 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 70
-	health = 70
+	maxHealth = 80
+	health = 80
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	poison_per_bite = 5
@@ -93,8 +93,8 @@
 	icon_state = "scout"
 	icon_living = "scout"
 	icon_dead = "scout_dead"
-	maxHealth = 40
-	health = 40
+	maxHealth = 60
+	health = 60
 	obj_damage = 10
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -286,8 +286,8 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 200
-	health = 200
+	maxHealth = 250
+	health = 250
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	speed = 4
@@ -432,8 +432,8 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	maxHealth = 70
-	health = 70
+	maxHealth = 90
+	health = 90
 	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast."
 
 /mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
