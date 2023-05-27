@@ -546,6 +546,27 @@
 		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to set [target]'s charge to 100 but it's already at 100!")
 	target.full_charge = TRUE
 
+//Used to turn off lights in areas.
+/obj/effect/mapping_helpers/turn_off_lights
+	name = "area lights off helper"
+	icon_state = "lights_off"
+	late = TRUE
+
+/obj/effect/mapping_helpers/turn_off_lights/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+	payload()
+	qdel(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/turn_off_lights/proc/payload()
+	var/area/needed_area = get_area(src)
+	if(!needed_area.lightswitch)
+		log_mapping("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
+	needed_area.lightswitch = FALSE
+
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
