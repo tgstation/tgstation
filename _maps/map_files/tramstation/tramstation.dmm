@@ -3152,7 +3152,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "alA" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -3865,7 +3865,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "aso" = (
 /obj/structure/ladder,
 /obj/structure/railing{
@@ -4460,7 +4460,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "axS" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 4
@@ -4496,13 +4496,13 @@
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "aye" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "ayn" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -4522,7 +4522,7 @@
 /obj/item/crowbar,
 /obj/item/screwdriver,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "ayB" = (
 /obj/machinery/restaurant_portal/restaurant,
 /obj/machinery/camera/directional/north{
@@ -4539,7 +4539,7 @@
 	amount = 23
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "ayH" = (
 /obj/structure/window/spawner,
 /obj/structure/closet/crate,
@@ -4625,7 +4625,7 @@
 /obj/structure/table,
 /obj/machinery/coffeemaker,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "azN" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -5283,7 +5283,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "aFb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10235,7 +10235,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "cbG" = (
 /obj/effect/landmark/start/security_officer,
 /obj/structure/chair{
@@ -11666,7 +11666,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "cDX" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/briefcase,
@@ -16143,7 +16143,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "elr" = (
 /turf/closed/wall,
 /area/station/commons/dorms)
@@ -16257,7 +16257,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "enj" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/effect/turf_decal/sand,
@@ -17099,7 +17099,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "eCQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/light/directional/south,
@@ -17923,7 +17923,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "eVz" = (
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
@@ -21271,7 +21271,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "glP" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/eighties/red,
@@ -24602,7 +24602,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "hDj" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Testing Room"
@@ -25109,7 +25109,7 @@
 /obj/item/stock_parts/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "hNe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -29463,7 +29463,7 @@
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "jqA" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
@@ -32488,7 +32488,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "kye" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
@@ -33649,7 +33649,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "kSh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
@@ -34003,7 +34003,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "kXz" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -43779,7 +43779,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "oyK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -46324,7 +46324,7 @@
 "pxD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "pxH" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -46592,7 +46592,7 @@
 	id = "cargowarehouse"
 	},
 /turf/open/floor/plating,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "pBQ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -47939,7 +47939,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "qas" = (
 /turf/closed/wall/rust,
 /area/station/hallway/primary/tram/center)
@@ -49128,7 +49128,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "qyr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
@@ -50984,7 +50984,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "rgm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -51009,7 +51009,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "rgR" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery/white{
@@ -55816,7 +55816,7 @@
 	id = "cargowarehouse"
 	},
 /turf/open/floor/plating,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "sRZ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/chair{
@@ -56657,7 +56657,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "tfL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -58327,7 +58327,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "tKt" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -58514,8 +58514,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/turn_off_lights,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "tNW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -59396,7 +59397,7 @@
 /area/station/security/courtroom)
 "udQ" = (
 /turf/closed/wall,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "udS" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/floodlight_frame,
@@ -60316,7 +60317,7 @@
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/iron,
-/area/station/cargo/warehouse/lights_off)
+/area/station/cargo/warehouse)
 "uue" = (
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
