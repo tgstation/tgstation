@@ -12,7 +12,6 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
 
 	if(prob(10 * A.stage))
 		var/obj/item/organ/internal/bladder/bladder = A.affected_mob.get_organ_slot(ORGAN_SLOT_BLADDER)
