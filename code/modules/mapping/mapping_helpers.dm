@@ -565,6 +565,9 @@
 	var/area/needed_area = get_area(src)
 	if(!needed_area.lightswitch)
 		log_mapping("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
+	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
+	if(!light_switch)
+		CRASH("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.") // So we don't cause any anomalies with permanently turned off lights.
 	needed_area.lightswitch = FALSE
 
 //needs to do its thing before spawn_rivers() is called
