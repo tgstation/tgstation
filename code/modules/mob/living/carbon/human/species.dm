@@ -199,6 +199,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default butt with a different organ
 	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt
 
+	///Replaces default bladder with a different organ
+	var/obj/item/organ/internal/bladder/mutantbladder = /obj/item/organ/internal/bladder
+
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
@@ -355,6 +358,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantstomach
 		if(ORGAN_SLOT_BUTT)
 			return mutantbutt
+		if(ORGAN_SLOT_BLADDER)
+			return mutantbladder
 		else
 			CRASH("Invalid organ slot [slot]")
 
@@ -384,6 +389,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_BUTT,
+		ORGAN_SLOT_BLADDER,
 	)
 
 	for(var/slot in organ_slots)
@@ -1911,6 +1917,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantstomach
 	to_store += mutantappendix
 	to_store += mutantbutt
+	to_store += mutantbladder
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
 
