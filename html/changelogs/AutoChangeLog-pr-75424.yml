@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Spacesuits won't show 'you turn off x' if it's turned off automatically, either from removing the power cell or it losing power."

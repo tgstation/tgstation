@@ -548,7 +548,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/abandoned/crew)
 "bJ" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/syndicate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/fingerless,
@@ -617,7 +617,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -665,7 +665,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "cg" = (
@@ -926,7 +926,7 @@
 	},
 /area/shuttle/abandoned/bridge)
 "di" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/radio{
 	desc = "An old handheld radio. You could use it, if you really wanted to.";
@@ -1073,7 +1073,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
