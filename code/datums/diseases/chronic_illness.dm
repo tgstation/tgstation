@@ -63,7 +63,7 @@
 			switch(rand(1,2))
 				if(1)
 					to_chat(affected_mob, span_notice("You feel your atoms begin to realign. You're safe. For now."))
-					stage = 1
+					update_stage(1)
 				if(2)
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)

@@ -44,7 +44,7 @@
 			ehms = new(user.drop_location())
 			user.put_in_hands(ehms)
 			ehms.balloon_alert(user, "the injector materializes in your hand")
-			RegisterSignal(ehms, COMSIG_AFTER_INJECT, PROC_REF(on_injected))
+			RegisterSignal(ehms, COMSIG_EHMS_INJECTOR_INJECTED, PROC_REF(on_injected))
 			AddComponent(/datum/component/traitor_objective_register, ehms, \
 				succeed_signals = null, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
@@ -156,13 +156,16 @@
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	if(used == FALSE)
-		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 2 SECONDS, affected_mob))
-			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-			affected_mob.ForceContractDisease(hms)
-			used = TRUE
-			inject(affected_mob, user)
-			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
-	else
-		inject(affected_mob, user)
+	if(used)
+		return ..()
+	to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
+	balloon_alert(user, "injecting...")
+	log_combat(user, affected_mob, "attempted to inject", src)
+	if(!do_after(user, 1.5 SECONDS))
+		balloon_alert(user, "interrupted!")
+		return
+	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+	affected_mob.ForceContractDisease(hms)
+	used = TRUE
+	inject(affected_mob, user)
+	SEND_SIGNAL(src, COMSIG_EHMS_INJECTOR_INJECTED, user, affected_mob)

@@ -165,4 +165,4 @@
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
 /// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
-#define COMSIG_AFTER_INJECT "after_inject"
+#define COMSIG_EHMS_INJECTOR_INJECTED "after_ehms_inject"
