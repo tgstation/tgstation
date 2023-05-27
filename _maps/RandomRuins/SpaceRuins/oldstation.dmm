@@ -6883,12 +6883,10 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/periodic_table/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Ke" = (
@@ -7710,9 +7708,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "RA" = (
@@ -8393,9 +8389,7 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Yl" = (

@@ -1691,9 +1691,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/cc64k_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "dH" = (
