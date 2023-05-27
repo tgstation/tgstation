@@ -1,4 +1,3 @@
-//This one's from bay12
 /obj/machinery/vending/runic_vendor
 	name = "\improper Runic Vending Machine"
 	desc = "This vending machine was designed for warfare! A perfect bait for NanoTrasen's crew thirst for consumerism!."
