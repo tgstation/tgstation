@@ -3559,6 +3559,7 @@
 #include "code\modules\industrial_lift\elevator\elevator_controller.dm"
 #include "code\modules\industrial_lift\elevator\elevator_doors.dm"
 #include "code\modules\industrial_lift\elevator\elevator_indicator.dm"
+#include "code\modules\industrial_lift\elevator\elevator_music_zone.dm"
 #include "code\modules\industrial_lift\elevator\elevator_panel.dm"
 #include "code\modules\industrial_lift\tram\tram_doors.dm"
 #include "code\modules\industrial_lift\tram\tram_floors.dm"
