@@ -152,6 +152,8 @@
 	/// What was our power state the last time we updated its appearance?
 	/// TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
+	/// The vertical pixel offset applied when the machine is anchored on a tile with table
+	var/tabletop_offset = 6
 	armor_type = /datum/armor/obj_machinery
 
 /datum/armor/obj_machinery
@@ -944,7 +946,7 @@
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
 	if(locate(/obj/structure/table) in loc)
-		pixel_y = anchored ? 8 : 0 // Table height
+		pixel_y = anchored ? tabletop_offset : initial(pixel_y)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN

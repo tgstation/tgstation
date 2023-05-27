@@ -518,14 +518,6 @@
 	open = FALSE
 	update_appearance()
 
-/// Go on top of a table if we're anchored & not varedited
-/obj/machinery/microwave/proc/set_on_table()
-	var/obj/structure/table/counter = locate(/obj/structure/table) in get_turf(src)
-	if(anchored && counter && !pixel_y)
-		pixel_y = 6
-	else if(!anchored)
-		pixel_y = initial(pixel_y)
-
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
 /// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.
 /obj/machinery/microwave/hell
