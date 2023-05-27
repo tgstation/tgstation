@@ -26524,6 +26524,8 @@
 /area/station/maintenance/hallway/abandoned_command)
 "jPm" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/light_switch/directional/east,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/warehouse)
 "jPq" = (

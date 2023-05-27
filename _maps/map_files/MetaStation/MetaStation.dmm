@@ -7538,6 +7538,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "cSv" = (
@@ -35910,6 +35911,7 @@
 "mXE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "mXK" = (
@@ -51045,6 +51047,7 @@
 "stw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "stC" = (
