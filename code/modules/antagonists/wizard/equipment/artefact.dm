@@ -393,9 +393,9 @@
 
 /obj/item/runic_vendor_staff
 	name = "staff of runic vendormancy"
-	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
-	icon_state = "lavastaff"
-	inhand_icon_state = "lavastaff"
+	desc = "This staff allows you to summon, detonate and throw Runic Vendors. A modern spin on the old Geomancy with 3 summoning charges that can be recovered with a simple magical channeling."
+	icon_state = "vendor_staff"
+	inhand_icon_state = "vendor_staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -430,6 +430,9 @@
 	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in T
 	if(vendor_on_turf)
 		vendor_on_turf.runic_explosion()
+		return
+	if(!summon_vendor_charges)
+		user.balloon_alert(user, "no charges!")
 		return
 	if(get_dist(T,src) > max_summon_range)
 		user.balloon_alert(user, "too far!")
@@ -473,9 +476,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/machinery/vending/runic_vendor))
 		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
-		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 20, 4, user)
+		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(vendor_on_turf)
-		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 20, 4, user)
+		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
