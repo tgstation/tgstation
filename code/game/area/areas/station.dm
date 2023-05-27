@@ -1364,9 +1364,6 @@
 	icon_state = "cargo_warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/station/cargo/warehouse/lights_off
-	lightswitch = FALSE
-
 /area/station/cargo/drone_bay
 	name = "\improper Drone Bay"
 	icon_state = "cargo_drone"
