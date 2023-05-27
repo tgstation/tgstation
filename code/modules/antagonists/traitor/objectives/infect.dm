@@ -143,27 +143,29 @@
 		//don't take an objective target of someone who is already dead
 		fail_objective()
 
-
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector
 	name = "EHMS autoinjector"
 	desc = "Experimental Hereditary Manifold Sickness autoinjector."
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
-	var/used = 0
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
+	/// Has someone been injected with the sickness yet?
+	var/used = FALSE
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	if(used == 0)
-		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 1.5 SECONDS))
-			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-			affected_mob.ForceContractDisease(hms)
-			used = 1
-			inject(affected_mob, user)
-			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
-	else
-		inject(affected_mob, user)
-
+	if(used)
+		return ..()
+	to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
+	balloon_alert(user, "injecting...")
+	log_combat(user, affected_mob, "attempted to inject", src)
+	if(!do_after(user, 1.5 SECONDS))
+		balloon_alert(user, "interrupted!")
+		return
+	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+	affected_mob.ForceContractDisease(hms)
+	used = TRUE
+	inject(affected_mob, user)
+	SEND_SIGNAL(src, COMSIG_LIVING_EHMS_INJECTED, user, affected_mob)
