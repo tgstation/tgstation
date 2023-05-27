@@ -19,7 +19,7 @@
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
-				damage_amount *= 2
+				damage_amount *= 1
 			if(BRUTE)
 				damage_amount *= 0.25
 	. = ..()
@@ -113,7 +113,7 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	density = TRUE
-	max_integrity = 60
+	max_integrity = 90
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
@@ -128,7 +128,7 @@
 	icon_state = "webpassage"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	max_integrity = 40
+	max_integrity = 60
 	alpha = 200
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
