@@ -80,7 +80,6 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	for(var/datum/log_category/category as anything in log_categories)
 		category = log_categories[category]
 		var/list/category_data = list()
-		category_data[category.category] = category_data
 
 		var/list/entries = list()
 		for(var/datum/log_entry/entry as anything in category.entries)
@@ -110,7 +109,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	switch(action)
 		if("re-render")
 			cache_ui_data()
-			update_static_data_for_all_viewers()
+			SStgui.update_uis(src)
 			return TRUE
 
 		else

@@ -28,6 +28,8 @@ type LogEntryData = {
   data?: any[];
 };
 
+const CATEGORY_ALL = 'all';
+
 export const LogViewer = (_: any, context: any) => {
   const { data, act } = useBackend<LogViewerData>(context);
 
@@ -36,6 +38,26 @@ export const LogViewer = (_: any, context: any) => {
     'activeCategory',
     ''
   );
+
+  let viewerData: LogViewerCategoryData = {
+    entry_count: 0,
+    entries: [],
+  };
+
+  if (activeCategory) {
+    if (activeCategory !== CATEGORY_ALL) {
+      viewerData = data.categories[activeCategory];
+    } else {
+      for (const category in data.categories) {
+        const categoryData = data.categories[category];
+        for (const entry of categoryData.entries) {
+          viewerData.entries.push(entry);
+        }
+        viewerData.entry_count += categoryData.entry_count;
+      }
+      viewerData.entries.sort((a, b) => a.id - b.id);
+    }
+  }
 
   return (
     <Window width={720} height={720}>
@@ -48,10 +70,7 @@ export const LogViewer = (_: any, context: any) => {
           active={activeCategory}
           setActive={setActiveCategory}
         />
-        <CategoryViewer
-          activeCategory={activeCategory}
-          data={data.categories[activeCategory]}
-        />
+        <CategoryViewer activeCategory={activeCategory} data={viewerData} />
       </Window.Content>
     </Window>
   );
@@ -84,6 +103,20 @@ const CategoryBar = (props: CategoryBarProps, context: any) => {
         />
       }>
       <Stack scrollableHorizontal>
+        {/** these are not in stack items to have them directly next to eachother */}
+        <Button
+          textAlign="left"
+          content="None"
+          selected={props.active === ''}
+          onClick={() => props.setActive('')}
+        />
+        <Button
+          textAlign="left"
+          content="All"
+          tooltip="This can be slow!"
+          selected={props.active === CATEGORY_ALL}
+          onClick={() => props.setActive(CATEGORY_ALL)}
+        />
         {sorted.map((category) => {
           if (!category.toLowerCase().includes(categorySearch.toLowerCase())) {
             return null;
@@ -114,7 +147,7 @@ const validateRegExp = (str: string) => {
     new RegExp(str);
     return true;
   } catch (e) {
-    return false;
+    return e;
   }
 };
 
@@ -125,9 +158,18 @@ const CategoryViewer = (props: CategoryViewerProps, context: any) => {
     'searchRegex',
     false
   );
+  let [caseSensitive, setCaseSensitive] = useLocalState(
+    context,
+    'caseSensitive',
+    false
+  );
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;
+  }
+  let regexValidation: boolean | SyntaxError = true;
+  if (searchRegex) {
+    regexValidation = validateRegExp(search);
   }
 
   return (
@@ -135,7 +177,7 @@ const CategoryViewer = (props: CategoryViewerProps, context: any) => {
       title={`Category Viewer${
         props.activeCategory
           ? ` - ${props.activeCategory}[${props.data?.entry_count}]`
-          : ''
+          : ' - Select a category'
       }`}
       buttons={
         <>
@@ -147,14 +189,21 @@ const CategoryViewer = (props: CategoryViewerProps, context: any) => {
             onChange={(_: any, value: string) => setSearch(value)}
           />
           <Button
-            icon={searchRegex ? 'check-square' : 'square'}
-            content="Regex"
+            icon={'code'}
+            tooltip="RegEx Search"
             selected={searchRegex}
             onClick={() => setSearchRegex(!searchRegex)}
           />
           <Button
+            icon={'font'}
+            selected={caseSensitive}
+            tooltip="Case Sensitive"
+            onClick={() => setCaseSensitive(!caseSensitive)}
+          />
+          <Button
             icon="trash"
-            content="Clear"
+            tooltip="Clear Search"
+            color="bad"
             onClick={() => {
               setSearch('');
               setSearchRegex(false);
@@ -163,59 +212,60 @@ const CategoryViewer = (props: CategoryViewerProps, context: any) => {
         </>
       }>
       <Stack vertical>
-        {!searchRegex || validateRegExp(search) ? (
+        {!searchRegex || regexValidation === true ? (
           props.data?.entries.map((entry) => {
             if (search) {
               if (searchRegex) {
-                try {
-                  const regex = new RegExp(search);
-                  if (!regex.test(entry.message)) {
-                    return null;
-                  }
-                } catch (e) {
-                  return <NoticeBox danger>RegEx failure</NoticeBox>;
+                const regex = new RegExp(search, caseSensitive ? 'g' : 'gi');
+                if (!regex.test(entry.message)) {
+                  return null;
                 }
               } else {
-                if (!entry.message.includes(search)) {
-                  return null;
+                if (caseSensitive) {
+                  if (!entry.message.includes(search)) {
+                    return null;
+                  }
+                } else {
+                  if (
+                    !entry.message.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return null;
+                  }
                 }
               }
             }
 
             return (
-              <>
-                <Stack.Item key={entry.id}>
-                  <Collapsible
-                    fitted
-                    tooltip={entry.timestamp}
-                    title={`[${entry.id}] - ${entry.message.substring(0, 50)}${
-                      entry.message.length > 50 ? '...' : ''
-                    }`}>
-                    <Stack vertical fill>
-                      <Stack.Item>
-                        <p font-family="Courier">{entry.message}</p>
-                      </Stack.Item>
-                      <Stack.Item>
-                        {entry.semver && (
-                          <Stack.Item>
-                            <JsonViewer data={entry.semver} title="Semver" />
-                          </Stack.Item>
-                        )}
-                      </Stack.Item>
-                      {entry.data && (
+              <Stack.Item key={entry.id}>
+                <Collapsible
+                  fitted
+                  tooltip={entry.timestamp}
+                  title={`[${entry.id}] - ${entry.message}`}>
+                  <Stack vertical fill>
+                    <Stack.Item>
+                      <p font-family="Courier">{entry.message}</p>
+                    </Stack.Item>
+                    <Stack.Item>
+                      {entry.semver && (
                         <Stack.Item>
-                          <JsonViewer data={entry.data} title="Data" />
+                          <JsonViewer data={entry.semver} title="Semver" />
                         </Stack.Item>
                       )}
-                    </Stack>
-                  </Collapsible>
-                </Stack.Item>
-                <Stack.Divider />
-              </>
+                    </Stack.Item>
+                    {entry.data && (
+                      <Stack.Item>
+                        <JsonViewer data={entry.data} title="Data" />
+                      </Stack.Item>
+                    )}
+                  </Stack>
+                </Collapsible>
+              </Stack.Item>
             );
           })
         ) : (
-          <NoticeBox danger>Invalid RegEx</NoticeBox>
+          <NoticeBox danger>
+            Invalid RegEx: {(regexValidation as SyntaxError).message}
+          </NoticeBox>
         )}
       </Stack>
     </Section>
