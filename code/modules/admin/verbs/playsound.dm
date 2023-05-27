@@ -78,13 +78,12 @@
 	if(!ytdl)
 		to_chat(user, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
-	input = shell_url_scrub(input)
 	var/web_sound_url = ""
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
 	var/duration = 0
-
 	if(istext(input))
+		input = shell_url_scrub(input)
 		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[input]\"")
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
 		var/stdout = output[SHELLEO_STDOUT]
