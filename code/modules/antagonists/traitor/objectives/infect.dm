@@ -26,7 +26,7 @@
 
 /datum/traitor_objective/target_player/infect/can_generate_objective(generating_for, list/possible_duplicates)
 	if(length(possible_duplicates) > 0)
-    	return FALSE
+		return FALSE
 	return ..()
 
 /datum/traitor_objective/target_player/infect/generate_ui_buttons(mob/user)
