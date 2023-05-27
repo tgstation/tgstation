@@ -32,6 +32,15 @@
 	COOLDOWN_DECLARE(piss_notification)
 
 
+
+/obj/item/organ/internal/bladder/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/internal/bladder/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
 /obj/item/organ/internal/bladder/proc/consume_act(datum/reagents/consumed_reagents, amount)
 	stored_piss = min(stored_piss + amount, max_piss_storage)
 
