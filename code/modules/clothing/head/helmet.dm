@@ -427,6 +427,7 @@
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	armor_type = /datum/armor/helmet_skull
 	icon_state = "skull"
 	inhand_icon_state = null
