@@ -371,3 +371,24 @@ GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 	AI_EMOTION_BLUE_GLOW = "ai_sal",
 	AI_EMOTION_RED_GLOW = "ai_hal",
 ))
+
+GLOBAL_LIST_INIT(ai_hologram_displays, list(
+	Bear = list(icon='icons/mob/simple/animal.dmi', icon_state="bear"),
+	Carp = list(icon='icons/mob/simple/carp.dmi', icon_state="carp"),
+	Chicken = list(icon='icons/mob/simple/animal.dmi', icon_state="chicken_brown"),
+	Corgi = list(icon='icons/mob/simple/pets.dmi', icon_state="corgi"),
+	Cow = list(icon='icons/mob/simple/animal.dmi', icon_state="cow"),
+	Crab = list(icon='icons/mob/simple/animal.dmi', icon_state="crab"),
+	Fox = list(icon='icons/mob/simple/pets.dmi', icon_state="fox"),
+	Goat = list(icon='icons/mob/simple/animal.dmi', icon_state="goat"),
+	Cat = list(icon='icons/mob/simple/pets.dmi', icon_state="cat"),
+	Cat_2 = list(icon='icons/mob/simple/pets.dmi', icon_state="cat2"),
+	Poly = list(icon='icons/mob/simple/animal.dmi', icon_state="parrot_fly"),
+	Pug = list(icon='icons/mob/simple/pets.dmi', icon_state="pug"),
+	Spider = list(icon='icons/mob/simple/animal.dmi', icon_state="guard"),
+	Default = list(icon='icons/mob/silicon/ai.dmi', icon_state="default"),
+	Floating Face = list(icon='icons/mob/silicon/ai.dmi', icon_state="floating face"),
+	Xeno Queen = list(icon='icons/mob/nonhuman-player/alien.dmi', icon_state="alienq"),
+	Horror = list(icon='icons/mob/silicon/ai.dmi', icon_state="horror"),
+	Clock = list(icon='icons/mob/silicon/ai.dmi', icon_state="clock"),
+))
