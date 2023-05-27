@@ -2,6 +2,7 @@
 	key = "piss"
 
 /datum/emote/living/carbon/human/piss/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
 	if(!user.get_organ_slot(ORGAN_SLOT_BLADDER) || !ishuman(user))
 		to_chat(user, "<span class='warning'>You don't have a bladder!</span>")
 		return
