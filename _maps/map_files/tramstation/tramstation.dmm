@@ -17669,6 +17669,7 @@
 /obj/item/scalpel{
 	pixel_y = 11
 	},
+/obj/item/cautery,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "eRb" = (
@@ -40380,6 +40381,8 @@
 /obj/item/hemostat{
 	pixel_x = 3
 	},
+/obj/item/surgical_drapes,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nny" = (
@@ -59763,13 +59766,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ukS" = (
-/obj/structure/table/reinforced,
-/obj/item/surgical_drapes,
-/obj/item/cautery,
-/obj/machinery/camera/directional/south{
-	c_tag = "Science - Robotics Surgery";
-	network = list("ss13","rd")
-	},
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "ukU" = (

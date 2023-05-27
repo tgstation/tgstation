@@ -7214,7 +7214,6 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "cLa" = (
-/obj/structure/weightmachine/stacklifter,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/white/textured_edge{
@@ -12482,10 +12481,6 @@
 /area/station/maintenance/central)
 "eER" = (
 /obj/structure/rack,
-/obj/item/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/item/storage/box/bodybags,
 /obj/item/healthanalyzer,
 /obj/structure/disposalpipe/segment,
@@ -12495,6 +12490,8 @@
 /obj/structure/window{
 	dir = 1
 	},
+/obj/item/tank/internals/anesthetic,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "eEV" = (
@@ -42264,8 +42261,8 @@
 /obj/machinery/light/directional/north,
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
+/obj/item/storage/box/gloves,
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = -10;

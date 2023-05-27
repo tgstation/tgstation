@@ -18218,6 +18218,8 @@
 /obj/item/mmi,
 /obj/item/mmi,
 /obj/item/mmi,
+/obj/item/pen,
+/obj/item/storage/box/bodybags,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -35899,6 +35901,7 @@
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "ltE" = (
@@ -69677,9 +69680,7 @@
 /area/station/hallway/primary/central)
 "wkH" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/table,
-/obj/item/storage/box/bodybags,
-/obj/item/pen,
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "wkV" = (
