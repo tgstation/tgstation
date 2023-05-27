@@ -611,6 +611,5 @@
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
 
-
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER
