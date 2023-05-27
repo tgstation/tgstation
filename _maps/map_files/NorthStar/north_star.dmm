@@ -22819,6 +22819,15 @@
 /obj/structure/emergency_shield/regenerating,
 /turf/open/floor/plating,
 /area/station/cargo/miningdock)
+"fWK" = (
+/obj/structure/foamedmetal,
+/obj/structure/grille,
+/obj/effect/decal/cleanable/molten_object/large{
+	desc = "The pile looks inert, yet you still hear a faint hum. Standing around this makes you feel funny.";
+	name = "glob of mess"
+	},
+/turf/open/floor/engine,
+/area/station/maintenance/floor1/port/aft)
 "fWZ" = (
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel/fifty,
@@ -87276,11 +87285,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/starboard/fore)
 "wSa" = (
+/obj/item/trench_tool,
 /obj/effect/decal/cleanable/molten_object/large{
-	desc = "The pile looks inert, yet you still hear a faint hum. Standinf around this makes you feel funny.";
+	desc = "The pile looks inert, yet you still hear a faint hum. Standing around this makes you feel funny.";
 	name = "glob of mess"
 	},
-/obj/item/trench_tool,
 /turf/open/floor/plating/foam,
 /area/station/maintenance/floor1/port/aft)
 "wSb" = (
@@ -136514,7 +136523,7 @@ dEc
 vcr
 vcr
 wtm
-wtm
+fWK
 vcr
 dss
 oxz
