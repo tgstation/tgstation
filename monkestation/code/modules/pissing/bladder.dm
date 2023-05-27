@@ -35,10 +35,15 @@
 /obj/item/organ/internal/bladder/proc/consume_act(datum/reagents/consumed_reagents, amount)
 	stored_piss = min(stored_piss + amount, max_piss_storage)
 
-	if(COOLDOWN_FINISHED(src, piss_notification))
+	if(COOLDOWN_FINISHED(src, piss_notification) && stored_piss == max_piss_storage)
 		to_chat(owner, span_warning("Your bladder if feeling full."))
 		COOLDOWN_START(src, piss_notification, 5 MINUTES)
 
+
+
+/obj/item/organ/internal/bladder/process(seconds_per_tick, times_fired)
+	. = ..()
+	stored_piss = min(stored_piss + per_process_piss, max_piss_storage)
 
 /obj/item/organ/internal/bladder/proc/urinate()
 	if(stored_piss < per_piss_usage)
