@@ -78,6 +78,7 @@
 	if(!ytdl)
 		to_chat(user, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
+	input = shell_url_scrub(input)
 	var/web_sound_url = ""
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
@@ -192,8 +193,7 @@
 			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
-		var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-		web_sound(usr, shell_scrubbed_input)
+		web_sound(usr, web_sound_input)
 	else
 		web_sound(usr, null)
 
