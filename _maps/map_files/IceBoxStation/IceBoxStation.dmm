@@ -47176,7 +47176,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oXo" = (
-/obj/effect/mapping_helpers/turn_off_lights,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "oXq" = (
