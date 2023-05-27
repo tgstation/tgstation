@@ -1,18 +1,20 @@
-/datum/looping_sound/local_forecast
-	start_sound = 'sound/ambience/music/local_forecast/local_forecast1.ogg'
-	start_length = 5.83 SECONDS
+/datum/looping_sound/elevator_music
+	start_sound = 'sound/ambience/music/elevator/elevator-01.ogg'
+	start_length = 7.62 SECONDS
 
 	mid_sounds = list(
-		'sound/ambience/music/local_forecast/local_forecast2.ogg' = 6,
-		'sound/ambience/music/local_forecast/local_forecast3.ogg' = 5,
-		'sound/ambience/music/local_forecast/local_forecast4.ogg' = 4,
-		'sound/ambience/music/local_forecast/local_forecast5.ogg' = 3,
-		'sound/ambience/music/local_forecast/local_forecast6.ogg' = 2,
-		'sound/ambience/music/local_forecast/local_forecast7.ogg' = 1,
+		'sound/ambience/music/elevator/elevator-01.ogg',
+		'sound/ambience/music/elevator/elevator-02.ogg',
+		'sound/ambience/music/elevator/elevator-03.ogg',
+		'sound/ambience/music/elevator/elevator-04.ogg',
+		'sound/ambience/music/elevator/elevator-05.ogg',
+		'sound/ambience/music/elevator/elevator-06.ogg',
+		'sound/ambience/music/elevator/elevator-07.ogg',
+		'sound/ambience/music/elevator/elevator-08.ogg',
 	)
-	mid_length = 5.83 SECONDS
+	mid_length = 7.62 SECONDS
 
-	end_sound = 'sound/ambience/music/local_forecast/local_forecast8.ogg'
+	end_sound = 'sound/ambience/music/elevator/elevator-08.ogg'
 
 	volume = 20
 	falloff_exponent = 5
@@ -21,3 +23,6 @@
 	ignore_walls = FALSE
 	use_reverb = FALSE
 	each_once = TRUE
+	skip_starting_sounds = TRUE
+	in_order = TRUE
+	direct = TRUE

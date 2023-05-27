@@ -15,7 +15,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "bO" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced,
 /obj/item/wallframe/button{
@@ -159,7 +159,7 @@
 /area/ruin/space)
 "fC" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/circuitboard/machine/teleporter_hub,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
@@ -192,7 +192,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "gD" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/frame/computer{
 	dir = 1;
@@ -247,12 +247,12 @@
 /area/ruin/space)
 "ia" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "ib" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/computer{
 	dir = 1
 	},
@@ -519,7 +519,7 @@
 	},
 /area/ruin/space/has_grav/derelictsulaco)
 "rb" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
@@ -549,7 +549,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "rW" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/computer{
 	dir = 4;
 	anchored = 1
@@ -759,7 +759,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "yS" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/rack_parts,
 /turf/open/floor/circuit,
@@ -1169,7 +1169,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "Mi" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/frame/computer{
 	dir = 1;
@@ -1472,7 +1472,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "UP" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/machine,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
