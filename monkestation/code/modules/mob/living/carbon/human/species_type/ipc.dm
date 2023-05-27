@@ -24,7 +24,6 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_XENO_IMMUNE,
-		TRAIT_NOMETABOLISM,
 		TRAIT_GENELESS,
 		TRAIT_TOXIMMUNE)
 
@@ -55,6 +54,7 @@
 	stunmod = 0.8
 	siemens_coeff = 1.5
 	species_gibs = GIB_TYPE_ROBOTIC
+	reagent_tag = PROCESS_SYNTHETIC
 	//attack_sound = 'sound/items/trayhit1.ogg'
 	//deathsound = "sound/voice/borg_deathsound.ogg"
 	species_language_holder = /datum/language_holder/synthetic
