@@ -42,7 +42,7 @@
 			ehms = new(user.drop_location())
 			user.put_in_hands(ehms)
 			ehms.balloon_alert(user, "the injector materializes in your hand")
-			RegisterSignal(ehms, COMSIG_AFTER_INJECT, PROC_REF(on_injected))
+			RegisterSignal(ehms, COMSIG_EHMS_INJECTOR_INJECTED, PROC_REF(on_injected))
 			AddComponent(/datum/component/traitor_objective_register, ehms, \
 				succeed_signals = null, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
@@ -168,4 +168,4 @@
 	affected_mob.ForceContractDisease(hms)
 	used = TRUE
 	inject(affected_mob, user)
-	SEND_SIGNAL(src, COMSIG_LIVING_EHMS_INJECTED, user, affected_mob)
+	SEND_SIGNAL(src, COMSIG_EHMS_INJECTOR_INJECTED, user, affected_mob)
