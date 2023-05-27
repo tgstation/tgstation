@@ -21270,6 +21270,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "glP" = (
