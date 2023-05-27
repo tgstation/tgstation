@@ -82,7 +82,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	var/obj/item/organ/internal/bladder/contained_bladder = target.get_organ_slot(ORGAN_SLOT_BLADDER)
+	var/obj/item/organ/internal/bladder/contained_bladder = target_mob.get_organ_slot(ORGAN_SLOT_BLADDER)
 	if(contained_bladder)
 		contained_bladder.consume_act(reagents, fraction)
 	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
