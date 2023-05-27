@@ -153,7 +153,7 @@
 	/// TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
 	/// The vertical pixel offset applied when the machine is anchored on a tile with table
-	var/tabletop_offset = 6
+	var/tabletop_offset = 8
 	armor_type = /datum/armor/obj_machinery
 
 /datum/armor/obj_machinery
