@@ -415,10 +415,10 @@
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
 		if(item_type == "bottle")
-			var/obj/item/reagent_containers/cup/bottle/P
+			var/obj/item/reagent_containers/cup/tube/P
 			for(var/i in 1 to amount)
-				P = new/obj/item/reagent_containers/cup/bottle(drop_location())
-				P.name = trim("[name] bottle")
+				P = new/obj/item/reagent_containers/cup/tube(drop_location())
+				P.name = trim("[name] test tube")
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE

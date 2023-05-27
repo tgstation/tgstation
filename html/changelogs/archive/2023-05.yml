@@ -737,3 +737,264 @@
   - bugfix: fixed TTS not working when used by local servers
   YakumoChen:
   - qol: Bar bottles now work as makeshift rolling pins
+2023-05-20:
+  DaydreamIQ:
+  - bugfix: Space Dragon can no longer place their portals outside the station on
+      Tramstation
+  JohnFulpWillard:
+  - qol: Gym equipment was reworked. You now buckle yourself to weight machines to
+      use them, rather than clicking on it and getting stunned for a few seconds.
+      It also means it works like a chair now.
+  - qol: Gym equipment no longer breaks a sweat in no gravity.
+  MTandi:
+  - bugfix: fixed possible issues with apc, airalarm and damaged machinery/windows
+      helpers
+  Profakos:
+  - bugfix: fixes request console messages not being trimmed and encoded properly
+  ShizCalev:
+  - code_imp: Made a new unit test to find turfs with broken/missing icons! Rejoice!
+  - bugfix: Fixed a bunch of incorrect and missing turf icons.
+  orthography:
+  - bugfix: fixed Tramstation genetics pen chasms
+  san7890:
+  - refactor: Lizards (the animal (not the species of people)) are now a bit smarter.
+      Expect to see them avidly hunt down their prey, rather than languish around
+      and wait for it to come to them. Hungry buggers.
+  - image: We now actually implement the previously unused lizard gib animation for
+      those little buggers!
+  - refactor: Expect to see Killer Tomatoes be a bit smarter as they now are able
+      to juggle multiple targets, lock onto you, and barrel towards you. They're much
+      the same as before, but just a little bit more intelligent, which is especially
+      scary considering they're a fucking plant.
+  timothymtorres:
+  - code_imp: Add extra clothing options to equip mob outfits.  Replaced many one-letter
+      vars in file with better descriptions.
+2023-05-21:
+  MTandi:
+  - bugfix: made it impossible to change tram/elevator button styles that couldn't
+      be reverted back
+  - image: changed button styles, added tram/elevator button overlays
+  - refactor: refactored the way button sprites are applied, updated sprite names
+      to make more sense
+  - rscdel: removed unused button sprites
+  Thunder12345:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
+2023-05-22:
+  SyncIt21:
+  - bugfix: wire cutter's can carve out book's again.
+  - bugfix: bibles can convert other bibles
+  TiviPlus:
+  - qol: TTS no longer chokes on large amounts of one letter
+2023-05-23:
+  Comxy:
+  - bugfix: Removes spiderling from hostile gold spawns.
+  Epoc:
+  - rscadd: Toast sandwich
+  Furrior:
+  - admin: 'If you are on a downstream server using non-Latin fonts (e.g. Cyrillic)
+      for character/job names: The player panel encoding has been fixed so it should
+      show up properly for you now.'
+  Ghommie:
+  - bugfix: Fixed large paintings looking pretty off while flipped E/W.
+  Helg2:
+  - bugfix: fixed medical kiosk showing you that you have blood if you don't have
+      one.
+  JohnFulpWillard:
+  - bugfix: Borgs can be tipped over while flashed.
+  Rhials:
+  - qol: Ashwalker roundend reporting has been revamped. Glory to the Necropolis!
+  ShizCalev:
+  - bugfix: Fixed an item duplication bug involving snow tiles.
+  Singul0:
+  - bugfix: The buttons in HoP office of Icebox now actually works
+  Treach:
+  - bugfix: The Lavaland Syndicate base now has the correct plumbing constructor.
+  Watermelon914, Iamgoofball:
+  - bugfix: Fixed message garbling. TTS messages won't play in the wrong order anymore.
+  - qol: Added a way for players to change the volume of TTS.
+  Youtubeboy139:
+  - image: Added new Maintenance Drone Dispenser sprite
+  ZephyrTFA:
+  - server: All logs are now formatted in json, excluding perf and investigations
+  Zergspower:
+  - qol: Space Ruine Mechtransport - more modern redesign
+  jlsnow301:
+  - bugfix: Fixed an issue where TGUI say blinks on open, which should make it look
+      and feel faster.
+  orthography:
+  - bugfix: fixes the guide to mimery radial menu.
+  - refactor: refactors how the mime book works.
+  tf-4:
+  - refactor: Converted butterflies to the basic mob system
+  - rscadd: Butterflies can now be grown in cytology
+2023-05-24:
+  Cheshify:
+  - bugfix: The North Star got a few minor requested tweaks
+  DaydreamIQ:
+  - balance: Hulk damage to portals lowered to 30 (Was 150)
+  Ghommie:
+  - bugfix: Capturing CTF control points no longer requires the active hand to be
+      empty.
+  - bugfix: Fixes the sparring contract. You can now spar with no stakes and just
+      for fun.
+  Guillaume Prata:
+  - balance: Plasmamen won't spawn with breathing masks anymore as their helmet has
+      maskless internals support now. Enjoy your moustache's accent plasmacooks!
+  JohnFulpWillard:
+  - bugfix: Shaft Miners are now alerted of Icemoon storms, Clowns are naive, and
+      Curators are immune to the Tower of Babel again.
+  Jolly:
+  - bugfix: '[MetaStation] The abandoned sec couch should now be covered by nearstation.'
+  - bugfix: '[MetaStation] Lattice adjacent to the newly added fitness room is now
+      covered by nearstation.'
+  MTandi:
+  - qol: RPD and Pipe Pispenser UI tweaks for better navigation
+  - code_imp: RPD and Pipe Dispenser UI now on TS
+  - bugfix: You receive damage from tritium only when there are enough moles to make
+      it visible
+  MTandi, coiledlamb:
+  - rscadd: Added test tubes and racks for them
+  - balance: All 30u bottles now have 50u volume and chem master/pandemic spawn tubes
+      instead of bottles
+  Peliex:
+  - refactor: honeycomb is now edible
+  - bugfix: all-in-one grinder now notifies the user when trying to dump an empty
+      bag
+  - bugfix: all-in-one grinder now accepts honeycomb from plant bags
+  Rhials:
+  - bugfix: The windows on the waystation ruin now only have one grille underneath,
+      rather than two.
+  Ryll/Shaps:
+  - bugfix: Godmode now prevents people from suffering forced wounds
+  Watermelon914:
+  - bugfix: Fixed bypassing component cooldowns with module components.
+  YehnBeep:
+  - bugfix: Fixed missing construction access on North Star and Birdshot. Non-engineer
+      builders can ask for this access again and get to those build projects.
+  - bugfix: Fixed some maintenance doors requiring different accesses than the room's
+      main doors in the North Star's engineering department.
+  carlarctg:
+  - bugfix: Fixes ducky shoes having clown shoe slowdown
+  mc-oofert:
+  - balance: You can no longer augment golems
+  - balance: You can no longer amputate undismemberable traits
+  orthography:
+  - rscadd: Interdyne has released a new medication to treat those who are in the
+      wrong timeline!
+  - rscadd: Interdyne has also realized this is VERY profitable! They've begun arming
+      their operatives with an autoinjector.
+  - bugfix: fixed northstar tcomms to use proper rather than birdshot
+  - bugfix: adds more fire alarms to birdshot.
+  timothymtorres:
+  - rscadd: Add two new basketball teams and stadiums - Ash Gladiators and Beach Bums
+2023-05-25:
+  Chadley:
+  - bugfix: fixes the HMS objective.
+  Ghommie:
+  - balance: Drawing small graffiti like paw/foot/claw prints, small brush dots and
+      short lines should cost half as many charges off your spraycan or crayon.
+  - balance: The cost of recoloring graffiti decals is now consistent with that of
+      drawing them.
+  - balance: Trying to suicide with an empty spraycan will now fail, because it's
+      empty. It's just that simple.
+  - qol: Adds a eye-dropper-like right-click function to the painting canvas UI. Right-Click
+      a pixel on the canvas while holding a painting tool to have it copy its color.
+  - qol: Also adds a right-click function to the color palette at the bottom of the
+      UI to allow users to set its colors without having to alternate between the
+      game window and the UI.
+  - qol: Lastly, a tooltip has been added near the top-left corner of the same UI
+      to let players know of these features.
+  LemonInTheDark:
+  - server: qdel statistics are once again logged in qdel.log, instead of the otherwise
+      typical json logging system
+  Melbert:
+  - balance: Milk no longer harms the potency of mushrooms. Apparently it's good for
+      them?
+  - balance: Radium now does slightly more tox damage than Uranium
+  - code_imp: Removed a ton of boilerplate from chem hydro interactions
+  SyncIt21:
+  - bugfix: out of bounds when updating lights in lighting subsystem
+  san7890:
+  - refactor: Chickens have been refactored into basic mobs, expect them to be a tad
+      bit smarter.
+  - code_imp: Cat Surgeons are a bit more smarter about attacking threats to the world
+      around them on their endless pursuit for those felinid tails.
+2023-05-27:
+  FlufflesTheDog:
+  - bugfix: Test tubes can now be stored in chemistry smart fridges
+  Ghommie:
+  - qol: The Canvas UI now shows a grid while the user is painting.
+  Helg2:
+  - bugfix: Coroner envirohelm (plasmaman helmet of coroner) now doesn't show as errors
+      when using flashlight mode.
+  JohnFulpWillard:
+  - balance: Very small items like tape recorders now use 10 mat points instead of
+      5.
+  - bugfix: Species that have longer arms than normal can now properly set their glove
+      offset to go low and meet their hand.
+  Jolly:
+  - bugfix: '[MetaStation] - One of the chem heaters in the pharmacy is no longer
+      nudged and awkwardly four pixels to the right.'
+  - bugfix: '[TramStation] - The chem heater in the Xenobiology lab was replaced with
+      the proper one that every other station uses.'
+  - image: The chem heater sprite was nudged a SINGLE pixel to the right. This should,
+      hopefully, make them appear more centered.
+  LemonInTheDark:
+  - server: del logging is now done by outputting to a json file again, but this time
+      we're using ACTUAL json and not just a big text string with newlines and shit
+  MTandi:
+  - bugfix: Plumbing RCD UI fixed
+  Melbert:
+  - bugfix: Fixes being unable to amputate
+  - admin: Getting dusted by HMS gives a death log
+  - bugfix: Fixed being unable to spraypaint things
+  - bugfix: Fix being unable to wound people who are wounded
+  SyncIt21:
+  - bugfix: runtime when sm processes gases in vacuum
+  - qol: sm will now get activated for the very first time only if there is more than
+      0.01 moles of a reactive gas present, so you can now safely install it in near
+      vacuum
+  - qol: sm will continue to process gasses only when there is above 0.01 moles of
+      the gas present else it just ignores it
+  - bugfix: rolling pin icon show's up correctly under the tools section in the crafting
+      menu i.e. for those recipes that require it
+  - bugfix: basketball hoop icon and other sprites that are not the standard `32 x
+      32` now show's up correctly in the crafting menu
+  - bugfix: graves can be closed again, but only with a shovel and not by hand.
+  - qol: you can put items in graves normally without throwing them in
+  - qol: examines & screentips for graves
+  TheSmallBlue and cats4gold:
+  - sound: Recent research concluded that the new elevator music was upping crewmate's
+      morale a bit too much, this has now been corrected via the replacement of said
+      music.
+  - code_imp: Added a new "in_order" variable to the looping sound datum, for when
+      you need sounds to play in order
+  TheVekter:
+  - bugfix: Adds a drone dispenser to Tramstation.
+  - bugfix: The stacking machine on Tramstation no longer has incorrect input and
+      output directions at roundstart.
+  - config: Drone dispensers are now listed as required map items for passing unit
+      tests. If one is not present on your map, it will fail the test.
+  - bugfix: Added the missing drone fabricator to Northstar's robotics maintenance.
+  Treach:
+  - bugfix: Turbine parts can now be printed at ancient protolathes.
+  Vect0r:
+  - bugfix: Birdshots xenobio should now be getting power from the rest of the powergrid.
+  Z Man Wit Z Plan:
+  - bugfix: Added some grills around not-so defended areas on Tramstation (specifically
+      arrivals)
+  carlarctg:
+  - bugfix: Spacesuits won't show 'you turn off x' if it's turned off automatically,
+      either from removing the power cell or it losing power.
+  - refactor: Refactors snipping cuffs into a bespoke cuffsnapping element, adding
+      support for delayed cuffsnipping. Adds this element to box cutters! Effectively
+      speaking everything is the same as usual.
+  moocowswag:
+  - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.
+  - rscadd: Nanotrasen has uncovered a unique use for plasteel allowing the construction
+      of new machines capable of fabricating and distributing hardlight into a modular
+      barrier. These new machines are available via the advanced power manipulation
+      techweb.
+  san7890:
+  - bugfix: Chickens should now, once again, peck you in case you hit them.

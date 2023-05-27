@@ -261,7 +261,7 @@
 		new /obj/item/food/grown/oat(src)
 	new /obj/item/food/grown/cocoapod(src)
 	new /obj/item/food/grown/wheat(src)
-	new /obj/item/reagent_containers/honeycomb(src)
+	new /obj/item/food/honeycomb(src)
 	new /obj/item/seeds/poppy(src)
 
 /obj/item/storage/box/ingredients/carnivore
