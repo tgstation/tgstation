@@ -51,12 +51,15 @@
 		return
 
 	var/valid_toilet = FALSE
+	var/valid_urinal = FALSE
 	var/turf/open/owner_turf = get_turf(owner)
 	for(var/atom/movable/listed_atom in owner_turf)
 		if(istype(listed_atom, /obj/structure/toilet))
 			valid_toilet = TRUE
 			break
-
+		if(istype(listed_atom, /obj/structure/urinal))
+			valid_urinal = TRUE
+			break
 
 	var/obj/item/reagent_containers/held_container
 	if(owner.held_items[owner.active_hand_index] != null)
@@ -70,6 +73,10 @@
 
 	if(valid_toilet)
 		owner.visible_message(span_notice("[owner] pisses into the toilet."))
+		return
+
+	if(valid_urinal)
+		owner.visible_message(span_notice("[owner] carefully pisses into the urinal not spilling a drop."))
 		return
 
 	owner.visible_message(span_warning("[owner] pisses all over the floor!"))
