@@ -23,7 +23,7 @@
 		return
 	var/mob/living/living_pawn = controller.pawn
 	// We can't pick this up
-	if (fetch_thing.anchored || !isturf(fetch_thing.loc) || !living_pawn.CanReach(fetch_thing))
+	if (fetch_thing.anchored || !living_pawn.Adjacent(fetch_thing))
 		finish_action(controller, FALSE, target_key, delivery_key)
 		return
 
@@ -106,7 +106,7 @@
 		finish_action(controller, FALSE) // Where did it go?
 
 	var/mob/living/basic/basic_pawn = controller.pawn
-	if(!in_range(basic_pawn, snack))
+	if(!basic_pawn.Adjacent(snack))
 		return
 
 	if(isturf(snack.loc))
