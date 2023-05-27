@@ -288,5 +288,4 @@
 	desc = "A flimsy hat made of paper."
 	icon_state = "paper"
 	worn_icon_state = "paper"
-	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head
