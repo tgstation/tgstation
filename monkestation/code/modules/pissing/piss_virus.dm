@@ -15,7 +15,7 @@
 	var/mob/living/M = A.affected_mob
 
 	if(prob(10 * A.stage))
-		var/obj/item/organ/internal/bladder/bladder = A.affected_mob.(ORGAN_SLOT_BLADDER)
+		var/obj/item/organ/internal/bladder/bladder = A.affected_mob(ORGAN_SLOT_BLADDER)
 		if(bladder)
 			bladder.stored_piss += 15
 			bladder.urinate()
