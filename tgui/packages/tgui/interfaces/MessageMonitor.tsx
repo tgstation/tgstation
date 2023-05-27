@@ -70,19 +70,19 @@ const RequestLogsScreen = (props, context) => {
               <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
             {requests?.map((request) => (
-              <tr key={request.ref} className="Table__row candystripe">
-                <td>
+              <Table.Row key={request.ref} className="candystripe">
+                <Table.Cell>
                   <Button
                     icon="trash"
                     color="red"
                     onClick={() => act('delete_request', { ref: request.ref })}
                   />
-                </td>
-                <td>{request.message}</td>
-                <td>{request.stamp}</td>
-                <td>{request.send_dpt}</td>
-                <td>{request.id_auth}</td>
-              </tr>
+                </Table.Cell>
+                <Table.Cell>{request.message}</Table.Cell>
+                <Table.Cell>{request.stamp}</Table.Cell>
+                <Table.Cell>{request.send_dpt}</Table.Cell>
+                <Table.Cell>{request.id_auth}</Table.Cell>
+              </Table.Row>
             ))}
           </Table>
         </Section>
@@ -116,18 +116,18 @@ const MessageLogsScreen = (props, context) => {
               <Table.Cell>Message</Table.Cell>
             </Table.Row>
             {messages?.map((message) => (
-              <tr key={message.ref} className="Table__row candystripe">
-                <td>
+              <Table.Row key={message.ref} className="candystripe">
+                <Table.Cell>
                   <Button
                     icon="trash"
                     color="red"
                     onClick={() => act('delete_message', { ref: message.ref })}
                   />
-                </td>
-                <td>{message.sender}</td>
-                <td>{message.recipient}</td>
-                <td>{message.message}</td>
-              </tr>
+                </Table.Cell>
+                <Table.Cell>{message.sender}</Table.Cell>
+                <Table.Cell>{message.recipient}</Table.Cell>
+                <Table.Cell>{message.message}</Table.Cell>
+              </Table.Row>
             ))}
           </Table>
         </Section>
