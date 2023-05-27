@@ -286,8 +286,8 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 220
-	health = 220
+	maxHealth = 200
+	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	speed = 4
