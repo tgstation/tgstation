@@ -25,9 +25,9 @@
 	. += NAMEOF(src, maximum_objectives_in_period)
 
 /datum/traitor_objective/target_player/infect/can_generate_objective(generating_for, list/possible_duplicates)
-    if(length(possible_duplicates) > 0)
-        return FALSE
-    return ..()
+	if(length(possible_duplicates) > 0)
+    	return FALSE
+	return ..()
 
 /datum/traitor_objective/target_player/infect/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
