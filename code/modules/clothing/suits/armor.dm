@@ -240,7 +240,7 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bone
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /datum/armor/armor_bone
 	melee = 35
