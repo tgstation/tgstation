@@ -21,7 +21,6 @@
 	if (QDELETED(fetch_thing))
 		finish_action(controller, FALSE, target_key, delivery_key)
 		return
-	var/mob/living/living_pawn = controller.pawn
 	// We can't pick this up
 	if (fetch_thing.anchored)
 		finish_action(controller, FALSE, target_key, delivery_key)
