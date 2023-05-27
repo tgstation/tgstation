@@ -233,7 +233,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	var/list/category_header = list(
 		LOG_HEADER_INIT_TIMESTAMP = logging_start_timestamp,
-		LOG_HEADER_ROUND_ID = big_number_to_text(GLOB.round_id),
+		LOG_HEADER_ROUND_ID = GLOB.round_id,
 		LOG_HEADER_SECRET = category_instance.secret,
 		LOG_HEADER_CATEGORY_LIST = contained_categories,
 		LOG_HEADER_CATEGORY = category_instance.category,
