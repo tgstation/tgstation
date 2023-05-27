@@ -34,8 +34,8 @@
 		[show_deleted ? "" : "WHERE deleted IS NULL"]
 			[show_deleted ? "WHERE" : "AND"] author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND ckey LIKE CONCAT('%',:ckey,'%')
 		ORDER BY id DESC
 		LIMIT :skip, :take
@@ -65,8 +65,8 @@
 			[show_deleted ? "" : "WHERE deleted IS NULL"]
 			[show_deleted ? "WHERE" : "AND"] author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND ckey LIKE CONCAT('%',:ckey,'%')
 	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category, "ckey" = ckey))
 
