@@ -24,8 +24,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_XENO_IMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_TOXIMMUNE)
+		TRAIT_GENELESS)
 
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
 	mutantbrain = /obj/item/organ/internal/brain/positron
