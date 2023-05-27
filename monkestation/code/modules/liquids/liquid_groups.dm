@@ -212,6 +212,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			member.liquid_height = expected_turf_height + member.turf_height
 
 /datum/liquid_group/proc/process_member(turf/member)
+	if(isspaceturf(member))
+		remove_any(member.liquids, reagents_per_turf)
+
 	if(!(member in members))
 		return
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
