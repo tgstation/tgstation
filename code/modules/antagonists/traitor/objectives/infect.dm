@@ -150,6 +150,7 @@
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
+	//Was the injector used on someone yet?
 	var/used = FALSE
 	volume = 30
 	amount_per_transfer_from_this = 30

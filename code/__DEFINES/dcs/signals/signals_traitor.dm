@@ -32,3 +32,5 @@
 #define COMSIG_TRAITOR_GRAFFITI_DRAWN "traitor_rune_drawn"
 /// Called when someone slips on some seditious graffiti. Pass the mind of the viewer.
 #define COMSIG_TRAITOR_GRAFFITI_SLIPPED "traitor_demoralise_event"
+/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
+#define COMSIG_EHMS_INJECTOR_INJECTED "after_ehms_inject"
