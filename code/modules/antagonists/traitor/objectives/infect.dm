@@ -8,16 +8,14 @@
 	name = "Infect %TARGET% the %JOB TITLE%"
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
-	abstract_type = /datum/traitor_objective/target_player/infect
-	objective_period = 45 MINUTES
-	maximum_objectives_in_period = 1
 	progression_minimum = 45 MINUTES
 
 	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = 1
 
 	var/heads_of_staff = FALSE
-	duplicate_type = /datum/traitor_objective/target_player
+
+	duplicate_type = /datum/traitor_objective/target_player/infect
 
 	var/obj/item/reagent_containers/hypospray/medipen/manifoldinjector/ehms
 
@@ -25,6 +23,11 @@
 	. = ..()
 	. += NAMEOF(src, objective_period)
 	. += NAMEOF(src, maximum_objectives_in_period)
+
+/datum/traitor_objective/target_player/infect/can_generate_objective(generating_for, list/possible_duplicates)
+    if(length(possible_duplicates) > 0)
+        return FALSE
+    return ..()
 
 /datum/traitor_objective/target_player/infect/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -147,18 +150,18 @@
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
-	var/used = 0
+	var/used = FALSE
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	if(used == 0)
+	if(used == FALSE)
 		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
 		if(do_after(user, 2 SECONDS, affected_mob))
 			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
 			affected_mob.ForceContractDisease(hms)
-			used = 1
+			used = TRUE
 			inject(affected_mob, user)
 			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
 	else
