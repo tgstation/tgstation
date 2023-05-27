@@ -101,7 +101,8 @@
 #define LOG_CATEGORY_ADMIN_PRIVATE_ASAY "adminprivate-asay"
 
 // Debug categories
-#define LOG_CATEGORY_DEBUG "debug"
+#define LOG_CATEGORY_DEBUG_PRIVATE "debug-private"
+#define LOG_CATEGORY_DEBUG_PUBLIC "debug-public"
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
 #define LOG_CATEGORY_DEBUG_HREF "debug-href"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
