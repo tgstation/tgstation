@@ -5547,6 +5547,7 @@
 #include "monkestation\code\modules\reagents\fun\austrialium.dm"
 #include "monkestation\code\modules\reagents\fun\shakeium.dm"
 #include "monkestation\code\modules\reagents\medical\solder.dm"
+#include "monkestation\code\modules\reagents\medical\system_cleaner.dm"
 #include "monkestation\code\modules\reagents\recipes\fun.dm"
 #include "monkestation\code\modules\reagents\recipes\medical.dm"
 #include "monkestation\code\modules\research\designs\computer_designs.dm"
