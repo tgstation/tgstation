@@ -12,7 +12,7 @@
 	gender = FEMALE
 	maxHealth = 100
 	health = 100
-	obj_damage = 45	
+	obj_damage = 45
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	speed = 5
@@ -68,8 +68,8 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 60
-	health = 60
+	maxHealth = 70
+	health = 70
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	poison_per_bite = 5
@@ -286,8 +286,8 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 200
-	health = 200
+	maxHealth = 220
+	health = 220
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	speed = 4
