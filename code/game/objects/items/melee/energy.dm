@@ -15,6 +15,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
 	attack_style = /datum/attack_style/melee_weapon/swing/esword
+	weapon_sprite_angle = 45
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -351,7 +352,6 @@
 	slowdown = 0.75
 	reverse_for_lefthand = FALSE
 	time_per_turf = 0.1 SECONDS
-	weapon_sprite_angle = 45
 
 /datum/attack_style/melee_weapon/swing/esword/get_swing_description()
 	return ..() + " It must be active to swing. Right-clicking will swing in the opposite direction."

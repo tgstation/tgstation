@@ -24,6 +24,8 @@
 	wound_bonus = -15
 	bare_wound_bonus = 15
 	attack_style = /datum/attack_style/melee_weapon/stab_out/spear
+	weapon_sprite_angle = 45
+
 	/// For explosive spears, what we cry out when we use this to bap someone
 	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear

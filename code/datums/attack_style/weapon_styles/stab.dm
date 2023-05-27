@@ -64,7 +64,6 @@
 /datum/attack_style/melee_weapon/stab_out/spear
 	cd = CLICK_CD_MELEE * 2
 	stab_range = 2
-	weapon_sprite_angle = 45
 	sprite_size_multiplier = 1.5
 
 /datum/attack_style/melee_weapon/stab_out/spear/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)

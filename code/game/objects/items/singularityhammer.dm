@@ -18,6 +18,7 @@
 	force_string = "LORD SINGULOTH HIMSELF"
 	armor_type = /datum/armor/item_magichammer
 	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/singularity_hammer
+	weapon_sprite_angle = 45
 	/// AOE radius if the suck. Don't VV this too high, you have been warned
 	var/suck_radius = 5
 	/// Duration of cooldown between sucks
@@ -38,7 +39,6 @@
 	return ..()
 
 /datum/attack_style/melee_weapon/swing/requires_wield/singularity_hammer
-	weapon_sprite_angle = 45
 
 /datum/attack_style/melee_weapon/swing/requires_wield/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	. = ..()
@@ -91,7 +91,8 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	armor_type = /datum/armor/item_magichammer
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/diagonal_sprite
+	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	weapon_sprite_angle = 45
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()

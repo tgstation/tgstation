@@ -224,6 +224,8 @@
 	 * Generally don't do that unless it's stuff that would not function as a weapon, like an RCD.
 	 */
 	var/datum/attack_style/melee_weapon/attack_style = /datum/attack_style/melee_weapon
+	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
+	var/weapon_sprite_angle = 45
 
 	/**
 	 * How well can we block with this thing?

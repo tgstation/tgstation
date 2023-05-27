@@ -348,8 +348,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 #endif
 
 /datum/attack_style/melee_weapon
-	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
-	var/weapon_sprite_angle = 0
 	/// The attack effect is scaled by this amount
 	var/sprite_size_multiplier = 1
 
@@ -429,7 +427,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// Creates an image for use in attack animations
 /datum/attack_style/melee_weapon/proc/create_attack_image(mob/living/attacker, obj/item/weapon, turf/initial_loc, angle)
 	if(isnull(angle))
-		angle = -weapon_sprite_angle + get_angle(attacker, initial_loc)
+		angle = -weapon.weapon_sprite_angle + get_angle(attacker, initial_loc)
 
 	var/image/attack_image = image(icon = weapon, loc = attacker, layer = attacker.layer + 0.1)
 	attack_image.transform = turn(attack_image.transform, angle)

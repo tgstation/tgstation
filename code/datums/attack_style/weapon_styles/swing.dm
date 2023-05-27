@@ -12,8 +12,8 @@
 /datum/attack_style/melee_weapon/swing/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	var/num_turfs_to_move = length(affecting)
 	var/final_animation_length = time_per_turf * num_turfs_to_move
-	var/initial_angle = -weapon_sprite_angle + get_angle(attacker, affecting[1])
-	var/final_angle = -weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
+	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[1])
+	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
 	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1], initial_angle)
 	var/matrix/final_transform = turn(attack_image.transform, final_angle - initial_angle)
 	var/final_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
@@ -41,10 +41,6 @@
 	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
 		reverse_range(.)
 
-// Swing for weapons which sit at a 45 degree angle
-/datum/attack_style/melee_weapon/swing/diagonal_sprite
-	weapon_sprite_angle = 45
-
 // Swing for weapons which require being wielded
 /datum/attack_style/melee_weapon/swing/requires_wield
 
@@ -56,9 +52,3 @@
 		attacker.balloon_alert(attacker, "wield your weapon!")
 		return ATTACK_STYLE_CANCEL
 	return ..()
-
-/datum/attack_style/melee_weapon/swing/requires_wield/diagonal_sprite
-	weapon_sprite_angle = 45
-
-/datum/attack_style/melee_weapon/swing/requires_wield/fireaxe
-	weapon_sprite_angle = 90

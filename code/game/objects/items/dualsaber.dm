@@ -33,6 +33,7 @@
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
 	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/desword
+	weapon_sprite_angle = 45
 
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
@@ -213,7 +214,6 @@
 /datum/attack_style/melee_weapon/swing/requires_wield/desword
 	cd = CLICK_CD_MELEE * 1.25
 	reverse_for_lefthand = FALSE
-	weapon_sprite_angle = 45
 
 /datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description()
 	return "It swings out to all adjacent tiles besides directly behind you. It must be active to swing."
