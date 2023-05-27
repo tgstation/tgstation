@@ -26,7 +26,7 @@
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
-	tabletop_offset = 6
+	anchored_tabletop_offset = 6
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	/// How dirty is it?
@@ -54,8 +54,6 @@
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
 	soundloop = new(src, FALSE)
-	set_on_table()
-
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/microwave/Exited(atom/movable/gone, direction)
@@ -78,10 +76,6 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	return ..()
-
-/obj/machinery/microwave/set_anchored(anchorvalue)
-	. = ..()
-	set_on_table()
 
 /obj/machinery/microwave/RefreshParts()
 	. = ..()

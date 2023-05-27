@@ -8,6 +8,7 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items
