@@ -10361,7 +10361,7 @@
 /area/station/security/execution/transfer)
 "dhj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -24911,7 +24911,7 @@
 "hWs" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/throwing_star/toy,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -27127,7 +27127,7 @@
 /area/station/command/bridge)
 "iGW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
@@ -33753,7 +33753,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
@@ -41735,7 +41735,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "npV" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/warm/directional/north,
 /turf/open/misc/ashplanet/wateryrock{
@@ -50688,7 +50688,7 @@
 /area/station/maintenance/fore)
 "qdR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
@@ -52292,7 +52292,7 @@
 /area/station/service/hydroponics)
 "qFU" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
 /area/station/maintenance/port/aft)
 "qFX" = (
@@ -56475,7 +56475,7 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
@@ -58248,7 +58248,7 @@
 /area/mine/laborcamp)
 "szx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -72836,7 +72836,7 @@
 /area/station/service/hydroponics)
 "xgB" = (
 /obj/structure/flora/rock/style_random,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/station/maintenance/port/aft)
 "xgH" = (
@@ -75769,7 +75769,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "ycj" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/jungle/a/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/ashplanet/wateryrock{
