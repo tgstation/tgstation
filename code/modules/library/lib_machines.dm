@@ -25,8 +25,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
-	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
-	pixel_y = 8
+	anchored_tabletop_offset = 8
 	///The current book id we're searching for
 	var/book_id = null
 	///The current title we're searching for
@@ -204,8 +203,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		WHERE isnull(deleted)
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 		ORDER BY id DESC
 		LIMIT :skip, :take
 	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
@@ -232,8 +231,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		WHERE isnull(deleted)
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category))
 
 	if(!query_library_count_books.warn_execute())

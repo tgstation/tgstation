@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes:
+  - bugfix: "Fixed virus food being unsynthesizable by making it a hot reaction instead. Now requires 600K to synthesize."

@@ -167,6 +167,56 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/modular_shield_generator
+	name = "Modular Shield Generator Board"
+	desc = "The circuit board for a modular shield generator."
+	id = "modular_shield_generator"
+	build_path = /obj/item/circuitboard/machine/modular_shield_generator
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_node
+	name = "Modular Shield Node Board"
+	desc = "The circuit board for a modular shield node."
+	id = "modular_shield_node"
+	build_path = /obj/item/circuitboard/machine/modular_shield_node
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_relay
+	name = "Modular Shield Relay Board"
+	desc = "The circuit board for a modular shield relay."
+	id = "modular_shield_relay"
+	build_path = /obj/item/circuitboard/machine/modular_shield_relay
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_charger
+	name = "Modular Shield Charger Board"
+	desc = "The circuit board for a modular shield charger."
+	id = "modular_shield_charger"
+	build_path = /obj/item/circuitboard/machine/modular_shield_charger
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/modular_shield_well
+	name = "Modular Shield Well Board"
+	desc = "The circuit board for a modular shield well."
+	id = "modular_shield_well"
+	build_path = /obj/item/circuitboard/machine/modular_shield_well
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/teleconsole
 	name = "Teleporter Console Board"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
