@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "rolling pin icon show's up correctly under the tools section in the crafting menu i.e. for those recipes that require it"
-  - bugfix: "basketball hoop icon and other sprites that are not the standard `32 x 32` now show's up correctly in the crafting menu"

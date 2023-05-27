@@ -7091,8 +7091,8 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "cJv" = (
-/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cJx" = (
@@ -28697,9 +28697,7 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/tools)
 "ksl" = (
-/obj/machinery/chem_heater/withbuffer{
-	pixel_x = 4
-	},
+/obj/machinery/chem_heater/withbuffer,
 /obj/machinery/light/directional/south,
 /obj/machinery/button/door/directional/south{
 	id = "pharmacy_shutters_2";

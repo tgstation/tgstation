@@ -1,6 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes:
-  - bugfix: "Adds a drone dispenser to Tramstation."
-  - bugfix: "The stacking machine on Tramstation no longer has incorrect input and output directions at roundstart."
-  - config: "Drone dispensers are now listed as required map items for passing unit tests. If one is not present on your map, it will fail the test."
