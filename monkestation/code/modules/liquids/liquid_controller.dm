@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(liquids)
 				LG.build_turf_reagent()
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
-						return
+						break
 					LG.process_member(member)
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
