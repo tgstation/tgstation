@@ -91,7 +91,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	armor_type = /datum/armor/item_magichammer
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/diagonal_sprite
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()

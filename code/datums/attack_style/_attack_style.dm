@@ -250,7 +250,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				// At this point we've moved a turf but can continue attacking, so we'll
 				// soft restart the swing from this point at the new turf.
 				starting_loc = attacker.loc
-				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking).Cut(1, affecting_index)
+				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
+				affecting.Cut(1, affecting_index)
 
 	// All relevant turfs have been hit so we're wrapping up the attack at this point
 

@@ -2,7 +2,7 @@
 /datum/attack_style/melee_weapon/swing
 	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
 	sprite_size_multiplier = 1.5
-	time_per_turf = 0.4 SECONDS
+	time_per_turf = 0.2 SECONDS
 	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
 	var/reverse_for_lefthand = TRUE
 
@@ -56,6 +56,9 @@
 		attacker.balloon_alert(attacker, "wield your weapon!")
 		return ATTACK_STYLE_CANCEL
 	return ..()
+
+/datum/attack_style/melee_weapon/swing/requires_wield/diagonal_sprite
+	weapon_sprite_angle = 45
 
 /datum/attack_style/melee_weapon/swing/requires_wield/fireaxe
 	weapon_sprite_angle = 90
