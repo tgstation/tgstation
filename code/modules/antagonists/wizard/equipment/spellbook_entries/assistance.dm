@@ -99,7 +99,11 @@
 	refundable = TRUE
 
 /datum/spellbook_entry/item/vendormancer
-	name = "Staff of vendormancy"
-	desc = "A staff with the teachings of the first Runic Vendormancer."
+	name = "Staff of Vendormancy"
+	desc = "A staff with the teachings of the first Runic Vendormancer.\
+		It can summon up to 3 Runic Vendors that decay over time, but can be \
+		throw around to squash oponents or be directly detonated. When out of \
+		charges a long channel will restore the charges."
 	item_path = /obj/item/runic_vendor_staff
 	category = "Assistance"
+	refundable = TRUE
