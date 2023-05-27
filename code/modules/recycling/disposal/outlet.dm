@@ -127,9 +127,9 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
-	if(obj_flags |= EMAGGED)
-		eject_speed = EJECT_SPEED_YEET
-		eject_range = EJECT_RANGE_YEET
+	obj_flags |= EMAGGED
+	eject_speed = EJECT_SPEED_YEET
+	eject_range = EJECT_RANGE_YEET
 
 #undef EJECT_SPEED_SLOW
 #undef EJECT_SPEED_MED
