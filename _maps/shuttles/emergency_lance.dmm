@@ -852,7 +852,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dd" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Dg" = (
@@ -907,7 +907,7 @@
 	},
 /area/shuttle/escape)
 "FA" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -987,7 +987,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Hq" = (
@@ -1609,7 +1609,7 @@
 	pixel_y = -3
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/door/window/survival_pod{
 	dir = 4;
 	name = "Emergency Weapons";

@@ -285,7 +285,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/beakers/bluespace,
 /obj/item/storage/box/beakers/bluespace,
-/obj/item/construction/plumbing/research,
+/obj/item/construction/plumbing,
 /obj/item/stack/ducts/fifty,
 /obj/item/stack/ducts/fifty,
 /turf/open/floor/iron/white/side{
