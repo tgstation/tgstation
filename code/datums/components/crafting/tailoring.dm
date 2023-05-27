@@ -325,4 +325,4 @@
 	reqs = list(
 		/obj/item/paper = 1,
 	)
-	category = CAT_MISC
+	category = CAT_CLOTHING
