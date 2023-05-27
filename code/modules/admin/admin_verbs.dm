@@ -210,6 +210,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/populate_world,
 	/client/proc/pump_random_event,
 	/client/proc/print_cards,
+	/client/proc/reestablish_tts_connection,
 	/client/proc/reload_cards,
 	/client/proc/reload_configuration,
 	/client/proc/restart_controller,
