@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - image: "New air alarm sprite"
+  - bugfix: "Air alarm properly updates status when powered"

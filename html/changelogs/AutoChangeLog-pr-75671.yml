@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "Objects have a variable to adjust them visually when they're wrenched or spawned on a table"
+  - refactor: "Removed redundant code that had similar purpose, moved `obj` wrenching logic into the `objs.dm`"
+  - qol: "food/slime processor can be moved on table and adjusts to it when wrenched"

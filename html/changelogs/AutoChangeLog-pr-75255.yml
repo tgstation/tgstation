@@ -1,4 +1,0 @@
-author: "lebedev"
-delete-after: True
-changes:
-  - qol: "Made selected elements highlighted in TGUI Dropdowns"

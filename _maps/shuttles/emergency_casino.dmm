@@ -99,9 +99,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "dr" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "dy" = (
@@ -300,9 +298,7 @@
 /area/shuttle/escape)
 "iV" = (
 /obj/structure/chair/stool/directional/north,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "jE" = (
@@ -573,17 +569,13 @@
 /area/shuttle/escape)
 "pp" = (
 /obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "px" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "qd" = (
@@ -949,9 +941,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -1034,9 +1024,7 @@
 "Fl" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/light/directional/north,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
@@ -1076,9 +1064,7 @@
 "Gz" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "GU" = (
@@ -1300,9 +1286,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "PP" = (
@@ -1355,9 +1339,7 @@
 "Sl" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Sp" = (
@@ -1479,9 +1461,7 @@
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/directional/south,
 /obj/structure/closet/crate/bin,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Yc" = (

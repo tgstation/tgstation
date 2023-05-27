@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Elevator music now cuts off instantly when exiting the elevator and is inaudible from the corridor outside."
+  - rscadd: "Elevator music can be disabled via a preference."
+  - bugfix: "Several elevators which should not have played music now do not."
