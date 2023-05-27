@@ -920,3 +920,81 @@
       bit smarter.
   - code_imp: Cat Surgeons are a bit more smarter about attacking threats to the world
       around them on their endless pursuit for those felinid tails.
+2023-05-27:
+  FlufflesTheDog:
+  - bugfix: Test tubes can now be stored in chemistry smart fridges
+  Ghommie:
+  - qol: The Canvas UI now shows a grid while the user is painting.
+  Helg2:
+  - bugfix: Coroner envirohelm (plasmaman helmet of coroner) now doesn't show as errors
+      when using flashlight mode.
+  JohnFulpWillard:
+  - balance: Very small items like tape recorders now use 10 mat points instead of
+      5.
+  - bugfix: Species that have longer arms than normal can now properly set their glove
+      offset to go low and meet their hand.
+  Jolly:
+  - bugfix: '[MetaStation] - One of the chem heaters in the pharmacy is no longer
+      nudged and awkwardly four pixels to the right.'
+  - bugfix: '[TramStation] - The chem heater in the Xenobiology lab was replaced with
+      the proper one that every other station uses.'
+  - image: The chem heater sprite was nudged a SINGLE pixel to the right. This should,
+      hopefully, make them appear more centered.
+  LemonInTheDark:
+  - server: del logging is now done by outputting to a json file again, but this time
+      we're using ACTUAL json and not just a big text string with newlines and shit
+  MTandi:
+  - bugfix: Plumbing RCD UI fixed
+  Melbert:
+  - bugfix: Fixes being unable to amputate
+  - admin: Getting dusted by HMS gives a death log
+  - bugfix: Fixed being unable to spraypaint things
+  - bugfix: Fix being unable to wound people who are wounded
+  SyncIt21:
+  - bugfix: runtime when sm processes gases in vacuum
+  - qol: sm will now get activated for the very first time only if there is more than
+      0.01 moles of a reactive gas present, so you can now safely install it in near
+      vacuum
+  - qol: sm will continue to process gasses only when there is above 0.01 moles of
+      the gas present else it just ignores it
+  - bugfix: rolling pin icon show's up correctly under the tools section in the crafting
+      menu i.e. for those recipes that require it
+  - bugfix: basketball hoop icon and other sprites that are not the standard `32 x
+      32` now show's up correctly in the crafting menu
+  - bugfix: graves can be closed again, but only with a shovel and not by hand.
+  - qol: you can put items in graves normally without throwing them in
+  - qol: examines & screentips for graves
+  TheSmallBlue and cats4gold:
+  - sound: Recent research concluded that the new elevator music was upping crewmate's
+      morale a bit too much, this has now been corrected via the replacement of said
+      music.
+  - code_imp: Added a new "in_order" variable to the looping sound datum, for when
+      you need sounds to play in order
+  TheVekter:
+  - bugfix: Adds a drone dispenser to Tramstation.
+  - bugfix: The stacking machine on Tramstation no longer has incorrect input and
+      output directions at roundstart.
+  - config: Drone dispensers are now listed as required map items for passing unit
+      tests. If one is not present on your map, it will fail the test.
+  - bugfix: Added the missing drone fabricator to Northstar's robotics maintenance.
+  Treach:
+  - bugfix: Turbine parts can now be printed at ancient protolathes.
+  Vect0r:
+  - bugfix: Birdshots xenobio should now be getting power from the rest of the powergrid.
+  Z Man Wit Z Plan:
+  - bugfix: Added some grills around not-so defended areas on Tramstation (specifically
+      arrivals)
+  carlarctg:
+  - bugfix: Spacesuits won't show 'you turn off x' if it's turned off automatically,
+      either from removing the power cell or it losing power.
+  - refactor: Refactors snipping cuffs into a bespoke cuffsnapping element, adding
+      support for delayed cuffsnipping. Adds this element to box cutters! Effectively
+      speaking everything is the same as usual.
+  moocowswag:
+  - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.
+  - rscadd: Nanotrasen has uncovered a unique use for plasteel allowing the construction
+      of new machines capable of fabricating and distributing hardlight into a modular
+      barrier. These new machines are available via the advanced power manipulation
+      techweb.
+  san7890:
+  - bugfix: Chickens should now, once again, peck you in case you hit them.

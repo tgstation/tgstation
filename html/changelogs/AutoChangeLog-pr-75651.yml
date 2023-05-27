@@ -1,4 +1,0 @@
-author: "Treach"
-delete-after: True
-changes:
-  - bugfix: "Turbine parts can now be printed at ancient protolathes."
