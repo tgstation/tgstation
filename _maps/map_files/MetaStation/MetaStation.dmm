@@ -1250,6 +1250,7 @@
 "azr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "azs" = (
@@ -29989,6 +29990,10 @@
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
+"kSO" = (
+/mob/living/basic/chicken,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "kSP" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -43953,6 +43958,7 @@
 "pVs" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "pVM" = (
@@ -105287,7 +105293,7 @@ lnc
 cUP
 mil
 lqQ
-lJa
+kSO
 lJa
 bmF
 ozi
