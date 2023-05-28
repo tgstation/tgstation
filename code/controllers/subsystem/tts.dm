@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(tts)
 					distance_multiplier = 1,
 					use_reverb = TRUE
 				)
-	if(!SShtml_audio.channel_assignment.Find(target))
+	if(!SShtml_audio.speakers[target])
 		SShtml_audio.register_player(target, TRUE) // we require LOS for speakers on TTS
 	SShtml_audio.play_audio(target, audio_url, blips_url)
 
