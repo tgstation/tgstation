@@ -10,16 +10,11 @@ enum Screen {
   Hacked,
 }
 
-enum ServerStatus {
-  Offline,
-  Online,
-}
-
 type Data = {
   screen: Screen;
   status: BooleanLike;
-  server_status: number;
-  auth: number;
+  server_status: BooleanLike;
+  auth: BooleanLike;
   password: string;
   is_malf: BooleanLike;
   error_message: string;
@@ -284,7 +279,7 @@ const MainScreenNotAuth = (props, context) => {
             disabled
             onClick={() => act('turn_server')}
           />
-          {is_malf === 1 && (
+          {!!is_malf && (
             <Button content="Hack" color="red" onClick={() => act('hack')} />
           )}
         </Section>
@@ -317,7 +312,7 @@ const MainScreen = (props, context) => {
   const { auth } = data;
   return (
     <Stack fill vertical>
-      {auth === 1 ? <MainScreenAuth /> : <MainScreenNotAuth />}
+      {auth ? <MainScreenAuth /> : <MainScreenNotAuth />}
     </Stack>
   );
 };
@@ -335,7 +330,7 @@ export const MessageMonitor = (props, context) => {
     <Window width={700} height={400}>
       <Window.Content>
         <Stack vertical fill>
-          {server_status === ServerStatus.Online ? (
+          {server_status ? (
             <>
               <Stack.Item>
                 {!!error_message && (
