@@ -9522,11 +9522,9 @@
 "cnz" = (
 /obj/machinery/iv_drip,
 /obj/structure/mirror/directional/south,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/blood/old,
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery/fore)
 "cnA" = (
@@ -83806,9 +83804,7 @@
 "vOZ" = (
 /obj/machinery/iv_drip,
 /obj/structure/mirror/directional/south,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery/aft)
 "vPg" = (
