@@ -52,11 +52,10 @@
 		/obj/effect/decal/cleanable/oil,
 	)
 
-/datum/round_event/vent_clog/start() //Sets the vent up for unclogging/mob production.
-	produce_mob() //The first one's free!
-	announce_to_ghosts(vent)
-
+/datum/round_event/vent_clog/start()
 	clog_vent()
+	produce_mob() //Spawns a second mob to get the ball rolling quicker.
+	announce_to_ghosts(vent)
 
 /datum/round_event/vent_clog/tick() //Checks if spawn_interval is met, then sends signal to vent to produce a mob.
 	if(activeFor % spawn_delay == 0)
@@ -80,6 +79,8 @@
 		/mob/living/basic/cockroach,
 		/mob/living/basic/giant_spider/maintenance,
 		/mob/living/basic/mouse,
+		/mob/living/basic/lizard,
+		/mob/living/basic/frog,
 	)
 	return pick(mob_list)
 
@@ -129,7 +130,6 @@
 	vent = get_vent()
 
 	clog_vent()
-	produce_mob()
 
 	announce_to_ghosts(vent)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(vent)]."]", "Lifesign Notification")
@@ -239,7 +239,6 @@
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/blood/splatter,
-		/obj/effect/decal/cleanable/blood/gibs,
 	)
 
 /datum/round_event/vent_clog/critical/announce()
@@ -284,6 +283,7 @@
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
+		/mob/living/basic/mothroach,
 	)
 	return pick(mob_list)
 
