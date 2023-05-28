@@ -78,7 +78,7 @@
 /area/space/nearstation)
 "lq" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
+	name = "Space Engine Room"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -388,7 +388,7 @@
 /area/station/engineering/supermatter/room)
 "Rb" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
+	name = "Space Engine Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
@@ -834,13 +834,13 @@ Zh
 Zh
 jS
 zz
-ZS
-ZS
-zz
+FU
 ZS
 zz
 ZS
+zz
 ZS
+FU
 "}
 (17,1,1) = {"
 lq
@@ -856,13 +856,13 @@ Zh
 Zh
 jS
 zz
-ZS
+FU
 zz
 ZS
 vK
 ZS
 zz
-ZS
+FU
 "}
 (18,1,1) = {"
 Om
@@ -878,13 +878,13 @@ Zh
 Zh
 jS
 zz
-ZS
-ZS
-zz
+FU
 ZS
 zz
 ZS
+zz
 ZS
+FU
 "}
 (19,1,1) = {"
 Ho

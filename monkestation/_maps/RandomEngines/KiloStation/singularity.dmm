@@ -44,7 +44,7 @@
 "fN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine"
+	name = "Space Engine Room"
 	},
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 1
@@ -88,7 +88,7 @@
 "ic" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine"
+	name = "Space Engine Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
@@ -97,9 +97,7 @@
 /area/station/engineering/supermatter/room)
 "is" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "Departure Shuttle Airlock"
-	},
+/obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable/layer1,
 /turf/open/floor/iron,
@@ -112,9 +110,7 @@
 /area/station/engineering/supermatter/room)
 "jc" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "Departure Shuttle Airlock"
-	},
+/obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -400,7 +396,7 @@
 "BM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine"
+	name = "Space Engine Room"
 	},
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4
@@ -443,6 +439,11 @@
 /turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"En" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
 "EK" = (
 /obj/structure/particle_accelerator/particle_emitter/left,
 /obj/effect/turf_decal/stripes/line{
@@ -1009,7 +1010,7 @@ zu
 zu
 IJ
 Vk
-cY
+En
 IJ
 "}
 (11,1,1) = {"
@@ -1033,7 +1034,7 @@ XV
 Rx
 Vk
 Ir
-cY
+En
 "}
 (12,1,1) = {"
 pa
@@ -1186,7 +1187,7 @@ JC
 RL
 WZ
 zu
-rP
+XV
 Cu
 IJ
 Vk
@@ -1208,7 +1209,7 @@ Ii
 oe
 RN
 tB
-zu
+WZ
 zu
 gS
 zg
@@ -1217,7 +1218,7 @@ XV
 hW
 Vk
 NO
-lg
+WZ
 "}
 (20,1,1) = {"
 zs
