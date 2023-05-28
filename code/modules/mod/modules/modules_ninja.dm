@@ -290,8 +290,8 @@
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
 /obj/item/mod/module/status_readout
 	name = "MOD status readout module"
-	desc = "A once-common module, this technology went unfortunately out of fashion; \
-		and right into the arachnid grip of the Spider Clan. This hooks into the suit's spine, \
+	desc = "A once-common module, this technology went unfortunately out of fashion around the safer regions of space; \
+		and right into the research networks of the Periphery. This hooks into the suit's spine, \
 		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
 		and even useful information such as their overall health and wellness."
 	icon_state = "status"
