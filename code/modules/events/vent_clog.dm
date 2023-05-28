@@ -163,6 +163,7 @@
 /datum/round_event/vent_clog/proc/plunger_unclog(datum/source, obj/item/plunger/P, mob/user, reinforced)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_unclog), user)
+	return COMPONENT_NO_AFTERATTACK
 
 ///Handles the actual unclogging action and ends the event on completion.
 /datum/round_event/vent_clog/proc/attempt_unclog(mob/user)
@@ -173,6 +174,7 @@
 	to_chat(user, span_notice("You begin pumping [vent] with your plunger."))
 	if(do_after(user, 6 SECONDS, target = vent))
 		to_chat(user, span_notice("You finish pumping [vent]."))
+		clear_signals()
 		kill()
 
 ///Handles the initial steps of clogging a vent, either at event start or when the vent moves.
@@ -185,6 +187,11 @@
 			new /obj/effect/decal/cleanable/dirt(nearby_turf)
 
 	produce_mob()
+
+///Clears the signals related to the event, before we wrap things up.
+/datum/round_event/vent_clog/proc/clear_signals()
+	UnregisterSignal(vent, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(vent, COMSIG_PLUNGER_ACT)
 
 /datum/round_event_control/vent_clog/major
 	name = "Vent Clog: Major"
