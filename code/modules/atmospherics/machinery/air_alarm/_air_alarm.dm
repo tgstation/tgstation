@@ -61,7 +61,7 @@
 
 
 	///Warning message spoken by air alarms
-	var/warning_message = ""
+	var/warning_message = null
 
 	//Stops the air alarm from talking about their atmos problems.
 	var/speaker_enabled = TRUE
