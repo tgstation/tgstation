@@ -12924,12 +12924,12 @@
 /turf/open/floor/iron/checker,
 /area/station/service/kitchen)
 "cZo" = (
-/obj/structure/sign/collision_counter{
-	pixel_x = -4;
-	pixel_y = 2
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
 	},
-/turf/closed/wall,
-/area/station/medical/medbay/lobby)
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "cZz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -16416,7 +16416,6 @@
 	},
 /obj/machinery/newscaster/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eqJ" = (
@@ -21490,7 +21489,6 @@
 	dir = 10;
 	network = list("ss13","engine","engineering")
 	},
-/obj/structure/sign/delamination_counter/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "gpD" = (
@@ -24333,6 +24331,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/sign/incident/dual/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "hvJ" = (
@@ -25049,6 +25048,7 @@
 	c_tag = "Civilian - Recreational Area North-West"
 	},
 /obj/item/toy/plush/lizard_plushie/space/green,
+/obj/structure/sign/incident/dual/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hMs" = (
@@ -28295,9 +28295,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "iWm" = (
-/obj/structure/sign/collision_counter{
-	pixel_x = -32
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
 	pixel_x = -5;
@@ -34355,9 +34352,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/sign/collision_counter{
-	pixel_x = 32
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "lcn" = (
@@ -39373,6 +39367,16 @@
 /obj/item/extinguisher,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"mTW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/incident/dual/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "mUd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 1
@@ -41570,7 +41574,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
 /obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
@@ -45078,6 +45081,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"pbT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/sign/incident/dual/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "pbV" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/musician/piano,
@@ -49607,11 +49618,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
-/obj/structure/sign/collision_counter{
-	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
-	name = "darwin award counter";
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
@@ -102245,7 +102251,7 @@ sHH
 sHH
 cjy
 qHs
-vqH
+pbT
 fuj
 xEy
 miU
@@ -152330,7 +152336,7 @@ jvf
 ook
 mGQ
 yiM
-fpg
+cZo
 heY
 ddh
 mQp
@@ -169033,8 +169039,8 @@ gUF
 rlO
 jJV
 mTM
-fxs
-lDt
+mTW
+wyd
 mJc
 kin
 juV
@@ -169291,7 +169297,7 @@ uGM
 dYS
 mTM
 fxs
-cZo
+wyd
 wyd
 rks
 rks
