@@ -165,7 +165,7 @@
 
 ///generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
-	if(active)//bug or did admin call proc on already active shield gen?
+	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return
 	if(radius < 0)//what the fuck are admins doing
 		radius = initial(radius)
