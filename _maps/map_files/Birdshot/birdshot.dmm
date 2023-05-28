@@ -900,9 +900,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_y = 36
-	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/north,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "atx" = (
@@ -3528,9 +3526,7 @@
 /area/station/hallway/primary/starboard)
 "bAI" = (
 /obj/structure/chair/office,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
@@ -8096,9 +8092,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/department/engine/atmos)
 "dqK" = (
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 34
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/department/engine/atmos)
 "dqO" = (
@@ -26524,6 +26518,8 @@
 /area/station/maintenance/hallway/abandoned_command)
 "jPm" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/light_switch/directional/east,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/warehouse)
 "jPq" = (
@@ -34423,9 +34419,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "mBC" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "mBQ" = (
@@ -52910,9 +52904,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "sKS" = (
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/pda_ad/directional/north,
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
@@ -53595,9 +53587,7 @@
 /area/station/security)
 "sVp" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/east,
 /obj/item/newspaper,
 /obj/item/newspaper{
 	pixel_y = 5
@@ -56787,9 +56777,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/aft)
 "tZi" = (
-/obj/structure/sign/poster/contraband/got_wood{
-	pixel_y = 31
-	},
+/obj/structure/sign/poster/contraband/got_wood/directional/north,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "tZl" = (
@@ -61980,13 +61968,10 @@
 /area/station/medical/storage)
 "vFn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = 32;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/no_erp/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/starboard/central)
 "vFv" = (
@@ -71626,7 +71611,7 @@
 "ykY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/dead/research_director,
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/rd)
 "ykZ" = (

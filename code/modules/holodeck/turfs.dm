@@ -172,12 +172,10 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
+	initial_gas_mix = SPACE_TEMP_NOBLIUM
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
-
-/turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "nob=7500;TEMP=2.7"
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
