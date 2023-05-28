@@ -73,6 +73,16 @@
 #define LOG_JSON_ENTRIES "entries"
 #define LOG_JSON_LOGGING_START "log-start"
 
+// Log entry keys
+#define LOG_ENTRY_KEY_TIMESTAMP "ts"
+#define LOG_ENTRY_KEY_CATEGORY "cat"
+#define LOG_ENTRY_KEY_MESSAGE "msg"
+#define LOG_ENTRY_KEY_DATA "data"
+#define LOG_ENTRY_KEY_WORLD_STATE "w-state"
+#define LOG_ENTRY_KEY_SEMVER_STORE "s-store"
+#define LOG_ENTRY_KEY_ID "id"
+#define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
+
 // Category for invalid/missing categories
 #define LOG_CATEGORY_NOT_FOUND "invalid-category"
 
