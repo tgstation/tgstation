@@ -75,6 +75,22 @@
 	memorizer_mind = null
 	return ..()
 
+/datum/memory/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["name"] = name
+	.["memorizer"] = memorizer
+	.["story_value"] = story_value
+	.["memory_flags"] = memory_flags
+	.["mood_verb"] = mood_verb
+	.["protagonist_name"] = protagonist_name
+	.["deuteragonist_name"] = deuteragonist_name
+	.["antagonist_name"] = antagonist_name
+	.["where"] = where
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
+
 /**
  * Generates a name for the memory.
  */
@@ -229,9 +245,11 @@
 
 	var/static/list/something_pool = list(
 		/mob/living/basic/bat,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
 		/mob/living/basic/carp/magic,
 		/mob/living/basic/carp/magic/chaos,
+		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/cow/wisdom,
 		/mob/living/basic/giant_spider,
@@ -245,9 +263,7 @@
 		/mob/living/basic/statue,
 		/mob/living/basic/stickman,
 		/mob/living/basic/stickman/dog,
-		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chicken,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/goliath/beast,

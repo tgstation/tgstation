@@ -6,7 +6,7 @@ import { WINDOW_SIZES } from './constants';
  * ensures window size, visibility, and focus.
  */
 export const windowOpen = (channel: Channel) => {
-  setWindowSizeAndVisibility(true, WINDOW_SIZES.small);
+  setWindowVisibility(true);
   Byond.sendMessage('open', { channel });
 };
 
@@ -15,7 +15,7 @@ export const windowOpen = (channel: Channel) => {
  * Sending "close" logs it server side.
  */
 export const windowClose = () => {
-  setWindowSizeAndVisibility(false, WINDOW_SIZES.small);
+  setWindowVisibility(false);
   Byond.winset('map', {
     focus: true,
   });
@@ -26,8 +26,10 @@ export const windowClose = () => {
 export const windowLoad = () => {
   Byond.winset('tgui_say', {
     pos: '848,500',
+    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
+    visible: false,
   });
-  setWindowSizeAndVisibility(false, WINDOW_SIZES.small);
+
   Byond.winset('map', {
     focus: true,
   });
@@ -37,20 +39,21 @@ export const windowLoad = () => {
  * Modifies the window size.
  */
 export const windowSet = (size = WINDOW_SIZES.small) => {
-  setWindowSizeAndVisibility(true, size);
-};
+  let sizeStr = `${WINDOW_SIZES.width}x${size}`;
 
-/** Helper function to set window size and visibility */
-const setWindowSizeAndVisibility = (isVisible: boolean, size: number) => {
-  const sizeStr = `${WINDOW_SIZES.width}x${size}`;
-
-  Byond.winset('tgui_say', {
-    'is-visible': isVisible,
+  Byond.winset('tgui_say.browser', {
     size: sizeStr,
   });
 
-  Byond.winset('tgui_say.browser', {
-    'is-visible': isVisible,
+  Byond.winset('tgui_say', {
     size: sizeStr,
+  });
+};
+
+/** Helper function to set window size and visibility */
+const setWindowVisibility = (visible: boolean) => {
+  Byond.winset('tgui_say', {
+    'is-visible': visible,
+    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
   });
 };
