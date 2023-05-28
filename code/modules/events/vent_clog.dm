@@ -21,6 +21,7 @@
 
 /datum/round_event/vent_clog
 	announce_when = 10
+	announce_chance = 90
 	end_when = 600
 
 	///Vent selected for the event.
@@ -54,7 +55,6 @@
 
 /datum/round_event/vent_clog/start()
 	clog_vent()
-	produce_mob() //Spawns a second mob to get the ball rolling quicker.
 	announce_to_ghosts(vent)
 
 /datum/round_event/vent_clog/tick() //Checks if spawn_interval is met, then sends signal to vent to produce a mob.
