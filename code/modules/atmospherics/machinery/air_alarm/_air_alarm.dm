@@ -1,3 +1,5 @@
+#define AIRALARM_WARNING_COOLDOWN (10 SECONDS)
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -57,13 +59,22 @@
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
+
+	///Warning message spoken by air alarms
+	var/warning_message = null
+
+	//Stops the air alarm from talking about their atmos problems.
+	var/speaker_enabled = TRUE
+
+	///Cooldown on sending warning messages
+	COOLDOWN_DECLARE(warning_cooldown)
+
 	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
 	var/obj/machinery/air_sensor/connected_sensor
 	/// Used to link air alarm to air sensor via map helpers
 	var/air_sensor_chamber_id = ""
 	/// Whether it is possible to link/unlink this air alarm from a sensor
 	var/allow_link_change = TRUE
-
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -113,6 +124,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	GLOB.air_alarms += src
 	update_appearance()
+
+/obj/machinery/airalarm/process()
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+
+	speak(warning_message)
+	COOLDOWN_START(src, warning_cooldown, AIRALARM_WARNING_COOLDOWN)
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
@@ -532,6 +550,26 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
+		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low pressure and temperature detected."
+			return
+		if(pressure <= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High pressure and temperature detected."
+			return
+		if(pressure <= WARNING_LOW_PRESSURE)
+			warning_message = "Danger! Low pressure detected."
+			return
+		if(pressure >= WARNING_HIGH_PRESSURE)
+			warning_message = "Danger! High pressure detected."
+			return
+		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low temperature detected."
+			return
+		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High temperature detected."
+			return
+		warning_message = "Danger! Atmospheric issue detected."
+
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 
@@ -551,6 +589,16 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
+
+/obj/machinery/airalarm/proc/speak(warning_message)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+	if(!speaker_enabled)
+		return
+	if(!warning_message)
+		return
+
+	say(warning_message)
 
 /// Used for unlocked air alarm helper, which unlocks the air alarm.
 /obj/machinery/airalarm/proc/unlock()
@@ -631,3 +679,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 	update_appearance()
 	update_name()
+	check_danger()
+
+#undef AIRALARM_WARNING_COOLDOWN
