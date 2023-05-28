@@ -71574,7 +71574,7 @@
 "ykY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
-/obj/item/kirbyplants/dead/rd,
+/obj/item/kirbyplants/dead/research_director,
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/rd)
 "ykZ" = (
