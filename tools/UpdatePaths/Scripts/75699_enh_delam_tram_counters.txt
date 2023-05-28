@@ -1,0 +1,2 @@
+/obj/structure/sign/delamination_counter : /obj/structure/sign/incident/delam{@OLD}
+/obj/structure/sign/collision_counter : /obj/structure/sign/incident/dual{@OLD}
