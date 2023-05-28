@@ -52,6 +52,15 @@ SUBSYSTEM_DEF(html_audio)
 				var audio_player = document.getElementById(element_id);
 				audio_player.volume = parseFloat(volume);
 			}
+			function setVolumes(volume_json) {
+				var volumes = JSON.parse(volume_json);
+
+				for (var element_id in volumes) {
+					if (obj.hasOwnProperty(element_id)) {
+						setVolume(volumes[element_id], element_id);
+					}
+				}
+			}
 			function playAudio(url, element_id)
 			{
 				var audio_player = document.getElementById(element_id);
@@ -147,6 +156,7 @@ SUBSYSTEM_DEF(html_audio)
 			listener << output(list2params(list("false", "channel_[speaker.assigned_channel]")), "html_audio_player:setLooping")
 
 /datum/controller/subsystem/html_audio/proc/update_listener_volume(client/listener)
+	var/list/channels_to_update = list()
 	for(var/speaker_player in speakers)
 		var/datum/html_audio_speaker/speaker = speakers[speaker_player]
 		var/volume_to_use = 0
@@ -177,7 +187,9 @@ SUBSYSTEM_DEF(html_audio)
 
 				volume_to_use *= pressure_factor
 				volume_to_use = clamp(volume_to_use, 0, 1)
-		listener << output(list2params(list(num2text(volume_to_use), "channel_[speaker.assigned_channel]")), "html_audio_player:setVolume") // TODO: find way to batch this so we just send 1 update with all the audio volumes
+		channels_to_update["channel_[speaker.assigned_channel]"] = num2text(volume_to_use)
+	if (length(channels_to_update))
+		listener << output(url_encode(json_encode(channels_to_update)), "html_audio_player:setVolumes")
 
 /datum/controller/subsystem/html_audio/proc/jank_ass_browse_check(checked_person)
 	if (!winexists(checked_person, "html_audio_player"))
