@@ -105,7 +105,7 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters(backstory)
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a fugitive hunting crew?", ROLE_FUGITIVE_HUNTER)
+	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", ROLE_FUGITIVE_HUNTER)
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/shuttle/hunter/ship
