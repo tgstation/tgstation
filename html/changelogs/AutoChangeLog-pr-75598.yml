@@ -1,4 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - bugfix: "Part of the North Star library's private study will no longer register as part of the chapel on the crew monitor and similar."
