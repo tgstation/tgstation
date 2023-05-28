@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "stabilized metal slime extract properly increments stacks so that it's appearance & weight are updated correctly & is picked up by material sniffers."

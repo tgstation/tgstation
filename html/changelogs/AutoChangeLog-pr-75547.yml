@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes:
-  - bugfix: "Added the missing drone fabricator to Northstar's robotics maintenance."

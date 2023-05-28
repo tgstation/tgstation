@@ -32,7 +32,6 @@ GLOBAL_PROTECT(##log_var_name);\
 // These should be used where the log category cannot easily be a json log file.
 DECLARE_LOG(config_error_log, DONT_START_LOG)
 DECLARE_LOG(perf_log, DONT_START_LOG) // Declared here but name is set in time_track subsystem
-DECLARE_LOG_NAMED(world_qdel_log, "qdel", START_LOG)
 
 #ifdef REFERENCE_DOING_IT_LIVE
 DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
