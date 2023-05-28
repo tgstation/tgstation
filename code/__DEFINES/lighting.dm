@@ -15,6 +15,8 @@
 #define LIGHT_ATTACHED (1<<0)
 /// Freezes a light in its current state, blocking any attempts at modification
 #define LIGHT_FROZEN (1<<1)
+/// Does this light ignore inherent offsets? (Pixels, transforms, etc)
+#define LIGHT_IGNORE_OFFSET (1<<2)
 
 // Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
 /// frequency, in 1/10ths of a second, of the lighting process

@@ -189,9 +189,14 @@
 
 /// Returns a list of x and y offsets to apply to our visual lighting position
 /proc/calculate_light_offset(atom/get_offset)
-	var/list/hand_back = get_visual_offset(get_offset)
-	hand_back[1] = -hand_back[1] / world.icon_size
-	hand_back[2] = -hand_back[2] / world.icon_size
+	var/list/hand_back
+	if(!(get_offset.light_flags & LIGHT_IGNORE_OFFSET))
+		hand_back = get_visual_offset(get_offset)
+		hand_back[1] = -hand_back[1] / world.icon_size
+		hand_back[2] = -hand_back[2] / world.icon_size
+	else
+		hand_back = list(0, 0)
+
 	var/list/atoms_opinion = get_offset.get_light_offset()
 	hand_back[1] += atoms_opinion[1]
 	hand_back[2] += atoms_opinion[2]
