@@ -51,6 +51,7 @@
 	name = "Renegade (Preview only)"
 
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	head = /obj/item/clothing/head/helmet/sec
 	gloves = /obj/item/clothing/gloves/latex
 	suit = /obj/item/clothing/suit/armor/vest
 	r_hand = /obj/item/gun/ballistic/automatic/pistol
@@ -62,6 +63,7 @@
 
 /datum/antagonist/renegade/forge_objectives(datum/mind/renegademind)
 	var/datum/objective/survive/survive = new
+	survive.explanation_text = "Survive by any means possible! Whatever it takes you must do it, everyone around are totally plotting against you, from Clown to the Command."
 	survive.owner = owner
 	objectives += survive
 

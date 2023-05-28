@@ -1,6 +1,6 @@
 /datum/brain_trauma/special/renegade
 	name = "Paranoid Psychosis"
-	desc = "Patient has a psychotic disorder, becoming extremely paranoid of his surrounding and people."
+	desc = "Patient has a psychotic disorder, becoming extremely paranoid of people around him."
 	scan_desc = "paranoid psychosis"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = span_warning("You feel safe once again.")
@@ -32,7 +32,7 @@
 		too_close()
 		return
 
-	owner.add_mood_event("paranoid alone", /datum/mood_event/paranoid_alone)
+	owner.add_mood_event("paranoid close", /datum/mood_event/paranoid_alone)
 	being_viewed = FALSE
 	time_close = 0
 
@@ -45,8 +45,10 @@
 
 /datum/brain_trauma/special/renegade/on_lose()
 	..()
+	owner.clear_mood_event("paranoid close")
+	owner.clear_mood_event("paranoid armed")
+	owner.clear_mood_event("paranoid armored")
 	owner.mind.remove_antag_datum(/datum/antagonist/renegade)
-	owner.emote("calmly sighs")
 
 /datum/brain_trauma/special/renegade/handle_speech(datum/source, list/speech_args)
 	if(!being_viewed)

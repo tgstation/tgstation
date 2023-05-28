@@ -8,7 +8,7 @@ const Renegade: Antagonist = {
     multiline`
     You're paranoid about your surroundings and co-workers!
     Are they planning to kill you? You cannot trust anybody.
-    No matter how it is, you know - YOU MUST SURVIVE BY ANY MEANS POSSIBLE.
+    You need to protect your life with any means possible.
     `,
   ],
   category: Category.Midround,
