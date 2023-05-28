@@ -201,6 +201,22 @@
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
 	description = "THEY NEEEEEEED [unhinged]!!"
 
+/datum/mood_event/paranoid_close
+	description = "This person is too close, he has something in his mind?"
+	mood_change = -8
+	timeout = 3 SECONDS
+	hidden = TRUE
+
+/datum/mood_event/paranoid_closesevere
+	description = "WHY IS HE JUST STANDING THERE MENACINGLY?? HE IS TOTALLY PLOTTING SOMETHING!"
+	mood_change = -30
+	timeout = 3 SECONDS
+
+/datum/mood_event/paranoid_notarmed
+	description = "I have no weapons to defend myself with, I might get killed!"
+	mood_change = -10
+	hidden = TRUE
+
 /datum/mood_event/tower_of_babel
 	description = "My ability to communicate is an incoherent babel..."
 	mood_change = -1

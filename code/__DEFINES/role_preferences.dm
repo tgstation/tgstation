@@ -32,6 +32,7 @@
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
+#define ROLE_RENEGADE "Renegade"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
@@ -132,6 +133,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
+	ROLE_RENEGADE = 0,
 	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,

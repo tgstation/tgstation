@@ -804,6 +804,43 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
 
+/// Midround Renegade Ruleset (From Living)
+/datum/dynamic_ruleset/midround/from_living/renegade
+	name = "Renegade"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/renegade
+	antag_flag = ROLE_RENEGADE
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_living/renegade/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/carbon/human/candidate in candidates)
+		if( \
+			!candidate.get_organ_by_type(/obj/item/organ/internal/brain) \
+			|| candidate.mind.has_antag_datum(/datum/antagonist/renegade) \
+			|| candidate.stat == DEAD \
+			|| !(ROLE_RENEGADE in candidate.client?.prefs?.be_special) \
+			|| !candidate.mind.assigned_role \
+		)
+			candidates -= candidate
+
+/datum/dynamic_ruleset/midround/from_living/renegade/execute()
+	var/mob/living/carbon/human/renegade = pick_n_take(candidates)
+	renegade.gain_trauma(/datum/brain_trauma/special/renegade)
+	message_admins("[ADMIN_LOOKUPFLW(renegade)] has been made Renegade by the midround ruleset.")
+	log_game("[key_name(renegade)] was made Renegade by the midround ruleset.")
+	return TRUE
+
 /// Midround Space Changeling Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
 	name = "Space Changeling"

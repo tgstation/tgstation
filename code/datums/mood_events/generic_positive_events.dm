@@ -107,6 +107,22 @@
 	timeout = 3 SECONDS
 	hidden = TRUE
 
+/datum/mood_event/paranoid_armed
+	description = "I feel more secure with a weapon on me." //Renegades get it when armed
+	mood_change = 4
+	hidden = TRUE
+
+/datum/mood_event/paranoid_armored
+	description = "I feel more secure with armor on me." //Renegades get it when have armor on them
+	mood_change = 2
+	hidden = TRUE
+
+/datum/mood_event/paranoid_alone
+	description = "I feel safe when there is no one around me."
+	mood_change = 2
+	timeout = 3 SECONDS
+	hidden = TRUE
+
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
@@ -364,7 +380,7 @@
 	description = "Swish! Nothing but net."
 	mood_change = 2
 	timeout = 5 MINUTES
-	
+
 /datum/mood_event/basketball_dunk
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2
