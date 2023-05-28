@@ -693,9 +693,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/structure/sign/poster/official/moth_epi{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/moth_epi/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,

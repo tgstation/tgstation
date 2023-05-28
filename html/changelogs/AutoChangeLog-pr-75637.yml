@@ -1,4 +1,0 @@
-author: "Vect0r"
-delete-after: True
-changes:
-  - bugfix: "Birdshots xenobio should now be getting power from the rest of the powergrid."

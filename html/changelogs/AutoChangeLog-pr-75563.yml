@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "graves can be closed again, but only with a shovel and not by hand."
-  - qol: "you can put items in graves normally without throwing them in"
-  - qol: "examines & screentips for graves"

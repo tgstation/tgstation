@@ -1,5 +1,0 @@
-author: "TheSmallBlue and cats4gold"
-delete-after: True
-changes:
-  - sound: "Recent research concluded that the new elevator music was upping crewmate's morale a bit too much, this has now been corrected via the replacement of said music."
-  - code_imp: "Added a new \"in_order\" variable to the looping sound datum, for when you need sounds to play in order"

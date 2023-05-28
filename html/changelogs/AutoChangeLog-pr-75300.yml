@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "runtime when sm processes gases in vacuum"
-  - qol: "sm will now get activated for the very first time only if there is more than 0.01 moles of a reactive gas present, so you can now safely install it in near vacuum"
-  - qol: "sm will continue to process gasses only when there is above 0.01 moles of the gas present else it just ignores it"

@@ -29,7 +29,7 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	payday_modifier = 0.75
-	breathid = "plas"
+	breathid = GAS_PLASMA
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
