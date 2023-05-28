@@ -220,7 +220,6 @@
 		/datum/language/beachbum,
 		/datum/language/calcic,
 		/datum/language/draconic,
-		/datum/language/drone,
 		/datum/language/moffic,
 		/datum/language/monkey,
 		/datum/language/mushroom,
@@ -230,9 +229,7 @@
 		/datum/language/slime,
 		/datum/language/sylvan,
 		/datum/language/terrum,
-		/datum/language/uncommon,
 		/datum/language/voltaic,
-		/datum/language/xenocommon,
 	)
 	var/extra_language
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
