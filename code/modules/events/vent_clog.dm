@@ -33,23 +33,30 @@
 	var/spawn_delay = 10
 	///Used to track/limit produced mobs.
 	var/list/living_mobs = list()
+	///The list of decals we will choose from to spawn when producing a mob
+	var/list/filth_spawn_types = list()
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(vent)].", "Custodial Notification")
 
 /datum/round_event/vent_clog/setup()
 	vent = get_vent()
-
-	apply_signals()
-
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 	spawn_delay = rand(10, 15)
+	filth_spawn_types = list(
+		/obj/effect/decal/cleanable/dirt,
+		/obj/effect/decal/cleanable/vomit,
+		/obj/effect/decal/cleanable/insectguts,
+		/obj/effect/decal/cleanable/oil,
+	)
 
 /datum/round_event/vent_clog/start() //Sets the vent up for unclogging/mob production.
 	produce_mob() //The first one's free!
 	announce_to_ghosts(vent)
+
+	clog_vent()
 
 /datum/round_event/vent_clog/tick() //Checks if spawn_interval is met, then sends signal to vent to produce a mob.
 	if(activeFor % spawn_delay == 0)
@@ -121,7 +128,7 @@
 	vent = null //If by some great calamity, the last valid vent is destroyed, the ref is cleared.
 	vent = get_vent()
 
-	apply_signals()
+	clog_vent()
 	produce_mob()
 
 	announce_to_ghosts(vent)
@@ -139,15 +146,27 @@
 	if(vent.welded)
 		return
 
-	var/mob/new_mob = new spawned_mob(get_turf(vent))
+	var/list/potential_locations = list()
+
+	for(var/turf/nearby_turf in view(1, get_turf(vent)))
+		if(!nearby_turf.density)
+			potential_locations += nearby_turf
+
+	var/turf/spawn_location = pick(potential_locations)
+
+	var/mob/new_mob = new spawned_mob(spawn_location)
 	living_mobs += WEAKREF(new_mob)
 	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
+	var/filth_to_spawn = pick(filth_spawn_types)
+	new filth_to_spawn(spawn_location)
+	playsound(spawn_location, 'sound/effects/splat.ogg', 30, TRUE)
 
 ///Signal catcher for plunger_act()
 /datum/round_event/vent_clog/proc/plunger_unclog(datum/source, obj/item/plunger/P, mob/user, reinforced)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_unclog), user)
 
+///Handles the actual unclogging action and ends the event on completion.
 /datum/round_event/vent_clog/proc/attempt_unclog(mob/user)
 	if(vent.welded)
 		to_chat(user, span_notice("You cannot pump [vent] if it's welded shut!"))
@@ -158,9 +177,16 @@
 		to_chat(user, span_notice("You finish pumping [vent]."))
 		kill()
 
-/datum/round_event/vent_clog/proc/apply_signals()
+///Handles the initial steps of clogging a vent, either at event start or when the vent moves.
+/datum/round_event/vent_clog/proc/clog_vent()
 	RegisterSignal(vent, COMSIG_PARENT_QDELETING, PROC_REF(vent_move))
 	RegisterSignal(vent, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
+
+	for(var/turf/nearby_turf in view(2, get_turf(vent)))
+		if(isopenturf(nearby_turf) && prob(85))
+			new /obj/effect/decal/cleanable/dirt(nearby_turf)
+
+	produce_mob()
 
 /datum/round_event_control/vent_clog/major
 	name = "Vent Clog: Major"
@@ -176,6 +202,12 @@
 	. = ..()
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 7)
 	spawn_delay = rand(15,20)
+	filth_spawn_types = list(
+		/obj/effect/decal/cleanable/blood,
+		/obj/effect/decal/cleanable/insectguts,
+		/obj/effect/decal/cleanable/fuel_pool,
+		/obj/effect/decal/cleanable/oil,
+	)
 
 /datum/round_event/vent_clog/major/get_mob()
 	var/static/list/mob_list = list(
@@ -203,6 +235,12 @@
 	. = ..()
 	spawn_delay = rand(15,25)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 5)
+	filth_spawn_types = list(
+		/obj/effect/decal/cleanable/dirt,
+		/obj/effect/decal/cleanable/blood,
+		/obj/effect/decal/cleanable/blood/splatter,
+		/obj/effect/decal/cleanable/blood/gibs,
+	)
 
 /datum/round_event/vent_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(vent)] ventilation network.", "Security Alert")
@@ -229,6 +267,12 @@
 	end_when = rand(600, 900)
 	spawn_delay = rand(6, 25)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
+	filth_spawn_types = list(
+		/obj/effect/decal/cleanable/xenoblood,
+		/obj/effect/decal/cleanable/fuel_pool,
+		/obj/effect/decal/cleanable/greenglow,
+		/obj/effect/decal/cleanable/vomit,
+	)
 
 /datum/round_event/vent_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area_name(vent)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
