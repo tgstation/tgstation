@@ -7,6 +7,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"cY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space/nearstation)
 "dq" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/sign/warning/electric_shock/directional/east,
@@ -21,6 +26,10 @@
 /turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"eq" = (
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "eP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -44,9 +53,23 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"gS" = (
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 8
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "hD" = (
 /turf/open/floor/glass/plasma,
 /area/station/engineering/supermatter/room)
+"hQ" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "hV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -57,6 +80,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"hW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "ic" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -73,6 +101,7 @@
 	name = "Departure Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "iW" = (
@@ -81,12 +110,28 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"jc" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "Departure Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "jl" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"kf" = (
+/obj/machinery/field/generator,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "km" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -107,24 +152,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "lg" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"lt" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/external{
-	name = "Departure Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "lE" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/fifty,
@@ -170,11 +203,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/plasma,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"or" = (
+/obj/machinery/power/rad_collector,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "oK" = (
@@ -210,21 +252,26 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"qj" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/power/rad_collector,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "ql" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/emitter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"qW" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "re" = (
 /obj/machinery/light/blacklight/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"ru" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/space/basic,
+/area/space/nearstation)
 "rz" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -254,7 +301,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "th" = (
-/obj/structure/cable,
 /obj/machinery/camera/directional/north{
 	c_tag = "Departures Lounge";
 	name = "shuttle camera"
@@ -277,11 +323,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"vD" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/power/energy_accumulator/grounding_rod,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
+"vF" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space/nearstation)
 "xm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end{
@@ -293,6 +340,11 @@
 "xr" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
+"xs" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "xG" = (
 /obj/machinery/power/terminal{
@@ -313,12 +365,22 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "yw" = (
-/obj/item/stack/cable_coil,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"zg" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "zs" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
+"zu" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/layer1,
+/turf/open/space/basic,
+/area/space/nearstation)
 "zB" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/shieldgen,
@@ -326,8 +388,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "zH" = (
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable,
+/obj/machinery/the_singularitygen,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "zP" = (
@@ -355,6 +416,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Cu" = (
@@ -386,8 +448,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "EU" = (
@@ -403,8 +463,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Fu" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/power/rad_collector,
 /obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -420,8 +478,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "HV" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/the_singularitygen/tesla,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Ib" = (
@@ -463,14 +520,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "KY" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/the_singularitygen,
 /obj/machinery/light/blacklight/directional/east,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Lc" = (
 /obj/machinery/light/directional/south,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Le" = (
@@ -492,7 +547,6 @@
 "LZ" = (
 /obj/structure/particle_accelerator/particle_emitter/center,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Mb" = (
@@ -536,8 +590,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "OT" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable,
+/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Pj" = (
@@ -547,7 +600,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "PV" = (
@@ -577,6 +629,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"Rx" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "RL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron,
@@ -591,7 +648,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Su" = (
@@ -599,6 +655,10 @@
 /obj/machinery/power/emitter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"SM" = (
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Uk" = (
 /obj/machinery/power/energy_accumulator/tesla_coil,
@@ -635,6 +695,11 @@
 /obj/structure/particle_accelerator/fuel_chamber,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"UU" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "Vk" = (
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -664,6 +729,16 @@
 /area/station/engineering/supermatter/room)
 "WZ" = (
 /turf/open/space/basic,
+/area/space/nearstation)
+"Xz" = (
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"XV" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "Yj" = (
 /obj/effect/turf_decal/stripes/line{
@@ -766,9 +841,9 @@ zP
 zP
 zs
 pk
-pk
-pk
-pk
+iW
+iW
+iW
 BT
 ob
 zs
@@ -789,14 +864,14 @@ zs
 zs
 zs
 pk
+Ib
 oK
 oK
 oK
-oK
-oK
+UU
 zs
 th
-fx
+Pj
 zs
 "}
 (5,1,1) = {"
@@ -814,12 +889,12 @@ km
 Zp
 Ib
 Ib
-Ib
-Ib
-Ib
+SM
+qW
+xs
 is
 yw
-fx
+Pj
 zs
 "}
 (6,1,1) = {"
@@ -833,15 +908,15 @@ hV
 Nv
 iW
 eo
-qj
+oK
+or
 VI
 VI
-vD
-Uk
+Xz
 Uk
 HV
 zs
-fx
+yw
 Lc
 zs
 "}
@@ -857,15 +932,15 @@ pk
 iW
 eo
 Fu
+or
 VI
 VI
-vD
-Uk
+Xz
 Uk
 KY
 zs
-lt
-zs
+yw
+Pj
 zs
 "}
 (8,1,1) = {"
@@ -887,8 +962,8 @@ zs
 zs
 zs
 zs
-fx
-Pj
+jc
+zs
 zs
 "}
 (9,1,1) = {"
@@ -904,14 +979,14 @@ DA
 Eh
 WZ
 WZ
-WZ
-lg
-WZ
-WZ
-WZ
-WZ
-rP
-WZ
+IJ
+cY
+cY
+cY
+vF
+vF
+XV
+cY
 WZ
 "}
 (10,1,1) = {"
@@ -926,16 +1001,16 @@ NC
 Fj
 RL
 WZ
-WZ
+zu
+zu
+ru
+zu
+zu
+zu
 IJ
-Ir
-rP
-rP
-rP
-rP
-rP
-Ir
-WZ
+Vk
+cY
+IJ
 "}
 (11,1,1) = {"
 rz
@@ -949,16 +1024,16 @@ aJ
 Fj
 RL
 WZ
-IJ
-rP
-Cu
-IJ
-rP
-rP
-rP
-IJ
-Cu
-rP
+zu
+cY
+Ir
+Vk
+hW
+XV
+Rx
+Vk
+Ir
+cY
 "}
 (12,1,1) = {"
 pa
@@ -966,21 +1041,21 @@ UA
 oK
 NK
 pk
-sz
-sz
+lZ
+lZ
 lZ
 UJ
 RL
 WZ
-IJ
+zu
 rP
+kf
 IJ
 Vk
-lg
-IJ
-lg
+eq
 Vk
 IJ
+kf
 rP
 "}
 (13,1,1) = {"
@@ -995,15 +1070,15 @@ EK
 Fj
 RL
 WZ
-IJ
+zu
 rP
-WZ
+IJ
+Vk
 lg
 IJ
 lg
+Vk
 IJ
-lg
-WZ
 rP
 "}
 (14,1,1) = {"
@@ -1018,14 +1093,14 @@ LZ
 Fj
 RL
 WZ
-IJ
+zu
 rP
 WZ
-IJ
-lg
-Vk
 lg
 IJ
+lg
+IJ
+lg
 WZ
 rP
 "}
@@ -1041,14 +1116,14 @@ RV
 Fj
 RL
 WZ
-IJ
+zu
 rP
 WZ
-lg
 IJ
 lg
-IJ
+Vk
 lg
+IJ
 WZ
 rP
 "}
@@ -1064,15 +1139,15 @@ sz
 Fj
 RL
 WZ
-IJ
+zu
 rP
-IJ
-Vk
+WZ
 lg
 IJ
 lg
-Vk
 IJ
+lg
+WZ
 rP
 "}
 (17,1,1) = {"
@@ -1087,15 +1162,15 @@ IL
 UJ
 RL
 WZ
-IJ
-rP
-Cu
-IJ
-rP
-rP
+zu
 rP
 IJ
-Cu
+Vk
+lg
+IJ
+lg
+Vk
+IJ
 rP
 "}
 (18,1,1) = {"
@@ -1110,16 +1185,16 @@ Ii
 JC
 RL
 WZ
-WZ
+zu
+rP
+Cu
 IJ
-NO
+Vk
+eq
+Vk
+IJ
+Cu
 rP
-rP
-rP
-rP
-rP
-NO
-WZ
 "}
 (19,1,1) = {"
 zs
@@ -1133,16 +1208,16 @@ Ii
 oe
 RN
 tB
-WZ
-WZ
-WZ
+zu
+zu
+gS
+zg
+hQ
+XV
+hW
+Vk
+NO
 lg
-WZ
-WZ
-WZ
-lg
-WZ
-WZ
 "}
 (20,1,1) = {"
 zs
