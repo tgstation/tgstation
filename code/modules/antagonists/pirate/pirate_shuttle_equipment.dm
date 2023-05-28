@@ -378,6 +378,8 @@
 	var/ransom_value = 500
 	if(ransomee.stat != DEAD)
 		ransom_value *= 2
+	if(!ransomee.mind.assigned_role)
+		return ransom_value
 	if(ransomee.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		ransom_value *= 2
 	if(ransomee.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
