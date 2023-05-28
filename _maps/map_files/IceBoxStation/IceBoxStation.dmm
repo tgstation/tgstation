@@ -66518,7 +66518,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/command/heads_quarters/ce)
 "vkC" = (
@@ -74418,13 +74417,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xFM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/sign/delamination_counter/directional/north,
-/turf/open/floor/engine,
+/obj/structure/sign/incident/delam,
+/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "xFU" = (
 /obj/structure/barricade/wooden,
@@ -235552,7 +235546,7 @@ gTK
 gTK
 myX
 sSJ
-gka
+xFM
 eEh
 fab
 eDC
@@ -235820,7 +235814,7 @@ spv
 dwy
 spv
 wuo
-xFM
+pry
 kUz
 mLV
 gka

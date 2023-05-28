@@ -58633,7 +58633,6 @@
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
 "tPV" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -70443,6 +70442,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
+"ygX" = (
+/obj/structure/sign/incident/dual,
+/turf/closed/wall/r_wall,
+/area/station/security/checkpoint/engineering)
 "ygY" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
@@ -101468,7 +101471,7 @@ vpP
 roB
 uBy
 fXQ
-roB
+ygX
 tPV
 hJd
 hJd

@@ -12035,6 +12035,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"ewu" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/incident/delam/directional/south,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "ewB" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -22939,7 +22945,6 @@
 	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "iug" = (
@@ -33681,7 +33686,6 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "mkO" = (
@@ -67067,6 +67071,7 @@
 "ybl" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/delivery,
+/obj/structure/sign/incident/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ybm" = (
@@ -110436,7 +110441,7 @@ fec
 rHn
 fJP
 tYc
-mdk
+ewu
 fJy
 bDW
 bDW

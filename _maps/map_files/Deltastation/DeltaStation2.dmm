@@ -15459,7 +15459,6 @@
 "dOr" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot,
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "dOw" = (
@@ -17960,6 +17959,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"evP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
+/obj/structure/sign/incident/delam/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "ewb" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
@@ -37985,6 +37989,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
+"jvr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "jvs" = (
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -67804,6 +67816,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/toolcloset,
+/obj/structure/sign/incident/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qWZ" = (
@@ -77015,7 +77028,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "tou" = (
-/obj/structure/sign/delamination_counter/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/engine_access,
 /turf/open/floor/engine,
@@ -90250,7 +90262,6 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wyN" = (
@@ -117212,7 +117223,7 @@ glb
 dRK
 wcP
 yeO
-nbZ
+evP
 nCi
 kmS
 fCk
@@ -117470,7 +117481,7 @@ vrs
 qJI
 iQV
 nbZ
-akM
+nCi
 cOx
 uGn
 axu
@@ -121064,7 +121075,7 @@ jBE
 bIa
 rRD
 xqW
-azi
+jvr
 lbR
 pFq
 dqX

@@ -35576,6 +35576,16 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"jxd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/incident/delam/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "jxi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -84199,6 +84209,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister,
+/obj/structure/sign/incident/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wfx" = (
@@ -92119,6 +92130,7 @@
 "yhO" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/structure/window/spawner/directional/east,
+/obj/structure/sign/incident/delam/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -138015,7 +138027,7 @@ oIy
 bIW
 oIy
 oIy
-pso
+jxd
 xgW
 xgW
 pUf
