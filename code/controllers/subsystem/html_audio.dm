@@ -2,17 +2,41 @@ SUBSYSTEM_DEF(html_audio)
 	name = "HTML Audio"
 	init_order = INIT_ORDER_HTMLAUDIO
 	flags = SS_NO_FIRE
+	var/list/speakers = list()
 	var/max_channels = 512 // set this to how many total channels you want
 	var/list/channel_assignment = list() // list([atom in the world], [atom in the world], ...) for keeping track of what channels are in use and by what
-	var/list/channel_loop_status = list() // list([atom in the world] = TRUE/FALSE, ...) for keeping track of what channels are looping
-	var/list/channel_tts_status = list() // list([atom in the world] = TRUE/FALSE, ...) for keeping track of what channels are TTS
 	var/list/listeners = list() // list of client listeners to update when audio gets added
-	var/list/active_urls = list() // list("url_here", ...), ref'd by active_urls[channel_id]
-	var/list/list/channel_requires_LOS_at_start_listeners = list() // list(list(/client, ...)) complicated, used for LOS requirements on hearing speech
-	var/list/channel_requires_LOS_at_start = list() // list([atom in the world] = TRUE/FALSE, ...) for keeping track of what channels require LOS at the start
 	var/list/listener_handlers = list() // list([atom in the world] = listener_handler)
 	var/browse_txt
 	var/preview_browse_txt
+
+/datum/html_audio_speaker
+	var/atom/speaker
+	var/assigned_channel
+	var/looping = FALSE
+	var/tts = FALSE
+	var/url
+	var/blips_url
+	var/requires_LOS = FALSE
+	var/list/listeners_at_start_for_LOS
+
+/datum/html_audio_speaker/New(requires_LOS)
+	. = ..()
+	src.requires_LOS = requires_LOS
+
+
+/datum/html_audio_speaker/proc/deregister_player_qdel(atom/movable/player)
+	SIGNAL_HANDLER
+	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	SShtml_audio.deregister_player(player)
+
+/datum/html_audio_speaker/proc/handle_player_move(atom/movable/player, atom/old_loc)
+	SIGNAL_HANDLER
+	list_clear_nulls(SShtml_audio.listeners) // clients be like *poof* mid proc
+	for(var/client/listener in SShtml_audio.listeners)
+		if(!listener)
+			continue
+		SShtml_audio.update_listener_volume(listener)
 
 /datum/controller/subsystem/html_audio/Initialize()
 	browse_txt = {"
@@ -67,11 +91,6 @@ SUBSYSTEM_DEF(html_audio)
 			</script>
 	"}
 	channel_assignment.len = max_channels
-	channel_loop_status.len = max_channels
-	channel_tts_status.len = max_channels
-	active_urls.len = max_channels
-	channel_requires_LOS_at_start.len = max_channels
-	channel_requires_LOS_at_start_listeners.len = max_channels
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, PROC_REF(register_listener))
 	return SS_INIT_SUCCESS
 
@@ -83,15 +102,15 @@ SUBSYSTEM_DEF(html_audio)
 
 /datum/listener_handler/proc/deregister_listener_qdel(atom/movable/listener)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, list(COMSIG_MOVABLE_MOVED))
-	SShtml_audio.listener_handlers[listener] = null
-	UnregisterSignal(src, list(COMSIG_MOB_LOGOUT))
+	UnregisterSignal(listener, list(COMSIG_MOVABLE_MOVED))
+	SShtml_audio.listener_handlers -= listener
+	UnregisterSignal(listener, list(COMSIG_MOB_LOGOUT))
 
 /datum/listener_handler/proc/unregister_listener_logout(mob/old_listener)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, list(COMSIG_MOVABLE_MOVED))
-	SShtml_audio.listener_handlers[old_listener] = null
-	UnregisterSignal(src, list(COMSIG_MOB_LOGOUT))
+	UnregisterSignal(old_listener, list(COMSIG_MOVABLE_MOVED))
+	SShtml_audio.listener_handlers -= old_listener
+	UnregisterSignal(old_listener, list(COMSIG_MOB_LOGOUT))
 
 /datum/controller/subsystem/html_audio/proc/register_listener(datum/source, mob/new_login)
 	list_clear_nulls(listeners)
@@ -107,35 +126,37 @@ SUBSYSTEM_DEF(html_audio)
 	new_handler.RegisterSignal(listener.mob, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/listener_handler, deregister_listener_qdel)) // calls update_listener_volume
 	new_handler.RegisterSignal(listener.mob, COMSIG_MOB_LOGOUT, TYPE_PROC_REF(/datum/listener_handler, unregister_listener_logout))
 	update_listener_volume(listener)
-	for(var/i in 1 to max_channels) // New listener, so let's get them up to speed on all the channels.
-		if(active_urls[i])
-			if(channel_tts_status[i])
+	for(var/speaker_player in speakers) // New listener, so let's get them up to speed on all the channels.
+		var/datum/html_audio_speaker/speaker = speakers[speaker_player]
+		if(speaker.url)
+			if(speaker.tts)
 				var/use_blips = listener.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
 				var/use_byond_audio = listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)
 				if(CONFIG_GET(flag/tts_force_html_audio))
 					use_byond_audio = FALSE
 				if(!use_byond_audio)
 					if(use_blips)
-						listener << output(list2params(list(active_urls[i]["blips"], "channel_[i]")), "html_audio_player:playAudio")
+						listener << output(list2params(list(speaker.blips_url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
 					else
-						listener << output(list2params(list(active_urls[i]["normal"], "channel_[i]")), "html_audio_player:playAudio")
+						listener << output(list2params(list(speaker.url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
 			else
-				listener << output(list2params(list(active_urls[i], "channel_[i]")), "html_audio_player:playAudio")
-		if(channel_loop_status[i])
-			listener << output(list2params(list("true", "channel_[i]")), "html_audio_player:setLooping")
+				listener << output(list2params(list(speaker.url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
+		if(speaker.looping)
+			listener << output(list2params(list("true", "channel_[speaker.assigned_channel]")), "html_audio_player:setLooping")
 		else
-			listener << output(list2params(list("false", "channel_[i]")), "html_audio_player:setLooping")
+			listener << output(list2params(list("false", "channel_[speaker.assigned_channel]")), "html_audio_player:setLooping")
 
 /datum/controller/subsystem/html_audio/proc/update_listener_volume(client/listener)
-	for(var/i in 1 to max_channels)
+	for(var/speaker_player in speakers)
+		var/datum/html_audio_speaker/speaker = speakers[speaker_player]
 		var/volume_to_use = 0
-		var/distance = get_dist(channel_assignment[i], listener.mob)
-		var/turf/speaker_turf = get_turf(channel_assignment[i])
+		var/distance = get_dist(speaker.speaker, listener.mob)
+		var/turf/speaker_turf = get_turf(speaker.speaker)
 		var/turf/listener_turf = get_turf(listener.mob)
-		if(!channel_assignment[i] || distance >= 10 || (channel_requires_LOS_at_start[i] && !(listener in channel_requires_LOS_at_start_listeners[i])) || (channel_tts_status[i] && listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)))
+		if(!speaker.speaker || distance >= 10 || (speaker.requires_LOS && !(listener in speaker.listeners_at_start_for_LOS)) || (speaker.tts && listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)))
 			volume_to_use = 0
 		else
-			if(channel_tts_status[i])
+			if(speaker.tts)
 				volume_to_use = min((1-(1/10*distance))**2, 1) * listener.prefs.read_preference(/datum/preference/numeric/sound_tts_volume) / 100
 			else
 				volume_to_use = min((1-(1/10*distance))**2, 1)
@@ -156,7 +177,7 @@ SUBSYSTEM_DEF(html_audio)
 
 				volume_to_use *= pressure_factor
 				volume_to_use = clamp(volume_to_use, 0, 1)
-		listener << output(list2params(list(num2text(volume_to_use), "channel_[i]")), "html_audio_player:setVolume")
+		listener << output(list2params(list(num2text(volume_to_use), "channel_[speaker.assigned_channel]")), "html_audio_player:setVolume") // TODO: find way to batch this so we just send 1 update with all the audio volumes
 
 /datum/controller/subsystem/html_audio/proc/jank_ass_browse_check(checked_person)
 	if (!winexists(checked_person, "html_audio_player"))
@@ -166,30 +187,20 @@ SUBSYSTEM_DEF(html_audio)
 
 /datum/controller/subsystem/html_audio/proc/register_player(atom/movable/player, requires_LOS = FALSE)
 	var/assigned = FALSE
+	var/datum/html_audio_speaker/new_speaker = new(requires_LOS)
 	for(var/i in 1 to max_channels) // Go through the channels, find the first empty slot and get in there.
 		if(isnull(channel_assignment[i]))
 			assigned = TRUE
-			channel_assignment[i] = player
-			if(requires_LOS)
-				channel_requires_LOS_at_start[i] = TRUE
-			RegisterSignal(player, COMSIG_MOVABLE_MOVED, PROC_REF(handle_player_move))
-			RegisterSignal(player, COMSIG_PARENT_QDELETING, PROC_REF(deregister_player_qdel))
+			new_speaker.assigned_channel = i
+			new_speaker.speaker = player
+			speakers[player] = new_speaker
+			channel_assignment[i] = new_speaker
+			new_speaker.RegisterSignal(player, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/html_audio_speaker, handle_player_move))
+			new_speaker.RegisterSignal(player, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/html_audio_speaker, deregister_player_qdel))
 			break
 	if(!assigned)
-		CRASH("YO WE OUT OF FUCKING CHANNELS ABORT ABORT ABORT TOO MANY FUCKING THINGS GOT HTML AUDIO REEL THAT SHIT IN BRO BACK THAT ASS UP")
-	list_clear_nulls(listeners) // clients be like *poof* mid proc
-	for(var/client/listener in listeners)
-		if(!listener)
-			continue
-		update_listener_volume(listener)
-
-/datum/controller/subsystem/html_audio/proc/deregister_player_qdel(atom/movable/player)
-	SIGNAL_HANDLER
-	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	deregister_player(player)
-
-/datum/controller/subsystem/html_audio/proc/handle_player_move(atom/movable/player, atom/old_loc)
-	SIGNAL_HANDLER
+		qdel(new_speaker)
+		CRASH("No channels to spare / HTML audio weeps / Silent speaker waits - ChatGPT, \"Whispers of Silence\", 5/24/2023")
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
 	for(var/client/listener in listeners)
 		if(!listener)
@@ -198,13 +209,9 @@ SUBSYSTEM_DEF(html_audio)
 
 /datum/controller/subsystem/html_audio/proc/deregister_player(atom/movable/player)
 	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	var/current_channel = channel_assignment.Find(player)
-	channel_assignment[current_channel] = null
-	active_urls[current_channel] = null
-	channel_loop_status[current_channel] = null
-	channel_tts_status[current_channel] = null
-	channel_requires_LOS_at_start[current_channel] = null
-	channel_requires_LOS_at_start_listeners[current_channel] = null
+	var/datum/html_audio_speaker/speaker = speakers[player]
+	channel_assignment[speaker.assigned_channel] = null
+	speakers -= player
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
 	for(var/client/listener in listeners)
 		if(!listener)
@@ -214,38 +221,39 @@ SUBSYSTEM_DEF(html_audio)
 /datum/controller/subsystem/html_audio/proc/play_audio(atom/movable/player, url, blips_url = null)
 	stop_looping_audio(player)
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
-	var/our_id = channel_assignment.Find(player)
-	if(!our_id)
-		CRASH("YO SOME FUCKER JUST TRIED TO PLAY AUDIO WITHOUT REGISTERING, BOO THIS FUCKER")
+	var/datum/html_audio_speaker/speaker = speakers[player]
+	if(!speaker)
+		CRASH("Sound lost in the void / Unregistered melody / HTML's silence - ChatGPT, \"Unheard Melodies\", 5/24/2023")
 	if(blips_url)
-		active_urls[our_id] = list("normal" = url, "blips" = blips_url)
-		channel_tts_status[our_id] = TRUE
+		speaker.url = url
+		speaker.blips_url = blips_url
+		speaker.tts = TRUE
 	else
-		active_urls[our_id] = url
-		channel_tts_status[our_id] = null
-	channel_requires_LOS_at_start_listeners[our_id] = list() // fresh play, thus fresh listeners who are compatible
+		speaker.url = url
+		speaker.tts = FALSE
+	speaker.listeners_at_start_for_LOS = list() // fresh play, thus fresh listeners who are compatible
 	var/list/hearers = list()
-	if(channel_requires_LOS_at_start[our_id])
+	if(speaker.requires_LOS)
 		hearers = get_hearers_in_view(10, player)
 		for(var/mob/mob_hearing in hearers)
 			if(mob_hearing.client)
-				channel_requires_LOS_at_start_listeners[our_id].Add(mob_hearing.client) // the linter can kiss my ass
+				speaker.listeners_at_start_for_LOS.Add(mob_hearing.client)
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
 		update_listener_volume(listener)
-		if(channel_tts_status[our_id])
+		if(speaker.tts)
 			var/use_blips = listener.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
 			var/use_byond_audio = listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)
 			if(CONFIG_GET(flag/tts_force_html_audio))
 				use_byond_audio = FALSE
 			if(!use_byond_audio)
 				if(use_blips)
-					listener << output(list2params(list(active_urls[our_id]["blips"], "channel_[our_id]")), "html_audio_player:playAudio")
+					listener << output(list2params(list(speaker.blips_url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
 				else
-					listener << output(list2params(list(active_urls[our_id]["normal"], "channel_[our_id]")), "html_audio_player:playAudio")
+					listener << output(list2params(list(speaker.url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
 		else
-			listener << output(list2params(list(active_urls[our_id], "channel_[our_id]")), "html_audio_player:playAudio")
+			listener << output(list2params(list(speaker.url, "channel_[speaker.assigned_channel]")), "html_audio_player:playAudio")
 
 /datum/controller/subsystem/html_audio/proc/play_preview_audio(client/listener, url)
 	jank_ass_browse_check(listener)
@@ -253,22 +261,22 @@ SUBSYSTEM_DEF(html_audio)
 
 /datum/controller/subsystem/html_audio/proc/start_looping_audio(atom/movable/player)
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
-	var/our_id = channel_assignment.Find(player)
-	if(!our_id)
-		CRASH("YO SOME FUCKER JUST TRIED TO LOOP AUDIO WITHOUT REGISTERING, BOO THIS FUCKER")
-	channel_loop_status[our_id] = TRUE
+	var/datum/html_audio_speaker/speaker = speakers[player]
+	if(!speaker)
+		CRASH("Looping sound unheard / HTML audio unbound / HTML audio unbound - ChatGPT, \"Echoes Lost in Silence\", 5/24/2023")
+	speaker.looping = TRUE
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
-		listener << output(list2params(list("true", "channel_[our_id]")), "html_audio_player:setLooping")
+		listener << output(list2params(list("true", "channel_[speaker.assigned_channel]")), "html_audio_player:setLooping")
 
 /datum/controller/subsystem/html_audio/proc/stop_looping_audio(atom/movable/player)
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
-	var/our_id = channel_assignment.Find(player)
-	if(!our_id)
-		CRASH("YO SOME FUCKER JUST TRIED TO NOT LOOP AUDIO WITHOUT REGISTERING, BOO THIS FUCKER")
-	channel_loop_status[our_id] = FALSE
+	var/datum/html_audio_speaker/speaker = speakers[player]
+	if(!speaker)
+		CRASH("Endless loop persists / HTML audio uncontrolled / Silence won't prevail - ChatGPT, \"Unbound Echoes\", 5/24/2023")
+	speaker.looping = FALSE
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
-		listener << output(list2params(list("false", "channel_[our_id]")), "html_audio_player:setLooping")
+		listener << output(list2params(list("false", "channel_[speaker.assigned_channel]")), "html_audio_player:setLooping")
