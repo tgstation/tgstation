@@ -39,13 +39,13 @@ SUBSYSTEM_DEF(html_audio)
 		SShtml_audio.update_listener_volume(listener)
 
 /datum/controller/subsystem/html_audio/Initialize()
-	browse_txt = {"
+	browse_txt = @{"
 			<META http-equiv="X-UA-Compatible" content="IE=edge">"}
 	for(var/i in 1 to max_channels)
 		browse_txt += {"
 			<audio id="channel_[i]" volume="0">
 			</audio>"}
-	browse_txt += {"
+	browse_txt += @{"
 			<script>
 			function setVolume(volume, element_id)
 			{
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(html_audio)
 				var volumes = JSON.parse(volume_json);
 
 				for (var element_id in volumes) {
-					if (obj.hasOwnProperty(element_id)) {
+					if (volumes.hasOwnProperty(element_id)) {
 						setVolume(volumes[element_id], element_id);
 					}
 				}
@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(html_audio)
 			}
 			</script>
 	"}
-	preview_browse_txt = {"
+	preview_browse_txt = @{"
 			<META http-equiv="X-UA-Compatible" content="IE=edge">
 			<audio id="channel_preview" volume="100">
 			</audio>
