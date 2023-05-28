@@ -576,11 +576,10 @@
 		return
 
 	var/render_list = ""
-	for(var/thing in patient.diseases)
-		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			render_list += "<span class='alert ml-1'><b>Warning: [D.form] detected</b>\n\
-			<div class='ml-2'>Name: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</div>\
+	for(var/datum/disease/disease as anything in patient.diseases)
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			render_list += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
+			<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 			</span>"
 
 	if(render_list == "")
