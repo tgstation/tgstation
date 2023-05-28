@@ -13,13 +13,12 @@
 		return
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(scrubber)
-		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded)
 			return TRUE //make sure we have a valid scrubber to spawn from.
 	return FALSE
 
 /datum/round_event/scrubber_clog
 	announce_when = 10
-	start_when = 5
 	end_when = 600
 
 	///Scrubber selected for the event.
@@ -32,8 +31,6 @@
 	var/spawn_delay = 10
 	///Used to track/limit produced mobs.
 	var/list/living_mobs = list()
-	///Used for tracking if the clog signal should be sent.
-	var/clogged = TRUE
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)].", "Custodial Notification")
@@ -45,6 +42,7 @@
 		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
+	RegisterSignal(scrubber, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
@@ -52,18 +50,16 @@
 	spawn_delay = rand(10, 15)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
-	scrubber.clogged = TRUE
 	produce_mob(spawned_mob, living_mobs) //The first one's free!
 	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
-	if(activeFor % spawn_delay == 0 && scrubber.clogged)
+	if(activeFor % spawn_delay == 0)
 		life_check()
-		if(living_mobs.len < maximum_spawns && clogged)
+		if(living_mobs.len < maximum_spawns)
 			produce_mob(spawned_mob, living_mobs)
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
-	scrubber.clogged = FALSE
 	scrubber = null
 	living_mobs.Cut()
 
@@ -93,7 +89,7 @@
 	var/list/scrubber_list = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(scrubber)
-		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded)
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
@@ -127,7 +123,6 @@
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
-	scrubber.clogged = TRUE
 	produce_mob(spawned_mob, living_mobs)
 
 	announce_to_ghosts(scrubber)
@@ -150,9 +145,25 @@
 	if(scrubber.welded)
 		return
 
-	var/mob/new_mob = new spawned_mob(get_turf(src))
+	var/mob/new_mob = new spawned_mob(get_turf(scrubber))
 	living_mobs += WEAKREF(new_mob)
-	scrubber.visible_message(span_warning("[new_mob] crawls out of [src]!"))
+	scrubber.visible_message(span_warning("[new_mob] crawls out of [scrubber]!"))
+
+///Signal catcher for plunger_act()
+/datum/round_event/scrubber_clog/proc/plunger_unclog(datum/source, obj/item/plunger/P, mob/user, reinforced)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(attempt_unclog), user)
+
+/datum/round_event/scrubber_clog/proc/attempt_unclog(mob/user)
+	if(scrubber.welded)
+		to_chat(user, span_notice("You cannot pump [scrubber] if it's welded shut!"))
+		return
+
+	to_chat(user, span_notice("You begin pumping [scrubber] with your plunger."))
+	if(do_after(user, 6 SECONDS, target = scrubber))
+		to_chat(user, span_notice("You finish pumping [scrubber]."))
+		end_when = activeFor + 1 //Skip to the end and wrap things up
+
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Scrubber Clog: Major"

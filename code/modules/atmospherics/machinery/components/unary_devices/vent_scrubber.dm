@@ -25,9 +25,6 @@
 	var/widenet = FALSE
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
-
-	///Enables the use of plunger_act for ending the vent clog random event
-	var/clogged = FALSE
 	///The area this scrubber is assigned to
 	var/area/assigned_area
 
@@ -359,19 +356,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/plunger, mob/living/user, reinforced)
-	if(!clogged)
-		return
-
-	if(welded)
-		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
-		return
-
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
-	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
-		clogged = FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
