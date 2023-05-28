@@ -1,10 +1,9 @@
 #define MOB_SPAWN_MINIMUM 3
 
 /datum/round_event_control/vent_clog
-	name = "Vent Clog: Minor"
+	name = "Ventilation Clog: Minor"
 	typepath = /datum/round_event/vent_clog
 	weight = 25
-	max_occurrences = 10
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a vent."
@@ -47,7 +46,6 @@
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 	spawn_delay = rand(10, 15)
 	filth_spawn_types = list(
-		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/oil,
@@ -194,7 +192,7 @@
 	UnregisterSignal(vent, COMSIG_PLUNGER_ACT)
 
 /datum/round_event_control/vent_clog/major
-	name = "Vent Clog: Major"
+	name = "Ventilation Clog: Major"
 	typepath = /datum/round_event/vent_clog/major
 	weight = 12
 	max_occurrences = 5
@@ -219,6 +217,7 @@
 		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/basic/giant_spider,
+		/mob/living/basic/cockroach/hauberoach,
 	)
 	return pick(mob_list)
 
@@ -226,7 +225,7 @@
 	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(vent)] area.", "Infestation Alert")
 
 /datum/round_event_control/vent_clog/critical
-	name = "Vent Clog: Critical"
+	name = "Ventilation Clog: Critical"
 	typepath = /datum/round_event/vent_clog/critical
 	weight = 8
 	min_players = 15
@@ -241,7 +240,6 @@
 	spawn_delay = rand(15,25)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 5)
 	filth_spawn_types = list(
-		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/blood/splatter,
 	)
@@ -258,7 +256,7 @@
 	return pick(mob_list)
 
 /datum/round_event_control/vent_clog/strange
-	name = "Vent Clog: Strange"
+	name = "Ventilation Clog: Strange"
 	typepath = /datum/round_event/vent_clog/strange
 	weight = 5
 	max_occurrences = 2
@@ -284,11 +282,12 @@
 /datum/round_event/vent_clog/strange/get_mob()
 	var/static/list/mob_list = list(
 		/mob/living/basic/lightgeist,
+		/mob/living/basic/mothroach,
+		/mob/living/basic/cockroach/glockroach/mobroach,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
-		/mob/living/basic/mothroach,
 	)
 	return pick(mob_list)
 
