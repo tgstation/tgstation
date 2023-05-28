@@ -93,7 +93,6 @@
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
-	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
@@ -474,18 +473,6 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
-		SpinAnimation(4,2)
-		if(flip_cooldown <= world.time)
-			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, span_userdanger("While trying to flip [src] you pull the trigger and accidentally shoot yourself!"))
-				process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
-				user.dropItemToGround(src, TRUE)
-				return
-			flip_cooldown = (world.time + 30)
-			user.visible_message(span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That’s pretty badass."))
-			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
-			return
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
