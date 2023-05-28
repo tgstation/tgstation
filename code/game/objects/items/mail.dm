@@ -432,7 +432,7 @@
 		return FALSE
 	mail_type = lowertext(mail_type)
 
-	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No"))
+	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No") == "Yes")
 	if(isnull(mail_armed))
 		return FALSE
 	if(loc != user)
@@ -478,7 +478,7 @@
 	atom_storage.hide_contents(user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
-	shady_mail.armed = (mail_armed == "Yes")
+	shady_mail.armed = mail_armed
 	shady_mail.made_by_ref = WEAKREF(user.mind)
 	user.put_in_hands(shady_mail)
 	qdel(src)
