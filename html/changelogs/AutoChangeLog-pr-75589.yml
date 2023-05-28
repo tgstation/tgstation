@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Newly created areas in Icemoon and Space are no longer valid Cult areas for Runes and such."
