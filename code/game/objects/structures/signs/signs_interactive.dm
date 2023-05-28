@@ -58,12 +58,12 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 	var/delam_record = 0
 
 /obj/structure/sign/incident/delam
+	icon_state = "stat_display_delam"
 	name = "delamination incident display"
 	sign_features = DISPLAY_DELAM
 	desc = "A signs describe how long it's been since the last delamination incident. Features an advert for SAFETY MOTH."
 
 /obj/structure/sign/incident/dual
-	icon_state = "stat_display_dual"
 	desc = "A display that provides information on the station's safety record. Features an advert for SAFETY MOTH."
 	sign_features = DISPLAY_DELAM | DISPLAY_TRAM
 
