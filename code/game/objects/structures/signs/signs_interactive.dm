@@ -87,11 +87,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 
 /obj/structure/sign/incident/LateInitialize()
 	. = ..()
-	if(DISPLAY_DELAM)
+	if(sign_features & DISPLAY_DELAM)
 		GLOB.map_delamination_counters += src
 		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
 
-	if(DISPLAY_TRAM)
+	if(sign_features & DISPLAY_TRAM)
 		for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
 			RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(tram_hit))
 
@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 
 /obj/structure/sign/incident/update_overlays()
 	. = ..()
-	if(DISPLAY_DELAM)
+	if(sign_features & DISPLAY_DELAM)
 		var/delam_display_color
 		if(!last_delam)
 			delam_display_color = "#FF0000"
@@ -138,7 +138,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 			delam_trend_overlay.pixel_z = 6
 			. += delam_trend_overlay
 
-	if(DISPLAY_TRAM)
+	if(sign_features & DISPLAY_TRAM)
 		var/tram_display_color = "#66CCFF"
 		var/tram_pos1 = hit_count % 10
 		var/mutable_appearance/tram_pos1_overlay = mutable_appearance('icons/obj/stat_display.dmi', "num_[tram_pos1]")
@@ -170,7 +170,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 /obj/structure/sign/incident/examine(mob/user)
 	. = ..()
 
-	if(DISPLAY_DELAM)
+	if(sign_features & DISPLAY_DELAM)
 		. += span_info("It has been [last_delam] day\s since the last delamination event at this Nanotrasen facility.")
 		switch (last_delam)
 			if(0)
@@ -186,7 +186,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 			else
 				. += span_info("Incredible!<br/>")
 
-	if(DISPLAY_TRAM)
+	if(sign_features & DISPLAY_TRAM)
 		. += span_info("The station has had [hit_count] tram incident\s this shift.")
 		switch (hit_count)
 			if(0)
