@@ -67,9 +67,9 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 	desc = "A display that provides information on the station's safety record. Features an advert for SAFETY MOTH."
 	sign_features = DISPLAY_DELAM | DISPLAY_TRAM
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident, 31)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/delam, 31)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 31)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/delam, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 
 /obj/structure/sign/incident/Initialize(mapload)
 	..()
