@@ -93,8 +93,8 @@
 	icon_state = "scout"
 	icon_living = "scout"
 	icon_dead = "scout_dead"
-	maxHealth = 60
-	health = 60
+	maxHealth = 65
+	health = 65
 	obj_damage = 10
 	melee_damage_lower = 5
 	melee_damage_upper = 10
