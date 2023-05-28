@@ -76,7 +76,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/sign/incident/Destroy()
-	if(DISPLAY_DELAM)
+	if(sign_features & DISPLAY_DELAM)
 		GLOB.map_delamination_counters -= src
 	return ..()
 
