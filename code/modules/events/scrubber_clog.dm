@@ -37,9 +37,6 @@
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
-	if(!scrubber)
-		kill()
-		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 	RegisterSignal(scrubber, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
@@ -79,10 +76,10 @@
 	return pick(mob_list)
 
 /**
- * Finds a valid scrubber for the scrubber clog event.
+ * Finds a valid scrubber to spawn mobs from.
  *
- * For every scrubber in the round, checks if the scrubber turf is on-station, and is neither welded nor already clogged, and
- * adds it to a list. A random scrubber is picked from this list, and returned as the scrubber that will be used for the event.
+ * Randomly selects a scrubber that is on-station and unwelded. If no scrubbers are found, the event
+ * is immediately killed.
  */
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
@@ -91,6 +88,11 @@
 		var/turf/scrubber_turf = get_turf(scrubber)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded)
 			scrubber_list += scrubber
+
+	if(!length(scrubber_list))
+		kill()
+		CRASH("Unable to find suitable scrubber.")
+
 	return pick(scrubber_list)
 
 /**
@@ -117,9 +119,6 @@
 	SIGNAL_HANDLER
 	scrubber = null //If by some great calamity, the last valid scrubber is destroyed, the ref is cleared.
 	scrubber = get_scrubber()
-	if(!scrubber)
-		kill()
-		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
@@ -129,7 +128,7 @@
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /**
- * Produces a mob based on the input given by scrubber clog event.
+ * Handles the production of our mob and adds it to our living_mobs list
  *
  * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
  * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
@@ -137,11 +136,9 @@
  *
  * Arguments:
  * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
- * * living_mobs - Used to add the spawned mob to the list of currently living mobs produced by this vent.
- * Relevant code for how the list is handled is in the scrubber_clog.dm file.
  */
 
-/datum/round_event/scrubber_clog/proc/produce_mob(spawned_mob, list/living_mobs)
+/datum/round_event/scrubber_clog/proc/produce_mob(spawned_mob)
 	if(scrubber.welded)
 		return
 
@@ -163,7 +160,6 @@
 	if(do_after(user, 6 SECONDS, target = scrubber))
 		to_chat(user, span_notice("You finish pumping [scrubber]."))
 		end_when = activeFor + 1 //Skip to the end and wrap things up
-
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Scrubber Clog: Major"
