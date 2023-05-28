@@ -432,7 +432,7 @@
 		return FALSE
 	mail_type = lowertext(mail_type)
 
-	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No"))
+	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No") == "Yes")
 	if(isnull(mail_armed))
 		return FALSE
 	if(loc != user)
