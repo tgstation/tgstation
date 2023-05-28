@@ -84,49 +84,41 @@
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = tool_behaviour == TOOL_KNIFE
 	RemoveElement(/datum/element/eyestab)
+	var/obj/item/reference
 	switch(tool_behaviour)
 		if(TOOL_KNIFE)
 			force = 8
-			sharpness = SHARP_EDGED
-			hitsound = 'sound/weapons/bladeslice.ogg'
-			usesound = initial(usesound)
+			reference = /obj/item/knife
 			AddElement(/datum/element/eyestab)
 		if(TOOL_SCREWDRIVER)
 			force = 4
-			sharpness = SHARP_POINTY
-			hitsound = 'sound/weapons/bladeslice.ogg'
-			usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+			reference = /obj/item/screwdriver
 			AddElement(/datum/element/eyestab)
 		if(TOOL_WIRECUTTER)
 			force = 4
-			sharpness = NONE
-			hitsound = 'sound/items/wirecutter.ogg'
-			usesound = 'sound/items/wirecutter.ogg'
+			reference = /obj/item/wirecutters
 		if(TOOL_WRENCH)
 			force = 4
-			sharpness = NONE
-			hitsound = initial(hitsound)
-			usesound = 'sound/items/ratchet.ogg'
+			reference = /obj/item/wrench
 		if(TOOL_SHOVEL)
 			force = 6
-			sharpness = SHARP_EDGED
-			hitsound = initial(hitsound)
-			usesound = 'sound/effects/shovel_dig.ogg'
+			reference = /obj/item/shovel
 		if(TOOL_SAW)
 			force = 6
-			sharpness = SHARP_EDGED
-			usesound = initial(hitsound)
-			usesound = initial(usesound)
+			reference = /obj/item/knife // There is no manual saw in the game ATM to refer
 		if(TOOL_ROLLINGPIN)
 			force = 6
-			sharpness = NONE
-			hitsound = initial(hitsound)
-			usesound = initial(usesound)
+			reference = /obj/item/kitchen/rollingpin
 		else
 			force = 0
-			sharpness = NONE
-			hitsound = initial(hitsound)
-			usesound = initial(usesound)
+	if(isnull(reference))
+		sharpness = NONE
+		hitsound = initial(hitsound)
+		usesound = initial(usesound)
+	else
+		sharpness = initial(reference.sharpness)
+		hitsound = initial(reference.hitsound)
+		usesound = initial(reference.usesound)
 
 /obj/item/spess_knife/examine(mob/user)
 	. = ..()
