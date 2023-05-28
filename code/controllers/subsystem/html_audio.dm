@@ -66,10 +66,12 @@ SUBSYSTEM_DEF(html_audio)
 			function playAudio(url, element_id)
 			{
 				var audio_player = document.getElementById(element_id);
-				audio_player.pause();
-				audio_player.src = url;
-				audio_player.load();
-				audio_player.play();
+				if (audio_player.src !== url) {
+					audio_player.pause();
+					audio_player.src = url;
+					audio_player.load();
+					audio_player.play();
+				}
 			}
 			function setLooping(loop, element_id)
 			{
