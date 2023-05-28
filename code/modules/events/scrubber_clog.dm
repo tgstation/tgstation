@@ -38,8 +38,7 @@
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
-	RegisterSignal(scrubber, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
+	apply_signals()
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
@@ -47,14 +46,14 @@
 	spawn_delay = rand(10, 15)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
-	produce_mob(spawned_mob, living_mobs) //The first one's free!
+	produce_mob() //The first one's free!
 	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0)
 		life_check()
 		if(living_mobs.len < maximum_spawns)
-			produce_mob(spawned_mob, living_mobs)
+			produce_mob()
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
 	scrubber = null
@@ -120,9 +119,8 @@
 	scrubber = null //If by some great calamity, the last valid scrubber is destroyed, the ref is cleared.
 	scrubber = get_scrubber()
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
-
-	produce_mob(spawned_mob, living_mobs)
+	apply_signals()
+	produce_mob()
 
 	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
@@ -133,12 +131,9 @@
  * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
  * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
  * new mob is created on the scrubber's turf, then added to the living_mobs list.
- *
- * Arguments:
- * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
  */
 
-/datum/round_event/scrubber_clog/proc/produce_mob(spawned_mob)
+/datum/round_event/scrubber_clog/proc/produce_mob()
 	if(scrubber.welded)
 		return
 
@@ -160,6 +155,10 @@
 	if(do_after(user, 6 SECONDS, target = scrubber))
 		to_chat(user, span_notice("You finish pumping [scrubber]."))
 		end_when = activeFor + 1 //Skip to the end and wrap things up
+
+/datum/round_event/scrubber_clog/proc/apply_signals()
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
+	RegisterSignal(scrubber, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Scrubber Clog: Major"
