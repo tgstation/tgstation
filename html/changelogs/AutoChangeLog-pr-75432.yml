@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - refactor: "Refactors snipping cuffs into a bespoke cuffsnapping element, adding support for delayed cuffsnipping. Adds this element to box cutters! Effectively speaking everything is the same as usual."

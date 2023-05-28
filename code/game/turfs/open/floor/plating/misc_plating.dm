@@ -55,7 +55,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/snowed/cavern
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = BURNING_COLD
 
 /turf/open/floor/plating/snowed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -74,12 +74,9 @@
 
 // When you want real, genuine snowed plating in your kitchen's cold room.
 /turf/open/floor/plating/snowed/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 	planetary_atmos = FALSE
 	temperature = COLD_ROOM_TEMP
-
-/turf/open/floor/plating/snowed/coldroom/Initialize(mapload)
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 //Used in SnowCabin.dm
 /turf/open/floor/plating/snowed/snow_cabin

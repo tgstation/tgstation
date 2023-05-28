@@ -24,6 +24,10 @@
 	/// Message of the log entry.
 	var/message
 
+	/// Bitfield that describes how exactly to log stuff exactly
+	/// See code/__DEFINES/logging/dm
+	var/flags = NONE
+
 	/// Data of the log entry; optional.
 	var/list/data
 
@@ -32,12 +36,13 @@
 
 GENERAL_PROTECT_DATUM(/datum/log_entry)
 
-/datum/log_entry/New(timestamp, category, message, list/data, list/semver_store)
+/datum/log_entry/New(timestamp, category, message, flags, list/data, list/semver_store)
 	..()
 
 	src.id = next_id++
 	src.timestamp = timestamp
 	src.category = category
+	src.flags = flags
 	src.message = message
 	with_data(data)
 	with_semver_store(semver_store)
@@ -62,10 +67,19 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 /// Converts the log entry to a human-readable string.
 /datum/log_entry/proc/to_readable_text(format = TRUE)
+	var/output = ""
 	if(format)
-		return "\[[timestamp]\] [uppertext(category)]: [message]"
+		output += "\[[timestamp]\] [uppertext(category)]: [message]"
 	else
-		return "[message]"
+		output += "[message]"
+
+	if(flags & ENTRY_USE_DATA_W_READABLE)
+#if DM_VERSION >= 515
+		output += json_encode(data, JSON_PRETTY_PRINT)
+#else
+		output += json_encode(data)
+#endif
+	return output
 
 /// Converts the log entry to a JSON string.
 /datum/log_entry/proc/to_json_text()

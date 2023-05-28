@@ -71,8 +71,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
 	  */
 	var/list/mutant_bodyparts = list()
-	///Internal organs that are unique to this race, like a tail.
-	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
 	var/list/bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
@@ -82,9 +80,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+	///Internal organs that are unique to this race, like a tail.
+	var/list/mutant_organs = list()
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
+	///Replaces default brain with a different organ
+	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
+	///Replaces default heart with a different organ
+	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
+	///Replaces default lungs with a different organ
+	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
+	///Replaces default eyes with a different organ
+	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
+	///Replaces default ears with a different organ
+	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
+	///Replaces default tongue with a different organ
+	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
+	///Replaces default liver with a different organ
+	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
+	///Replaces default stomach with a different organ
+	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
+	///Replaces default appendix with a different organ.
+	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
@@ -143,35 +161,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/inherent_factions
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
-	var/breathid = "o2"
+	var/breathid = GAS_O2
 
 	///What anim to use for dusting
 	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
-
-	// Prefer anything other than setting these to null, such as TRAITS
-	// why?
-	// because traits also disable the downsides of not having an organ, removing organs but not having the trait or logic will make your species die
-
-	///Replaces default brain with a different organ
-	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
-	///Replaces default heart with a different organ
-	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
-	///Replaces default lungs with a different organ
-	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
-	///Replaces default eyes with a different organ
-	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
-	///Replaces default ears with a different organ
-	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
-	///Replaces default tongue with a different organ
-	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
-	///Replaces default liver with a different organ
-	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
-	///Replaces default stomach with a different organ
-	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
-	///Replaces default appendix with a different organ.
-	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
