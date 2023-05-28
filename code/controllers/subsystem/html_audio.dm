@@ -1,12 +1,14 @@
 SUBSYSTEM_DEF(html_audio)
 	name = "HTML Audio"
 	init_order = INIT_ORDER_HTMLAUDIO
-	flags = SS_NO_FIRE
+	priority = FIRE_PRIORITY_HTML_AUDIO
+	wait = 0.5 SECONDS
 	var/list/speakers = list()
 	var/max_channels = 512 // set this to how many total channels you want
 	var/list/channel_assignment = list() // list([atom in the world], [atom in the world], ...) for keeping track of what channels are in use and by what
 	var/list/listeners = list() // list of client listeners to update when audio gets added
 	var/list/listener_handlers = list() // list([atom in the world] = listener_handler)
+	var/list/currentrun = list()
 	var/browse_txt
 	var/preview_browse_txt
 
@@ -25,20 +27,13 @@ SUBSYSTEM_DEF(html_audio)
 	. = ..()
 	src.requires_LOS = requires_LOS
 
-
 /datum/html_audio_speaker/proc/deregister_player_qdel(atom/movable/player)
 	SIGNAL_HANDLER
-	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(player, list(COMSIG_PARENT_QDELETING))
 	deleting = TRUE
+	listeners_at_start_for_LOS = null
+	speaker = null
 	SShtml_audio.deregister_player(player)
-
-/datum/html_audio_speaker/proc/handle_player_move(atom/movable/player, atom/old_loc)
-	SIGNAL_HANDLER
-	list_clear_nulls(SShtml_audio.listeners) // clients be like *poof* mid proc
-	for(var/client/listener in SShtml_audio.listeners)
-		if(!listener)
-			continue
-		SShtml_audio.update_listener_volume(listener)
 
 /datum/controller/subsystem/html_audio/Initialize()
 	browse_txt = @{"
@@ -109,21 +104,31 @@ SUBSYSTEM_DEF(html_audio)
 
 /datum/listener_handler
 
-/datum/listener_handler/proc/handle_listener_move(mob/listener, atom/old_loc)
-	SIGNAL_HANDLER
-	SShtml_audio.update_listener_volume(listener.client)
-
 /datum/listener_handler/proc/deregister_listener_qdel(atom/movable/listener)
 	SIGNAL_HANDLER
-	UnregisterSignal(listener, list(COMSIG_MOVABLE_MOVED))
 	SShtml_audio.listener_handlers -= listener
 	UnregisterSignal(listener, list(COMSIG_MOB_LOGOUT))
 
 /datum/listener_handler/proc/unregister_listener_logout(mob/old_listener)
 	SIGNAL_HANDLER
-	UnregisterSignal(old_listener, list(COMSIG_MOVABLE_MOVED))
 	SShtml_audio.listener_handlers -= old_listener
 	UnregisterSignal(old_listener, list(COMSIG_MOB_LOGOUT))
+
+/datum/controller/subsystem/html_audio/stat_entry(msg)
+	msg = "Speakers:[length(speakers)]|Listeners:[length(listeners)]"
+	return ..()
+
+/datum/controller/subsystem/html_audio/fire(resumed) // Preferably, we'd do this on movement. Unfortunately, that's too expensive.
+	list_clear_nulls(listeners) // clients be like *poof* mid proc
+	var/list/currentrun = listeners.Copy()
+	while(currentrun.len)
+		var/client/listener = currentrun[currentrun.len]
+		--currentrun.len
+		if(!listener)
+			continue
+		update_listener_volume(listener)
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/html_audio/proc/register_listener(datum/source, mob/new_login)
 	list_clear_nulls(listeners)
@@ -135,7 +140,6 @@ SUBSYSTEM_DEF(html_audio)
 
 	var/datum/listener_handler/new_handler = new // our ECS system is dumb as shit and needs us to do this to have two things hooked on this
 	listener_handlers[listener.mob] = new_handler
-	new_handler.RegisterSignal(listener.mob, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/listener_handler, handle_listener_move)) // calls update_listener_volume
 	new_handler.RegisterSignal(listener.mob, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/listener_handler, deregister_listener_qdel)) // calls update_listener_volume
 	new_handler.RegisterSignal(listener.mob, COMSIG_MOB_LOGOUT, TYPE_PROC_REF(/datum/listener_handler, unregister_listener_logout))
 	update_listener_volume(listener)
@@ -211,7 +215,6 @@ SUBSYSTEM_DEF(html_audio)
 			new_speaker.speaker = player
 			speakers[player] = new_speaker
 			channel_assignment[i] = new_speaker
-			new_speaker.RegisterSignal(player, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/html_audio_speaker, handle_player_move))
 			new_speaker.RegisterSignal(player, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/html_audio_speaker, deregister_player_qdel))
 			break
 	if(!assigned)
@@ -224,8 +227,11 @@ SUBSYSTEM_DEF(html_audio)
 		update_listener_volume(listener)
 
 /datum/controller/subsystem/html_audio/proc/deregister_player(atom/movable/player)
-	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	var/datum/html_audio_speaker/speaker = speakers[player]
+	if(!speaker)
+		CRASH("Void of sound it seeks / Deregistering its plea / HTML's dissonance - ChatGPT, \"HTML's Dissonance\", 5/28/2023")
+	speaker.UnregisterSignal(player, list(COMSIG_PARENT_QDELETING))
+	speaker.deleting = TRUE
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
 	for(var/client/listener in listeners)
 		if(!listener)
@@ -233,6 +239,8 @@ SUBSYSTEM_DEF(html_audio)
 		update_listener_volume(listener)
 	channel_assignment[speaker.assigned_channel] = null
 	speakers -= player
+	if(!QDELETED(speaker))
+		qdel(speaker)
 
 /datum/controller/subsystem/html_audio/proc/play_audio(atom/movable/player, url, blips_url = null)
 	stop_looping_audio(player)
