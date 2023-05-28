@@ -4670,13 +4670,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/fireaxecabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aAE" = (
@@ -8090,10 +8090,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/clock/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Command - Bridge North"
 	},
+/obj/structure/sign/incident/dual/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bsW" = (
@@ -18810,7 +18810,7 @@
 /area/station/science/lower)
 "fnl" = (
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/directional/east,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -25358,6 +25358,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
 /obj/item/assembly/signaler,
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "hSs" = (
@@ -32349,7 +32350,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/fireaxecabinet/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -43920,6 +43920,7 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "oBY" = (

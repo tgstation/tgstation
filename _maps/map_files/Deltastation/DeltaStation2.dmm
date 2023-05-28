@@ -3952,6 +3952,10 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
+"aWs" = (
+/obj/structure/sign/incident/delam,
+/turf/closed/wall/r_wall,
+/area/station/command/bridge)
 "aWu" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -133124,7 +133128,7 @@ kOj
 aad
 aad
 aad
-diL
+aWs
 vsW
 drj
 bog
@@ -138521,7 +138525,7 @@ xms
 aaa
 aad
 aaa
-diL
+aWs
 hub
 bsC
 bog

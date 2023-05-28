@@ -41492,11 +41492,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "kWD" = (
-/obj/structure/fireaxecabinet/directional/north,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/sign/incident/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kWM" = (
@@ -70697,6 +70697,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/fireaxecabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sAa" = (
