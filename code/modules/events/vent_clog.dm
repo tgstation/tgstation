@@ -1,8 +1,10 @@
+#define MOB_SPAWN_MINIMUM 3
+
 /datum/round_event_control/vent_clog
 	name = "Vent Clog: Minor"
 	typepath = /datum/round_event/vent_clog
 	weight = 25
-	max_occurrences = 3
+	max_occurrences = 10
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a vent."
@@ -26,7 +28,7 @@
 	///What mob will be spawned
 	var/mob/spawned_mob = /mob/living/basic/cockroach
 	///Cap on the number of spawned mobs that can be alive at once.
-	var/maximum_spawns = 3
+	var/maximum_spawns = MOB_SPAWN_MINIMUM
 	///Interval between mob spawns.
 	var/spawn_delay = 10
 	///Used to track/limit produced mobs.
@@ -42,7 +44,7 @@
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
-	maximum_spawns = rand(3, 5)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 	spawn_delay = rand(10, 15)
 
 /datum/round_event/vent_clog/start() //Sets the vent up for unclogging/mob production.
@@ -154,7 +156,7 @@
 	to_chat(user, span_notice("You begin pumping [vent] with your plunger."))
 	if(do_after(user, 6 SECONDS, target = vent))
 		to_chat(user, span_notice("You finish pumping [vent]."))
-		end_when = activeFor + 1 //Skip to the end and wrap things up
+		kill()
 
 /datum/round_event/vent_clog/proc/apply_signals()
 	RegisterSignal(vent, COMSIG_PARENT_QDELETING, PROC_REF(vent_move))
@@ -164,7 +166,7 @@
 	name = "Vent Clog: Major"
 	typepath = /datum/round_event/vent_clog/major
 	weight = 12
-	max_occurrences = 3
+	max_occurrences = 5
 	earliest_start = 10 MINUTES
 	description = "Dangerous mobs climb out of a vent."
 	min_wizard_trigger_potency = 0
@@ -172,7 +174,7 @@
 
 /datum/round_event/vent_clog/major/setup()
 	. = ..()
-	maximum_spawns = rand(2,4)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 7)
 	spawn_delay = rand(15,20)
 
 /datum/round_event/vent_clog/major/get_mob()
@@ -191,18 +193,16 @@
 	typepath = /datum/round_event/vent_clog/critical
 	weight = 8
 	min_players = 15
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 25 MINUTES
 	description = "Really dangerous mobs climb out of a vent."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 6
 
-/datum/round_event/vent_clog/critical
-	maximum_spawns = 3
-
 /datum/round_event/vent_clog/critical/setup()
 	. = ..()
 	spawn_delay = rand(15,25)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 5)
 
 /datum/round_event/vent_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(vent)] ventilation network.", "Security Alert")
@@ -219,18 +219,16 @@
 	name = "Vent Clog: Strange"
 	typepath = /datum/round_event/vent_clog/strange
 	weight = 5
-	max_occurrences = 1
+	max_occurrences = 2
 	description = "Strange mobs climb out of a vent, harmfulness varies."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
 
-/datum/round_event/vent_clog/strange
-	maximum_spawns = 3
-
 /datum/round_event/vent_clog/strange/setup()
 	. = ..()
-	end_when = rand(600, 720)
-	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
+	end_when = rand(600, 900)
+	spawn_delay = rand(6, 25)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 
 /datum/round_event/vent_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area_name(vent)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
@@ -244,3 +242,5 @@
 		/mob/living/simple_animal/pet/gondola,
 	)
 	return pick(mob_list)
+
+#undef MOB_SPAWN_MINIMUM
