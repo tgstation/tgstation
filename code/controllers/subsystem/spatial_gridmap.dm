@@ -565,7 +565,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 #ifdef UNIT_TESTS
 	if(untracked_movable_error(to_remove))
-		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=FALSE) //dont remove from cells because we should be able to see 2 errors
 		return
 #endif
 
