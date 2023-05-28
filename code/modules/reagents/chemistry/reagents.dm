@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///The opacity of the chems used to determine the alpha of liquid turfs
 	var/opacity = 175
 	///The rate of evaporation in units per call
-	var/evaporation_rate = 0.5
+	var/evaporation_rate = 1
 
 	///is this chemical exempt from istype restrictions
 	var/bypass_restriction = FALSE

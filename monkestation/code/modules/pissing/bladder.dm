@@ -30,6 +30,10 @@
 	var/piss_temperature = 340
 	///last notification of having a full bladder
 	COOLDOWN_DECLARE(piss_notification)
+	///how many processes required to generate piss
+	var/required_process = 25
+	///the current process count
+	var/processes = 0
 
 
 
@@ -52,6 +56,10 @@
 
 /obj/item/organ/internal/bladder/process(seconds_per_tick, times_fired)
 	. = ..()
+	if(processes < required_process)
+		processes++
+		return
+	processes = 0
 	stored_piss = min(stored_piss + per_process_piss, max_piss_storage)
 
 /obj/item/organ/internal/bladder/proc/urinate()
