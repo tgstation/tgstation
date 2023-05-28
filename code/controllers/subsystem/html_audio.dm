@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(html_audio)
 	var/blips_url
 	var/requires_LOS = FALSE
 	var/list/listeners_at_start_for_LOS
+	var/deleting = FALSE
 
 /datum/html_audio_speaker/New(requires_LOS)
 	. = ..()
@@ -28,6 +29,7 @@ SUBSYSTEM_DEF(html_audio)
 /datum/html_audio_speaker/proc/deregister_player_qdel(atom/movable/player)
 	SIGNAL_HANDLER
 	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	deleting = TRUE
 	SShtml_audio.deregister_player(player)
 
 /datum/html_audio_speaker/proc/handle_player_move(atom/movable/player, atom/old_loc)
@@ -163,7 +165,7 @@ SUBSYSTEM_DEF(html_audio)
 		var/distance = get_dist(speaker.speaker, listener.mob)
 		var/turf/speaker_turf = get_turf(speaker.speaker)
 		var/turf/listener_turf = get_turf(listener.mob)
-		if(!speaker.speaker || distance >= 10 || (speaker.requires_LOS && !(listener in speaker.listeners_at_start_for_LOS)) || (speaker.tts && listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)))
+		if(speaker.deleting || !speaker.speaker || distance >= 10 || (speaker.requires_LOS && !(listener in speaker.listeners_at_start_for_LOS)) || (speaker.tts && listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_byond_audio)))
 			volume_to_use = 0
 		else
 			if(speaker.tts)
@@ -222,13 +224,13 @@ SUBSYSTEM_DEF(html_audio)
 /datum/controller/subsystem/html_audio/proc/deregister_player(atom/movable/player)
 	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	var/datum/html_audio_speaker/speaker = speakers[player]
-	channel_assignment[speaker.assigned_channel] = null
-	speakers -= player
 	list_clear_nulls(listeners) // clients be like *poof* mid proc
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
 		update_listener_volume(listener)
+	channel_assignment[speaker.assigned_channel] = null
+	speakers -= player
 
 /datum/controller/subsystem/html_audio/proc/play_audio(atom/movable/player, url, blips_url = null)
 	stop_looping_audio(player)
