@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(tts)
 				if(!CONFIG_GET(flag/tts_force_html_audio))
 					audio_file = new(current_target.audio_file)
 					audio_file_blips = new(current_target.audio_file_blips)
-				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, audio_url = current_target.audio_file_url, blips_url = current_target.blips_file_url)
+				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset, audio_url = current_target.audio_file_url, blips_url = current_target.blips_file_url)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length

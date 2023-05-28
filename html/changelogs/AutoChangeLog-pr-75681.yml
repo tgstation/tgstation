@@ -1,0 +1,7 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "Fixes epipens, pillbottles, and test tubes missing texture when put into suit storage"
+  - bugfix: "A paper hat no longer appears on your head when putting paper into suit storage"
+  - rscadd: "The paper hat is now a craftable item"
+  - image: "Pills and patches are no longer visible on a person when put into suit storage"

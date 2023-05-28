@@ -410,7 +410,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bs" = (
-/mob/living/simple_animal/hostile/cat_butcherer,
+/mob/living/basic/cat_butcherer,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},

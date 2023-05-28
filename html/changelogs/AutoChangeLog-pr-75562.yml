@@ -1,0 +1,5 @@
+author: "mikederkan"
+delete-after: True
+changes:
+  - rscadd: "Made disposals outlets launch with more range depending on the setting used"
+  - rscadd: "Made disposals outlets emag effect irreversible without reconstruction"

@@ -282,3 +282,10 @@
 	name = "red nightcap"
 	desc = "A red nightcap for all the sleepyheads and dozers out there."
 	icon_state = "sleep_red"
+
+/obj/item/clothing/head/costume/paper_hat
+	name = "paper hat"
+	desc = "A flimsy hat made of paper."
+	icon_state = "paper"
+	worn_icon_state = "paper"
+	dog_fashion = /datum/dog_fashion/head
