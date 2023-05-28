@@ -206,53 +206,47 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/hide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Failed to establish database connection.")
-		return
-	if(IsAdminAdvancedProcCall())
-		log_admin("Proc call lead to hide_book being called, blocked")
-		message_admins("Proc call lead to hide_book being called, someone may be attempting to perms escalate. Blocked")
+		to_chat(admin, span_danger("Failed to establish database connection."))
 		return
 	if(!check_rights_for(admin, R_BAN))
-		log_admin("[admin.ckey] tried to hide a book without the required perms")
+		log_admin_private("[admin.ckey] tried to hide a book without the required perms")
 		message_admins("[admin.ckey] tried to hide a book without the required perms")
 		return
-
-	var/log_reason = "([admin.ckey]) hid book #[id][reason ? ": \"[reason]\"" : ""]"
-	log_admin_private(log_reason)
-	log_reason = "\[[SQLtime()]\] round #[GLOB.round_id] [log_reason]"
 
 	var/datum/db_query/query_hide_book = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("library")]
 		SET deleted = 1
 		WHERE id = :id
 	"}, list("id" = id))
-	query_hide_book.warn_execute()
+	if(!query_hide_book.warn_execute())
+		qdel(query_hide_book)
+		return
 	qdel(query_hide_book)
+
 
 	var/datum/db_query/query_update_log = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("library_action")] (book, reason, ckey, datetime, action, ip_addr)
 		VALUES (:book, :reason, :ckey, Now(), :action, INET_ATON(:ip_addr))
 	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_DELETE, "ip_addr" = admin.address))
-	query_update_log.warn_execute()
+	if(!query_update_log.warn_execute())
+		qdel(query_update_log)
+		return
 	qdel(query_update_log)
+
+	var/log_reason = "([admin.ckey]) hid book #[id][reason ? ": \"[reason]\"" : ""]"
+	log_admin_private(log_reason)
 	library_updated()
-	params_changed = TRUE
 	update_db_info()
 
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/unhide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		message_admins("Failed to establish database connection.")
-		return
-	if(IsAdminAdvancedProcCall())
-		stack_trace("Proc call lead to unhide_book being called, blocked")
-		message_admins("Proc call lead to unhide_book being called, blocked")
+		to_chat(admin, span_danger("Failed to establish database connection."))
 		return
 	if(!check_rights_for(admin, R_BAN))
-		stack_trace("[admin.ckey] tried to unhide a book without the required perms")
+		log_admin_private("[admin.ckey] tried to unhide a book without the required perms")
+		message_admins("[admin.ckey] tried to unhide a book without the required perms")
 		return
-
-	log_admin_private("([admin.ckey]) unhid book #[id]")
 
 	var/datum/db_query/query_unhide_book = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("library")]
@@ -260,15 +254,21 @@
 		WHERE id = :id
 	"}, list("id" = id))
 
-	query_unhide_book.warn_execute()
+	if(!query_unhide_book.warn_execute())
+		qdel(query_unhide_book)
+		return
 	qdel(query_unhide_book)
 
 	var/datum/db_query/query_update_log = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("library_action")] (book, reason, ckey, datetime, action, ip_addr)
 		VALUES (:book, :reason, :ckey, Now(), :action, INET_ATON(:ip_addr))
 	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_RESTORE, "ip_addr" = admin.address))
-	query_update_log.warn_execute()
+	if(!query_update_log.warn_execute())
+		qdel(query_update_log)
+		return
 	qdel(query_update_log)
+
+	log_admin_private("([admin.ckey]) unhid book #[id]")
 	library_updated()
 	update_db_info()
 
@@ -300,19 +300,31 @@
 	data["address"] = ip_addr
 	return data
 
+/// Weaps around a book's sql data, feeds it into a ui that allows us to at base view the contents of the book
 /datum/admin_book_viewer
 	/// Weakref to the /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker that spawned us
 	var/datum/weakref/owner_ref
+	/// If we're displaying raw data or rendered markdown
 	var/view_raw = FALSE
+	/// The book id. Incremental, goes up over time
 	var/id
+	/// The display name for the book, taken from the player's character
 	var/author
+	/// Title of the book
 	var/title
+	/// The full text of the book, stored raw
 	var/content
+	/// Category the book falls into, see SSlibrary.search_categories
 	var/category
+	/// The ckey of the user who triggered the upload request
 	var/author_ckey
+	/// The time of day at which the book was uploaded
 	var/creation_time
+	/// Boolean, flips to true to "hide" a book from public viewing. Defaults to null
 	var/deleted
+	/// The round id the book was uploaded in
 	var/creation_round
+	/// Represents the full admin record of this book, as of the view request. Datumized to make it easier to deal with.
 	var/list/datum/book_history_entry/history
 
 /datum/admin_book_viewer/proc/set_owner(obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/owner)
