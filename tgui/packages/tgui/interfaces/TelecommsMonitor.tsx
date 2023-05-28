@@ -61,7 +61,7 @@ const MachineScreen = (props, context) => {
               <Table.Cell>Name</Table.Cell>
               <Table.Cell>Machine</Table.Cell>
             </Table.Row>
-            {machine.linked_machinery?.map((lm) => (
+            {linked_machinery?.map((lm) => (
               <Table.Row key={lm.ref} className="candystripe">
                 <Table.Cell>{lm.ref}</Table.Cell>
                 <Table.Cell>{lm.id}</Table.Cell>
