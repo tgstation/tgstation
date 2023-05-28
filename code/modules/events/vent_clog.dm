@@ -79,8 +79,6 @@
 		/mob/living/basic/cockroach,
 		/mob/living/basic/giant_spider/maintenance,
 		/mob/living/basic/mouse,
-		/mob/living/basic/lizard,
-		/mob/living/basic/frog,
 	)
 	return pick(mob_list)
 
