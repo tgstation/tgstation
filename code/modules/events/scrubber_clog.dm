@@ -7,6 +7,16 @@
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a scrubber."
 
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+		var/turf/scrubber_turf = get_turf(scrubber)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+			return TRUE //make sure we have a valid scrubber to spawn from.
+	return FALSE
+
 /datum/round_event/scrubber_clog
 	announce_when = 10
 	start_when = 5
@@ -42,18 +52,18 @@
 	spawn_delay = rand(10, 15)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
-	scrubber.clog()
-	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
+	scrubber.clogged = TRUE
+	produce_mob(spawned_mob, living_mobs) //The first one's free!
 	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0 && scrubber.clogged)
 		life_check()
 		if(living_mobs.len < maximum_spawns && clogged)
-			scrubber.produce_mob(spawned_mob, living_mobs)
+			produce_mob(spawned_mob, living_mobs)
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
-	scrubber.unclog()
+	scrubber.clogged = FALSE
 	scrubber = null
 	living_mobs.Cut()
 
@@ -87,16 +97,6 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
-	. = ..()
-	if(!.)
-		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
-		var/turf/scrubber_turf = get_turf(scrubber)
-		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
-			return TRUE //make sure we have a valid scrubber to spawn from.
-	return FALSE
-
 /**
  * Checks which mobs in the mob spawn list are alive.
  *
@@ -127,11 +127,32 @@
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
-	scrubber.clog()
-	scrubber.produce_mob(spawned_mob, living_mobs)
+	scrubber.clogged = TRUE
+	produce_mob(spawned_mob, living_mobs)
 
 	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
+
+/**
+ * Produces a mob based on the input given by scrubber clog event.
+ *
+ * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
+ * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
+ * new mob is created on the scrubber's turf, then added to the living_mobs list.
+ *
+ * Arguments:
+ * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
+ * * living_mobs - Used to add the spawned mob to the list of currently living mobs produced by this vent.
+ * Relevant code for how the list is handled is in the scrubber_clog.dm file.
+ */
+
+/datum/round_event/scrubber_clog/proc/produce_mob(spawned_mob, list/living_mobs)
+	if(scrubber.welded)
+		return
+
+	var/mob/new_mob = new spawned_mob(get_turf(src))
+	living_mobs += WEAKREF(new_mob)
+	scrubber.visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Scrubber Clog: Major"
