@@ -16,7 +16,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	worn_icon_state = "paper"
 	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
@@ -24,11 +23,8 @@
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
-	slot_flags = ITEM_SLOT_HEAD
-	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	dog_fashion = /datum/dog_fashion/head
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
@@ -354,6 +350,9 @@
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
 	//can't be put on fire!
 	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
+		return FALSE
+	//already on fire!
+	if(resistance_flags & ON_FIRE)
 		return FALSE
 	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)

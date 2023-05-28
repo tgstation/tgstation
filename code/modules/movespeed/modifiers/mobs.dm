@@ -13,6 +13,9 @@
 /datum/movespeed_modifier/hunger
 	variable = TRUE
 
+/datum/movespeed_modifier/golem_hunger
+	variable = TRUE
+
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
@@ -139,4 +142,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/health_scaling_speed_buff
+	variable = TRUE
+
+/datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE

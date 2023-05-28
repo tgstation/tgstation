@@ -94,6 +94,27 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubswine"
 
+/obj/item/clothing/under/rank/medical/coroner
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a white cross turned sideways on the chest, denoting that the wearer is a trained coroner."
+	name = "coroner jumpsuit"
+	icon_state = "coroner"
+	inhand_icon_state = "w_suit"
+
+/obj/item/clothing/under/rank/medical/coroner/skirt
+	name = "coroner jumpskirt"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a white cross turned sideways on the chest, denoting that the wearer is a trained coroner."
+	icon_state = "coroner_skirt"
+	inhand_icon_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/medical/scrubs/coroner
+	name = "coroner scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is as dark as an emo's poetry."
+	icon_state = "scrubsblack"
+
 /obj/item/clothing/under/rank/medical/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
 	name = "chemist's jumpsuit"

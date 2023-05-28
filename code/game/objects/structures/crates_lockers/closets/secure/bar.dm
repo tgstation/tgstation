@@ -9,6 +9,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	door_anim_time = 0 // no animation
+	paint_jobs = null
 
 /obj/structure/closet/secure_closet/bar/PopulateContents()
 	..()
@@ -16,3 +17,6 @@
 		new /obj/item/reagent_containers/cup/glass/bottle/beer( src )
 	new /obj/item/etherealballdeployer(src)
 	new /obj/item/roulette_wheel_beacon(src)
+
+/obj/structure/closet/secure_closet/bar/all_access
+	req_access = null

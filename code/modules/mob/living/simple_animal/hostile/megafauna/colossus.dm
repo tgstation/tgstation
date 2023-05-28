@@ -151,13 +151,12 @@
 		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(human_victim.mind)
-			if(istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp))
-				. = TRUE
-		if (is_species(human_victim, /datum/species/golem/sand))
-			. = TRUE
+	if(!ishuman(victim))
+		return FALSE
+	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
+		return TRUE
+	var/mob/living/carbon/human/human_victim = victim
+	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
 	visible_message(span_colossus("[src] disintegrates [victim]!"))
@@ -263,7 +262,7 @@
 		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
-	..()
+	. = ..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
@@ -527,10 +526,10 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = tgui_alert(usr,"Become a Lightgeist? (Warning, You can no longer be revived!)",,list("Yes","No"))
-		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
-			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
+		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
+			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
+			deployable.key = user.key
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -581,6 +580,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

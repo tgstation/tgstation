@@ -354,16 +354,14 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
-/// all of our organs are "deleted" and regenerated (cause it's a full heal)
-/// which unfortunately means we lose our living heart.
-/// So, we'll give them some lee-way and give them back the living heart afterwards
-/// (Maybe put this behind only admin_revives only? Not sure.)
-/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
+/// Gives the heretic aliving heart on aheal or organ refresh
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
-	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-	heart_knowledge.on_research(source)
+	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(source, src)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)

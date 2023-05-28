@@ -44,7 +44,7 @@
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	create_reagents(10)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
@@ -1144,6 +1144,11 @@
 	name = "\improper Medical Doctor action figure"
 	icon_state = "md"
 	toysay = "The patient is already dead!"
+
+/obj/item/toy/figure/coroner
+	name = "\improper Coroner action figure"
+	icon_state = "coroner"
+	toysay = "Get the damn Revenant outta here!"
 
 /obj/item/toy/figure/paramedic
 	name = "\improper Paramedic action figure"

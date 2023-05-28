@@ -28,8 +28,7 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
-	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
-	pixel_y = 8
+	anchored_tabletop_offset = 8
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -648,7 +647,7 @@
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_bible()
-	var/obj/item/storage/book/bible/holy_book = new(loc)
+	var/obj/item/book/bible/holy_book = new(loc)
 	if(!GLOB.bible_icon_state || !GLOB.bible_inhand_icon_state)
 		return
 	holy_book.icon_state = GLOB.bible_icon_state

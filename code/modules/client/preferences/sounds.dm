@@ -28,6 +28,28 @@
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_tts
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/sound_tts_blips
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_blips"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+/datum/preference/numeric/sound_tts_volume
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_volume"
+	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 100
+
+/datum/preference/numeric/sound_tts_volume/create_default_value()
+	return maximum
+
 /// Controls hearing dance machines
 /datum/preference/toggle/sound_jukebox
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -60,4 +82,10 @@
 /datum/preference/toggle/sound_ship_ambience
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/// Controls hearing elevator music
+/datum/preference/toggle/sound_elevator
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_elevator"
 	savefile_identifier = PREFERENCE_PLAYER

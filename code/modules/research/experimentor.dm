@@ -110,8 +110,8 @@
 	. = ..()
 	malfunction_probability_coeff = malfunction_probability_coeff_modifier
 	resetTime = initial(resetTime)
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		resetTime = max(1, resetTime - manipulator.tier)
+	for(var/datum/stock_part/servo/servo in component_parts)
+		resetTime = max(1, resetTime - servo.tier)
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		malfunction_probability_coeff += scanning_module.tier * 2
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
@@ -639,18 +639,18 @@
 	to_chat(user, message)
 
 	var/static/list/valid_animals = list(
-		/mob/living/simple_animal/parrot/natural,
-		/mob/living/simple_animal/butterfly,
-		/mob/living/simple_animal/pet/cat,
+		/mob/living/basic/butterfly,
+		/mob/living/basic/carp,
+		/mob/living/basic/lizard,
+		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/hostile/lizard,
-		/mob/living/basic/mouse,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/basic/carp,
+		/mob/living/simple_animal/parrot/natural,
+		/mob/living/simple_animal/pet/cat,
+		/mob/living/simple_animal/pet/fox,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)

@@ -374,7 +374,7 @@
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
-	var/face_direction = get_dir(src, p_turf)
+	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
 	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
 	var/a_incidence_s = abs(incidence_s)
@@ -1142,6 +1142,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
 
 /**
  * Called when the atom log's in or out
@@ -1185,6 +1186,23 @@
 	atom_colours[colour_priority] = null
 	update_atom_colour()
 
+/**
+ * Checks if this atom has the passed color
+ * Can optionally be supplied with a range of priorities, IE only checking "washable" or above
+ */
+/atom/proc/is_atom_colour(looking_for_color, min_priority_index = 1, max_priority_index = COLOUR_PRIORITY_AMOUNT)
+	// make sure uppertext hex strings don't mess with lowertext hex strings
+	looking_for_color = lowertext(looking_for_color)
+
+	if(!LAZYLEN(atom_colours))
+		// no atom colors list has been set up, just check the color var
+		return lowertext(color) == looking_for_color
+
+	for(var/i in min_priority_index to max_priority_index)
+		if(lowertext(atom_colours[i]) == looking_for_color)
+			return TRUE
+
+	return FALSE
 
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()

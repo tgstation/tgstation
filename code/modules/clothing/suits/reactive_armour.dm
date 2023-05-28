@@ -57,7 +57,7 @@
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()

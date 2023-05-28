@@ -115,19 +115,3 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Thanks for the credits, landlubbers."
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
-
-///psychic gangster junkies who want some allowance to continue the gore-binge
-/datum/pirate_gang/psykers
-	name = "Roving Psyker-gang"
-
-	ship_template_id = "psyker"
-	ship_name_pool = "psyker_names" //just points to THE ONE AND ONLY
-
-	threat_title = "Junkie tribute"
-	threat_content = "Hello, you psychically dormant pawn-pieces. It's the %SHIPNAME! Our funds are running a little low, and we're not going to be able to continue our gore-binge! %PAYOFF credits should do, wanna help us out?"
-	arrival_announcement = "We didn't blaze this far just to send some idle threats. Just you wait; we'll make you wish you were in a mental asylum."
-	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
-
-	response_received = "You guys aren't so bad for being dormants. The next gore-fest goes to you guys. Peace!"
-	response_too_late = "Oh, now you think we're worth the money. Pathetic dormants."
-	response_not_enough = "You really shouldn't have messed with us. You're in for a psychic nightmare."

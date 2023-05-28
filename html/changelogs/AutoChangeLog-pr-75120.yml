@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Stairs are now resistant to being shoved by mobs with high move force."
