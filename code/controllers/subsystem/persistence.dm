@@ -554,7 +554,7 @@ SUBSYSTEM_DEF(persistence)
 	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
 	if((rounds_since_engine_exploded + 1) > highscore_since_engine_exploded)
 		highscore_since_engine_exploded = rounds_since_engine_exploded + 1
-	rustg_file_write("[highscore_since_engine_exploded]", DELAMINATION_HIGHSCORE_FILEPATH)
+		rustg_file_write("[highscore_since_engine_exploded]", DELAMINATION_HIGHSCORE_FILEPATH)
 
 /datum/controller/subsystem/persistence/proc/load_tram_counter()
 	if(!fexists(TRAM_COUNT_FILEPATH))
