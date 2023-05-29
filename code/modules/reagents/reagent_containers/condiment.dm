@@ -273,6 +273,13 @@
 	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/cooking_oil
+	name = "corn oil"
+	desc = "For all your deep-frying needs."
+	icon_state = "cooking_oil"
+	list_reagents = list(/datum/reagent/consumable/cooking_oil = 50)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/condiment/quality_oil
 	name = "quality oil"
 	desc = "For the fancy chef inside everyone."
