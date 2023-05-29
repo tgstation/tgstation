@@ -52,6 +52,10 @@
 		top_off(starting=TRUE)
 	update_icon_state()
 
+/obj/item/ammo_box/Destroy(force)
+	QDEL_LIST(stored_ammo)
+	return ..()
+
 /obj/item/ammo_box/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
 
