@@ -122,6 +122,71 @@ GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 ))
 //stores the ghost forms that support hair and other such things
 
+// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile. (used for /obj/machinery/status_display/ai )
+GLOBAL_LIST_INIT(ai_status_display_emotes, list(
+	AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
+	AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
+	AI_EMOTION_HAPPY = "ai_happy",
+	AI_EMOTION_NEUTRAL = "ai_neutral",
+	AI_EMOTION_UNSURE = "ai_unsure",
+	AI_EMOTION_CONFUSED = "ai_confused",
+	AI_EMOTION_SAD = "ai_sad",
+	AI_EMOTION_BSOD = "ai_bsod",
+	AI_EMOTION_PROBLEMS = "ai_trollface",
+	AI_EMOTION_AWESOME = "ai_awesome",
+	AI_EMOTION_DORFY = "ai_urist",
+	AI_EMOTION_THINKING = "ai_thinking",
+	AI_EMOTION_FACEPALM = "ai_facepalm",
+	AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
+	AI_EMOTION_BLUE_GLOW = "ai_sal",
+	AI_EMOTION_RED_GLOW = "ai_hal",
+))
+
+// New items need to also be added to ai_hologram_icon_state list
+GLOBAL_LIST_INIT(ai_hologram_icons, list(
+	AI_HOLOGRAM_DEFAULT = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_BEAR = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_CARP = 'icons/mob/simple/carp.dmi',
+	AI_HOLOGRAM_CHICKEN = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_CORGI = 'icons/mob/simple/pets.dmi',
+	AI_HOLOGRAM_COW = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_CRAB = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_FOX = 'icons/mob/simple/pets.dmi',
+	AI_HOLOGRAM_GOAT = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_CAT = 'icons/mob/simple/pets.dmi',
+	AI_HOLOGRAM_CAT_2 = 'icons/mob/simple/pets.dmi',
+	AI_HOLOGRAM_PARROT = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_PUG = 'icons/mob/simple/pets.dmi',
+	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_FACE = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_XENO = 'icons/mob/nonhuman-player/alien.dmi',
+	AI_HOLOGRAM_NARSIE = 'icons/mob/silicon/ai.dmi',
+	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
+))
+
+// New items need to also be added to ai_hologram_icons list
+GLOBAL_LIST_INIT(ai_hologram_icon_state, list(
+	AI_HOLOGRAM_DEFAULT = "default",
+	AI_HOLOGRAM_BEAR = "bear",
+	AI_HOLOGRAM_CARP = "carp",
+	AI_HOLOGRAM_CHICKEN = "chicken_brown",
+	AI_HOLOGRAM_CORGI = "corgi",
+	AI_HOLOGRAM_COW = "cow",
+	AI_HOLOGRAM_CRAB = "crab",
+	AI_HOLOGRAM_FOX = "fox",
+	AI_HOLOGRAM_GOAT = "goat",
+	AI_HOLOGRAM_CAT = "cat",
+	AI_HOLOGRAM_CAT_2 = "cat2",
+	AI_HOLOGRAM_PARROT = "parrot_fly",
+	AI_HOLOGRAM_PUG = "pug",
+	AI_HOLOGRAM_SPIDER = "guard",
+	AI_HOLOGRAM_FACE = "floating face",
+	AI_HOLOGRAM_XENO = "alienq",
+	AI_HOLOGRAM_NARSIE = "horror",
+	AI_HOLOGRAM_RATVAR = "clock",
+))
+
+
 GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	":thinking:",
 	"Alien",
@@ -350,45 +415,4 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 GLOBAL_LIST_INIT(status_display_state_pictures, list(
 	"blank",
 	"shuttle",
-))
-
-// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile. (used for /obj/machinery/status_display/ai )
-GLOBAL_LIST_INIT(ai_status_display_emotes, list(
-	AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
-	AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
-	AI_EMOTION_HAPPY = "ai_happy",
-	AI_EMOTION_NEUTRAL = "ai_neutral",
-	AI_EMOTION_UNSURE = "ai_unsure",
-	AI_EMOTION_CONFUSED = "ai_confused",
-	AI_EMOTION_SAD = "ai_sad",
-	AI_EMOTION_BSOD = "ai_bsod",
-	AI_EMOTION_PROBLEMS = "ai_trollface",
-	AI_EMOTION_AWESOME = "ai_awesome",
-	AI_EMOTION_DORFY = "ai_urist",
-	AI_EMOTION_THINKING = "ai_thinking",
-	AI_EMOTION_FACEPALM = "ai_facepalm",
-	AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
-	AI_EMOTION_BLUE_GLOW = "ai_sal",
-	AI_EMOTION_RED_GLOW = "ai_hal",
-))
-
-GLOBAL_LIST_INIT(ai_hologram_displays, list(
-	Bear = list(icon='icons/mob/simple/animal.dmi', icon_state="bear"),
-	Carp = list(icon='icons/mob/simple/carp.dmi', icon_state="carp"),
-	Chicken = list(icon='icons/mob/simple/animal.dmi', icon_state="chicken_brown"),
-	Corgi = list(icon='icons/mob/simple/pets.dmi', icon_state="corgi"),
-	Cow = list(icon='icons/mob/simple/animal.dmi', icon_state="cow"),
-	Crab = list(icon='icons/mob/simple/animal.dmi', icon_state="crab"),
-	Fox = list(icon='icons/mob/simple/pets.dmi', icon_state="fox"),
-	Goat = list(icon='icons/mob/simple/animal.dmi', icon_state="goat"),
-	Cat = list(icon='icons/mob/simple/pets.dmi', icon_state="cat"),
-	Cat_2 = list(icon='icons/mob/simple/pets.dmi', icon_state="cat2"),
-	Poly = list(icon='icons/mob/simple/animal.dmi', icon_state="parrot_fly"),
-	Pug = list(icon='icons/mob/simple/pets.dmi', icon_state="pug"),
-	Spider = list(icon='icons/mob/simple/animal.dmi', icon_state="guard"),
-	Default = list(icon='icons/mob/silicon/ai.dmi', icon_state="default"),
-	Floating Face = list(icon='icons/mob/silicon/ai.dmi', icon_state="floating face"),
-	Xeno Queen = list(icon='icons/mob/nonhuman-player/alien.dmi', icon_state="alienq"),
-	Horror = list(icon='icons/mob/silicon/ai.dmi', icon_state="horror"),
-	Clock = list(icon='icons/mob/silicon/ai.dmi', icon_state="clock"),
 ))

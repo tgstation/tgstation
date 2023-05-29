@@ -159,14 +159,16 @@
 
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
-		
+
 		// check if roundstart ai?
 		if(client.prefs?.read_preference(/datum/preference/choiced/ai_emote_display))
 			var/emote_choice = client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
-			
+
 			if(emote_choice == "Random")
 				emote_choice = pick(GLOB.ai_status_display_emotes)
-			
+
+			var/turf/ai_turf = get_turf(loc)
+
 			// make this into a proc so we don't c/p it in multiple spots
 			for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
 				var/turf/display_turf = get_turf(ai_display)
@@ -180,10 +182,10 @@
 				ai_display.update()
 
 		if(client.prefs?.read_preference(/datum/preference/choiced/ai_hologram_display))
-			var/hologram_choice = client.prefs.read_preference(/datum/preference/choiced/ai_hologram_display)
+			var/list/hologram_choice = client.prefs.read_preference(/datum/preference/choiced/ai_hologram_display)
 			if(hologram_choice == "Random")
-				hologram_choice = pick(GLOB.ai_hologram_displays)
-				
+				hologram_choice = pick(GLOB.ai_hologram_icons)
+
 			if(hologram_choice == "Human")
 				var/mob/living/carbon/human/dummy/ai_dummy = new
 				var/mutable_appearance/dummy_appearance = client.prefs.render_new_preview_appearance(ai_dummy)
@@ -191,10 +193,9 @@
 					qdel(ai_dummy)
 					hologram_appearance = dummy_appearance
 			else
-				hologram_appearance = mutable_appearance(GLOB.ai_hologram_displays[hologram_choice].icon, GLOB.ai_hologram_displays[hologram_choice].icon_state)	
+				hologram_appearance = mutable_appearance(GLOB.ai_hologram_icons[hologram_choice], GLOB.ai_hologram_icon_state[hologram_choice])
 
-	hologram_appearance = hologram_appearance || mutable_appearance(GLOB.ai_hologram_displays.default.icon, GLOB.ai_hologram_displays.default.icon_state)
-			
+	hologram_appearance = hologram_appearance || mutable_appearance(GLOB.ai_hologram_icons[AI_HOLOGRAM_DEFAULT], GLOB.ai_hologram_icon_state[AI_HOLOGRAM_DEFAULT])
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
