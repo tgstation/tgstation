@@ -91,7 +91,7 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "biohazard",
-		SPECIES_PERK_NAME = "Weedkiller susceptability",
+		SPECIES_PERK_NAME = "Weedkiller Susceptability",
 		SPECIES_PERK_DESC = "Being a floral life form, you are susceptable to anti-florals and will take extra toxin damage from it!"
 	))
 

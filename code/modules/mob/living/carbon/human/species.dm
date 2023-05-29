@@ -2154,7 +2154,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "dna",
-			SPECIES_PERK_NAME = "No genes",
+			SPECIES_PERK_NAME = "No Genes",
 			SPECIES_PERK_DESC = "[plural_form] have no genes, making genetic scrambling a useless weapon, but also locking them out from getting genetic powers.",
 		))
 
@@ -2162,7 +2162,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "No respiration",
+			SPECIES_PERK_NAME = "No Respiration",
 			SPECIES_PERK_DESC = "[plural_form] have no need to breathe!",
 		))
 
@@ -2232,7 +2232,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/difference_positive = (shrugging_difference > 0)
 		var/more_or_less = (difference_positive) ? "more" : "less"
 		var/perk_type = (difference_positive) ? SPECIES_POSITIVE_PERK : SPECIES_NEGATIVE_PERK
-		var/perk_name = ("Toxin " + ((difference_positive) ? "resistant" : "vulnerable")) + " liver"
+		var/perk_name = ("Toxin " + ((difference_positive) ? "Resistant" : "Vulnerable")) + " Liver"
 
 		to_add += list(list(
 			SPECIES_PERK_TYPE = perk_type,
@@ -2252,7 +2252,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "[capitalize(breathid)] breathing",
+			SPECIES_PERK_NAME = "[capitalize(breathid)] Breathing",
 			SPECIES_PERK_DESC = "[plural_form] must breathe [breathid] to survive. You receive a tank when you arrive.",
 		))
 
