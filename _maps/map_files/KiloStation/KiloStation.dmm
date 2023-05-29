@@ -4993,6 +4993,11 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter"
+	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "bNM" = (

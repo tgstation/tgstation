@@ -49518,6 +49518,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter"
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "rah" = (

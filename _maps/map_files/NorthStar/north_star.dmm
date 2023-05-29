@@ -77346,6 +77346,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/status_display/ai/directional/west,
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter"
+	},
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "uNb" = (

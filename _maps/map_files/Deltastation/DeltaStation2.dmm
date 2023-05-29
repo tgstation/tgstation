@@ -97397,6 +97397,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/security/prison)
+"xPE" = (
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter"
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xPH" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -147500,7 +147508,7 @@ vra
 qZs
 gft
 clO
-jvs
+xPE
 eJv
 mON
 xTW
