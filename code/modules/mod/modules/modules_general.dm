@@ -596,3 +596,39 @@
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+/obj/item/mod/module/magneto
+	name = "MOD magneto charger module"
+	desc = "A compact, weak generator that charges a suit's power cell by conversion of the mechanical energy of deambulation. \
+		Originally developed for the TGMC as a replacement to the more efficient, yet space-OSHA non-compliant miniature plutonium cell for their shoulder lamps."
+	icon_state = "magneto"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/magneto)
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.15
+
+/obj/item/mod/module/magneto/on_suit_activation()
+	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	/// This way we don't even bother to call on_moved() while flying/floating
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movetype_flag_enabled))
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movetype_flag_disabled))
+
+/obj/item/mod/module/magneto/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED))
+
+/obj/item/mod/module/magneto/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(!(old_state & (FLOATING|FLYING)) && flag & (FLOATING|FLYING))
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/magneto/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(old_state & (FLOATING|FLYING) && !(mod.wearer & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+//TODO Needs checks against currently processing movement loops such as conveyor belts and hyperspace drift.
+/obj/item/mod/module/magneto/proc/on_moved(atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+	if(forced || mod.wearer.moving_from_pull || mod.wearer.buckled) //mot compatible with being dragged around or vehicles.
+		return
+	mod.core.add_charge(power_per_step)

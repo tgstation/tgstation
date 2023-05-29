@@ -385,3 +385,145 @@
 		creatures_detected++
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
+
+/obj/item/mod/module/casing_recycler
+	name = "MOD casing recycler module"
+	desc = "A hybrid between a brass catcher and a vacuum cleaner, this module recycles empty casings back into usable iron, five sheets at a time. \
+		Ideated for the TGMC to cut costs, production was halted once they realized the marines mainly used caseless munitions."
+	icon_state = "casing_recycler"
+	module_type = MODULE_TOGGLE
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/casing_recycler)
+	overlay_state_inactive = "module_casing_recycler"
+	overlay_state_active = "module_casing_recycler"
+	var/efficiency = 0.5
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered)
+	)
+	var/datum/component/connect_loc_behalf/connector
+
+/obj/item/mod/module/casing_recycler/Initialize()
+	. = ..()
+	//afaik, iron is the only material casings have.
+	var/static/list/accepted_mats = list(/datum/material/iron)
+	AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_insert=CALLBACK(src, PROC_REF(recycle)), _after_retrieve=CALLBACK(src, PROC_REF(drop_into_storage)))
+
+/obj/item/mod/module/casing_recycler/on_activation()
+	. = ..()
+	if(!.)
+		return
+	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/casing_recycler/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	QDEL_NULL(connector)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/casing_recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	for(var/obj/item/ammo_casing/casing in mod.wearer.loc)
+		insert_casing(casing)
+
+/obj/item/mod/module/casing_recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
+	SIGNAL_HANDLER
+	if(!isammocasing(arrived))
+		return
+	insert_casing(arrived)
+
+/obj/item/mod/module/casing_recycler/proc/insert_casing(obj/item/ammo_casing/casing)
+	if(!can_insert(casing))
+		return FALSE
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	container.insert_item(casing, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	return TRUE
+
+/obj/item/mod/module/casing_recycler/proc/can_insert(obj/item/ammo_casing/casing)
+	if(casing.loaded_projectile) // It only recycles empty projectiles.
+		return FALSE
+
+/obj/item/mod/module/casing_recycler/proc/recycle(obj/item/inserted, last_inserted_id, material_amount, datum/component/material_container/container)
+	var/static/list/required_iron = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
+	if(!container.has_materials(required_iron))
+		return
+	container.retrieve_sheets(SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron, src) //dropped later
+	balloon_alert("casings recycled")
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+
+/obj/item/mod/module/casing_recycler/proc/drop_into_storage(obj/item/to_drop)
+	if(!mod.atom_storage?.attempt_insert(to_drop, mod.wearer, override = TRUE))
+		to_drop.forceMove(mod.wearer.drop_location())
+
+/obj/item/mod/module/casing_recycler/donk
+	name = "MOD riot foam dart recycler module"
+	desc = "Tired of having to clean the halls after a good day spent shooting foam darts at your \"friends\" \
+		or reloading your donksoft LMG one dart at a time, hoping your pet doesn't die of old age in the meantime? \
+		Worry not, we at Donk Co. have the perfect solution to your problems: The Foam Dart Recycler. \
+		It'll sucks every casing off the floor like nothing else and print a new box of foam darts once full. FOR FREE!\
+		Requires a MODsuit to use."
+	icon_state = "donk_recycler"
+	overlay_state_inactive = "module_donk_recycler"
+	overlay_state_active = "module_donk_recycler"
+	var/accepts_non_foam = TRUE
+	var/ammobox_type = /obj/item/ammo_box/foambox/riot
+	var/required_amount = SHEET_MATERIAL_AMOUNT*25
+
+/obj/item/mod/module/casing_recycler/donk/can_insert(obj/item/ammo_casing/casing)
+	if(istype(casing, /obj/item/ammo_casing/caseless/foam_dart))
+		return TRUE
+	return accepts_non_foam && ..()
+
+/obj/item/mod/module/casing_recycler/donk/recycle(obj/item/inserted, last_inserted_id, material_amount, datum/component/material_container/container)
+	if(!container.use_amount_mat(required_amount, /datum/material/iron))
+		return
+	var/obj/item/ammo_box/product = new ammobox_type (src)
+	drop_into_storage(product)
+	balloon_alert("ammo box dispensed.")
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+
+/obj/item/mod/module/casing_recycler/donk/safe
+	name = "MOD foam dart recycler module"
+	icon_state = "donk_safe_recycler"
+	overlay_state_inactive = "module_donk_safe_recycler"
+	overlay_state_active = "module_donk_safe_recycler"
+	complexity = 1
+	accepts_non_foam = FALSE
+	efficiency = 1
+	ammobox_type = /obj/item/ammo_box/foambox
+	required_amount = SMALL_MATERIAL_AMOUNT*5
+
+/obj/item/mod/module/shooting_assistant
+	name = "MOD shooting assistant module"
+	desc = "A port of a prototype meant to boost the TGMC troops' ability with firearms, \
+		before command opted for better unga training instead. \
+		Toggle to sacrifice mobility for steadier aim while holding a firearm, \
+		or enjoy the faster shooting at the cost of accuracy."
+	icon_state = "shooting_assistant"
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
+
+//TODO REFACTOR HOW SPREAD IS CALCULATED ON GUN.DM OR ADD A STEADY AIM TRAIT.
+/obj/item/mod/module/shooting_assistant/on_suit_activation()
+	mod.wearer.add_traits(list(TRAIT_POOR_AIM, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+
+/obj/item/mod/module/shooting_assistant/on_suit_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_POOR_AIM, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+
+/obj/item/mod/module/shooting_assistant/on_activation()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+	REMOVE_TRAIT(mod.wearer, TRAIT_POOR_AIM, MOD_TRAIT)
+
+/obj/item/mod/module/shooting_assistant/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+	ADD_TRAIT(mod.wearer, TRAIT_POOR_AIM, MOD_TRAIT)

@@ -30,11 +30,22 @@
 	var/datum/callback/precondition
 	/// A callback invoked after materials are inserted into this container
 	var/datum/callback/after_insert
+	/// A callback invoked after sheets are retrieve from this container
+	var/datum/callback/after_retrieve
 	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/init_mats, max_amt = 0, _mat_container_flags=NONE, list/allowed_mats=init_mats, list/allowed_items, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/init_mats,
+			max_amt = 0,
+			_mat_container_flags=NONE,
+			list/allowed_mats=init_mats,
+			list/allowed_items,
+			datum/callback/_insertion_check,
+			datum/callback/_precondition,
+			datum/callback/_after_insert,
+			datum/callback/_after_retrieve)
+
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -52,6 +63,7 @@
 	insertion_check = _insertion_check
 	precondition = _precondition
 	after_insert = _after_insert
+	after_retrieve = _after_retrieve
 
 	for(var/mat in init_mats) //Make the assoc list material reference -> amount
 		var/mat_ref = GET_MATERIAL_REF(mat)
@@ -170,27 +182,28 @@
 	if(!user.temporarilyRemoveItemFromInventory(held_item))
 		to_chat(user, span_warning("[held_item] is stuck to you and cannot be placed into [parent]."))
 		return
+	var/held_item_name = held_item.name // insert_item() will delete the item when actually inserted.
 	var/inserted = insert_item(held_item, stack_amt = requested_amount, breakdown_flags= mat_container_flags)
 	if(inserted)
-		to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
+		to_chat(user, span_notice("You insert a material total of [held_item_name] into [parent]."))
 		qdel(held_item)
-		if(after_insert)
-			after_insert.Invoke(held_item, last_inserted_id, inserted)
 	else if(held_item == active_held)
 		user.put_in_active_hand(held_item)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt, breakdown_flags = mat_container_flags)
-	if(QDELETED(I))
+/datum/component/material_container/proc/insert_item(obj/item/inserted, multiplier = 1, stack_amt, breakdown_flags = mat_container_flags)
+	if(QDELETED(inserted))
 		return FALSE
 
 	multiplier = CEILING(multiplier, 0.01)
 
-	var/material_amount = get_item_material_amount(I, breakdown_flags)
+	var/material_amount = get_item_material_amount(inserted, breakdown_flags)
 	if(!material_amount || !has_space(material_amount))
 		return FALSE
 
-	last_inserted_id = insert_item_materials(I, multiplier, breakdown_flags)
+	last_inserted_id = insert_item_materials(inserted, multiplier, breakdown_flags)
+	after_insert?.Invoke(inserted, last_inserted_id, material_amount, src)
+	qdel(inserted)
 	return material_amount
 
 /**
@@ -324,8 +337,8 @@
 	return total_amount_save - total_amount
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, atom/target = null)
-	if(!M.sheet_type)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
+	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
@@ -333,18 +346,20 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[M] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[M] / SHEET_MATERIAL_AMOUNT)
+	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 	return count
 
 

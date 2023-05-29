@@ -1158,7 +1158,7 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
-	
+
 /datum/design/borg_upgrade_condiment_synthesizer
 	name = "Condiment Synthesizer"
 	id = "borg_upgrade_condiment_synthesizer"
@@ -1180,7 +1180,7 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
-	
+
 /datum/design/borg_upgrade_service_apparatus
 	name = "Service apparatus"
 	id = "borg_upgrade_service_apparatus"
@@ -1923,6 +1923,33 @@
 	build_path = /obj/item/mod/module/disposal_connector
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
+	)
+
+/datum/design/module/magneto
+	name = "Magneto Charger Module"
+	id = "mod_magneto"
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/magneto
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
+/datum/design/module/casing_recycler
+	name = "Casing Recycler Module"
+	id = "mod_recycler"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/mod/module/casing_recycler
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
+/datum/design/module/shooting_assistant
+	name = "Shooting Assistant Module"
+	id = "mod_shooting"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT*2, /datum/material/gold = SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/shooting_assistant
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
 
 //MODsuit anomalock modules
