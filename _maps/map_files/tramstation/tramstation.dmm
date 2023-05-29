@@ -41969,7 +41969,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/sign/incident/dual/directional/north,
+/obj/structure/sign/incident/tram/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "nQG" = (

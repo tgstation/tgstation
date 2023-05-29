@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 /obj/structure/sign/incident
 	name = "safety incident display"
 	icon = 'icons/obj/stat_display.dmi'
+	icon_preview = "stat_display_dual"
 	icon_state = "stat_display_dual"
 	is_editable = FALSE
 	/// What statistics we want the sign to display
@@ -58,6 +59,7 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 	var/delam_record = 0
 
 /obj/structure/sign/incident/delam
+	icon_preview = "stat_display_delam"
 	icon_state = "stat_display_delam"
 	name = "delamination incident display"
 	sign_features = DISPLAY_DELAM
@@ -67,9 +69,17 @@ GLOBAL_LIST_EMPTY(map_delamination_counters)
 	desc = "A display that provides information on the station's safety record. Features an advert for SAFETY MOTH."
 	sign_features = DISPLAY_DELAM | DISPLAY_TRAM
 
+/obj/structure/sign/incident/tram
+	icon_preview = "stat_display_tram"
+	icon_state = "stat_display_tram"
+	name = "tram incident display"
+	desc = "A display that provides the number of tram related safety incidents this shift. Features an advert for SAFETY MOTH."
+	sign_features = DISPLAY_TRAM
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/delam, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/dual, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/incident/tram, 32)
 
 /obj/structure/sign/incident/Initialize(mapload)
 	..()
