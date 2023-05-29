@@ -769,7 +769,8 @@
 	// This can definitely be improved upon in the future
 	switch(hit_limb.body_zone)
 		if(BODY_ZONE_HEAD)
-			pass()
+			// Handled by parent call
+			// pass()
 
 		if(BODY_ZONE_CHEST)
 			if(wear_suit)

@@ -371,7 +371,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return ATTACK_STYLE_CANCEL
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				pass()
+				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 				go_to_attack = TRUE
 			else
@@ -386,7 +386,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return ATTACK_STYLE_CANCEL
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				pass()
+				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 				go_to_afterattack = TRUE
 			else
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return . | ATTACK_STYLE_CANCEL
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				pass()
+				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 				return .
 			else
@@ -449,6 +449,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	/// Used for playing a little animation over the turf
 	var/attack_effect = ATTACK_EFFECT_PUNCH
+
+/datum/attack_style/unarmed/check_pacifism(mob/living/attacker, obj/item/weapon)
+	return FALSE
 
 /datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	ASSERT(isnull(weapon) || istype(weapon, /obj/item/bodypart))

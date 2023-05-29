@@ -305,7 +305,7 @@
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
-	if(close_enough && (!combat_mode || right_clicking) && !ismob(clicked_on)) // melbert todo : why did i put the right click check here?
+	if(close_enough && !combat_mode && !ismob(clicked_on)) // melbert todo : why did i put the right click check here?
 		changeNext_move(CLICK_CD_MELEE)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
@@ -334,7 +334,7 @@
 /**
  * Also known as "Unarmed attack"ing
  *
- * Called with this mob clicks on any atom in touch range whilst not holding an item.
+ * Called with this mob clicks on any atom in touch range (unless telekinesis) whilst not holding an item.
  *
  * Translates into [atom/proc/attack_hand], etc.
  *
