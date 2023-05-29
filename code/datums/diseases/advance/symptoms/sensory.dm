@@ -45,7 +45,10 @@
 	if(A.stage >= 3)
 		M.adjust_dizzy(-4 SECONDS)
 		M.adjust_drowsiness(-4 SECONDS)
-		M.adjust_slurring(-1 SECONDS)
+		// All slurring effects get reduced down a bit
+		for(var/datum/status_effect/speech/slurring/slur in M.status_effects)
+			slur.remove_duration(1 SECONDS)
+
 		M.adjust_confusion(-2 SECONDS)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
@@ -91,18 +94,18 @@
 	var/mob/living/carbon/ill_mob = source_disease.affected_mob
 	switch(source_disease.stage)
 		if(4, 5)
-			var/obj/item/organ/internal/ears/ears = ill_mob.getorganslot(ORGAN_SLOT_EARS)
+			var/obj/item/organ/internal/ears/ears = ill_mob.get_organ_slot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
 
 			ill_mob.adjust_temp_blindness(-4 SECONDS)
 			ill_mob.adjust_eye_blur(-4 SECONDS)
 
-			var/obj/item/organ/internal/eyes/eyes = ill_mob.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eyes = ill_mob.get_organ_slot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
 
-			eyes.applyOrganDamage(-2)
+			eyes.apply_organ_damage(-2)
 			if(prob(20))
 				if(ill_mob.is_blind_from(EYE_DAMAGE))
 					to_chat(ill_mob, span_warning("Your vision slowly returns..."))

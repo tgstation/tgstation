@@ -30,7 +30,7 @@
 
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_EYES)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	START_PROCESSING(SSobj, src)
 	update_appearance()
 
@@ -51,7 +51,7 @@
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
-			color_cutoffs = list()
+			color_cutoffs = null
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_PIPE_CONNECTABLE)

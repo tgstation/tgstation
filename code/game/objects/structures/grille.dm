@@ -11,6 +11,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
@@ -61,12 +62,22 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			var/cost = 8
-			var/delay = 2 SECONDS
-
-			if(the_rcd.window_glass == RCD_WINDOW_REINFORCED)
-				delay = 4 SECONDS
+			var/cost = 0
+			var/delay = 0
+			if(the_rcd.window_type  == /obj/structure/window)
+				cost = 6
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 9
+				delay = 2.5 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/fulltile)
 				cost = 12
+				delay = 3 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
+				cost = 15
+				delay = 4 SECONDS
+			if(!cost)
+				return FALSE
 
 			return rcd_result_with_memory(
 				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
@@ -86,18 +97,17 @@
 			var/turf/T = loc
 
 			if(repair_grille())
-				to_chat(user, span_notice("You rebuild the broken grille."))
+				balloon_alert(user, "grille rebuilt")
 
 			if(!clear_tile(user))
 				return FALSE
 
-			if(!ispath(the_rcd.window_type, /obj/structure/window))
-				CRASH("Invalid window path type in RCD: [the_rcd.window_type]")
 			var/obj/structure/window/window_path = the_rcd.window_type
-			if(!valid_window_location(T, user.dir, is_fulltile = initial(window_path.fulltile)))
-				to_chat(user, span_notice("Already a window in this direction!"))
+			if(!ispath(window_path))
+				CRASH("Invalid window path type in RCD: [window_path]")
+			if(!valid_build_direction(T, user.dir, is_fulltile = initial(window_path.fulltile)))
+				balloon_alert(user, "window already here!")
 				return FALSE
-			to_chat(user, span_notice("You construct the window."))
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
@@ -357,3 +367,5 @@
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
 	take_damage(max_integrity * 0.6)
+
+#undef CLEAR_TILE_MOVE_LIMIT

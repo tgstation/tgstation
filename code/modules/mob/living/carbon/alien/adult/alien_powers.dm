@@ -338,34 +338,13 @@ Doesn't work on other aliens/AI.*/
 	new choice_path(owner.loc)
 	return TRUE
 
-/datum/action/cooldown/alien/sneak
+/datum/action/cooldown/sneak/alien
 	name = "Sneak"
+	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "alien_sneak"
-	/// The alpha we go to when sneaking.
-	var/sneak_alpha = 75
-
-/datum/action/cooldown/alien/sneak/Remove(mob/living/remove_from)
-	if(HAS_TRAIT(remove_from, TRAIT_ALIEN_SNEAK))
-		remove_from.alpha = initial(remove_from.alpha)
-		REMOVE_TRAIT(remove_from, TRAIT_ALIEN_SNEAK, name)
-
-	return ..()
-
-/datum/action/cooldown/alien/sneak/Activate(atom/target)
-	if(HAS_TRAIT(owner, TRAIT_ALIEN_SNEAK))
-		// It's safest to go to the initial alpha of the mob.
-		// Otherwise we get permanent invisbility exploits.
-		owner.alpha = initial(owner.alpha)
-		to_chat(owner, span_noticealien("You reveal yourself!"))
-		REMOVE_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
-
-	else
-		owner.alpha = sneak_alpha
-		to_chat(owner, span_noticealien("You blend into the shadows..."))
-		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
-
-	return TRUE
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
 
 /datum/action/cooldown/alien/regurgitate
 	name = "Regurgitate"
@@ -379,7 +358,7 @@ Doesn't work on other aliens/AI.*/
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/alien/adult/alieninated_owner = owner
-	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
 		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
 			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
@@ -396,14 +375,14 @@ Doesn't work on other aliens/AI.*/
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return -1
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)

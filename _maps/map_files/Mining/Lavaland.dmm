@@ -224,9 +224,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/corporate_perks_vacation{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -701,9 +699,7 @@
 	},
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "eW" = (
@@ -769,10 +765,8 @@
 /area/mine/laborcamp)
 "fo" = (
 /obj/structure/closet/crate,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
@@ -1139,9 +1133,7 @@
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "hn" = (
@@ -1413,12 +1405,12 @@
 /area/mine/storage/public)
 "iH" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/item/kitchen/fork{
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -1589,10 +1581,10 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "jU" = (
@@ -1614,12 +1606,12 @@
 /area/mine/production)
 "ka" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/machinery/newscaster/directional/north,
 /obj/item/plate/large,
 /obj/item/kitchen/fork,
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "kg" = (
@@ -2262,9 +2254,7 @@
 /area/mine/medical)
 "mP" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -2840,9 +2830,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp/quarters)
 "pO" = (
@@ -2887,7 +2875,7 @@
 	network = list("labor")
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/security)
+/area/lavaland/surface/outdoors)
 "pZ" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -2903,9 +2891,7 @@
 "qb" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/north,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "qd" = (
@@ -2978,9 +2964,6 @@
 "qs" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 7
@@ -2989,14 +2972,15 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "qw" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "qx" = (
@@ -3468,7 +3452,7 @@
 "tL" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/production)
+/area/lavaland/surface/outdoors)
 "tM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3506,12 +3490,6 @@
 	dir = 8
 	},
 /area/mine/laborcamp)
-"ub" = (
-/obj/machinery/camera/autoname/directional/east{
-	network = list("labor")
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp/production)
 "ui" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3939,9 +3917,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/east,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -4219,11 +4195,11 @@
 /area/mine/living_quarters)
 "yN" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -4348,9 +4324,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/ripped{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/ripped/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -4604,7 +4578,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "BH" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
@@ -4656,9 +4630,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "Ce" = (
@@ -4796,7 +4768,7 @@
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -5456,10 +5428,10 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "HH" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/telecomms/relay/preset/mining,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
 "HI" = (
@@ -5714,8 +5686,8 @@
 /obj/machinery/door/airlock/security{
 	name = "Labor Camp Gate Monitoring"
 	},
-/obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "Jl" = (
@@ -7534,9 +7506,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/south,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
 "UQ" = (
@@ -7562,10 +7532,10 @@
 /area/lavaland/surface/outdoors)
 "US" = (
 /obj/structure/table/wood,
+/obj/item/toy/cards/deck,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/item/toy/cards/deck,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "UV" = (
@@ -7646,9 +7616,7 @@
 /area/mine/laborcamp)
 "Vm" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -8043,9 +8011,7 @@
 /area/lavaland/surface/outdoors)
 "XJ" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -8310,7 +8276,7 @@
 /area/mine/living_quarters)
 "Zw" = (
 /obj/structure/curtain,
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/machinery/shower/directional/south,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
@@ -22248,7 +22214,7 @@ pU
 pU
 tL
 pU
-ub
+pV
 pU
 pU
 uU

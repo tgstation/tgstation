@@ -1,4 +1,4 @@
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -37,6 +37,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
 	return TRUE
 
 //These procs fetch a cumulative total damage from all bodyparts
@@ -116,12 +117,12 @@
  * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organtype)
-	var/obj/item/organ/affected_organ = getorganslot(slot)
+	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
 	if(required_organtype && (affected_organ.status != required_organtype))
 		return
-	affected_organ.applyOrganDamage(amount, maximum)
+	affected_organ.apply_organ_damage(amount, maximum)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
@@ -133,14 +134,14 @@
  * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
 /mob/living/carbon/setOrganLoss(slot, amount, required_organtype)
-	var/obj/item/organ/affected_organ = getorganslot(slot)
+	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
 	if(required_organtype && (affected_organ.status != required_organtype))
 		return
 	if(affected_organ.damage == amount)
 		return
-	affected_organ.setOrganDamage(amount)
+	affected_organ.set_organ_damage(amount)
 
 /**
  * If an organ exists in the slot requested, return the amount of damage that organ has
@@ -148,8 +149,8 @@
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  */
-/mob/living/carbon/getOrganLoss(slot)
-	var/obj/item/organ/affected_organ = getorganslot(slot)
+/mob/living/carbon/get_organ_loss(slot)
+	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(affected_organ)
 		return affected_organ.damage
 

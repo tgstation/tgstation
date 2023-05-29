@@ -4,20 +4,26 @@
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "navbeacon0-f"
-	base_icon_state = "navbeacon"
+	icon_state = "navbeacon0"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
 	armor_type = /datum/armor/machinery_navbeacon
+	circuit = /obj/item/circuitboard/machine/navbeacon
 
-	var/open = FALSE // true if cover is open
-	var/locked = TRUE // true if controls are locked
-	var/freq = FREQ_NAV_BEACON
-	var/location = "" // location response text
-	var/list/codes // assoc. list of transponder codes
-	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	/// true if controls are locked
+	var/controls_locked = TRUE
+	/// true if cover is locked
+	var/cover_locked = TRUE
+	/// location response text
+	var/location = ""
+	/// original location name, to allow resets
+	var/original_location = ""
+	/// associative list of transponder codes
+	var/list/codes
+	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	var/codes_txt = ""
 
 	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
@@ -31,6 +37,8 @@
 
 /obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
+
+	original_location = location
 
 	set_codes()
 
@@ -49,179 +57,181 @@
 		GLOB.navbeacons["[new_turf?.z]"] += src
 	return ..()
 
-// set the transponder codes assoc list from codes_txt
+/obj/machinery/navbeacon/on_construction(mob/user)
+	var/turf/our_turf = loc
+	if(!isfloorturf(our_turf))
+		return
+	var/turf/open/floor/floor = our_turf
+	floor.remove_tile(null, silent = TRUE, make_tile = TRUE, force_plating = TRUE)
+
+
+///Set the transponder codes assoc list from codes_txt during initialization, or during reset
 /obj/machinery/navbeacon/proc/set_codes()
+
+	codes = list()
+
 	if(!codes_txt)
 		return
 
-	codes = new()
-
 	var/list/entries = splittext(codes_txt, ";") // entries are separated by semicolons
 
-	for(var/e in entries)
-		var/index = findtext(e, "=") // format is "key=value"
+	for(var/entry in entries)
+		var/index = findtext(entry, "=") // format is "key=value"
 		if(index)
-			var/key = copytext(e, 1, index)
-			var/val = copytext(e, index + length(e[index]))
+			var/key = copytext(entry, 1, index)
+			var/val = copytext(entry, index + length(entry[index]))
 			codes[key] = val
 		else
-			codes[e] = "1"
+			codes[entry] = "[TRUE]"
 
+///Removes the nav beacon from the global beacon lists
 /obj/machinery/navbeacon/proc/glob_lists_deregister()
 	if (GLOB.navbeacons["[z]"])
 		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	GLOB.deliverybeacontags -= location
 
+///Registers the navbeacon to the global beacon lists
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
 	if(!codes)
 		return
-	if(codes["patrol"])
+	if(codes[NAVBEACON_PATROL_MODE])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
 		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
-	if(codes["delivery"])
+	if(codes[NAVBEACON_DELIVERY_MODE])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-// update the icon_state
-/obj/machinery/navbeacon/update_icon_state()
-	icon_state = "[base_icon_state][open]"
-	return ..()
+/obj/machinery/navbeacon/crowbar_act(mob/living/user, obj/item/I)
+	if(default_deconstruction_crowbar(I))
+		return TRUE
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
-	add_fingerprint(user)
-	open = !open
-	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
-	update_appearance()
-	tool.play_tool_sound(src, 50)
-	return TRUE
+	if(!panel_open && cover_locked)
+		balloon_alert(user, "hatch locked!")
+		return TRUE
+	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
-	var/turf/T = loc
-	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, params)
+	var/turf/our_turf = loc
+	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	if (isidcard(I) || istype(I, /obj/item/modular_computer/pda))
-		if(open)
+	if (attacking_item.GetID())
+		if(!panel_open)
 			if (allowed(user))
-				locked = !locked
-				to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+				controls_locked = !controls_locked
+				balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
+				SStgui.update_uis(src)
 			else
-				to_chat(user, span_danger("Access denied."))
-			updateDialog()
+				balloon_alert(user, "access denied")
 		else
-			to_chat(user, span_warning("You must open the cover first!"))
+			balloon_alert(user, "panel open!")
 		return
 
 	return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
-	interact(user, 1)
+	interact(user)
 
 /obj/machinery/navbeacon/attack_paw(mob/user, list/modifiers)
 	return
 
-/obj/machinery/navbeacon/ui_interact(mob/user)
+/obj/machinery/navbeacon/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	var/ai = isAI(user)
-	var/turf/T = loc
-	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+
+	var/turf/our_turf = loc
+	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	if(!open && !ai) // can't alter controls if not open, unless you're an AI
-		to_chat(user, span_warning("The beacon's control cover is closed!"))
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "NavBeacon")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/obj/machinery/navbeacon/ui_data(mob/user)
+	var/list/data = list()
+	var/list/controls = list()
+
+	controls["location"] = location
+	controls["patrol_enabled"] = codes[NAVBEACON_PATROL_MODE] ? TRUE : FALSE
+	controls["patrol_next"] = codes[NAVBEACON_PATROL_NEXT]
+	controls["delivery_enabled"] = codes[NAVBEACON_DELIVERY_MODE] ? TRUE : FALSE
+	controls["delivery_direction"] = dir2text(text2num(codes[NAVBEACON_DELIVERY_DIRECTION]))
+	controls["cover_locked"] = cover_locked
+
+	data["locked"] = controls_locked
+	data["siliconUser"] = issilicon(user)
+	data["controls"] = controls
+
+	return data
+
+/obj/machinery/navbeacon/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/static_controls = list()
+	var/static/list/direction_options = list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST))
+
+	static_controls["direction_options"] = direction_options
+	static_controls["has_codes"] = codes_txt ? TRUE : FALSE
+
+	data["static_controls"] = static_controls
+	return data
+
+/obj/machinery/navbeacon/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
+	if(action == "lock" && allowed(usr))
+		controls_locked = !controls_locked
+		return TRUE
 
-	var/t
+	if(controls_locked && !issilicon(usr))
+		return
 
-	if(locked && !ai)
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-<i>(swipe card to unlock controls)</i><BR>
-Location: [location ? location : "(none)"]</A><BR>
-Transponder Codes:<UL>"}
+	switch(action)
+		if("reset_codes")
+			glob_lists_deregister()
+			location = original_location
+			set_codes()
+			glob_lists_register()
+			return TRUE
+		if("toggle_cover")
+			cover_locked = !cover_locked
+			return TRUE
+		if("toggle_patrol")
+			toggle_code(NAVBEACON_PATROL_MODE)
+			return TRUE
+		if("toggle_delivery")
+			toggle_code(NAVBEACON_DELIVERY_MODE)
+			return TRUE
+		if("set_location")
+			var/input_text = tgui_input_text(usr, "Enter the beacon's location tag", "Beacon Location", location, 20)
+			if (!input_text || location == input_text)
+				return
+			glob_lists_deregister()
+			location = input_text
+			glob_lists_register()
+			return TRUE
+		if("set_patrol_next")
+			var/next_patrol = codes[NAVBEACON_PATROL_NEXT]
+			var/input_text = tgui_input_text(usr, "Enter the tag of the next patrol location", "Beacon Location", next_patrol, 20)
+			if (!input_text || location == input_text)
+				return
+			codes[NAVBEACON_PATROL_NEXT] = input_text
+			return TRUE
+		if("set_delivery_direction")
+			codes[NAVBEACON_DELIVERY_DIRECTION] = "[text2dir(params["direction"])]"
+			return TRUE
 
-		for(var/key in codes)
-			t += "<LI>[key] ... [codes[key]]"
-		t+= "<UL></TT>"
-
+///Adds or removes a specific code
+/obj/machinery/navbeacon/proc/toggle_code(code)
+	if(codes[code])
+		codes.Remove(code)
 	else
-
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-<i>(swipe card to lock controls)</i><BR>
-
-<HR>
-Location: <A href='byond://?src=[REF(src)];locedit=1'>[location ? location : "None"]</A><BR>
-Transponder Codes:<UL>"}
-
-		for(var/key in codes)
-			t += "<LI>[key] ... [codes[key]]"
-			t += " <A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
-			t += " <A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
-		t += " <A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
-		t+= "<UL></TT>"
-
-	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)
-	popup.set_content(t)
-	popup.open()
-	return
-
-/obj/machinery/navbeacon/Topic(href, href_list)
-	if(..())
-		return
-	if(open && !locked)
-		usr.set_machine(src)
-
-		if(href_list["locedit"])
-			var/newloc = stripped_input(usr, "Enter New Location", "Navigation Beacon", location, MAX_MESSAGE_LEN)
-			if(newloc)
-				location = newloc
-				glob_lists_register()
-				updateDialog()
-
-		else if(href_list["edit"])
-			var/codekey = href_list["code"]
-
-			var/newkey = stripped_input(usr, "Enter Transponder Code Key", "Navigation Beacon", codekey)
-			if(!newkey)
-				return
-
-			var/codeval = codes[codekey]
-			var/newval = stripped_input(usr, "Enter Transponder Code Value", "Navigation Beacon", codeval)
-			if(!newval)
-				newval = codekey
-				return
-
-			codes.Remove(codekey)
-			codes[newkey] = newval
-			glob_lists_register()
-
-			updateDialog()
-
-		else if(href_list["delete"])
-			var/codekey = href_list["code"]
-			codes.Remove(codekey)
-			glob_lists_register()
-			updateDialog()
-
-		else if(href_list["add"])
-
-			var/newkey = stripped_input(usr, "Enter New Transponder Code Key", "Navigation Beacon")
-			if(!newkey)
-				return
-
-			var/newval = stripped_input(usr, "Enter New Transponder Code Value", "Navigation Beacon")
-			if(!newval)
-				newval = "1"
-				return
-
-			if(!codes)
-				codes = new()
-
-			codes[newkey] = newval
-			glob_lists_register()
-
-			updateDialog()
+		codes[code]="[TRUE]"
+	glob_lists_register()

@@ -435,14 +435,17 @@ DEFINE_BITFIELD(turret_flags, list(
 			continue
 
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
-			if(isanimal(A))
-				var/mob/living/simple_animal/SA = A
-				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
+			if(isanimal_or_basicmob(A))
+				var/mob/living/animal = A
+				if(animal.stat || in_faction(animal)) //don't target if dead or in faction
 					continue
-				targets += SA
+				targets += animal
 				continue
 
 		if(issilicon(A))
+			if(!(turret_flags & TURRET_FLAG_SHOOT_BORGS))
+				continue
+
 			var/mob/living/silicon/sillycone = A
 
 			if(ispAI(A))
@@ -452,13 +455,12 @@ DEFINE_BITFIELD(turret_flags, list(
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(sillyconerobot.stat != CONSCIOUS)
 					continue
-				if((turret_flags & TURRET_FLAG_SHOOT_BORGS))
-					targets += sillyconerobot
+				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
-				if(in_faction(sillyconerobot))
+				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
-				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
-					targets += sillyconerobot
+
+				targets += sillyconerobot
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -731,6 +733,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
+	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_BORGS
 	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/Initialize(mapload)
@@ -810,7 +813,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		return TRUE
 
 /obj/machinery/porta_turret/ai
-	faction = list(FACTION_SILICON)
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
@@ -1059,7 +1061,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
@@ -1176,3 +1178,16 @@ DEFINE_BITFIELD(turret_flags, list(
 			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
 				toggle_on(FALSE)
 				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
+
+#undef TURRET_STUN
+#undef TURRET_LETHAL
+#undef POPUP_ANIM_TIME
+#undef POPDOWN_ANIM_TIME
+#undef TURRET_FLAG_SHOOT_ALL_REACT
+#undef TURRET_FLAG_AUTH_WEAPONS
+#undef TURRET_FLAG_SHOOT_CRIMINALS
+#undef TURRET_FLAG_SHOOT_ALL
+#undef TURRET_FLAG_SHOOT_ANOMALOUS
+#undef TURRET_FLAG_SHOOT_UNSHIELDED
+#undef TURRET_FLAG_SHOOT_BORGS
+#undef TURRET_FLAG_SHOOT_HEADS

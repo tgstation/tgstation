@@ -92,7 +92,8 @@
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 
-	var/lawupdate = TRUE //Cyborgs will sync their laws with their AI by default
+	///Cyborgs will sync their laws with their AI by default
+	var/lawupdate = TRUE
 	///Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
 	var/scrambledcodes = FALSE
 	///Boolean of whether the borg is locked down or not

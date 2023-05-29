@@ -73,14 +73,21 @@
 //windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MINERAL_MATERIAL_AMOUNT 2000
+// Defines related to the custom materials used on objects.
+///The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 2000 Units.
+#define SHEET_MATERIAL_AMOUNT 2000
+///The amount of materials you get from half a sheet. Used in standard object quantities. 1000 units.
+#define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT/2)
+///The amount of materials used in the smallest of objects, like pens and screwdrivers. 100 units.
+#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/10)
+
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 //maximum amount of cable in a coil
 #define MAXCOIL 30
 
-//tablecrafting defines
+//food/drink crafting defines
+//When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_FOOD "Foods"
 #define CAT_BREAD "Breads"
 #define CAT_BURGER "Burgers"
@@ -102,7 +109,31 @@
 #define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
 
+GLOBAL_LIST_INIT(crafting_category_food, list(
+	CAT_FOOD,
+	CAT_BREAD,
+	CAT_BURGER,
+	CAT_CAKE,
+	CAT_EGG,
+	CAT_LIZARD,
+	CAT_MEAT,
+	CAT_SEAFOOD,
+	CAT_MISCFOOD,
+	CAT_MEXICAN,
+	CAT_MOTH,
+	CAT_PASTRY,
+	CAT_PIE,
+	CAT_PIZZA,
+	CAT_SALAD,
+	CAT_SANDWICH,
+	CAT_SOUP,
+	CAT_SPAGHETTI,
+	CAT_ICE,
+	CAT_DRINK,
+))
+
 //crafting defines
+//When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_WEAPON_RANGED "Weapons Ranged"
 #define CAT_WEAPON_MELEE "Weapons Melee"
 #define CAT_WEAPON_AMMO "Weapon Ammo"
@@ -121,6 +152,27 @@
 #define CAT_ENTERTAINMENT "Entertainment"
 #define CAT_TOOLS "Tools"
 #define CAT_CULT "Blood Cult"
+
+GLOBAL_LIST_INIT(crafting_category, list(
+	CAT_WEAPON_RANGED,
+	CAT_WEAPON_MELEE,
+	CAT_WEAPON_AMMO,
+	CAT_ROBOT,
+	CAT_MISC,
+	CAT_CLOTHING,
+	CAT_CHEMISTRY,
+	CAT_ATMOSPHERIC,
+	CAT_STRUCTURE,
+	CAT_TILES,
+	CAT_WINDOWS,
+	CAT_DOORS,
+	CAT_FURNITURE,
+	CAT_EQUIPMENT,
+	CAT_CONTAINERS,
+	CAT_ENTERTAINMENT,
+	CAT_TOOLS,
+	CAT_CULT,
+))
 
 //rcd modes
 #define RCD_FLOORWALL 0
@@ -156,3 +208,10 @@
 
 /// How much less resources the RCD uses when reconstructing
 #define RCD_MEMORY_COST_BUFF 8
+
+// Defines for the construction component
+#define FORWARD 1
+#define BACKWARD -1
+
+#define ITEM_DELETE "delete"
+#define ITEM_MOVE_INSIDE "move_inside"

@@ -28,8 +28,8 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
 	. = ..()
 	cube_production = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		cube_production += manipulator.tier * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		cube_production += servo.tier * 0.1
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		cube_production += matter_bin.tier * 0.1
 
@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(O, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(O))

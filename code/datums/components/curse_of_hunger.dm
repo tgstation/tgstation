@@ -72,8 +72,7 @@
 	awakened = TRUE
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
+	cursed.add_traits(list(TRAIT_CLUMSY, TRAIT_PACIFISM), CURSED_ITEM_TRAIT(cursed_item.type))
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
 
@@ -83,8 +82,7 @@
 	var/obj/item/cursed_item = parent
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
+	uncursed.remove_traits(list(TRAIT_CLUMSY, TRAIT_PACIFISM), CURSED_ITEM_TRAIT(cursed_item.type))
 	//remove either one of the signals that could have called this proc
 	UnregisterSignal(cursed_item, COMSIG_ITEM_DROPPED)
 
@@ -107,7 +105,7 @@
 	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
 
-/datum/component/curse_of_hunger/process(delta_time)
+/datum/component/curse_of_hunger/process(seconds_per_tick)
 	var/obj/item/cursed_item = parent
 	var/mob/living/carbon/cursed = cursed_item.loc
 	///check hp
@@ -115,7 +113,7 @@
 		the_curse_ends(cursed)
 		return
 
-	hunger += delta_time
+	hunger += seconds_per_tick
 	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) || prob(80))
 		return
 

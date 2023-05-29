@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	anchored_tabletop_offset = 8
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
@@ -67,8 +68,8 @@
 /obj/machinery/reagentgrinder/RefreshParts()
 	. = ..()
 	speed = 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed = servo.tier
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
@@ -173,14 +174,23 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
+		if(!I.contents.len)
+			to_chat(user, span_notice("[I] is empty!"))
+			return TRUE
+
 		var/list/inserted = list()
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
-			else
-				to_chat(user, span_notice("You fill [src] to the brim."))
+			inserted = list()
+		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+
+		if(!I.contents.len)
+			to_chat(user, span_notice("You empty [I] into [src]."))
+		else
+			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)
@@ -361,3 +371,5 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
+
+#undef MILK_TO_BUTTER_COEFF

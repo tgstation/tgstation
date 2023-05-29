@@ -49,9 +49,6 @@
 	return data
 
 /datum/computer_file/program/maintenance/camera/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	var/mob/living/user = usr
 	switch(action)
 		if("print_photo")

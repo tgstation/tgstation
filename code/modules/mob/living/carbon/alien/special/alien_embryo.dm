@@ -25,37 +25,37 @@
 		if(prob(10))
 			attempt_grow(gib_on_success = FALSE)
 
-/obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
+/obj/item/organ/internal/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
 	switch(stage)
 		if(3, 4)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("sneeze")
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(owner, span_danger("Your throat feels sore."))
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(owner, span_danger("Mucous runs down the back of your throat."))
 		if(5)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("sneeze")
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(owner, span_danger("Your muscles ache."))
 				if(prob(20))
 					owner.take_bodypart_damage(1)
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(owner, span_danger("Your stomach hurts."))
 				if(prob(20))
 					owner.adjustToxLoss(1)
 		if(6)
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
-			owner.adjustToxLoss(5 * delta_time) // Why is this [TOX]?
+			owner.adjustToxLoss(5 * seconds_per_tick) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
@@ -111,8 +111,7 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
-	ADD_TRAIT(new_xeno, TRAIT_IMMOBILIZED, type) //so we don't move during the bursting animation
-	ADD_TRAIT(new_xeno, TRAIT_HANDS_BLOCKED, type)
+	new_xeno.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), type) //so we don't move during the bursting animation
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 

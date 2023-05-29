@@ -21,12 +21,12 @@
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	armor_type = /datum/armor/combat_swat
 
 /datum/armor/combat_swat
@@ -56,7 +56,7 @@
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -82,14 +82,14 @@
 /obj/item/clothing/shoes/winterboots/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/winterboots/ice_boots
 	name = "ice hiking boots"
 	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
 	icon_state = "iceboots"
 	inhand_icon_state = null
-	clothing_flags = NOSLIP_ICE
+	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
 // A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
 /obj/item/clothing/shoes/winterboots/ice_boots/eva
@@ -101,7 +101,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = NOSLIP_ICE|THICKMATERIAL
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 
 /datum/armor/ice_boots_eva
@@ -121,7 +121,6 @@
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
-	species_exception = list(/datum/species/golem/uranium)
 
 /datum/armor/shoes_workboots
 	bio = 80
@@ -129,7 +128,7 @@
 /obj/item/clothing/shoes/workboots/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -147,7 +146,7 @@
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/discoshoes
 	name = "green lizardskin shoes"

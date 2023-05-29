@@ -187,12 +187,15 @@
 		LAZYADD(target_blacklist, sacrifice.mind)
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
-	to_chat(user, span_hypnophrase("Your patrons accepts your offer."))
 
-	if(sacrifice.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	var/feedback = "Your patrons accept your offer"
+	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
+	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
+		feedback += " <i>graciously</i>"
 
+	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
@@ -493,3 +496,6 @@
 	)
 
 	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+
+#undef SACRIFICE_SLEEP_DURATION
+#undef SACRIFICE_REALM_DURATION

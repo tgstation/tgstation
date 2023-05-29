@@ -48,12 +48,12 @@
 		holder.flags |= NO_REACT
 	return NONE
 
-/obj/machinery/plumbing/reaction_chamber/process(delta_time)
+/obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
 	if(!emptying || reagents.is_reacting) //suspend heating/cooling during emptying phase
-		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
 
-	use_power(active_power_usage * delta_time)
+	use_power(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
@@ -149,12 +149,12 @@
 	QDEL_NULL(alkaline_beaker)
 	return ..()
 
-/obj/machinery/plumbing/reaction_chamber/chem/process(delta_time)
+/obj/machinery/plumbing/reaction_chamber/chem/process(seconds_per_tick)
 	//add acidic/alkaine buffer if over/under limit
 	if(reagents.is_reacting && reagents.ph < alkaline_limit)
-		alkaline_beaker.reagents.trans_to(reagents, 1 * delta_time)
+		alkaline_beaker.reagents.trans_to(reagents, 1 * seconds_per_tick)
 	if(reagents.is_reacting && reagents.ph > acidic_limit)
-		acidic_beaker.reagents.trans_to(reagents, 1 * delta_time)
+		acidic_beaker.reagents.trans_to(reagents, 1 * seconds_per_tick)
 	..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)

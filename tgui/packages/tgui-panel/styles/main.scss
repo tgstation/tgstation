@@ -56,5 +56,5 @@
 // @include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
 @include meta.load-css('~tgui/styles/layouts/Window.scss');
 
-// Goonchat styles
-@include meta.load-css('./goon/chat-dark.scss');
+// tgchat styles
+@include meta.load-css('./tgchat/chat-dark.scss');

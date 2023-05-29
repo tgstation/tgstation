@@ -27,6 +27,7 @@
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[hairstyle]
 	if(hair_style)
+		icon = hair_style.icon
 		icon_state = hair_style.icon_state
 	return ..()
 

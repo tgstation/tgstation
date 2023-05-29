@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "undressing a hat/back item from a dog will correctly remove the item's overlay"
-  - bugfix: "most armor vests will actually show on a dog when placed on its back"

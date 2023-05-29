@@ -10,26 +10,26 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
+/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
+/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
 		return
-	if(!DT_PROB(2, delta_time))
+	if(!SPT_PROB(2, seconds_per_tick))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
-	owner.adjust_disgust(33 * delta_time)
-	applyOrganDamage(5 * delta_time, 199)
+	owner.adjust_disgust(33 * seconds_per_tick)
+	apply_organ_damage(5 * seconds_per_tick, 199)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -84,8 +84,8 @@
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
 /mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
-	var/obj/item/organ/internal/brain/old_brain = getorganslot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/internal/old_eyes = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
@@ -306,7 +306,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/tick(delta_time, times_fired)
+/datum/status_effect/psychic_projection/tick(seconds_per_tick, times_fired)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return

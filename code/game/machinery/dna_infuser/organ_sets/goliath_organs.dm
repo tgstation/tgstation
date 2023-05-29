@@ -9,7 +9,7 @@
 	organs_needed = 4
 	bonus_activate_text = span_notice("goliath DNA is deeply infused with you! You can now endure walking on lava!")
 	bonus_deactivate_text = span_notice("You feel your muscle mass shrink and the tendrils around your skin wither. Your Goliath DNA is mostly gone and so is your ability to survive lava.")
-	bonus_traits = TRAIT_LAVA_IMMUNE
+	bonus_traits = list(TRAIT_LAVA_IMMUNE)
 
 ///goliath eyes, simple night vision
 /obj/item/organ/internal/eyes/night_vision/goliath
@@ -66,7 +66,7 @@
 	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/brain/goliath/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
+/obj/item/organ/internal/brain/goliath/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(!ishuman(brain_owner))
 		return
@@ -78,7 +78,7 @@
 	hammer = new/obj/item/goliath_infuser_hammer
 	brain_owner.put_in_hands(hammer)
 
-/obj/item/organ/internal/brain/goliath/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
+/obj/item/organ/internal/brain/goliath/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))
@@ -113,29 +113,41 @@
 	toolspeed = 0.1
 	/// Amount of damage we deal to the mining and boss factions.
 	var/mining_bonus_force = 80
+	/// Our cooldown declare for our special knockback hit
+	COOLDOWN_DECLARE(tendril_hammer_cd)
 
 /obj/item/goliath_infuser_hammer/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/goliath_infuser_hammer/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/goliath_infuser_hammer/examine(mob/user)
 	. = ..()
-	user.changeNext_move(CLICK_CD_MELEE * 2) //hits slower but HARD
+	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
-	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
-		// Target is not a nemesis, so attack normally.
-		return ..()
-	// Apply nemesis-specific effects.
-	nemesis_effects(user, target)
-	// Can't apply bonus force if target isn't "solid", or is occupying the same turf as the user.
-	if(!target.density || get_turf(target) == get_turf(user))
-		return ..()
-	// Target is a nemesis, and we CAN apply bonus force.
-	force += mining_bonus_force
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, click_parameters)
 	. = ..()
-	force -= mining_bonus_force
+
+	//If we're on cooldown, we'll do a normal attack.
+	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))
+		return
+
+	//do a normal attack if our target isn't living, since we're gonna define them after this.
+	if(!isliving(target))
+		return
+
+	var/mob/living/fresh_pancake = target
+
+	// Check for nemesis factions on the target.
+	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
+		// Target is not a nemesis, so attack normally.
+		return
+
+	// Apply nemesis-specific effects.
+	nemesis_effects(user, fresh_pancake)
+
+	// Target is a nemesis, and so now we do the extra big damage and go on cooldown
+	fresh_pancake.apply_damage(mining_bonus_force, damtype) //smush
+	COOLDOWN_START(src, tendril_hammer_cd, 2 SECONDS)
 
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))

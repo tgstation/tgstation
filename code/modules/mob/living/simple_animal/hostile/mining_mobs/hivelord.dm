@@ -196,7 +196,7 @@
 	clickbox_max_scale = 2
 	var/can_infest_dead = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == DEAD || !isturf(loc))
 		return
@@ -284,9 +284,9 @@
 	.=..()
 	AddComponent(\
 		/datum/component/spawner,\
-		mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
+		spawn_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
 		spawn_time = 20 SECONDS,\
-		max_mobs = 3,\
+		max_spawned = 3,\
 		spawn_text = "peels itself off from",\
 		faction = faction,\
 	)

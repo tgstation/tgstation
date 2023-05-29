@@ -245,7 +245,7 @@
 	material_modifier = 0.25
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
-	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
+	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 10)
 	. = ..()
 
 /obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
@@ -648,14 +648,14 @@
 
 // set_density on both open and close procs has a check and return builtin.
 
-/obj/machinery/door/airlock/instant/open(forced = FALSE)
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	set_density(FALSE)
 	operating = FALSE
 	return TRUE
 
-/obj/machinery/door/airlock/instant/close(forced = FALSE, force_crush = FALSE)
+/obj/machinery/door/airlock/instant/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	set_density(TRUE)

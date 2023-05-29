@@ -44,7 +44,7 @@
 	var/functional = TRUE
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	if(!sender.mind?.has_antag_datum(/datum/antagonist/traitor))
+	if(!IS_TRAITOR(sender))
 		to_chat(sender, span_warning("You have no clue how to use this thing."))
 		return
 	if(!functional)

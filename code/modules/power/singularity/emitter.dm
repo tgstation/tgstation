@@ -94,8 +94,8 @@
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
 	fire_delay = fire_shoot_delay
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power_usage -= 50 * manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power_usage -= 50 * servo.tier
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
 
 /obj/machinery/power/emitter/examine(mob/user)
@@ -175,7 +175,7 @@
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/emitter/process(delta_time)
+/obj/machinery/power/emitter/process(seconds_per_tick)
 	if(machine_stat & (BROKEN))
 		return
 	if(!welded || (!powernet && active_power_usage))
@@ -198,7 +198,7 @@
 		update_appearance()
 		investigate_log("regained power and turned ON at [AREACOORD(src)]", INVESTIGATE_ENGINE)
 	if(charge <= 80)
-		charge += 2.5 * delta_time
+		charge += 2.5 * seconds_per_tick
 	if(!check_delay() || manual == TRUE)
 		return FALSE
 	fire_beam()
@@ -478,6 +478,7 @@
 
 /obj/item/turret_control
 	name = "turret controls"
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON

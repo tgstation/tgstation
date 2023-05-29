@@ -44,8 +44,12 @@
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
+	setup_components()
+
+/// Simply adds the necessary components for this to function.
+/obj/machinery/photocopier/proc/setup_components()
+	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == object_copy)
@@ -516,12 +520,20 @@
 	else
 		return TRUE
 
+/// Subtype of photocopier that is free to use.
+/obj/machinery/photocopier/gratis
+	desc = "Does the same important paperwork, but it's free to use! The best type of free."
+
+/obj/machinery/photocopier/gratis/setup_components()
+	// it's free! no charge! very cool and gratis-pilled.
+	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+
 /*
  * Toner cartridge
  */
 /obj/item/toner
 	name = "toner cartridge"
-	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -534,7 +546,7 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
-	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
 	charges = 25
 	max_charges = 25

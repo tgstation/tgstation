@@ -93,7 +93,7 @@
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
-/obj/item/organ/internal/brain/shadow/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/shadow/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
@@ -101,9 +101,9 @@
 	var/light_amount = owner_turf.get_lumcount()
 
 	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-		owner.take_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
+		owner.take_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		owner.heal_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
+		owner.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /obj/item/organ/internal/eyes/shadow
 	name = "burning red eyes"

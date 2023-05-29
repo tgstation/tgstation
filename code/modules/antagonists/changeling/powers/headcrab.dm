@@ -15,11 +15,11 @@
 
 	..()
 	var/datum/mind/stored_mind = user.mind
-	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, TRUE)
+	var/list/organs = user.get_organs_for_zone(BODY_ZONE_HEAD, TRUE)
 
 	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/blinded_human in range(2, user))
-		var/obj/item/organ/internal/eyes/eyes = blinded_human.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
 		if(!eyes || blinded_human.is_blind())
 			continue
 		to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))

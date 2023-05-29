@@ -76,14 +76,12 @@
 /datum/mutation/human/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	acquirer.physiology.burn_mod *= 0.5
-	ADD_TRAIT(acquirer, TRAIT_RESISTHEAT, GENETIC_MUTATION)
-	ADD_TRAIT(acquirer, TRAIT_NOFIRE, GENETIC_MUTATION)
+	acquirer.add_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/human/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	owner.physiology.burn_mod /= 0.5
-	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_NOFIRE, GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/human/quick_recovery
 	name = "Quick Recovery"
@@ -111,7 +109,7 @@
 
 /datum/mutation/human/plasmocile/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.get_organ_slot(ORGAN_SLOT_LUNGS)
 	ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	if(improved_lungs)
 		apply_buff(improved_lungs)
@@ -120,7 +118,7 @@
 
 /datum/mutation/human/plasmocile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	var/obj/item/organ/internal/lungs/improved_lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/improved_lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
 	REMOVE_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)

@@ -32,6 +32,41 @@
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
 
+/// Updates features and clothing attached to a specific limb with limb-specific offsets
+/mob/living/carbon/proc/update_features(feature_key)
+	switch(feature_key)
+		if(OFFSET_UNIFORM)
+			update_worn_undersuit()
+		if(OFFSET_ID)
+			update_worn_id()
+		if(OFFSET_GLOVES)
+			update_worn_gloves()
+		if(OFFSET_GLASSES)
+			update_worn_glasses()
+		if(OFFSET_EARS)
+			update_inv_ears()
+		if(OFFSET_SHOES)
+			update_worn_shoes()
+		if(OFFSET_S_STORE)
+			update_suit_storage()
+		if(OFFSET_FACEMASK)
+			update_worn_mask()
+		if(OFFSET_HEAD)
+			update_worn_head()
+		if(OFFSET_FACE)
+			dna?.species?.handle_body(src) // updates eye icon
+			update_worn_mask()
+		if(OFFSET_BELT)
+			update_worn_belt()
+		if(OFFSET_BACK)
+			update_worn_back()
+		if(OFFSET_SUIT)
+			update_worn_oversuit()
+		if(OFFSET_NECK)
+			update_worn_neck()
+		if(OFFSET_HELD)
+			update_held_items()
+
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
 /mob/living/carbon/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -545,7 +580,9 @@
 		if(!overlay.can_draw_on_bodypart(owner))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
-
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		. += "-[human_owner.get_mob_height()]"
 	return .
 
 ///Generates a cache key specifically for husks
@@ -555,6 +592,9 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		. += "-[human_owner.get_mob_height()]"
 	return .
 
 /obj/item/bodypart/head/generate_icon_key()

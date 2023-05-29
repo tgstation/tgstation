@@ -77,7 +77,7 @@
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removes your need breathe. \
+	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
@@ -91,12 +91,10 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(user, TRAIT_NOBREATH, type)
+	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
+	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
@@ -223,7 +221,7 @@
  *
  * Also starts storms in any area that doesn't have one.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	for(var/mob/living/carbon/close_carbon in view(5, source))

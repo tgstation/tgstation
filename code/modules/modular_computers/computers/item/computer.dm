@@ -20,6 +20,8 @@
 	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
 	///A pAI currently loaded into the modular computer.
 	var/obj/item/pai_card/inserted_pai
+	///Does the console update the crew manifest when the ID is removed?
+	var/crew_manifest_update = FALSE
 
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
@@ -133,7 +135,7 @@
 
 	update_appearance()
 	register_context()
-	init_network_id(NETWORK_TABLETS)
+	Add_Messenger()
 	install_default_programs()
 
 /obj/item/modular_computer/proc/install_default_programs()
@@ -144,9 +146,7 @@
 
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	wipe_program(forced = TRUE)
-	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		idle.kill_program(TRUE)
+	close_all_programs()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
@@ -274,6 +274,9 @@
 /obj/item/modular_computer/RemoveID(mob/user)
 	if(!computer_id_slot)
 		return ..()
+
+	if(crew_manifest_update)
+		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
 	if(user)
 		if(!issilicon(user) && in_range(src, user))
@@ -445,7 +448,7 @@
 		enabled = TRUE
 		update_appearance()
 		if(open_ui)
-			ui_interact(user)
+			update_tablet_open_uis(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -455,7 +458,7 @@
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process(delta_time)
+/obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -464,26 +467,20 @@
 		shutdown_computer()
 		return
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
+	if(active_program && active_program.requires_ntnet && !get_ntnet_status())
 		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
-		if(idle_programs.program_state == PROGRAM_STATE_KILLED)
-			idle_threads.Remove(idle_programs)
-			continue
-		idle_programs.process_tick(delta_time)
-		idle_programs.ntnet_status = get_ntnet_status(idle_programs.requires_ntnet_feature)
+		idle_programs.process_tick(seconds_per_tick)
+		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
 	if(active_program)
-		if(active_program.program_state == PROGRAM_STATE_KILLED)
-			active_program = null
-		else
-			active_program.process_tick(delta_time)
-			active_program.ntnet_status = get_ntnet_status()
+		active_program.process_tick(seconds_per_tick)
+		active_program.ntnet_status = get_ntnet_status()
 
-	handle_power(delta_time) // Handles all computer power interaction
+	handle_power(seconds_per_tick) // Handles all computer power interaction
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
@@ -563,23 +560,7 @@
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
-///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
-/obj/item/modular_computer/proc/wipe_program(forced)
-	if(!active_program)
-		return
-	active_program.kill_program(forced)
-	active_program = null
-
-// Relays kill program request to currently active program. Use this to quit current program.
-/obj/item/modular_computer/proc/kill_program(forced = FALSE)
-	wipe_program(forced)
-	var/mob/user = usr
-	if(user && istype(user))
-		//Here to prevent programs sleeping in destroy
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
-	update_appearance()
-
-/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
+/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
@@ -589,11 +570,12 @@
 
 	// The program is already running. Resume it.
 	if(program in idle_threads)
-		program.program_state = PROGRAM_STATE_ACTIVE
 		active_program = program
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
-		update_appearance()
+		if(open_ui)
+			update_tablet_open_uis(user)
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
@@ -603,7 +585,7 @@
 		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
-	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+	if(program.requires_ntnet && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
 		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
@@ -612,19 +594,20 @@
 
 	active_program = program
 	program.alert_pending = FALSE
-	update_appearance()
-	ui_interact(user)
+	if(open_ui)
+		update_tablet_open_uis(user)
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	// NTNet is down and we are not connected via wired connection. No signal.
-	if(!SSmodular_computers.check_function(specific_action))
-		return NTNET_NO_SIGNAL
-
+/obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
+
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!find_functional_ntnet_relay())
+		return NTNET_NO_SIGNAL
 
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf || !istype(current_turf))
@@ -643,12 +626,15 @@
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSnetworks.add_log(text, network_id)
+	return SSmodular_computers.add_log("[src]: [text]")
 
-/obj/item/modular_computer/proc/shutdown_computer(loud = 1)
-	kill_program(forced = TRUE)
-	for(var/datum/computer_file/program/idle_program in idle_threads)
-		idle_program.kill_program(forced = TRUE)
+/obj/item/modular_computer/proc/close_all_programs()
+	active_program = null
+	for(var/datum/computer_file/program/idle as anything in idle_threads)
+		idle_threads.Remove(idle)
+
+/obj/item/modular_computer/proc/shutdown_computer(loud = TRUE)
+	close_all_programs()
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)

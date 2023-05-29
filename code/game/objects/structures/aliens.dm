@@ -323,6 +323,7 @@
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
+#define FAKE "fake"
 #define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
@@ -363,6 +364,8 @@
 			icon_state = "[base_icon_state]"
 		if(BURST)
 			icon_state = "[base_icon_state]_hatched"
+		if(FAKE)
+			icon_state = "[base_icon_state]_growing"
 	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
@@ -375,7 +378,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
@@ -443,7 +446,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)
@@ -456,6 +459,12 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+/obj/structure/alien/egg/fake
+	status = FAKE
+	icon_state = "egg_growing"
+	layer = LOW_ITEM_LAYER
+
+#undef FAKE
 #undef BURSTING
 #undef BURST
 #undef GROWING

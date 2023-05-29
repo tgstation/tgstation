@@ -17,6 +17,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -82,6 +83,15 @@
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/bio
+
+/obj/item/clothing/suit/toggle/labcoat/coroner
+	name = "coroner labcoat"
+	desc = "A suit that protects against minor chemical spills. Has a black stripe on the shoulder."
+	icon_state = "labcoat_coroner"
+
+/obj/item/clothing/suit/toggle/labcoat/coroner/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/autopsy_scanner
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"

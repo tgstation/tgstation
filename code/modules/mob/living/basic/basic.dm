@@ -123,10 +123,10 @@
 	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
 		AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 
-/mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, forced = TRUE)
+		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
 	if(length(speak_emote))
@@ -214,8 +214,8 @@
 /mob/living/basic/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
-/mob/living/basic/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * delta_time)
+/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
 	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")

@@ -75,7 +75,8 @@
 		return
 	var/mob/admin = usr
 	if(tgui_alert(usr, "WARNING: [warning_text]", event_control.name, list("Yes", "No")) == "Yes")
-		message_admins("[admin.ckey] [snitch_text]")
+		if(snitch_text)
+			message_admins("[admin.ckey] [snitch_text]")
 	else
 		return ADMIN_CANCEL_EVENT
 
@@ -86,3 +87,95 @@
 
 /datum/event_admin_setup/warn_admin/apply_to_event(datum/round_event/event)
 	return
+
+/datum/event_admin_setup/set_location
+	///Text shown when admins are queried about setting the target location.
+	var/input_text = "Aimed at the turf we're on?"
+	///Turf that will be passed onto the event.
+	var/atom/chosen_turf
+
+/datum/event_admin_setup/set_location/prompt_admins()
+	var/set_location = tgui_alert(usr, input_text, event_control.name, list("Yes", "No", "Cancel"))
+	switch(set_location)
+		if("Yes")
+			chosen_turf = get_turf(usr)
+		if("No")
+			chosen_turf = null
+		else
+			return ADMIN_CANCEL_EVENT
+
+/datum/event_admin_setup/input_number
+	///Text shown when admins are queried about what number to set.
+	var/input_text = "Unset text"
+	///The value the number will be set to by default
+	var/default_value
+	///The highest value setable by the admin.
+	var/max_value = 10000
+	///The lowest value setable by the admin
+	var/min_value = 0
+	///Value selected by the admin
+	var/chosen_value
+
+/datum/event_admin_setup/input_number/prompt_admins()
+	chosen_value = tgui_input_number(usr, input_text, event_control.name, default_value, max_value, min_value)
+	if(isnull(chosen_value))
+		return ADMIN_CANCEL_EVENT
+
+///For events that mandate a set number of candidates to function
+/datum/event_admin_setup/minimum_candidate_requirement
+	///Text shown when there are not enough candidates
+	var/output_text = "There are no candidates eligible to..."
+	///Minimum number of candidates for the event to function
+	var/min_candidates = 1
+
+/datum/event_admin_setup/minimum_candidate_requirement/prompt_admins()
+	var/candidate_count = count_candidates()
+	if(candidate_count < min_candidates)
+		tgui_alert(usr, output_text, "Error")
+		return ADMIN_CANCEL_EVENT
+	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
+
+/// Checks for candidates. Should return the total number of candidates
+/datum/event_admin_setup/minimum_candidate_requirement/proc/count_candidates()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented count_candidates() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/minimum_candidate_requirement/apply_to_event(datum/round_event/event)
+	return
+
+///For events that require a true/false question
+/datum/event_admin_setup/question
+	///Question shown to the admin.
+	var/input_text = "Are you sure you would like to do this?"
+	///Value passed to the event.
+	var/chosen
+
+/datum/event_admin_setup/question/prompt_admins()
+	var/response = tgui_alert(usr, input_text , event_control.name , list("Yes", "No", "Cancel"))
+	switch(response)
+		if("Yes")
+			chosen = TRUE
+		if("No")
+			chosen = FALSE
+		else
+			return ADMIN_CANCEL_EVENT
+
+/datum/event_admin_setup/multiple_choice
+	///Text shown to the admin when queried about which options they want to pick.
+	var/input_text = "Unset Text"
+	///The minimum number of choices an admin must make for this event.
+	var/min_choices = 1
+	///The maximum number of choices that the admin can make for this event.
+	var/max_choices = 50
+	///List of choices returned by this setup to the event.
+	var/list/choices = list()
+
+/datum/event_admin_setup/multiple_choice/proc/get_options()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented get_options() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/multiple_choice/prompt_admins()
+	var/list/options = get_options()
+	choices = tgui_input_checkboxes(usr, input_text, event_control.name, options, min_choices, max_choices)
+	if(isnull(choices))
+		return ADMIN_CANCEL_EVENT

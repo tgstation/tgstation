@@ -331,10 +331,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	spawned -= to_remove
 	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
 
-/obj/machinery/computer/holodeck/process(delta_time)
-	if(damaged && DT_PROB(5, delta_time))
+/obj/machinery/computer/holodeck/process(seconds_per_tick)
+	if(damaged && SPT_PROB(5, seconds_per_tick))
 		for(var/turf/holo_turf in linked)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				do_sparks(2, 1, holo_turf)
 				return
 	. = ..()

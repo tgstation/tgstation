@@ -108,7 +108,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped) && !istype(bumped, /mob/living/simple_animal/deer))
+	if(isliving(bumped) && !istype(bumped, /mob/living/basic/deer))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped

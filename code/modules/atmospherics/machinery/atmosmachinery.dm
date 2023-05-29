@@ -125,6 +125,26 @@
 	//return QDEL_HINT_FINDREFERENCE
 
 /**
+ * Run when you update the conditions in which an /atom might want to start reacting to its turf's air
+ */
+/atom/proc/atmos_conditions_changed()
+	return
+
+/atom/movable/atmos_conditions_changed()
+	var/turf/open/open_loc = loc
+	if(!isopenturf(open_loc))
+		return
+	var/datum/gas_mixture/turf_gas = open_loc.air
+	if(isnull(turf_gas))
+		return
+	check_atmos_process(open_loc, turf_gas, turf_gas.temperature)
+
+/turf/open/atmos_conditions_changed()
+	if(isnull(air))
+		return
+	check_atmos_process(src, air, air.temperature)
+
+/**
  * Called by the machinery disconnect(), custom for each type
  */
 /obj/machinery/atmospherics/proc/destroy_network()
@@ -369,15 +389,29 @@
 	add_fingerprint(user)
 
 	var/unsafe_wrenching = FALSE
-	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+	var/internal_pressure = int_air.return_pressure() - env_air.return_pressure()
+	var/empty_pipe = FALSE
+	if(istype(src, /obj/machinery/atmospherics/components))
+		var/list/datum/gas_mixture/all_gas_mixes = return_analyzable_air()
+		var/empty_mixes = 0
+		for(var/gas_mix_number in 1 to device_type)
+			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
+			if(!(gas_mix.total_moles() > 0))
+				empty_mixes++
+		if(empty_mixes == device_type)
+			empty_pipe = TRUE
+	if(!(int_air.total_moles() > 0))
+		empty_pipe = TRUE
 
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	if(!empty_pipe)
+		to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
-	if (internal_pressure > 2*ONE_ATMOSPHERE)
+	if (internal_pressure > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	if(I.use_tool(src, user, 20, volume=50))
+	var/time_taken = empty_pipe ? 0 : 20
+	if(I.use_tool(src, user, time_taken, volume = 50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
@@ -388,7 +422,8 @@
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
 		return deconstruct(TRUE)
-	return TRUE
+
+	return ..()
 
 /**
  * Getter for can_unwrench
@@ -461,7 +496,7 @@
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
-/obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		set_pipe_color(obj_color)
@@ -589,3 +624,7 @@
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+#undef PIPE_VISIBLE_LEVEL
+#undef PIPE_HIDDEN_LEVEL
+#undef VENT_SOUND_DELAY

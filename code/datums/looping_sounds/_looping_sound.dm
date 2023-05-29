@@ -10,6 +10,8 @@
 	var/mid_length_vary = 0
 	/// If we should always play each sound once per loop of all sounds. Weights here only really effect order, and could be disgarded
 	var/each_once = FALSE
+	/// Whether if the sounds should be played in order or not. Defaults to FALSE.
+	var/in_order = FALSE
 	/// Override for volume of start sound.
 	var/start_volume
 	/// (soundfile) Played before starting the mid_sounds loop.
@@ -50,12 +52,16 @@
 	var/loop_started = FALSE
 	/// If we're using cut_mid, this is the list we cut from
 	var/list/cut_list
+	/// The index of the current song we're playing in the mid_sounds list, only used if in_order is used
+	var/audio_index = 1
 
 	// Args
 	/// Do we skip the starting sounds?
 	var/skip_starting_sounds = FALSE
 	/// If true, plays directly to provided atoms instead of from them.
 	var/direct
+	/// Sound channel to play on, random if not provided
+	var/sound_channel
 
 /datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
@@ -93,6 +99,7 @@
  * * null_parent - Whether or not we should set the parent to null (useful when destroying the `looping_sound` itself). Defaults to FALSE.
  */
 /datum/looping_sound/proc/stop(null_parent = FALSE)
+	stop_current()
 	if(null_parent)
 		set_parent(null)
 	if(!timer_id)
@@ -120,9 +127,18 @@
 		return
 	// If we have a timer, we're varying mid length, and this is happening while we're runnin mid_sounds
 	if(timer_id && mid_length_vary && start_time)
-		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary))
+		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 	if(!chance || prob(chance))
 		play(get_sound())
+
+/**
+ * Applies a new mid length to the sound
+ */
+/datum/looping_sound/proc/set_mid_length(new_mid)
+	mid_length = new_mid
+	if(!timer_id)
+		return
+	updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 
 /**
  * The proc that handles actually playing the sound.
@@ -134,7 +150,7 @@
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
 	if(direct)
-		sound_to_play.channel = SSsounds.random_available_channel()
+		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
 		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
@@ -160,6 +176,12 @@
 			. = pick_weight(.)
 		return .
 
+	if(in_order)
+		. = play_from
+		audio_index++
+		if(audio_index > length(play_from))
+			audio_index = 1
+		return .[audio_index]
 
 	if(!length(cut_list))
 		cut_list = shuffle(play_from.Copy())
@@ -195,6 +217,13 @@
 		play(start_sound, start_volume)
 		start_wait = start_length
 	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+
+/// Stops sound playing on current channel, if specified
+/datum/looping_sound/proc/stop_current()
+	if(!sound_channel || !ismob(parent))
+		return
+	var/mob/mob_parent = parent
+	mob_parent.stop_sound_channel(sound_channel)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()

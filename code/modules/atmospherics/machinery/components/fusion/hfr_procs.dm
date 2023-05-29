@@ -183,7 +183,7 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(seconds_per_tick)
 	fusion_temperature_archived = fusion_temperature
 	fusion_temperature = internal_fusion.temperature
 	moderator_temperature_archived = moderator_temperature
@@ -192,7 +192,7 @@
 	coolant_temperature = airs[1].temperature
 	output_temperature_archived = output_temperature
 	output_temperature = linked_output.airs[1].temperature
-	temperature_period = delta_time
+	temperature_period = seconds_per_tick
 
 	//Set the power level of the fusion process
 	switch(fusion_temperature)
@@ -579,7 +579,7 @@
 		return
 	origin_turf.assume_air(remove_mixture)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(seconds_per_tick)
 	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
 	if (cracked_part)
 		// We have an existing crack
@@ -595,7 +595,7 @@
 		else
 			// Gotta go fast
 			leak_rate = HYPERTORUS_STRONG_SPILL_RATE
-		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** delta_time)
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** seconds_per_tick)
 		return
 
 	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)

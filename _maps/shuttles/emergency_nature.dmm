@@ -379,7 +379,7 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
-/obj/item/food/soup/monkeysdelight{
+/obj/item/reagent_containers/cup/bowl/soup/monkey{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy{
@@ -642,9 +642,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/pda_ad/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zf" = (
@@ -783,9 +781,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
@@ -812,7 +808,7 @@
 /area/shuttle/escape)
 "Fo" = (
 /obj/item/cultivator,
-/mob/living/simple_animal/hostile/lizard,
+/mob/living/basic/lizard,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Fp" = (
@@ -907,9 +903,7 @@
 /area/shuttle/escape)
 "Jw" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "JD" = (
@@ -944,9 +938,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/tools{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/tools/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (
@@ -1067,9 +1059,7 @@
 	dir = 1
 	},
 /obj/structure/chair,
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
-	pixel_x = 30
-	},
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/east,
 /turf/open/floor/iron{
 	dir = 1
 	},

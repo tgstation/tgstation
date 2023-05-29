@@ -22,7 +22,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=10)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "#000000" //what colour the ink is!
@@ -110,7 +110,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "#DC143C"
-	custom_materials = list(/datum/material/gold = 750)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -188,7 +188,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Description")
-			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
+			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 280)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.can_perform_action(O))
 				return
@@ -279,7 +279,9 @@
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
-		w_class_on = WEIGHT_CLASS_NORMAL)
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
@@ -337,7 +339,7 @@
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
@@ -366,7 +368,9 @@
 	AddComponent(/datum/component/transforming, \
 		throwforce_on = 5, \
 		w_class_on = WEIGHT_CLASS_SMALL, \
-		sharpness_on = TRUE)
+		sharpness_on = TRUE, \
+		inhand_icon_change = FALSE, \
+	)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -385,7 +389,8 @@
 	SIGNAL_HANDLER
 	extended = active
 	if(user)
-		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+		balloon_alert(user, "[extended ? "extended" : "retracted"]")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 	if(!extended)
 		tool_behaviour = initial(tool_behaviour)

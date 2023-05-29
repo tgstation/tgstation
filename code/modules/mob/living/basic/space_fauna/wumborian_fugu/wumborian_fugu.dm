@@ -50,11 +50,10 @@
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, loot = list(/obj/item/fugu_gland))
-	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)
 	expand = new(src)
 	expand.Grant(src)
-	ai_controller.blackboard[BB_FUGU_INFLATE] = WEAKREF(expand)
+	ai_controller.set_blackboard_key(BB_FUGU_INFLATE, expand)
 
 /mob/living/basic/wumborian_fugu/Destroy()
 	QDEL_NULL(expand)

@@ -26,22 +26,22 @@
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
 
-	//Enables the use of plunger_act for ending the vent clog random event
+	///Enables the use of plunger_act for ending the vent clog random event
 	var/clogged = FALSE
+	///The area this scrubber is assigned to
+	var/area/assigned_area
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	if(!id_tag)
-		id_tag = SSnetworks.assign_random_name()
+		id_tag = assign_random_name()
 	. = ..()
+
 	for(var/to_filter in filter_types)
 		if(istext(to_filter))
 			filter_types -= to_filter
 			filter_types += gas_id2path(to_filter)
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
-	. = ..()
 
 	assign_to_area()
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -60,16 +60,31 @@
 	if (old_area == new_area)
 		return
 
-	disconnect_from_area()
-	assign_to_area()
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area()
-	var/area/area = get_area(src)
-	area?.air_scrubbers += src
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
-	var/area/area = get_area(src)
-	area?.air_scrubbers -= src
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area(area/target_area = get_area(src))
+	//this scrubber is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
+		return
+	assigned_area = target_area
+	assigned_area.air_scrubbers += src
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area(area/target_area = get_area(src))
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_scrubbers -= src
+	assigned_area = null
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
@@ -83,16 +98,7 @@
 			filter_types |= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
@@ -107,16 +113,7 @@
 			filter_types -= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas
-
-	if(isopenturf(our_turf))
-		turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 // WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
@@ -133,17 +130,7 @@
 			else
 				filter_types |= translated_gas
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -170,17 +157,6 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/try_update_atmos_process()
-	var/turf/open/turf = get_turf(src)
-	if (!istype(turf))
-		return
-
-	var/datum/gas_mixture/turf_gas = turf.air
-	if (isnull(turf_gas))
-		return
-
-	check_atmos_process(turf, turf_gas, turf_gas.temperature)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(idle_power_usage)
@@ -199,23 +175,24 @@
 	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_scrubbing(scrubbing, mob/user)
+	if (src.scrubbing != scrubbing)
+		investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
+
 	src.scrubbing = scrubbing
-	investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
-	update_appearance(UPDATE_ICON)
-	try_update_atmos_process()
+	atmos_conditions_changed()
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
 	src.widenet = widenet
-	update_appearance(UPDATE_ICON)
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
 	if(override_naming)
 		return
-	var/area/scrub_area = get_area(src)
-	name = "\proper [scrub_area.name] [name] [id_tag]"
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)

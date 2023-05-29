@@ -108,18 +108,9 @@
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 
-/datum/wound/slash/handle_process(delta_time, times_fired)
+/datum/wound/slash/handle_process(seconds_per_tick, times_fired)
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
 	if(!no_bleeding)
-		if(victim.stat == DEAD)
-			adjust_blood_flow(-max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time)
-			if(blood_flow < minimum_flow)
-				if(demotes_to)
-					replace_wound(demotes_to)
-					return
-				qdel(src)
-				return
-
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -128,12 +119,12 @@
 	//gauze always reduces blood flow, even for non bleeders
 	if(limb.current_gauze)
 		if(clot_rate > 0)
-			adjust_blood_flow(-clot_rate * delta_time)
-		adjust_blood_flow(-limb.current_gauze.absorption_rate * delta_time)
-		limb.seep_gauze(limb.current_gauze.absorption_rate * delta_time)
+			adjust_blood_flow(-clot_rate * seconds_per_tick)
+		adjust_blood_flow(-limb.current_gauze.absorption_rate * seconds_per_tick)
+		limb.seep_gauze(limb.current_gauze.absorption_rate * seconds_per_tick)
 	//otherwise, only clot if it's a bleeder
 	else if(!no_bleeding)
-		adjust_blood_flow(-clot_rate * delta_time)
+		adjust_blood_flow(-clot_rate * seconds_per_tick)
 
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
@@ -145,7 +136,7 @@
 			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [no_bleeding ? "healed up" : "stopped bleeding"]!"))
 			qdel(src)
 
-/datum/wound/slash/on_stasis(delta_time, times_fired)
+/datum/wound/slash/on_stasis(seconds_per_tick, times_fired)
 	if(blood_flow >= minimum_flow)
 		return
 	if(demotes_to)
@@ -178,7 +169,7 @@
 	if(user.is_mouth_covered())
 		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
 		return
-	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
+	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
 		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
 		return
 

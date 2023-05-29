@@ -384,7 +384,9 @@
 	outer_plating_amount=1
 
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	return INVOKE_ASYNC(src, PROC_REF(check_step), used_atom,user)
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
+		. = check_step(used_atom, user)
+	return .
 
 //CLARKE
 /datum/component/construction/unordered/mecha_chassis/clarke

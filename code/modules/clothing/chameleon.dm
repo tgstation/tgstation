@@ -690,7 +690,7 @@
 /obj/item/clothing/shoes/chameleon/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
@@ -710,7 +710,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize(mapload)
@@ -1052,3 +1052,5 @@
 	var/obj/item/gun/new_gun = new guntype(src)
 	set_chameleon_gun(new_gun)
 	qdel(new_gun)
+
+#undef EMP_RANDOMISE_TIME

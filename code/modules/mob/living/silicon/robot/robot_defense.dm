@@ -417,6 +417,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
+	return TRUE
+
 /mob/living/silicon/robot/bullet_act(obj/projectile/Proj, def_zone)
 	. = ..()
 	updatehealth()

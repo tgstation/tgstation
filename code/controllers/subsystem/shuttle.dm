@@ -1096,3 +1096,7 @@ SUBSYSTEM_DEF(shuttle)
 			has_purchase_shuttle_access |= shuttle_template.who_can_purchase
 
 	return has_purchase_shuttle_access
+
+#undef MAX_TRANSIT_REQUEST_RETRIES
+#undef MAX_TRANSIT_TILE_COUNT
+#undef SOFT_TRANSIT_RESERVATION_THRESHOLD

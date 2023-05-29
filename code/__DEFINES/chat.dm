@@ -20,6 +20,9 @@
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"
 
+/// Max length of chat message in characters
+#define CHAT_MESSAGE_MAX_LENGTH 110
+
 //debug printing macros (for development and testing)
 /// Used for debug messages to the world
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, \

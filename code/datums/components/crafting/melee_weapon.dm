@@ -21,6 +21,18 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/telecrystalprod
+	name = "Snatcherprod"
+	result = /obj/item/melee/baton/security/cattleprod/telecrystalprod
+	reqs = list(
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
+		/obj/item/assembly/igniter = 1,
+		/obj/item/stack/telecrystal = 1,
+	)
+	time = 4 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub

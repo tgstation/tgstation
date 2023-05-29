@@ -142,9 +142,9 @@
 		update_appearance()
 	return ..()
 
-/obj/item/gun/energy/process(delta_time)
+/obj/item/gun/energy/process(seconds_per_tick)
 	if(selfcharge && cell && cell.percent() < 100)
-		charge_timer += delta_time
+		charge_timer += seconds_per_tick
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
@@ -298,7 +298,7 @@
 		var/obj/projectile/energy/loaded_projectile = E.loaded_projectile
 		if(!loaded_projectile)
 			. = ""
-		else if(loaded_projectile.nodamage || !loaded_projectile.damage || loaded_projectile.damage_type == STAMINA)
+		else if(loaded_projectile.damage <= 0 || loaded_projectile.damage_type == STAMINA)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass."))
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)

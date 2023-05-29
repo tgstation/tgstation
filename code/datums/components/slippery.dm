@@ -9,8 +9,10 @@
 	var/paralyze_time = 0
 	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
 	var/lube_flags
+	/// Optional callback providing an additional chance to prevent slippage
+	var/datum/callback/can_slip_callback
 	/// A proc callback to call on slip.
-	var/datum/callback/callback
+	var/datum/callback/on_slip_callback
 	/// If parent is an item, this is the person currently holding/wearing the parent (or the parent if no one is holding it)
 	var/mob/living/holder
 	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
@@ -28,12 +30,21 @@
 	/// The connect_loc_behalf component for the holder_connections list.
 	var/datum/weakref/holder_connect_loc_behalf
 
-/datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+/datum/component/slippery/Initialize(
+	knockdown,
+	lube_flags = NONE,
+	datum/callback/on_slip_callback,
+	paralyze,
+	force_drop = FALSE,
+	slot_whitelist,
+	datum/callback/can_slip_callback,
+)
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
-	src.callback = callback
+	src.can_slip_callback = can_slip_callback
+	src.on_slip_callback = on_slip_callback
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 
@@ -49,11 +60,22 @@
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
 
-/datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+/datum/component/slippery/InheritComponent(
+	datum/component/slippery/component,
+	i_am_original,
+	knockdown,
+	lube_flags = NONE,
+	datum/callback/on_slip_callback,
+	paralyze,
+	force_drop = FALSE,
+	slot_whitelist,
+	datum/callback/can_slip_callback,
+)
 	if(component)
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
-		callback = component.callback
+		on_slip_callback = component.on_slip_callback
+		can_slip_callback = component.on_slip_callback
 		paralyze = component.paralyze_time
 		force_drop = component.force_drop_items
 		slot_whitelist = component.slot_whitelist
@@ -62,7 +84,8 @@
 	src.paralyze_time = max(paralyze, 0)
 	src.force_drop_items = force_drop
 	src.lube_flags = lube_flags
-	src.callback = callback
+	src.on_slip_callback = on_slip_callback
+	src.can_slip_callback = can_slip_callback
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 /*
@@ -76,8 +99,12 @@
 	if(!isliving(arrived))
 		return
 	var/mob/living/victim = arrived
-	if(!(victim.movement_type & (FLYING | FLOATING)) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
-		callback.Invoke(victim)
+	if((victim.movement_type & (FLYING | FLOATING)))
+		return
+	if(can_slip_callback && !can_slip_callback.Invoke(holder, victim))
+		return
+	if(victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items))
+		on_slip_callback?.Invoke(victim)
 
 /*
  * Gets called when COMSIG_ITEM_EQUIPPED is sent to parent.
@@ -143,14 +170,3 @@
 /datum/component/slippery/UnregisterFromParent()
 	. = ..()
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
-
-/// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
-/datum/component/slippery/clowning
-
-/datum/component/slippery/clowning/Slip_on_wearer(datum/source, atom/movable/AM)
-	var/obj/item/I = holder.get_item_by_slot(ITEM_SLOT_FEET)
-	if(holder.body_position == LYING_DOWN && !holder.buckled)
-		if(istype(I, /obj/item/clothing/shoes/clown_shoes))
-			Slip(source, AM)
-		else
-			to_chat(holder,span_warning("[parent] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy..."))

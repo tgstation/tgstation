@@ -319,6 +319,9 @@ export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
       page = [];
     }
   }
+  if (page.length) {
+    pages.push(page);
+  }
   return pages;
 };
 

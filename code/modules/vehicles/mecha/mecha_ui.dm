@@ -29,7 +29,7 @@
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()
 	data["cabin_dangerous_highpressure"] = WARNING_HIGH_PRESSURE
-	data["mineral_material_amount"] = MINERAL_MATERIAL_AMOUNT
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
 	data["mechflag_keys"] = list(
 		"ADDING_ACCESS_POSSIBLE" = ADDING_ACCESS_POSSIBLE,
@@ -195,17 +195,17 @@
 			if("drop_cell")
 				if(construction_state != MECHA_OPEN_HATCH)
 					return
-				cell.forceMove(get_turf(src))
+				usr.put_in_hands(cell)
 				cell = null
 			if("drop_scanning")
-				if(construction_state == MECHA_OPEN_HATCH)
+				if(construction_state != MECHA_OPEN_HATCH)
 					return
-				scanmod.forceMove(get_turf(src))
+				usr.put_in_hands(scanmod)
 				scanmod = null
 			if("drop_capacitor")
-				if(construction_state == MECHA_OPEN_HATCH)
+				if(construction_state != MECHA_OPEN_HATCH)
 					return
-				capacitor.forceMove(get_turf(src))
+				usr.put_in_hands(capacitor)
 				capacitor = null
 			if("set_pressure")
 				var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank_valve)
@@ -245,7 +245,7 @@
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
 			name = userinput
-			chassis_camera.update_c_tag(src)
+			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return

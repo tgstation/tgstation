@@ -13,9 +13,7 @@
 	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
 		return
 	to_chat(src, span_notice("You're too exhausted to keep going..."))
-	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
-	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
 	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		adjustStaminaLoss(30, FALSE)
 
@@ -30,17 +28,17 @@
 
 /mob/living/carbon/proc/get_traumas()
 	. = list()
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.traumas
 
 /mob/living/carbon/proc/has_trauma_type(brain_trauma_type, resilience)
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.has_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		var/list/arguments = list()
 		if(args.len > 2)
@@ -48,16 +46,16 @@
 		. = B.brain_gain_trauma(trauma, resilience, arguments)
 
 /mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.gain_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_all_traumas(resilience)
-	var/obj/item/organ/internal/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_all_traumas(resilience)

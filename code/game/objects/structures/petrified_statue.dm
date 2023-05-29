@@ -25,10 +25,10 @@
 		max_integrity = atom_integrity
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/statue/petrified/process(delta_time)
+/obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer -= delta_time
+	timer -= seconds_per_tick
 	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
@@ -73,7 +73,7 @@
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			if(iscarbon(petrified_mob))
 				var/mob/living/carbon/petrified_carbon = petrified_mob
-				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
 				carbon_brain.forceMove(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"

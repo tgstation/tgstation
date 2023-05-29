@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	///the id of the tram we're linked to.
 	var/specific_lift_id = MAIN_STATION_TRAM
 	/// The ID of that particular destination.
-	var/destination_id
+	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 
@@ -19,21 +19,44 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	LAZYREMOVEASSOC(GLOB.tram_landmarks, specific_lift_id, src)
 	return ..()
 
+//tramstation
 
-/obj/effect/landmark/tram/left_part
+/obj/effect/landmark/tram/tramstation/west
 	name = "West Wing"
-	destination_id = "left_part"
+	platform_code = TRAMSTATION_WEST
 	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
 
-/obj/effect/landmark/tram/middle_part
+/obj/effect/landmark/tram/tramstation/central
 	name = "Central Wing"
-	destination_id = "middle_part"
+	platform_code = TRAMSTATION_CENTRAL
 	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
 
-/obj/effect/landmark/tram/right_part
+/obj/effect/landmark/tram/tramstation/east
 	name = "East Wing"
-	destination_id = "right_part"
+	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+
+//birdshot
+
+/obj/effect/landmark/tram/birdshot/sec_wing
+	name = "Security Wing"
+	platform_code = BIRDSHOT_SECURITY_WING
+	tgui_icons = list("Security" = "gavel")
+
+/obj/effect/landmark/tram/birdshot/prison_wing
+	name = "Prison Wing"
+	platform_code = BIRDSHOT_PRISON_WING
+	tgui_icons = list("Prison" = "box")
+
+/obj/effect/landmark/tram/birdshot/maint_left
+	name = "Port Platform"
+	platform_code = BIRDSHOT_MAINTENANCE_LEFT
+	tgui_icons = list("Port Platform" = "plane-departure")
+
+/obj/effect/landmark/tram/birdshot/maint_right
+	name = "Starboard Platform"
+	platform_code = BRIDSHOT_MAINTENANCE_RIGHT
+	tgui_icons = list("Starboard Platform" = "plane-arrival")
 
 /**
  * lift_id landmarks. used to map in specific_lift_id to trams. when the trams lift_master encounters one on a trams tile

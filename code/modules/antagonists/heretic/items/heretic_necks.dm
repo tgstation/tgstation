@@ -42,3 +42,11 @@
 	name = "Piercing Eldritch Medallion"
 	desc = "A strange medallion. Peering through the crystalline surface, the light refracts into new and terrifying spectrums of color. You see yourself, reflected off cascading mirrors, warped into impossible shapes."
 	heretic_only_trait = TRAIT_XRAY_VISION
+
+// Cosmetic-only version
+/obj/item/clothing/neck/fake_heretic_amulet
+	name = "religious icon"
+	desc = "A strange medallion, which makes its wearer look like they're part of some cult."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "eye_medalion"
+	w_class = WEIGHT_CLASS_SMALL

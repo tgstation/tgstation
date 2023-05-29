@@ -42,23 +42,28 @@
 
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
-	. = ..()
-	rift_ability = new
-	rift_ability.Grant(owner.current)
-	owner.current.faction |= FACTION_CARP
-	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
-	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
+	rift_ability = new()
+	return ..()
 
-/datum/antagonist/space_dragon/on_removal()
-	. = ..()
-	rift_ability.Remove(owner.current)
-	owner.current.faction -= FACTION_CARP
-	UnregisterSignal(owner.current, COMSIG_LIVING_LIFE)
-	UnregisterSignal(owner.current, COMSIG_LIVING_DEATH)
-	rift_list = null
+/datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/antag = mob_override || owner.current
+	RegisterSignal(antag, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
+	RegisterSignal(antag, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
+	antag.faction |= FACTION_CARP
+	// Give the ability over if we have one
+	rift_ability?.Grant(antag)
+
+/datum/antagonist/space_dragon/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/antag = mob_override || owner.current
+	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
+	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
+	antag.faction -= FACTION_CARP
+	rift_ability?.Remove(antag)
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
+	carp = null
+	QDEL_NULL(rift_ability)
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()

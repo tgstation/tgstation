@@ -292,7 +292,6 @@
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
-	nodamage = FALSE
 	armor_flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
@@ -313,6 +312,10 @@
 	src.light_ex_range = light_ex_range
 	src.reactionary = reactionary
 	return ..()
+
+// Though the projectile itself is not damaging its effects are
+/obj/projectile/blastwave/is_hostile_projectile()
+	return TRUE
 
 /obj/projectile/blastwave/Range()
 	. = ..()

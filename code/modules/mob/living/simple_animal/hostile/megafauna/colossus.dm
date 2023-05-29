@@ -67,7 +67,7 @@
 	/// Final attack ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/colossus_final
 	/// Have we used DIE yet?
-	var/final_availible = TRUE
+	var/final_available = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
@@ -111,8 +111,8 @@
 	else
 		move_to_delay = initial(move_to_delay)
 
-	if(health <= maxHealth / 10 && !final_availible)
-		final_availible = FALSE
+	if(health <= maxHealth / 10 && final_available)
+		final_available = FALSE
 		colossus_final.Trigger(target = target)
 	else if(prob(20 + anger_modifier)) //Major attack
 		spiral_shots.Trigger(target = target)
@@ -151,13 +151,12 @@
 		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(human_victim.mind)
-			if(istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp))
-				. = TRUE
-		if (is_species(human_victim, /datum/species/golem/sand))
-			. = TRUE
+	if(!ishuman(victim))
+		return FALSE
+	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
+		return TRUE
+	var/mob/living/carbon/human/human_victim = victim
+	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
 	visible_message(span_colossus("[src] disintegrates [victim]!"))
@@ -263,7 +262,7 @@
 		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
-	..()
+	. = ..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
@@ -321,6 +320,7 @@
 
 /obj/machinery/anomalous_crystal/ex_act()
 	ActivationReaction(null, ACTIVATE_BOMB)
+	return TRUE
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
@@ -526,10 +526,10 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = tgui_alert(usr,"Become a Lightgeist? (Warning, You can no longer be revived!)",,list("Yes","No"))
-		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
-			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
+		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
+			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
+			deployable.key = user.key
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -544,18 +544,33 @@
 	use_time = 1 SECONDS
 
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
-	if(..())
-		if(ishuman(user))
-			var/mobcheck = FALSE
-			for(var/mob/living/simple_animal/A in range(1, src))
-				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
-					break
-				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
-				user.forceMove(S)
-				mobcheck = TRUE
-				break
-			if(!mobcheck)
-				new /mob/living/basic/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+	. = ..()
+	if (!. || !ishuman(user))
+		return FALSE
+
+	var/list/valid_mobs = list()
+	var/list/nearby_things = range(1, src)
+	for(var/mob/living/basic/possible_mob in nearby_things)
+		if (!is_valid_animal(possible_mob))
+			continue
+		valid_mobs += possible_mob
+	for(var/mob/living/simple_animal/possible_mob in nearby_things)
+		if (!is_valid_animal(possible_mob))
+			continue
+		valid_mobs += possible_mob
+
+	if (!length(valid_mobs)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
+		new /mob/living/basic/cockroach(get_step(src,dir))
+		return
+
+	var/mob/living/picked_mob = pick(valid_mobs)
+	var/obj/structure/closet/stasis/possessor_container = new /obj/structure/closet/stasis(picked_mob)
+	user.forceMove(possessor_container)
+
+/// Returns true if this is a mob you're allowed to possess
+/obj/machinery/anomalous_crystal/possessor/proc/is_valid_animal(mob/living/check_mob)
+	return check_mob.stat != DEAD && !check_mob.ckey && check_mob.mob_size < MOB_SIZE_LARGE && check_mob.melee_damage_upper <= 5
+
 
 /obj/structure/closet/stasis
 	name = "quantum entanglement stasis warp field"
@@ -565,6 +580,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
@@ -577,7 +593,7 @@
 
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
-	if(isanimal(loc))
+	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
@@ -594,23 +610,26 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/L in src)
-		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags &= ~GODMODE
-		L.notransform = 0
+	for(var/mob/living/possessor in src)
+		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.status_flags &= ~GODMODE
+		possessor.notransform = FALSE
+		if(kill || !isanimal_or_basicmob(loc))
+			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
+			possessor.death(FALSE)
 		if(holder_animal)
-			holder_animal.mind.transfer_to(L)
+			possessor.forceMove(get_turf(holder_animal))
+			holder_animal.mind.transfer_to(possessor)
+			possessor.mind.grab_ghost(force = TRUE)
 			holder_animal.gib()
-		if(kill || !isanimal(loc))
-			L.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
-			L.death(FALSE)
-	..()
+			return ..()
+	return ..()
 
 /obj/structure/closet/stasis/emp_act()
 	return
 
 /obj/structure/closet/stasis/ex_act()
-	return
+	return FALSE
 
 /datum/action/exit_possession
 	name = "Exit Possession"
@@ -634,12 +653,13 @@
 	qdel(stasis)
 	qdel(src)
 
-#undef ACTIVATE_TOUCH
-#undef ACTIVATE_SPEECH
-#undef ACTIVATE_HEAT
+#undef ACTIVATE_BOMB
 #undef ACTIVATE_BULLET
 #undef ACTIVATE_ENERGY
-#undef ACTIVATE_BOMB
-#undef ACTIVATE_MOB_BUMP
-#undef ACTIVATE_WEAPON
+#undef ACTIVATE_HEAT
 #undef ACTIVATE_MAGIC
+#undef ACTIVATE_MOB_BUMP
+#undef ACTIVATE_SPEECH
+#undef ACTIVATE_TOUCH
+#undef ACTIVATE_WEAPON
+#undef COLOSSUS_ENRAGED

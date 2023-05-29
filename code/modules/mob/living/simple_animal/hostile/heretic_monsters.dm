@@ -322,11 +322,12 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-			return
+			return ..()
+
 		var/list/parts_to_remove = list()
 		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
 			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
-				if(bodypart.dismemberable)
+				if(!(bodypart.bodypart_flags & BODYPART_UNREMOVABLE))
 					parts_to_remove += bodypart
 
 		if(parts_to_remove.len && prob(10))
@@ -378,14 +379,14 @@
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * delta_time, FALSE)
-		adjustFireLoss(-1.5 * delta_time, FALSE)
+		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
+		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
 
 	return ..()
 

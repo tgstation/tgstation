@@ -2,17 +2,20 @@
 "am" = (
 /obj/machinery/power/port_gen/pacman/super,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "au" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 2
 	},
 /turf/open/floor/bamboo,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
+"av" = (
+/turf/template_noop,
+/area/space/nearstation)
 "aH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "aM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -23,24 +26,24 @@
 /obj/structure/firelock_frame,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "bc" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "bj" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "ck" = (
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "cE" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/command{
@@ -49,20 +52,20 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/eva,
 /turf/open/floor/iron/white/corner,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "cR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right,
 /turf/open/floor/iron/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "cY" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "db" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "di" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -74,15 +77,15 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "dD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "dZ" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "eh" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -92,7 +95,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "eC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -102,47 +105,44 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/textured,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "eU" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/teleport/hub,
 /obj/effect/turf_decal/delivery/white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "fc" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space)
 "fm" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "fp" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "fA" = (
 /obj/machinery/light/broken/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "fI" = (
 /obj/structure/closet/mini_fridge,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "fQ" = (
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "fY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "gC" = (
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_x = 11;
@@ -150,23 +150,19 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "gH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/shrink_cw,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "hh" = (
-/obj/structure/lattice,
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/template_noop,
-/area/template_noop)
+/turf/closed/mineral/random/high_chance,
+/area/ruin/space/has_grav/crashedship/fore)
 "hv" = (
 /obj/item/stack/ore/gold,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "hI" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -179,21 +175,21 @@
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "ip" = (
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "iI" = (
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "iU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "iW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/structure/cable,
@@ -201,10 +197,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "ja" = (
 /turf/closed/mineral/random/high_chance,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "kc" = (
 /turf/template_noop,
 /area/template_noop)
@@ -212,52 +208,51 @@
 /obj/structure/girder/displaced,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "kM" = (
 /obj/item/bedsheet/yellow,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "kZ" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "le" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space)
 "lf" = (
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "lg" = (
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "lx" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 0;
-	pixel_y = 25
+/obj/machinery/power/apc/auto_name/directional/north{
+	environ = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "lG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "lR" = (
 /obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "mb" = (
 /obj/item/stack/ore/glass,
 /turf/template_noop,
@@ -267,7 +262,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/item/gps/spaceruin,
 /turf/open/floor/catwalk_floor,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "mP" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/turf_decal/stripes/line,
@@ -279,18 +274,15 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "nb" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/computer/teleporter{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "nh" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 9
@@ -298,43 +290,37 @@
 /obj/effect/turf_decal/trimline/brown/corner,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "nl" = (
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "nI" = (
 /obj/structure/girder/displaced,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "nY" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "om" = (
 /obj/effect/turf_decal/loading_area,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "on" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "oM" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
@@ -342,21 +328,21 @@
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "oT" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "pb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/shrink_cw,
 /obj/structure/cable,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "pe" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/turf_decal/stripes/line{
@@ -369,7 +355,7 @@
 	name = "Entry Hall"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "pO" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 10
@@ -378,7 +364,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "pP" = (
 /obj/machinery/porta_turret{
 	dir = 8;
@@ -393,7 +379,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/line,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "pT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -404,28 +390,25 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 10
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "pZ" = (
 /obj/structure/girder/displaced,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "qo" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "qu" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/effect/turf_decal/trimline/brown/line{
@@ -433,7 +416,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "qB" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -441,45 +424,48 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/structure/closet/firecloset,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "qI" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "qO" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "rb" = (
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "rm" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "rt" = (
 /obj/item/chair,
 /turf/open/misc/asteroid/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "rX" = (
 /obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "rZ" = (
 /turf/closed/mineral/random,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "sr" = (
 /obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/electronics/airlock,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
+"sy" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav/crashedship/small_asteroid)
 "tb" = (
 /obj/item/kirbyplants,
 /turf/open/floor/wood/tile,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "tm" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
@@ -494,7 +480,7 @@
 	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "tn" = (
 /obj/structure/chair{
 	dir = 4
@@ -505,49 +491,46 @@
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "ts" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/teleport/station,
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "tN" = (
 /obj/structure/table/wood,
 /obj/item/paper/fluff/ruins/crashedship/captains_log,
 /turf/open/floor/wood/tile,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "uf" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "um" = (
 /turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "ut" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "uz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "uF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "vg" = (
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "vk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "vJ" = (
 /obj/effect/turf_decal/trimline/white/filled/warning{
 	dir = 1
@@ -563,14 +546,14 @@
 /turf/open/floor/iron/airless{
 	icon_state = "podfloor_dark"
 	},
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "vX" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "wi" = (
 /turf/open/floor/bamboo,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "xa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -580,7 +563,7 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 1
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "xb" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
@@ -588,51 +571,42 @@
 /obj/effect/turf_decal/trimline/brown/line,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "xy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
 /obj/structure/canister_frame/machine/finished_canister_frame,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "xF" = (
 /turf/closed/wall/mineral/titanium,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "xJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "xU" = (
 /obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "yb" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/neutral/filled/end,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "yk" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "yB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -643,22 +617,19 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 4
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "yL" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 8
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "za" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "zg" = (
 /obj/item/stack/tile/wood,
 /turf/template_noop,
@@ -668,40 +639,37 @@
 /obj/effect/spawner/random/decoration,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "zA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/catwalk_floor,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "zC" = (
 /obj/structure/grille/broken,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "zD" = (
 /turf/closed/wall/mineral/titanium,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "zO" = (
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "zW" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/closet,
 /obj/item/dice/d6,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Af" = (
 /obj/item/chair,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ak" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/command{
@@ -712,15 +680,19 @@
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Au" = (
-/turf/closed/mineral/random,
-/area/awaymission/bmpship)
+/obj/structure/lattice,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/template_noop,
+/area/space)
 "AF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "AM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -731,7 +703,7 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 6
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Bw" = (
 /obj/effect/turf_decal/trimline/white/filled/warning{
 	dir = 1
@@ -747,7 +719,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "podfloor_dark"
 	},
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "BM" = (
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 1
@@ -758,37 +730,44 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "BS" = (
 /obj/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Cg" = (
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Cj" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/line,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Cz" = (
 /obj/effect/turf_decal/siding/blue/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
+"CB" = (
+/obj/structure/lattice,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "CK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/bamboo,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "CM" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/corner{
@@ -796,46 +775,43 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "CN" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
+/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "CP" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "CT" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "CU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 5
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "DY" = (
 /obj/item/pen/fountain,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "EA" = (
 /turf/open/misc/asteroid/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "EB" = (
 /obj/item/chair,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -845,22 +821,22 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 1
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "EL" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "EM" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "EO" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/engine,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "EW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -868,7 +844,7 @@
 	name = "Emergency Supplies"
 	},
 /turf/open/floor/pod/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ff" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -879,7 +855,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Fg" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
@@ -889,7 +865,7 @@
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Fy" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -898,20 +874,20 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer4,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "FP" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "FY" = (
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Gf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -922,67 +898,62 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 5
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Gv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 9
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "GH" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "GM" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Hb" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/engine/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ho" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "HM" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "HT" = (
 /obj/effect/turf_decal/siding/blue,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "HZ" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "ID" = (
 /obj/item/stack/rods,
 /turf/template_noop,
@@ -990,23 +961,23 @@
 "IG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "IM" = (
 /obj/item/shard,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Jr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/side/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Jv" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "JN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1017,7 +988,7 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 8
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Kd" = (
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
@@ -1025,13 +996,13 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ko" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Ku" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/end{
@@ -1052,10 +1023,10 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "KD" = (
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "KF" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -1078,7 +1049,7 @@
 	target_type = /obj/machinery/porta_turret
 	},
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Lo" = (
 /obj/machinery/door/airlock/command{
 	emergency = 1;
@@ -1087,12 +1058,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "LX" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Me" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
@@ -1101,7 +1072,7 @@
 /obj/structure/cable,
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Mg" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/turf_decal/stripes/line,
@@ -1112,16 +1083,16 @@
 	name = "Entry Hall"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Mi" = (
 /obj/structure/table_frame/wood,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "Mw" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "MC" = (
 /obj/effect/mob_spawn/corpse/human/laborer,
 /turf/template_noop,
@@ -1129,14 +1100,11 @@
 "Nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 4
 	},
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Nn" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 9
@@ -1144,7 +1112,7 @@
 /obj/effect/turf_decal/trimline/brown/corner,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "NB" = (
 /obj/effect/turf_decal/trimline/white/filled/warning{
 	dir = 1
@@ -1156,7 +1124,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "podfloor_dark"
 	},
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "NF" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/machinery/door/airlock/external/ruin,
@@ -1164,13 +1132,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/textured_edge,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "NM" = (
 /obj/machinery/power/shuttle_engine/large{
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Oy" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/turf_decal/stripes/line{
@@ -1184,12 +1152,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "OZ" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/midship)
 "Pb" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -1198,21 +1166,21 @@
 /obj/structure/table,
 /obj/item/door_seal,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ph" = (
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Pp" = (
 /obj/structure/lattice/catwalk,
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Pu" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -1222,16 +1190,16 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Qy" = (
 /obj/structure/door_assembly/door_assembly_com,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "RA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "RL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1240,25 +1208,22 @@
 /turf/open/floor/iron/dark/side/airless{
 	dir = 9
 	},
-/area/awaymission/bmpship/midship)
-"RU" = (
-/turf/closed/mineral/random/high_chance,
-/area/awaymission/bmpship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Tj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/shrink_ccw,
 /obj/structure/cable,
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "To" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Ty" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "TP" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -1266,14 +1231,14 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/spawner/random/structure/tank_holder,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Uc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Uk" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -1281,17 +1246,17 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/pod/light,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Uz" = (
 /turf/closed/mineral/gibtonite,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "UA" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "UC" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "UH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1301,12 +1266,12 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "US" = (
 /obj/machinery/light/broken/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Vp" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -1314,7 +1279,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "VH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1325,11 +1290,11 @@
 /obj/structure/door_assembly/door_assembly_med,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "VL" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
+/area/ruin/space/has_grav/crashedship/midship)
 "Wi" = (
 /obj/machinery/light/broken/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -1337,7 +1302,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/side/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
+"WN" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "Xu" = (
 /obj/item/shard,
 /obj/item/stack/rods,
@@ -1351,19 +1320,19 @@
 /obj/structure/table,
 /obj/item/stock_parts/cell/lead,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "XW" = (
 /turf/open/floor/wood/parquet,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "Ya" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Ye" = (
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Yl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1374,36 +1343,36 @@
 /obj/structure/firelock_frame,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "Yp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/bamboo,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "Yw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/pod/dark,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "YU" = (
 /obj/item/stack/rods,
 /turf/open/misc/asteroid,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "Zl" = (
 /obj/machinery/power/floodlight,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/awaymission/bmpship/aft)
+/area/ruin/space/has_grav/crashedship/aft)
 "Zm" = (
 /obj/item/stack/ore/diamond,
 /turf/open/misc/asteroid/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 "ZA" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
-/area/awaymission/bmpship/fore)
+/area/ruin/space/has_grav/crashedship/fore)
 
 (1,1,1) = {"
 kc
@@ -1427,7 +1396,7 @@ kc
 kc
 kc
 kc
-Au
+sy
 kc
 kc
 kc
@@ -1454,8 +1423,8 @@ kc
 kc
 kc
 mb
-Au
-Au
+sy
+sy
 kc
 kc
 kc
@@ -1480,11 +1449,11 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
+sy
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1508,11 +1477,11 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
+sy
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1537,10 +1506,10 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1566,8 +1535,8 @@ kc
 kc
 kc
 kc
-Au
-Au
+sy
+sy
 kc
 kc
 kc
@@ -1594,8 +1563,8 @@ kc
 kc
 kc
 kc
-Au
-Au
+sy
+sy
 kc
 kc
 kc
@@ -1622,7 +1591,7 @@ kc
 kc
 kc
 kc
-Au
+sy
 kc
 kc
 kc
@@ -1674,7 +1643,7 @@ fY
 eh
 uF
 kc
-fc
+WN
 Ya
 kc
 kc
@@ -1694,7 +1663,7 @@ kc
 kc
 kc
 kc
-kc
+av
 NM
 uF
 Fy
@@ -1722,14 +1691,14 @@ kc
 rm
 nh
 uF
-fc
-fc
+WN
+WN
 uF
 Uk
 mu
 Pb
 uF
-fc
+WN
 kc
 vX
 kc
@@ -1759,7 +1728,7 @@ uF
 uF
 qO
 mb
-fc
+WN
 kc
 kc
 kc
@@ -1786,8 +1755,8 @@ EW
 uF
 xJ
 lG
-fc
-fc
+WN
+WN
 kc
 kc
 kc
@@ -1844,7 +1813,7 @@ iW
 vk
 Nc
 LX
-fc
+WN
 kc
 kc
 kc
@@ -1877,7 +1846,7 @@ kc
 kc
 kc
 kc
-fc
+WN
 kc
 kc
 "}
@@ -1895,15 +1864,15 @@ Ff
 zO
 cR
 EB
-fc
-fc
+WN
+WN
 EM
 fc
 AF
 uF
 kc
 kc
-fc
+WN
 Ku
 Af
 kc
@@ -1929,7 +1898,7 @@ uF
 am
 iI
 uF
-fc
+WN
 ut
 uF
 Xy
@@ -1951,8 +1920,8 @@ Ff
 Ye
 bj
 lG
-fc
-fc
+WN
+WN
 lG
 sr
 lG
@@ -1961,7 +1930,7 @@ mb
 kc
 uF
 Uc
-fc
+WN
 kc
 kc
 "}
@@ -1989,7 +1958,7 @@ kc
 kc
 uF
 lG
-fc
+WN
 kc
 kc
 "}
@@ -2015,7 +1984,7 @@ lg
 vX
 kc
 kc
-fc
+WN
 kc
 kc
 kc
@@ -2034,16 +2003,16 @@ za
 rb
 iU
 OZ
-fc
-fc
+WN
+WN
 qO
-fc
+WN
 mb
 kc
-fc
-fc
+WN
+WN
 kc
-fc
+WN
 kc
 kc
 kc
@@ -2058,20 +2027,20 @@ kc
 kc
 kc
 ID
-hh
+Au
 bc
 Cz
 Ho
 fp
-fc
-fc
+WN
+WN
 km
-fc
+WN
 Ty
-fc
+WN
 Jv
-fc
-fc
+WN
+WN
 kc
 kc
 kc
@@ -2091,15 +2060,15 @@ US
 HT
 zW
 aH
-fc
+WN
 zg
 KF
 kc
-fc
+WN
 aH
 Jv
 mb
-fc
+WN
 kc
 kc
 kc
@@ -2119,9 +2088,9 @@ rb
 HT
 le
 pZ
-fc
-fc
-fc
+WN
+WN
+WN
 zg
 Ty
 Jv
@@ -2147,14 +2116,14 @@ Jv
 HT
 Vp
 fp
-fc
+WN
 Ty
 Qy
 Ty
 fp
 fp
-fc
-fc
+WN
+WN
 UC
 kc
 kc
@@ -2322,20 +2291,20 @@ fp
 fp
 fp
 EL
-Au
-Au
-Au
+rZ
+rZ
+rZ
 fp
-Au
+rZ
 kc
 "}
 (34,1,1) = {"
 kc
 kc
 kc
-Au
-Au
-Au
+rZ
+rZ
+rZ
 kc
 HZ
 Bw
@@ -2348,24 +2317,24 @@ zm
 XW
 rZ
 rZ
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 "}
 (35,1,1) = {"
 kc
 kc
-Au
-Au
-Au
-Au
-Au
-hh
+rZ
+rZ
+rZ
+rZ
+rZ
+CB
 kZ
 yk
 fA
@@ -2376,23 +2345,23 @@ Mi
 RA
 dZ
 FP
-ja
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+hh
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 "}
 (36,1,1) = {"
 kc
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 rZ
 CT
 EA
@@ -2404,81 +2373,81 @@ um
 IG
 YU
 KD
-ja
-Au
-Au
-Au
-Au
-Au
+hh
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 "}
 (37,1,1) = {"
 kc
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 rZ
 Zm
 rt
 CT
-ja
+hh
 fI
 dZ
 qo
 dZ
 CP
 hv
-ja
-Au
-Au
-Au
-Au
-Au
+hh
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 "}
 (38,1,1) = {"
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 rZ
 EA
-ja
-ja
+hh
+hh
 qI
 zC
 FP
 kM
 qI
-ja
-Au
-Au
-Au
-Au
-Au
+hh
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
 "}
 (39,1,1) = {"
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 rZ
 rZ
 rZ
@@ -2486,68 +2455,68 @@ db
 FP
 YU
 Uz
+hh
+rZ
+rZ
+rZ
 ja
-Au
-Au
-Au
-RU
-Au
-Au
+rZ
+rZ
 kc
 kc
 kc
 "}
 (40,1,1) = {"
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-RU
-RU
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 rZ
 ja
+ja
+rZ
+rZ
+rZ
+hh
 DY
 hv
 rZ
-Au
-Au
-RU
-RU
-RU
-Au
-Au
+rZ
+rZ
+ja
+ja
+ja
+rZ
+rZ
 kc
 kc
 kc
 "}
 (41,1,1) = {"
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-RU
-RU
 rZ
 rZ
 rZ
-Au
-Au
-RU
-RU
-RU
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+ja
+ja
+rZ
+rZ
+rZ
+rZ
+rZ
+ja
+ja
+ja
+rZ
+rZ
 kc
 kc
 kc
@@ -2555,27 +2524,27 @@ kc
 "}
 (42,1,1) = {"
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-RU
-Au
-Au
-Au
-Au
-RU
-RU
-RU
-Au
-RU
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+ja
+rZ
+rZ
+rZ
+rZ
+ja
+ja
+ja
+rZ
+ja
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2584,24 +2553,24 @@ kc
 (43,1,1) = {"
 kc
 kc
-Au
-Au
+rZ
+rZ
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-RU
-RU
-RU
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+ja
+ja
+ja
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2616,19 +2585,19 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2646,15 +2615,15 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2675,12 +2644,12 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2703,11 +2672,11 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
-Au
-Au
+rZ
+rZ
+rZ
+rZ
+rZ
 kc
 kc
 kc
@@ -2732,9 +2701,9 @@ kc
 kc
 kc
 kc
-Au
-Au
-Au
+rZ
+rZ
+rZ
 kc
 kc
 kc

@@ -64,7 +64,7 @@
 
 
 // Slowdown values.
-/// The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of plasteel.
+/// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of plasteel.
 #define MATERIAL_SLOWDOWN_PLASTEEL (0.05)
-/// The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of alien alloy.
+/// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of alien alloy.
 #define MATERIAL_SLOWDOWN_ALIEN_ALLOY (0.1)

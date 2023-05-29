@@ -1,5 +1,3 @@
-// File ordered based on progression
-
 /datum/uplink_category/implants
 	name = "Implants"
 	weight = 2
@@ -9,7 +7,6 @@
 	category = /datum/uplink_category/implants
 	surplus = 50
 
-// No progression cost
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
 	desc = "An implant injected into the body and later activated at the user's will. It will attempt to free the \

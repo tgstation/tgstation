@@ -48,17 +48,28 @@
 
 // ~wound global lists
 // list in order of highest severity to lowest
-GLOBAL_LIST_INIT(global_wound_types, list(WOUND_BLUNT = list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate),
-		WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
-		WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
-		WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
-		))
+GLOBAL_LIST_INIT(global_wound_types, list(
+	WOUND_BLUNT = list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate),
+	WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
+	WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
+	WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
+))
 
 // every single type of wound that can be rolled naturally, in case you need to pull a random one
-GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate,
-	/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate,
-	/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate,
-	/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate))
+GLOBAL_LIST_INIT(global_all_wound_types, list(
+	/datum/wound/blunt/critical,
+	/datum/wound/blunt/severe,
+	/datum/wound/blunt/moderate,
+	/datum/wound/slash/critical,
+	/datum/wound/slash/severe,
+	/datum/wound/slash/moderate,
+	/datum/wound/pierce/critical,
+	/datum/wound/pierce/severe,
+	/datum/wound/pierce/moderate,
+	/datum/wound/burn/critical,
+	/datum/wound/burn/severe,
+	/datum/wound/burn/moderate,
+))
 
 
 // ~burn wound infection defines
@@ -79,8 +90,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define WOUND_BURN_SANITIZATION_RATE 0.075
 /// how much blood you can lose per tick per slash max.
 #define WOUND_SLASH_MAX_BLOODFLOW 4.5
-/// dead people don't bleed, but they can clot! this is the minimum amount of clotting per tick on dead people, so even critical cuts will slowly clot in dead people
-#define WOUND_SLASH_DEAD_CLOT_MIN 0.025
 /// further slash attacks on a bodypart with a slash wound have their blood_flow further increased by damage * this (10 damage slash adds .25 flow)
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)

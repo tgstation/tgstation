@@ -7,6 +7,8 @@
 #define NUKE_RESULT_NOSURVIVORS 6
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
+#define NUKE_RESULT_HIJACK_DISK 9
+#define NUKE_RESULT_HIJACK_NO_DISK 10
 
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
@@ -77,6 +79,7 @@
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
+#define PATH_COSMIC "Cosmic Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -199,6 +202,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 #define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
 
+/// Checks if the given mob is a traitor
+#define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
+
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
@@ -252,6 +258,21 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 // Progression traitor defines
 
+/// Chance that the traitor could roll hijack if the pop limit is met.
+#define HIJACK_PROB 10
+/// Hijack is unavailable as a random objective below this player count.
+#define HIJACK_MIN_PLAYERS 30
+
+/// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
+#define MARTYR_PROB 20
+
+/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
+#define KILL_PROB 50
+/// If a kill objective is rolled, chance that it is to destroy the AI.
+#define DESTROY_AI_PROB(denominator) (100 / denominator)
+/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
+#define MAROON_PROB 30
+
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
 /// How many telecrystals mapper/admin only "precharged" uplink implant
@@ -280,11 +301,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_STATE_INVALID 5
 
 /// Weights for traitor objective categories
-#define OBJECTIVE_WEIGHT_TINY 5
-#define OBJECTIVE_WEIGHT_SMALL 7
+#define OBJECTIVE_WEIGHT_VERY_UNLIKELY 2
+#define OBJECTIVE_WEIGHT_UNLIKELY 5
 #define OBJECTIVE_WEIGHT_DEFAULT 10
-#define OBJECTIVE_WEIGHT_BIG 15
-#define OBJECTIVE_WEIGHT_HUGE 20
+#define OBJECTIVE_WEIGHT_LIKELY 15
+#define OBJECTIVE_WEIGHT_VERY_LIKELY 20
 
 #define REVENANT_NAME_FILE "revenant_names.json"
 
@@ -304,3 +325,12 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+
+
+// If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
+#define FLAG_ANTAG_CAN_BE_INDUCTED (1 << 0)
+
+#define HUNTER_PACK_COPS "cop_hunters"
+#define HUNTER_PACK_RUSSIAN "russian_hunters"
+#define HUNTER_PACK_BOUNTY "bounty_hunters"
+#define HUNTER_PACK_PSYKER "psyker_hunters"

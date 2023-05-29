@@ -25,6 +25,8 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
+	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
+	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -362,10 +364,23 @@
 	desc = "There's no label on this wine bottle."
 
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled/generate_vintage()
-	var/current_year = CURRENT_STATION_YEAR
-	var/year = rand(current_year-50,current_year)
-	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
-	var/origin = pick("Nanotrasen","Syndicate","Local")
+	var/year = rand(CURRENT_STATION_YEAR - 50, CURRENT_STATION_YEAR)
+	var/type = pick(
+		"Bold Red",
+		"Dessert",
+		"Dry White",
+		"Light Red",
+		"Medium Red",
+		"Rich White",
+		"Rose",
+		"Sparkling",
+		"Sweet White",
+	)
+	var/origin = pick(
+		"Local",
+		"Nanotrasen",
+		"Syndicate",
+	)
 	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe
@@ -509,6 +524,14 @@
 	custom_price = PAYCHECK_CREW
 	icon_state = "applejack_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
+	drink_type = FRUIT
+
+/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	desc = "Electrically infused wine! Recharges etherials, safe for consumption."
+	custom_price = PAYCHECK_CREW
+	icon_state = "wine_voltaic_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/wine_voltaic = 100)
 	drink_type = FRUIT
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne

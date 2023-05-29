@@ -12,8 +12,8 @@
 	to_chat(user, span_notice("We cleanse impurities from our form."))
 	..()
 	var/list/bad_organs = list(
-		user.getorgan(/obj/item/organ/internal/body_egg),
-		user.getorgan(/obj/item/organ/internal/zombie_infection))
+		user.get_organ_by_type(/obj/item/organ/internal/body_egg),
+		user.get_organ_by_type(/obj/item/organ/internal/zombie_infection))
 
 	for(var/o in bad_organs)
 		var/obj/item/organ/O = o

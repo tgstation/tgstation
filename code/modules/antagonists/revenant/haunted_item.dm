@@ -55,13 +55,13 @@
 				continue
 			// This gives all mobs in view "5" haunt level
 			// For reference picking one up gives "2"
-			haunted_item.ai_controller.blackboard[BB_TO_HAUNT_LIST][WEAKREF(victim)] = 5
+			haunted_item.ai_controller.add_blackboard_key_assoc(BB_TO_HAUNT_LIST, victim, 5)
 
 	if(haunted_item.throwforce < throw_force_max)
 		pre_haunt_throwforce = haunted_item.throwforce
 		haunted_item.throwforce = min(haunted_item.throwforce + throw_force_bonus, throw_force_max)
 
-	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/storage/book/bible)
+	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/book/bible)
 	src.types_which_dispell_us = types_which_dispell_us || default_dispell_types
 	src.despawn_message = despawn_message
 

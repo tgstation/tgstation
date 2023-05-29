@@ -101,12 +101,12 @@
 	update_appearance()
 	timerid = addtimer(CALLBACK(src, PROC_REF(finish_interrogation)), 450, TIMER_STOPPABLE)
 
-/obj/machinery/hypnochair/process(delta_time)
+/obj/machinery/hypnochair/process(seconds_per_tick)
 	var/mob/living/carbon/C = occupant
 	if(!istype(C) || C != victim)
 		interrupt_interrogation()
 		return
-	if(DT_PROB(5, delta_time) && !(C.get_eye_protection() > 0))
+	if(SPT_PROB(5, seconds_per_tick) && !(C.get_eye_protection() > 0))
 		to_chat(C, "<span class='hypnophrase'>[pick(\
 			"...blue... red... green... blue, red, green, blueredgreen[span_small("blueredgreen")]",\
 			"...pretty colors...",\
@@ -115,7 +115,7 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
-	use_power(active_power_usage * delta_time)
+	use_power(active_power_usage * seconds_per_tick)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE

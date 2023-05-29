@@ -1,38 +1,162 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"b" = (
+"c" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/shipping_container/nthi,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters{
+	name = "Storage Shutters";
+	id = "defnotillegastuffinhereofficer"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/corner,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/structure/noticeboard/directional/south,
+/obj/item/paper{
+	default_raw_text = "Please make sure all heavy equipment and tools are stored properly between sessions to prevent on-site accidents! All current workers comp filings will have a minimal delay of 3 months to be reviewed from date of entry. If you are unable to work during those months, we will NOT be paying compensation until legally required. This isn't a threat.";
+	name = "Storage Units"
+	},
+/obj/item/paper{
+	default_raw_text = "Mark this room off as long-term storage, isn't worth trying to retrieve the containers before closing off the halls.";
+	name = "Equipment Notice"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"w" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/vehicle/sealed/mecha/working/ripley,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"C" = (
+/obj/structure/shipping_container,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"D" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"c" = (
+"E" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
-/obj/item/stock_parts/cell/empty,
-/obj/item/screwdriver{
-	pixel_y = -10;
-	pixel_x = 7
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
 	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Long-Term Shipping Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"G" = (
+/obj/structure/shipping_container/nanotrasen,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"f" = (
+"H" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/iron/smooth,
+/obj/item/wrench,
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"g" = (
-/obj/modular_map_connector,
-/obj/effect/turf_decal/stripes/white/corner,
+"I" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"h" = (
-/turf/template_noop,
+"J" = (
+/turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
-"k" = (
+"K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/mecha_parts/chassis/ripley,
 /obj/item/mecha_parts/part/ripley_left_arm{
@@ -45,330 +169,214 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"l" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"p" = (
-/obj/structure/shipping_container/nthi,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"q" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"w" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"A" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"B" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/vehicle/sealed/mecha/working/ripley,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"C" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/wrench,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
-"D" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"F" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/starboard/lesser)
-"H" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"K" = (
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
-"L" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/clothing/gloves/cargo_gauntlet,
-/obj/item/clothing/gloves/cargo_gauntlet,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
-"N" = (
-/obj/structure/shipping_container,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "P" = (
-/obj/structure/shipping_container/nanotrasen,
+/obj/structure/shipping_container/nakamura,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/obj/item/stock_parts/cell/empty,
+/obj/item/screwdriver{
+	pixel_y = -10;
+	pixel_x = 7
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "S" = (
-/obj/effect/turf_decal/stripes/white/corner,
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/engineering/material,
-/obj/effect/spawner/random/engineering/toolbox,
-/turf/open/floor/iron/smooth,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "V" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/spawner/random/engineering/flashlight,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
-"W" = (
-/turf/template_noop,
-/area/template_noop)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/structure/noticeboard/directional/west,
-/obj/item/paper{
-	default_raw_text = "Mark this room off as long-term storage, isn't worth trying to retrieve the containers before closing off the halls.";
-	name = "Equipment Notice"
-	},
-/obj/item/paper{
-	default_raw_text = "Please make sure all heavy equipment and tools are stored properly between sessions to prevent on-site accidents! All current workers comp filings will have a minimal delay of 3 months to be reviewed from date of entry. If you are unable to work during those months, we will NOT be paying compensation until legally required. This isn't a threat.";
-	name = "Storage Units"
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/north{
+	id = "defnotillegastuffinhereofficer";
+	name = "Storage Shutters Toggle"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
-W
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
 "}
 (2,1,1) = {"
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
-K
+J
+A
+I
+I
+I
+v
+I
+D
+o
+J
+c
 "}
 (3,1,1) = {"
-w
-w
-w
-b
-w
-w
-w
-w
-Y
-M
-l
-w
-b
-w
-A
-K
+F
+I
+I
+n
+u
+J
+S
+I
+j
+J
+c
 "}
 (4,1,1) = {"
-g
-H
-H
-S
-H
-H
-S
-H
-H
-S
-H
-H
-S
-H
-L
-K
+J
+Z
+I
+I
+p
+J
+J
+J
+J
+J
+c
 "}
 (5,1,1) = {"
-F
-a
-P
-F
-a
-p
-F
-a
-N
-F
-a
-P
-F
-a
-a
-K
+J
+t
+t
+q
+w
+E
+q
+E
+E
+J
+c
 "}
 (6,1,1) = {"
-F
-a
-a
-F
-a
-a
-F
-a
-a
-F
-a
-a
-F
+i
+Y
 C
+V
+Y
+P
+V
+Y
+a
+J
 c
-K
 "}
 (7,1,1) = {"
-F
-a
-a
-F
-a
-a
-F
-a
-a
-F
-a
-a
-F
-k
-B
-K
+i
+Y
+Y
+V
+Y
+Y
+V
+H
+Q
+J
+c
 "}
 (8,1,1) = {"
+i
+Y
+Y
+V
+Y
+Y
+V
 K
-K
-K
-q
-K
-K
-q
-K
-K
-K
-K
-K
-K
-K
-K
-K
+y
+J
+c
 "}
 (9,1,1) = {"
-K
+i
 V
-w
-w
-K
-w
-w
-w
-K
-W
-W
-W
-W
-W
-W
-W
+V
+V
+V
+V
+V
+V
+V
+J
+c
 "}
 (10,1,1) = {"
-K
-U
-w
-w
-K
-z
-f
-D
-h
-W
-W
-W
-W
-W
-W
-W
+i
+Y
+G
+V
+Y
+d
+V
+Y
+G
+J
+c
 "}
 (11,1,1) = {"
-K
-K
-K
-K
-K
-K
-K
-K
-h
-W
-W
-W
-W
-W
-W
-W
+i
+Y
+Y
+V
+Y
+Y
+V
+Y
+Y
+J
+c
+"}
+(12,1,1) = {"
+i
+Y
+Y
+U
+Y
+Y
+x
+Y
+Y
+J
+c
+"}
+(13,1,1) = {"
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
 "}

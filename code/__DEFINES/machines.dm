@@ -43,6 +43,14 @@
 #define SHOCK (1<<3)
 #define SAFE (1<<4)
 
+//defines to be used with the door's open()/close() procs in order to discriminate what type of open is being done. The door will never open if it's been physically disabled (i.e. welded, sealed, etc.).
+/// We should go through the door's normal opening procedure, no overrides.
+#define DEFAULT_DOOR_CHECKS 0
+/// We're not going through the door's normal opening procedure, we're forcing it open. Can still fail if it's emagged or something. Costs power.
+#define FORCING_DOOR_CHECKS 1
+/// We are getting this door open if it has not been physically held shut somehow. Play a special sound to signify this level of opening.
+#define BYPASS_DOOR_CHECKS 2
+
 //used in design to specify which machine can build it
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
@@ -121,3 +129,20 @@
 
 /// What's the minimum duration of a syndie bomb (in seconds)
 #define SYNDIEBOMB_MIN_TIMER_SECONDS 90
+
+// Camera upgrade bitflags.
+#define CAMERA_UPGRADE_XRAY (1<<0)
+#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
+#define CAMERA_UPGRADE_MOTION (1<<2)
+
+/// Max length of a status line in the status display
+#define MAX_STATUS_LINE_LENGTH 40
+
+/// Blank Status Display
+#define SD_BLANK 0
+/// Shows the emergency shuttle timer
+#define SD_EMERGENCY 1
+/// Shows an arbitrary message, user-set
+#define SD_MESSAGE 2
+/// Shows an alert picture (e.g. red alert, radiation, etc.)
+#define SD_PICTURE 3

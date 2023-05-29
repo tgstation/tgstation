@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(economy)
 #define ECON_PRICE_UPDATE_STEP "econ_prc_stp"
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	var/delta_time = wait / (5 MINUTES)
+	var/seconds_per_tick = wait / (5 MINUTES)
 
 	if(!resumed)
 		temporary_total = 0
@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(economy)
 			return
 
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
+	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
@@ -227,3 +227,7 @@ SUBSYSTEM_DEF(economy)
 		"cost" = price_to_use,
 		"vendor" = vendor,
 	))
+
+#undef ECON_DEPARTMENT_STEP
+#undef ECON_ACCOUNT_STEP
+#undef ECON_PRICE_UPDATE_STEP

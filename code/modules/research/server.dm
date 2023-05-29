@@ -255,7 +255,9 @@
 	hdd_wires = 0
 	deconstruction_state = HDD_OVERLOADED
 
+#undef HDD_CUT_LOOSE
+#undef HDD_OVERLOADED
 #undef HDD_PANEL_CLOSED
 #undef HDD_PANEL_OPEN
 #undef HDD_PRIED
-#undef HDD_CUT_LOOSE
+#undef SERVER_NOMINAL_TEXT

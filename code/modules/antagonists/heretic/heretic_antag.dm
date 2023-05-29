@@ -58,6 +58,7 @@
 		PATH_ASH = "white",
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
+		PATH_COSMIC = "purple",
 	)
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
@@ -65,7 +66,8 @@
 		PATH_FLESH = COLOR_SOFT_RED,
 		PATH_ASH = COLOR_VIVID_RED,
 		PATH_VOID = COLOR_CYAN,
-		PATH_BLADE = COLOR_SILVER
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -352,16 +354,14 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
-/// all of our organs are "deleted" and regenerated (cause it's a full heal)
-/// which unfortunately means we lose our living heart.
-/// So, we'll give them some lee-way and give them back the living heart afterwards
-/// (Maybe put this behind only admin_revives only? Not sure.)
-/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
+/// Gives the heretic aliving heart on aheal or organ refresh
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
-	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-	heart_knowledge.on_research(source)
+	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(source, src)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
@@ -667,7 +667,7 @@
  * and returns HERETIC_HAS_LIVING_HEART if they have a living heart
  */
 /datum/antagonist/heretic/proc/has_living_heart()
-	var/obj/item/organ/our_living_heart = owner.current?.getorganslot(living_heart_organ_slot)
+	var/obj/item/organ/our_living_heart = owner.current?.get_organ_slot(living_heart_organ_slot)
 	if(!our_living_heart)
 		return HERETIC_NO_HEART_ORGAN
 

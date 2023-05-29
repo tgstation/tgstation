@@ -6,7 +6,6 @@
 	undeletable = TRUE
 	size = 4
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
@@ -82,7 +81,7 @@
 	download_completion = FALSE
 	ui_header = "downloader_finished.gif"
 
-/datum/computer_file/program/ntnetdownload/process_tick(delta_time)
+/datum/computer_file/program/ntnetdownload/process_tick(seconds_per_tick)
 	if(!downloaded_file)
 		return
 	if(download_completion >= downloaded_file.size)
@@ -99,10 +98,7 @@
 			download_netspeed = NTNETSPEED_ETHERNET
 	download_completion += download_netspeed
 
-/datum/computer_file/program/ntnetdownload/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_downloadfile")
 			if(!downloaded_file)
@@ -151,7 +147,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = TRUE, access = access),
+			"access" = (computer.obj_flags & EMAGGED) && programs.available_on_syndinet ? TRUE : programs.can_run(user, transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 
@@ -166,6 +162,6 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/ntnetdownload/kill_program(forced)
+/datum/computer_file/program/ntnetdownload/kill_program()
 	abort_file_download()
 	return ..()

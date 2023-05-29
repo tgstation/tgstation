@@ -13,7 +13,7 @@
 	return TRUE
 
 ///Called by the AI controller when this action is performed
-/datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller, ...)
+/datum/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
 	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	return
 

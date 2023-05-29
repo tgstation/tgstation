@@ -398,7 +398,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 
-	.["is_admin"] = check_rights_for(user.client, R_VAREDIT)
+	.["is_admin"] = (admin_only || isAdminGhostAI(user)) && check_rights_for(user.client, R_VAREDIT)
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -648,7 +648,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		if("print_component")
 			var/component_path = text2path(params["component_to_print"])
 			var/obj/item/circuit_component/component
-			if(!check_rights_for(ui.user.client, R_SPAWN))
+			if((!admin_only && !isAdminGhostAI(ui.user)) || !check_rights_for(ui.user.client, R_SPAWN))
 				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
 				if(!printer)
 					balloon_alert(ui.user, "linked printer not found!")
