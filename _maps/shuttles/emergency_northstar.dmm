@@ -22,8 +22,8 @@
 /area/shuttle/escape)
 "cx" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/red/directional/north,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/shuttle/escape)
 "dl" = (
@@ -107,14 +107,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/red/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
 /area/shuttle/escape)
 "nh" = (
-/obj/structure/rack,
-/turf/open/floor/iron/smooth_large,
+/obj/machinery/smartfridge/survival_pod/preloaded,
+/turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/escape)
 "nt" = (
 /obj/structure/table/optable,
@@ -310,6 +310,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dk" = (
@@ -335,6 +337,12 @@
 	name = "Emergency Shuttle Access"
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Dx" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
 /area/shuttle/escape)
 "DJ" = (
 /obj/machinery/iv_drip,
@@ -369,17 +377,13 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/escape)
 "HY" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/table/reinforced,
-/obj/item/assembly/flash/handheld,
-/obj/item/restraints/handcuffs,
-/turf/open/floor/iron/dark,
+/turf/template_noop,
 /area/shuttle/escape)
 "Ir" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/recharger,
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "IT" = (
@@ -431,6 +435,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/structure/table/reinforced,
+/obj/item/assembly/flash/handheld,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "NU" = (
@@ -456,7 +463,7 @@
 /area/shuttle/escape)
 "Pa" = (
 /obj/machinery/status_display/evac/directional/east,
-/obj/machinery/light/red/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/escape)
 "Qo" = (
@@ -512,7 +519,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/red/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -533,8 +539,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 1
 	},
-/obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TK" = (
@@ -590,8 +596,8 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -617,7 +623,7 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
-AW
+HY
 AW
 FQ
 FQ
@@ -643,8 +649,8 @@ Ei
 "}
 (2,1,1) = {"
 AW
-yq
-tq
+nh
+Dx
 mw
 rV
 OL
@@ -693,7 +699,7 @@ Tg
 "}
 (4,1,1) = {"
 Qw
-nh
+yq
 Qo
 aK
 Qo
@@ -843,7 +849,7 @@ BS
 "}
 (10,1,1) = {"
 AW
-HY
+AW
 Tz
 Do
 FQ
@@ -867,7 +873,7 @@ AW
 Ei
 "}
 (11,1,1) = {"
-AW
+HY
 AW
 FQ
 FQ
