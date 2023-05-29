@@ -203,7 +203,7 @@
 
 /datum/round_event/vent_clog/major/setup()
 	. = ..()
-	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 7)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 5)
 	spawn_delay = rand(15,20)
 	filth_spawn_types = list(
 		/obj/effect/decal/cleanable/blood,
@@ -238,7 +238,7 @@
 /datum/round_event/vent_clog/critical/setup()
 	. = ..()
 	spawn_delay = rand(15,25)
-	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 5)
+	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 6)
 	filth_spawn_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/blood/splatter,
