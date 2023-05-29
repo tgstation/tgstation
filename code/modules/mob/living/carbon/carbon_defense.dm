@@ -653,4 +653,38 @@
 		organs -= organ_type
 	GLOB.bioscrambler_valid_organs = organs
 
+/mob/living/carbon/get_final_damage_for_weapon(obj/item/attacking_item)
+	. = ..()
+	if(dna?.species)
+		. *= dna.species.check_species_weakness(attacking_item)
+
+	return .
+
+/mob/living/carbon/get_attacked_bodypart(mob/living/user, hit_chance = 100)
+	return get_bodypart(user == src ? check_zone(user.zone_selected) : get_random_valid_zone(user.zone_selected, hit_chance)) || bodyparts[1]
+
+/mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
+	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+	if(!apply_to_clothes)
+		return
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			if(wear_mask)
+				wear_mask.add_mob_blood(src)
+				update_worn_mask()
+			if(wear_neck)
+				wear_neck.add_mob_blood(src)
+				update_worn_neck()
+			if(glasses && prob(33))
+				glasses.add_mob_blood(src)
+				update_worn_glasses()
+			if(head)
+				head.add_mob_blood(src)
+				update_worn_head()
+
 #undef SHAKE_ANIMATION_OFFSET

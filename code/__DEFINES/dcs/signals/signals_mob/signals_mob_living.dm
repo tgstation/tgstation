@@ -165,21 +165,22 @@
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
 ///from /mob/living/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_LIVING_CHECK_BLOCK "human_check_shields"
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
 	#define SUCCESSFUL_BLOCK (1<<0)
 
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_LIVING_DISARM_HIT "human_disarm_hit"
+#define COMSIG_LIVING_DISARM_HIT "living_disarm_hit"
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
-#define COMSIG_LIVING_DISARM_PRESHOVE "carbon_disarm_preshove"
+#define COMSIG_LIVING_DISARM_PRESHOVE "living_disarm_preshove"
 	///Tells disarm code to act as if the mob was shoved into something solid, even we we're not
 	#define DISARM_ACT_AS_SOLID (1<<0)
 	///Stops the rest of the disarm entirely, acting as a "miss"
 	#define DISARM_STOP (1<<1)
 ///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-#define COMSIG_LIVING_DISARM_COLLIDE "carbon_disarm_collision"
+#define COMSIG_LIVING_DISARM_COLLIDE "living_disarm_collision"
 	#define DISARM_SHOVE_HANDLED (1<<0)
 
+/// From /mob/living/proc/was_attacked_effects, signifying the mob was attacked by another mob
 #define COMSIG_LIVING_ATTACKED_BY "living_attacked_by"
 
 /// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect

@@ -705,3 +705,76 @@
 	if(dna && dna.species)
 		no_protection = dna.species.handle_fire(src, seconds_per_tick, times_fired, no_protection)
 	fire_handler.harm_human(seconds_per_tick, times_fired, no_protection)
+
+/mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+	. = ..()
+	if(damage > 10 || (damage >= 5 && prob(33)))
+		force_say(user)
+
+	if(isnull(hit_limb))
+		return
+
+	if(isnull(attacking_item))
+		if(hit_limb.body_zone == BODY_ZONE_CHEST)
+			if(wear_suit)
+				wear_suit.add_fingerprint(user)
+			else if(w_uniform)
+				w_uniform.add_fingerprint(user)
+		return
+
+	if(attacking_item.get_sharpness() || armor_block >= 50)
+		return
+
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			if(prob(damage))
+				adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+				if(stat == CONSCIOUS)
+					visible_message(span_danger("[src] is knocked senseless!"), ignored_mobs = src)
+					to_chat(src, span_userdanger("You're knocked senseless!"))
+					set_confusion_if_lower(20 SECONDS)
+					adjust_eye_blur(20 SECONDS)
+				if(prob(10))
+					gain_trauma(/datum/brain_trauma/mild/concussion)
+
+			else
+				adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * 0.2)
+
+			// rev deconversion through blunt trauma.
+			if(!isnull(mind) \
+				&& stat == CONSCIOUS \
+				&& src != user \
+				&& prob(damage + ((100 - health) * 0.5)) \
+			)
+				var/datum/antagonist/rev/rev = mind?.has_antag_datum(/datum/antagonist/rev)
+				rev?.remove_revolutionary(FALSE, user)
+
+		if(BODY_ZONE_CHEST)
+			if(stat == CONSCIOUS && prob(damage))
+				visible_message(span_danger("[src] is knocked down!"), ignored_mobs = src)
+				to_chat(src, span_userdanger("You're knocked down!"))
+				apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+
+/mob/living/carbon/human/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
+	if(!prob(25 + (attacking_item.force * 2)))
+		return
+
+	apply_to_clothes = prob(attacking_item.force * 2)
+
+	. = ..()
+	if(!.)
+		return
+	if(!apply_to_clothes)
+		return
+	// This can definitely be improved upon in the future
+	switch(hit_limb.body_zone)
+		if(BODY_ZONE_HEAD)
+			pass()
+
+		if(BODY_ZONE_CHEST)
+			if(wear_suit)
+				wear_suit.add_mob_blood(src)
+				update_worn_oversuit()
+			if(w_uniform)
+				w_uniform.add_mob_blood(src)
+				update_worn_undersuit()
