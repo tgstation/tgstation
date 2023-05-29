@@ -1,7 +1,0 @@
-author: "HWSensum"
-delete-after: True
-changes:
-  - rscadd: "added a mail counterfeit device that can make custom (and also armed) mails. Traitors have those devices in their uplinks."
-  - rscadd: "added new kit for QM and Cargo Technicians that have multiple mail counterfeit devices for neat price."
-  - bugfix: "fixed envelopes that were giving only their first item, even tho they had two items insede."
-  - image: "added new icon for mail counterfeit device."

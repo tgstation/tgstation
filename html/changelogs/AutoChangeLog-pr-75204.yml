@@ -1,7 +1,0 @@
-author: "SethLafuente"
-delete-after: True
-changes:
-  - rscadd: "Added 3 new spider types"
-  - rscadd: "Added more spider abilities"
-  - balance: "Rebalanced spiders"
-  - bugfix: "Fixes spiderlings having density"

@@ -1,4 +1,0 @@
-author: "FeudeyTF"
-delete-after: True
-changes:
-  - code_imp: "Updated the UI of the console for viewing message logs and console for view server communications"
