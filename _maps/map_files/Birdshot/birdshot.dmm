@@ -31626,7 +31626,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	name = "Vacant Office Maintenance"
+	name = "Coroner Office Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /turf/open/floor/plating,
@@ -50242,7 +50242,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/machinery/door/airlock/medical/glass,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Coroner's Office"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
