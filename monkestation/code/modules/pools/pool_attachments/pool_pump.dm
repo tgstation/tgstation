@@ -89,7 +89,11 @@
 
 	if(attached_group.expected_turf_height >= desired_depth)
 		return
-	attached_group.add_reagents(cached_turf.liquids, creatable_reagents, 300)
+	var/list/converted_to_type = list()
+	for(var/datum/reagent/listed_reagent in creatable_reagents)
+		converted_to_type[listed_reagent.type] = creatable_reagents[listed_reagent]
+
+	attached_group.add_reagents(cached_turf.liquids, converted_to_type, 300)
 
 
 /obj/machinery/pool_pump/attack_hand(mob/living/user, list/modifiers)
