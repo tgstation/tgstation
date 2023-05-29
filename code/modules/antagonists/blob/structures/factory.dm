@@ -14,10 +14,12 @@
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 	///Its Blobbernaut, if it has spawned any.
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobbernaut
+	///Used in blob/powers.dm, checks if it's already trying to spawn a blobbernaut to prevent issues.
+	var/is_creating_blobbernaut = FALSE
 
 /obj/structure/blob/special/factory/scannerreport()
-	if(naut)
+	if(blobbernaut)
 		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
 	return "Will produce a blob spore every few seconds."
 
@@ -30,18 +32,18 @@
 		to_chat(spore, span_userdanger("Your factory was destroyed! You can no longer sustain yourself."))
 		spore.death()
 	spores = null
-	if(naut)
-		naut.factory = null
-		to_chat(naut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
-		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
-		naut = null
+	if(blobbernaut)
+		blobbernaut.factory = null
+		to_chat(blobbernaut, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
+		blobbernaut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
+		blobbernaut = null
 	if(overmind)
 		overmind.factory_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/factory/Be_Pulsed()
 	. = ..()
-	if(naut)
+	if(blobbernaut)
 		return
 	if(spores.len >= max_spores)
 		return
