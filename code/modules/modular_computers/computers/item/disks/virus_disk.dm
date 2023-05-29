@@ -84,7 +84,7 @@
 		return
 
 	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
-	if(!app || charges <= 0 || !app.send_message(user, list(target), rigged = REF(user), fake_name = fakename, fake_job = fakejob))
+	if(!app || charges <= 0 || !app.send_message(user, target, rigged = REF(user), fake_name = fakename, fake_job = fakejob))
 		return FALSE
 	charges--
 	user.show_message(span_notice("Success!"))

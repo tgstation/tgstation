@@ -333,8 +333,13 @@
 				stored_pda.icon = initial(pda_path.icon)
 			stored_pda.icon_state = initial(pda_path.icon_state)
 			stored_pda.desc = initial(pda_path.desc)
+			remove_pda_messenger(stored_pda)
 
 			return TRUE
+
+		if("reset_pda")
+			remove_pda_messenger(stored_pda)
+
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)
 				return TRUE

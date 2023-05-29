@@ -112,7 +112,7 @@
 			return TRUE
 
 	if(active_program)
-		active_program.ui_act(action, params, ui, state)
+		. = active_program.ui_act(action, params, ui, state)
 
 	switch(action)
 		if("PC_exit")
@@ -194,6 +194,7 @@
 			saved_identification = computer_id_slot.registered_name
 			saved_job = computer_id_slot.assignment
 			UpdateDisplay()
+			
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		if("PC_Pai_Interact")

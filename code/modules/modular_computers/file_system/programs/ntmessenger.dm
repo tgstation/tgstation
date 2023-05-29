@@ -22,7 +22,7 @@
 	/// Whether or not we're sending and receiving messages.
 	var/sending_and_receiving = TRUE
 	/// The messages currently saved in the app.
-	var/messages = list()
+	var/list/messages = list()
 	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
 	var/last_text
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
@@ -31,8 +31,8 @@
 	var/datum/picture/saved_image
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
-	/// Whether or not we're currently looking at the message list.
-	var/viewing_messages = FALSE
+	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
+	var/viewing_messages_of = null
 	// Whether or not this device is currently hidden from the message monitor.
 	var/monitor_hidden = FALSE
 	// Whether or not we're sorting by job.
@@ -68,7 +68,7 @@
 			data["ref"] = REF(messenger)
 
 			//if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
-			dictionary += list(data)
+			dictionary += list(data["ref"] = data)
 
 	return dictionary
 
@@ -89,7 +89,7 @@
 
 	return dictionary
 
-/datum/computer_file/program/messenger/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
+/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
 	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
@@ -98,6 +98,9 @@
 		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
 		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
 		photo_path = deter_path
+
+/datum/computer_file/program/messenger/proc/can_send_everyone_message()
+	return (last_text && world.time < last_text + 10) || (last_text_everyone && world.time < last_text_everyone + 2 MINUTES)
 
 /datum/computer_file/program/messenger/ui_state(mob/user)
 	if(issilicon(user))
@@ -130,11 +133,18 @@
 			return UI_UPDATE
 
 		if("PDA_viewMessages")
-			viewing_messages = !viewing_messages
+			viewing_messages_of = params["ref"]
 			return UI_UPDATE
 
 		if("PDA_clearMessages")
-			messages = list()
+			var/user_ref = params["ref"]
+			if(user_ref)
+				for(var/list/message in messages)
+					if((user_ref in message["targets"]) || message["sender"] == user_ref)
+						messages -= list(message)
+			else
+				messages = list()
+			viewing_messages_of = null
 			return UI_UPDATE
 
 		if("PDA_changeSortStyle")
@@ -150,13 +160,11 @@
 				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
 				return
 
-			var/list/targets = list()
+			if(can_send_everyone_message())
+				to_chat(usr, span_warning("The subspace transmitter of your tablet is still cooling down!"))
+				return
 
-			for(var/obj/item/modular_computer/mc in GetViewableDevices())
-				targets += mc
-
-			if(targets.len > 0)
-				send_message(usr, targets, TRUE)
+			send_message_to_all(usr, params["msg"])
 
 			return UI_UPDATE
 
@@ -171,7 +179,7 @@
 
 			if(!(target.saved_identification == params["name"] && target.saved_job == params["job"]))
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
-				return
+				return UI_UPDATE
 
 			for(var/datum/computer_file/program/messenger/app in computer.stored_files)
 				if(!app.sending_and_receiving && !sending_virus)
@@ -184,7 +192,8 @@
 						disk.send_virus(computer, target, usr)
 						return UI_UPDATE
 
-				send_message(usr, list(target))
+
+				send_message(usr, list(target), params["msg"])
 				return UI_UPDATE
 
 		if("PDA_clearPhoto")
@@ -212,22 +221,31 @@
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/data = ..()
 
-	data["owner"] = computer.saved_identification
-	data["sortByJob"] = sort_by_job
-	data["isSilicon"] = issilicon(user)
+	data["owner"] = list(
+		"name" = computer.saved_identification,
+		"job" = computer.saved_job,
+		"ref" = REF(computer),
+	)
+	data["sort_by_job"] = sort_by_job
+	data["is_silicon"] = issilicon(user)
 
 	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = list()
 
+	var/list/messengers = ScrubMessengerList()
+	// im very unhappy about this, but pda code has forced my hand
+	if(viewing_messages_of && !(viewing_messages_of in messengers))
+		viewing_messages_of = null
+
 	data["messages"] = messages
-	data["messengers"] = ScrubMessengerList()
+	data["messengers"] = messengers
 	data["ringer_status"] = ringer_status
 	data["sending_and_receiving"] = sending_and_receiving
-	data["viewing_messages"] = viewing_messages
+	data["viewing_messages_of"] = viewing_messages_of ? messengers[viewing_messages_of] : null
 	data["photo"] = photo_path
-	data["canSpam"] = spam_mode
+	data["can_spam"] = spam_mode
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 	if(disk && istype(disk))
@@ -240,32 +258,30 @@
 // MESSAGE HANDLING //
 //////////////////////
 
-///Gets an input message from user and returns the sanitized message.
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, target_name, rigged = FALSE)
-	var/input_message
-	if(mime_mode)
-		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
-	else
-		input_message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
+///Brings up the quick reply prompt to send a message.
+/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, obj/item/modular_computer/target)
+	var/target_name = target.saved_identification
+	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]")
+	send_message(usr, list(target), input_message)
 
-	if (!input_message || !sending_and_receiving)
-		return
+///Sanitizes and encodes the PDA message and returns it
+/datum/computer_file/program/messenger/proc/sanitize_message(message)
+	message = html_encode(message)
+	if(mime_mode)
+		message = emoji_sanitize(message)
+	return sanitize(message)
+
+/datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
+	send_message(user, null, message, everyone = TRUE)
+
+///Sends a message via PDA. Recipient is either `target` or all viewable devices depending on if `everyone` is true.
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, obj/item/modular_computer/target, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!user.can_perform_action(computer))
 		return
-	return sanitize(input_message)
 
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!targets.len)
-		return FALSE
-
-	var/target_name = length(targets) == 1 ? targets[1].saved_identification : "Everyone"
-	var/message = msg_input(user, target_name, rigged)
+	message = sanitize_message(message)
 
 	if(!message)
-		return FALSE
-
-	if((last_text && world.time < last_text + 10) || (everyone && last_text_everyone && world.time < last_text_everyone + 2 MINUTES))
-		to_chat(user, span_warning("The subspace transmitter of your tablet is still cooling down!"))
 		return FALSE
 
 	var/turf/position = get_turf(computer)
@@ -285,6 +301,17 @@
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
+
+	var/list/obj/item/modular_computer/targets = list()
+
+	if(everyone)
+		for(var/obj/item/modular_computer/mc in GetViewableDevices())
+			targets += mc
+	else
+		targets += target
+
+	if(!length(targets))
+		return FALSE
 
 	// Send the signal
 	var/list/string_targets = list()
@@ -308,6 +335,7 @@
 		"photo" = saved_image,
 		"photo_path" = photo_path,
 		"automated" = FALSE,
+		"everyone" = everyone,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
 		signal.data["rigged_user"] = REF(user) // Used for bomb logging
@@ -326,16 +354,23 @@
 	message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
 	signal.data["message"] = emoji_parse(signal.data["message"])
 
+	// produce references to our targets and send those to UI
+	var/list/target_refs = list()
+	for(var/obj/item/modular_computer/target_computer in signal.data["targets"])
+		target_refs += REF(target_computer)
+
 	// Log it in our logs
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.format_message())
+	message_data["contents"] = html_decode(signal.data["message"])
 	message_data["outgoing"] = TRUE
-	message_data["ref"] = signal.data["ref"]
+	message_data["sender"] = signal.data["ref"]
 	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
+	message_data["targets"] = target_refs
 	message_data["target_details"] = signal.format_target()
+	message_data["everyone"] = everyone
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
@@ -371,12 +406,13 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.format_message())
+	message_data["contents"] = html_decode(signal.data["message"])
 	message_data["outgoing"] = FALSE
-	message_data["ref"] = signal.data["ref"]
+	message_data["sender"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
 	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
+	message_data["everyone"] = signal.data["everyone"]
 	messages += list(message_data)
 
 	var/mob/living/L = null
@@ -387,7 +423,7 @@
 		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Quick Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -407,6 +443,8 @@
 	if (ringer_status)
 		computer.ring(ringtone)
 
+	SStgui.update_uis(computer)
+
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
@@ -422,7 +460,7 @@
 	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
-				send_message(usr, list(locate(href_list["target"])))
+				quick_reply_prompt(usr, list(locate(href_list["target"])))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer

@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
-
 // This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
@@ -136,7 +134,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	update_appearance()
 	register_context()
 	init_network_id(NETWORK_TABLETS)
-	Add_Messenger()
 	install_default_programs()
 
 /obj/item/modular_computer/proc/install_default_programs()
@@ -153,7 +150,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
-	Remove_Messenger()
 
 	if(istype(inserted_disk))
 		QDEL_NULL(inserted_disk)
@@ -830,9 +826,3 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()
-
-/obj/item/modular_computer/proc/Add_Messenger()
-	GLOB.TabletMessengers += src
-
-/obj/item/modular_computer/proc/Remove_Messenger()
-	GLOB.TabletMessengers -= src
