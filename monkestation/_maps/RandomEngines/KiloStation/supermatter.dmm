@@ -88,7 +88,6 @@
 	network = list("ss13","engine")
 	},
 /obj/machinery/light_switch/directional/west,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "fx" = (
@@ -137,7 +136,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gZ" = (
@@ -158,7 +156,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Secure Storage Toggle";
@@ -416,6 +413,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "qj" = (
@@ -424,7 +422,6 @@
 /obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ql" = (
@@ -608,6 +605,7 @@
 "vx" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "vD" = (
@@ -1074,7 +1072,6 @@
 /obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "JH" = (
@@ -1155,7 +1152,6 @@
 /area/station/engineering/supermatter/room)
 "LM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1217,7 +1213,6 @@
 /obj/item/geiger_counter,
 /obj/structure/table,
 /obj/structure/sign/warning/xeno_mining/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "NC" = (
@@ -1245,7 +1240,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/south,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Pp" = (
@@ -1293,13 +1287,6 @@
 "QA" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"QB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "RA" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -1328,6 +1315,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/meter,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Su" = (
@@ -1481,7 +1469,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "WZ" = (
@@ -1737,10 +1724,10 @@ LM
 hj
 fj
 ML
-de
+Fu
 ma
 Fu
-Fu
+de
 xG
 VI
 vD
@@ -1756,8 +1743,8 @@ lV
 vD
 RV
 vx
-QB
-QB
+JH
+JH
 pJ
 Si
 JH
