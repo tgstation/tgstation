@@ -17663,6 +17663,7 @@
 /obj/item/scalpel{
 	pixel_y = 11
 	},
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "eRb" = (
@@ -31252,6 +31253,7 @@
 /area/station/medical/chemistry)
 "jZa" = (
 /obj/machinery/light/small/directional/west,
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "jZb" = (
