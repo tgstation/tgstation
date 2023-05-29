@@ -4996,7 +4996,8 @@
 /obj/structure/bed/dogbed,
 /mob/living/basic/pet/dog/bullterrier{
 	name = "Walter";
-	real_name = "Walter"
+	real_name = "Walter";
+	desc = "It's Walter!"
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
