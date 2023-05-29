@@ -56,3 +56,10 @@
 /datum/log_category/speech_indicator
 	category = LOG_CATEGORY_SPEECH_INDICATOR
 	config_flag = /datum/config_entry/flag/log_speech_indicators
+
+// Logs seperately, printed into on server shutdown to store hard deletes and such
+/datum/log_category/debug_qdel
+	category = LOG_CATEGORY_QDEL
+	// We want this human readable so it's easy to see at a glance
+	entry_flags = ENTRY_USE_DATA_W_READABLE
+	internal_formatting = FALSE
