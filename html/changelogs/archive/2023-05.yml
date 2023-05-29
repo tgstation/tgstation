@@ -1060,3 +1060,56 @@
   - spellcheck: fixed a typo in custom item description in northstar
   mc-oofert:
   - bugfix: soap suicide
+2023-05-29:
+  FeudeyTF:
+  - code_imp: Updated the UI of the console for viewing message logs and console for
+      view server communications
+  Guillaume Prata:
+  - rscadd: Air alarms will now talk about their atmospheric problems (low/high pressure/temperature)
+      so players can understand what is the room's issue easier.
+  HWSensum:
+  - rscadd: added a mail counterfeit device that can make custom (and also armed)
+      mails. Traitors have those devices in their uplinks.
+  - rscadd: added new kit for QM and Cargo Technicians that have multiple mail counterfeit
+      devices for neat price.
+  - bugfix: fixed envelopes that were giving only their first item, even tho they
+      had two items insede.
+  - image: added new icon for mail counterfeit device.
+  JohnFulpWillard:
+  - balance: Newly created areas in Icemoon and Space are no longer valid Cult areas
+      for Runes and such.
+  LT3:
+  - qol: Being connected to an IV now has a visual indicator
+  MTandi:
+  - qol: dead potted plant can be revived with a seed
+  - qol: Solar control console now shows power generation history
+  Melbert:
+  - qol: Gun Flipping is now done by right clicking the gun when it's in your active
+      hand ("use secondary"), meaning you should be less likely to accidentally spin
+      your gun instead of ejecting rounds / racking / etc.
+  - qol: You can gun flip all guns, instead of just ballistics. This includes stuff
+      like wands.
+  Sealed101:
+  - bugfix: exorcised a ghost of the gang gamemode from graffiti
+  SethLafuente:
+  - rscadd: Added 3 new spider types
+  - rscadd: Added more spider abilities
+  - balance: Rebalanced spiders
+  - bugfix: Fixes spiderlings having density
+  Seven:
+  - bugfix: Fixes epipens, pillbottles, and test tubes missing texture when put into
+      suit storage
+  - bugfix: A paper hat no longer appears on your head when putting paper into suit
+      storage
+  - rscadd: The paper hat is now a craftable item
+  - image: Pills and patches are no longer visible on a person when put into suit
+      storage
+  SyncIt21:
+  - bugfix: stabilized metal slime extract properly increments stacks so that it's
+      appearance & weight are updated correctly & is picked up by material sniffers.
+  axietheaxolotl / viro:
+  - image: new medkit sprites, again.
+  mikederkan:
+  - rscadd: Made disposals outlets launch with more range depending on the setting
+      used
+  - rscadd: Made disposals outlets emag effect irreversible without reconstruction
