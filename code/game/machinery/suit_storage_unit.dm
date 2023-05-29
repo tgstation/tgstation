@@ -70,6 +70,10 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
 	mask_type = /obj/item/clothing/mask/breath
 
+// intended for space ruins, to take pressure away from using station jetpacks
+/obj/machinery/suit_storage_unit/standard_unit/jetpack
+	storage_type = /obj/item/tank/jetpack/carbondioxide
+
 /obj/machinery/suit_storage_unit/spaceruin
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space

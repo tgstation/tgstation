@@ -834,7 +834,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/standard_unit/jetpack,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/crashedship/midship)
 "EW" = (

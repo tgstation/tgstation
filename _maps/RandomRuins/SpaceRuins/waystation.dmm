@@ -2944,7 +2944,7 @@
 "YD" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/standard_unit/jetpack,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
 "YX" = (

@@ -382,7 +382,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "LT" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/standard_unit/jetpack,
 /obj/machinery/power/terminal{
 	dir = 4
 	},

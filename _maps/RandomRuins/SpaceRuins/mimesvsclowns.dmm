@@ -88,7 +88,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "vj" = (
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/standard_unit/jetpack,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "vs" = (
