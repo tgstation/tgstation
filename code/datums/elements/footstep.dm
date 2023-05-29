@@ -168,13 +168,13 @@
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
-	var/turf/open/turf = get_turf(source)
-	if(!istype(turf))
+	var/turf/open/source_loc = get_turf(source)
+	if(!istype(source_loc))
 		return
 
 	if(source.check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
 		return
 
-	playsound(turf, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
 
 #undef SHOULD_DISABLE_FOOTSTEPS
