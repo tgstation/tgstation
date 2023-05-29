@@ -103,6 +103,9 @@
 
 /// Have to process to ignite any gas that comes in the turf
 /obj/machinery/igniter/process()
+	if(!on)
+		return 1
+
 	var/turf/location = loc
 	if(!isturf(location) || !isopenturf(location)) //don't ignite stuff inside walls
 		on = FALSE
