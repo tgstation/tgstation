@@ -101,19 +101,21 @@
 /datum/ai_behavior/eat_fetched_snack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
 	var/obj/item/snack = controller.blackboard[target_key]
-	if(QDELETED(snack))
-		finish_action(controller, FALSE) // Where did it go?
 	var/is_living_loc = isliving(snack.loc)
 	if(QDELETED(snack) || (!isturf(snack.loc) && !is_living_loc))
 		finish_action(controller, FALSE) // Where did it go?
+		return
 
 	var/mob/living/basic/basic_pawn = controller.pawn
-	if(!is_living_loc)
-		if(!basic_pawn.Adjacent(snack))
-			return
-		basic_pawn.melee_attack(snack) // snack attack!
-	else if(SPT_PROB(10, seconds_per_tick))
-		basic_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
+	if(is_living_loc)
+		if(SPT_PROB(10, seconds_per_tick))
+			basic_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
+		return
+
+	if(!basic_pawn.Adjacent(snack))
+		return
+
+	basic_pawn.melee_attack(snack) // snack attack!
 
 	if(QDELETED(snack)) // we ate it!
 		finish_action(controller, TRUE, target_key, delivery_key)
