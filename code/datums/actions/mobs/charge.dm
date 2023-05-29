@@ -173,6 +173,7 @@
 	cooldown_time = 6 SECONDS
 	charge_delay = 1.5 SECONDS
 	charge_distance = 4
+	melee_cooldown_time = 0
 	/// How long to shake for before charging
 	var/shake_duration = 1 SECONDS
 	/// Intensity of shaking animation

@@ -1,0 +1,10 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "precise insertion of sheets into material container (e.g. drone dispenser) works again"
+  - bugfix: "recycler properly recycles all contents inside a storage medium like a backpack & even inert bag of holding"
+  - bugfix: "gaining extra metal after recycling ammo boxes"
+  - qol: "recycler consumes only half the power when recycling item's that has no material"
+  - qol: "you can fill up your bag with iron, glass, whatever material and attack the autolathe/ore silo with it to transfer all it's contents into it"
+  - refactor: "`/datum/component/material_container/insert_item()` now splits stack, deletes the inserted item & calls the\n`after_insert` callback"
+  - refactor: "`/datum/component/material_container/user_insert()` now extracts material from all the contents of an atom reccursively"

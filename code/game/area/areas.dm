@@ -500,8 +500,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_light = FALSE
 	power_environ = FALSE
 	always_unpowered = FALSE
-	area_flags &= ~VALID_TERRITORY
-	area_flags &= ~BLOBS_ALLOWED
+	area_flags &= ~(VALID_TERRITORY|BLOBS_ALLOWED|CULT_PERMITTED)
 	require_area_resort()
 /**
  * Set the area size of the area

@@ -181,3 +181,6 @@
 	#define DISARM_SHOVE_HANDLED (1<<0)
 
 #define COMSIG_LIVING_ATTACKED_BY "living_attacked_by"
+
+/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
+#define COMSIG_AFTER_INJECT "after_inject"

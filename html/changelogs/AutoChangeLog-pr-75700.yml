@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes:
+  - balance: "Syndicate corpses dropped from killing a Legion no longer come with a MODSuit."

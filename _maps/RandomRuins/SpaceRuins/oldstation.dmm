@@ -181,9 +181,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "aO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
@@ -444,9 +442,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "bP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -718,7 +714,7 @@
 /area/ruin/space/ancientstation/delta/proto)
 "cF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -4114,9 +4110,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "od" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -4222,9 +4216,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "ow" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/broken/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -5098,9 +5090,7 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "vp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -5497,7 +5487,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "yQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/plasma/spawner/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "yS" = (
@@ -5715,9 +5705,7 @@
 /turf/closed/mineral/plasma,
 /area/ruin/space/ancientstation/beta/hall)
 "Ay" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
@@ -5745,9 +5733,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "AM" = (
 /obj/machinery/light/small/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -5940,9 +5926,7 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Cz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -6883,12 +6867,10 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/periodic_table/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Ke" = (
@@ -7572,9 +7554,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "PZ" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7710,9 +7690,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "RA" = (
@@ -8319,9 +8297,7 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "XU" = (
 /obj/machinery/light/small/directional/west,
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
+/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
@@ -8393,9 +8369,7 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Yl" = (

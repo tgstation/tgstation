@@ -71,6 +71,7 @@
 			var/list/event_call = list(event_type)
 			if (event_type == TGS_EVENT_WATCHDOG_DETACH)
 				detached = TRUE
+				chat_channels.Cut() // https://github.com/tgstation/tgstation-server/issues/1490
 
 			if(event_parameters)
 				event_call += event_parameters
