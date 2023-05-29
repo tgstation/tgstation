@@ -2238,7 +2238,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = perk_type,
 			SPECIES_PERK_ICON = "biohazard",
 			SPECIES_PERK_NAME = perk_name,
-			SPECIES_PERK_DESC = "[plural_form] livers are capable of rapidly shrugging off [tox_shrugging]u of toxins, which is [more_or_less] than humans."
+			SPECIES_PERK_DESC = "[name] livers are capable of rapidly shrugging off [tox_shrugging]u of toxins, which is [more_or_less] than humans."
 		))
 
 	return to_add

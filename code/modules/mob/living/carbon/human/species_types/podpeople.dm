@@ -84,7 +84,7 @@
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "lightbulb",
 		SPECIES_PERK_NAME = "Photosynthetic",
-		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
+		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
 		However, if you are LOW on nutrition, you will progressively take brute damage until you die or enter the light once more."
 	))
 
@@ -99,7 +99,8 @@
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "briefcase-medical",
 		SPECIES_PERK_NAME = "Semi-Complex Biology",
-		SPECIES_PERK_DESC = "Your biology is extremely complex, and ordinary health analyzers will be unable to scan you!"
+		SPECIES_PERK_DESC = "Your biology is extremely complex, making ordinary health scanners unable to scan you. Make sure the doctor treating you either has a \
+		plant analyzer or a advanced health scanner!"
 	))
 
 	return to_add
