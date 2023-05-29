@@ -38,9 +38,12 @@
 	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
 
 /obj/machinery/igniter/welder_act(mob/living/user, obj/item/tool)
+	if(on)
+		return
+
 	if(!tool.tool_start_check(user, amount = 2))
 		balloon_alert(user, "not enough fuel!")
-		return TRUE
+		return
 
 	user.visible_message(span_notice("[user] begins to dismantle [src]."),\
 			span_notice("You start to unweld \the [src]..."))
