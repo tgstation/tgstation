@@ -20,11 +20,7 @@
 
 
 	overfloor_placed = TRUE
-
-	/// Determines the type of damage overlay that will be used for the tile
-	var/damaged_dmi = 'icons/turf/damaged.dmi'
-	var/broken = FALSE
-	var/burnt = FALSE
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
 	/// Determines if you can deconstruct this with a RCD
@@ -32,33 +28,16 @@
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-
-	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
-		var/static/list/previous_errors = list()
-
-		if (!(type in previous_errors))
-			if (broken != (icon_state in broken_states()))
-				stack_trace("[icon_state] (from [type]), which should be [broken ? "NOT broken, IS" : "broken, IS NOT"]")
-				previous_errors[type] = TRUE
-
-			if (burnt != (icon_state in burnt_states()))
-				stack_trace("[icon_state] (from [type]), which should be [burnt ? "NOT burnt, IS" : "burnt, IS NOT"]")
-				previous_errors[type] = TRUE
-
 	if(mapload && prob(33))
 		MakeDirty()
 
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/// Returns a list of every turf state considered "broken".
-/// Will be randomly chosen if a turf breaks at runtime.
-/turf/open/floor/proc/broken_states()
+/turf/open/floor/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/// Returns a list of every turf state considered "burnt".
-/// Will be randomly chosen if a turf is burnt at runtime.
-/turf/open/floor/proc/burnt_states()
+/turf/open/floor/burnt_states()
 	return list()
 
 /turf/open/floor/Destroy()
@@ -122,29 +101,6 @@
 	if(!istype(T))
 		return
 	T.break_tile()
-
-/turf/open/floor/break_tile()
-	if(broken)
-		return
-	broken = TRUE
-	update_appearance()
-
-/turf/open/floor/burn_tile()
-	if(burnt)
-		return
-	burnt = TRUE
-	update_appearance()
-
-/turf/open/floor/update_overlays()
-	. = ..()
-	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states()))
-	else if(burnt)
-		var/list/burnt_states = burnt_states()
-		if(burnt_states.len)
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
-		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states()))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)

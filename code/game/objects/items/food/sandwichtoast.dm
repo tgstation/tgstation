@@ -242,6 +242,21 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/toast_sandwich
+	name = "toast sandwich"
+	desc = "A piece of buttered toast between two slices of bread. Why would you make this?"
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "toast_sandwich"
+	bite_consumption = 3
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("bread" = 2, "Britain" = 1, "butter" = 1, "toast" = 1)
+	foodtypes = GRAIN
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/death_sandwich
 	name = "death sandwich"
 	desc = "Eat it right, or you die!"
@@ -257,6 +272,10 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
+
+/obj/item/food/death_sandwich/Initialize(mapload)
+	. = ..()
+	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
 
 ///Override for checkliked callback
 /obj/item/food/death_sandwich/make_edible()
