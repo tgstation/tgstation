@@ -5487,6 +5487,7 @@
 #include "monkestation\code\modules\pissing\piss_virus.dm"
 #include "monkestation\code\modules\pools\_pool.dm"
 #include "monkestation\code\modules\pools\pool_liquid_group.dm"
+#include "monkestation\code\modules\pools\pool_attachments\pool_pump.dm"
 #include "monkestation\code\modules\power\singularity\rad_collector.dm"
 #include "monkestation\code\modules\power\singularity\singularity_generator.dm"
 #include "monkestation\code\modules\power\singularity\particle_accelerator\particle.dm"

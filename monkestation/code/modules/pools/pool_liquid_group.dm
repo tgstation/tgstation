@@ -1,6 +1,8 @@
 /datum/liquid_group/pool_group
 	///list of all merger turfs, we can only spread in these turfs
 	var/list/merger_turfs = list()
+	///the connected pump used when new pumps try and attach
+	var/obj/machinery/pool_pump/connected_pump
 	///we do not evaporate
 	evaporates = FALSE
 	///we do not merge
@@ -12,6 +14,9 @@
 	. = ..()
 	for(var/turf/open/floor/lowered/iron/pool/pool_turf as anything in merger_turfs) /// pool is drained now we remove the pool references
 		pool_turf.cached_group = null
+	if(connected_pump)
+		connected_pump.attached_group = null
+		connected_pump = null
 
 /datum/liquid_group/pool_group/spread_liquid(turf/new_turf, turf/source_turf)
 	if(isclosedturf(new_turf) || !source_turf.atmos_adjacent_turfs)

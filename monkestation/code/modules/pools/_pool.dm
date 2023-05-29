@@ -27,11 +27,11 @@
 	GetMergeGroup(merger_id, merger_typecache)
 
 
-/turf/open/floor/lowered/iron/pool/proc/start_fill(datum/reagent/filling_reagent, base_amount)
+/turf/open/floor/lowered/iron/pool/proc/start_fill(list/reagent_list, temperature = 300)
 	if(!cached_group)
 		var/datum/liquid_group/pool_group/pool_group = new
-		pool_group.add_reagent(src, filling_reagent, base_amount, 300)
 		src.liquids = new(src, pool_group)
+		pool_group.add_reagents(src.liquids, reagent_list, temperature)
 		src.liquids.liquid_group = pool_group
 		pool_group.check_edges(src)
 		cached_group = pool_group
@@ -43,4 +43,4 @@
 
 
 /turf/open/floor/lowered/iron/pool/proc/debug_pool_startup()
-	start_fill(/datum/reagent/water, 300)
+	start_fill(list(/datum/reagent/water = 300), 300)
