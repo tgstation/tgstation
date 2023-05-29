@@ -1,5 +1,5 @@
 /datum/attack_style/unarmed/generic_damage/limb_based/punch
-	default_attack_verb = "punch" // The classic punch, wonderfully classic and completely random
+	default_attack_verb = "punch"
 	/// Amount of bonus stamina damage to apply in addition to the main attack type
 	var/bonus_stamina_damage_modifier = 1.5
 

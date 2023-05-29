@@ -117,8 +117,8 @@
 /datum/status_effect/blocking/proc/on_attacked(mob/living/source, atom/movable/hitby, damage, attack_text, attack_type, armour_penetration)
 	SIGNAL_HANDLER
 
-	// if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
-	//	return NONE
+	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
+		return NONE
 
 	if(isobj(hitby))
 		var/obj/obj_hit = hitby

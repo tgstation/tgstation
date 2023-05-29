@@ -33,7 +33,7 @@
 
 	return ..()
 
-/mob/living/carbon/divert_to_attack_style(atom/attack_target, list/modifiers)
+/mob/living/carbon/execute_unarmed_attack_style(atom/attack_target, list/modifiers)
 	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb(attack_target) || get_active_hand()
 	var/datum/attack_style/hit_style
@@ -145,7 +145,7 @@
 		Move_Pulled(A)
 		return TRUE
 
-	if(divert_to_attack_style(A, modifiers))
+	if(execute_unarmed_attack_style(A, modifiers))
 		return TRUE
 
 /mob/living/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
@@ -153,7 +153,7 @@
 	if(.)
 		return
 
-	if(divert_to_attack_style(atom_target, modifiers))
+	if(execute_unarmed_attack_style(atom_target, modifiers))
 		return TRUE
 
 
@@ -179,12 +179,21 @@
 		Move_Pulled(attack_target)
 		return TRUE
 
-	if(divert_to_attack_style(attack_target, modifiers))
+	if(execute_unarmed_attack_style(attack_target, modifiers))
 		return TRUE
 
 	return FALSE
 
-/mob/living/proc/divert_to_attack_style(atom/attack_target, list/modifiers)
+/**
+ * This proc is used in item-less click chain to execute unarmed attacks.
+ *
+ * * attack_target - The atom that was clicked on, the direction the attack swing is going.
+ * * modifiers - click modifiers lazylist, such as right click.
+ *
+ * Return TRUE if an attack was executed, successful or not
+ * Return FALSE if no style was executed
+ */
+/mob/living/proc/execute_unarmed_attack_style(atom/attack_target, list/modifiers)
 	var/datum/attack_style/hit_style
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		hit_style = default_disarm_style
@@ -202,6 +211,15 @@
 		return TRUE
 	return FALSE
 
+/**
+ * This proc is used in item-less click chain to execute unarmed attacks,
+ * solely for situations where the mob has their hands blocked
+ *
+ * * attack_target - The atom that was clicked on, the direction the bite is going.
+ *
+ * Return FALSE if no bite was executed
+ * Returns TRUE or FALSE depending on the result of the bite (successfully executed or not)
+ */
 /mob/living/proc/handle_bite(atom/attack_target)
 	if(!combat_mode)
 		return FALSE
@@ -283,10 +301,9 @@
 	return target.attack_alien_secondary(src, modifiers)
 
 /**
- * This is called when an xenomorphs ([/mob/living/carbon/alien]) clicks on this atom with an empty hand in melee range.
+ * This is called when a [xenomorphs][/mob/living/carbon/alien] clicks on this atom with an empty hand in melee range.
  *
  * By default it ends up doing identical behavior to monkeys (attack_paw)
- *
  */
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	return attack_paw(user, modifiers)

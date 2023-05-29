@@ -216,16 +216,13 @@
 	reverse_for_lefthand = FALSE
 
 /datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description()
-	return "It swings out to all adjacent tiles besides directly behind you. It must be active to swing."
+	return "It swings out to all adjacent tiles besides directly behind you. It must be active to swing. Right-clicking will swing in the opposite direction."
 
 /datum/attack_style/melee_weapon/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	var/behind_us = REVERSE_DIR(attack_direction)
-	var/list/cone_turfs = list()
-	for(var/around_dir in GLOB.alldirs)
-		if(around_dir & behind_us)
-			continue
-		var/turf/found_turf = get_step(attacker, around_dir)
-		if(istype(found_turf))
-			cone_turfs += found_turf
-
-	return cone_turfs
+	var/list/turfs_in_order = list()
+	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90))
+	turfs_in_order |= get_step(attacker, attack_direction)
+	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, -90))
+	if(right_clicking)
+		reverse_range(turfs_in_order)
+	return turfs_in_order

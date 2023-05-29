@@ -1,4 +1,3 @@
-
 /datum/attack_style/unarmed/disarm
 	attack_effect = ATTACK_EFFECT_DISARM
 	successful_hit_sound = 'sound/weapons/thudswoosh.ogg'

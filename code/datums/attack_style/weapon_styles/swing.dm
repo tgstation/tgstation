@@ -37,9 +37,10 @@
 	)
 
 /datum/attack_style/melee_weapon/swing/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
-	. = get_turfs_and_adjacent_in_direction(attacker, attack_direction)
+	var/list/swing_turfs = get_turfs_and_adjacent_in_direction(attacker, attack_direction)
 	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
-		reverse_range(.)
+		reverse_range(swing_turfs)
+	return swing_turfs
 
 // Swing for weapons which require being wielded
 /datum/attack_style/melee_weapon/swing/requires_wield

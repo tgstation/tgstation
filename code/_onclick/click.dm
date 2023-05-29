@@ -31,7 +31,6 @@
 	for(var/hand in hud_used?.hand_slots)
 		var/atom/movable/screen/inventory/hand/handy = hud_used.hand_slots[hand]
 		handy.update_appearance()
-		// if(handy % 2 == 0)
 		START_PROCESSING(SSfastprocess, handy)
 
 /**
@@ -617,10 +616,19 @@
 
 	return FALSE
 
-/mob/proc/select_attack_style(obj/item/holding)
+/**
+ * This proc is used in click chain to determine what attack style to use when given certain click parameters.
+ *
+ * * clicked_on - The atom that was clicked on.
+ * * holding - The item that being used to click on clicked_on.
+ *
+ * Return null to not execute any attack style.
+ * Return an attack style singleton to attempt to execute that style.
+ */
+/mob/proc/select_attack_style(atom/clicked_on, obj/item/holding)
 	return null
 
-/mob/living/select_attack_style(mob/living/clicked_on, obj/item/holding)
+/mob/living/select_attack_style(atom/clicked_on, obj/item/holding)
 	. = holding.attack_style
 	if(isnull(.))
 		return null

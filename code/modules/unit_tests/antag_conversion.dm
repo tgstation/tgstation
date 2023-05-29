@@ -21,20 +21,16 @@
 	// Fail state
 	converter.attack_self(leader)
 	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum from being AOE flashed, which is not intended.")
-	leader.next_move = 0
-	leader.next_click = 0
 
 	// Fail state again
 	var/obj/item/clothing/glasses = allocate(/obj/item/clothing/glasses/sunglasses)
 	peasant.equip_to_appropriate_slot(glasses)
-	leader.ClickOn(peasant)
+	click_wrapper(leader, peasant)
 	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum despite being flashproof.")
 	qdel(glasses)
-	leader.next_move = 0
-	leader.next_click = 0
 
 	// Success state
-	leader.ClickOn(peasant)
+	click_wrapper(leader, peasant)
 
 	TEST_ASSERT(peasant.IsParalyzed(), "Peasant was not paralyzed after being flashed by the leader.") // Flash paralyze
 	TEST_ASSERT(peasant.IsStun(), "Peasant was not stunned after being converted by the leader.") // Conversion stun
@@ -62,14 +58,12 @@
 	var/obj/effect/rune/convert/convert_rune = allocate(/obj/effect/rune/convert, run_loc_floor_bottom_left)
 
 	// Fail case
-	cult_a.ClickOn(convert_rune)
+	click_wrapper(cult_a, convert_rune)
 	TEST_ASSERT(!IS_CULTIST(new_cultist), "New cultist became a cultist with only 1 person converting them.")
 	TEST_ASSERT_EQUAL(length(cult_team.members), 1, "Expected cult to have 1 member after the cultist failed to convert anyone.")
-	cult_a.next_move = 0
-	cult_a.next_click = 0
 
 	// Success case
 	cult_b.mind.add_antag_datum(/datum/antagonist/cult)
-	cult_a.ClickOn(convert_rune)
+	click_wrapper(cult_a, convert_rune)
 	TEST_ASSERT(IS_CULTIST(new_cultist), "New cultist did not become a cultist after being converted by two people.")
 	TEST_ASSERT_EQUAL(length(cult_team.members), 3, "Expected cult to have 3 members after the cultists convert the new cultist.")

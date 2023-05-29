@@ -248,6 +248,9 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
+	/// Default attack style to use when left clicking off of combat mode
 	var/datum/attack_style/unarmed/default_help_style = /datum/attack_style/unarmed/help
+	/// Default attack style to use when left clicking on combat mode
 	var/datum/attack_style/unarmed/default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack
+	/// Default attack style to use when right clicking
 	var/datum/attack_style/unarmed/default_disarm_style = /datum/attack_style/unarmed/disarm

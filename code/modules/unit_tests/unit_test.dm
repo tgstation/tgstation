@@ -140,6 +140,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	return output
 
+/// Helper wrapper for ClickOn that allows click-related unit tests to not need to worry about click cooldowns
+/datum/unit_test/proc/click_wrapper(mob/clicker, atom/clicked_on, params_to_pass)
+	clicker.next_move = -1
+	clicker.next_click = -1
+	clicker.ClickOn(clicked_on, params_to_pass)
+
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
 	var/map_name = SSmapping.config.map_name
