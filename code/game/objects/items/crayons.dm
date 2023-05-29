@@ -102,7 +102,6 @@
 		"face",
 		"guy",
 		"matt",
-		"poseur tag",
 		"prolizard",
 		"revolution",
 		"star",
