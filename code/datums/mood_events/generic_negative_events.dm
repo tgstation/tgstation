@@ -202,7 +202,7 @@
 	description = "THEY NEEEEEEED [unhinged]!!"
 
 /datum/mood_event/paranoid_close
-	description = "This person is too close, he has something in his mind?"
+	description = "This person is too close to me, he has something in his mind?"
 	mood_change = -8
 	timeout = 3 SECONDS
 	hidden = TRUE

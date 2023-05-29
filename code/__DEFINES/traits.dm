@@ -425,6 +425,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HIDE_EXTERNAL_ORGANS "hide_external_organs"
 ///When people are floating from zero-grav or something, we can move around freely!
 #define TRAIT_FREE_FLOAT_MOVEMENT "free_float_movement"
+/// Their eyes are looking around nervously. Used for Renegades (people with Paranoia brain trauma)
+#define TRAIT_NERVOUS_EYES "nervous_eyes"
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind

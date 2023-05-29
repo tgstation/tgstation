@@ -28,6 +28,7 @@
 /datum/antagonist/renegade/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/renegade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
+	to_chat(owner, span_boldannounce("As a Renegade you're a secondary antagonist! You are allowed to escalate when there is any threat to your life, protecting it by any means! But you're not a murderer, you're just extremely scared for your life and paranoid of your surroundings."))
 
 /datum/antagonist/renegade/Destroy()
 	if(trauma)
@@ -63,7 +64,7 @@
 
 /datum/antagonist/renegade/forge_objectives(datum/mind/renegademind)
 	var/datum/objective/survive/survive = new
-	survive.explanation_text = "Survive by any means possible! Whatever it takes you must do it, everyone around are totally plotting against you, from Clown to the Command."
+	survive.explanation_text = "Survive by any means possible, even if it means someone must be hurt! Whatever it takes you must do it, everyone around are totally plotting against you!"
 	survive.owner = owner
 	objectives += survive
 

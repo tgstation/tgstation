@@ -90,6 +90,8 @@
 			. += "<span class='warning'><B>[t_His] eyes are glowing with an unnatural red aura!</B></span>"
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are bloodshot!</B></span>"
+		else if(HAS_TRAIT(src, TRAIT_NERVOUS_EYES))
+			. += "<span class='warning'><B>[t_His] eyes look around nervously!</B></span>"
 
 	//ears
 	if(ears && !(obscured & ITEM_SLOT_EARS) && !(ears.item_flags & EXAMINE_SKIP))

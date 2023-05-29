@@ -66,6 +66,7 @@
 
 /datum/brain_trauma/special/obsessed/on_lose()
 	..()
+	owner.playsound_local(get_turf(owner), 'sound/ambience/ambiholy2.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
 	if(obsession)
 		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)

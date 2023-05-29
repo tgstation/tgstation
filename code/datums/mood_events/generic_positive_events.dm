@@ -117,12 +117,6 @@
 	mood_change = 2
 	hidden = TRUE
 
-/datum/mood_event/paranoid_alone
-	description = "I feel safe when there is no one around me."
-	mood_change = 2
-	timeout = 3 SECONDS
-	hidden = TRUE
-
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
