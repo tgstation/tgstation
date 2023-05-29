@@ -1906,7 +1906,6 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
 
-
 /datum/design/module/patienttransport
 	name = "Patient Transport Module"
 	id = "mod_patienttransport"
