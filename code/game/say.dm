@@ -118,8 +118,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/mob/living/carbon/human/H = speaker
 		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 	else if(visible_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_visible_name()]" //For if the message can be seen but not heard, shows "speaker"'s visible identity (like when using sign language)
+		var/mob/living/carbon/human/human_speaker = speaker
+		namepart = "[human_speaker.get_visible_name()]" //For if the message can be seen but not heard, shows "speaker"'s visible identity (like when using sign language)
 	//End name span.
 	var/endspanpart = "</span>"
 
