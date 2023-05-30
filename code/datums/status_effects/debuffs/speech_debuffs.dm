@@ -202,13 +202,35 @@
 
 	return modified_char
 
-/datum/status_effect/speech/slurring/drunk
-	id = "drunk_slurring"
+/datum/status_effect/speech/slurring/generic
+	id = "generic_slurring"
 	common_prob = 33
-	uncommon_prob = 5
+	uncommon_prob = 0
 	replacement_prob = 5
 	doubletext_prob = 10
 	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk
+	id = "drunk_slurring"
+	// These defaults are updated when speech event occur.
+	common_prob = -1
+	uncommon_prob = -1
+	replacement_prob = -1
+	doubletext_prob = -1
+	text_modification_file = "slurring_drunk_text.json"
+
+/datum/status_effect/speech/slurring/drunk/handle_message(datum/source, list/message_args)
+	var/current_drunkness = owner.get_drunk_amount()
+	// These numbers are arbitarily picked
+	// Common replacements start at about 20, and maxes out at about 85
+	common_prob = clamp((current_drunkness * 0.8) - 16, 0, 50)
+	// Uncommon replacements (burping) start at 50 and max out at 110 (when you are dying)
+	uncommon_prob = clamp((current_drunkness * 0.2) - 10, 0, 12)
+	// Replacements start at 20 and max out at about 60
+	replacement_prob = clamp((current_drunkness * 0.4) - 8, 0, 12)
+	// Double texting start out at about 25 and max out at about 60
+	doubletext_prob = clamp((current_drunkness * 0.5) - 12, 0, 20)
+	return ..()
 
 /datum/status_effect/speech/slurring/cult
 	id = "cult_slurring"

@@ -19,6 +19,7 @@
  *
  * Functionally identical to [QDEL_HINT_QUEUE] if [GC_FAILURE_HARD_LOOKUP] is not enabled in _compiler_options.dm.
 */
+#warn TG0001 qdel REFERENCE_TRACKING enabled
 #define QDEL_HINT_FINDREFERENCE 5
 /// Behavior as [QDEL_HINT_FINDREFERENCE], but only if the GC fails and a hard delete is forced.
 #define QDEL_HINT_IFFAIL_FINDREFERENCE 6

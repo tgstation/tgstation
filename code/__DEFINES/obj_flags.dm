@@ -6,14 +6,13 @@
 #define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
 #define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
 #define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
-#define USES_TGUI (1<<5) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define BLOCK_Z_OUT_DOWN (1<<6)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<7) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<8) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<9) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<10) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<11) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<12) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define BLOCK_Z_OUT_DOWN (1<<5)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP (1<<6) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
+#define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
+#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
+#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -98,6 +97,8 @@
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
 /// Currently used to identify valid guns to steal
 #define NOT_A_REAL_GUN (1<<1)
+/// This gun shouldn't be allowed to go in a turret (it probably causes a bug/exploit)
+#define TURRET_INCOMPATIBLE (1<<2)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

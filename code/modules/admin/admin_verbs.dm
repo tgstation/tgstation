@@ -91,6 +91,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
+	/client/proc/log_viewer_new,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -209,6 +210,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/populate_world,
 	/client/proc/pump_random_event,
 	/client/proc/print_cards,
+	/client/proc/reestablish_tts_connection,
 	/client/proc/reload_cards,
 	/client/proc/reload_configuration,
 	/client/proc/restart_controller,
