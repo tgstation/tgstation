@@ -964,7 +964,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(IS_CULTIST(owner))
-		if(attack_type = PROJECTILE_ATTACK)
+		if(attack_type == PROJECTILE_ATTACK)
 			if(damage_type == BRUTE || damage_type == BURN)
 				if(damage >= 30)
 					var/turf/T = get_turf(owner)
