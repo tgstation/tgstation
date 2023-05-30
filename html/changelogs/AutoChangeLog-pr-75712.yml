@@ -1,0 +1,4 @@
+author: "Kubisopplay"
+delete-after: True
+changes:
+  - qol: "Admins can make a portal not spark when teleporting"
