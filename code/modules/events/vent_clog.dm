@@ -158,7 +158,7 @@
 	playsound(spawn_location, 'sound/effects/splat.ogg', 30, TRUE)
 
 ///Signal catcher for plunger_act()
-/datum/round_event/vent_clog/proc/plunger_unclog(datum/source, obj/item/plunger/P, mob/user, reinforced)
+/datum/round_event/vent_clog/proc/plunger_unclog(datum/source, obj/item/plunger/attacking_plunger, mob/user, reinforced)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_unclog), user)
 	return COMPONENT_NO_AFTERATTACK
@@ -188,8 +188,7 @@
 
 ///Clears the signals related to the event, before we wrap things up.
 /datum/round_event/vent_clog/proc/clear_signals()
-	UnregisterSignal(vent, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(vent, COMSIG_PLUNGER_ACT)
+	UnregisterSignal(vent, list(COMSIG_PARENT_QDELETING, COMSIG_PLUNGER_ACT))
 
 /datum/round_event_control/vent_clog/major
 	name = "Ventilation Clog: Major"
