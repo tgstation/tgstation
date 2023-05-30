@@ -12,6 +12,7 @@
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
+	pinless = TRUE
 	attack_verb_continuous = list("whipped", "cracked")
 	attack_verb_simple = list("whip", "crack")
 	weapon_weight = WEAPON_HEAVY
