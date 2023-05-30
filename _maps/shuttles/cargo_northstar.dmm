@@ -11,21 +11,20 @@
 /area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
-	dir = 5;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "g" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "QMLoad2"
-	},
 /obj/machinery/door/poddoor{
-	id = "QMLoaddoor2";
+	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
-/obj/structure/fans/tiny,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "h" = (
@@ -57,17 +56,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "p" = (
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor";
-	name = "Loading Doors";
-	pixel_y = -8
+/obj/machinery/conveyor_switch/oneway{
+	id = "QMLoad"
 	},
-/obj/machinery/button/door/directional/east{
-	id = "QMLoaddoor2";
-	name = "Loading Doors";
-	pixel_y = 8
-	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/pod/light,
 /area/shuttle/supply)
 "q" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -90,11 +82,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad"
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 1
 	},
-/turf/open/floor/catwalk_floor/iron,
+/obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/turf/open/floor/pod/light,
 /area/shuttle/supply)
 "w" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -105,13 +97,16 @@
 /area/shuttle/supply)
 "z" = (
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "C" = (
-/obj/machinery/light/red/directional/west,
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "QMLoad"
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "D" = (
@@ -119,6 +114,10 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"F" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "G" = (
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
@@ -147,47 +146,54 @@
 /turf/open/floor/pod/light,
 /area/shuttle/supply)
 "T" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad"
-	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
-/obj/structure/fans/tiny,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad"},
 /turf/open/floor/plating,
+/area/shuttle/supply)
+"Y" = (
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_y = -9;
+	pixel_x = 0
+	},
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/supply)
 
 (1,1,1) = {"
 i
-h
+w
+w
 i
+w
+w
 i
-i
-i
-i
-i
-i
+w
+w
 i
 s
 "}
 (2,1,1) = {"
 h
-x
 C
 x
+F
 x
 x
+F
 x
-C
 x
 I
 o
 "}
 (3,1,1) = {"
 w
-x
+f
 j
 k
 k
@@ -200,7 +206,7 @@ u
 "}
 (4,1,1) = {"
 w
-x
+f
 t
 N
 N
@@ -229,11 +235,11 @@ i
 g
 h
 T
-h
+Y
 G
-h
-h
-h
+i
+w
+w
 i
 s
 "}
