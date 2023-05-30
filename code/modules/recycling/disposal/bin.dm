@@ -563,6 +563,7 @@
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
 /obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
 	SIGNAL_HANDLER
 	if(!items_to_sweep)

@@ -50,6 +50,7 @@
 	playsound(loc, close_sound, 15, TRUE, -3)
 	update_appearance()
 
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
 /obj/structure/closet/crate/bin/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
 	SIGNAL_HANDLER
 
