@@ -77,7 +77,7 @@
 	if(number != 0)
 		icon_state = null
 		base_icon_state = null
-		update_overlays()
+		update_appearance()
 
 	else
 		icon_state = initial(icon_state)
