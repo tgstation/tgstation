@@ -236,7 +236,6 @@
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
 					message = "Only [inserted] amount of [item_name] could be consumed by [parent]."
-					return
 
 			//collect all messages to print later
 			if(!message)
