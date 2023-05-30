@@ -86,7 +86,7 @@
 	name = "custodial holobarrier projector"
 	desc = "A holographic projector that creates hard light wet floor barriers."
 	holosign_type = /obj/structure/holosign/barrier/wetsign
-	creation_time = 0.6 SECONDS
+	creation_time = 1 SECONDS
 	max_signs = 12
 
 /obj/item/holosign_creator/security
