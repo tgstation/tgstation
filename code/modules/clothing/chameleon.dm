@@ -363,8 +363,7 @@
 	..()
 	var/obj/item/modular_computer/pda/agent_pda = target
 	if(istype(agent_pda) && istype(job_datum))
-		agent_pda.saved_job = job_datum.title
-
+		agent_pda.imprint_id(job_name = job_datum.title)
 
 /obj/item/clothing/under/chameleon
 //starts off as black

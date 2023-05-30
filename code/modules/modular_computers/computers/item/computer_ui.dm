@@ -197,10 +197,8 @@
 						return TRUE
 
 		if("PC_Imprint_ID")
-			saved_identification = computer_id_slot.registered_name
-			saved_job = computer_id_slot.assignment
+			imprint_id()
 			UpdateDisplay()
-
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		if("PC_Pai_Interact")

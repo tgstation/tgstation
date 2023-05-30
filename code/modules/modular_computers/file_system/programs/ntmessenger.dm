@@ -1,3 +1,64 @@
+GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/registered_messenger) // a list of all active and visible messengers
+GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // same as above except it contains all hidden messengers
+
+///A struct that describes
+/datum/registered_messenger
+	var/name = ""
+	var/job = ""
+	var/datum/computer_file/program/messenger/program = null
+
+/datum/registered_messenger/New(name, job, program)
+	src.name = name
+	src.job = job
+	src.program = program
+
+///Registers an NTMessenger instance to the list of TabletMessengers. If it exists, updates it.
+/proc/add_messenger(obj/item/modular_computer/messenger)
+	// a bunch of empty PDAs are normally allocated, we don't want that clutter
+	if(!messenger.saved_identification || !messenger.saved_job)
+		return
+
+	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
+	if(!istype(msgr))
+		return
+	var/is_hidden = msgr.monitor_hidden // if this runtimes, something went terribly wrong with this PDA
+
+	var/msgr_ref = REF(msgr)
+	var/datum/registered_messenger/pda_struct = new(messenger.saved_identification, messenger.saved_job, msgr)
+
+	var/target_table = is_hidden ? GLOB.SecretTabletMessengers : GLOB.TabletMessengers
+
+	if(msgr_ref in target_table)
+		target_table[msgr_ref] = pda_struct
+	else
+		target_table += list("[msgr_ref]" = pda_struct)
+
+///Unregisters an NTMessenger instance from the TabletMessengers table.
+/proc/remove_messenger(obj/item/modular_computer/messenger)
+	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
+	if(!istype(msgr))
+		return
+
+	var/msgr_ref = REF(msgr)
+
+	var/list/target_table = msgr.monitor_hidden ? GLOB.SecretTabletMessengers : GLOB.TabletMessengers
+
+	if(!(msgr_ref in target_table))
+		return
+	target_table.Remove(msgr_ref)
+
+/proc/get_messengers_sorted(sort_by_job = FALSE)
+	var/sortmode
+	if(sort_by_job)
+		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
+	else
+		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
+
+	return sortTim(GLOB.TabletMessengers.Copy(), sortmode, associative = TRUE)
+
+/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
+	return "[messenger.saved_identification] ([messenger.saved_job])"
+
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
@@ -47,6 +108,12 @@
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
+/datum/computer_file/program/messenger/Destroy(force)
+	if(!QDELETED(computer))
+		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
+	remove_messenger(computer)
+	return ..()
+
 /datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
@@ -56,40 +123,23 @@
 	user.balloon_alert(user, "photo uploaded")
 	return TRUE
 
-/datum/computer_file/program/messenger/proc/ScrubMessengerList()
+/datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
-	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort_by_job))
-		if(messenger.saved_identification && messenger.saved_job && !(messenger == computer))
-			var/list/data = list()
-			data["name"] = messenger.saved_identification
-			data["job"] = messenger.saved_job
-			data["ref"] = REF(messenger)
+	var/list/messengers_sorted = get_messengers_sorted(sort_by_job)
 
-			//if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
-			dictionary += list(data["ref"] = data)
+	for(var/messenger_ref in messengers_sorted)
+		var/datum/registered_messenger/messenger = messengers_sorted[messenger_ref]
+		if(messenger.program == src) continue
 
-	return dictionary
+		var/list/data = list()
+		data["name"] = messenger.name
+		data["job"] = messenger.job
+		data["ref"] = REF(messenger.program)
 
-/proc/GetViewableDevices(sort_by_job = FALSE)
-	var/list/dictionary = list()
-
-	var/sortmode
-	if(sort_by_job)
-		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
-	else
-		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
-
-	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
-		for(var/datum/computer_file/program/messenger/app in P.stored_files)
-			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
-				continue
-			dictionary += P
+		dictionary += list(data["ref"] = data)
 
 	return dictionary
-
-/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
-	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
 	if(saved_image)
@@ -169,29 +219,30 @@
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
 
-			var/obj/item/modular_computer/target = locate(params["ref"])
-			if(!target)
-				return // we don't want tommy sending his messages to nullspace
+			var/target_ref = params["ref"]
 
-			if(!(target.saved_identification == params["name"] && target.saved_job == params["job"]))
+			if(!(target_ref in GLOB.TabletMessengers) || !(target_ref in GLOB.SecretTabletMessengers))
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return UI_UPDATE
 
-			for(var/datum/computer_file/program/messenger/app in computer.stored_files)
-				if(!app.sending_and_receiving && !sending_virus)
-					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
-					return
+			var/datum/computer_file/program/messenger/target = locate(target_ref)
+			if(!istype(target))
+				return // we don't want tommy sending his messages to nullspace
 
-				if(sending_virus)
-					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
-					if(istype(disk))
-						disk.send_virus(computer, target, usr)
-						update_static_data(usr, ui)
-						return TRUE
+			if(!target.sending_and_receiving && !sending_virus)
+				to_chat(usr, span_notice("ERROR: Recipient has receiving disabled."))
+				return
 
+			if(sending_virus)
+				CRASH("not implemented")
+				/* var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+				if(istype(disk))
+					disk.send_virus(computer, target, usr)
+					update_static_data(usr, ui)
+					return TRUE */
 
-				send_message(usr, list(target), params["msg"])
-				return TRUE
+			send_message(usr, list(target), params["msg"])
+			return TRUE
 
 		if("PDA_clearPhoto")
 			saved_image = null
@@ -221,7 +272,7 @@
 	data["owner"] = list(
 		"name" = computer.saved_identification,
 		"job" = computer.saved_job,
-		"ref" = REF(computer),
+		"ref" = REF(src),
 	)
 	data["is_silicon"] = issilicon(user)
 
@@ -230,7 +281,7 @@
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = list()
 
-	var/list/messengers = ScrubMessengerList()
+	var/list/messengers = get_messengers()
 	// im very unhappy about this, but pda code has forced my hand
 	if(viewing_messages_of && !(viewing_messages_of in messengers))
 		viewing_messages_of = null
@@ -255,8 +306,8 @@
 //////////////////////
 
 ///Brings up the quick reply prompt to send a message.
-/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, obj/item/modular_computer/target)
-	var/target_name = target.saved_identification
+/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/computer_file/program/messenger/target)
+	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]")
 	send_message(usr, list(target), input_message)
 
@@ -268,12 +319,18 @@
 	return sanitize(message)
 
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
-	send_message(user, null, message, everyone = TRUE)
+	var/list/targets = list()
+	for(var/mc in get_messengers())
+		targets += mc
+	send_message(user, targets, message, everyone = TRUE)
 
-///Sends a message via PDA. Recipient is either `target` or all viewable devices depending on if `everyone` is true.
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, obj/item/modular_computer/target, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+///Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/datum/computer_file/program/messenger/targets, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!user.can_perform_action(computer))
 		return
+
+	if(!length(targets))
+		return FALSE
 
 	message = sanitize_message(message)
 
@@ -298,20 +355,10 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
 
-	var/list/obj/item/modular_computer/targets = list()
-
-	if(everyone)
-		for(var/obj/item/modular_computer/mc in GetViewableDevices())
-			targets += mc
-	else
-		targets += target
-
-	if(!length(targets))
-		return FALSE
-
 	// Send the signal
 	var/list/string_targets = list()
-	for (var/obj/item/modular_computer/comp in targets)
+	for (var/datum/computer_file/program/messenger/program in targets)
+		var/obj/item/modular_computer/comp = program.computer
 		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
 			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
 
@@ -327,8 +374,8 @@
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
-		"message" = html_decode(message),
-		"ref" = REF(computer),
+		"message" = message,
+		"ref" = REF(src),
 		"targets" = targets,
 		"rigged" = rigged,
 		"photo" = saved_image,
@@ -355,14 +402,14 @@
 
 	// produce references to our targets and send those to UI
 	var/list/target_refs = list()
-	for(var/obj/item/modular_computer/target_computer in signal.data["targets"])
+	for(var/datum/computer_file/program/messenger/target_computer in signal.data["targets"])
 		target_refs += REF(target_computer)
 
 	// Log it in our logs
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.data["message"])
+	message_data["contents"] = signal.data["message"]
 	message_data["outgoing"] = TRUE
 	message_data["sender"] = signal.data["ref"]
 	message_data["photo_path"] = signal.data["photo_path"]
@@ -382,7 +429,7 @@
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, user)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
+	user.log_talk(html_decode(message), LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.format_message()]"))
@@ -405,7 +452,7 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.data["message"])
+	message_data["contents"] = signal.data["message"]
 	message_data["outgoing"] = FALSE
 	message_data["sender"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
@@ -459,7 +506,7 @@
 	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
-				quick_reply_prompt(usr, list(locate(href_list["target"])))
+				quick_reply_prompt(usr, locate(href_list["target"]))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer

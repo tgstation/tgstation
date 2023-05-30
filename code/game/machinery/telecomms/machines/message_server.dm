@@ -176,9 +176,10 @@
 
 // Tablet message signal datum
 /datum/signal/subspace/messaging/tablet_msg/proc/format_target()
-	if (length(data["targets"]) > 1)
+	if (data["everyone"])
 		return "Everyone"
-	var/obj/item/modular_computer/target = data["targets"][1]
+	var/datum/computer_file/program/messenger/target_app = data["targets"][1]
+	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
@@ -187,11 +188,9 @@
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/modular_computer/comp in data["targets"])
-		if(!QDELETED(comp))
-			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
-				if(!QDELETED(app))
-					app.receive_message(src)
+	for (var/datum/computer_file/program/messenger/app in data["targets"])
+		if(!QDELETED(app))
+			app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()

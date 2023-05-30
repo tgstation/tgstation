@@ -1,34 +1,3 @@
-GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
-GLOBAL_LIST_EMPTY(SecretTabletMessengers)
-
-///Adds a PDA to the list of TabletMessengers.
-/proc/add_pda_messenger(obj/item/modular_computer/pda/computer)
-	var/datum/computer_file/program/messenger/program = locate() in computer.stored_files
-	var/is_hidden = program.monitor_hidden // if this runtimes, something went wrong
-
-	var/pda_struct = list(
-		"name" = computer.saved_identification,
-		"job" = computer.saved_job,
-		"ref" = REF(computer)
-		)
-	if(is_hidden)
-		GLOB.SecretTabletMessengers += list(pda_struct["ref"] = pda_struct)
-	else
-		GLOB.TabletMessengers += list(pda_struct["ref"] = pda_struct)
-
-/proc/remove_pda_messenger(obj/item/modular_computer/pda/computer)
-	var/computer_ref = REF(computer)
-	if(!(computer_ref in GLOB.TabletMessengers) && !(computer_ref in GLOB.SecretTabletMessengers))
-		return
-
-	var/datum/computer_file/program/messenger/program = locate() in computer.stored_files
-	var/is_hidden = program.monitor_hidden // ditto
-
-	if(is_hidden)
-		GLOB.SecretTabletMessengers.Remove(computer_ref)
-	else
-		GLOB.TabletMessengers.Remove(computer_ref)
-
 /obj/item/modular_computer/pda
 	name = "pda"
 	icon = 'icons/obj/modular_pda.dmi'
@@ -81,12 +50,10 @@ GLOBAL_LIST_EMPTY(SecretTabletMessengers)
 	. = ..()
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
-	add_pda_messenger(src)
 
 /obj/item/modular_computer/pda/Destroy()
 	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
-	remove_pda_messenger(src)
 	return ..()
 
 /obj/item/modular_computer/pda/install_default_programs()
@@ -278,6 +245,14 @@ GLOBAL_LIST_EMPTY(SecretTabletMessengers)
 	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
 	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
+
+/obj/item/modular_computer/pda/imprint_id(name = null, job_name = null)
+	. = ..()
+	add_messenger(src)
+
+/obj/item/modular_computer/pda/reset_imprint()
+	. = ..()
+	remove_messenger(src)
 
 /**
  * Nuclear PDA
