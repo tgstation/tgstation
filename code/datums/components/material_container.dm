@@ -221,6 +221,7 @@
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
+			var/message = null
 
 			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
 			if((!QDELETED(target) || was_stack_split))
@@ -234,11 +235,12 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
-					to_chat(user, span_notice("Only [inserted] amount of [item_name] could be consumed by [parent]."))
+					message = "Only [inserted] amount of [item_name] could be consumed by [parent]."
 					return
 
 			//collect all messages to print later
-			var/message = "[item_name] worth [inserted] material was consumed by [parent]."
+			if(!message)
+				message = "[item_name] worth [inserted] material was consumed by [parent]."
 			if(inserts[message])
 				inserts[message] += 1
 			else
