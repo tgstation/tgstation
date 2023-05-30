@@ -2909,6 +2909,7 @@
 /obj/item/lighter{
 	pixel_x = 15
 	},
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "boY" = (
@@ -19361,6 +19362,7 @@
 "hnP" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/status_display/evac/directional/south,
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "hnV" = (
