@@ -618,3 +618,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/microwave, 32)
 	. += "\t[span_info("Rated M for mature. A Pangalactic Studios Picture.")]"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blood_geometer, 32)
+
+/obj/structure/sign/poster/contraband/singletank_bomb
+	name = "Single Tank Bomb Guide"
+	desc = "This informational poster teaches the viewer how to make a single tank bomb of high quality."
+	icon_state = "singletank_bomb"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)

@@ -429,10 +429,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/boombox, 32)
 	icon_state = "download_gun"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/download, 32)
-
-/obj/structure/sign/poster/contraband/singletank_bomb
-	name = "Single Tank Bomb Guide"
-	desc = "This informational poster teaches the viewer how to make a single tank bomb of high quality."
-	icon_state = "singletank_bomb"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/singletank_bomb, 32)
