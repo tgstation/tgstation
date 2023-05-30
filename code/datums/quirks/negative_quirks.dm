@@ -468,7 +468,7 @@
 	mob_trait = TRAIT_CLUMSY
 	gain_text = span_danger("You feel your IQ sink like your brain is liquid.")
 	lose_text = span_notice("You feel like your IQ went up to at least average.")
-	medical_record_text = "Patient is so unbelievably fucking stupid. I've seen clowns with better fine motor skills."
+	medical_record_text = "Patient has demonstrated an extreme difficulty with high motor skill paired with an inability to demonstrate critical thinking."
 
 /datum/quirk/nonviolent
 	name = "Pacifist"
