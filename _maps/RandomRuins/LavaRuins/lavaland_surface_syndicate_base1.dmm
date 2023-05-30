@@ -1832,8 +1832,7 @@
 /obj/machinery/air_sensor{
 	chamber_id = "lavalandsyndieco2"
 	},
-/obj/structure/sign/poster/official/wtf_is_co2{
-	pixel_y = 32;
+/obj/structure/sign/poster/official/wtf_is_co2/directional/north{
 	dir = 1
 	},
 /turf/open/floor/engine/co2,

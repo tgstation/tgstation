@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - image: "Resprited many condiment containers"
+  - image: "Added a sprite for cooking oil / corn oil container"
+  - image: "Replaced old condiment bottles with the newer bottles in Condi Master"

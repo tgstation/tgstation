@@ -177,7 +177,7 @@
 /obj/effect/mine/gas
 	name = "oxygen mine"
 	var/gas_amount = 360
-	var/gas_type = "o2"
+	var/gas_type = GAS_O2
 
 /obj/effect/mine/gas/mineEffect(mob/victim)
 	atmos_spawn_air("[gas_type]=[gas_amount]")
@@ -185,18 +185,18 @@
 
 /obj/effect/mine/gas/plasma
 	name = "plasma mine"
-	gas_type = "plasma"
+	gas_type = GAS_PLASMA
 
 
 /obj/effect/mine/gas/n2o
 	name = "\improper N2O mine"
-	gas_type = "n2o"
+	gas_type = GAS_N2O
 
 
 /obj/effect/mine/gas/water_vapor
 	name = "chilled vapor mine"
 	gas_amount = 500
-	gas_type = "water_vapor"
+	gas_type = GAS_WATER_VAPOR
 
 /obj/effect/mine/sound
 	name = "honkblaster 1000"

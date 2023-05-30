@@ -299,8 +299,7 @@ GLOBAL_VAR(restart_counter)
 	#ifdef UNIT_TESTS
 	FinishTestRun()
 	return
-	#endif
-
+	#else
 	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
@@ -331,6 +330,7 @@ GLOBAL_VAR(restart_counter)
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
+	#endif
 
 /world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)

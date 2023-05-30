@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = BURNING_COLD
 	floor_variance = 0
 	icon_state = "snow-ice"
 	base_icon_state = "snow-ice"
@@ -258,17 +258,14 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	worm_chance = 0
 
 /turf/open/misc/asteroid/snow/temperatre
-	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
+	initial_gas_mix = COLD_ATMOS
 
 //Used for when you want to have real, genuine snow in your kitchen's cold room
 /turf/open/misc/asteroid/snow/coldroom
 	baseturfs = /turf/open/misc/asteroid/snow/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 	planetary_atmos = FALSE
 	temperature = COLD_ROOM_TEMP
-
-/turf/open/misc/asteroid/snow/coldroom/Initialize(mapload)
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
