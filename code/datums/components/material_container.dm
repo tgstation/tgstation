@@ -232,6 +232,14 @@
 
 			to_chat(user, span_notice("[item_name] worth [inserted] material was consumed by [parent]."))
 		else
+			//decode the error & print it
+			var/error_msg
+			if(inserted == -2)
+				error_msg = "[parent] has insufficient space to accept the [target]"
+			else
+				error_msg = "[target] has insufficient materials to be accepted by [parent]"
+			to_chat(user, span_warning(error_msg))
+
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 			if(!isnull(item_stack) && was_stack_split)
 				var/obj/item/stack/inserting_stack = target
@@ -241,8 +249,6 @@
 			//was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
-
-			to_chat(user, span_warning("[target] has insufficient materials to be accepted by [parent]."))
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
