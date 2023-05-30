@@ -171,8 +171,7 @@
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)
 	else
-		materials.insert_item(O, breakdown_flags=BREAKDOWN_FLAGS_ORE_PROCESSOR)
-		qdel(O)
+		materials.insert_item(O, breakdown_flags = BREAKDOWN_FLAGS_ORE_PROCESSOR)
 		if(mineral_machine)
 			mineral_machine.updateUsrDialog()
 
