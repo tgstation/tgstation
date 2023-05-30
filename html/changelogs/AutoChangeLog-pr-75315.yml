@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - rscadd: "Air alarms will now talk about their atmospheric problems (low/high pressure/temperature) so players can understand what is the room's issue easier."

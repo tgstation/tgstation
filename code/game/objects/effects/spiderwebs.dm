@@ -19,7 +19,7 @@
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
-				damage_amount *= 2
+				damage_amount *= 1.25
 			if(BRUTE)
 				damage_amount *= 0.25
 	. = ..()
@@ -105,6 +105,38 @@
 	else if(isprojectile(mover))
 		return prob(30)
 
+/obj/structure/spider/solid
+	name = "solid web"
+	icon = 'icons/effects/effects.dmi'
+	desc = "A solid wall of web, thick enough to block air flow."
+	icon_state = "solidweb"
+	can_atmos_pass = ATMOS_PASS_NO
+	opacity = TRUE
+	density = TRUE
+	max_integrity = 90
+	plane = GAME_PLANE_UPPER
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/spider/solid/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/spider/passage
+	name = "web passage"
+	icon = 'icons/effects/effects.dmi'
+	desc = "A messy connection of webs blocking the other side, but not solid enough to prevent passage."
+	icon_state = "webpassage"
+	can_atmos_pass = ATMOS_PASS_NO
+	opacity = TRUE
+	max_integrity = 60
+	alpha = 200
+	plane = GAME_PLANE_UPPER
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/spider/passage/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
 /obj/structure/spider/cocoon
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web."
@@ -132,3 +164,41 @@
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()
+
+/obj/structure/spider/sticky
+	name = "sticky web"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Extremely soft and sticky silk."
+	icon_state = "verystickyweb"
+	max_integrity = 20
+
+/obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(isspider(mover))
+		return TRUE
+	if(!isliving(mover))
+		return
+	if(isspider(mover.pulledby))
+		return TRUE
+	balloon_alert(mover, "stuck in web!")
+	return FALSE
+
+/obj/structure/spider/spikes
+	name = "web spikes"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "webspikes1"
+	max_integrity = 40
+
+/obj/structure/spider/spikes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
+/obj/structure/spider/carcass
+	name = "web carcass"
+	icon = 'icons/effects/effects.dmi'
+	desc = "hardened silk formed into small yet deadly spikes."
+	icon_state = "webcarcass"
+	max_integrity = 125
+	density = TRUE
+	anchored = FALSE

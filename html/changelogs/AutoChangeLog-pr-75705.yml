@@ -1,0 +1,5 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "You can no longer pulse the wire on an unpowered shield generator to activate shields"
+  - bugfix: "External only setting on modular shield generators now properly uses terrestrial turfs such as lavawastes."

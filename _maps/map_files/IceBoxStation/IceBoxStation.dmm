@@ -7756,6 +7756,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"ctY" = (
+/obj/structure/tank_holder/anesthetic,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "cum" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 1
@@ -69624,6 +69628,7 @@
 /obj/structure/table,
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "wkV" = (
@@ -250332,7 +250337,7 @@ apM
 uvt
 kBT
 pra
-pra
+ctY
 mtI
 uxj
 eNK

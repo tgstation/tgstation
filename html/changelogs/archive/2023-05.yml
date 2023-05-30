@@ -1060,3 +1060,84 @@
   - spellcheck: fixed a typo in custom item description in northstar
   mc-oofert:
   - bugfix: soap suicide
+2023-05-29:
+  FeudeyTF:
+  - code_imp: Updated the UI of the console for viewing message logs and console for
+      view server communications
+  Guillaume Prata:
+  - rscadd: Air alarms will now talk about their atmospheric problems (low/high pressure/temperature)
+      so players can understand what is the room's issue easier.
+  HWSensum:
+  - rscadd: added a mail counterfeit device that can make custom (and also armed)
+      mails. Traitors have those devices in their uplinks.
+  - rscadd: added new kit for QM and Cargo Technicians that have multiple mail counterfeit
+      devices for neat price.
+  - bugfix: fixed envelopes that were giving only their first item, even tho they
+      had two items insede.
+  - image: added new icon for mail counterfeit device.
+  JohnFulpWillard:
+  - balance: Newly created areas in Icemoon and Space are no longer valid Cult areas
+      for Runes and such.
+  LT3:
+  - qol: Being connected to an IV now has a visual indicator
+  MTandi:
+  - qol: dead potted plant can be revived with a seed
+  - qol: Solar control console now shows power generation history
+  Melbert:
+  - qol: Gun Flipping is now done by right clicking the gun when it's in your active
+      hand ("use secondary"), meaning you should be less likely to accidentally spin
+      your gun instead of ejecting rounds / racking / etc.
+  - qol: You can gun flip all guns, instead of just ballistics. This includes stuff
+      like wands.
+  Sealed101:
+  - bugfix: exorcised a ghost of the gang gamemode from graffiti
+  SethLafuente:
+  - rscadd: Added 3 new spider types
+  - rscadd: Added more spider abilities
+  - balance: Rebalanced spiders
+  - bugfix: Fixes spiderlings having density
+  Seven:
+  - bugfix: Fixes epipens, pillbottles, and test tubes missing texture when put into
+      suit storage
+  - bugfix: A paper hat no longer appears on your head when putting paper into suit
+      storage
+  - rscadd: The paper hat is now a craftable item
+  - image: Pills and patches are no longer visible on a person when put into suit
+      storage
+  SyncIt21:
+  - bugfix: stabilized metal slime extract properly increments stacks so that it's
+      appearance & weight are updated correctly & is picked up by material sniffers.
+  axietheaxolotl / viro:
+  - image: new medkit sprites, again.
+  mikederkan:
+  - rscadd: Made disposals outlets launch with more range depending on the setting
+      used
+  - rscadd: Made disposals outlets emag effect irreversible without reconstruction
+2023-05-30:
+  Cheshify:
+  - rscadd: The North Star's medbay has been fully renovated.
+  - bugfix: The CMO's office ceiling is now properly protected on the North Star.
+  MTandi, Krysonism:
+  - rscadd: Added Spess Knife with many tool behaviours
+  SyncIt21:
+  - bugfix: fix "none" gas names in gas filter
+  - bugfix: precise insertion of sheets into material container (e.g. drone dispenser)
+      works again
+  - bugfix: recycler properly recycles all contents inside a storage medium like a
+      backpack & even inert bag of holding
+  - bugfix: gaining extra metal after recycling ammo boxes
+  - qol: recycler consumes only half the power when recycling item's that has no material
+  - qol: you can fill up your bag with iron, glass, whatever material and attack the
+      autolathe/ore silo with it to transfer all it's contents into it
+  - refactor: '`/datum/component/material_container/insert_item()` now splits stack,
+      deletes the inserted item & calls the
+
+      `after_insert` callback'
+  - refactor: '`/datum/component/material_container/user_insert()` now extracts material
+      from all the contents of an atom reccursively'
+  TheVekter:
+  - rscadd: As a result of a recent safety lawsuit, Nanotrasen has mandated the return
+      of anesthetic canisters and masks to robotics research on all stations that
+      are not currently equipped with them.
+  - balance: Syndicate corpses dropped from killing a Legion no longer come with a
+      MODSuit.
