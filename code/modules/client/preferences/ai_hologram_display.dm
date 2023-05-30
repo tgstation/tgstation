@@ -9,9 +9,8 @@
 	var/list/values = list()
 
 	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
-	values["Human"] = icon('icons/mob/simple/mob.dmi', "m-none")
 
-	for(var/hologram in GLOB.ai_hologram_icons - "Human" - "Random")
+	for(var/hologram in GLOB.ai_hologram_icons - "Random")
 		values[hologram] = icon(GLOB.ai_hologram_icons[hologram], GLOB.ai_hologram_icon_state[hologram])
 
 	return values
