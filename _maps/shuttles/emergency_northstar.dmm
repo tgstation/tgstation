@@ -376,9 +376,6 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/escape)
-"HY" = (
-/turf/template_noop,
-/area/shuttle/escape)
 "Ir" = (
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/evac/directional/east,
@@ -623,7 +620,7 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
-HY
+Ei
 AW
 FQ
 FQ
@@ -873,7 +870,7 @@ AW
 Ei
 "}
 (11,1,1) = {"
-HY
+Ei
 AW
 FQ
 FQ

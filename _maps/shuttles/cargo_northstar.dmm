@@ -152,7 +152,8 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad"},
+	id = "QMLoad"
+	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "Y" = (

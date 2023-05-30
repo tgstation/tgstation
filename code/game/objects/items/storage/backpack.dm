@@ -29,6 +29,16 @@
 	create_storage(max_slots = 21, max_total_storage = 21)
 	AddElement(/datum/element/attack_equip)
 
+/obj/item/storage/backpack/equipped(mob/user, slot, initial)
+	if(slot == ITEM_SLOT_BACK)
+		if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
+			slowdown++
+	. = ..()
+
+/obj/item/storage/backpack/dropped(mob/user, silent)
+	. = ..()
+	slowdown = initial(slowdown)
+
 /*
  * Backpack Types
  */
@@ -279,11 +289,27 @@
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
 	shoulder_carry = TRUE
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_RPOCKET
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 
 /obj/item/storage/backpack/satchel/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 18
+
+/obj/item/storage/backpack/satchel/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot == ITEM_SLOT_BELT)
+		ADD_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
+		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
+			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
+			selected_bag.slowdown++
+
+/obj/item/storage/backpack/satchel/dropped(mob/user, silent)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
+		REMOVE_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
+		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
+			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
+			selected_bag.slowdown = initial(selected_bag.slowdown)
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
