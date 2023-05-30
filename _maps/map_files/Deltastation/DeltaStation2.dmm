@@ -65892,7 +65892,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
-/obj/item/food/grilled_cheese_sandwich,
+/obj/item/food/sandwich/cheese/grilled,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "qzT" = (

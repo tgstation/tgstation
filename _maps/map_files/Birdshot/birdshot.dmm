@@ -162,7 +162,7 @@
 	name = "Kitchen Shutters"
 	},
 /obj/item/plate,
-/obj/item/food/peanut_butter_jelly_sandwich,
+/obj/item/food/sandwich/peanut_butter_jelly,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "aeA" = (
@@ -20172,7 +20172,7 @@
 	name = "Kitchen Shutters"
 	},
 /obj/item/plate,
-/obj/item/food/peanut_butter_jelly_sandwich,
+/obj/item/food/sandwich/peanut_butter_jelly,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "hBt" = (
