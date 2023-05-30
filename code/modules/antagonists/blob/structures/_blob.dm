@@ -398,13 +398,6 @@
 	/// The radius up to which this special structure naturally grows normal blobs.
 	var/expand_range = 0
 
-	// Spore production vars: for core, factories, and nodes (with strains)
-	var/mob/living/basic/blob_minion/blobbernaut/minion/naut = null
-	var/max_spores = 0
-	var/list/spores = list()
-	COOLDOWN_DECLARE(spore_delay)
-	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
-
 	// Area reinforcement vars: used by cores and nodes, for strains to modify
 	/// Range this blob free upgrades to strong blobs at: for the core, and for strains
 	var/strong_reinforce_range = 0
@@ -452,17 +445,3 @@
 						expanded = TRUE
 		if(distance <= pulse_range)
 			B.Be_Pulsed()
-
-/obj/structure/blob/special/proc/produce_spores()
-	if(naut)
-		return
-	if(spores.len >= max_spores)
-		return
-	if(!COOLDOWN_FINISHED(src, spore_delay))
-		return
-	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_minion/spore/BS = new (loc, src)
-	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		BS.overmind = overmind
-		BS.update_icons()
-		overmind.blob_mobs.Add(BS)
