@@ -118,7 +118,7 @@
 	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
-	creation_time = 0.6 SECONDS
+	creation_time = 1 SECONDS
 	max_signs = 6
 
 /obj/item/holosign_creator/cyborg
