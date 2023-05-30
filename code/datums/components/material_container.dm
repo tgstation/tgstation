@@ -139,6 +139,9 @@
 	//don't attack the machine
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
+	//can't allow abstract, hologram items
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return
 	//user defined conditions
 	if(precondition && !precondition.Invoke(user))
 		return
@@ -148,13 +151,14 @@
 	for(var/i = length(contents); i >= 1 ; i--)
 		var/obj/item/target = contents[i]
 
-		//not a solid sub type
-		if(target.item_flags & ABSTRACT)
+		//not a solid subtype or an hologram
+		if((target.item_flags & ABSTRACT) || (target.flags_1 & HOLOGRAM_1))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
 			continue
-		//item is either not real, not allowed for redemption, not in the allowed types
-		if((target.flags_1 & HOLOGRAM_1) || (target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
+
+		//item is either not allowed for redemption, not in the allowed types
+		if((target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				to_chat(user, span_warning("[parent] won't accept [target]!"))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
@@ -187,6 +191,7 @@
 			return
 
 		//insert the item
+		var/item_name = target.name
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
@@ -203,8 +208,10 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
+					to_chat(user, span_notice("Only [inserted] amount of [item_name] could be consumed by [parent]."))
+					return
 
-			to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
+			to_chat(user, span_notice("[item_name] worth [inserted] material was consumed by [parent]."))
 		else
 			//decode the error & print it
 			var/error_msg
