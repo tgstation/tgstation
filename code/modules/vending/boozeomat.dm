@@ -12,6 +12,7 @@
 			"products" = list(
 				/obj/item/reagent_containers/cup/glass/bottle/curacao = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+				/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/tequila = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/rum = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/cognac = 5,

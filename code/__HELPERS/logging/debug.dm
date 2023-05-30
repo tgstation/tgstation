@@ -36,7 +36,7 @@
 
 /// Logging for hard deletes
 /proc/log_qdel(text, list/data)
-	logger.Log(LOG_CATEGORY_DEBUG_QDEL, text, data)
+	logger.Log(LOG_CATEGORY_QDEL, text, data)
 
 /* Log to the logfile only. */
 /proc/log_runtime(text, list/data)

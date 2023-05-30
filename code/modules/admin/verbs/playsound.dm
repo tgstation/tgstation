@@ -82,9 +82,9 @@
 	var/stop_web_sounds = FALSE
 	var/list/music_extra_data = list()
 	var/duration = 0
-
 	if(istext(input))
-		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[input]\"")
+		var/shell_scrubbed_input = shell_url_scrub(input)
+		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
 		var/stdout = output[SHELLEO_STDOUT]
 		var/stderr = output[SHELLEO_STDERR]
@@ -192,8 +192,7 @@
 			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
-		var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-		web_sound(usr, shell_scrubbed_input)
+		web_sound(usr, web_sound_input)
 	else
 		web_sound(usr, null)
 

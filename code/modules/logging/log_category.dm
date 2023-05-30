@@ -10,6 +10,10 @@
 	/// The master category that contains this category
 	var/datum/log_category/master_category
 
+	/// Flags to apply to our /datum/log_entry's
+	/// See code/__DEFINES/logging/dm
+	var/entry_flags = NONE
+
 	/// If set this config flag is checked to enable this log category
 	var/config_flag
 
@@ -32,6 +36,7 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 		timestamp = logger.human_readable_timestamp(),
 		category = category,
 		message = message,
+		flags = entry_flags,
 		data = data,
 		semver_store = semver_store,
 	)
