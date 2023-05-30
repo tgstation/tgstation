@@ -2856,7 +2856,7 @@
 /area/station/command/teleporter)
 "bcb" = (
 /obj/structure/sign/warning/secure_area,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/research)
 "bcf" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -35991,7 +35991,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "mYX" = (
 /obj/structure/table,
@@ -103511,9 +103511,9 @@ wXF
 wXF
 wXF
 wXF
-xKK
+gFQ
 wto
-xKK
+gFQ
 oWk
 xuD
 qZg
