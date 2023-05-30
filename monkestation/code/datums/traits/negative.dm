@@ -1,14 +1,14 @@
 /datum/quirk/jailbird
 	name = "Jailbird"
-	desc = "You're a wanted criminal! You start the round set to arrest for a random crime."
-	value = -1
+	desc = "You're a ex-criminal! You start the round set to parole for a random crime."
+	value = 0
 	icon = "bird"
 
 /datum/quirk/jailbird/post_add()
 	. = ..()
 	var/mob/living/carbon/human/jailbird = quirk_holder
 	var/quirk_crime	= pick(world.file2list("monkestation/strings/random_crimes.txt"))
-	to_chat(jailbird, "<span class='boldnotice'>You are on the run for your crime of: [quirk_crime]!</span>")
+	to_chat(jailbird, "<span class='boldnotice'>You are on parole for the crime of: [quirk_crime]!</span>")
 	addtimer(CALLBACK(src, .proc/apply_arrest, quirk_crime), 10 SECONDS)
 
 
@@ -18,9 +18,9 @@
 	var/crime = "[pick(world.file2list("monkestation/strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
 	var/perpname = jailbird.real_name
 	var/datum/record/crew/jailbird_record = find_record(perpname)
-	var/datum/crime/new_crime = new(name = jailbird, details = crime, author = "Nanotrasen Bounty Department")
+	var/datum/crime/new_crime = new(name = "Jailbird", details = crime, author = "Nanotrasen Bounty Department")
 	jailbird_record.crimes += new_crime
-	jailbird_record.wanted_status = WANTED_ARREST
+	jailbird_record.wanted_status = WANTED_PAROLE
 	jailbird.sec_hud_set_security_status()
 
 /datum/quirk/stowaway

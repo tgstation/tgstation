@@ -103,12 +103,12 @@
 	var/obj/machinery/camera/located_camera = locate() in range(7, owner)
 	if(located_camera)
 		var/datum/record/crew/records = find_record(owner.name)
-		var/datum/crime/new_crime = new(name = owner.real_name, details = "Public Urination", author = "Automated Criminal Detection Service")
+		var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in the [owner_turf.loc]", author = "Automated Criminal Detection Service")
 		records.crimes += new_crime
 		records.wanted_status = WANTED_ARREST
 
 	var/obj/effect/decal/cleanable/piss_stain/stain = locate() in owner_turf
-	if(!(stain in owner_turf.contents))
+	if(!(stain in owner_turf.contents) && !owner_turf.liquids)
 		new /obj/effect/decal/cleanable/piss_stain(owner_turf)
 		return
 
