@@ -69,32 +69,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.balloon_alert(attacker, "can't act while blocking!")
 		return FALSE
 
-	// This gives a little bit of leeway for angling attacks.
-	// If we straight up use dir, then the window for doing a NSEW attack is far smaller than the window for NE/SE/SW/NW attacks.
-	// But by using angle, we can use a slightly larger and equal range for all angles, each being 45 degrees.
 	var/attack_direction = NONE
-	var/click_angle = get_angle(attacker, aimed_towards)
-	switch(click_angle)
-		if(0 to 22.5, 337.5 to 360)
-			attack_direction = NORTH
-		if(22.5 to 67.5)
-			attack_direction = NORTHEAST
-		if(67.5 to 112.5)
-			attack_direction = EAST
-		if(112.5 to 157.5)
-			attack_direction = SOUTHEAST
-		if(157.5 to 202.5)
-			attack_direction = SOUTH
-		if(202.5 to 247.5)
-			attack_direction = SOUTHWEST
-		if(247.5 to 292.5)
-			attack_direction = WEST
-		if(292.5 to 337.5)
-			attack_direction = NORTHWEST
-		else
-			// ??? result, just default to dir
-			stack_trace("[attacker] clicking on [aimed_towards] resulted in invalid angle [click_angle].")
-			attack_direction = get_dir(attacker, aimed_towards)
+	if(get_turf(attacker) != get_turf(aimed_towards))
+		// This gives a little bit of leeway for angling attacks.
+		// If we straight up use dir, then the window for doing a NSEW attack is far smaller than the window for NE/SE/SW/NW attacks.
+		attack_direction = angle2dir(get_angle(attacker, aimed_towards))
 
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
 
@@ -102,7 +81,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/pre_set_dir = attacker.set_dir_on_move
 	attacker.set_dir_on_move = FALSE
 	// Make sure they can't attack while swinging
-	attacker.changeNext_move(time_per_turf * length(affecting))
+	attacker.changeNext_move(2 * time_per_turf * length(affecting))
 	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
 	var/attack_result = execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking)
 	// Restore this
@@ -172,7 +151,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				else
 					blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
 
-				return attack_flag || ATTACK_STYLE_CANCEL // Purposeful use of || and not |, only sends CANCEL if no flags are set
+				return attack_flag | ATTACK_STYLE_BLOCKED
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting_index)
@@ -235,7 +214,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 		// Finally, we handle travel time.
 		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
-			stoplag(time_per_turf)
+			sleep(time_per_turf) // probably shouldn't use stoplag?
+
 			// Sanity checking
 			if(QDELETED(attacker))
 				return ATTACK_STYLE_CANCEL

@@ -2,7 +2,6 @@
  * Holds procs designed to change one type of value, into another.
  * Contains:
  * file2list
- * angle2dir
  * angle2text
  * worldtime2text
  * text2dir_extended & dir2text_short
@@ -61,10 +60,7 @@
 		else
 	return
 
-//Converts an angle (degrees) into a ss13 direction
-GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
-#define angle2dir(X) (GLOB.modulo_angle_to_dir[round((((X%360)+382.5)%360)/45)+1])
-
+// Also see [angle2dir]
 /proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(round(degree, 0.1))

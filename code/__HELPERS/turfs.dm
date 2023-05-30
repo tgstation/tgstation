@@ -401,21 +401,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return FALSE
 
 /**
- * Returns a list of turfs, from right to left, that are in the direction from the base atom
+ * Returns a list of turfs, from left to right, that are in the direction from the base atom
  *
- * For example, a the dir of north would give you the tile to the top right, top, and top left from the base
+ * For example, a the dir of north would give you the tile to the top left, top, and top right from the base
  * And a dir of northwest would give you the tile directly left, top left, and directly top
  */
 /proc/get_turfs_and_adjacent_in_direction(atom/base, general_dir)
 	var/angle_to = dir2angle(general_dir)
 	var/list/result_list = list()
+	var/turf/left_turf = get_step(base, angle2dir(angle_to - 45))
 	var/turf/middle_turf = get_step(base, general_dir)
-	var/turf/right_turf = get_step(middle_turf, turn(general_dir, angle_to - 45))
-	var/turf/left_turf = get_step(middle_turf, turn(general_dir, angle_to + 45))
-	if(istype(right_turf))
-		result_list += right_turf
-	if(istype(middle_turf))
-		result_list += middle_turf
+	var/turf/right_turf = get_step(base, angle2dir(angle_to + 45))
 	if(istype(left_turf))
 		result_list += left_turf
+	if(istype(middle_turf))
+		result_list += middle_turf
+	if(istype(right_turf))
+		result_list += right_turf
 	return result_list

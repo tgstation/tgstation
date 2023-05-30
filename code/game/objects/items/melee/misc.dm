@@ -458,4 +458,5 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
-	attack_style = /datum/attack_style/melee_weapon/swing/diagonal_sprite
+	attack_style = /datum/attack_style/melee_weapon/swing
+	weapon_sprite_angle = 45

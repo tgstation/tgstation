@@ -170,13 +170,11 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return FALSE
 
-	if(ismovable(attack_target) && !isliving(attack_target))
+	var/just_do_attack_hand = ismovable(attack_target) && !isliving(attack_target)
+	var/try_moving_pulled = !combat_mode && pulling && isturf(attack_target)
+	if(just_do_attack_hand || try_moving_pulled)
 		if(!right_click_attack_chain(attack_target, modifiers))
 			resolve_unarmed_attack(attack_target, modifiers)
-		return TRUE
-
-	if(!combat_mode && pulling && isturf(attack_target))
-		Move_Pulled(attack_target)
 		return TRUE
 
 	if(execute_unarmed_attack_style(attack_target, modifiers))
