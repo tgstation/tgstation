@@ -1113,3 +1113,31 @@
   - rscadd: Made disposals outlets launch with more range depending on the setting
       used
   - rscadd: Made disposals outlets emag effect irreversible without reconstruction
+2023-05-30:
+  Cheshify:
+  - rscadd: The North Star's medbay has been fully renovated.
+  - bugfix: The CMO's office ceiling is now properly protected on the North Star.
+  MTandi, Krysonism:
+  - rscadd: Added Spess Knife with many tool behaviours
+  SyncIt21:
+  - bugfix: fix "none" gas names in gas filter
+  - bugfix: precise insertion of sheets into material container (e.g. drone dispenser)
+      works again
+  - bugfix: recycler properly recycles all contents inside a storage medium like a
+      backpack & even inert bag of holding
+  - bugfix: gaining extra metal after recycling ammo boxes
+  - qol: recycler consumes only half the power when recycling item's that has no material
+  - qol: you can fill up your bag with iron, glass, whatever material and attack the
+      autolathe/ore silo with it to transfer all it's contents into it
+  - refactor: '`/datum/component/material_container/insert_item()` now splits stack,
+      deletes the inserted item & calls the
+
+      `after_insert` callback'
+  - refactor: '`/datum/component/material_container/user_insert()` now extracts material
+      from all the contents of an atom reccursively'
+  TheVekter:
+  - rscadd: As a result of a recent safety lawsuit, Nanotrasen has mandated the return
+      of anesthetic canisters and masks to robotics research on all stations that
+      are not currently equipped with them.
+  - balance: Syndicate corpses dropped from killing a Legion no longer come with a
+      MODSuit.
