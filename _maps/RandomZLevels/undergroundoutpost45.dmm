@@ -7903,7 +7903,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "sz" = (
 /obj/item/paper{
-	default_raw_text = Gary,ifyoueverreadthis,knowthatilovedyou,andthatnomatterwhatyouneedtocontinueonandliveoninthisworld,evenwithoutme.
+	default_raw_text = "Gary,ifyoueverreadthis,knowthatilovedyou,andthatnomatterwhatyouneedtocontinueonandliveoninthisworld,evenwithoutme."
 	},
 /obj/structure/alien/weeds,
 /turf/open/misc/asteroid{
