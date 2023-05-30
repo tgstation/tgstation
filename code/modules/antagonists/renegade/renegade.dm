@@ -13,22 +13,21 @@
 	var/datum/brain_trauma/special/renegade/trauma
 
 /datum/antagonist/renegade/admin_add(datum/mind/new_owner,mob/admin)
-	var/mob/living/carbon/C = new_owner.current
-	if(!istype(C))
+	var/mob/living/carbon/owner_carbon = new_owner.current
+	if(!istype(owner_carbon))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
+	if(!owner_carbon.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	//PRESTO FUCKIN MAJESTO
-	C.gain_trauma(/datum/brain_trauma/special/renegade)//ZAP
+	owner_carbon.gain_trauma(/datum/brain_trauma/special/renegade)//ZAP
 
 /datum/antagonist/renegade/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/renegade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
-	to_chat(owner, span_boldannounce("As a Renegade you're a secondary antagonist! You are allowed to escalate when there is any threat to your life, protecting it by any means! But you're not a murderer, you're just extremely scared for your life and paranoid of your surroundings."))
 
 /datum/antagonist/renegade/Destroy()
 	if(trauma)
@@ -37,7 +36,7 @@
 
 /datum/antagonist/renegade/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.hair_color = "#bb9966" // Brown
+	victim_dummy.hair_color = COLOR_BROWN
 	victim_dummy.hairstyle = "Messy"
 	victim_dummy.update_body_parts()
 
@@ -57,10 +56,10 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	r_hand = /obj/item/gun/ballistic/automatic/pistol
 
-/datum/outfit/renegade/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
-		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
-	H.regenerate_icons()
+/datum/outfit/renegade/post_equip(mob/living/carbon/human/renegade_user)
+	for(var/obj/item/carried_item in renegade_user.get_equipped_items(TRUE))
+		carried_item.add_mob_blood(renegade_user)//Oh yes, there will be blood...
+	renegade_user.regenerate_icons()
 
 /datum/antagonist/renegade/forge_objectives(datum/mind/renegademind)
 	var/datum/objective/survive/survive = new
@@ -75,7 +74,7 @@
 	var/list/report = list()
 
 	if(!owner)
-		CRASH("antagonist datum without owner")
+		CRASH("Renegade antagonist datum without owner")
 
 	report += "<b>[printplayer(owner)]</b>"
 

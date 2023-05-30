@@ -30,7 +30,6 @@
 
 /datum/brain_trauma/special/renegade/on_life(seconds_per_tick, times_fired)
 	armed_check()
-	armored_check()
 
 	if(locate(/mob/living/carbon) in viewers(1, owner)-owner)
 		being_viewed = TRUE
@@ -86,25 +85,47 @@
 		/obj/item/flamethrower,
 	))
 
-	for(var/obj/item in find_weapons)
-		if(weapons[item.type])
-			total_time_armed += 30
-			owner.add_mood_event("paranoid armed", /datum/mood_event/paranoid_armed)
-			return
-	owner.add_mood_event("paranoid armed", /datum/mood_event/paranoid_notarmed)
-	if(prob(5))
-		to_chat(owner, span_warning("I better get some kind of weapon on my hand..."))
-
-/datum/brain_trauma/special/renegade/proc/armored_check()
-	var/list/find_armor = owner.get_contents()
 	var/static/list/armor = typecacheof(list(
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/suit/armor,
 		/obj/item/shield,
 	))
 
-	for(var/obj/item in find_armor)
+	for(var/obj/item in find_weapons)
+		if(weapons[item.type])
+			total_time_armed += 30
+			owner.add_mood_event("paranoid armed", /datum/mood_event/paranoid_armed)
+		else
+			owner.add_mood_event("paranoid armed", /datum/mood_event/paranoid_notarmed)
+			if(prob(5))
+				to_chat(owner, span_warning("You better get some kind of weapon on your hand..."))
 		if(armor[item.type])
 			owner.add_mood_event("paranoid armored", /datum/mood_event/paranoid_armored)
 			return
 		owner.clear_mood_event("paranoid armored")
+
+/datum/mood_event/paranoid_armed
+	description = "I feel more secure with a weapon on me."
+	mood_change = 4
+	hidden = TRUE
+
+/datum/mood_event/paranoid_armored
+	description = "I feel more secure with armor on me."
+	mood_change = 2
+	hidden = TRUE
+
+/datum/mood_event/paranoid_close
+	description = "Why do they all have to stand so close to me? What are they planning?"
+	mood_change = -8
+	timeout = 3 SECONDS
+	hidden = TRUE
+
+/datum/mood_event/paranoid_closesevere //When someone near renegade for at least 3 minutes
+	description = "THEY'RE ALL AROUND ME! GET BACK! LEAVE ME ALONE!"
+	mood_change = -30
+	timeout = 3 SECONDS
+
+/datum/mood_event/paranoid_notarmed
+	description = "I need a weapon! If I don't have a weapon, how can I protect myself from these lunatics?"
+	mood_change = -10
+	hidden = TRUE

@@ -107,16 +107,6 @@
 	timeout = 3 SECONDS
 	hidden = TRUE
 
-/datum/mood_event/paranoid_armed
-	description = "I feel more secure with a weapon on me." //Renegades get it when armed
-	mood_change = 4
-	hidden = TRUE
-
-/datum/mood_event/paranoid_armored
-	description = "I feel more secure with armor on me." //Renegades get it when have armor on them
-	mood_change = 2
-	hidden = TRUE
-
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
