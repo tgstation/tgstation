@@ -13006,13 +13006,6 @@
 "ON" = (
 /obj/structure/glowshroom/single,
 /obj/structure/closet/crate/wooden,
-/obj/item/stack/sheet/mineral/mythril,
-/obj/item/stack/sheet/mineral/mythril,
-/obj/item/stack/sheet/mineral/mythril,
-/obj/item/stack/sheet/mineral/mythril,
-/obj/item/stack/sheet/mineral/runite,
-/obj/item/stack/sheet/mineral/runite,
-/obj/item/stack/sheet/mineral/runite,
 /obj/effect/spawner/random/entertainment/coin,
 /obj/effect/spawner/random/entertainment/coin,
 /obj/effect/spawner/random/entertainment/coin,
@@ -13023,6 +13016,10 @@
 /obj/effect/spawner/random/entertainment/coin,
 /obj/effect/spawner/random/entertainment/coin,
 /obj/effect/spawner/random/entertainment/coin,
+/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -13148,6 +13145,15 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/undergroundoutpost45)
+"PZ" = (
+/obj/structure/barricade/wooden,
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Qa" = (
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer,
 /obj/effect/mapping_helpers/broken_floor,
@@ -58088,7 +58094,7 @@ zq
 XQ
 zq
 ad
-YT
+PZ
 YT
 ad
 ad
