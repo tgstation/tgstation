@@ -46109,7 +46109,6 @@
 /area/station/medical/storage)
 "mjP" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/cable,
 /turf/open/openspace,
 /area/station/maintenance/floor3/port)
 "mjQ" = (
