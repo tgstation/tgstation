@@ -150,11 +150,11 @@
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
-	//Was the injector used on someone yet?
-	var/used = FALSE
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
+	//Was the injector used on someone yet?
+	var/used = FALSE
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
 	if(used)
