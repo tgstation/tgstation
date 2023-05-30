@@ -8,6 +8,7 @@
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_igniter
 	resistance_flags = FIRE_PROOF
+	processing_flags = NONE
 	var/id = null
 	var/on = FALSE
 
@@ -20,21 +21,22 @@
 	if(isnull(held_item))
 		return NONE
 
-	var/tool_tip_set = FALSE
+	if(isnull(held_item))
+		return NONE
 
 	if(held_item.tool_behaviour == TOOL_MULTITOOL)
-		context[SCREENTIP_CONTEXT_LMB] = "Connect Igniter"
-		tool_tip_set = TRUE
+		context[SCREENTIP_CONTEXT_LMB] = "Connect [src]"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	else if(held_item.tool_behaviour == TOOL_WELDER)
+	if(held_item.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "Unweld"
-		tool_tip_set = TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
+	return NONE
 
 /obj/machinery/igniter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to set it's ID to match your ignition controller's ID.")
+	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
 	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
 
 /obj/machinery/igniter/welder_act(mob/living/user, obj/item/tool)
@@ -45,11 +47,10 @@
 		balloon_alert(user, "not enough fuel!")
 		return
 
-	user.visible_message(span_notice("[user] begins to dismantle [src]."),\
-			span_notice("You start to unweld \the [src]..."))
+	loc.balloon_alert(user, "dismantling [src]")
 	if(!tool.use_tool(src, user, delay = 2.5 SECONDS, amount = 2, volume = 50))
 		return
-	user.balloon_alert(user, "igniter dismantled")
+	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -62,10 +63,10 @@
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the sparkers controllers ID", "Sparker ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id changed")
+	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -91,21 +92,24 @@
 	fire = 100
 	acid = 70
 
+/// turns the igniter on/off
+/obj/machinery/igniter/proc/toggle()
+	on = !( on )
+	if(on)
+		begin_processing()
+	else
+		end_processing()
+	update_appearance()
+
 /obj/machinery/igniter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	add_fingerprint(user)
-
-	use_power(active_power_usage)
-	on = !( on )
-	update_appearance()
+	toggle()
 
 /// Have to process to ignite any gas that comes in the turf
 /obj/machinery/igniter/process()
-	if(!on)
-		return 1
-
 	var/turf/location = loc
 	if(!isturf(location) || !isopenturf(location)) //don't ignite stuff inside walls
 		on = FALSE
@@ -113,11 +117,10 @@
 		on = FALSE
 	if(!on)
 		update_appearance()
-		return 1
+		return PROCESS_KILL
 
 	location.hotspot_expose(1000, 500, 1)
 	use_power(active_power_usage) //use power to keep the turf hot
-	return 1
 
 /obj/machinery/igniter/update_icon_state()
 	icon_state = "[base_icon_state][on]"
@@ -168,21 +171,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	if(isnull(held_item))
 		return NONE
 
-	var/tool_tip_set = FALSE
-
 	if(held_item.tool_behaviour == TOOL_MULTITOOL)
-		context[SCREENTIP_CONTEXT_LMB] = "Connect Sparker"
-		tool_tip_set = TRUE
+		context[SCREENTIP_CONTEXT_LMB] = "Connect [src]"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	else if(held_item.tool_behaviour == TOOL_WELDER)
+	if(held_item.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "Unweld"
-		tool_tip_set = TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
+	return NONE
 
 /obj/machinery/sparker/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to set it's ID to match your ignition controller's ID.")
+	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
 	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
 
 /obj/machinery/sparker/welder_act(mob/living/user, obj/item/tool)
@@ -190,11 +191,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 		balloon_alert(user, "not enough fuel!")
 		return TRUE
 
-	user.visible_message(span_notice("[user] begins to dismantle [src]."),\
-			span_notice("You start to unweld \the [src]..."))
+	loc.balloon_alert(user, "dismantling [src]")
 	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, amount = 1, volume = 50))
 		return
-	user.balloon_alert(user, "sparker dismantled")
+	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -206,10 +206,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
 	var/change_id = tgui_input_number(user, "Set the sparkers controllers ID", "Sparker ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id changed")
+	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -243,21 +243,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!(powered()))
-		return
+	if(!(powered()))
+		return FALSE
 
-	if ((disable) || (last_spark && world.time < last_spark + 50))
-		return
+	if((disable) || (last_spark && world.time < last_spark + 50))
+		return FALSE
+
+	var/turf/location = loc
+	if(!isturf(location) || !isopenturf(location))
+		return FALSE
 
 	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
+	location.hotspot_expose(1000, 2500, 1)
 	use_power(active_power_usage)
 
-	var/turf/location = loc
-	if (isturf(location))
-		location.hotspot_expose(1000, 2500, 1)
-	return 1
+	return TRUE
 
 /obj/machinery/sparker/emp_act(severity)
 	. = ..()
