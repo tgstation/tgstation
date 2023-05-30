@@ -961,7 +961,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Oe" = (
-/obj/item/food/notasandwich{
+/obj/item/food/sandwich/notasandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
