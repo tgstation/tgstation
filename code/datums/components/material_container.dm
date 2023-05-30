@@ -142,12 +142,25 @@
 	//can't allow abstract, hologram items
 	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
 		return
+	//untouchable
+	if(held_item.resistance_flags & INDESTRUCTIBLE)
+		return
 	//user defined conditions
 	if(precondition && !precondition.Invoke(user))
 		return
 
-	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
+	//get all contents of this item reccursively
 	var/list/contents = held_item.get_all_contents_type(/obj/item)
+	//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
+	if(!isstack(held_item))
+		var/total_amount = 0
+		for(var/obj/item/weapon in contents)
+			total_amount += get_item_material_amount(weapon, breakdown_flags)
+		if(!has_space(total_amount))
+			to_chat(user, span_warning("[parent] doesn't have enough space for the [held_item][contents.len > 1 ? "And it's contents" : ""]!"))
+			return
+
+	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
 	for(var/i = length(contents); i >= 1 ; i--)
 		var/obj/item/target = contents[i]
 
@@ -163,6 +176,12 @@
 				to_chat(user, span_warning("[parent] won't accept [target]!"))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
+			continue
+
+		//untouchable, move it out the way, code copied from recycler
+		if(target.resistance_flags & INDESTRUCTIBLE)
+			if(!isturf(target.loc) && !isliving(target.loc))
+				target.forceMove(get_turf(parent))
 			continue
 
 		//if stack, check if we want to read precise amount of sheets to insert
@@ -213,14 +232,6 @@
 
 			to_chat(user, span_notice("[item_name] worth [inserted] material was consumed by [parent]."))
 		else
-			//decode the error & print it
-			var/error_msg
-			if(inserted == -2)
-				error_msg = "[parent] has insufficient space to accept the [target]"
-			else
-				error_msg = "[target] has insufficient materials to be accepted by [parent]"
-			to_chat(user, span_warning(error_msg))
-
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 			if(!isnull(item_stack) && was_stack_split)
 				var/obj/item/stack/inserting_stack = target
@@ -230,6 +241,8 @@
 			//was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
+
+			to_chat(user, span_warning("[target] has insufficient materials to be accepted by [parent]."))
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
