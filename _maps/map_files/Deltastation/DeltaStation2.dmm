@@ -9577,6 +9577,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/science/robotics/lab)
 "cnl" = (
@@ -43728,6 +43729,7 @@
 	pixel_x = -10;
 	pixel_y = -4
 	},
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "kSc" = (

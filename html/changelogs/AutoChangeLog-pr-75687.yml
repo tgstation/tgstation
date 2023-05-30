@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "basic mobs & co no longer indiscriminately perform close-range actions in the presence of obstacles such as directional windows between them and their target."
+  - bugfix: "Doggos should look at you with longing eyes once again if you dare pick up an edible they are trying to eat."
