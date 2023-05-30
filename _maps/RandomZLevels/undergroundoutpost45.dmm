@@ -3037,6 +3037,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
+"ic" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/turf/open/floor/mineral/plastitanium,
+/area/awaymission/undergroundoutpost45)
 "id" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating{
@@ -10448,7 +10452,6 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "yV" = (
-/obj/effect/gibspawner/human,
 /obj/item/gun/ballistic/automatic/wt550,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -10505,7 +10508,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "zi" = (
-/obj/vehicle/sealed/mecha/durand,
+/obj/vehicle/sealed/mecha/durand{
+	max_integrity = 450
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
 "zj" = (
@@ -10527,6 +10532,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"zp" = (
+/mob/living/simple_animal/hostile/nanotrasen,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/undergroundoutpost45)
 "zq" = (
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -10809,6 +10818,10 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"Bg" = (
+/mob/living/simple_animal/hostile/nanotrasen/elite,
+/turf/open/floor/mineral/plastitanium,
+/area/awaymission/undergroundoutpost45)
 "Bh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -11175,6 +11188,11 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45)
+"Dt" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/nanotrasen,
+/turf/open/floor/mineral/plastitanium,
+/area/awaymission/undergroundoutpost45)
 "Dw" = (
 /obj/machinery/door/poddoor/ert,
 /turf/open/misc/asteroid{
@@ -11444,6 +11462,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"ER" = (
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/undergroundoutpost45)
 "EX" = (
 /obj/structure/toilet{
 	dir = 8
@@ -12054,6 +12076,11 @@
 	},
 /turf/closed/mineral/random/labormineral,
 /area/awaymission/undergroundoutpost45/caves)
+"JC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mecha_wreckage/gygax,
+/turf/open/floor/mineral/plastitanium,
+/area/awaymission/undergroundoutpost45)
 "JD" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -12215,6 +12242,12 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"La" = (
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45)
 "Lb" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -13343,9 +13376,13 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Sq" = (
-/obj/structure/closet/crate,
-/obj/item/gun/energy/laser/captain/scattershot,
 /obj/structure/alien/weeds,
+/obj/structure/closet/crate,
+/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/c45,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -13371,8 +13408,7 @@
 /turf/open/floor/vault,
 /area/awaymission/undergroundoutpost45/caves)
 "SE" = (
-/obj/vehicle/sealed/mecha/gygax/dark,
-/mob/living/basic/syndicate/ranged/smg/pilot,
+/mob/living/simple_animal/hostile/nanotrasen,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
 "SG" = (
@@ -13869,6 +13905,12 @@
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/undergroundoutpost45)
+"Ww" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45)
 "WB" = (
 /obj/item/clothing/shoes/workboots,
 /obj/structure/alien/weeds,
@@ -14171,7 +14213,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "YN" = (
 /obj/item/paper{
-	default_raw_text = Theheadofsecurityhasgonemad!thexenosjumpingoutoftheventshasmadehimparanoidenoughtoturnonhismen!Heclimbedinthestolenmechandisshootinganybodyheseesnow!WHATEVERWILLWEDO?
+	default_raw_text = The security officers have gone mad from paranoia and have started to somtimes kill each other and bystanders!
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
@@ -34241,7 +34283,7 @@ yr
 yr
 yr
 yr
-Uq
+ER
 QK
 wT
 ad
@@ -34257,7 +34299,7 @@ Ju
 JX
 YO
 Bs
-YO
+ic
 YO
 Ju
 Se
@@ -34516,7 +34558,7 @@ YO
 Se
 RP
 OB
-Ju
+Dt
 Se
 ad
 ad
@@ -34768,7 +34810,7 @@ ad
 Se
 zi
 YO
-Ju
+JC
 IY
 Se
 Jg
@@ -35008,7 +35050,7 @@ wT
 KV
 mv
 Ru
-QK
+La
 CX
 Uq
 Qj
@@ -35542,7 +35584,7 @@ YO
 SJ
 ZV
 Se
-Jg
+zp
 En
 SE
 Se
@@ -36058,7 +36100,7 @@ Ju
 Dg
 Jg
 ht
-YO
+ic
 Se
 ad
 ad
@@ -36829,7 +36871,7 @@ Us
 Se
 Jg
 Xd
-YO
+Bg
 Se
 ad
 ad
@@ -37656,7 +37698,7 @@ zq
 Ma
 MX
 zq
-Gj
+zq
 zq
 zq
 zq
@@ -38107,7 +38149,7 @@ IO
 QK
 QK
 QK
-QK
+Ww
 Se
 YO
 Qa
@@ -38683,7 +38725,7 @@ XC
 UL
 QT
 EI
-Lo
+XC
 Wb
 Pf
 zq
