@@ -214,7 +214,7 @@
 	value = 4
 	gain_text = span_notice("Some of the words of the people around you certainly aren't common. Good thing you studied for this.")
 	lose_text = span_notice("You seem to have forgotten your second language.")
-	medical_record_text = "Patient speaks multiple languages. Showoff."
+	medical_record_text = "Patient speaks multiple languages."
 	var/list/possible_languages = list(
 		/datum/language/aphasia,
 		/datum/language/beachbum,
