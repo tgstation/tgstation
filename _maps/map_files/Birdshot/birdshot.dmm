@@ -17111,6 +17111,9 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/security/tram)
 "gEc" = (
@@ -18703,6 +18706,9 @@
 /obj/item/assembly/signaler{
 	pixel_x = 5;
 	pixel_y = 6
+	},
+/obj/machinery/digital_clock{
+	pixel_y = -28
 	},
 /turf/open/floor/wood/tile,
 /area/station/command/bridge)
@@ -29789,6 +29795,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kXl" = (
@@ -42339,6 +42348,9 @@
 /area/station/service/library)
 "puT" = (
 /obj/structure/bookcase/random/nonfiction,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "pvg" = (
@@ -59739,6 +59751,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/security)
 "uVb" = (

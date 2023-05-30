@@ -61,9 +61,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	. = ..()
 
 	var/ones = since_last % 10
-	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
-	ones_overlay.pixel_w = 4
-	. += ones_overlay
+	var/mutable_appearance/minute_tence_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
+	minute_tence_overlay.pixel_w = 4
+	. += minute_tence_overlay
 
 	var/tens = (since_last / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
@@ -72,7 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/examine(mob/user)
 	. = ..()
-	. += span_info("It has been [since_last] day\s since the last delamination event at a Nanotrasen facility.")
+	. += span_info("It has been [since_last] shift\s since the last delamination event at a Nanotrasen facility.")
 	switch (since_last)
 		if (0)
 			. += span_info("In case you didn't notice.")

@@ -7220,6 +7220,14 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
+"bKA" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor4/aft)
 "bKG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -9525,6 +9533,9 @@
 "cnx" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment1)
 "cnA" = (
@@ -26126,6 +26137,9 @@
 "gQU" = (
 /obj/structure/table/wood,
 /obj/machinery/coffeemaker/impressa,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/entry)
 "gQV" = (
@@ -26351,7 +26365,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/status_display/evac/directional/south,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gUs" = (
@@ -47987,6 +48003,9 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -55994,6 +56013,9 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/restaurant_portal/bar,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
 "oys" = (
@@ -58645,6 +58667,14 @@
 /obj/item/food/pizzaslice/moldy,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/fore)
+"plJ" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor1/fore)
 "plO" = (
 /obj/machinery/icecream_vat,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -59207,6 +59237,9 @@
 "psK" = (
 /obj/effect/turf_decal/tile/green/half,
 /obj/machinery/vending/coffee,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -75191,6 +75224,9 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment2)
 "tJZ" = (
@@ -81272,6 +81308,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
+"vsD" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor3/fore)
 "vsJ" = (
 /obj/structure/bed/dogbed/lia,
 /mob/living/basic/carp/pet/lia,
@@ -91188,6 +91232,14 @@
 	},
 /turf/open/space/openspace,
 /area/space)
+"xUB" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor2/fore)
 "xUH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/grille/broken,
@@ -122638,7 +122690,7 @@ vni
 mnQ
 rMq
 kyR
-vOK
+plJ
 hVG
 bBx
 nYt
@@ -187660,7 +187712,7 @@ mZm
 feX
 gPH
 fNT
-fqo
+xUB
 idn
 shi
 lES
@@ -253710,7 +253762,7 @@ bvB
 oZx
 nGc
 eDe
-ybQ
+vsD
 nKn
 wdb
 vEw
@@ -318732,7 +318784,7 @@ oox
 vRO
 qbg
 nWW
-uIk
+bKA
 bVy
 vVu
 uVr

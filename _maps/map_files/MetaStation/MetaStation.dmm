@@ -1420,6 +1420,8 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/item/wallframe/digital_clock,
+/obj/item/wallframe/digital_clock,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "aCE" = (
@@ -13662,6 +13664,15 @@
 /obj/structure/window,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"fdu" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "fdH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -41720,9 +41731,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oUB" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "oUE" = (
@@ -53289,6 +53302,9 @@
 /area/station/command/heads_quarters/qm)
 "sXE" = (
 /obj/structure/cable,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "sXF" = (
@@ -60436,6 +60452,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vxJ" = (
@@ -63597,6 +63616,12 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/pumproom)
+"wDH" = (
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "wEf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
 	dir = 1
@@ -64659,6 +64684,9 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wYo" = (
@@ -88654,7 +88682,7 @@ mjr
 nxz
 ueD
 sVY
-mjr
+wDH
 rSx
 pEH
 pEH
@@ -96863,7 +96891,7 @@ tqI
 gkD
 nXm
 wNh
-veO
+fdu
 duI
 duI
 duI

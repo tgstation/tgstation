@@ -15121,7 +15121,9 @@
 	dir = 5
 	},
 /obj/structure/sign/departments/science/alt/directional/east,
-/obj/structure/sign/clock/directional/north,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "dKs" = (
@@ -20791,6 +20793,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ffP" = (
@@ -25831,6 +25836,9 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/machinery/digital_clock{
+	pixel_y = -28
 	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
@@ -40641,8 +40649,10 @@
 "kbQ" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/clock/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/digital_clock{
+	pixel_y = -28
+	},
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "kbT" = (
@@ -44639,6 +44649,21 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lcC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
 "lcF" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/broken/directional/west,
@@ -55328,6 +55353,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"nPK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "nPQ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -65498,7 +65535,6 @@
 /obj/item/gun/syringe,
 /obj/item/gun/syringe,
 /obj/structure/table/reinforced,
-/obj/structure/sign/clock/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -85690,7 +85726,9 @@
 	pixel_x = 32
 	},
 /obj/item/kirbyplants/random,
-/obj/structure/sign/clock/directional/north,
+/obj/machinery/digital_clock{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "vuG" = (
@@ -132290,7 +132328,7 @@ aaa
 aaa
 aaa
 sjt
-kEn
+nPK
 kJd
 wTn
 sjt
@@ -142906,7 +142944,7 @@ cBN
 tXa
 nXo
 iVq
-lRk
+lcC
 crR
 iee
 iYi
