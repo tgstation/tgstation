@@ -157,8 +157,15 @@
 		for(var/obj/item/weapon in contents)
 			total_amount += get_item_material_amount(weapon, breakdown_flags)
 		if(!has_space(total_amount))
-			to_chat(user, span_warning("[parent] doesn't have enough space for the [held_item][contents.len > 1 ? "And it's contents" : ""]!"))
+			to_chat(user, span_warning("[parent] doesn't have enough space for [held_item] [contents.len > 1 ? "And it's contents" : ""]!"))
 			return
+
+	/**
+	 * to reduce chat spams we group all messages and print them after everything is over
+	 * usefull when we are trying to insert all stock parts of an RPED into the autolathe for example
+	 */
+	var/list/inserts = list()
+	var/list/errors = list()
 
 	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
 	for(var/i = length(contents); i >= 1 ; i--)
@@ -230,15 +237,24 @@
 					to_chat(user, span_notice("Only [inserted] amount of [item_name] could be consumed by [parent]."))
 					return
 
-			to_chat(user, span_notice("[item_name] worth [inserted] material was consumed by [parent]."))
+			//collect all messages to print later
+			var/message = "[item_name] worth [inserted] material was consumed by [parent]."
+			if(inserts[message])
+				inserts[message] += 1
+			else
+				inserts[message] = 1
 		else
-			//decode the error & print it
 			var/error_msg
 			if(inserted == -2)
-				error_msg = "[parent] has insufficient space to accept the [target]"
+				error_msg = "[parent] has insufficient space to accept [target]"
 			else
 				error_msg = "[target] has insufficient materials to be accepted by [parent]"
-			to_chat(user, span_warning(error_msg))
+
+			//collect all messages to print later
+			if(errors[error_msg])
+				errors[error_msg] += 1
+			else
+				errors[error_msg] = 1
 
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 			if(!isnull(item_stack) && was_stack_split)
@@ -249,6 +265,18 @@
 			//was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
+
+	//print successfull inserts
+	for(var/success_msg in inserts)
+		var/count = inserts[success_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_notice(success_msg))
+
+	//print errors last
+	for(var/error_msg in errors)
+		var/count = errors[error_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_warning(error_msg))
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
