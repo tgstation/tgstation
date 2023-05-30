@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - admin: "new log viewer, try it out. (View Round Logs)"

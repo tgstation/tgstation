@@ -57,9 +57,7 @@
 "aw" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/space_cube{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/space_cube/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -212,9 +210,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "be" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/syndicate)
 "bg" = (
@@ -430,9 +426,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bZ" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
@@ -503,9 +497,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/hacking_guide{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -828,9 +820,7 @@
 /obj/structure/table/wood,
 /obj/item/pen,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal_2,
-/obj/structure/sign/poster/contraband/c20r{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/c20r/directional/south,
 /turf/open/floor/wood{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -1156,9 +1146,7 @@
 "eU" = (
 /obj/machinery/space_heater,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/build{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/build/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2460,9 +2448,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kx" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -2817,9 +2803,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mD" = (
@@ -4399,9 +4383,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "xq" = (
 /obj/item/radio/off,
-/obj/structure/sign/poster/official/safety_report{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_report/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
@@ -6382,9 +6364,7 @@
 /area/awaymission/moonoutpost19/mines)
 "HH" = (
 /obj/machinery/vending/snack,
-/obj/structure/sign/poster/contraband/eat{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/eat/directional/north,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
