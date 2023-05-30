@@ -25036,6 +25036,12 @@
 /area/station/engineering/storage/tech)
 "jhY" = (
 /obj/machinery/firealarm/directional/east,
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "jie" = (
