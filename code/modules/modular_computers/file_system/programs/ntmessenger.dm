@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
 	if(!istype(msgr))
 		return
-	var/is_hidden = msgr.monitor_hidden // if this runtimes, something went terribly wrong with this PDA
+	var/is_hidden = msgr.monitor_hidden || msgr.invisible // if this runtimes, something went terribly wrong with the PDA
 
 	var/msgr_ref = REF(msgr)
 	var/datum/registered_messenger/pda_struct = new(messenger.saved_identification, messenger.saved_job, msgr)
