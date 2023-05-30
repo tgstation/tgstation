@@ -98,6 +98,21 @@
 
 	owner.visible_message(span_warning("[owner] pisses all over the floor!"))
 	stored_piss -= per_piss_usage
+
+
+	var/obj/machinery/camera/located_camera = locate() in range(7, owner)
+	if(located_camera)
+		var/datum/record/crew/records = find_record(owner.name)
+		var/datum/crime/new_crime = new(name = owner.real_name, details = "Public Urination", author = "Automated Criminal Detection Service")
+		records.crimes += new_crime
+		records.wanted_status = WANTED_ARREST
+
+	var/obj/effect/decal/cleanable/piss_stain/stain = locate() in owner_turf
+	if(!(stain in owner_turf.contents))
+		new /obj/effect/decal/cleanable/piss_stain(owner_turf)
+		return
+
+	qdel(stain)
 	owner_turf.add_liquid(pissin_reagent, piss_amount, FALSE, piss_temperature)
 
 
