@@ -8,7 +8,7 @@
 	name = "Infect %TARGET% the %JOB TITLE%"
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
-	progression_minimum = 45 MINUTES
+	progression_minimum = 30 MINUTES
 
 	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = 1
