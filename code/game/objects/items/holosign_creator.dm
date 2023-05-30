@@ -102,7 +102,7 @@
 	desc = "A holographic projector that creates holographic engineering barriers."
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/structure/holosign/barrier/engineering
-	creation_time = 0.6 SECONDS
+	creation_time = 1 SECONDS
 	max_signs = 12
 
 /obj/item/holosign_creator/atmos
