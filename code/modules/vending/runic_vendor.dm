@@ -46,7 +46,7 @@
 			/obj/item/toy/foam_runic_scepter = 1,
 			)
 
-	. = ..()
+	return ..()
 
 /obj/machinery/vending/runic_vendor/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
