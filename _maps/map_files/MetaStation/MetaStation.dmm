@@ -35991,7 +35991,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
-/turf/open/floor/iron/white,
+/turf/closed/wall/r_wall,
 /area/station/science/ordnance)
 "mYX" = (
 /obj/structure/table,
@@ -45827,7 +45827,7 @@
 /area/station/commons/locker)
 "qCY" = (
 /obj/structure/sign/directions/evac,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/station/maintenance/department/science/central)
 "qDa" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -95547,7 +95547,7 @@ fma
 fma
 fma
 fma
-ujJ
+kor
 aQS
 qCY
 kQe
@@ -95807,7 +95807,7 @@ wOS
 orv
 dPY
 xWJ
-kQe
+oIg
 cId
 rQl
 oIg
@@ -95816,7 +95816,7 @@ neA
 vLU
 kZf
 jxW
-dKC
+svS
 rhU
 pjX
 mGI
@@ -96060,11 +96060,11 @@ ose
 tzq
 njW
 eLY
-eut
-kor
-kor
-kor
-kQe
+fma
+ujJ
+ujJ
+ujJ
+oIg
 cDM
 poS
 byf
@@ -96073,7 +96073,7 @@ oir
 wal
 tzg
 jxW
-dKC
+svS
 tjE
 rDB
 nFa
