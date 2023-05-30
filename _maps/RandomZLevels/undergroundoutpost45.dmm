@@ -1234,24 +1234,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/central)
-"dw" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 1
-	},
-/turf/open/floor/vault{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "dx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
@@ -10982,23 +10964,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
-"BJ" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 1
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
-/turf/open/floor/vault{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "BL" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -11175,11 +11140,7 @@
 /obj/item/pipe{
 	dir = 8
 	},
-/turf/open/floor/vault{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	temperature = 363.9
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45/caves)
 "CS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -11546,7 +11507,7 @@
 /obj/machinery/power/shuttle_engine/large{
 	dir = 4
 	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
+/obj/structure/window/reinforced,
 /turf/open/floor/vault{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -11733,6 +11694,9 @@
 /area/awaymission/undergroundoutpost45/central)
 "FY" = (
 /obj/structure/closet/bombcloset/security,
+/obj/item/clothing/suit/utility/bomb_suit/security,
+/obj/item/clothing/head/utility/bomb_hood/security,
+/obj/machinery/syndicatebomb/training,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
 "Ga" = (
@@ -11950,9 +11914,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/vault{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -12709,7 +12671,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "MR" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/vault{
@@ -13483,6 +13445,8 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "RG" = (
 /obj/structure/closet/secure_closet/security,
+/obj/item/storage/belt/security,
+/obj/item/storage/box/survival/security/radio,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
 "RJ" = (
@@ -13672,7 +13636,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "SP" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional,
+/obj/structure/window/reinforced,
 /turf/open/floor/vault{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -14713,8 +14677,14 @@
 /area/awaymission/undergroundoutpost45/caves)
 "ZV" = (
 /obj/item/storage/toolbox/maint_kit,
-/obj/structure/closet/secure_closet/contraband/heads,
-/obj/structure/closet/secure_closet/contraband/heads,
+/obj/structure/closet/secure_closet/contraband/armory,
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/random/contraband/cannabis,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
 "ZZ" = (
@@ -42905,7 +42875,7 @@ zq
 zq
 zq
 zq
-BJ
+HE
 HE
 Ko
 Ts
@@ -42915,7 +42885,7 @@ XC
 TI
 Ko
 HE
-dw
+HE
 zq
 ad
 ad
