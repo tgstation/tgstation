@@ -235,7 +235,7 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
-					message = "Only [inserted] amount of [item_name] could be consumed by [parent]."
+					message = "Only [inserted] amount of [item_name] was consumed by [parent]."
 
 			//collect all messages to print later
 			if(!message)
