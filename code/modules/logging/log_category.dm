@@ -4,8 +4,20 @@
 	var/category
 	/// If set this config flag is checked to enable this log category
 	var/config_flag
-	/// List of all entries, in chronological order of when they were added
+
+	/// Whether or not this log should not be publically visible
+	var/secret = FALSE
+
+	/// Whether the readable version of the log message is formatted internally instead of by rustg
+	var/internal_formatting = TRUE
+
+	/// List of log entries for this category
 	var/list/entries = list()
+
+	/// Total number of entries this round so far
+	var/entry_count = 0
+
+GENERAL_PROTECT_DATUM(/datum/log_category)
 
 /// Backup log category to catch attempts to log to a category that doesn't exist
 /datum/log_category/backup_category_not_found
@@ -22,6 +34,9 @@
 
 	entries += list(entry)
 	write_entry(entry)
+	entry_count += 1
+	if(entry_count <= CONFIG_MAX_CACHED_LOG_ENTRIES)
+		entries += entry
 
 /// Allows for category specific file splitting. Needs to accept a null entry for the default file.
 /datum/log_category/proc/get_output_file(list/entry)

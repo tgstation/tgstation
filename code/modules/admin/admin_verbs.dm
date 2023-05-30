@@ -95,6 +95,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_law_panel,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
+	/client/proc/log_viewer_new,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
