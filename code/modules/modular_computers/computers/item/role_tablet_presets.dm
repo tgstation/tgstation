@@ -211,8 +211,8 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#FAFAFA#000099#252580"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#3F96CC#000099#333333"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -381,6 +381,16 @@
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.ringer_status = FALSE
+
+/obj/item/modular_computer/pda/psychologist
+	name = "psychologist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#333333#000099#3F96CC"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /**
  * No Department
