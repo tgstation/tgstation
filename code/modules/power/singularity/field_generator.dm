@@ -59,6 +59,7 @@ no power level overlay is currently in the overlays list.
 	energy = 100
 	fire = 50
 	acid = 70
+	bomb = 100 //Explosive resistance only protects the turfs behind itself from the epicenter.
 
 /obj/machinery/field/generator/update_overlays()
 	. = ..()
