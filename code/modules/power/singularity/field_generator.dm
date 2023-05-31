@@ -72,9 +72,9 @@ no power level overlay is currently in the overlays list.
 
 
 /obj/machinery/field/generator/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
-	AddElement(/datum/element/blocks_explosives)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
