@@ -21,6 +21,7 @@
 	var/obj/machinery/field/generator/field_gen_2 = null
 
 /obj/machinery/field/containment/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
@@ -28,7 +29,6 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/blocks_explosives)
 
 /obj/machinery/field/containment/Destroy()
 	if(field_gen_1)
