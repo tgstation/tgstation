@@ -418,7 +418,7 @@
 			if(user)
 				user.visible_message(span_danger("[user] blinds [M] with the flash!"), span_danger("You memory-flash [M]!"))
 
-			to_chat(M, span_userdanger("This light makes you forget everything you seen in the past [set_time] [time_measure]..."))
+			to_chat(M, span_userdanger("This light makes you forget everything you saw in the past [set_time] [time_measure]..."))
 			M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 			M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 		else if(user)
