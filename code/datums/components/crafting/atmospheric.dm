@@ -24,6 +24,8 @@
 		/obj/item/stack/sheet/iron = 5,
 		/obj/item/assembly/igniter = 1,
 	)
+	blacklist = list(/obj/item/assembly/igniter/condenser)
+	one_per_turf = TRUE
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
 
