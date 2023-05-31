@@ -62,7 +62,7 @@
 	return ..()
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the sparkers controllers ID", "Sparker ID", id, 100)
+	var/change_id = tgui_input_number(user, "Set the igniter controller's ID", "Igniter ID", id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
@@ -205,7 +205,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	return ..()
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the sparkers controllers ID", "Sparker ID", id, 100)
+	var/change_id = tgui_input_number(user, "Set the sparker controller's ID", "Sparker ID", id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
