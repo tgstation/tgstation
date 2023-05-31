@@ -393,6 +393,18 @@
 /obj/item/flashlight/lantern,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
+"ou" = (
+/obj/structure/closet/syndicate,
+/obj/item/clothing/under/syndicate,
+/obj/item/pickaxe,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/flashlight/lantern,
+/obj/item/clothing/suit/space/orange,
+/obj/item/clothing/head/helmet/space/orange,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
 "pl" = (
 /obj/item/ammo_casing/a357/spent{
 	dir = 8;
@@ -1991,7 +2003,7 @@ Cf
 Cf
 Er
 ED
-HI
+ou
 qO
 ED
 FV
