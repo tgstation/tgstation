@@ -53,9 +53,6 @@
 /// If we don't have a marked item, attempts to mark the caster's held item.
 /datum/action/cooldown/spell/summonitem/proc/try_link_item(mob/living/caster)
 	var/obj/item/potential_mark = caster.get_active_held_item()
-	try_link_item_checks(caster, potential_mark)
-
-/datum/action/cooldown/spell/summonitem/proc/try_link_item_checks(mob/living/caster, obj/item/potential_mark)
 	if(!potential_mark)
 		if(caster.get_inactive_held_item())
 			to_chat(caster, span_warning("You must hold the desired item in your hands to mark it for recall!"))
@@ -160,17 +157,17 @@
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"
 	desc = "Activating this would activate your linked baton emergency teleport protocol and recall it back to your hand, Takes a long time for translocation crystals to be enriched after use. REMINDER: YOU NEED TO LINK YOUR BATON MANUALLY!"
-	button_icon = 'icons/obj/weapons/baton.dmi'
+	button_icon = 'icons/obj/abductor.dmi'
 	button_icon_state = "wonderprodStun"
 
-	cooldown_time = 5 MINUTES
+	cooldown_time = 3.5 MINUTES
 
 	invocation_type = INVOCATION_NONE
 
 /datum/action/cooldown/spell/summonitem/abductor/try_link_item(mob/living/caster)
 	var/obj/item/potential_mark = caster.get_active_held_item()
-	if(istype(potential_mark, /obj/item/melee/baton/abductor))
-		try_link_item_checks(potential_mark)
-	else
-		to_chat(caster, span_warning("Object is unable to be marked, Make sure the object you are trying to mark is a baton of our origin"))
-	return FALSE
+	if(!istype(potential_mark, /obj/item/melee/baton/abductor))
+		to_chat(caster, span_warning("Object is unable to be marked, Ensure that the object you are trying to mark is a baton of our origin"))
+
+		return FALSE
+	return  ..()
