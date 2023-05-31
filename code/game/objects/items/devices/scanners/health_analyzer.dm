@@ -570,7 +570,7 @@
 		return
 
 	diseasescan(user, patient, src)
-
+//Checks the individual for any diseases that are visible to the scanner, and displays the diseases in the attacked to the attacker.
 /proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
 	if(!istype(patient) || user.incapacitated())
 		return
