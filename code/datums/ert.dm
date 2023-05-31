@@ -116,3 +116,21 @@
 	polldesc = "a Centcom-hired bounty hunting gang"
 	random_names = FALSE
 	ert_template = /datum/map_template/shuttle/ert/bounty
+
+/datum/ert/memetic
+	leader_role = /datum/antagonist/ert/memetic/commander
+	roles = list(/datum/antagonist/ert/memetic)
+	teamsize = 3
+	code = "Blue"
+	rename_team = "Memetic Response Team"
+	mission = "Replace the memories of crew about particular incident."
+	polldesc = "a Nanotrasen Memory Replacement team"
+	opendoors = FALSE
+
+/datum/ert/memetic/red
+	leader_role = /datum/antagonist/ert/memetic/commander/red
+	roles = list(/datum/antagonist/ert/memetic/red)
+	code = "Red"
+	rename_team = "Armed Memetic Response Team"
+	polldesc = "an armed Nanotrasen Memory Replacement team"
+	opendoors = TRUE

@@ -193,3 +193,15 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/// Trim for generic memetic ERT. No universal ID card changing access.
+/datum/id_trim/centcom/ert/memetic
+	assignment = JOB_ERT_MEMETIC
+	trim_state = "trim_psychologist"
+	subdepartment_color = COLOR_MEDICAL_BLUE
+	sechud_icon_state = SECHUD_MEMETIC_RESPONSE_OFFICER
+
+/datum/id_trim/centcom/ert/memetic/New()
+	. = ..()
+
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)

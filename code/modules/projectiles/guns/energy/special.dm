@@ -342,7 +342,7 @@
 	name = "cryogenic temperature gun"
 	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
 	pin = /obj/item/firing_pin
-	ammo_type = list(/obj/item/ammo_casing/energy/temp)
+	ammo_type = list(/obj/item/ammo_casing/energy/temp/cryo)
 
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"

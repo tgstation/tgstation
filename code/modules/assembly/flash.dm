@@ -287,15 +287,6 @@
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
-/obj/item/assembly/flash/memorizer
-	name = "memorizer"
-	desc = "If you see this, you're not likely to remember it any time soon."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "memorizer"
-	inhand_icon_state = "nullrod"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
 /obj/item/assembly/flash/armimplant
@@ -380,5 +371,63 @@
 		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_pacifism(4 SECONDS)
+
+/obj/item/assembly/flash/hypnotic/memorizer
+	name = "memorizer"
+	desc = "If you see this, you're not likely to remember it any time soon. Alt-click to set the time period you want victim to forget."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "memorizer"
+	inhand_icon_state = "nullrod"
+	light_color = COLOR_RED_LIGHT
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	flashing_overlay = "memorizer2"
+	///Time measures used by memorizer
+	var/time_measure_types = list("seconds", "minutes", "hours", "days")
+	///The time type sent in the memorizer (minutes, years and etc)
+	var/time_measure = "minutes"
+	///The time set in the memorizer
+	var/set_time = 1
+
+/obj/item/assembly/flash/hypnotic/memorizer/AltClick(mob/user)
+	var/time_measure_setting = tgui_input_list(user, message = "In what time measure we are erasing memories?", items = time_measure_types, default = "minutes")
+	time_measure = time_measure_setting
+	var/set_time_setting = tgui_input_number(user, message = "What period of time should the victim forget?", title = "In [time_measure]", default = 1, max_value = 60, min_value = 1)
+	set_time = set_time_setting
+	if(time_measure_setting)
+		to_chat(user, span_notice("You will be erasing memories in [time_measure]."))
+	if(set_time_setting)
+		to_chat(user, span_notice("You will be erasing memories in the [set_time] [time_measure] period."))
+	. = ..()
+
+/obj/item/assembly/flash/hypnotic/memorizer/examine(mob/user)
+	. = ..()
+	. += span_notice("It will be erasing memories in the [set_time] [time_measure] period.")
+
+/obj/item/assembly/flash/hypnotic/memorizer/flash_carbon(mob/living/carbon/M, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
+	if(!istype(M))
+		return
+	if(user)
+		log_combat(user, M, "[targeted? "memory-flashed(targeted)" : "memory-flashed(AOE)"]", src)
+	else //caused by emp/remote signal
+		M.log_message("was [targeted? "memory-flashed(targeted)" : "memory-flashed(AOE)"]", LOG_ATTACK)
+	if(generic_message && M != user)
+		to_chat(M, span_notice("[src] emits a memory burning light!"))
+	if(targeted)
+		if(M.flash_act(1, 1))
+			if(user)
+				user.visible_message(span_danger("[user] blinds [M] with the flash!"), span_danger("You memory-flash [M]!"))
+
+			to_chat(M, span_userdanger("This light makes you forget everything you seen in the past [set_time] [time_measure]..."))
+			M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+			M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+		else if(user)
+			user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to memory-flash [M]!"))
+		else
+			to_chat(M, span_danger("[src] fails to blind you!"))
+
+	else if(M.flash_act())
+		to_chat(M, span_notice("Such a weird light..."))
+		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER

@@ -537,3 +537,50 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+/datum/outfit/centcom/ert/memetic
+	name = "ERT Memetic"
+
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/ert/memetic
+	uniform = /obj/item/clothing/under/suit/black_really
+	neck = /obj/item/clothing/neck/tie/black/tied
+	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+	)
+	belt = /obj/item/gun/energy/decloner
+	ears = /obj/item/radio/headset/headset_cent/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/assembly/flash/hypnotic/memorizer
+	r_pocket = /obj/item/melee/baton/telescopic
+
+/datum/outfit/centcom/ert/memetic/commander
+	name = "ERT Memetic Commander"
+
+	id_trim = /datum/id_trim/centcom/ert/commander
+	neck = /obj/item/clothing/neck/tie/red/tied
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/grenade/hypnotic = 1,
+	)
+	glasses = /obj/item/clothing/glasses/sunglasses/big
+
+/datum/outfit/centcom/ert/memetic/alert
+	name = "ERT Memetic - High Alert"
+
+	suit = /obj/item/clothing/suit/armor/reactive/teleport
+	suit_store = /obj/item/gun/energy/temperature/freeze
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+
+/datum/outfit/centcom/ert/memetic/commander/alert
+	name = "ERT Memetic Commander - High Alert"
+
+	suit = /obj/item/clothing/suit/armor/reactive/repulse
+	suit_store = /obj/item/gun/energy/shrink_ray/anyone
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen

@@ -419,6 +419,9 @@
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
+/obj/item/gun/energy/shrink_ray/anyone //Variant with a normal pin
+	pin = /obj/item/firing_pin
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"

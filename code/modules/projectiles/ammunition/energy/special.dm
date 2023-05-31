@@ -42,6 +42,12 @@
 	projectile_type = /obj/projectile/temp/hot
 	select_name = "bake"
 
+/obj/item/ammo_casing/energy/temp/cryo
+	projectile_type = /obj/projectile/temp/cryo
+	select_name = "freeze"
+	e_cost = 250
+	fire_sound = 'sound/weapons/pulse3.ogg'
+
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
 	select_name = "goddamn meteor"

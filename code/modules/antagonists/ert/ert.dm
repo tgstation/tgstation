@@ -275,3 +275,17 @@
 	name = "Marine Medic"
 	outfit = /datum/outfit/centcom/ert/marine/medic
 	role = "Medical Officer"
+
+/datum/antagonist/ert/memetic
+	name = "Memetic Agent"
+	outfit = /datum/outfit/centcom/ert/memetic
+
+/datum/antagonist/ert/memetic/red
+	outfit = /datum/outfit/centcom/ert/memetic/alert
+
+/datum/antagonist/ert/memetic/commander
+	name = "Memetic Supervisor Agent"
+	outfit = /datum/outfit/centcom/ert/memetic/commander
+
+/datum/antagonist/ert/memetic/commander/red
+	outfit = /datum/outfit/centcom/ert/memetic/commander/alert

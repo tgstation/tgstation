@@ -292,7 +292,6 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//tools
-		/obj/item/assembly/flash/memorizer = 1,
 		/obj/item/flashlight/flashdark = 1,
 		/obj/item/knife/kitchen = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
