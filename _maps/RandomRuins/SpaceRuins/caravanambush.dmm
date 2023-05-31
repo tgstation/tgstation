@@ -28,7 +28,7 @@
 "ag" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy,
+/obj/item/gun/energy/e_gun/mini,
 /turf/template_noop,
 /area/template_noop)
 "ah" = (
@@ -949,7 +949,7 @@
 "MT" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy,
+/obj/item/knife/combat/survival,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter2)
 "Nl" = (

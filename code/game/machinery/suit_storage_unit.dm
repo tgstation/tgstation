@@ -152,6 +152,10 @@
 	helmet_type = /obj/item/clothing/head/utility/radiation
 	storage_type = /obj/item/geiger_counter
 
+/obj/machinery/suit_storage_unit/contractor
+	suit_type = /obj/item/clothing/suit/space/syndicate/contract
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/contract
+
 /obj/machinery/suit_storage_unit/open
 	state_open = TRUE
 	density = FALSE

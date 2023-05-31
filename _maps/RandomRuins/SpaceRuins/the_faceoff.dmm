@@ -632,7 +632,7 @@
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/item/gun/energy,
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
 "xT" = (
