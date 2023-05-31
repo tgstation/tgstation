@@ -14,6 +14,7 @@
 	var/greet_text
 	/// Type path for the associated job datum.
 	var/role_job = /datum/job/abductor_agent
+	var/datum/action/cooldown/spell/summonitem/abductor/baton_return_spell = new(owner)
 
 /datum/antagonist/abductor/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/scientist = new
@@ -74,11 +75,13 @@
 	objectives += team.objectives
 	finalize_abductor()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
+	baton_return_spell.Grant(owner)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
 	owner.special_role = null
 	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
+	baton_return_spell.Remove(owner)
 	return ..()
 
 /datum/antagonist/abductor/greet()
