@@ -25,17 +25,17 @@
 	/**
 	  * Components attached to this datum
 	  *
-	  * Lazy associated list in the structure of `type:component/list of components`
+	  * Lazy associated list in the structure of `type -> component/list of components`
 	  */
 	var/list/datum_components
 	/**
 	  * Any datum registered to receive signals from this datum is in this list
 	  *
-	  * Lazy associated list in the structure of `signal:registree/list of registrees`
+	  * Lazy associated list in the structure of `signal -> registree/list of registrees`
 	  */
 	var/list/comp_lookup
-	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
-	var/list/list/datum/callback/signal_procs
+	/// Lazy associated list in the structure of `target -> list(signal -> proctype)` that are run when the datum receives that signal
+	var/list/list/signal_procs
 
 	/// Datum level flags
 	var/datum_flags = NONE
