@@ -7,7 +7,7 @@
  * Arguments:
  * * message - The message being logged
  * * message_type - the type of log the message is(ATTACK, SAY, etc)
- * * tag - tag that indicates the type of test(announcement, telepathy, etc)
+ * * tag - tag that indicates the type of text(announcement, telepathy, etc)
  * * log_globally - boolean checking whether or not we write this log to the log file
  * * forced_by - source that forced the dialogue if any
  */
