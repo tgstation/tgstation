@@ -130,18 +130,18 @@
 						var/obj/item/organ/internal/tongue/robot/clockwork/organ = new()
 						organ.Insert(Host, TRUE, FALSE)
 						return TRUE
-				if(ORGAN_SLOT_EXTERNAL_TAIL)
-					var/obj/item/organ/external/tail/clockwork/organ = new()
-					to_chat(Host, "<span class='userdanger'>imagine you have a tail or not.</span>")
-					organ.Insert(Host, TRUE, FALSE)
-					return TRUE
-				if(ORGAN_SLOT_EXTERNAL_WINGS)
-					var/obj/item/organ/external/wings/functional/clockwork/organ = new()
-					to_chat(Host, "<span class='userdanger'>imagine you have wings or not.</span>")
-					//if(robustbits)
-						//organ.flight_level = WINGS_FLYING   //old bee code
-					organ.Insert(Host, TRUE, FALSE)
-					return TRUE
+				//if(ORGAN_SLOT_EXTERNAL_TAIL)      //disabled this part, because its not...QUITE working...it might be looping for moths/lizards somehow.
+				//	var/obj/item/organ/external/tail/clockwork/organ = new()
+				//	to_chat(Host, "<span class='userdanger'>imagine you have a tail or not.</span>")
+				//	organ.Insert(Host, TRUE, FALSE)
+				//	return TRUE
+				//if(ORGAN_SLOT_EXTERNAL_WINGS)
+				//	var/obj/item/organ/external/wings/functional/clockwork/organ = new()
+				//	to_chat(Host, "<span class='userdanger'>imagine you have wings or not.</span>")
+				//	//if(robustbits)
+				//		//organ.flight_level = WINGS_FLYING   //old bee code
+				//	organ.Insert(Host, TRUE, FALSE)
+				//	return TRUE
 	if(replacebody)
 		for(var/obj/item/bodypart/Oldlimb in Host.bodyparts)
 			if(!IS_ORGANIC_LIMB(Oldlimb))
@@ -150,7 +150,7 @@
 					Oldlimb.brute_reduction = max(5, Oldlimb.brute_reduction)
 				continue
 			switch(Oldlimb.body_zone)
-				if(BODY_ZONE_HEAD)
+				if(BODY_ZONE_HEAD)//i wish i knew how to transfer external organs from old limb to new limb, but i dont.
 					var/obj/item/bodypart/head/robot/clockwork/newlimb = new()
 					if(robustbits)
 						newlimb.brute_reduction = 5
@@ -159,7 +159,7 @@
 					Host.visible_message("<span_class='userdanger'>Your head feels numb, and cold.</span>")
 					qdel(Oldlimb)
 					return TRUE
-				if(BODY_ZONE_CHEST)
+				if(BODY_ZONE_CHEST)//i wish i knew how to transfer external organs from old limb to new limb, but i dont.
 					var/obj/item/bodypart/chest/robot/clockwork/newlimb = new()
 					if(robustbits)
 						newlimb.brute_reduction = 5
