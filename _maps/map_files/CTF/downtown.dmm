@@ -1904,13 +1904,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"Qb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/centcom/ctf)
 "Qr" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack{
@@ -4399,7 +4392,7 @@ Te
 Te
 Te
 td
-Qb
+fn
 xs
 td
 Ll

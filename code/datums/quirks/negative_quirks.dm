@@ -381,15 +381,9 @@
 /datum/quirk/item_quirk/nearsighted/add_unique(client/client_source)
 	var/glasses_name = client_source?.prefs.read_preference(/datum/preference/choiced/glasses) || "Regular"
 	var/obj/item/clothing/glasses/glasses_type
-	switch(glasses_name)
-		if ("Thin")
-			glasses_type = /obj/item/clothing/glasses/regular/thin
-		if ("Circle")
-			glasses_type = /obj/item/clothing/glasses/regular/circle
-		if ("Hipster")
-			glasses_type = /obj/item/clothing/glasses/regular/hipster
-		else
-			glasses_type = /obj/item/clothing/glasses/regular
+
+	glasses_name = glasses_name == "Random" ? pick(GLOB.nearsighted_glasses) : glasses_name
+	glasses_type = GLOB.nearsighted_glasses[glasses_name]
 
 	give_item_to_holder(glasses_type, list(
 		LOCATION_EYES = ITEM_SLOT_EYES,
