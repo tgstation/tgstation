@@ -1,5 +1,5 @@
 /// List of containers the Chem Master machine can print
-GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
+GLOBAL_LIST_INIT(chem_master_containers, list(
 	/obj/item/reagent_containers/cup/bottle,
 	// Condiments
 	/obj/item/reagent_containers/condiment/flour,
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 	/obj/item/reagent_containers/condiment/ketchup,
 	/obj/item/reagent_containers/condiment/yoghurt,
 	// ...
-)))
+))
 
 #define MODE_DESTROY 0
 #define MODE_MOVE 1
@@ -44,6 +44,10 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 	var/mode = MODE_MOVE
 	/// List of printable container types
 	var/list/printable_containers
+	/// Selected printable container type
+	var/selected_container_id
+	/// Selected printable container volume
+	var/selected_container_volume = 0
 
 /obj/machinery/chem_master_new/Initialize(mapload)
 	create_reagents(100)
@@ -131,7 +135,9 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 	printable_containers = list()
 
 /obj/machinery/chem_master_new/ui_assets(mob/user)
-	return get_asset_datum(/datum/asset/spritesheet/chemmaster)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/chemmaster)
+	)
 
 /obj/machinery/chem_master_new/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -144,9 +150,9 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 	data["containers"] = list()
 	for(var/obj/item/reagent_containers/container as anything in GLOB.chem_master_containers)
 		data["containers"] += list(list(
-				"icon" = sanitize_css_class_name("[container.type]"),
-				"name" = container.name,
-				"volume" = container.volume,
+				"id" = sanitize_css_class_name("[container]"),
+				"name" = initial(container.name),
+				"volume" = initial(container.volume),
 			))
 
 	return data
@@ -168,8 +174,12 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 		for(var/datum/reagent/reagent in reagents.reagent_list)
 			buffer_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
 	data["bufferContents"] = buffer_contents
+	data["bufferCurrentVolume"] = round(reagents.total_volume, 0.01)
 
 	data["mode"] = mode
+
+	data["selectedContainerId"] = selected_container_id
+	data["selectedContainerVolume"] = selected_container_volume
 
 	return data
 
@@ -190,6 +200,11 @@ GLOBAL_LIST_INIT(chem_master_containers, typecacheof(list(
 
 	if(action == "toggleMode")
 		mode = !mode
+		return TRUE
+
+	if(action == "selectContainer")
+		selected_container_id = params["id"]
+		selected_container_volume = params["volume"]
 		return TRUE
 
 /// Transfer reagents to specified target from the opposite source

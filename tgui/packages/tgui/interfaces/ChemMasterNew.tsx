@@ -1,6 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Section, Table } from '../components';
+import { BooleanLike, classes } from 'common/react';
+import { capitalize } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { AnimatedNumber, Box, Button, Section, Table, Tooltip, Tabs, NumberInput } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -10,10 +11,20 @@ type Data = {
   beakerMaxVolume: number;
   beakerContents: Reagent[];
   bufferContents: Reagent[];
+  bufferCurrentVolume: number;
+  containers: Container[];
+  selectedContainerId: string;
+  selectedContainerVolume: number;
 };
 
 type Reagent = {
   id: number;
+  name: string;
+  volume: number;
+};
+
+type Container = {
+  id: string;
   name: string;
   volume: number;
 };
@@ -27,7 +38,17 @@ export const ChemMasterNew = (props, context) => {
     beakerMaxVolume,
     beakerContents,
     bufferContents,
+    bufferCurrentVolume,
+    containers,
+    selectedContainerVolume,
   } = data;
+
+  const [itemCount, setItemCount] = useLocalState(context, 'itemCount', 1);
+  const [selectedVolume, setSelectedVolume] = useLocalState(
+    context,
+    'selectedVolume',
+    1
+  );
   return (
     <Window width={400} height={600}>
       <Window.Content scrollable>
@@ -68,7 +89,6 @@ export const ChemMasterNew = (props, context) => {
             ))}
           </Table>
         </Section>
-
         <Section
           title="Buffer"
           buttons={
@@ -99,6 +119,81 @@ export const ChemMasterNew = (props, context) => {
             ))}
           </Table>
         </Section>
+        <Section
+          title="Packaging"
+          buttons={
+            bufferContents.length !== 0 && (
+              <Box>
+                <NumberInput
+                  unit={'items'}
+                  step={1}
+                  value={itemCount}
+                  minValue={1}
+                  maxValue={100}
+                  onChange={(e, value) => {
+                    setItemCount(value);
+                    setSelectedVolume(Math.floor(bufferCurrentVolume / value));
+                  }}
+                />
+                <NumberInput
+                  unit={'u. each'}
+                  step={1}
+                  value={selectedVolume}
+                  minValue={1}
+                  maxValue={selectedContainerVolume}
+                  onChange={(e, value) => {
+                    setSelectedVolume(value);
+                    setItemCount(
+                      Math.min(100, Math.ceil(bufferCurrentVolume / value))
+                    );
+                  }}
+                />
+                <Button ml={1} content="Create" />
+              </Box>
+            )
+          }>
+          <Tabs fluid>
+            {['Containers', 'Pills', 'Patches'].map((category) => (
+              <Tabs.Tab
+                align="center"
+                key={category}
+                selected={category === 'Containers'}
+                onClick={() => ''}>
+                {category}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+          {containers.map((container) => (
+            // <ContainerButton key={container.id} container={container} />
+            <Tooltip
+              key={container.id}
+              content={`${capitalize(container.name)}\xa0(${
+                container.volume
+              } u.)`}>
+              <Button
+                color="transparent"
+                width="32px"
+                height="32px"
+                selected={container.id === data.selectedContainerId}
+                p={0}
+                onClick={() => {
+                  setSelectedVolume(container.volume);
+                  setItemCount(
+                    Math.min(
+                      100,
+                      Math.ceil(data.bufferCurrentVolume / container.volume)
+                    )
+                  );
+                  act('selectContainer', {
+                    id: container.id,
+                    volume: container.volume,
+                  });
+                }}>
+                <Box className={classes(['chemmaster32x32', container.id])} />
+              </Button>
+            </Tooltip>
+          ))}
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -112,18 +207,18 @@ const ReagentEntry = (props, context) => {
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
-        {`u.`}
+        {` u.`}
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
           content="1"
-          onClick={() =>
+          onClick={() => {
             act('transfer', {
               reagentId: chemical.id,
               amount: 1,
               target: transferTo,
-            })
-          }
+            });
+          }}
         />
         <Button
           content="5"
@@ -179,3 +274,33 @@ const ReagentEntry = (props, context) => {
     </Table.Row>
   );
 };
+
+// const ContainerButton = ({ container }, context) => {
+//   const { act, data } = useBackend<Data>(context);
+//   return (
+//     <Tooltip
+//       content={`${capitalize(container.name)}\xa0(${container.volume}u)`}>
+//       <Button
+//         color="transparent"
+//         width="32px"
+//         height="32px"
+//         selected={container.id === data.selectedContainerId}
+//         p={0}
+//         onClick={() => {
+//           context.setSelectedVolume(container.volume);
+//           context.setItemCount(
+//             Math.min(
+//               100,
+//               Math.ceil(data.bufferCurrentVolume / container.volume)
+//             )
+//           );
+//           act('selectContainer', {
+//             id: container.id,
+//             volume: container.volume,
+//           });
+//         }}>
+//         <Box className={classes(['chemmaster32x32', container.id])} />
+//       </Button>
+//     </Tooltip>
+//   ) as any;
+// };
