@@ -68,3 +68,22 @@
 	head = /obj/item/clothing/head/costume/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
+
+/datum/outfit/pirate/interdyne
+	name = "Exinterdyne pharmacist"
+
+	id = /obj/item/card/id/advanced/black
+	id_trim = /datum/id_trim/job/medical_doctor
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	glasses = /obj/item/clothing/glasses/hud/health/night
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/beret/sec/navyofficer
+	shoes = /obj/item/clothing/shoes/sneakers/white
+
+/datum/outfit/pirate/interdyne/captain
+	name = "Exinterdyne Senior Resident"
+
+	id_trim = /datum/id_trim/pirate/captain/silverscale
+	mask = /datum/id_trim/job/chief_medical_officer
+	l_pocket = /obj/item/lighter

@@ -1,0 +1,842 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "piratebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"ab" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = -24;
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ad" = (
+/obj/machinery/button/door/directional/south{
+	id = "piratebridgebolt";
+	name = "Bridge Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ae" = (
+/obj/machinery/shuttle_scrambler,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"af" = (
+/turf/template_noop,
+/area/template_noop)
+"ag" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "piratebridgebolt";
+	name = "Bridge"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ah" = (
+/obj/machinery/computer/shuttle/pirate,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aj" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"ak" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/reagentgrinder/constructed,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"al" = (
+/obj/machinery/loot_locator{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"an" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ao" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ap" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/chem_master,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ar" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/beakers/variety,
+/obj/item/storage/box/beakers/variety,
+/obj/item/storage/box/beakers/variety,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/screwdriver/nuke,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"av" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/black,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aw" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/chem_heater,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ax" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ay" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"az" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aC" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/effect/mob_spawn/ghost_role/human/pirate/senior{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aD" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/mob_spawn/ghost_role/human/junior,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aF" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aG" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/piratepad,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aH" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aI" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/portable_atmospherics/canister/healium,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/item/wrench/medical,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aJ" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aK" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"aL" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"aM" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/beaker/noreact,
+/obj/item/reagent_containers/cup/beaker/noreact,
+/obj/item/storage/box/syringes,
+/obj/machinery/light/no_nightlight/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aO" = (
+/obj/machinery/porta_turret/syndicate/energy,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"aQ" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aR" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aS" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aV" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/item/disk/surgery/debug,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aW" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"be" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/pandemic,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bf" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bk" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/medical,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bl" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/syndie_kit/tuberculosisgrenade,
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bm" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bo" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/medbeam,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"br" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/suit_storage_unit/medical,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bu" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bv" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bx" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"by" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/item/disk/surgery,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bA" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bB" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bC" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bF" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/beaker/meta,
+/obj/item/reagent_containers/cup/beaker/meta,
+/obj/item/reagent_containers/cup/beaker/meta,
+/obj/item/reagent_containers/cup/beaker/meta,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bH" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/vending/drugs,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bK" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bQ" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/medical,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"bX" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ek" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ep" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/computer/piratepad_control{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ey" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/mob_spawn/ghost_role/human/junior{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"eE" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/door/window/brigdoor/right/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"fY" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"gY" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"iD" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/button/door/directional/south{
+	id = "pirateportexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"mD" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"mU" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"sP" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/table/optable,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"vB" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/scalpel/advanced,
+/obj/item/scalpel/advanced,
+/obj/item/scalpel/advanced,
+/obj/item/retractor/advanced,
+/obj/item/retractor/advanced,
+/obj/item/retractor/advanced,
+/obj/item/cautery/advanced,
+/obj/item/cautery/advanced,
+/obj/item/cautery/advanced,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"wf" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/reagentgrinder/constructed,
+/obj/item/storage/box/monkeycubes/syndicate,
+/obj/item/storage/box/monkeycubes/syndicate,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"yi" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"En" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ED" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"Hg" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"JT" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/spray/chemsprayer/bioterror,
+/obj/item/reagent_containers/spray/chemsprayer/bioterror,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Oe" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"OL" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Rq" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/no_nightlight/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Ur" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/closet/l3closet/virology,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Xk" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+
+(1,1,1) = {"
+af
+af
+af
+af
+af
+aO
+aa
+aa
+aa
+aa
+aO
+af
+af
+af
+af
+af
+"}
+(2,1,1) = {"
+af
+af
+af
+af
+af
+aj
+ap
+aw
+ak
+bF
+aj
+af
+af
+af
+af
+af
+"}
+(3,1,1) = {"
+af
+af
+af
+af
+af
+aj
+aM
+ax
+bX
+ar
+aj
+af
+af
+af
+af
+af
+"}
+(4,1,1) = {"
+af
+af
+af
+af
+af
+aO
+aQ
+ay
+Oe
+OL
+aj
+af
+af
+af
+af
+af
+"}
+(5,1,1) = {"
+af
+af
+af
+af
+aj
+aj
+aj
+aj
+bx
+bH
+aO
+af
+af
+af
+af
+af
+"}
+(6,1,1) = {"
+af
+aO
+aa
+aj
+aj
+aI
+En
+aj
+yi
+aj
+aj
+aj
+af
+af
+af
+af
+"}
+(7,1,1) = {"
+aO
+aj
+ey
+aF
+aj
+aW
+aR
+ek
+gY
+JT
+bf
+aj
+aO
+aa
+aj
+aO
+"}
+(8,1,1) = {"
+aa
+ae
+an
+ab
+aj
+aj
+aj
+aj
+fY
+bX
+iD
+aj
+aD
+aG
+ep
+aj
+"}
+(9,1,1) = {"
+aa
+ah
+ao
+mU
+ag
+bm
+Xk
+bm
+by
+bX
+mU
+aL
+fY
+bX
+mU
+aK
+"}
+(10,1,1) = {"
+aa
+al
+az
+ad
+aj
+aj
+aj
+aj
+aV
+bX
+bl
+aj
+bQ
+bk
+br
+aj
+"}
+(11,1,1) = {"
+aO
+aj
+aC
+aH
+aj
+sP
+bm
+ek
+bA
+vB
+bo
+aj
+aO
+aa
+aj
+aO
+"}
+(12,1,1) = {"
+af
+aO
+aa
+aj
+aj
+aJ
+aS
+aj
+yi
+aj
+aj
+ED
+af
+af
+af
+af
+"}
+(13,1,1) = {"
+af
+af
+af
+af
+aO
+aj
+aj
+mD
+bB
+Ur
+aO
+af
+af
+af
+af
+af
+"}
+(14,1,1) = {"
+af
+af
+af
+af
+af
+aj
+gY
+eE
+bC
+Hg
+aj
+af
+af
+af
+af
+af
+"}
+(15,1,1) = {"
+af
+af
+af
+af
+af
+aj
+Rq
+bu
+bX
+wf
+aj
+af
+af
+af
+af
+af
+"}
+(16,1,1) = {"
+af
+af
+af
+af
+af
+aj
+av
+bv
+be
+bK
+aj
+af
+af
+af
+af
+af
+"}
+(17,1,1) = {"
+af
+af
+af
+af
+af
+aO
+aa
+mD
+aa
+aa
+aO
+af
+af
+af
+af
+af
+"}

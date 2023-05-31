@@ -115,3 +115,21 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Thanks for the credits, landlubbers."
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
+
+///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
+/datum/pirate_gang/Interdyne
+	name = "Expharmacist Unrest"
+
+	is_heavy_threat = TRUE
+	ship_template_id = "Interdyne"
+	ship_name_pool = "Interdyne_names" //just points to THE ONE AND ONLY
+
+	threat_title = "Fundings for Research"
+	threat_content = "Greetings this is the %SHIPNAME. We require some funding for our operations. \
+		%PAYOFF credits should suffice."
+	arrival_announcement = "We humbly ask for a substantial amount of income for the future research of our cause. It sure would be a shame if you got sick, but we can fix that."
+	possible_answers = list("Very well.","Get a job.")
+
+	response_received = "Thanks for your generosity, your money wont be wasted."
+	response_too_late = "We hope you like skin cancer!"
+	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some"
