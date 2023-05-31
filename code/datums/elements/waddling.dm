@@ -14,7 +14,7 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 
-/datum/element/waddling/proc/LivingWaddle(mob/living/targetmob, atom/oldloc, direction, forced)
+/datum/element/waddling/proc/LivingWaddle(mob/living/target, atom/oldloc, direction, forced)
 	SIGNAL_HANDLER
 
 	if(forced || target.incapacitated() || target.body_position == LYING_DOWN || CHECK_MOVE_LOOP_FLAGS(target, MOVEMENT_LOOP_OUTSIDE_CONTROL))
