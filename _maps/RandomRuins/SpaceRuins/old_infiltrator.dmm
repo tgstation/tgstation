@@ -215,10 +215,6 @@
 	pixel_y = -4;
 	pixel_x = -7
 	},
-/obj/item/camera_bug{
-	pixel_x = -5;
-	pixel_y = 9
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "nR" = (
@@ -720,8 +716,8 @@
 /area/ruin/space/unpowered)
 "YL" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/suit/space/syndicate/black/green,
+/obj/item/clothing/head/helmet/space/syndicate/black/green,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "YN" = (
