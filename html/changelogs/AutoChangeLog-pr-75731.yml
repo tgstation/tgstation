@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - bugfix: "Syndicate Holster now works as intended (You can finally put both revolver and speedloaders in it at the same time)."
