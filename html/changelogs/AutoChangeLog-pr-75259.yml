@@ -1,0 +1,7 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "Oldstation: Windows are easier to fix as they're now fulltile and use the new helpers to appear cracked."
+  - qol: "Oldstation: You don't need a special card to access APCs, other minor access tweaks."
+  - qol: "Oldstation: Some walls have been moved and adjusted for better navigation and look."
+  - bugfix: "Oldstation: Fixed paper text, overlapping objects, xenos being blocked by flying crates, and some other minor issues."
