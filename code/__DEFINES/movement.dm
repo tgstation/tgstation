@@ -44,6 +44,10 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
  * Has no use outside of procs called within the movement proc chain.
  */
 #define CHECK_MOVE_LOOP_FLAGS(movable, flags) (movable.move_packet ? (movable.move_packet.processing_move_loop_flags & (flags)) : NONE)
+///Should we consider the loop to be dragging movables rather than making them walk? e.g. footsteps won't play if enabled
+#define MOVEMENT_LOOP_DRAGGING (1<<4)
+///Added to the move packet `processing_move_loop_flags` so we know when a loop is behind movement even in absence of other flags
+#define MOVED_BY_MOVEMENT_LOOP (1<<5)
 
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1
