@@ -49,11 +49,7 @@ export const ChemMasterNew = (props, context) => {
   } = data;
 
   const [itemCount, setItemCount] = useLocalState(context, 'itemCount', 1);
-  const [selectedVolume, setSelectedVolume] = useLocalState(
-    context,
-    'selectedVolume',
-    1
-  );
+
   return (
     <Window width={550} height={600}>
       <Window.Content scrollable>
@@ -137,14 +133,16 @@ export const ChemMasterNew = (props, context) => {
                   maxValue={100}
                   onChange={(e, value) => {
                     setItemCount(value);
-                    setSelectedVolume(Math.floor(bufferCurrentVolume / value));
                   }}
                 />
                 <Box inline mx={1}>
                   <AnimatedNumber
-                    value={Math.min(selectedContainerVolume, selectedVolume)}
+                    value={Math.min(
+                      selectedContainerVolume,
+                      bufferCurrentVolume / itemCount
+                    ).toFixed(1)}
                   />
-                  {'u. each'}
+                  {' u. each'}
                 </Box>
                 <Button content="Create" />
               </Box>
@@ -167,19 +165,6 @@ export const ChemMasterNew = (props, context) => {
                     selected={container.id === data.selectedContainerId}
                     p={0}
                     onClick={() => {
-                      setSelectedVolume(
-                        Math.min(
-                          selectedVolume,
-                          container.volume,
-                          bufferCurrentVolume
-                        )
-                      );
-                      setItemCount(
-                        Math.min(
-                          100,
-                          Math.ceil(data.bufferCurrentVolume / container.volume)
-                        )
-                      );
                       act('selectContainer', {
                         id: container.id,
                         volume: container.volume,
