@@ -52,6 +52,10 @@
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 	showpipe = !!underfloor_accessibility
+	if(show_pipe)
+		REMOVE_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+	else
+		ADD_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
