@@ -1,31 +1,53 @@
-/// List of containers the Chem Master machine can print
-GLOBAL_LIST_INIT(chem_master_containers, list(
-	/obj/item/reagent_containers/cup/bottle,
-	// Condiments
-	/obj/item/reagent_containers/condiment/flour,
-	/obj/item/reagent_containers/condiment/sugar,
-	/obj/item/reagent_containers/condiment/rice,
-	/obj/item/reagent_containers/condiment/cornmeal,
-	/obj/item/reagent_containers/condiment/enzyme,
-	/obj/item/reagent_containers/condiment/saltshaker,
-	/obj/item/reagent_containers/condiment/peppermill,
-	/obj/item/reagent_containers/condiment/soysauce,
-	/obj/item/reagent_containers/condiment/bbqsauce,
-	/obj/item/reagent_containers/condiment/quality_oil,
-	/obj/item/reagent_containers/condiment/cooking_oil,
-	/obj/item/reagent_containers/condiment/peanut_butter,
-	/obj/item/reagent_containers/condiment/cherryjelly,
-	/obj/item/reagent_containers/condiment/honey,
-	/obj/item/reagent_containers/condiment/mayonnaise,
-	/obj/item/reagent_containers/condiment/ketchup,
-	/obj/item/reagent_containers/condiment/yoghurt,
-	// ...
-))
-
 #define MODE_DESTROY 0
 #define MODE_MOVE 1
 #define BEAKER "beaker"
 #define BUFFER "buffer"
+#define CONDIMENTS "condiments"
+#define PACKS "packs"
+#define TUBES "tubes"
+#define PILLS "pills"
+#define PATCHES "patches"
+
+/// List of containers the Chem Master machine can print
+GLOBAL_LIST_INIT(chem_master_containers, list(
+	CONDIMENTS = list(
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/condiment/flour,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/condiment/rice,
+		/obj/item/reagent_containers/condiment/cornmeal,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/reagent_containers/condiment/soymilk,
+		/obj/item/reagent_containers/condiment/yoghurt,
+		/obj/item/reagent_containers/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/peppermill,
+		/obj/item/reagent_containers/condiment/soysauce,
+		/obj/item/reagent_containers/condiment/bbqsauce,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/condiment/hotsauce,
+		/obj/item/reagent_containers/condiment/coldsauce,
+		/obj/item/reagent_containers/condiment/mayonnaise,
+		/obj/item/reagent_containers/condiment/ketchup,
+		/obj/item/reagent_containers/condiment/quality_oil,
+		/obj/item/reagent_containers/condiment/cooking_oil,
+		/obj/item/reagent_containers/condiment/peanut_butter,
+		/obj/item/reagent_containers/condiment/cherryjelly,
+		/obj/item/reagent_containers/condiment/honey,
+		/obj/item/reagent_containers/condiment/pack,
+	),
+	PACKS = list(
+		/obj/item/reagent_containers/condiment/pack
+	),
+	TUBES = list(
+		/obj/item/reagent_containers/cup/tube
+	),
+	PILLS = typecacheof(list(
+		/obj/item/reagent_containers/pill/style
+	)),
+	PATCHES = typecacheof(list(
+		/obj/item/reagent_containers/pill/patch/style
+	)),
+))
 
 /obj/machinery/chem_master_new
 	name = "ChemMaster 3000"
@@ -132,7 +154,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	return TRUE
 
 /obj/machinery/chem_master_new/proc/load_printable_containers()
-	printable_containers = list()
+	printable_containers = list(
+		TUBES = GLOB.chem_master_containers[TUBES],
+		PILLS = GLOB.chem_master_containers[PILLS],
+		PATCHES = GLOB.chem_master_containers[PATCHES],
+	)
 
 /obj/machinery/chem_master_new/ui_assets(mob/user)
 	return list(
@@ -147,13 +173,19 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /obj/machinery/chem_master_new/ui_static_data(mob/user)
 	var/list/data = list()
-	data["containers"] = list()
-	for(var/obj/item/reagent_containers/container as anything in GLOB.chem_master_containers)
-		data["containers"] += list(list(
+	data["categories"] = list()
+	for(var/category in printable_containers)
+		var/container_data = list()
+		for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
+			container_data += list(list(
 				"id" = sanitize_css_class_name("[container]"),
 				"name" = initial(container.name),
 				"volume" = initial(container.volume),
 			))
+		data["categories"]+= list(list(
+			"name" = category,
+			"containers" = container_data,
+		))
 
 	return data
 
@@ -254,8 +286,22 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		say("Cannot move reagent during reaction!")
 	return canMove
 
+/obj/machinery/chem_master_new/condimaster
+	name = "CondiMaster 3000"
+	desc = "Used to create condiments and other cooking supplies."
+
+/obj/machinery/chem_master_new/condimaster/load_printable_containers()
+	printable_containers = list(
+		CONDIMENTS = GLOB.chem_master_containers[CONDIMENTS],
+		PACKS = GLOB.chem_master_containers[PACKS],
+	)
 
 #undef MODE_DESTROY
 #undef MODE_MOVE
 #undef BEAKER
 #undef BUFFER
+#undef CONDIMENTS
+#undef PACKS
+#undef TUBES
+#undef PILLS
+#undef PATCHES

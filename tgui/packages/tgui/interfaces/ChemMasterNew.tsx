@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Section, Table, Tooltip, Tabs, NumberInput } from '../components';
+import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -12,9 +12,14 @@ type Data = {
   beakerContents: Reagent[];
   bufferContents: Reagent[];
   bufferCurrentVolume: number;
-  containers: Container[];
+  categories: Category[];
   selectedContainerId: string;
   selectedContainerVolume: number;
+};
+
+type Category = {
+  name: string;
+  containers: Container[];
 };
 
 type Reagent = {
@@ -39,7 +44,7 @@ export const ChemMasterNew = (props, context) => {
     beakerContents,
     bufferContents,
     bufferCurrentVolume,
-    containers,
+    categories,
     selectedContainerVolume,
   } = data;
 
@@ -50,7 +55,7 @@ export const ChemMasterNew = (props, context) => {
     1
   );
   return (
-    <Window width={400} height={600}>
+    <Window width={550} height={600}>
       <Window.Content scrollable>
         <Section
           title="Beaker"
@@ -135,63 +140,66 @@ export const ChemMasterNew = (props, context) => {
                     setSelectedVolume(Math.floor(bufferCurrentVolume / value));
                   }}
                 />
-                <NumberInput
-                  unit={'u. each'}
-                  step={1}
-                  value={selectedVolume}
-                  minValue={1}
-                  maxValue={selectedContainerVolume}
-                  onChange={(e, value) => {
-                    setSelectedVolume(value);
-                    setItemCount(
-                      Math.min(100, Math.ceil(bufferCurrentVolume / value))
-                    );
-                  }}
-                />
-                <Button ml={1} content="Create" />
+                <Box inline mx={1}>
+                  <AnimatedNumber
+                    value={Math.min(selectedContainerVolume, selectedVolume)}
+                  />
+                  {'u. each'}
+                </Box>
+                <Button content="Create" />
               </Box>
             )
           }>
-          <Tabs fluid>
-            {['Containers', 'Pills', 'Patches'].map((category) => (
-              <Tabs.Tab
-                align="center"
-                key={category}
-                selected={category === 'Containers'}
-                onClick={() => ''}>
-                {category}
-              </Tabs.Tab>
-            ))}
-          </Tabs>
-          {containers.map((container) => (
-            // <ContainerButton key={container.id} container={container} />
-            <Tooltip
-              key={container.id}
-              content={`${capitalize(container.name)}\xa0(${
-                container.volume
-              } u.)`}>
-              <Button
-                color="transparent"
-                width="32px"
-                height="32px"
-                selected={container.id === data.selectedContainerId}
-                p={0}
-                onClick={() => {
-                  setSelectedVolume(container.volume);
-                  setItemCount(
-                    Math.min(
-                      100,
-                      Math.ceil(data.bufferCurrentVolume / container.volume)
-                    )
-                  );
-                  act('selectContainer', {
-                    id: container.id,
-                    volume: container.volume,
-                  });
-                }}>
-                <Box className={classes(['chemmaster32x32', container.id])} />
-              </Button>
-            </Tooltip>
+          {categories.map((category) => (
+            <Box key={category.name}>
+              {category.containers.map((container) => (
+                // <ContainerButton key={container.id} container={container} />
+                <Tooltip
+                  key={container.id}
+                  content={`${capitalize(container.name)}\xa0(${
+                    container.volume
+                  } u.)`}>
+                  <Button
+                    overflow="hidden"
+                    color="transparent"
+                    width="48px"
+                    height="48px"
+                    selected={container.id === data.selectedContainerId}
+                    p={0}
+                    onClick={() => {
+                      setSelectedVolume(
+                        Math.min(
+                          selectedVolume,
+                          container.volume,
+                          bufferCurrentVolume
+                        )
+                      );
+                      setItemCount(
+                        Math.min(
+                          100,
+                          Math.ceil(data.bufferCurrentVolume / container.volume)
+                        )
+                      );
+                      act('selectContainer', {
+                        id: container.id,
+                        volume: container.volume,
+                      });
+                    }}>
+                    <Box
+                      style={{
+                        'transform': ['pills', 'patches'].includes(
+                          category.name
+                        )
+                          ? 'scale(3)'
+                          : 'scale(2)',
+                      }}
+                      m={'8px'}
+                      className={classes(['chemmaster32x32', container.id])}
+                    />
+                  </Button>
+                </Tooltip>
+              ))}
+            </Box>
           ))}
         </Section>
       </Window.Content>

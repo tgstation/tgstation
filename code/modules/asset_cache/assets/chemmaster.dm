@@ -4,11 +4,12 @@
 
 /datum/asset/spritesheet/chemmaster/create_spritesheets()
 	var/list/ids = list()
-	for(var/obj/item/reagent_containers/container as anything in GLOB.chem_master_containers)
-		var/icon_file = initial(container.icon)
-		var/icon_state = initial(container.icon_state)
-		var/id = sanitize_css_class_name("[container]")
-		if(id in ids) // exclude duplicate containers
-			continue
-		ids += id
-		Insert(id, icon_file, icon_state)
+	for(var/category in GLOB.chem_master_containers)
+		for(var/obj/item/reagent_containers/container as anything in GLOB.chem_master_containers[category])
+			var/icon_file = initial(container.icon)
+			var/icon_state = initial(container.icon_state)
+			var/id = sanitize_css_class_name("[container]")
+			if(id in ids) // exclude duplicate containers
+				continue
+			ids += id
+			Insert(id, icon_file, icon_state)
