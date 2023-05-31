@@ -130,19 +130,20 @@ export const ChemMasterNew = (props, context) => {
                   step={1}
                   value={itemCount}
                   minValue={1}
-                  maxValue={100}
+                  maxValue={10}
                   onChange={(e, value) => {
                     setItemCount(value);
                   }}
                 />
                 <Box inline mx={1}>
-                  <AnimatedNumber
-                    value={Math.min(
-                      selectedContainerVolume,
-                      bufferCurrentVolume / itemCount
-                    ).toFixed(1)}
-                  />
-                  {' u. each'}
+                  {`${
+                    Math.round(
+                      Math.min(
+                        selectedContainerVolume,
+                        bufferCurrentVolume / itemCount
+                      ) * 100
+                    ) / 100
+                  } u. each`}
                 </Box>
                 <Button content="Create" />
               </Box>

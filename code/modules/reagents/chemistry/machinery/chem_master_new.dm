@@ -3,7 +3,6 @@
 #define BEAKER "beaker"
 #define BUFFER "buffer"
 #define CONDIMENTS "condiments"
-#define PACKS "packs"
 #define TUBES "tubes"
 #define PILLS "pills"
 #define PATCHES "patches"
@@ -35,9 +34,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		/obj/item/reagent_containers/condiment/honey,
 		/obj/item/reagent_containers/condiment/pack,
 	),
-	PACKS = list(
-		/obj/item/reagent_containers/condiment/pack
-	),
 	TUBES = list(
 		/obj/item/reagent_containers/cup/tube
 	),
@@ -65,7 +61,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// Whether separated reagents should be moved back to container or destroyed.
 	var/mode = MODE_MOVE
 	/// List of printable container types
-	var/list/printable_containers
+	var/list/printable_containers = list()
 	/// Selected printable container type
 	var/selected_container_id
 	/// Selected printable container volume
@@ -74,6 +70,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master_new/Initialize(mapload)
 	create_reagents(100)
 	load_printable_containers()
+	var/obj/item/reagent_containers/default_container = printable_containers[printable_containers[1]][1]
+	selected_container_id = sanitize_css_class_name("[default_container]")
+	selected_container_volume = initial(default_container.volume)
 	return ..()
 
 /obj/machinery/chem_master_new/Destroy()
@@ -120,8 +119,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		. = TRUE // No afterattack
 		var/obj/item/reagent_containers/beaker = item
 		replace_beaker(user, beaker)
-		// if(!panel_open)
-		// 	ui_interact(user)
+		if(!panel_open)
+			ui_interact(user)
 	return ..()
 
 /obj/machinery/chem_master_new/attack_hand_secondary(mob/user, list/modifiers)
@@ -293,7 +292,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master_new/condimaster/load_printable_containers()
 	printable_containers = list(
 		CONDIMENTS = GLOB.chem_master_containers[CONDIMENTS],
-		PACKS = GLOB.chem_master_containers[PACKS],
 	)
 
 #undef MODE_DESTROY
@@ -301,7 +299,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 #undef BEAKER
 #undef BUFFER
 #undef CONDIMENTS
-#undef PACKS
 #undef TUBES
 #undef PILLS
 #undef PATCHES
