@@ -154,7 +154,7 @@
 			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_NUKEOPS_METAGAME)
-			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
+			new /obj/item/mod/control/pre_equipped/nuclear/unrestricted(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -425,6 +425,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
+
+/obj/item/storage/box/syndie_kit/mail_counterfeit
+	name = "mail counterfeit kit"
+	desc = "A box full of mail counterfeit devices. Nothing stops the mail."
+
+/obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/storage/mail_counterfeit_device(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"

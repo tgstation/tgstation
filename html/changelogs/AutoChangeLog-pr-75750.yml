@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The peanut butter banana sandwich is no longer presented as grilled when it doesn't require a griddle to make."
