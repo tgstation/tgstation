@@ -112,7 +112,6 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/robocontrol,
 	)
 
 /**
@@ -212,6 +211,8 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#FAFAFA#000099#252580"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
