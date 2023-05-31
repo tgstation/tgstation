@@ -177,8 +177,8 @@
 		LAZYADD(list_of_turfs, get_perimeter(src, radius))
 
 		if(exterior_only)
-			for(var/turf/target_tile as anything in list_of_turfs)
-				if(!(isfloorturf(target_tile)) && isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+			for(var/turf/open/target_tile in list_of_turfs)
+				if(!(isfloorturf(target_tile)) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 					deploying_shield.shield_generator = src
 					LAZYADD(deployed_shields, deploying_shield)
@@ -186,7 +186,7 @@
 			calculate_regeneration()
 			return
 
-		for(var/turf/target_tile as anything in list_of_turfs)
+		for(var/turf/target_tile in list_of_turfs)
 			if(isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
@@ -198,8 +198,8 @@
 	//this code only runs on radius less than 10 and gives us a more accurate circle that is more compatible with decimal values
 	LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to the turfs inside the shield
 	if(exterior_only)
-		for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
-			if(!(isfloorturf(target_tile)) && isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
+		for(var/turf/open/target_tile in circle_range_turfs(src, radius))
+			if(!(isfloorturf(target_tile)) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				LAZYADD(deployed_shields, deploying_shield)
@@ -207,7 +207,7 @@
 		calculate_regeneration()
 		return
 
-	for(var/turf/target_tile as anything in circle_range_turfs(src, radius))
+	for(var/turf/target_tile in circle_range_turfs(src, radius))
 		if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
