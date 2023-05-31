@@ -26,6 +26,7 @@
 	chance = DEFAULT_RADIATION_CHANCE,
 	minimum_exposure_time = 0,
 	intensity,
+	should_rad_act = TRUE
 )
 	if(!SSradiation.can_fire)
 		return
@@ -38,6 +39,12 @@
 	pulse_information.minimum_exposure_time = minimum_exposure_time
 	pulse_information.turfs_to_process = RANGE_TURFS(max_range, source)
 	pulse_information.intensity = intensity
+
+	if(should_rad_act)
+		for(var/obj/collector in range(5, src))
+			if(!istype(collector, /obj/machinery/power/rad_collector))
+				continue
+			collector.rad_act(intensity)
 
 	SSradiation.processing += pulse_information
 
