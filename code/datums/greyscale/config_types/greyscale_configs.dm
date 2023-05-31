@@ -172,6 +172,10 @@
 	name = "Mime PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
+/datum/greyscale_config/tablet/stripe_double
+	name = "Double Stripe PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_double.json'
+
 /datum/greyscale_config/tablet/stripe_split
 	name = "Split Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
