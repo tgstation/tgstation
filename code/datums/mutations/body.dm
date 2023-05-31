@@ -347,7 +347,7 @@
 		warpchance = 0
 		owner.visible_message(span_danger("[owner] appears out of nowhere!"))
 	else
-		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * seconds_per_tick
+		warpchance += 0.0625 * (1 / GET_MUTATION_ENERGY(src)) * seconds_per_tick
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
