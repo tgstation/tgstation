@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "You can now sweep garbage into open trash bins (the crate subtype)."

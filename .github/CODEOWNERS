@@ -24,6 +24,11 @@
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
 
+# Cobby
+
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Fikou
 
@@ -126,6 +131,7 @@
 
 /code/modules/wiremod/ @Watermelon914
 /code/modules/antagonists/traitor/ @Watermelon914
+/code/controllers/subsystem/tts.dm @Watermelon914
 
 # ZephyrTFA
 
@@ -138,12 +144,6 @@
 
 
 # CONTRIBUTORS
-
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Jordie0608
 
