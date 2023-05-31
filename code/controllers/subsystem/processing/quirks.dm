@@ -36,7 +36,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	/// A list of quirks that cannot be used by specific species. Format: "quirk" = list(species1, species2)
 	var/static/list/species_quirk_blacklist = list(
-		"Blood Deficiency" = list(/datum/species/plasmaman)
+		/datum/species/plasmaman = list(
+			/datum/quirk/blooddeficiency,
+		)
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
@@ -166,6 +168,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if ((initial(quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood))
 			continue
 
+		var/datum/species/user_species = supplied_prefs.read_preference(/datum/preference/choiced/species)
+		if(quirk in species_quirk_blacklist[user_species])
+			continue
+
 		var/blacklisted = FALSE
 
 		for (var/list/blacklist as anything in quirk_blacklist)
@@ -181,9 +187,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				break
 
 		if (blacklisted)
-			continue
-
-		if(species_quirk_blacklist[quirk_name] && (supplied_prefs.read_preference(/datum/preference/choiced/species) in species_quirk_blacklist[quirk_name]))
 			continue
 
 		var/value = initial(quirk.value)

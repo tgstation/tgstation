@@ -53,7 +53,7 @@
 	var/quirk_name = params["quirk"]
 
 	var/list/new_quirks = preferences.all_quirks | quirk_name
-	if (SSquirks.filter_invalid_quirks(new_quirks) != new_quirks)
+	if (SSquirks.filter_invalid_quirks(new_quirks, preferences) != new_quirks)
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
@@ -71,7 +71,7 @@
 	var/list/new_quirks = preferences.all_quirks - quirk_name
 	if ( \
 		!(quirk_name in preferences.all_quirks) \
-		|| SSquirks.filter_invalid_quirks(new_quirks) != new_quirks \
+		|| SSquirks.filter_invalid_quirks(new_quirks, preferences) != new_quirks \
 	)
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
