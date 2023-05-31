@@ -64,6 +64,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/can_merge = TRUE
 	///number in decimal value that acts as a multiplier to the amount of liquids lost in applications
 	var/loss_precent = 1
+	///do we have any containing expose turf chemicals with volume to look for?
+	var/exposure = FALSE
 
 ///NEW/DESTROY
 /datum/liquid_group/New(height, obj/effect/abstract/liquid_turf/created_liquid)
@@ -224,6 +226,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		qdel(turf_reagents)
 	turf_reagents = new(100000)
 
+	exposure = FALSE
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
@@ -231,6 +234,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!amount)
 			continue
 		passed_list[pulled_reagent.type] = amount
+		if(pulled_reagent.turf_exposure)
+			exposure = TRUE
 
 	turf_reagents.add_reagent_list(passed_list)
 	turf_reagents.chem_temp = group_temperature
