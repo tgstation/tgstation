@@ -3,6 +3,7 @@
 	description = "Exactly what you think. Should be useful."
 	color = "#c0d121"
 	taste_description = "piss"
+	evaporation_rate = 4
 
 /obj/item/organ/internal/bladder
 	name = "bladder"
