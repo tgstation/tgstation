@@ -53,9 +53,9 @@
 	SIGNAL_HANDLER
 	showpipe = !!underfloor_accessibility
 	if(show_pipe)
-		REMOVE_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	else
-		ADD_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()

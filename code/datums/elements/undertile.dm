@@ -59,7 +59,7 @@
 
 	else
 		SET_PLANE_IMPLICIT(source, initial(source.plane))
-		REMOVE_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+		REMOVE_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(invisibility_trait)
 			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))

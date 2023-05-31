@@ -318,9 +318,9 @@
 	var/should_hide = !underfloor_accessibility
 
 	if(should_hide)
-		ADD_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+		ADD_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
 	else
-		REMOVE_TRAIT(target, TRAIT_UNDERFLOOR, REF(src))
+		REMOVE_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
 
 	if(parent_movable.anchored || !should_hide)
 		tile_covered = should_hide

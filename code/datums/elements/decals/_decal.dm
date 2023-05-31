@@ -30,7 +30,7 @@
 
 	var/list/resulting_decals_params = list() // param lists
 	for(var/datum/element/decal/rotating as anything in old_decals)
-		resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
+		resulting_decals_params += list(rotating.get_rotated_parameters(old_dir,new_dir))
 
 	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
 	for(var/datum/element/decal/decal in old_decals)
@@ -158,7 +158,7 @@
 /datum/element/decal/proc/shuttle_rotate(datum/source, list/datum/element/decal/rotating)
 	SIGNAL_HANDLER
 	rotating += src
-	
+
 /**
  * Reacts to the source atom smoothing.
  *
