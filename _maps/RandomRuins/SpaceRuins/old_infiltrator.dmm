@@ -240,7 +240,7 @@
 /area/ruin/space/unpowered)
 "pv" = (
 /obj/effect/turf_decal/bot_red,
-/obj/machinery/suit_storage_unit/contractor,
+/obj/machinery/suit_storage_unit/nuke_med,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "qL" = (
