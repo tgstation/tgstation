@@ -11,9 +11,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
 
-	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
-	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
-	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
+	/// Assoc. list of all roundstart quirk datum types; "name" = /path/
+	var/list/quirks = list()
+	/// Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
+	var/list/quirk_points = list()
+	/// An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
@@ -30,6 +32,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Social Anxiety", "Mute"),
+	)
+
+	/// A list of quirks that cannot be used by specific species. Format: "quirk" = list(species1, species2)
+	var/static/list/species_quirk_blacklist = list(
+		"Blood Deficiency" = list(/datum/species/plasmaman)
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
@@ -144,7 +151,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// be valid.
 /// If no changes need to be made, will return the same list.
 /// Expects all quirk names to be unique, but makes no other expectations.
-/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
+/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, datum/preferences/supplied_prefs)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
@@ -174,6 +181,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				break
 
 		if (blacklisted)
+			continue
+
+		if(species_quirk_blacklist[quirk_name] && (supplied_prefs.read_preference(/datum/preference/choiced/species) in species_quirk_blacklist[quirk_name]))
 			continue
 
 		var/value = initial(quirk.value)
