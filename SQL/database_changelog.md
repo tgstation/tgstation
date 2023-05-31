@@ -22,7 +22,6 @@ Adds a new index to the library table to speed up admin searches
 ```sql
  ALTER TABLE `library_action` MODIFY COLUMN `ckey` varchar(32) NOT NULL;
  ALTER TABLE `library_action` MODIFY COLUMN `ip_addr` int(10) unsigned NOT NULL;
-CREATE INDEX `idx_admin_lib_search` ON library(`author`,`title`,`category`);
 ```
 
 -----------------------------------------------------
