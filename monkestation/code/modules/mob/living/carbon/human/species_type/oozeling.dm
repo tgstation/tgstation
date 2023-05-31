@@ -100,6 +100,7 @@
 	if(!atmos_sealed)
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
+			environment.assert_gas(/datum/gas/water_vapor)
 			if(environment.gases[/datum/gas/water_vapor][MOLES] >= 1)
 				H.blood_volume -= 15
 				if(prob(50))
