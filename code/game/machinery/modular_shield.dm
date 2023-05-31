@@ -178,19 +178,25 @@
 
 		if(exterior_only)
 			for(var/turf/open/target_tile in list_of_turfs)
-				if(!(isfloorturf(target_tile)) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-					var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-					deploying_shield.shield_generator = src
-					LAZYADD(deployed_shields, deploying_shield)
+				if(isfloorturf(target_tile))
+					continue
+				if(locate(/obj/structure/emergency_shield/modular) in target_tile)
+					continue
+				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+				deploying_shield.shield_generator = src
+				LAZYADD(deployed_shields, deploying_shield)
+
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
 
-		for(var/turf/target_tile in list_of_turfs)
-			if(isopenturf(target_tile) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-				deploying_shield.shield_generator = src
-				LAZYADD(deployed_shields, deploying_shield)
+		for(var/turf/open/target_tile in list_of_turfs)
+			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
+				continue
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+			deploying_shield.shield_generator = src
+			LAZYADD(deployed_shields, deploying_shield)
+
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
@@ -199,19 +205,29 @@
 	LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to the turfs inside the shield
 	if(exterior_only)
 		for(var/turf/open/target_tile in circle_range_turfs(src, radius))
-			if(!(isfloorturf(target_tile)) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-				deploying_shield.shield_generator = src
-				LAZYADD(deployed_shields, deploying_shield)
+			if(isfloorturf(target_tile))
+				continue
+			if(target_tile in inside_shield)
+				continue
+			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
+				continue
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+			deploying_shield.shield_generator = src
+			LAZYADD(deployed_shields, deploying_shield)
+
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
 		return
 
-	for(var/turf/target_tile in circle_range_turfs(src, radius))
-		if(isopenturf(target_tile) && !(target_tile in inside_shield) && !(locate(/obj/structure/emergency_shield/modular) in target_tile))
-			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-			deploying_shield.shield_generator = src
-			LAZYADD(deployed_shields, deploying_shield)
+	for(var/turf/open/target_tile in circle_range_turfs(src, radius))
+		if(target_tile in inside_shield)
+			continue
+		if(locate(/obj/structure/emergency_shield/modular) in target_tile)
+			continue
+		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
+		deploying_shield.shield_generator = src
+		LAZYADD(deployed_shields, deploying_shield)
+
 	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
 
