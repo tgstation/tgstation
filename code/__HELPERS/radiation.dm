@@ -41,7 +41,7 @@
 	pulse_information.intensity = intensity
 
 	if(should_rad_act)
-		for(var/obj/collector in range(5, src))
+		for(var/obj/collector in range(5, source))
 			if(!istype(collector, /obj/machinery/power/rad_collector))
 				continue
 			collector.rad_act(intensity)
