@@ -74,6 +74,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/blocks_explosives)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
@@ -279,6 +280,7 @@ no power level overlay is currently in the overlays list.
 		turn_off()
 		return
 	move_resist = INFINITY
+	set_explosion_block(INFINITY)
 	can_atmos_pass = ATMOS_PASS_NO
 	air_update_turf(TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1)
@@ -356,6 +358,7 @@ no power level overlay is currently in the overlays list.
 	update_appearance()
 
 	move_resist = initial(move_resist)
+	set_explosion_block(0)
 
 /obj/machinery/field/generator/proc/shield_floor(create)
 	if(connected_gens.len < 2)
