@@ -14891,6 +14891,7 @@
 "dLm" = (
 /obj/structure/weightmachine,
 /obj/effect/turf_decal/stripes,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/station/medical/psychology)
 "dLt" = (
@@ -17371,6 +17372,7 @@
 /area/station/hallway/floor4/aft)
 "ert" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "erN" = (
@@ -25466,6 +25468,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/cmo)
 "gCm" = (
@@ -26949,6 +26952,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "gXs" = (
@@ -27392,6 +27396,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "hdg" = (
@@ -29862,6 +29867,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hKN" = (
@@ -41502,7 +41508,6 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/chemistry,
 /obj/item/hand_labeler,
-/obj/machinery/chem_dispenser,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "kPk" = (
@@ -52351,6 +52356,9 @@
 /area/station/maintenance/floor4/port/aft)
 "nwF" = (
 /obj/machinery/duct,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nwL" = (
@@ -78617,6 +78625,7 @@
 /area/station/maintenance/floor2/port/aft)
 "uxQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/patients_rooms)
 "uxR" = (
@@ -80755,6 +80764,10 @@
 	id = "surg_b_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -10;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
@@ -85553,6 +85566,7 @@
 /area/station/command/bridge)
 "wlP" = (
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "wlX" = (
@@ -88007,6 +88021,10 @@
 	id = "surg_a_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -10;
+	pixel_x = -24
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
