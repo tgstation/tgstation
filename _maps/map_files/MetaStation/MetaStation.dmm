@@ -2857,7 +2857,7 @@
 /area/station/command/teleporter)
 "bcb" = (
 /obj/structure/sign/warning/secure_area,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/research)
 "bcf" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -45827,7 +45827,7 @@
 /area/station/commons/locker)
 "qCY" = (
 /obj/structure/sign/directions/evac,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/station/maintenance/department/science/central)
 "qDa" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -95543,7 +95543,7 @@ fma
 fma
 fma
 fma
-ujJ
+kor
 aQS
 qCY
 kQe
@@ -95803,7 +95803,7 @@ wOS
 orv
 dPY
 xWJ
-kQe
+oIg
 cId
 rQl
 oIg
@@ -95812,7 +95812,7 @@ neA
 vLU
 kZf
 jxW
-dKC
+svS
 rhU
 pjX
 mGI
@@ -96056,11 +96056,11 @@ ose
 tzq
 njW
 eLY
-eut
-kor
-kor
-kor
-kQe
+fma
+ujJ
+ujJ
+ujJ
+oIg
 cDM
 poS
 byf
@@ -96069,7 +96069,7 @@ oir
 wal
 tzg
 jxW
-dKC
+svS
 tjE
 rDB
 nFa
@@ -103507,9 +103507,9 @@ wXF
 wXF
 wXF
 wXF
-xKK
+gFQ
 wto
-xKK
+gFQ
 oWk
 xuD
 qZg
