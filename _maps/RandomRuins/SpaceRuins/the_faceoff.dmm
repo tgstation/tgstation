@@ -400,7 +400,10 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
-/obj/item/clothing/suit/hooded/explorer/syndicate,
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_x = 8;
+	pixel_y = -2
+	},
 /obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
@@ -879,7 +882,10 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
-/obj/item/clothing/suit/hooded/explorer/syndicate,
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_y = -2;
+	pixel_x = 8
+	},
 /obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
