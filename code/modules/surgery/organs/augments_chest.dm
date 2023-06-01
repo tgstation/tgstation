@@ -58,7 +58,7 @@
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	if(reviving)
 		switch(owner.stat)
-			if(UNCONSCIOUS, HARD_CRIT)
+			if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT)
 				addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 			else
 				COOLDOWN_START(src, reviver_cooldown, revive_cost)
@@ -70,7 +70,7 @@
 		return
 
 	switch(owner.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT)
 			revive_cost = 0
 			reviving = TRUE
 			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
