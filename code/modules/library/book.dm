@@ -139,14 +139,8 @@
 			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
 			return
 
-		scanner.book_data = book_data.return_copy()
-		switch(scanner.mode)
-			if(0)
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer.'"))
-			if(1)
-				computer.buffer_book = book_data.return_copy()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
-			if(2)
+		switch(scanner.scan_mode)
+			if(BARCODE_SCANNER_CHECKIN)
 				var/list/checkouts = computer.checkouts
 				for(var/checkout_ref in checkouts)
 					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
@@ -158,7 +152,7 @@
 					return
 
 				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
-			if(3)
+			if(BARCODE_SCANNER_INVENTORY)
 				var/datum/book_info/our_copy = book_data.return_copy()
 				computer.inventory[ref(our_copy)] = our_copy
 				computer.inventory_update()
