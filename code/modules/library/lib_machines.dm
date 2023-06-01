@@ -448,7 +448,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			return TRUE
 		if("checkout")
 			var/list/available = list()
-			for(var/id as anything in inventory)
+			for(var/id in inventory)
 				var/datum/book_info/book_infos = inventory[id]
 				available[book_infos.title] = book_infos
 			var/book_name = params["book_name"]
