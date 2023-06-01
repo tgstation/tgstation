@@ -446,4 +446,4 @@
 	SIGNAL_HANDLER
 	projectile.ricochets_max += 1
 	projectile.min_ricochets += 1
-	projectile.ricochet_incidence_leeway = 100
+	projectile.ricochet_incidence_leeway = 0
