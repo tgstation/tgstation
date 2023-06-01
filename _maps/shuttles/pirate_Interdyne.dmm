@@ -148,8 +148,9 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	chargecount = 1000000000;
-	long_term_power = 10000000
+	cell_type = /obj/item/stock_parts/cell/infinite;
+	long_term_power = 10000000;
+	start_charge = 100
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -198,7 +199,6 @@
 /obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -208,7 +208,6 @@
 /obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -523,7 +522,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/item/reagent_containers/cup/beaker/meta/salbutamol{
-	list_reagents = list(/datum/reagent/inverse/healing/convermol = 180)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -594,6 +593,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/mirror/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 
