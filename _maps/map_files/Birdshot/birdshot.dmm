@@ -5731,10 +5731,10 @@
 "cwt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/north{
-	name = "Security Desk"
-	},
 /obj/item/folder/red,
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	req_access = list("security")
+	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/checkpoint/customs)
 "cwC" = (
@@ -13499,9 +13499,7 @@
 "frP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/north{
-	name = "Security Desk"
-	},
+/obj/machinery/door/window/brigdoor/right/directional/north,
 /turf/open/floor/iron/textured_large,
 /area/station/security/checkpoint/customs)
 "fsf" = (
@@ -26250,7 +26248,6 @@
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/stairs{
@@ -39848,6 +39845,16 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
+"oAY" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig Cells"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/turf/open/floor/iron/textured_half,
+/area/station/security/brig)
 "oBm" = (
 /obj/structure/chair/sofa/bench/left,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -50127,6 +50134,7 @@
 	name = "Courtroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -51639,6 +51647,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Courtroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "spi" = (
@@ -65683,6 +65692,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Courtroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
 /turf/open/floor/plating,
 /area/station/security/courtroom)
 "wLA" = (
@@ -70861,7 +70871,7 @@
 	name = "Brig Cells"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig)
 "ybL" = (
@@ -90839,7 +90849,7 @@ eUg
 fBT
 nGe
 naG
-ldJ
+oAY
 ykZ
 onX
 xDa
