@@ -76,7 +76,7 @@
 	id_trim = /datum/id_trim/job/medical_doctor
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
 	suit = /obj/item/clothing/suit/toggle/labcoat
-	backpack = /obj/item/storage/backpack/satchel/med
+	back = /obj/item/storage/backpack/satchel/med
 	glasses = /obj/item/clothing/glasses/hud/health/night
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/utility/surgerycap/black
@@ -86,5 +86,3 @@
 	name = "Exinterdyne Senior Resident"
 
 	id_trim = /datum/id_trim/job/chief_medical_officer
-	mask = /obj/item/clothing/mask/gas/syndicate
-	l_pocket = /obj/item/lighter

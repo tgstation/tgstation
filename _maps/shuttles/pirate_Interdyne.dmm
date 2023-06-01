@@ -141,22 +141,22 @@
 /area/shuttle/pirate)
 "aC" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/effect/mob_spawn/ghost_role/human/pirate/senior{
+/obj/effect/mob_spawn/ghost_role/human/junior{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	long_term_power = 10000000;
-	start_charge = 10000000
+	chargecount = 1000000000;
+	long_term_power = 10000000
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
-/obj/effect/mob_spawn/ghost_role/human/junior,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mob_spawn/ghost_role/human/pirate/senior,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (
@@ -522,7 +522,9 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
-/obj/item/reagent_containers/cup/beaker/meta/salbutamol,
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
+	list_reagents = list(/datum/reagent/inverse/healing/convermol = 180)
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ED" = (
