@@ -14,6 +14,8 @@
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	. = ..()
+	if(.)
+		return
 	if(!computer_ref?.resolve())
 		user.balloon_alert(user, "not connected to computer!")
 		return
