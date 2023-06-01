@@ -400,9 +400,8 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
-/obj/item/clothing/suit/space/orange,
-/obj/item/clothing/head/helmet/space/orange,
-/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/hooded/explorer/syndicate,
+/obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "pl" = (
@@ -880,9 +879,8 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
-/obj/item/clothing/suit/space/orange,
-/obj/item/clothing/head/helmet/space/orange,
-/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/hooded/explorer/syndicate,
+/obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "IF" = (
