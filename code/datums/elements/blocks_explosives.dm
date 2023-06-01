@@ -21,7 +21,7 @@
 /datum/element/blocks_explosives/Detach(datum/source)
 	. = ..()
 	if(ismovable(source))
-		var/atom/movable/target = target
+		var/atom/movable/target = source
 		if(length(target.locs) > 1)
 			for(var/atom/location as anything in target.locs)
 				unblock_loc(location, target.explosion_block)
