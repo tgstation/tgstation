@@ -162,7 +162,9 @@
 /area/shuttle/pirate)
 "aF" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 4
+	dir = 4;
+	x_offset = -3;
+	y_offset = 7
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
@@ -197,10 +199,24 @@
 /area/shuttle/pirate)
 "aK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "pirateportexternal"
+	id_tag = "piratestarboardexternal"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/pirate{
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Pirate Ship";
+	port_direction = 2
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -209,11 +225,11 @@
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aM" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{

@@ -86,4 +86,3 @@
 	name = "Exinterdyne Senior Resident"
 
 	id_trim = /datum/id_trim/job/chief_medical_officer
-
