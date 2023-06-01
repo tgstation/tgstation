@@ -18,7 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	/// An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
-	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2), list(quirk3,quirk4)
+	/// A list of quirks that can not be used with each other.
 	var/static/list/quirk_blacklist = list(
 		list("Blind", "Nearsighted"),
 		list("Jolly", "Depression", "Apathetic", "Hypersensitive"),
@@ -34,10 +34,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 	)
 
-	/// A list of quirks that cannot be used by specific species. Format: species = list(quirk1, quirk2)
+	/// A list of quirks that cannot be used by specific species.
 	var/static/list/species_quirk_blacklist = list(
-		/datum/species/plasmaman = list(
-			/datum/quirk/blooddeficiency,
+		SPECIES_PLASMAMAN = list(
+			"Blood Deficiency",
 		),
 	)
 

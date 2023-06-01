@@ -31,8 +31,6 @@
 
 	var/list/quirks = SSquirks.get_quirks()
 
-	var/datum/species/user_species = preferences.read_preference(/datum/preference/choiced/species)
-
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
@@ -47,7 +45,6 @@
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = SSquirks.quirk_blacklist,
 		"species_quirk_blacklist" = SSquirks.species_quirk_blacklist,
-		"species_blacklist" = user_species
 	)
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)

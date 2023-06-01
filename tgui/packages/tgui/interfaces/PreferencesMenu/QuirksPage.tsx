@@ -134,7 +134,7 @@ export const QuirksPage = (props, context) => {
     `selectedQuirks_${data.active_slot}`,
     data.selected_quirks
   );
-
+  const chosenSpecies = data.character_preferences.misc.species;
   return (
     <ServerPreferencesFetcher
       render={(data) => {
@@ -202,20 +202,13 @@ export const QuirksPage = (props, context) => {
                 return `This is incompatible with ${incompatibleQuirk}!`;
               }
             }
+          }
 
-            for (const speciesblacklist of speciesquirkBlacklist) {
-              if (speciesblacklist.indexOf(quirk.name) === -1) {
-                continue;
-              }
-
-              for (const speciesquirkBlacklist of speciesblacklist) {
-                if (
-                  speciesquirkBlacklist !== quirk.name &&
-                  selectedQuirkNames.indexOf(speciesquirkBlacklist) !== -1
-                ) {
-                  return `This is incompatible with ${speciesquirkBlacklist}!`;
-                }
-              }
+          if (chosenSpecies in speciesquirkBlacklist) {
+            if (
+              speciesquirkBlacklist[chosenSpecies].indexOf(quirk.name) !== -1
+            ) {
+              return `This is incompatible with the species ${data.species[chosenSpecies].name}!`;
             }
           }
 
