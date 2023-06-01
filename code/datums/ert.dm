@@ -123,7 +123,7 @@
 	teamsize = 3
 	code = "Blue"
 	rename_team = "Memetic Response Team"
-	mission = "Replace the memories of crew about particular incident."
+	mission = "Censor all information and knowledge related to a highly classified incident aboard the station."
 	polldesc = "a Nanotrasen Memory Replacement team"
 	opendoors = FALSE
 
