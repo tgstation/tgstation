@@ -382,6 +382,7 @@ export const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     search_categories = [],
+    book_id,
     title,
     category,
     author,
@@ -402,6 +403,19 @@ export const SearchAndDisplay = (props, context) => {
       <Stack justify="space-between">
         <Stack.Item pb={0.6}>
           <Stack>
+            <Stack.Item>
+              <Input
+                value={book_id}
+                placeholder={book_id === null ? 'ID' : book_id}
+                mt={0.5}
+                width="70px"
+                onChange={(e, value) =>
+                  act('set_search_id', {
+                    id: value,
+                  })
+                }
+              />
+            </Stack.Item>
             <Stack.Item>
               <Dropdown
                 options={search_categories}
@@ -874,7 +888,7 @@ export const PageSelect = (props, context) => {
   } = props;
 
   if (page_count === 1) {
-    return;
+    return null;
   }
 
   return (

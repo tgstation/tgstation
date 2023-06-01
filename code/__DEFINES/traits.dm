@@ -159,6 +159,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
+#define TRAIT_CHUNKYFINGERS_IGNORE_BATON "chunkyfingers_ignore_baton"
 /// Allows you to mine with your bare hands
 #define TRAIT_FIST_MINING "fist_mining"
 #define TRAIT_DUMB "dumb"

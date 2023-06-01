@@ -1931,6 +1931,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
 	species_perks += create_pref_biotypes_perks()
+	species_perks += create_pref_organs_perks()
 	species_perks += create_pref_language_perk()
 
 	// Some overrides may return `null`, prevent those from jamming up the list.
@@ -2149,6 +2150,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				causing toxins will instead cause healing. Be careful around purging chemicals!",
 		))
 
+	if (TRAIT_GENELESS in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "dna",
+			SPECIES_PERK_NAME = "No Genes",
+			SPECIES_PERK_DESC = "[plural_form] have no genes, making genetic scrambling a useless weapon, but also locking them out from getting genetic powers.",
+		))
+
+	if (TRAIT_NOBREATH in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "No Respiration",
+			SPECIES_PERK_DESC = "[plural_form] have no need to breathe!",
+		))
+
 	return to_add
 
 /**
@@ -2166,6 +2183,77 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_NAME = "Undead",
 			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
 				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
+		))
+
+	return to_add
+
+/**
+ * Adds any perks relating to inherent differences to this species' organs.
+ * This proc is only suitable for generic differences, like alcohol tolerance, or heat threshold for breathing.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_organs_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	to_add += create_pref_liver_perks()
+	to_add += create_pref_lung_perks()
+
+	return to_add
+
+/datum/species/proc/create_pref_liver_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	var/alcohol_tolerance = initial(mutantliver.alcohol_tolerance)
+	var/obj/item/organ/internal/liver/base_liver = /obj/item/organ/internal/liver
+	var/tolerance_difference = alcohol_tolerance - initial(base_liver.alcohol_tolerance)
+
+	if (tolerance_difference != 0)
+		var/difference_positive = (tolerance_difference > 0)
+		var/more_or_less = (difference_positive) ? "more" : "less"
+		var/perk_type = (difference_positive) ? SPECIES_NEGATIVE_PERK : SPECIES_POSITIVE_PERK
+		var/perk_name = "Alcohol " + ((difference_positive) ? "Weakness" : "Tolerance")
+		var/percent_difference = (alcohol_tolerance / initial(base_liver.alcohol_tolerance)) * 100
+
+		to_add += list(list(
+			SPECIES_PERK_TYPE = perk_type,
+			SPECIES_PERK_ICON = "wine-glass",
+			SPECIES_PERK_NAME = perk_name,
+			SPECIES_PERK_DESC = "[name] livers are [more_or_less] susceptable to alcohol than human livers, by about [percent_difference]%."
+		))
+
+	var/tox_shrugging = initial(mutantliver.toxTolerance)
+	var/shrugging_difference = tox_shrugging - initial(base_liver.toxTolerance)
+	if (shrugging_difference != 0)
+		var/difference_positive = (shrugging_difference > 0)
+		var/more_or_less = (difference_positive) ? "more" : "less"
+		var/perk_type = (difference_positive) ? SPECIES_POSITIVE_PERK : SPECIES_NEGATIVE_PERK
+		var/perk_name = ("Toxin " + ((difference_positive) ? "Resistant" : "Vulnerable")) + " Liver"
+
+		to_add += list(list(
+			SPECIES_PERK_TYPE = perk_type,
+			SPECIES_PERK_ICON = "biohazard",
+			SPECIES_PERK_NAME = perk_name,
+			SPECIES_PERK_DESC = "[name] livers are capable of rapidly shrugging off [tox_shrugging]u of toxins, which is [more_or_less] than humans."
+		))
+
+	return to_add
+
+/datum/species/proc/create_pref_lung_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	if (breathid != GAS_O2)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "[capitalize(breathid)] Breathing",
+			SPECIES_PERK_DESC = "[plural_form] must breathe [breathid] to survive. You receive a tank when you arrive.",
 		))
 
 	return to_add
