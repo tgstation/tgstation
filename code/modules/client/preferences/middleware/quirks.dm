@@ -26,12 +26,12 @@
 
 	return data
 
-/datum/preference_middleware/quirks/get_constant_data(datum/preferences/supplied_prefs)
+/datum/preference_middleware/quirks/get_constant_data()
 	var/list/quirk_info = list()
 
 	var/list/quirks = SSquirks.get_quirks()
 
-	var/datum/species/user_species = supplied_prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/user_species = preferences.read_preference(/datum/preference/choiced/species)
 
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
