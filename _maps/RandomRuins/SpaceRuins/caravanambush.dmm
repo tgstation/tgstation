@@ -949,7 +949,7 @@
 "MT" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/knife/combat/survival,
+/obj/item/knife/combat,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter2)
 "Nl" = (
