@@ -8,9 +8,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	///Weakref to the library computer we are connected to.
 	var/datum/weakref/computer_ref
-	///The scan mode we are currently on.
-	///Selections: BARCODE_SCANNER_CHECKIN: check in books, BARCODE_SCANNER_INVENTORY: add scanned books to inventory.
-	var/scan_mode = BARCODE_SCANNER_CHECKIN
+	///Boolean on what mode we're scanning. TRUE is inventory mode, FALSE is check-in mode.
+	var/scan_mode = FALSE
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	. = ..()

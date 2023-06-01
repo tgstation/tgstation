@@ -132,6 +132,7 @@
 					to_chat(user, span_warning("The name is invalid."))
 					return
 				book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
+
 	else if(istype(attacking_item, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = attacking_item
 		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
@@ -139,24 +140,24 @@
 			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
 			return
 
-		switch(scanner.scan_mode)
-			if(BARCODE_SCANNER_CHECKIN)
-				var/list/checkouts = computer.checkouts
-				for(var/checkout_ref in checkouts)
-					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
-					if(!book_data.compare(maybe_ours.book_data))
-						continue
-					checkouts -= checkout_ref
-					computer.checkout_update()
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
-					return
+		if(scanner.scan_mode)
+			var/datum/book_info/our_copy = book_data.return_copy()
+			computer.inventory[ref(our_copy)] = our_copy
+			computer.inventory_update()
+			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
+		else
+			var/list/checkouts = computer.checkouts
+			for(var/checkout_ref in checkouts)
+				var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+				if(!book_data.compare(maybe_ours.book_data))
+					continue
+				checkouts -= checkout_ref
+				computer.checkout_update()
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
+				return
 
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
-			if(BARCODE_SCANNER_INVENTORY)
-				var/datum/book_info/our_copy = book_data.return_copy()
-				computer.inventory[ref(our_copy)] = our_copy
-				computer.inventory_update()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
+			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
+			return
 	else if(try_carve(attacking_item, user, params))
 		return
 	return ..()
