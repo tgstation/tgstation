@@ -43,6 +43,7 @@ export type Species = {
   desc: string;
   lore: string[];
   icon: string;
+  plural_form: string;
 
   use_skintones: BooleanLike;
   sexes: BooleanLike;
