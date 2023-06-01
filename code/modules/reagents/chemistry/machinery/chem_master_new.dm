@@ -63,16 +63,13 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// List of printable container types
 	var/list/printable_containers = list()
 	/// Selected printable container type
-	var/selected_container_id
-	/// Selected printable container volume
-	var/selected_container_volume = 0
+	var/selected_container
 
 /obj/machinery/chem_master_new/Initialize(mapload)
 	create_reagents(100)
 	load_printable_containers()
 	var/obj/item/reagent_containers/default_container = printable_containers[printable_containers[1]][1]
-	selected_container_id = sanitize_css_class_name("[default_container]")
-	selected_container_volume = initial(default_container.volume)
+	selected_container = REF(default_container)
 	return ..()
 
 /obj/machinery/chem_master_new/Destroy()
@@ -177,7 +174,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		var/container_data = list()
 		for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
 			container_data += list(list(
-				"id" = sanitize_css_class_name("[container]"),
+				"icon" = sanitize_css_class_name("[container]"),
+				"ref" = REF(container),
 				"name" = initial(container.name),
 				"volume" = initial(container.volume),
 			))
@@ -209,8 +207,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	data["mode"] = mode
 
-	data["selectedContainerId"] = selected_container_id
-	data["selectedContainerVolume"] = selected_container_volume
+	data["selectedContainerRef"] = selected_container
+	var/obj/item/reagent_containers/container = locate(selected_container)
+	data["selectedContainerVolume"] = initial(container.volume)
 
 	return data
 
@@ -234,8 +233,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		return TRUE
 
 	if(action == "selectContainer")
-		selected_container_id = params["id"]
-		selected_container_volume = params["volume"]
+		selected_container = params["ref"]
 		return TRUE
 
 /// Transfer reagents to specified target from the opposite source

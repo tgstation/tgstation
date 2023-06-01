@@ -13,7 +13,7 @@ type Data = {
   bufferContents: Reagent[];
   bufferCurrentVolume: number;
   categories: Category[];
-  selectedContainerId: string;
+  selectedContainerRef: string;
   selectedContainerVolume: number;
 };
 
@@ -29,7 +29,8 @@ type Reagent = {
 };
 
 type Container = {
-  id: string;
+  icon: string;
+  ref: string;
   name: string;
   volume: number;
 };
@@ -45,6 +46,7 @@ export const ChemMasterNew = (props, context) => {
     bufferContents,
     bufferCurrentVolume,
     categories,
+    selectedContainerRef,
     selectedContainerVolume,
   } = data;
 
@@ -154,7 +156,7 @@ export const ChemMasterNew = (props, context) => {
               {category.containers.map((container) => (
                 // <ContainerButton key={container.id} container={container} />
                 <Tooltip
-                  key={container.id}
+                  key={container.ref}
                   content={`${capitalize(container.name)}\xa0(${
                     container.volume
                   } u.)`}>
@@ -163,12 +165,11 @@ export const ChemMasterNew = (props, context) => {
                     color="transparent"
                     width="48px"
                     height="48px"
-                    selected={container.id === data.selectedContainerId}
+                    selected={container.ref === selectedContainerRef}
                     p={0}
                     onClick={() => {
                       act('selectContainer', {
-                        id: container.id,
-                        volume: container.volume,
+                        ref: container.ref,
                       });
                     }}>
                     <Box
@@ -180,7 +181,7 @@ export const ChemMasterNew = (props, context) => {
                           : 'scale(2)',
                       }}
                       m={'8px'}
-                      className={classes(['chemmaster32x32', container.id])}
+                      className={classes(['chemmaster32x32', container.icon])}
                     />
                   </Button>
                 </Tooltip>
