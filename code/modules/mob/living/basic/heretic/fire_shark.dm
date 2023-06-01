@@ -1,4 +1,4 @@
-/mob/living/basic/fire_shark
+/mob/living/basic/heretic_summon/fire_shark
 	name = "fire shark"
 	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
 	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
@@ -29,7 +29,7 @@
 	death_message = "implodes into itself."
 	ai_controller = null
 
-/mob/living/basic/fire_shark/Initialize(mapload)
+/mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)

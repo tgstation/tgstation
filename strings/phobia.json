@@ -263,6 +263,38 @@
 		"wt550"
 	],
 
+	"heresy": [
+		"eldritch",
+		"ritual",
+		"rune",
+		"focus",
+		"codex cicatrix",
+		"heretic",
+		"mansus",
+		"rust",
+		"flesh",
+		"ash",
+		"void",
+		"blade",
+		"cosmic",
+		"space",
+		"star",
+		"armsy",
+		"worm",
+		"flesh snek",
+		"raw prophet",
+		"stalker",
+		"fire shark",
+		"ghoul",
+		"pierced reality",
+		"reality pierce",
+		"reality crack",
+		"maid in the mirror",
+		"hand",
+		"arm",
+		"void storm"
+	],
+
 	"insects": [
 		"bee",
 		"buzz",
@@ -424,7 +456,7 @@
 		"wiz",
 		"wizard",
 		"zombie"
-		]
+	]
 
 
 

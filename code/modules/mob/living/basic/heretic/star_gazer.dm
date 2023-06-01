@@ -1,4 +1,4 @@
-/mob/living/basic/star_gazer
+/mob/living/basic/heretic_summon/star_gazer
 	name = "Star Gazer"
 	desc = "A creature that has been tasked to watch over the stars."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
@@ -45,7 +45,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 
-/mob/living/basic/star_gazer/Initialize(mapload)
+/mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/cosmic_domain))
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
