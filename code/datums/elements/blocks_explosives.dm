@@ -26,7 +26,7 @@
 			for(var/atom/location as anything in target.locs)
 				unblock_loc(location, target.explosion_block)
 		else if(target.loc)
-			unblock_loc(location, target.explosion_block)
+			unblock_loc(target.loc, target.explosion_block)
 	REMOVE_TRAIT(source, TRAIT_BLOCKING_EXPLOSIVES, TRAIT_GENERIC)
 
 /// Call this when our blocking well, changes. we'll update our turf(s) with the details
