@@ -560,6 +560,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		. += span_cult("It seems drained.")
 
+///Handles teleporting the atom we're pulling along with us when using the shifter
 /obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
 	var/mob/living/carbon/C = user
 	if(C.pulling)
@@ -580,6 +581,7 @@ Striking a noncultist, however, will tear their flesh."}
 	var/mob/living/carbon/C = user
 	var/turf/mobloc = get_turf(C)
 	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
+	var/atom/movable/pulled = handle_teleport_grab(destination, C) //we handle it here before teleporting the user as to not lose the 'pulling' var
 
 	if(!destination || !do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
 		playsound(src, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
@@ -590,7 +592,6 @@ Striking a noncultist, however, will tear their flesh."}
 	if(uses <= 0)
 		icon_state ="shifter_drained"
 
-	var/atom/movable/pulled = handle_teleport_grab(destination, C)
 	if(pulled)
 		C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
