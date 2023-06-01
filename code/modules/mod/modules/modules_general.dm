@@ -365,7 +365,7 @@
 	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// Minimum temperature we can set.
-	var/min_temp = 293.15
+	var/min_temp = T20C
 	/// Maximum temperature we can set.
 	var/max_temp = 318.15
 
@@ -599,12 +599,11 @@
 
 /obj/item/mod/module/magneto
 	name = "MOD magneto charger module"
-	desc = "A compact, weak generator that charges a suit's power cell by conversion of the mechanical energy of deambulation. \
-		Originally developed for the TGMC as a replacement to the more efficient, yet space-OSHA non-compliant miniature plutonium cell for their shoulder lamps."
+	desc = "A compact, weak generator that charges a suit's power cell by conversion of the mechanical energy of deambulation."
 	icon_state = "magneto"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/magneto)
-	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.15
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
 
 /obj/item/mod/module/magneto/on_suit_activation()
 	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
@@ -627,8 +626,9 @@
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 //TODO Needs checks against currently processing movement loops such as conveyor belts and hyperspace drift.
-/obj/item/mod/module/magneto/proc/on_moved(atom/old_loc, movement_dir, forced)
+/obj/item/mod/module/magneto/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
-	if(forced || mod.wearer.moving_from_pull || mod.wearer.buckled) //mot compatible with being dragged around or vehicles.
+	//Shouldn't work if the wearer isn't really walking/running around.
+	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || wearer.check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
 		return
 	mod.core.add_charge(power_per_step)

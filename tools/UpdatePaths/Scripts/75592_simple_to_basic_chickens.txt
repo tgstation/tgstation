@@ -1,0 +1,1 @@
+/mob/living/simple_animal/chicken : /mob/living/basic/chicken{@OLD}

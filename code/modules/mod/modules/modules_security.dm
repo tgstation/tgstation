@@ -388,8 +388,9 @@
 
 /obj/item/mod/module/casing_recycler
 	name = "MOD casing recycler module"
-	desc = "A hybrid between a brass catcher and a vacuum cleaner, this module recycles empty casings back into usable iron, five sheets at a time. \
-		Ideated for the TGMC to cut costs, production was halted once they realized the marines mainly used caseless munitions."
+	desc = "A hybrid between a brass catcher and a vacuum cleaner, this module recycles empty casings back \
+		into usable iron, five sheets at a time. Ideated for the TGMC to cut costs, \
+		production was halted once they realized they mainly used caseless ammo."
 	icon_state = "casing_recycler"
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
@@ -444,6 +445,7 @@
 /obj/item/mod/module/casing_recycler/proc/can_insert(obj/item/ammo_casing/casing)
 	if(casing.loaded_projectile) // It only recycles empty projectiles.
 		return FALSE
+	return TRUE
 
 /obj/item/mod/module/casing_recycler/proc/recycle(obj/item/inserted, last_inserted_id, material_amount, datum/component/material_container/container)
 	var/static/list/required_iron = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
@@ -459,11 +461,8 @@
 
 /obj/item/mod/module/casing_recycler/donk
 	name = "MOD riot foam dart recycler module"
-	desc = "Tired of having to clean the halls after a good day spent shooting foam darts at your \"friends\" \
-		or reloading your donksoft LMG one dart at a time, hoping your pet doesn't die of old age in the meantime? \
-		Worry not, we at Donk Co. have the perfect solution to your problems: The Foam Dart Recycler. \
-		It'll sucks every casing off the floor like nothing else and print a new box of foam darts once full. FOR FREE!\
-		Requires a MODsuit to use."
+	desc = "A mod module that collects and recycles ejected casings and \
+			foam darts off the ground into boxes of riot foam darts when full."
 	icon_state = "donk_recycler"
 	overlay_state_inactive = "module_donk_recycler"
 	overlay_state_active = "module_donk_recycler"
@@ -497,33 +496,18 @@
 
 /obj/item/mod/module/shooting_assistant
 	name = "MOD shooting assistant module"
-	desc = "A port of a prototype meant to boost the TGMC troops' ability with firearms, \
-		before command opted for better unga training instead. \
-		Toggle to sacrifice mobility for steadier aim while holding a firearm, \
-		or enjoy the faster shooting at the cost of accuracy."
+	desc = "A botched prototype meant to boost one's ability with firearms. \
+		Its settings appear to be stuck with only two modes available: \
+		'Rapid Fire Stormtrooper' and 'Slow Moving Sharpshooter'. \
+		Incompatible with dual wielding firearms."
 	icon_state = "shooting_assistant"
-	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
 
-//TODO REFACTOR HOW SPREAD IS CALCULATED ON GUN.DM OR ADD A STEADY AIM TRAIT.
 /obj/item/mod/module/shooting_assistant/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_POOR_AIM, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_POOR_AIM, TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
 
 /obj/item/mod/module/shooting_assistant/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_POOR_AIM, TRAIT_DOUBLE_TAP), MOD_TRAIT)
-
-/obj/item/mod/module/shooting_assistant/on_activation()
-	. = ..()
-	if(!.)
-		return
-	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
-	REMOVE_TRAIT(mod.wearer, TRAIT_POOR_AIM, MOD_TRAIT)
-
-/obj/item/mod/module/shooting_assistant/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
-	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
-	ADD_TRAIT(mod.wearer, TRAIT_POOR_AIM, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_POOR_AIM, TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)

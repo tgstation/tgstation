@@ -142,7 +142,6 @@
 		if (length(matlist))
 			var/inserted = materials.mat_container.insert_item(inp)
 			materials.silo_log(src, "collected", inserted, "sheets", matlist)
-			qdel(inp)
 			return
 
 	// No silo attached process to internal storage

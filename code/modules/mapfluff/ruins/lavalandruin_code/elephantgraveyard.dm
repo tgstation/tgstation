@@ -138,32 +138,31 @@
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
-	cutting_tool = /obj/item/shovel
 	can_install_electronics = FALSE
+	can_weld_shut = FALSE
+	cutting_tool = null
 	paint_jobs = null
 
+	/// will this grave give you nightmares when opened
 	var/lead_tomb = FALSE
+	/// was this grave opened for the first time
 	var/first_open = FALSE
-	var/grave_dug_open = FALSE
+	/// was a shovel used to close this grave
+	var/dug_closed = FALSE
 
-/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+/obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SHOVEL)
+		context[SCREENTIP_CONTEXT_RMB] = opened ? "Cover up" : "Dig open"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
-	if(!.)
-		return FALSE
-
-	if(!force && !grave_dug_open)
-		balloon_alert(user, "use a shovel!")
-		return FALSE
-
-	return TRUE
-
-/obj/structure/closet/crate/grave/before_close(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	balloon_alert(user, "already open!")
-	return FALSE
+	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -197,37 +196,71 @@
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
-		if(!opened)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
-				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
-				if (do_after(user,20, target = src))
-					grave_dug_open = TRUE
-					open(user, force = TRUE)
-					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
-					if(lead_tomb == TRUE && first_open == TRUE)
-						user.gain_trauma(/datum/brain_trauma/magic/stalker)
-						to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
-						first_open = FALSE
-					return 1
-				return 1
-			else
-				to_chat(user, span_notice("You can't dig up a grave with \the [S.name]."))
-				return 1
-		else
-			to_chat(user, span_notice("The grave has already been dug up."))
-			return 1
+/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
 
-	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
-		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
-			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
-			if (do_after(user,15, target = src))
-				to_chat(user, span_notice("You remove \the [src]  completely."))
-				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
-				deconstruct(TRUE)
-				return 1
-	return
+	if(!force)
+		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/grave/before_close(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!dug_closed)
+		to_chat(user, span_notice("You'll need a shovel to cover it up."))
+		return FALSE
+
+	dug_closed = FALSE
+	return TRUE
+
+/obj/structure/closet/crate/grave/tool_interact(obj/item/weapon, mob/living/carbon/user)
+	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
+	if(weapon.tool_behaviour != TOOL_SHOVEL)
+		return ..()
+
+	//player is attempting to open/close the grave with a shovel
+	if(!user.combat_mode)
+		user.visible_message(
+			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
+			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+		)
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
+			return TRUE
+
+		if(opened)
+			dug_closed = TRUE
+			close(user)
+		else if(open(user, force = TRUE))
+			user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+			if(lead_tomb && first_open)
+				user.gain_trauma(/datum/brain_trauma/magic/stalker)
+				to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+				first_open = FALSE
+
+		return TRUE
+
+	//player is attempting to destroy the open grave with a shovel
+	else
+		if(!opened)
+			return TRUE
+
+		user.visible_message(
+			span_notice("[user] Is attempting to remove [src]."),
+			span_notice("You start removing [src]."),
+		)
+		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
+			return TRUE
+
+		to_chat(user, span_notice("You remove \the [src] completely."))
+		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+		deconstruct(TRUE)
+		return TRUE
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

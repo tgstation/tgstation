@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - server: "All logs are now formatted in json, excluding perf and investigations"

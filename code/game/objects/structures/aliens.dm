@@ -356,6 +356,11 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/alien/egg/Destroy()
+	QDEL_NULL(child)
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
