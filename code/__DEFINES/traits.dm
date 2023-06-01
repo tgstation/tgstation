@@ -672,7 +672,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNSTABLE_ASS		"unstable_ass"
 #define TRAIT_STABLE_ASS		"stable_ass"
 #define TRAIT_KLEPTOMANIAC		"kleptomaniac"
-#define TRAIT_ANIME	"anime"
+#define TRAIT_ANIME				"anime"
+#define TRAIT_CAT				"cat"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
