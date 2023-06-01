@@ -507,7 +507,31 @@
 	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
 
 /obj/item/mod/module/shooting_assistant/on_suit_activation()
-	mod.wearer.add_traits(list(TRAIT_POOR_AIM, TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+	RegisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN, PROC_REF(on_mob_fired_gun))
+
 
 /obj/item/mod/module/shooting_assistant/on_suit_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_POOR_AIM, TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN)
+
+/obj/item/mod/module/shooting_assistant/on_activation()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+
+/obj/item/mod/module/shooting_assistant/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+
+/obj/item/mod/module/shooting_assistant/proc/on_mob_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	if(active)
+		bonus_spread_values[MIN_BONUS_SPREAD_INDEX] -= 20
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] -= 10
+	else
+		bonus_spread_values[MIN_BONUS_SPREAD_INDEX] += 10
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += 35
