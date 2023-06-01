@@ -24,7 +24,7 @@
 /area/shuttle/pirate)
 "ad" = (
 /obj/machinery/button/door/directional/south{
-	id = "piratebridgebolt";
+	id = "piratebridge";
 	name = "Bridge Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
@@ -51,6 +51,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ah" = (
@@ -146,12 +147,15 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aD" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	long_term_power = 10000000
+	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
 /obj/effect/mob_spawn/ghost_role/human/junior,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (
@@ -166,6 +170,7 @@
 	dir = 8
 	},
 /obj/machinery/piratepad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aH" = (
@@ -185,6 +190,7 @@
 "aJ" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/computer/operating,
+/obj/item/disk/surgery/debug,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aK" = (
@@ -206,6 +212,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aM" = (
@@ -220,7 +227,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aO" = (
-/obj/machinery/porta_turret/syndicate/energy,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aQ" = (
@@ -241,13 +250,6 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"aV" = (
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 1
-	},
-/obj/item/disk/surgery/debug,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "aW" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/components/unary/cryo_cell,
@@ -265,7 +267,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle,
+/obj/item/storage/box/syndie_kit/chemical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bk" = (
@@ -284,12 +286,15 @@
 /area/shuttle/pirate)
 "bm" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bo" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/gun/medbeam,
+/obj/item/gun/syringe/rapidsyringe,
+/obj/item/pen/sleepy,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "br" = (
@@ -317,19 +322,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"by" = (
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 1
-	},
-/obj/item/disk/surgery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bA" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bB" = (
@@ -339,12 +339,14 @@
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bC" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bF" = (
@@ -371,6 +373,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bQ" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -414,6 +418,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "gY" = (
@@ -441,9 +446,39 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"pk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"pC" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"qU" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"rC" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"vk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "vB" = (
@@ -473,9 +508,20 @@
 /obj/item/storage/box/monkeycubes/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"xh" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "yi" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"AA" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "En" = (
@@ -491,6 +537,7 @@
 "Hg" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/light/directional/south,
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "JT" = (
@@ -502,16 +549,27 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"LT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "OL" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/vending/medical/syndicate_access,
 /obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Pi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Rq" = (
@@ -525,12 +583,13 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/l3closet/virology,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Xk" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 
@@ -579,7 +638,7 @@ af
 aj
 aM
 ax
-bX
+pk
 ar
 aj
 af
@@ -651,7 +710,7 @@ aj
 aW
 aR
 ek
-gY
+pC
 JT
 bf
 aj
@@ -682,17 +741,17 @@ aj
 aa
 ah
 ao
-mU
+AA
 ag
 bm
 Xk
 bm
-by
-bX
-mU
+fY
+Pi
+qU
 aL
 fY
-bX
+vk
 mU
 aK
 "}
@@ -705,8 +764,8 @@ aj
 aj
 aj
 aj
-aV
-bX
+fY
+LT
 bl
 aj
 bQ
@@ -721,8 +780,8 @@ aC
 aH
 aj
 sP
-bm
-ek
+xh
+rC
 bA
 vB
 bo
@@ -795,7 +854,7 @@ af
 aj
 Rq
 bu
-bX
+LT
 wf
 aj
 af
