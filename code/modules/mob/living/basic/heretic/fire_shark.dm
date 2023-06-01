@@ -5,9 +5,7 @@
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
-	combat_mode = TRUE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -22,12 +20,8 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	faction = list(FACTION_HERETIC)
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
-	basic_mob_flags = DEL_ON_DEATH
-	death_message = "implodes into itself."
-	ai_controller = null
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
