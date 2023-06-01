@@ -43,8 +43,8 @@
 
 /datum/market_item/misc/donk_recycler
 	name = "MOD Riot Foam Dart Recycler Module"
-	desc = "Another one of those toys Nanotrasen is too wimpy to buy you. If you love toy guns, hate cleaning and got a MODsuit, this is a must have."
-	item = /obj/item/mod/module/casing_recycler/donk
+	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must have."
+	item = /obj/item/mod/module/recycler/donk
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 4.5
 	stock_max = 2

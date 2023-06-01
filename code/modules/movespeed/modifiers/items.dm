@@ -18,4 +18,4 @@
 	multiplicative_slowdown = -0.5
 
 /datum/movespeed_modifier/shooting_assistant
-	multiplicative_slowdown = 0.25
+	multiplicative_slowdown = 0.6

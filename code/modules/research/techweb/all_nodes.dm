@@ -2300,8 +2300,8 @@
 
 /datum/techweb_node/mod_experimental
 	id = "mod_experimental"
-	display_name = "Ported and Experimental Modular Suits"
-	description = "Applications of patent infringment and experimentality when creating MODsuits have created these..."
+	display_name = "Experimental Modular Suits"
+	description = "Applications of experimentality when creating MODsuits have created these..."
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",

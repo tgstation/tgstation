@@ -254,28 +254,28 @@
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags)
 	if(QDELETED(weapon))
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
 
 	var/material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!material_amount)
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
 	if(isstack(weapon) && !has_space(material_amount)) //not enugh space split and feed as many sheets possible
 		item_stack = weapon
 		var/space_left = max_amount - total_amount
 		if(!space_left)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		var/material_per_sheet = material_amount / item_stack.amount
 		var/sheets_to_insert = round(space_left / material_per_sheet)
 		if(!sheets_to_insert)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = split_stack(item_stack, sheets_to_insert)
 		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!has_space(material_amount))
-		return -2
+		return MATERIAL_INSERT_ITEM_NO_SPACE
 
 	last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
 	if(!isnull(last_inserted_id))
@@ -287,7 +287,7 @@
 		var/obj/item/stack/inserting_stack = target
 		item_stack.add(inserting_stack.amount)
 		qdel(inserting_stack)
-	return 0
+	return MATERIAL_INSERT_ITEM_FAILURE
 
 /**
  * Inserts the relevant materials from an item into this material container.

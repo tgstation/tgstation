@@ -94,6 +94,8 @@
 	var/ricochets = 0
 	/// how many times we can ricochet max
 	var/ricochets_max = 0
+	/// how many times we have to ricochet min (unless we hit an atom we can ricochet off)
+	var/min_ricochets = 0
 	/// 0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
 	var/ricochet_chance = 0
 	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
@@ -684,7 +686,7 @@
 	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS
-	if(prob(chance))
+	if(ricochets < min_ricochets || prob(chance))
 		return TRUE
 	return FALSE
 

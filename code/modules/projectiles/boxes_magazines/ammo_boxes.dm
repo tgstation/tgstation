@@ -113,7 +113,17 @@
 	max_ammo = 40
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 
+/obj/item/ammo_box/foambox/mini
+	icon_state = "foambox_mini"
+	max_ammo = 20
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5)
+
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
+
+/obj/item/ammo_box/foambox/riot/mini
+	icon_state = "foambox_riot_mini"
+	max_ammo = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*12.5)
