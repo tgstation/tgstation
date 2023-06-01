@@ -88,6 +88,7 @@ export type QuirkInfo = {
   max_positive_quirks: number;
   quirk_info: Record<string, Quirk>;
   quirk_blacklist: string[][];
+  species_quirk_blacklist: string[][];
 };
 
 export enum RandomSetting {
