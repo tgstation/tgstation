@@ -145,7 +145,7 @@ export const QuirksPage = (props, context) => {
         const {
           max_positive_quirks: maxPositiveQuirks,
           quirk_blacklist: quirkBlacklist,
-          species_quirk_blacklist: speciesquirkBlacklist,
+          species_quirk_blacklist: speciesQuirkBlacklist,
           quirk_info: quirkInfo,
         } = data.quirks;
 
@@ -204,12 +204,11 @@ export const QuirksPage = (props, context) => {
             }
           }
 
-          if (chosenSpecies in speciesquirkBlacklist) {
-            if (
-              speciesquirkBlacklist[chosenSpecies].indexOf(quirk.name) !== -1
-            ) {
-              return `This is incompatible with the species ${data.species[chosenSpecies].name}!`;
-            }
+          if (
+            chosenSpecies in speciesQuirkBlacklist &&
+            speciesQuirkBlacklist[chosenSpecies].indexOf(quirk.name) !== -1
+          ) {
+            return `${quirk.name} is not compatible with ${data.species[chosenSpecies].plural_form}!`;
           }
 
           return undefined;
