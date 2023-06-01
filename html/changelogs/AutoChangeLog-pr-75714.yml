@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Metastation departures now has an APC and Air alarm again."
+  - bugfix: "Metastation and Birdshot's Coroner offices are now called Coroner office."
