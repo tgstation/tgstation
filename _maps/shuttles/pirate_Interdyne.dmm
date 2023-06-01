@@ -148,7 +148,8 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	long_term_power = 10000000
+	long_term_power = 10000000;
+	start_charge = 10000000
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -384,6 +385,12 @@
 "bX" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"dV" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "ek" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -414,6 +421,12 @@
 /obj/machinery/door/window/brigdoor/right/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"fO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "fY" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
@@ -438,6 +451,23 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"jv" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"jY" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"lW" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "mD" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -446,39 +476,13 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"pk" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"pC" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"qU" = (
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"rC" = (
-/obj/machinery/door/airlock/hatch,
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"vk" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
+"ua" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "vB" = (
@@ -508,31 +512,27 @@
 /obj/item/storage/box/monkeycubes/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"xh" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "yi" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"AA" = (
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "En" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ED" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"GS" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Hg" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
@@ -549,12 +549,6 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"LT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 4
@@ -566,10 +560,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/vending/medical/syndicate_access,
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"Pi" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Rq" = (
@@ -584,6 +574,18 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"VF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Wp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Xk" = (
@@ -638,7 +640,7 @@ af
 aj
 aM
 ax
-pk
+fO
 ar
 aj
 af
@@ -710,7 +712,7 @@ aj
 aW
 aR
 ek
-pC
+lW
 JT
 bf
 aj
@@ -741,17 +743,17 @@ aj
 aa
 ah
 ao
-AA
+GS
 ag
 bm
 Xk
 bm
 fY
-Pi
-qU
+ua
+jY
 aL
 fY
-vk
+Wp
 mU
 aK
 "}
@@ -765,7 +767,7 @@ aj
 aj
 aj
 fY
-LT
+VF
 bl
 aj
 bQ
@@ -780,8 +782,8 @@ aC
 aH
 aj
 sP
-xh
-rC
+jv
+dV
 bA
 vB
 bo
@@ -854,7 +856,7 @@ af
 aj
 Rq
 bu
-LT
+VF
 wf
 aj
 af

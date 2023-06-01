@@ -76,14 +76,15 @@
 	id_trim = /datum/id_trim/job/medical_doctor
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
 	suit = /obj/item/clothing/suit/toggle/labcoat
+	backpack = /obj/item/storage/backpack/satchel/med
 	glasses = /obj/item/clothing/glasses/hud/health/night
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/beret/sec/navyofficer
+	head = /obj/item/clothing/head/utility/surgerycap/black
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
 /datum/outfit/pirate/interdyne/captain
 	name = "Exinterdyne Senior Resident"
 
-	id_trim = /datum/id_trim/pirate/captain/silverscale
-	mask = /datum/id_trim/job/chief_medical_officer
+	id_trim = /datum/id_trim/job/chief_medical_officer
+	mask = /obj/item/clothing/mask/gas/syndicate
 	l_pocket = /obj/item/lighter

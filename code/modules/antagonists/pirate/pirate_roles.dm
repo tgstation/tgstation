@@ -104,12 +104,9 @@
 	prompt_name = "an Exinterdyne worker"
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
-	fluff_spawn = null
 
 /obj/effect/mob_spawn/ghost_role/human/junior
-	rank = "Gunner"
 	outfit = /datum/outfit/pirate/interdyne
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/senior
-	rank = "Captain"
 	outfit = /datum/outfit/pirate/interdyne/captain
