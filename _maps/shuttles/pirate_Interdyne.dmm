@@ -240,6 +240,7 @@
 /obj/item/reagent_containers/cup/beaker/noreact,
 /obj/item/storage/box/syringes,
 /obj/machinery/light/no_nightlight/directional/north,
+/obj/item/storage/box/syringes,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aO" = (
