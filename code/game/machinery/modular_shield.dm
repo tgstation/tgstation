@@ -656,7 +656,7 @@
 //The shield itself
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
-	desc = "An energy shield with varying configurations."
+	desc = "An energy shield with varying configurations, the damage it takes puts a strain on its generator."
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
@@ -670,6 +670,12 @@
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/emergency_shield/modular/attacked_by(obj/item/attacking_item, mob/living/user)
+
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item], causing the field to weaken!"), \
+		span_danger("You hit the [src] with [attacking_item], causing the field to weaken!"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
