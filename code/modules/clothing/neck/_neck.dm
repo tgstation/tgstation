@@ -185,26 +185,91 @@
 
 	var/mob/living/carbon/carbon_patient = M
 	var/body_part = parse_zone(user.zone_selected)
+	var/oxy_loss = carbon_patient.getOxyLoss()
 
-	var/heart_strength = span_danger("no")
-	var/lung_strength = span_danger("no")
+	var/heart_strength
+	var/pulse_pressure
 
 	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/lungs/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
 
-	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
-		if(istype(heart))
-			heart_strength = (heart.beating ? "a healthy" : span_danger("an unstable"))
-		if(istype(lungs))
-			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? span_danger("strained") : "healthy")
+	var/render_list = list()//information will be packaged in a list for clean display to the user
 
-	user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+	//determine what specific action we're taking
+	if(body_part == BODY_ZONE_CHEST)//We're listening to their chest
+		user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+		if(!user.can_hear())
+			to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear"))
+			return
+		else
+			render_list += "<span class='info'>You place [src] against [carbon_patient]'s [body_part]:</span>\n"
 
-	var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration" : "You faintly hear [heart_strength] pulse")
-	if(!user.can_hear())
-		diagnosis = "Fat load of good it does you though, since you can't hear"
+	else if(body_part == BODY_ZONE_PRECISE_GROIN)//We're feeling their abdomen
+		render_list += "<span class='info'>You carefully press down on [carbon_patient]'s abdomen:</span>\n"
+		user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
+	else if(body_part == BODY_ZONE_HEAD)//We're feeling their pulse on their neck
+		render_list += "<span class='info'>You carefully press your fingers to [carbon_patient]'s neck:</span>\n"
+		user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s neck."), ignored_mobs = user)
+	else if(body_part != BODY_ZONE_CHEST && body_part != BODY_ZONE_PRECISE_GROIN && body_part != BODY_ZONE_PRECISE_EYES && body_part != BODY_ZONE_PRECISE_MOUTH)//We're feeling their pulse on an extremity
+		render_list += "<span class='info'>You carefully press your fingers to [carbon_patient]'s [body_part]:</span>\n"
+		user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
+	else//We're targeting their mouth or eyes. Try again.
+		balloon_alert(user, "can't do that!")
+		return
 
-	to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. [diagnosis]."))
+	//assess breathing
+	if(body_part == BODY_ZONE_CHEST)//Check if we can actually hear lung sounds
+		if(carbon_patient.stat == DEAD || (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) || carbon_patient.failed_last_breath || carbon_patient.losebreath)//If pt is dead or otherwise not breathing
+			render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] not breathing!</span>\n"
+		else if(lungs.damage > 10)//if breathing, check for lung damage
+			render_list += "<span class='danger ml-1'>You hear fluid in [M.p_their()] lungs!</span>\n"
+		else if(oxy_loss > 10)//if they have suffocation damage
+			render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] breathing heavily!</span>\n"
+		else
+			render_list += "<span class='notice ml-1'>[M.p_theyre(TRUE)] breathing normally.</span>\n"//they're okay :D
+
+	//assess heart & blood level
+	if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
+		if(!heart.beating || carbon_patient.stat == DEAD)
+			render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
+		else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
+			render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
+		else
+			render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
+	else if(body_part != BODY_ZONE_CHEST && body_part != BODY_ZONE_PRECISE_GROIN && body_part != BODY_ZONE_PRECISE_EYES && body_part != BODY_ZONE_PRECISE_MOUTH)//we're checking their pulse on an extremity
+		if(!heart.beating || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+			render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
+		else
+			if(heart.damage > 10)
+				heart_strength = "<span class='danger'>irregular</span>"//their heart is damaged
+			else
+				heart_strength = "<span class='notice'>regular</span>"//they're okay :D
+
+			if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
+				pulse_pressure = "<span class='danger'>thready</span>"//low blood
+			else
+				pulse_pressure = "<span class='notice'>strong</span>"//they're okay :D
+
+			render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+
+	//assess abdominal organs
+	if(body_part == BODY_ZONE_PRECISE_GROIN)
+		if(liver.damage > 10 || appendix.damage > 10)//if there's damage to either their liver or appendix
+			if(liver.damage > 10)
+				render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] liver feels firm.</span>\n"//their liver is damaged
+			if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+				render_list += "<span class='danger ml-1'>[M] screams when you lift your hand from [M.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+				M.emote("scream")
+			else if(liver.damage < 11)
+				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//report no damage if they have appendix damage and are unconscious, and don't have any liver damage
+		else
+			render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
+
+
+	//display our packaged information in an examine block for easy reading
+	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 ///////////
 //SCARVES//
