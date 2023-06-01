@@ -422,9 +422,7 @@
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/periodic_table/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
@@ -546,9 +544,7 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/quirk/engineering_slogan{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "cW" = (
@@ -2745,9 +2741,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/enlist/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "ni" = (
@@ -3392,7 +3386,7 @@
 /area/centcom/central_command_areas/supplypod/loading/ert)
 "pV" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "pW" = (
@@ -6360,9 +6354,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "DF" = (
@@ -6508,9 +6500,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/obey{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/obey/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "EN" = (
@@ -7349,9 +7339,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/sign/poster/official/ian{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/ian/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "KQ" = (
@@ -7458,7 +7446,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lo" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -7485,9 +7473,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lw" = (
@@ -7626,9 +7612,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "LR" = (
-/obj/structure/sign/poster/official/tactical_game_cards{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "LU" = (

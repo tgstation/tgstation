@@ -109,9 +109,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_red/arrow_ccw,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "dz" = (
@@ -268,10 +266,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/whiteship/box)
 "iD" = (
