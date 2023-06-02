@@ -14098,6 +14098,10 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"dAq" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/tcommsat/computer)
 "dAr" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/camera/directional/west{
@@ -14714,6 +14718,10 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard/fore)
+"dIS" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "dIU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -34227,10 +34235,6 @@
 "iSU" = (
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
-"iSX" = (
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "iTd" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49158,6 +49162,7 @@
 	name = "Chief Engineer's Fax Machine"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/ce)
 "mKf" = (
@@ -51974,10 +51979,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
-"nrL" = (
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/smooth,
-/area/station/tcommsat/computer)
 "nrM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -57882,6 +57883,20 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"oSq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "oSt" = (
 /turf/closed/wall,
 /area/station/engineering/lobby)
@@ -61538,6 +61553,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pSI" = (
@@ -64124,20 +64140,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/library)
-"qAg" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "qAh" = (
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -117387,7 +117389,7 @@ gVm
 hIV
 iyD
 jzP
-iSX
+dIS
 dMs
 npD
 nUM
@@ -124834,7 +124836,7 @@ rJy
 rJy
 rJy
 aWr
-qAg
+oSq
 ehG
 ehG
 ehG
@@ -129993,7 +129995,7 @@ cax
 mFW
 kSN
 jKt
-nrL
+dAq
 uVY
 dqB
 nHL
