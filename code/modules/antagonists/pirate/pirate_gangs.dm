@@ -117,12 +117,12 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
-/datum/pirate_gang/Interdyne
+/datum/pirate_gang/interdyne
 	name = "Expharmacist Unrest"
 
 	is_heavy_threat = TRUE
-	ship_template_id = "Interdyne"
-	ship_name_pool = "Interdyne_names" //just points to THE ONE AND ONLY
+	ship_template_id = "interdyne"
+	ship_name_pool = "interdyne_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Fundings for Research"
 	threat_content = "Greetings, this is the %SHIPNAME. We require some funding for our operations. \
