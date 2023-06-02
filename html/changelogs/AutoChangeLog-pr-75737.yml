@@ -1,4 +1,0 @@
-author: "Charley"
-delete-after: True
-changes:
-  - bugfix: "fixes birdshot access in various spots."
