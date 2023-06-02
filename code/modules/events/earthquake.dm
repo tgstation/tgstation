@@ -1,9 +1,10 @@
 ///Earthquake event
 ///Breaks shit
 /datum/round_event_control/earthquake
-	name = "Planetary Earthquake"
+	name = "Planetary Earthquake" //change name
 	description = "After a brief warning, creates a large tear in the structure of the station."
 	typepath = /datum/round_event/earthquake
+	category = EVENT_CATEGORY_ENGINEERING
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
@@ -29,6 +30,8 @@
 	var/turf/epicenter
 	///A list of turfs that will be damaged by this event.
 	var/list/turfs_to_shred
+	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
+	var/list/underbelly = list()
 
 /datum/round_event/earthquake/setup()
 	epicenter = get_turf(pick(GLOB.generic_event_spawns))
@@ -44,6 +47,10 @@
 	var/turf/fracture_point_low = locate(epicenter.x - rand(3, 7), epicenter.y - rand(3, 7), epicenter.z)
 
 	turfs_to_shred = block(fracture_point_high, fracture_point_low)
+
+	///Grab a list of turfs below the ones we're going to destroy. If we're at the bottom layer, it will just tear up the flooring a bunch.
+	for(var/turf/turf_to_quake in turfs_to_shred)
+		underbelly += SSmapping.get_turf_below(turf_to_quake)
 
 	///Filter out some of the points that are a certain distance away from two or more of the epicenter and fracture points.
 	///This should create a pattern more akin to a line between two points, rather than a rectangle of destroyed ground.
@@ -62,7 +69,6 @@
 	if(ISMULTIPLE(activeFor, 5))
 		for(var/turf/turf_to_quake in turfs_to_shred)
 			turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
-			playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100) //Find a better sound
 
 	if(ISMULTIPLE(activeFor, 10))
 		for(var/mob/earthquake_witness as anything in GLOB.player_list)
@@ -77,7 +83,7 @@
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				quake_victim.Knockdown(3 SECONDS)
 				quake_victim.Paralyze(2 SECONDS)
-				to_chat(quake_victim, span_warning("[prob(5) ? "The ground quakes beneath you, throwing you off your feet!" : "Doh!"]"))
+				to_chat(quake_victim, span_warning("The ground quakes beneath you, throwing you off your feet!"))
 
 
 	///If we're about to strike, we break up the floor a bit right before creating the chasm.
@@ -85,14 +91,16 @@
 		for(var/turf/turf_to_shred in turfs_to_shred)
 			if(prob(90))
 				SSexplosions.lowturf += turf_to_shred
+		for(var/turf/turf_to_shred in underbelly) //Theoretically this should clear out any rock/snow walls below, allowing stuff to fall properly.
+			SSexplosions.lowturf += turf_to_shred
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100)
+	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 50)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
-		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 25)
+		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 100)
 
 	for(var/turf/turf_to_shred in turfs_to_shred)
 		if(prob(10)) //Varies up the damage a little bit.
