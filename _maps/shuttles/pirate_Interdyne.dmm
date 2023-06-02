@@ -24,9 +24,8 @@
 /area/shuttle/pirate)
 "ad" = (
 /obj/machinery/button/door/directional/south{
-	id = "piratebridge";
+	id = "interdynebridge";
 	name = "Bridge Bolt Control";
-	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
@@ -245,7 +244,7 @@
 /area/shuttle/pirate)
 "aO" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
+	faction = list("pirate","monkey")
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
@@ -587,6 +586,13 @@
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Tu" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "Ur" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
@@ -621,10 +627,10 @@ af
 af
 af
 aO
+Tu
 aa
-aa
-aa
-aa
+Tu
+Tu
 aO
 af
 af
@@ -707,7 +713,7 @@ af
 (6,1,1) = {"
 af
 aO
-aa
+Tu
 aj
 aj
 aI
@@ -736,12 +742,12 @@ JT
 bf
 aj
 aO
-aa
+Tu
 aj
 aO
 "}
 (8,1,1) = {"
-aa
+Tu
 ae
 an
 ab
@@ -759,7 +765,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-aa
+Tu
 ah
 ao
 GS
@@ -777,7 +783,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-aa
+Tu
 al
 az
 ad
@@ -808,14 +814,14 @@ vB
 bo
 aj
 aO
-aa
+Tu
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-aa
+Tu
 aj
 aj
 aJ
@@ -909,10 +915,10 @@ af
 af
 af
 aO
-aa
+Tu
 mD
-aa
-aa
+Tu
+Tu
 aO
 af
 af
