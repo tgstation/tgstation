@@ -132,4 +132,4 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	response_received = "Thanks for your generosity, your money wont be wasted."
 	response_too_late = "We hope you like skin cancer!"
-	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some"
+	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
