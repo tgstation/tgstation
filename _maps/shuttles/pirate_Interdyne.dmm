@@ -112,10 +112,10 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/bed,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	req_access = list("surgery")
 	},
+/obj/structure/bed,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aw" = (
@@ -212,7 +212,7 @@
 /area/shuttle/pirate)
 "aK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	cyclelinkedairlock = 666666;
+	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
 	req_access = list("surgery")
 	},
@@ -239,7 +239,8 @@
 /area/shuttle/pirate)
 "aL" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	cyclelinkedairlock = 666666;
+	cyclelinkedairlock = null;
+	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
 	req_access = list("surgery")
 	},
@@ -305,13 +306,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/syndie_kit/chemical,
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"bh" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 10
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "bk" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -493,7 +487,24 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("surgery")
+	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"ic" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "iD" = (
 /obj/machinery/light/small/directional/south,
@@ -526,14 +537,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"mg" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "interdynebridge"
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "mD" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -549,16 +552,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"pp" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"qm" = (
+"qy" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
@@ -566,14 +560,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"qq" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -629,14 +615,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Cp" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"Eh" = (
+"BT" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
@@ -644,6 +623,21 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"Cb" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"DD" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "En" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -676,6 +670,15 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Iv" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "JT" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
@@ -685,21 +688,13 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Nb" = (
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	faction = list("pirate","Syndicate");
-	max_integrity = 10000
+"Ks" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "interdynebridge"
 	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
-"No" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 10
-	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -714,6 +709,15 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Po" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "Rq" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
@@ -721,16 +725,12 @@
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"TM" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
+"Tr" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	faction = list("pirate","Syndicate");
+	max_integrity = 10000
 	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating/airless,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "Ur" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -738,6 +738,13 @@
 	},
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"UM" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "VF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -768,7 +775,7 @@ af
 aO
 aa
 aa
-mg
+Ks
 aa
 aO
 af
@@ -818,7 +825,7 @@ af
 af
 af
 af
-No
+Po
 aj
 aQ
 ay
@@ -835,7 +842,7 @@ af
 af
 af
 af
-Eh
+BT
 ED
 aj
 aj
@@ -843,7 +850,7 @@ aj
 bx
 bH
 aj
-No
+Po
 af
 af
 af
@@ -852,7 +859,7 @@ af
 (6,1,1) = {"
 af
 aO
-mg
+Ks
 aj
 aj
 aI
@@ -861,8 +868,8 @@ aj
 yi
 aj
 aj
-TM
-bh
+ic
+Cb
 af
 af
 af
@@ -883,7 +890,7 @@ aj
 aj
 aa
 aj
-Nb
+Tr
 "}
 (8,1,1) = {"
 vz
@@ -953,9 +960,9 @@ vB
 bo
 aj
 aj
-qq
+DD
 aj
-Nb
+Tr
 "}
 (12,1,1) = {"
 af
@@ -970,7 +977,7 @@ yi
 aj
 aj
 ED
-Cp
+UM
 af
 af
 af
@@ -979,7 +986,7 @@ af
 af
 af
 af
-qm
+qy
 ED
 aj
 aj
@@ -987,7 +994,7 @@ mD
 bB
 Ur
 aj
-pp
+Iv
 af
 af
 af
@@ -998,7 +1005,7 @@ af
 af
 af
 af
-pp
+Iv
 aj
 gY
 eE
@@ -1054,10 +1061,10 @@ af
 af
 af
 aO
-qq
+DD
 mD
-qq
-qq
+DD
+DD
 aO
 af
 af
