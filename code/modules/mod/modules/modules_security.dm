@@ -493,6 +493,7 @@
 	projectile.ricochets_max += 1
 	projectile.min_ricochets += 1
 	projectile.ricochet_incidence_leeway = 0 //allows the projectile to bounce at any angle.
+	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, MOD_TRAIT)
 
 #undef SHOOTING_ASSISTANT_OFF
 #undef STORMTROOPER_MODE
