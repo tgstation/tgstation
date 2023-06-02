@@ -724,7 +724,7 @@
 	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
-	playsound(mod.wearer, SFX_RUSTLE, 50, TRUE, -5)
+	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
 
 /obj/item/mod/module/recycler/on_select_use(atom/target)
 	. = ..()
