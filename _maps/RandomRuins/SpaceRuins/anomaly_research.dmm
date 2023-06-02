@@ -73,7 +73,7 @@
 /area/misc/anomaly_research)
 "cF" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/plasma/spawner/directional/south,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "cK" = (
@@ -537,7 +537,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/plasma/spawner/directional/south,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "nU" = (
@@ -682,7 +682,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/plasma/spawner/directional/south,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "rX" = (

@@ -10,6 +10,7 @@
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	flags_1 = CONDUCT_1
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE|KEEP_TOGETHER
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -68,6 +69,9 @@
 	var/ammo_y_offset = 0
 
 	var/pb_knockback = 0
+
+	/// Cooldown for the visible message sent from gun flipping.
+	COOLDOWN_DECLARE(flip_cooldown)
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
@@ -198,6 +202,40 @@
 	if(!(. & EMP_PROTECT_CONTENTS))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
+
+/obj/item/gun/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	if(pinless)
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_GUNFLIP))
+		return
+
+	SpinAnimation(4, 2) // The spin happens regardless of the cooldown
+
+	if(!COOLDOWN_FINISHED(src, flip_cooldown))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	COOLDOWN_START(src, flip_cooldown, 3 SECONDS)
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+		// yes this will sound silly for bows and wands, but that's a "gun" moment for you
+		user.visible_message(
+			span_danger("While trying to flip [src] [user] pulls the trigger accidentally!"),
+			span_userdanger("While trying to flip [src] you pull the trigger accidentally!"),
+		)
+		process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
+		user.dropItemToGround(src, TRUE)
+	else
+		user.visible_message(
+			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
+			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
+		)
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))

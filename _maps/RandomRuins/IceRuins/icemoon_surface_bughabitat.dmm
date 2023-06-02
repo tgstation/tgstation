@@ -240,7 +240,7 @@
 "BK" = (
 /obj/structure/table/rolling,
 /obj/item/petri_dish/random,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Cb" = (

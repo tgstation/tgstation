@@ -123,9 +123,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "bP" = (
 /obj/structure/bed,
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/east,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/item/bedsheet/purple,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -220,9 +218,7 @@
 /obj/item/food/donkpocket/spicy,
 /obj/item/food/ready_donk,
 /obj/item/food/ready_donk/mac_n_cheese,
-/obj/structure/sign/poster/contraband/donk_co{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/donk_co/directional/west,
 /obj/machinery/light/dim/directional/west,
 /obj/structure/closet/secure_closet/freezer/empty{
 	name = "fridge"
@@ -540,7 +536,7 @@
 	},
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/item/organ/internal/appendix,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
@@ -1045,7 +1041,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "ox" = (
@@ -1069,7 +1065,7 @@
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/item/organ/internal/lungs,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -1108,9 +1104,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "pi" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/west,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
@@ -1209,9 +1203,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "ql" = (
 /obj/item/trash/cheesie,
-/obj/structure/sign/poster/ripped{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/ripped/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
@@ -1323,9 +1315,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rd" = (
-/obj/structure/sign/poster/official/safety_report{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/safety_report/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -1523,9 +1513,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "tz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/north,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
@@ -1722,9 +1710,7 @@
 	pixel_y = 13
 	},
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_1,
-/obj/structure/sign/poster/contraband/tea_over_tizira{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/tea_over_tizira/directional/east,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
@@ -2395,7 +2381,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "DL" = (
@@ -2406,9 +2392,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "DX" = (
-/obj/structure/sign/poster/official/moth_piping{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/moth_piping/directional/north,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
@@ -3181,9 +3165,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/andromeda_bitters{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/andromeda_bitters/directional/east,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "Pu" = (
@@ -3362,7 +3344,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -3537,9 +3519,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "TH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/syndiemoth{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
 	},
@@ -3604,7 +3584,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "UH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/terminal/dangerous_research/front_desk{
 	dir = 1
 	},
@@ -3634,7 +3614,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Vd" = (
 /obj/structure/filingcabinet,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper/fluff/ruins/dangerous_research/manifest,
 /obj/effect/turf_decal/tile/dark_red/half,
@@ -3681,7 +3661,7 @@
 /obj/structure/closet{
 	name = "Outpost Security Locker"
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/ammo_box/c38,
@@ -3934,7 +3914,7 @@
 	},
 /obj/item/pen,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 8
 	},
