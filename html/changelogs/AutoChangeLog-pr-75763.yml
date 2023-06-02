@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "Fulton extraction packs (when used on yourself) now automatically shove themselves into any back-mounted storage, like MODsuit storage modules."

@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - code_imp: "The code for posters has been split among three files. If you see something weird, please report it."
-  - bugfix: "Fixed the single tank poster using the wrong typepath for its mapping dir."

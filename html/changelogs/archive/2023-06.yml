@@ -58,3 +58,46 @@
   - bugfix: Added a name and description for the basic version of the bow.
   timothymtorres:
   - qol: Add more glasses to the nearsighted pref menu with icons
+2023-06-02:
+  Charley:
+  - bugfix: fixes birdshot access in various spots.
+  Ghommie:
+  - bugfix: Stops shields getting broken by pillows and disablers.
+  Hatterhat:
+  - qol: Fulton extraction packs (when used on yourself) now automatically shove themselves
+      into any back-mounted storage, like MODsuit storage modules.
+  - balance: 'The source of the demonic portals that endlessly deposits snow legions
+      onto the Icemoon no longer preserves the bodies nor gear of the damned (read:
+      demon portal snow legions now only drop skeletons).'
+  JohnFulpWillard:
+  - bugfix: Metastation departures now has an APC and Air alarm again.
+  - bugfix: Metastation and Birdshot's Coroner offices are now called Coroner office.
+  Jolly:
+  - code_imp: The code for posters has been split among three files. If you see something
+      weird, please report it.
+  - bugfix: Fixed the single tank poster using the wrong typepath for its mapping
+      dir.
+  - bugfix: '[MetaStation] - Secured some walls in science that weren''t secured properly
+      (reinforced).'
+  MTandi:
+  - bugfix: fixed dead plant having wrong icon roundstart
+  Rhials:
+  - qol: Fugitive hunters now get a deadchat poll and notify deadchat properly.
+  Singul0:
+  - bugfix: Nanotrasen engineers has installed delamination counters for all Northstar
+      class expeditionary vessels to increase the pressure for engineers not to fuck
+      up
+  carlarctg:
+  - spellcheck: Fixes grammar error on syndie sm shard desc
+  coldud13:
+  - bugfix: Disposals pipes for the Detective's office & Mining cafeteria now work
+      on tram.
+  - bugfix: Replaced an open space with a floor at the courtroom holding area.
+  larentoun:
+  - bugfix: Gun overlays (energy ammo counter, flashlights, bayonette, etc) are now
+      one with gun's icon, which makes said overlays to transform correctly with gun's
+      transform (ie, throwing)
+  moocowswag:
+  - bugfix: Tramstation departures is no longer missing a window
+  - bugfix: Spatial instability now gets properly energized by energetic chromosomes
+  - bugfix: external shields no longer generate over walls
