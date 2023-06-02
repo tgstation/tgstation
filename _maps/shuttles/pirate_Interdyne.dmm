@@ -142,7 +142,7 @@
 "aC" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/mob_spawn/ghost_role/human/pirate/junior{
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -158,7 +158,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mob_spawn/ghost_role/human/pirate/senior,
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (
@@ -428,7 +428,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/mob_spawn/ghost_role/human/pirate/junior{
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
