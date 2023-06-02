@@ -205,11 +205,7 @@
 
 				//assess any suffocation damage
 				var/mob/living/carbon/carbon_patient = M
-				var/oxy_loss = carbon_patient.getOxyLoss()
-				var/hypoxia_status = FALSE
-
-				if(oxy_loss > 20)//target has suffocation damage
-					hypoxia_status = TRUE
+				var/hypoxia_status = carbon_patient.getOxyLoss() > 20
 
 				if(M == user)
 					if(hypoxia_status)
