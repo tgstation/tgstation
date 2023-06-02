@@ -34,10 +34,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 	)
 
-	/// A list of quirks that cannot be used by specific species.
+	/// A list of quirks that cannot be used by specific species, through their species ID.
 	var/static/list/species_quirk_blacklist = list(
 		SPECIES_PLASMAMAN = list(
 			"Blood Deficiency",
+			"Frail",
 		),
 	)
 
@@ -169,13 +170,13 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 
 		var/datum/species/user_species = supplied_prefs.read_preference(/datum/preference/choiced/species)
-		if(quirk in species_quirk_blacklist[user_species])
+		if(quirk_name in species_quirk_blacklist[initial(user_species.id)])
 			continue
 
 		var/blacklisted = FALSE
 
 		for (var/list/blacklist as anything in quirk_blacklist)
-			if (!(quirk in blacklist))
+			if (!(quirk_name in blacklist))
 				continue
 
 			for (var/other_quirk in blacklist)
