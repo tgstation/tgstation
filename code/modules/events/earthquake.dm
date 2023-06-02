@@ -1,3 +1,5 @@
+///Earthquake event
+///Breaks shit
 /datum/round_event_control/earthquake
 	name = "Planetary Earthquake"
 	description = "After a brief warning, creates a large tear in the structure of the station."
@@ -57,6 +59,11 @@
 	notify_ghosts("The earthquake's epicenter has been located: [get_area_name(epicenter)]", source = epicenter, header = "Rumble Rumble Rumble!")
 
 /datum/round_event/earthquake/tick()
+	if(ISMULTIPLE(activeFor, 5))
+		for(var/turf/turf_to_quake in turfs_to_shred)
+			turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
+			playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100) //Find a better sound
+
 	if(ISMULTIPLE(activeFor, 10))
 		for(var/mob/earthquake_witness as anything in GLOB.player_list)
 			if(!is_station_level(earthquake_witness.z))
@@ -64,9 +71,14 @@
 			shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
 			earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 100)
 
-	if(ISMULTIPLE(activeFor, 5))
+	if(activeFor == end_when - 2)
 		for(var/turf/turf_to_quake in turfs_to_shred)
-			turf_to_quake.Shake(0.1, 0.1)
+			turf_to_quake.Shake(0.3, 0.3, 1 SECONDS)
+			for(var/mob/living/carbon/quake_victim in turf_to_quake)
+				quake_victim.Knockdown(3 SECONDS)
+				quake_victim.Paralyze(2 SECONDS)
+				to_chat(quake_victim, span_warning("[prob(5) ? "The ground quakes beneath you, throwing you off your feet!" : "Doh!"]"))
+
 
 	///If we're about to strike, we break up the floor a bit right before creating the chasm.
 	if(activeFor == end_when - 1)
@@ -80,6 +92,7 @@
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
+		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 25)
 
 	for(var/turf/turf_to_shred in turfs_to_shred)
 		if(prob(10)) //Varies up the damage a little bit.
