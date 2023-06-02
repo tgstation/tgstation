@@ -118,11 +118,21 @@
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
 
+				M.flash_act(length = 10)//breifly apply flash affect to target
+
 				if(M == user) //they're using it on themselves
-					M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
+					user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
+					render_list += "<span class='info'>You direct [src] to into your eyes:</span>\n"
+
+					if(M.is_blind())
+						render_list += "<span class='notice ml-1'>You're not entirely certain what you were expecting...</span>\n"
+					else
+						render_list += "<span class='notice ml-1'>Trippy!</span>\n"
+
+					//M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
 				else
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
-					render_list += "<span class='notice'>You direct [src] to [M]'s eyes:</span>\n"
+					render_list += "<span class='info'>You direct [src] to [M]'s eyes:</span>\n"
 
 					if(M.stat == DEAD)
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils don't react to the light!</span>\n"//mob is dead
@@ -135,8 +145,7 @@
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 				//display our packaged information in an examine block for easy reading
-				if(render_list != "")
-					to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+				to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 			if(BODY_ZONE_PRECISE_MOUTH)
 
