@@ -64,7 +64,7 @@
 	if(!istype(turf))
 		return
 
-	if(!turf.footstep || source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED))
+	if(!turf.footstep || source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED) || source.check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
 		return
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
@@ -91,10 +91,10 @@
 		return
 	return turf
 
-/datum/element/footstep/proc/play_simplestep(mob/living/source)
+/datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source))
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/turf/open/source_loc = prepare_step(source)
@@ -120,7 +120,7 @@
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
 
 	var/volume_multiplier = 1
@@ -162,15 +162,19 @@
 
 
 ///Prepares a footstep for machine walking
-/datum/element/footstep/proc/play_simplestep_machine(atom/movable/source)
+/datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source))
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/turf/open/source_loc = get_turf(source)
 	if(!istype(source_loc))
 		return
+
+	if(source.check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+		return
+
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
 
 #undef SHOULD_DISABLE_FOOTSTEPS

@@ -1,0 +1,103 @@
+2023-06-01:
+  FlufflesTheDog:
+  - bugfix: Radios tuned to things other than common respond properly to turning on
+      the speaker
+  - bugfix: Abstract items can no longer be placed in others' hands.
+  Ghommie:
+  - bugfix: Being moved around by conveyor belt or tram no longer play footsteps and
+      wheelchair sounds.
+  - bugfix: The peanut butter banana sandwich is no longer presented as grilled when
+      it doesn't require a griddle to make.
+  - balance: You can now sweep garbage into open trash bins (the crate subtype).
+  Helg2:
+  - spellcheck: Plate Gauntlets and Plate Boots now have proper looking names.
+  - bugfix: Syndicate Holster now works as intended (You can finally put both revolver
+      and speedloaders in it at the same time).
+  IndieanaJones, Melbert:
+  - balance: Space Dragon can no longer choose its rift locations freely, and instead
+      is given 5 pre-determined locations to pick from instead
+  - balance: Space Dragon itself has been buffed in order to support a more confrontational
+      playstyle, however its wing gust now requires a line of sight to targets in
+      order to affect them.
+  - balance: Player Space Carp from rifts now have buffed health, but reduced object
+      damage values. They also gain a temporary speed boost when hit by Space Dragon's
+      fire breath instead of taking damage.
+  - balance: Carp rift spawn times have been reduced, the healing AOE is now a 3x3
+      instead of a 1x1, and apply normal gravity in a large radius around them
+  - balance: Space Dragon and rift carps now communicate on a private mind link channel
+      via action button similar to Raw Prophets and Slimepeople.
+  - bugfix: Fixed Gravity Generator forced gravity not applying.
+  - bugfix: Intern Announcer will no longer replace Space Dragon announcements.
+  - qol: The roundend report for space dragons now collates all players who played
+      a carp into one entry, rather than one per carp spawned.
+  - qol: Space Dragon sounds are much less ear piercingly loud.
+  LemonInTheDark:
+  - rscadd: You can now filter by book id in library consoles
+  - bugfix: The visitor console now actually has categories to select. Shows how many
+      people actually use it
+  - admin: Added a library moderation tool, so you guys can do that again now that
+      statbus has passed into the byond
+  - server: Bumped DB version, the library_action table has a few columns that were
+      improperly typed, this fixes that
+  MTandi:
+  - qol: 'Oldstation: Windows are easier to fix as they''re now fulltile and use the
+      new helpers to appear cracked.'
+  - qol: 'Oldstation: You don''t need a special card to access APCs, other minor access
+      tweaks.'
+  - qol: 'Oldstation: Some walls have been moved and adjusted for better navigation
+      and look.'
+  - bugfix: 'Oldstation: Fixed paper text, overlapping objects, xenos being blocked
+      by flying crates, and some other minor issues.'
+  Singul0:
+  - balance: The mothership which abductors came from has worked very hard to train
+      their field agents how to use batons from their specimen's habitat
+  SyncIt21:
+  - bugfix: bluespace poly crystals can be used to complete machine frames either
+      by hand or by RPED
+  TheVekter:
+  - bugfix: Added a name and description for the basic version of the bow.
+  timothymtorres:
+  - qol: Add more glasses to the nearsighted pref menu with icons
+2023-06-02:
+  Charley:
+  - bugfix: fixes birdshot access in various spots.
+  Ghommie:
+  - bugfix: Stops shields getting broken by pillows and disablers.
+  Hatterhat:
+  - qol: Fulton extraction packs (when used on yourself) now automatically shove themselves
+      into any back-mounted storage, like MODsuit storage modules.
+  - balance: 'The source of the demonic portals that endlessly deposits snow legions
+      onto the Icemoon no longer preserves the bodies nor gear of the damned (read:
+      demon portal snow legions now only drop skeletons).'
+  JohnFulpWillard:
+  - bugfix: Metastation departures now has an APC and Air alarm again.
+  - bugfix: Metastation and Birdshot's Coroner offices are now called Coroner office.
+  Jolly:
+  - code_imp: The code for posters has been split among three files. If you see something
+      weird, please report it.
+  - bugfix: Fixed the single tank poster using the wrong typepath for its mapping
+      dir.
+  - bugfix: '[MetaStation] - Secured some walls in science that weren''t secured properly
+      (reinforced).'
+  MTandi:
+  - bugfix: fixed dead plant having wrong icon roundstart
+  Rhials:
+  - qol: Fugitive hunters now get a deadchat poll and notify deadchat properly.
+  Singul0:
+  - bugfix: Nanotrasen engineers has installed delamination counters for all Northstar
+      class expeditionary vessels to increase the pressure for engineers not to fuck
+      up
+  carlarctg:
+  - spellcheck: Fixes grammar error on syndie sm shard desc
+  coldud13:
+  - bugfix: Disposals pipes for the Detective's office & Mining cafeteria now work
+      on tram.
+  - bugfix: Replaced an open space with a floor at the courtroom holding area.
+  larentoun:
+  - bugfix: Gun overlays (energy ammo counter, flashlights, bayonette, etc) are now
+      one with gun's icon, which makes said overlays to transform correctly with gun's
+      transform (ie, throwing)
+  moocowswag:
+  - bugfix: Tramstation departures is no longer missing a window
+  - bugfix: Spatial instability now gets properly energized by energetic chromosomes
+  - bugfix: external shields no longer generate over walls
