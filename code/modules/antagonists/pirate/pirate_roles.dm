@@ -111,5 +111,5 @@
 	rank = "Captain"
 	outfit = /datum/outfit/pirate/interdyne/captain
 
-/obj/effect/mob_spawn/ghost_role/human/junior
+/obj/effect/mob_spawn/ghost_role/human/pirate/junior
 	rank = "Pharmacist"
