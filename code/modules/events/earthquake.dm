@@ -47,7 +47,7 @@
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
 
 /datum/round_event/earthquake/start()
-	notify_ghosts("The earthquake's epicenter is in the [get_area_name(epicenter)]", source = epicenter, action = NOTIFY_ORBIT, header = "Rumble Rumble Grumble") //Make a cool custom icon for this
+	notify_ghosts("The earthquake's epicenter is in the [get_area_name(epicenter)]", source = epicenter, header = "Rumble Rumble Grumble") //Make a cool custom icon for this
 
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 10))
@@ -65,6 +65,8 @@
 		for(var/turf/turf_to_shred in turfs_to_shred)
 			if(prob(90))
 				SSexplosions.lowturf += turf_to_shred
+			else
+				SSexplosions.medturf += turf_to_shred
 
 /datum/round_event/earthquake/end()
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
