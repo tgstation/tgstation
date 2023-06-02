@@ -139,8 +139,6 @@
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
-#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "gingus"
-
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER
 	if(!active)
