@@ -428,7 +428,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/mob_spawn/ghost_role/human/junior{
+/obj/effect/mob_spawn/ghost_role/human/pirate/junior{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
