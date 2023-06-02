@@ -511,13 +511,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"vz" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 "vB" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
@@ -856,7 +849,7 @@ af
 aO
 aj
 aj
-vz
+mD
 bB
 Ur
 aO
