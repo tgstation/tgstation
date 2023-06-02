@@ -48,6 +48,19 @@
 
 	return ..()
 
+/obj/machinery/vending/runic_vendor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item)
+		if(istype(held_item, /obj/item/runic_vendor_scepter))
+			context[SCREENTIP_CONTEXT_LMB] = "Detonate"
+			context[SCREENTIP_CONTEXT_RMB] = "Force push"
+
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
+
 /obj/machinery/vending/runic_vendor/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
