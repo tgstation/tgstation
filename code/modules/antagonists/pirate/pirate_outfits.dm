@@ -81,6 +81,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/utility/surgerycap/black
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	l_pocket = /obj/item/card/emag/doorjack
 
 /datum/outfit/pirate/interdyne/captain
 	name = "Ex-Interdyne Senior Resident"
