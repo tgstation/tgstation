@@ -322,8 +322,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	switch(severity)
 		if(1)
 			Stun(160)
+			src.SetUnconscious(16)
 		if(2)
 			Stun(60)
+			src.SetUnconscious(6)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -424,3 +426,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
+
+/mob/living/silicon/on_hit(obj/projectile/P)
+	if(!src.has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
+		src.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), P.throwforce / 5)
+	. = ..()
+
+/mob/living/silicon/proc/clear_throw_slowdown()
+	if(src)
+		src.remove_movespeed_modifier(/datum/movespeed_modifier/shove)
