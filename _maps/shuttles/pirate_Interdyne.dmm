@@ -320,18 +320,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
-	dir = 2
-	},
+/obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bv" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
-	dir = 2
-	},
+/obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bx" = (
@@ -402,13 +398,6 @@
 /area/shuttle/pirate)
 "bX" = (
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"dt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "dV" = (
 /obj/machinery/door/airlock/hatch,
@@ -597,19 +586,19 @@
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"TT" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 "Ur" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"UI" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "VF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -630,6 +619,13 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Za" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 
 (1,1,1) = {"
 af
@@ -638,10 +634,10 @@ af
 af
 af
 aO
-dt
+UI
 aa
-dt
-dt
+UI
+UI
 aO
 af
 af
@@ -724,7 +720,7 @@ af
 (6,1,1) = {"
 af
 aO
-dt
+UI
 aj
 aj
 aI
@@ -753,12 +749,12 @@ JT
 bf
 aj
 aO
-dt
+UI
 aj
 aO
 "}
 (8,1,1) = {"
-dt
+UI
 ae
 an
 ab
@@ -776,7 +772,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-dt
+UI
 ah
 ao
 GS
@@ -794,7 +790,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-dt
+UI
 al
 az
 ad
@@ -825,14 +821,14 @@ vB
 bo
 aj
 aO
-dt
+UI
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-dt
+UI
 aj
 aj
 aJ
@@ -855,7 +851,7 @@ af
 aO
 aj
 aj
-TT
+Za
 bB
 Ur
 aO
@@ -926,10 +922,10 @@ af
 af
 af
 aO
-dt
+UI
 mD
-dt
-dt
+UI
+UI
 aO
 af
 af
