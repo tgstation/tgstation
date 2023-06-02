@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - image: "Made the oxygen medkits different coloured from the general medkit colours, and tweaked the burn medkits to look a bit less orange"
