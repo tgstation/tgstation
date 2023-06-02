@@ -507,6 +507,15 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"pj" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
@@ -517,6 +526,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"vz" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "vB" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
@@ -597,6 +615,26 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Qv" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Rk" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "Rq" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
@@ -672,7 +710,7 @@ af
 af
 af
 af
-af
+vz
 aj
 aM
 ax
@@ -689,9 +727,9 @@ af
 af
 af
 af
-af
-af
-aO
+vz
+Rk
+aj
 aQ
 ay
 Oe
@@ -707,7 +745,7 @@ af
 af
 af
 af
-af
+Rk
 aj
 aj
 aj
@@ -851,8 +889,8 @@ af
 af
 af
 af
-af
-aO
+Qv
+aj
 aj
 aj
 mD
@@ -869,8 +907,8 @@ af
 af
 af
 af
-af
-af
+pj
+Qv
 aj
 gY
 eE
@@ -888,7 +926,7 @@ af
 af
 af
 af
-af
+pj
 aj
 Rq
 bu
