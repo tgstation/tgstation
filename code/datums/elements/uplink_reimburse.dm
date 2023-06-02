@@ -22,6 +22,7 @@
 	src.refundable_tc = refundable_tc
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
 	// Due to how our attack chain is terrible and doesn't have some sort of usable inverted attackby() apparently the best method here is
 	// to just make the uplink component check for this element. Yay.
 
@@ -43,3 +44,8 @@
 	examine_string = "There's a label written in codespeak on the side, saying that this item can be refunded for [refundable_tc] by applying it onto an uplink."
 
 	examine_list += span_notice(examine_string)
+
+/datum/element/uplink_reimburse/proc/reimburse(datum/target, mob/user)
+	SIGNAL_HANDLER
+
+	return refundable_tc

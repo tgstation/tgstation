@@ -120,6 +120,7 @@
 /// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
 	uplink_handler.telecrystals = new_telecrystal_amount
+	uplink_handler.on_update()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -138,6 +139,8 @@
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
+#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "gingus"
+
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER
 	if(!active)
@@ -149,14 +152,14 @@
 	if(!istype(item))
 		return
 
-	var/datum/component/uplink/uplink_item = item.GetComponent(/datum/component/uplink)
+	var/tc_to_reimburse = SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, source, user)
 
-	if(!uplink_item)
+	if(!(tc_to_reimburse))
 		return
 
 	to_chat(user, span_notice("You tap [item] with [parent], and a moment after [item] disappears in a puff of red smoke that seems to enter [parent]!"))
-	uplink_item.add_telecrystals(reimbursable_telecrystals)
-	qdel(source)
+	add_telecrystals(tc_to_reimburse)
+	qdel(item)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
