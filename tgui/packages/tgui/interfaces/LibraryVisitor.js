@@ -54,8 +54,7 @@ const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     can_db_request,
-    search_categories = [],
-    book_id,
+    categories = [],
     title,
     category,
     author,
@@ -75,21 +74,8 @@ const SearchAndDisplay = (props, context) => {
         <Stack.Item pb={0.6}>
           <Stack>
             <Stack.Item>
-              <Input
-                value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
-                mt={0.5}
-                width="70px"
-                onChange={(e, value) =>
-                  act('set_search_id', {
-                    id: value,
-                  })
-                }
-              />
-            </Stack.Item>
-            <Stack.Item>
               <Dropdown
-                options={search_categories}
+                options={categories}
                 selected={category}
                 onSelected={(value) =>
                   act('set_search_category', {

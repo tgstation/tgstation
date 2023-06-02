@@ -9,12 +9,15 @@
  * Book Binder
  */
 
-GLOBAL_VAR_INIT(library_table_modified, 0)
+#define DEFAULT_UPLOAD_CATAGORY "Fiction"
+#define DEFAULT_SEARCH_CATAGORY "Any"
 
-/// Increments every time WE update the library db table, causes all existing consoles to repull when they next check
-/proc/library_updated()
-	GLOB.library_table_modified = (GLOB.library_table_modified + 1) % (SHORT_REAL_LIMIT - 1)
-
+///How many books should we load per page?
+#define BOOKS_PER_PAGE 18
+///How many checkout records should we load per page?
+#define CHECKOUTS_PER_PAGE 17
+///How many inventory items should we load per page?
+#define INVENTORY_PER_PAGE 19
 /*
  * Library Public Computer
  */
@@ -26,8 +29,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
 	anchored_tabletop_offset = 8
-	///The current book id we're searching for
-	var/book_id = null
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -72,7 +73,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	data["category"] = category
 	data["author"] = author
 	data["title"] = title
-	data["book_id"] = book_id
 	data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
 	data["our_page"] = search_page + 1
 	data["pages"] = page_content
@@ -85,12 +85,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	if(.)
 		return
 	switch(action)
-		if("set_search_id")
-			var/newid = text2num(params["id"])
-			if(newid != book_id)
-				params_changed = TRUE
-			book_id = newid
-			return TRUE
 		if("set_search_title")
 			var/newtitle = params["title"]
 			if(newtitle != title)
@@ -190,7 +184,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/proc/hash_search_info()
-	return "[GLOB.library_table_modified]-[book_id]-[title]-[author]-[category]-[search_page]-[page_count]"
+	return "[title]-[author]-[category]-[search_page]-[page_count]"
 
 /obj/machinery/computer/libraryconsole/proc/update_page_contents()
 	if(sending_request) //Final defense against nerds spamming db requests
@@ -204,10 +198,9 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 		ORDER BY id DESC
 		LIMIT :skip, :take
-	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
+	"}, list("author" = author, "title" = title, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
 
 	var/query_succeeded = query_library_list_books.Execute()
 	sending_request = FALSE
@@ -232,8 +225,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
-			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
-	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category))
+	"}, list("author" = author, "title" = title, "category" = category))
 
 	if(!query_library_count_books.warn_execute())
 		qdel(query_library_count_books)
@@ -309,6 +301,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/inventory_page = 0
 	///Should we load our inventory from the bookselves in our area?
 	var/dynamic_inv_load = FALSE
+	///Toggled if some bit of code wants to override hashing and allow for page updates
+	var/ignore_hash = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
 	///Our cooldown on using the printer
@@ -573,6 +567,14 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		return
 	obj_flags |= EMAGGED
 
+/obj/machinery/computer/libraryconsole/bookmanagement/has_anything_changed()
+	if(..())
+		return TRUE
+	if(!ignore_hash)
+		return FALSE
+	ignore_hash = FALSE
+	return TRUE
+
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)
 	screen_state = clamp(new_state, MIN_LIBRARY, MAX_LIBRARY)
 
@@ -629,8 +631,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		return
 	usr.log_message(msg, LOG_GAME)
 	qdel(query_library_upload)
-	library_updated()
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
+	ignore_hash = TRUE
 	update_db_info()
 
 /// Call this proc to attempt a print. It will return false if the print failed, true otherwise, longside some ux
@@ -840,6 +842,11 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 
 	qdel(draw_from)
 
+#undef BOOKS_PER_PAGE
+#undef CHECKOUTS_PER_PAGE
+#undef DEFAULT_SEARCH_CATAGORY
+#undef DEFAULT_UPLOAD_CATAGORY
+#undef INVENTORY_PER_PAGE
 #undef LIBRARY_ARCHIVE
 #undef LIBRARY_CHECKOUT
 #undef LIBRARY_INVENTORY
