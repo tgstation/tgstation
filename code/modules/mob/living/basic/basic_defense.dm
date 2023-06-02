@@ -8,7 +8,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/mob/living/basic/proc/attack_threshold_check(damage, damagetype = BRUTE)
+/mob/living/basic/proc/attack_threshold_check(damage = 0, damagetype = BRUTE)
 	if(damage <= 0)
 		return TRUE
 	if(damage * (damage_coeff[damagetype] || 0) <= force_threshold)
@@ -87,7 +87,7 @@
 			apply_damage(maxHealth)
 
 
-/mob/living/basic/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration)
+/mob/living/basic/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type = BRUTE)
 	. = ..()
 	if(.)
 		return
@@ -95,14 +95,10 @@
 	var/tap_vol = 50
 	if(isitem(hitby))
 		var/obj/item/item_hitting = hitby
-		if(!attack_threshold_check(damage, item_hitting.damtype))
-			tap_vol = item_hitting.get_clamped_volume()
-			. = TRUE
+		tap_vol = item_hitting.get_clamped_volume()
+		damage_type = item_hitting.damtype
 
-	else if(!attack_threshold_check(damage))
-		// This operates on the assumption the damage being recieved is brute damage, should be changed later.
-		. = TRUE
-
+	. = attack_threshold_check(damage, damage_type)
 	if(.)
 		playsound(loc, 'sound/weapons/tap.ogg', tap_vol, TRUE, -1)
 		visible_message(span_warning("[src] looks unharmed!"), blind_message = span_hear("You hear a thud."))

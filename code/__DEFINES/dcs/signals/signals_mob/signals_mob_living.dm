@@ -164,7 +164,7 @@
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
-///from /mob/living/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
 	#define SUCCESSFUL_BLOCK (1<<0)
 

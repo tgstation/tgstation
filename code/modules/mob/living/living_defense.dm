@@ -408,8 +408,8 @@
  * * armour_penetration - how much, if any, armor penetration the attack has. compared agaiinst armor penetration of the item doing the blocking.
  * this means that items which have their own armor penetration are better at shielding
  */
-/mob/living/proc/check_block(atom/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration) & SUCCESSFUL_BLOCK)
+/mob/living/proc/check_block(atom/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
 		return TRUE
 
 	return FALSE

@@ -313,7 +313,7 @@
 
 	else
 		// note: this check does not include damage from multipliers, like physiology
-		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration))
+		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 			return ATTACK_STYLE_BLOCKED
 
 		var/zone_hit_chance = 80

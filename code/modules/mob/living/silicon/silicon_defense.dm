@@ -22,11 +22,12 @@
 /mob/living/silicon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration)
+/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type = BRUTE)
 	. = ..()
 	if(.)
 		return
-
+	if(damage_type != BRUTE)
+		return FALSE
 	if(attack_text == UNARMED_ATTACK && damage <= 10)
 		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
 		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
