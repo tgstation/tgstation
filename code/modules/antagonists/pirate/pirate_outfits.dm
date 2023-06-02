@@ -83,6 +83,6 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
 /datum/outfit/pirate/interdyne/captain
-	name = "Exinterdyne Senior Resident"
+	name = "Ex-Interdyne Senior Resident"
 
 	id_trim = /datum/id_trim/job/chief_medical_officer
