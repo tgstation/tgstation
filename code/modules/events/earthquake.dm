@@ -1,8 +1,12 @@
 ///Earthquake event
-///Breaks shit
+///Draws a line of turfs between a high and low point, chosen relative to a generic_event_spawn landmark.
+///These turfs will shake and eventually "collapse", forming a deep cut in the station that drops to the z-level below.
+///Much of the actual structural damage is done through the explosions subsystem. Objects, machines, and especially people
+///that aren't moved out of the impact area (indicated by the wobbly tiles)
+///will not just be thrown down a z-level, but also be destroyed/maimed in the process.
 /datum/round_event_control/earthquake
-	name = "Planetary Earthquake" //change name
-	description = "After a brief warning, creates a large tear in the structure of the station."
+	name = "Earthquake"
+	description = "After a brief warning, creates a large chasm in the structure of the station."
 	typepath = /datum/round_event/earthquake
 	category = EVENT_CATEGORY_ENGINEERING
 	min_players = 15
@@ -39,7 +43,7 @@
 		message_admins("Earthquake event failed to find a turf! generic_event_spawn landmarks may be absent or bugged. Aborting...")
 		return
 
-	message_admins("An earthquake is about to strike the [get_area_name(epicenter)] at [ADMIN_JMP(epicenter)].")
+	message_admins("An seismic disturbance is about to strike the [get_area_name(epicenter)] at [ADMIN_JMP(epicenter)].")
 
 	///Picks two points generally opposite from each other
 	var/turf/fracture_point_high = locate(epicenter.x + rand(3, 7), epicenter.y + rand(3, 7), epicenter.z)
@@ -48,7 +52,7 @@
 
 	turfs_to_shred = block(fracture_point_high, fracture_point_low)
 
-	///Grab a list of turfs below the ones we're going to destroy. If we're at the bottom layer, it will just tear up the flooring a bunch.
+	///Grab a list of turfs below the ones we're going to destroy. If we're at the bottom layer, it will just tear up the flooring a bunch (likely exposing it to LAVA).
 	for(var/turf/turf_to_quake in turfs_to_shred)
 		underbelly += SSmapping.get_turf_below(turf_to_quake)
 
@@ -75,27 +79,31 @@
 			if(!is_station_level(earthquake_witness.z))
 				continue
 			shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
-			earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 100)
+			earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 75)
 
 	if(activeFor == end_when - 2)
 		for(var/turf/turf_to_quake in turfs_to_shred)
-			turf_to_quake.Shake(0.3, 0.3, 1 SECONDS)
+			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				quake_victim.Knockdown(3 SECONDS)
 				quake_victim.Paralyze(2 SECONDS)
 				to_chat(quake_victim, span_warning("The ground quakes beneath you, throwing you off your feet!"))
 
+		for(var/turf/turf_to_quake in underbelly)
+			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
+			for(var/mob/living/carbon/quake_victim in turf_to_quake)
+				to_chat(quake_victim, span_warning("Damn, I wonder what that rumbling noise is?")) ///You're about to find out
 
 	///If we're about to strike, we break up the floor a bit right before creating the chasm.
 	if(activeFor == end_when - 1)
 		for(var/turf/turf_to_shred in turfs_to_shred)
 			if(prob(90))
 				SSexplosions.lowturf += turf_to_shred
-		for(var/turf/turf_to_shred in underbelly) //Theoretically this should clear out any rock/snow walls below, allowing stuff to fall properly.
+		for(var/turf/turf_to_shred in underbelly) //This should clear out any rock/snow walls below, allowing stuff to fall properly. If not it just causes light structural damage.
 			SSexplosions.lowturf += turf_to_shred
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 50)
+	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
