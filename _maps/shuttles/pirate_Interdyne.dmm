@@ -132,6 +132,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "az" = (
@@ -143,6 +144,7 @@
 /obj/effect/mob_spawn/ghost_role/human/junior{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aD" = (
@@ -217,17 +219,16 @@
 	width = 17
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aL" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aM" = (
@@ -380,7 +381,9 @@
 /area/shuttle/pirate)
 "bH" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/vending/drugs,
+/obj/machinery/vending/drugs{
+	name = "\improper SyndicateDrug Plus"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bK" = (
@@ -399,6 +402,13 @@
 /area/shuttle/pirate)
 "bX" = (
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"dt" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "dV" = (
 /obj/machinery/door/airlock/hatch,
@@ -555,6 +565,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/light/directional/south,
 /obj/structure/closet/l3closet/virology,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "JT" = (
@@ -586,12 +597,12 @@
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Tu" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
+"TT" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
 	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "Ur" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -627,10 +638,10 @@ af
 af
 af
 aO
-Tu
+dt
 aa
-Tu
-Tu
+dt
+dt
 aO
 af
 af
@@ -713,7 +724,7 @@ af
 (6,1,1) = {"
 af
 aO
-Tu
+dt
 aj
 aj
 aI
@@ -742,12 +753,12 @@ JT
 bf
 aj
 aO
-Tu
+dt
 aj
 aO
 "}
 (8,1,1) = {"
-Tu
+dt
 ae
 an
 ab
@@ -765,7 +776,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-Tu
+dt
 ah
 ao
 GS
@@ -783,7 +794,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-Tu
+dt
 al
 az
 ad
@@ -814,14 +825,14 @@ vB
 bo
 aj
 aO
-Tu
+dt
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-Tu
+dt
 aj
 aj
 aJ
@@ -844,7 +855,7 @@ af
 aO
 aj
 aj
-mD
+TT
 bB
 Ur
 aO
@@ -915,10 +926,10 @@ af
 af
 af
 aO
-Tu
+dt
 mD
-Tu
-Tu
+dt
+dt
 aO
 af
 af
