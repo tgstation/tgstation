@@ -192,8 +192,8 @@
 
 	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/internal/lungs/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
-	var/obj/item/organ/internal/lungs/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
+	var/obj/item/organ/internal/liver/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/appendix/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
 
 	var/render_list = list()//information will be packaged in a list for clean display to the user
 
