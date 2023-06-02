@@ -91,6 +91,7 @@
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow,
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/portal,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
 		/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
 		/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion,
