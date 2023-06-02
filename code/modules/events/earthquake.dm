@@ -25,7 +25,7 @@
 		message_admins("Earthquake event failed to find a turf! generic_event_spawn landmarks may be absent or bugged. Aborting...")
 		return
 
-	message_admins("An earthquake is about to strike the [get_area_name(epicenter)] at [ADMIN_FLW(epicenter)].")
+	message_admins("An earthquake is about to strike the [get_area_name(epicenter)] at [ADMIN_JMP(epicenter)].")
 
 	///Picks two points generally opposite from each other
 	var/turf/fracture_point_high = locate(epicenter.x + rand(3, 7), epicenter.y + rand(3, 7), epicenter.z)
@@ -47,7 +47,7 @@
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
 
 /datum/round_event/earthquake/start()
-	notify_ghosts("The earthquake's epicenter has been located!", source = epicenter, header = "BWOOSHHRgHGhSHHrHGh") //Make a cool custom icon for this
+	notify_ghosts("The earthquake's epicenter is in the [get_area_name(epicenter)]", source = epicenter, action = NOTIFY_ORBIT, header = "Rumble Rumble Grumble") //Make a cool custom icon for this
 
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 10))
