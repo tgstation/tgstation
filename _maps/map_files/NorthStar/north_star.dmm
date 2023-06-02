@@ -642,6 +642,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/corner,
 /area/station/cargo/drone_bay)
 "ahG" = (
@@ -7931,6 +7932,10 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/service/chapel)
+"bTh" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/tcommsat/computer)
 "bTk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
@@ -11194,6 +11199,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningdock)
 "cKO" = (
@@ -14098,10 +14104,6 @@
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
-"dAq" = (
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/smooth,
-/area/station/tcommsat/computer)
 "dAr" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/camera/directional/west{
@@ -14718,10 +14720,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard/fore)
-"dIS" = (
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "dIU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -29713,6 +29711,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hJc" = (
@@ -32063,6 +32062,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
+"ipl" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ipn" = (
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/hop)
@@ -37513,6 +37516,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/disposal)
 "jLI" = (
@@ -57883,20 +57887,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"oSq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "oSt" = (
 /turf/closed/wall,
 /area/station/engineering/lobby)
@@ -61575,6 +61565,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -63444,6 +63435,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/corner{
 	dir = 4
 	},
@@ -78198,6 +78190,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "urO" = (
@@ -78561,6 +78554,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/atmos)
+"uwu" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/textured_large,
+/area/station/medical/chemistry)
 "uww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/hatch{
@@ -91802,6 +91799,20 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
+"xOH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "xOW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -117389,7 +117400,7 @@ gVm
 hIV
 iyD
 jzP
-dIS
+ipl
 dMs
 npD
 nUM
@@ -124836,7 +124847,7 @@ rJy
 rJy
 rJy
 aWr
-oSq
+xOH
 ehG
 ehG
 ehG
@@ -125121,7 +125132,7 @@ kzE
 clP
 lMH
 nBb
-kOR
+uwu
 kOR
 eXp
 kOR
@@ -129995,7 +130006,7 @@ cax
 mFW
 kSN
 jKt
-dAq
+bTh
 uVY
 dqB
 nHL
