@@ -99,6 +99,8 @@
 	name = "Interdyne Sleeper"
 	desc = "A cryo sleeper, looking impeccably clean!"
 	density = FALSE
+	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
+	flavour_text = "The station has refused to fund your research, you will now have to convince them to donate to your charitable cause."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "sleeper"
 	prompt_name = "an Exinterdyne worker"
