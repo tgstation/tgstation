@@ -236,6 +236,26 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		selected_container = params["ref"]
 		return TRUE
 
+	if(action == "create")
+		if(reagents.total_volume == 0)
+			return FALSE
+		var/item_count = text2num(params["itemCount"])
+		if(item_count <= 0)
+			return FALSE
+		create_containers(item_count)
+		return TRUE
+
+/// Create N selected containers with reagents from buffer split between them
+/obj/machinery/chem_master_new/proc/create_containers(item_count = 1)
+	use_power(active_power_usage)
+	var/obj/item/reagent_containers/container_style = locate(selected_container)
+	var/vol_each = reagents.total_volume / item_count
+	for(var/i in 1 to item_count)
+		var/obj/item/reagent_containers/item = new (container_style, drop_location()) // DOESNT WORK
+		adjust_item_drop_location(item)
+		reagents.trans_to(item, vol_each, transfered_by = src)
+	return TRUE
+
 /// Transfer reagents to specified target from the opposite source
 /obj/machinery/chem_master_new/proc/transfer_reagent(reagent_type, amount, target)
 	if (amount == -1)

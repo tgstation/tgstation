@@ -147,44 +147,25 @@ export const ChemMasterNew = (props, context) => {
                     ) / 100
                   } u. each`}
                 </Box>
-                <Button content="Create" />
+                <Button
+                  content="Create"
+                  onClick={() =>
+                    act('create', {
+                      itemCount: itemCount,
+                    })
+                  }
+                />
               </Box>
             )
           }>
           {categories.map((category) => (
             <Box key={category.name}>
               {category.containers.map((container) => (
-                // <ContainerButton key={container.id} container={container} />
-                <Tooltip
+                <ContainerButton
                   key={container.ref}
-                  content={`${capitalize(container.name)}\xa0(${
-                    container.volume
-                  } u.)`}>
-                  <Button
-                    overflow="hidden"
-                    color="transparent"
-                    width="48px"
-                    height="48px"
-                    selected={container.ref === selectedContainerRef}
-                    p={0}
-                    onClick={() => {
-                      act('selectContainer', {
-                        ref: container.ref,
-                      });
-                    }}>
-                    <Box
-                      style={{
-                        'transform': ['pills', 'patches'].includes(
-                          category.name
-                        )
-                          ? 'scale(3)'
-                          : 'scale(2)',
-                      }}
-                      m={'8px'}
-                      className={classes(['chemmaster32x32', container.icon])}
-                    />
-                  </Button>
-                </Tooltip>
+                  category={category}
+                  container={container}
+                />
               ))}
             </Box>
           ))}
@@ -270,32 +251,35 @@ const ReagentEntry = (props, context) => {
   );
 };
 
-// const ContainerButton = ({ container }, context) => {
-//   const { act, data } = useBackend<Data>(context);
-//   return (
-//     <Tooltip
-//       content={`${capitalize(container.name)}\xa0(${container.volume}u)`}>
-//       <Button
-//         color="transparent"
-//         width="32px"
-//         height="32px"
-//         selected={container.id === data.selectedContainerId}
-//         p={0}
-//         onClick={() => {
-//           context.setSelectedVolume(container.volume);
-//           context.setItemCount(
-//             Math.min(
-//               100,
-//               Math.ceil(data.bufferCurrentVolume / container.volume)
-//             )
-//           );
-//           act('selectContainer', {
-//             id: container.id,
-//             volume: container.volume,
-//           });
-//         }}>
-//         <Box className={classes(['chemmaster32x32', container.id])} />
-//       </Button>
-//     </Tooltip>
-//   ) as any;
-// };
+const ContainerButton = ({ container, category }, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const selectedContainerRef = data.selectedContainerRef;
+  return (
+    <Tooltip
+      key={container.ref}
+      content={`${capitalize(container.name)}\xa0(${container.volume} u.)`}>
+      <Button
+        overflow="hidden"
+        color="transparent"
+        width="48px"
+        height="48px"
+        selected={container.ref === selectedContainerRef}
+        p={0}
+        onClick={() => {
+          act('selectContainer', {
+            ref: container.ref,
+          });
+        }}>
+        <Box
+          style={{
+            'transform': ['pills', 'patches'].includes(category.name)
+              ? 'scale(3)'
+              : 'scale(2)',
+          }}
+          m={'8px'}
+          className={classes(['chemmaster32x32', container.icon])}
+        />
+      </Button>
+    </Tooltip>
+  ) as any;
+};
