@@ -150,7 +150,6 @@
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
 	cell_type = /obj/item/stock_parts/cell/infinite;
-	long_term_power = 10000000;
 	start_charge = 100
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
@@ -268,7 +267,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/closet/crate/freezer/blood,
 /obj/machinery/light/small/blacklight/directional/south,
-/obj/item/defibrillator/loaded,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aW" = (
@@ -296,6 +295,8 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/medical,
+/obj/item/mod/module/defibrillator/combat,
+/obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bl" = (
@@ -322,6 +323,8 @@
 "br" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/machinery/suit_storage_unit/medical,
+/obj/item/mod/module/defibrillator/combat,
+/obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
@@ -399,6 +402,8 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/medical,
+/obj/item/mod/module/defibrillator/combat,
+/obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bX" = (
@@ -505,6 +510,7 @@
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ua" = (
