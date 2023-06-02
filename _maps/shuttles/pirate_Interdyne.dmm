@@ -246,7 +246,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aO" = (
-/obj/machinery/porta_turret/syndicate/energy{
+/obj/machinery/porta_turret/syndicate/energy/heavy{
 	faction = list("pirate","Syndicate")
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -420,6 +420,16 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"el" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "ep" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
@@ -492,6 +502,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"mv" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "mD" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -507,10 +526,35 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"pj" = (
+"nq" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"pD" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"qx" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"sk" = (
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 5
 	},
@@ -528,7 +572,7 @@
 /area/shuttle/pirate)
 "vz" = (
 /obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
@@ -562,6 +606,16 @@
 /obj/item/storage/box/monkeycubes/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"xk" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "yi" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -572,7 +626,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
-/obj/item/reagent_containers/cup/beaker/meta/convermol{
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
 	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
 	},
 /turf/open/floor/iron/dark,
@@ -602,6 +656,13 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Lv" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 4
@@ -615,26 +676,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Qv" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"Rk" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating/airless,
-/area/template_noop)
 "Rq" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
@@ -668,6 +709,15 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"YA" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 
 (1,1,1) = {"
 af
@@ -710,7 +760,7 @@ af
 af
 af
 af
-vz
+mv
 aj
 aM
 ax
@@ -727,15 +777,15 @@ af
 af
 af
 af
-vz
-Rk
+af
+el
 aj
 aQ
 ay
 Oe
 OL
 aj
-af
+mv
 af
 af
 af
@@ -744,16 +794,16 @@ af
 (5,1,1) = {"
 af
 af
-af
-Rk
+vz
+xk
 aj
 aj
 aj
 aj
 bx
 bH
-aO
-af
+aj
+el
 af
 af
 af
@@ -772,8 +822,8 @@ yi
 aj
 aj
 aj
-af
-af
+pD
+Lv
 af
 af
 "}
@@ -790,7 +840,7 @@ lW
 JT
 bf
 aj
-aO
+aj
 ne
 aj
 aO
@@ -862,7 +912,7 @@ bA
 vB
 bo
 aj
-aO
+aj
 ne
 aj
 aO
@@ -880,24 +930,24 @@ yi
 aj
 aj
 ED
-af
-af
+xk
+sk
 af
 af
 "}
 (13,1,1) = {"
 af
 af
-af
-Qv
+YA
+xk
 aj
 aj
 aj
 mD
 bB
 Ur
-aO
-af
+aj
+qx
 af
 af
 af
@@ -907,15 +957,15 @@ af
 af
 af
 af
-pj
-Qv
+af
+qx
 aj
 gY
 eE
 bC
 Hg
 aj
-af
+nq
 af
 af
 af
@@ -926,7 +976,7 @@ af
 af
 af
 af
-pj
+nq
 aj
 Rq
 bu
