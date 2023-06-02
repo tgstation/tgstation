@@ -677,7 +677,7 @@
 	)
 	var/datum/component/connect_loc_behalf/connector
 
-/obj/item/mod/module/recycler/Initialize()
+/obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
 
