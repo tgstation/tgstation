@@ -212,6 +212,7 @@
 /area/shuttle/pirate)
 "aK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
+	cyclelinkedairlock = null;
 	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
 	req_access = list("surgery")
