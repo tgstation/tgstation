@@ -95,7 +95,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/Interdyne
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne
 	name = "\improper Interdyne sleeper"
 	desc = "A cryo sleeper, looking impeccably clean!"
 	density = FALSE
@@ -107,9 +107,9 @@
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/Interdyne/senior
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior
 	rank = "Head Pharmacist"
 	outfit = /datum/outfit/pirate/interdyne/captain
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/Interdyne/junior
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior
 	rank = "Pharmacist"
