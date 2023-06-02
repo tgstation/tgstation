@@ -29,8 +29,10 @@
 
 	///Picks two points generally opposite from each other
 	var/turf/fracture_point_high = locate(epicenter.x + rand(3, 7), epicenter.y + rand(3, 7), epicenter.z)
+	new /obj/item/toy/dummy(fracture_point_high) //Debug dummy!
 
 	var/turf/fracture_point_low = locate(epicenter.x - rand(3, 7), epicenter.y - rand(3, 7), epicenter.z)
+	new /obj/item/toy/dummy(fracture_point_low)
 
 	turfs_to_shred = block(fracture_point_high, fracture_point_low)
 
@@ -38,7 +40,7 @@
 	///This should create a pattern more akin to a line between two points, rather than a rectangle of destroyed ground.
 	for(var/turf/turf_to_check in turfs_to_shred)
 		var/total_distance = get_dist(turf_to_check, epicenter) + get_dist(turf_to_check, fracture_point_high) + get_dist(turf_to_check, fracture_point_low)
-		if(total_distance > (get_dist(fracture_point_high, fracture_point_low) * 1.6))
+		if(total_distance > (get_dist(fracture_point_high, fracture_point_low) * 1.7))
 			turfs_to_shred -= turf_to_check
 
 /datum/round_event/earthquake/announce(fake)
@@ -61,7 +63,7 @@
 	///If we're about to strike, we break up the floor a bit right before creating the chasm.
 	if(activeFor == end_when - 2)
 		for(var/turf/turf_to_shred in turfs_to_shred)
-			if(prob(85))
+			if(prob(90))
 				SSexplosions.lowturf += turf_to_shred
 
 /datum/round_event/earthquake/end()
@@ -71,7 +73,7 @@
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
 
 	for(var/turf/turf_to_shred in turfs_to_shred)
-		if(prob(15)) //Varies up the damage a little bit.
+		if(prob(10)) //Varies up the damage a little bit.
 			SSexplosions.medturf += turf_to_shred
 		else
 			SSexplosions.highturf += turf_to_shred
