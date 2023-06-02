@@ -1,7 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - balance: "Engineering, janitor and medical holosign projector projection time reduced to 1 second."
-  - balance: "Engineering, janitor, and medical holosign integrity reduced to 1."
-  - balance: "Engineering holosign projector max capacity increased to 12."
-  - balance: "Medical holosign projector max capacity increased to 6."
