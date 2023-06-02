@@ -53,7 +53,7 @@ export const ChemMasterNew = (props, context) => {
   const [itemCount, setItemCount] = useLocalState(context, 'itemCount', 1);
 
   return (
-    <Window width={550} height={600}>
+    <Window width={400} height={600}>
       <Window.Content scrollable>
         <Section
           title="Beaker"
@@ -183,7 +183,7 @@ const ReagentEntry = (props, context) => {
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
-        {` u.`}
+        {`u`}
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
@@ -254,15 +254,16 @@ const ReagentEntry = (props, context) => {
 const ContainerButton = ({ container, category }, context) => {
   const { act, data } = useBackend<Data>(context);
   const selectedContainerRef = data.selectedContainerRef;
+  const isPillPatch = ['pills', 'patches'].includes(category.name);
   return (
     <Tooltip
       key={container.ref}
-      content={`${capitalize(container.name)}\xa0(${container.volume} u.)`}>
+      content={`${capitalize(container.name)}\xa0(${container.volume}u)`}>
       <Button
         overflow="hidden"
         color="transparent"
-        width="48px"
-        height="48px"
+        width={isPillPatch ? '32px' : '48px'}
+        height={isPillPatch ? '32px' : '48px'}
         selected={container.ref === selectedContainerRef}
         p={0}
         onClick={() => {
@@ -271,12 +272,10 @@ const ContainerButton = ({ container, category }, context) => {
           });
         }}>
         <Box
+          m={isPillPatch ? '0' : '8px'}
           style={{
-            'transform': ['pills', 'patches'].includes(category.name)
-              ? 'scale(3)'
-              : 'scale(2)',
+            'transform': 'scale(2)',
           }}
-          m={'8px'}
           className={classes(['chemmaster32x32', container.icon])}
         />
       </Button>

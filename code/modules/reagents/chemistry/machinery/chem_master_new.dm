@@ -247,12 +247,27 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /// Create N selected containers with reagents from buffer split between them
 /obj/machinery/chem_master_new/proc/create_containers(item_count = 1)
-	use_power(active_power_usage)
-	var/container_style = locate(selected_container)
+	var/obj/item/reagent_containers/container_style = locate(selected_container)
 	var/vol_each = reagents.total_volume / item_count
+
+	// Generate item name
+	var/item_name_default = initial(container_style.name)
+	if(!(initial(container_style.reagent_flags) & OPENCONTAINER))
+		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([vol_each]u)"
+	var/item_name = tgui_input_text(usr,
+		"Container name",
+		"Name",
+		item_name_default,
+		MAX_NAME_LEN)
+	if(!item_name || !reagents.total_volume || !src || QDELETED(src) || !usr.can_perform_action(src, ALLOW_SILICON_REACH))
+		return FALSE
+
+	// Print and fill containers
+	use_power(active_power_usage)
 	for(var/i in 1 to item_count)
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
 		adjust_item_drop_location(item)
+		item.name = item_name
 		item.reagents.clear_reagents()
 		reagents.trans_to(item, vol_each, transfered_by = src)
 	return TRUE
