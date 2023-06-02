@@ -196,6 +196,9 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/computer/operating,
 /obj/item/disk/surgery/debug,
+/obj/machinery/defibrillator_mount/charging{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aK" = (
@@ -265,6 +268,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/closet/crate/freezer/blood,
 /obj/machinery/light/small/blacklight/directional/south,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aW" = (
@@ -312,6 +316,7 @@
 /obj/item/gun/medbeam,
 /obj/item/gun/syringe/rapidsyringe,
 /obj/item/pen/sleepy,
+/obj/item/defibrillator/compact/combat/loaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "br" = (
@@ -475,6 +480,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"ks" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "lW" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
@@ -545,6 +557,13 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
+"FN" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 "GS" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -593,13 +612,6 @@
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"UI" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "VF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -619,13 +631,6 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Za" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 
 (1,1,1) = {"
 af
@@ -634,10 +639,10 @@ af
 af
 af
 aO
-UI
+ks
 aa
-UI
-UI
+ks
+ks
 aO
 af
 af
@@ -720,7 +725,7 @@ af
 (6,1,1) = {"
 af
 aO
-UI
+ks
 aj
 aj
 aI
@@ -749,12 +754,12 @@ JT
 bf
 aj
 aO
-UI
+ks
 aj
 aO
 "}
 (8,1,1) = {"
-UI
+ks
 ae
 an
 ab
@@ -772,7 +777,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-UI
+ks
 ah
 ao
 GS
@@ -790,7 +795,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-UI
+ks
 al
 az
 ad
@@ -821,14 +826,14 @@ vB
 bo
 aj
 aO
-UI
+ks
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-UI
+ks
 aj
 aj
 aJ
@@ -851,7 +856,7 @@ af
 aO
 aj
 aj
-Za
+FN
 bB
 Ur
 aO
@@ -922,10 +927,10 @@ af
 af
 af
 aO
-UI
+ks
 mD
-UI
-UI
+ks
+ks
 aO
 af
 af
