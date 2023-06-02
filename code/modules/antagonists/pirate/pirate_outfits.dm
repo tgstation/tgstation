@@ -70,7 +70,7 @@
 	l_pocket = /obj/item/lighter
 
 /datum/outfit/pirate/interdyne
-	name = "Exinterdyne pharmacist"
+	name = "Ex-Interdyne Pharmacist"
 
 	id = /obj/item/card/id/advanced/black
 	id_trim = /datum/id_trim/job/medical_doctor
