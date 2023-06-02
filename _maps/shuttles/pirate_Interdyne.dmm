@@ -141,10 +141,10 @@
 /area/shuttle/pirate)
 "aC" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/effect/mob_spawn/ghost_role/human/pirate/junior{
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/mob_spawn/ghost_role/human/junior{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aD" = (
@@ -428,7 +428,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/mob_spawn/ghost_role/human/piratejunior{
+/obj/effect/mob_spawn/ghost_role/human/junior{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -495,6 +495,13 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"ne" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "sP" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
@@ -503,6 +510,13 @@
 "ua" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"vz" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "vB" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -550,13 +564,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
-"Gx" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "GS" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -568,13 +575,6 @@
 /obj/structure/closet/l3closet/virology,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"Jn" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "JT" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -639,10 +639,10 @@ af
 af
 af
 aO
-Gx
+ne
 aa
-Gx
-Gx
+ne
+ne
 aO
 af
 af
@@ -725,7 +725,7 @@ af
 (6,1,1) = {"
 af
 aO
-Gx
+ne
 aj
 aj
 aI
@@ -754,12 +754,12 @@ JT
 bf
 aj
 aO
-Gx
+ne
 aj
 aO
 "}
 (8,1,1) = {"
-Gx
+ne
 ae
 an
 ab
@@ -777,7 +777,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-Gx
+ne
 ah
 ao
 GS
@@ -795,7 +795,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-Gx
+ne
 al
 az
 ad
@@ -826,14 +826,14 @@ vB
 bo
 aj
 aO
-Gx
+ne
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-Gx
+ne
 aj
 aj
 aJ
@@ -856,7 +856,7 @@ af
 aO
 aj
 aj
-Jn
+vz
 bB
 Ur
 aO
@@ -927,10 +927,10 @@ af
 af
 af
 aO
-Gx
+ne
 mD
-Gx
-Gx
+ne
+ne
 aO
 af
 af
