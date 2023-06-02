@@ -787,6 +787,10 @@
 	suffix = "interdyne"
 	name = "pirate ship (Pharmaceutics Biocraft)"
 
+/datum/map_template/shuttle/pirate/grey
+	suffix = "grey"
+	name = "pirate ship (The Space Toolbox)"
+
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"

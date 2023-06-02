@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
-/datum/pirate_gang/interdyne
+/datum/pirate_gang/grey
 	name = "Expharmacist Unrest"
 
 	is_heavy_threat = TRUE
@@ -133,3 +133,19 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Thanks for your generosity, your money wont be wasted."
 	response_too_late = "We hope you like skin cancer!"
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
+
+///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
+	name = "The Grey Tide-6"
+
+	ship_template_id = "grey"
+	ship_name_pool = "grey_names" //just points to THE ONE AND ONLY
+
+	threat_title = "This is a Robbery"
+	threat_content = "Hey it's %SHIPNAME. Give us money. \
+		%PAYOFF might be enough."
+	arrival_announcement = "Nice stuff you got there, it's ours now."
+	possible_answers = list("Please don't hurt me.","Grey Shit.")
+
+	response_received = "THEY SERIOUSLY GAVE US THE MONEY??!! WHAT!!.. we are still gona steal the rest."
+	response_too_late = "We all knew it was gonna come to this"
+	response_not_enough = "Damn it seems you are broke, too bad."

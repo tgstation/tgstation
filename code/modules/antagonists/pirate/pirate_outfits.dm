@@ -87,3 +87,17 @@
 	name = "Ex-Interdyne Senior Resident"
 
 	id_trim = /datum/id_trim/job/chief_medical_officer
+
+/datum/outfit/pirate/grey
+	name = "The Grey Tide-6"
+
+	id = /obj/item/card/id/advanced/chameleon
+	uniform = /obj/item/clothing/under/color/grey/ancient
+	suit = null
+	back = /obj/item/storage/backpack/satchel
+	mask = /obj/item/clothing/mask/chameleon
+	glasses = null
+	head = null
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	l_pocket = /obj/item/reagent_containers/cup/glass/coffee
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
