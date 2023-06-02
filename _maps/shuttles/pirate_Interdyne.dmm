@@ -404,13 +404,6 @@
 "bX" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"dH" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 "dV" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -464,7 +457,6 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "iD" = (
@@ -507,13 +499,6 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"tq" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ua" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -565,6 +550,13 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
+"Gx" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "GS" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -576,6 +568,13 @@
 /obj/structure/closet/l3closet/virology,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Jn" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "JT" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -640,10 +639,10 @@ af
 af
 af
 aO
-tq
+Gx
 aa
-tq
-tq
+Gx
+Gx
 aO
 af
 af
@@ -726,7 +725,7 @@ af
 (6,1,1) = {"
 af
 aO
-tq
+Gx
 aj
 aj
 aI
@@ -755,12 +754,12 @@ JT
 bf
 aj
 aO
-tq
+Gx
 aj
 aO
 "}
 (8,1,1) = {"
-tq
+Gx
 ae
 an
 ab
@@ -778,7 +777,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-tq
+Gx
 ah
 ao
 GS
@@ -796,7 +795,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-tq
+Gx
 al
 az
 ad
@@ -827,14 +826,14 @@ vB
 bo
 aj
 aO
-tq
+Gx
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-tq
+Gx
 aj
 aj
 aJ
@@ -857,7 +856,7 @@ af
 aO
 aj
 aj
-dH
+Jn
 bB
 Ur
 aO
@@ -928,10 +927,10 @@ af
 af
 af
 aO
-tq
+Gx
 mD
-tq
-tq
+Gx
+Gx
 aO
 af
 af
