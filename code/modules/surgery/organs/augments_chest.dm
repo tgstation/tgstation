@@ -70,7 +70,7 @@
 		return
 
 	switch(owner.stat)
-		if(UNCONSCIOUS, HARD_CRIT, SOFT_CRIT)
+		if(UNCONSCIOUS, HARD_CRIT)
 			revive_cost = 0
 			reviving = TRUE
 			to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
