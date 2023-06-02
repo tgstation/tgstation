@@ -14,6 +14,7 @@
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
+	drag_slowdown = 1.5
 
 	screen_on = FALSE // Starts closed
 	var/start_open = TRUE // unless this var is set to 1
