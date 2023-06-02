@@ -113,4 +113,3 @@
 
 /obj/effect/mob_spawn/ghost_role/human/junior
 	rank = "Pharmacist"
-	outfit = /datum/outfit/pirate/interdyne
