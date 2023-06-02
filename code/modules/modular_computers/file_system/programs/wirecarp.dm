@@ -31,7 +31,7 @@
 		if("toggle_mass_pda")
 			if(!(params["ref"] in GLOB.TabletMessengers))
 				return
-			var/datum/computer_file/program/messenger/target_msgr = GLOB.TabletMessengers[params["ref"]].program
+			var/datum/computer_file/program/messenger/target_msgr = GLOB.TabletMessengers[params["ref"]]
 			target_msgr.spam_mode = !target_msgr.spam_mode
 			return TRUE
 

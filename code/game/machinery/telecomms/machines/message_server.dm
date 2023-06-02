@@ -133,7 +133,7 @@
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
+		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), STRINGIFY_PDA_TARGET(PDAsignal.data["name"], PDAsignal.data["job"]), html_decode(PDAsignal.format_message()), PDAsignal.data["photo"])
 		pda_msgs += msg
 		signal.logged = msg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))

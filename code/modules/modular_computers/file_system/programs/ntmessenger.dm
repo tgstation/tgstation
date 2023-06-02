@@ -1,16 +1,4 @@
-GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/registered_messenger) // a list of all active and visible messengers
-GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // same as above except it contains all hidden messengers
-
-///A struct that describes
-/datum/registered_messenger
-	var/name = ""
-	var/job = ""
-	var/datum/computer_file/program/messenger/program = null
-
-/datum/registered_messenger/New(name, job, program)
-	src.name = name
-	src.job = job
-	src.program = program
+GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger) // a list of all active and visible messengers
 
 ///Registers an NTMessenger instance to the list of TabletMessengers. If it exists, updates it.
 /proc/add_messenger(obj/item/modular_computer/messenger)
@@ -21,17 +9,12 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
 	if(!istype(msgr))
 		return
-	var/is_hidden = msgr.monitor_hidden || msgr.invisible // if this runtimes, something went terribly wrong with the PDA
 
 	var/msgr_ref = REF(msgr)
-	var/datum/registered_messenger/pda_struct = new(messenger.saved_identification, messenger.saved_job, msgr)
+	if(msgr_ref in GLOB.TabletMessengers)
+		return
 
-	var/target_table = is_hidden ? GLOB.SecretTabletMessengers : GLOB.TabletMessengers
-
-	if(msgr_ref in target_table)
-		target_table[msgr_ref] = pda_struct
-	else
-		target_table += list("[msgr_ref]" = pda_struct)
+	GLOB.TabletMessengers[msgr_ref] = msgr
 
 ///Unregisters an NTMessenger instance from the TabletMessengers table.
 /proc/remove_messenger(obj/item/modular_computer/messenger)
@@ -40,12 +23,10 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 		return
 
 	var/msgr_ref = REF(msgr)
-
-	var/list/target_table = msgr.monitor_hidden ? GLOB.SecretTabletMessengers : GLOB.TabletMessengers
-
-	if(!(msgr_ref in target_table))
+	if(!(msgr_ref in GLOB.TabletMessengers))
 		return
-	target_table.Remove(msgr_ref)
+
+	GLOB.TabletMessengers.Remove(msgr_ref)
 
 /proc/get_messengers_sorted(sort_by_job = FALSE)
 	var/sortmode
@@ -57,7 +38,7 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	return sortTim(GLOB.TabletMessengers.Copy(), sortmode, associative = TRUE)
 
 /proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
-	return "[messenger.saved_identification] ([messenger.saved_job])"
+	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -129,13 +110,13 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	var/list/messengers_sorted = get_messengers_sorted(sort_by_job)
 
 	for(var/messenger_ref in messengers_sorted)
-		var/datum/registered_messenger/messenger = messengers_sorted[messenger_ref]
-		if(messenger.program == src) continue
+		var/datum/computer_file/program/messenger/msgr = messengers_sorted[messenger_ref]
+		if(msgr == src || msgr.monitor_hidden || msgr.invisible) continue
 
 		var/list/data = list()
-		data["name"] = messenger.name
-		data["job"] = messenger.job
-		data["ref"] = REF(messenger.program)
+		data["name"] = msgr.computer.saved_identification
+		data["job"] = msgr.computer.saved_job
+		data["ref"] = REF(msgr)
 
 		dictionary += list(data["ref"] = data)
 
@@ -217,29 +198,28 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
-				return
+				return TRUE
 
 			var/target_ref = params["ref"]
 
-			if(!(target_ref in GLOB.TabletMessengers) || !(target_ref in GLOB.SecretTabletMessengers))
+			if(!(target_ref in GLOB.TabletMessengers))
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
-				return UI_UPDATE
+				return TRUE
 
-			var/datum/computer_file/program/messenger/target = locate(target_ref)
+			var/datum/computer_file/program/messenger/target = GLOB.TabletMessengers[target_ref]
 			if(!istype(target))
-				return // we don't want tommy sending his messages to nullspace
+				return TRUE // we don't want tommy sending his messages to nullspace
 
 			if(!target.sending_and_receiving && !sending_virus)
 				to_chat(usr, span_notice("ERROR: Recipient has receiving disabled."))
-				return
+				return TRUE
 
 			if(sending_virus)
-				CRASH("not implemented")
-				/* var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 				if(istype(disk))
 					disk.send_virus(computer, target, usr)
 					update_static_data(usr, ui)
-					return TRUE */
+					return TRUE
 
 			send_message(usr, list(target), params["msg"])
 			return TRUE
@@ -308,21 +288,15 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 ///Brings up the quick reply prompt to send a message.
 /datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/computer_file/program/messenger/target)
 	var/target_name = target.computer.saved_identification
-	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]")
+	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
 	send_message(usr, list(target), input_message)
-
-///Sanitizes and encodes the PDA message and returns it
-/datum/computer_file/program/messenger/proc/sanitize_message(message)
-	message = html_encode(message)
-	if(mime_mode)
-		message = emoji_sanitize(message)
-	return sanitize(message)
 
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
 	var/list/targets = list()
 	for(var/mc in get_messengers())
-		targets += mc
+		targets += GLOB.TabletMessengers[mc]
 	send_message(user, targets, message, everyone = TRUE)
+	last_text_everyone = world.time
 
 ///Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/datum/computer_file/program/messenger/targets, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
@@ -332,8 +306,12 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	if(!length(targets))
 		return FALSE
 
-	message = sanitize_message(message)
+	if(mime_mode)
+		message = emoji_sanitize(message)
 
+	message = html_encode(message)
+
+	// message at this point is not html escaped
 	if(!message)
 		return FALSE
 
@@ -352,7 +330,7 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	if (soft_filter_result)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return FALSE
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
 
 	// Send the signal
@@ -429,10 +407,10 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, user)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(html_decode(message), LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
+	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
-	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.format_message()]"))
+	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [sanitize(html_decode(signal.format_message()))]"))
 
 	if (ringer_status)
 		computer.send_sound()
@@ -441,7 +419,6 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 	if (everyone)
 		message_data["name"] = "Everyone"
 		message_data["job"] = ""
-		last_text_everyone = world.time
 
 	messages += list(message_data)
 	saved_image = null
@@ -469,7 +446,7 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Quick Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -484,7 +461,7 @@ GLOBAL_LIST_EMPTY_TYPED(SecretTabletMessengers, /datum/registered_messenger) // 
 
 		if(L.is_literate())
 			var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
-			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message][photo_message] [reply]"))
+			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][STRINGIFY_PDA_TARGET(signal.data["name"], signal.data["job"])][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
 	if (ringer_status)
 		computer.ring(ringtone)

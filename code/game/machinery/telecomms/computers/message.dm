@@ -209,13 +209,15 @@
 
 			var/recipient
 			var/list/viewable_tablets = list()
-			for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
-				var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
+			var/list/tablet_to_msgr = list()
+			for (var/msgr_ref in GLOB.TabletMessengers)
+				var/datum/computer_file/program/messenger/message_app = GLOB.TabletMessengers[msgr_ref]
 				if(!message_app || message_app.invisible)
 					continue
-				if(!tablet.saved_identification)
+				if(!message_app.computer.saved_identification)
 					continue
-				viewable_tablets += tablet
+				viewable_tablets += message_app.computer
+				tablet_to_msgr[message_app.computer] = message_app
 			if(length(viewable_tablets) > 0)
 				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 			else
@@ -237,7 +239,7 @@
 				"job" = "[job]",
 				"message" = html_decode(message),
 				"ref" = REF(src),
-				"targets" = list(recipient),
+				"targets" = list(tablet_to_msgr[recipient]),
 				"rigged" = FALSE,
 				"automated" = FALSE,
 			))

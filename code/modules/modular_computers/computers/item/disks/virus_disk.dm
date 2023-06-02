@@ -64,13 +64,14 @@
 	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
+/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, datum/computer_file/program/messenger/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	var/difficulty = target.get_detomatix_difficulty()
-	if(SEND_SIGNAL(target, COMSIG_TABLET_CHECK_DETONATE) & COMPONENT_TABLET_NO_DETONATE || prob(difficulty * 15))
+	var/obj/item/modular_computer/pda/target_computer = target.computer
+	var/difficulty = target_computer.get_detomatix_difficulty()
+	if(SEND_SIGNAL(target_computer, COMSIG_TABLET_CHECK_DETONATE) & COMPONENT_TABLET_NO_DETONATE || prob(difficulty * 15))
 		user.show_message(span_danger("ERROR: Target could not be bombed."), MSG_VISUAL)
 		charges--
 		return
@@ -84,13 +85,13 @@
 		return
 
 	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
-	if(!app || charges <= 0 || !app.send_message(user, target, rigged = REF(user), fake_name = fakename, fake_job = fakejob))
+	if(!app || charges <= 0 || !app.send_message(user, list(target), rigged = REF(user), fake_name = fakename, fake_job = fakejob))
 		return FALSE
 	charges--
 	user.show_message(span_notice("Success!"))
 	var/reference = REF(src)
-	target.add_traits(list(TRAIT_PDA_CAN_EXPLODE, TRAIT_PDA_MESSAGE_MENU_RIGGED), reference)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
+	target_computer.add_traits(list(TRAIT_PDA_CAN_EXPLODE, TRAIT_PDA_MESSAGE_MENU_RIGGED), reference)
+	addtimer(TRAIT_CALLBACK_REMOVE(target_computer, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
 	return TRUE
 
 /**

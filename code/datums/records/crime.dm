@@ -44,15 +44,16 @@
 
 /// Sends a citation alert message to the target's PDA.
 /datum/crime/citation/proc/alert_owner(mob/sender, atom/source, target_name, message)
-	for(var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-		if(tablet.saved_identification != target_name)
+	for(var/msgr_ref in GLOB.TabletMessengers)
+		var/datum/computer_file/program/messenger/msgr = GLOB.TabletMessengers[msgr_ref]
+		if(msgr.computer.saved_identification != target_name)
 			continue
 
 		var/datum/signal/subspace/messaging/tablet_msg/signal = new(source, list(
 			name = "Security Citation",
 			job = "Citation Server",
 			message = message,
-			targets = list(tablet),
+			targets = list(msgr),
 			automated = TRUE
 		))
 		signal.send_to_receivers()
