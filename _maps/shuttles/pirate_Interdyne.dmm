@@ -142,7 +142,7 @@
 "aC" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/mob_spawn/ghost_role/human/junior{
+/obj/effect/mob_spawn/ghost_role/human/pirate/junior{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
