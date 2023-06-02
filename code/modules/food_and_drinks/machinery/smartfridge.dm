@@ -500,7 +500,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	atmos_spawn_air("[TURF_TEMPERATURE(1000)]")
 
 
 // ----------------------------
@@ -621,6 +621,7 @@
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/bottle,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,

@@ -1757,10 +1757,8 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)
 "PB" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_x = 4
-	},
-/turf/closed/wall/mineral/wood,
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "PK" = (
 /obj/structure/table/reinforced/rglass,
@@ -3217,8 +3215,8 @@ dg
 dg
 dg
 iH
-mw
 PB
+dg
 dg
 dg
 dg

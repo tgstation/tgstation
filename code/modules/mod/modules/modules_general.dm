@@ -365,7 +365,7 @@
 	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// Minimum temperature we can set.
-	var/min_temp = 293.15
+	var/min_temp = T20C
 	/// Maximum temperature we can set.
 	var/max_temp = 318.15
 

@@ -14,6 +14,10 @@
 /obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/closet/crate/bin/update_overlays()
 	. = ..()
@@ -45,3 +49,18 @@
 /obj/structure/closet/crate/bin/proc/do_close()
 	playsound(loc, close_sound, 15, TRUE, -3)
 	update_appearance()
+
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/obj/structure/closet/crate/bin/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
+	SIGNAL_HANDLER
+
+	if(!items_to_sweep || !opened)
+		return
+
+	for (var/obj/item/garbage in items_to_sweep)
+		garbage.forceMove(loc)
+
+	items_to_sweep.Cut()
+
+	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
