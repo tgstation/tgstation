@@ -108,9 +108,9 @@
 	rank = "Pharmacist"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/senior
-	outfit = /datum/outfit/pirate/interdyne/captain
 	rank = "Captain"
+	outfit = /datum/outfit/pirate/interdyne/captain
 
 /obj/effect/mob_spawn/ghost_role/human/junior
+	rank = "Pharmacist"
 	outfit = /datum/outfit/pirate/interdyne
-	rank = "Gunner"

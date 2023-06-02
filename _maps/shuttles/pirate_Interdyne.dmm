@@ -480,13 +480,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"ks" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "lW" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
@@ -557,13 +550,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
-"FN" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 "GS" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -584,6 +570,20 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Kz" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"LY" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -639,10 +639,10 @@ af
 af
 af
 aO
-ks
+Kz
 aa
-ks
-ks
+Kz
+Kz
 aO
 af
 af
@@ -725,7 +725,7 @@ af
 (6,1,1) = {"
 af
 aO
-ks
+Kz
 aj
 aj
 aI
@@ -754,12 +754,12 @@ JT
 bf
 aj
 aO
-ks
+Kz
 aj
 aO
 "}
 (8,1,1) = {"
-ks
+Kz
 ae
 an
 ab
@@ -777,7 +777,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-ks
+Kz
 ah
 ao
 GS
@@ -795,7 +795,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-ks
+Kz
 al
 az
 ad
@@ -826,14 +826,14 @@ vB
 bo
 aj
 aO
-ks
+Kz
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-ks
+Kz
 aj
 aj
 aJ
@@ -856,7 +856,7 @@ af
 aO
 aj
 aj
-FN
+LY
 bB
 Ur
 aO
@@ -927,10 +927,10 @@ af
 af
 af
 aO
-ks
+Kz
 mD
-ks
-ks
+Kz
+Kz
 aO
 af
 af
