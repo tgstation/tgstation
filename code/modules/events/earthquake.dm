@@ -55,6 +55,7 @@
 			if(!is_station_level(earthquake_witness.z))
 				continue
 			shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
+			earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 100)
 
 	if(ISMULTIPLE(activeFor, 5))
 		for(var/turf/turf_to_quake in turfs_to_shred)
@@ -67,6 +68,7 @@
 				SSexplosions.lowturf += turf_to_shred
 
 /datum/round_event/earthquake/end()
+	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
