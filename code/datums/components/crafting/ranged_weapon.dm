@@ -29,6 +29,9 @@
 		/obj/item/screwdriver = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
+	blacklist = list(
+		/obj/item/screwdriver/cyborg,
+	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
@@ -203,6 +206,9 @@
 		/obj/item/weldingtool = 1,
 		/obj/item/assembly/igniter = 1,
 		/obj/item/stack/rods = 1,
+	)
+	blacklist = list(
+		/obj/item/weldingtool/largetank/cyborg,
 	)
 	parts = list(
 		/obj/item/assembly/igniter = 1,

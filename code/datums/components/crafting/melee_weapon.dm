@@ -140,5 +140,8 @@
 		/obj/item/weldingtool = 1,
 		/obj/item/roulette_wheel_beacon = 1,
 	)
+	blacklist = list(
+		/obj/item/weldingtool/largetank/cyborg,
+	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
