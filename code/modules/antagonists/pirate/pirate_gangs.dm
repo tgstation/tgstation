@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	is_heavy_threat = TRUE
 	ship_template_id = "Interdyne"
-	ship_name_pool = "rogue_names" //just points to THE ONE AND ONLY
+	ship_name_pool = "interdyne_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Fundings for Research"
 	threat_content = "Greetings, this is the %SHIPNAME. We require some funding for our operations. \
