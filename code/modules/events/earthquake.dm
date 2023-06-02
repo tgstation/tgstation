@@ -86,7 +86,9 @@
 			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				quake_victim.Knockdown(3 SECONDS)
-				quake_victim.Paralyze(2 SECONDS)
+				quake_victim.Paralyze(3 SECONDS)
+				if(quake_victim.client)
+					quake_victim.client.give_award(/datum/award/achievement/misc/earthquake, quake_victim)
 				to_chat(quake_victim, span_warning("The ground quakes beneath you, throwing you off your feet!"))
 
 		for(var/turf/turf_to_quake in underbelly)
