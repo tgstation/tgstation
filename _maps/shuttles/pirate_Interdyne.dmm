@@ -248,7 +248,7 @@
 /area/shuttle/pirate)
 "aO" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate","monkey")
+	faction = list("pirate","Syndicate")
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
@@ -404,6 +404,13 @@
 "bX" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"dH" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/porta_turret/syndicate/energy{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 "dV" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -457,6 +464,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "iD" = (
@@ -499,6 +507,13 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/table/optable,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"tq" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "interdynebridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ua" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -571,20 +586,6 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"Kz" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"LY" = (
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 4
@@ -639,10 +640,10 @@ af
 af
 af
 aO
-Kz
+tq
 aa
-Kz
-Kz
+tq
+tq
 aO
 af
 af
@@ -725,7 +726,7 @@ af
 (6,1,1) = {"
 af
 aO
-Kz
+tq
 aj
 aj
 aI
@@ -754,12 +755,12 @@ JT
 bf
 aj
 aO
-Kz
+tq
 aj
 aO
 "}
 (8,1,1) = {"
-Kz
+tq
 ae
 an
 ab
@@ -777,7 +778,7 @@ ep
 aj
 "}
 (9,1,1) = {"
-Kz
+tq
 ah
 ao
 GS
@@ -795,7 +796,7 @@ mU
 aK
 "}
 (10,1,1) = {"
-Kz
+tq
 al
 az
 ad
@@ -826,14 +827,14 @@ vB
 bo
 aj
 aO
-Kz
+tq
 aj
 aO
 "}
 (12,1,1) = {"
 af
 aO
-Kz
+tq
 aj
 aj
 aJ
@@ -856,7 +857,7 @@ af
 aO
 aj
 aj
-LY
+dH
 bB
 Ur
 aO
@@ -927,10 +928,10 @@ af
 af
 af
 aO
-Kz
+tq
 mD
-Kz
-Kz
+tq
+tq
 aO
 af
 af
