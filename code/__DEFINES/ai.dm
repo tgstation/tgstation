@@ -16,14 +16,16 @@
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
+///Does this require the current_movement_target to be adjacent and in reach?
+#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
 ///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
 ///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<4)
 ///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
+#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<5)
 
 ///AI flags
 /// Don't move if being pulled

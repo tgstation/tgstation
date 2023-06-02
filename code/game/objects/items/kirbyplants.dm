@@ -77,6 +77,7 @@
 /obj/item/kirbyplants/dead
 	name = "dead potted plant"
 	desc = "The unidentifiable plant remnants make you feel like planting something new in the pot."
+	icon_state = "plant-25"
 	dead = TRUE
 
 /obj/item/kirbyplants/dead/research_director

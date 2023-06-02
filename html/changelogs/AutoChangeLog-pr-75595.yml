@@ -1,5 +1,0 @@
-author: "Cheshify"
-delete-after: True
-changes:
-  - rscadd: "The North Star's medbay has been fully renovated."
-  - bugfix: "The CMO's office ceiling is now properly protected on the North Star."
