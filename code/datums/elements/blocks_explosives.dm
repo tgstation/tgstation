@@ -1,6 +1,7 @@
 /// Apply this element to a movable atom when you want it to block explosions
 /// It will mirror the blocking down to that movable's turf, keeping explosion work cheap
 /datum/element/blocks_explosives
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/blocks_explosives/Attach(datum/target)
 	if(!ismovable(target))
