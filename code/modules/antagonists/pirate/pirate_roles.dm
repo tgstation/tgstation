@@ -96,7 +96,7 @@
 	rank = "Top-drawer"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/Interdyne
-	name = "Interdyne Sleeper"
+	name = "\improper Interdyne sleeper"
 	desc = "A cryo sleeper, looking impeccably clean!"
 	density = FALSE
 	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
