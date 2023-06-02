@@ -119,15 +119,12 @@
 					return
 
 				if(M == user) //they're using it on themselves
-					if(M.flash_act(visual = 1))
-						M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes! Trippy!"))
-					else
-						M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
+					M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
 				else
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
 					render_list += "<span class='notice'>You direct [src] to [M]'s eyes:</span>\n"
 
-					if(M.stat == DEAD || !M.flash_act(visual = 1))
+					if(M.stat == DEAD)
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils don't react to the light!</span>\n"//mob is dead
 					else if(brain.damage > 20)
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils contract unevenly!</span>\n"//mob has sustained damage to their brain
@@ -138,7 +135,8 @@
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 				//display our packaged information in an examine block for easy reading
-				to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+				if(render_list != "")
+					to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 			if(BODY_ZONE_PRECISE_MOUTH)
 
@@ -204,8 +202,7 @@
 						render_list += "<span class='notice ml-1'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [ M.p_their()] teeth.</span>\n"
 
 				//assess any suffocation damage
-				var/mob/living/carbon/carbon_patient = M
-				var/hypoxia_status = carbon_patient.getOxyLoss() > 20
+				var/hypoxia_status = M.getOxyLoss() > 20
 
 				if(M == user)
 					if(hypoxia_status)
@@ -224,9 +221,9 @@
 				else
 					render_list += "<span class='info'>You press a finger to [M.p_their()] gums:</span>\n"
 
-				if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
+				if(M.blood_volume <= BLOOD_VOLUME_SAFE && M.blood_volume > BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>Color returns slowly!</span>\n"//low blood
-				else if(carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
+				else if(M.blood_volume <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>Color does not return!</span>\n"//critical blood
 				else
 					render_list += "<span class='notice ml-1'>Color returns quickly.</span>\n"//they're okay :D
