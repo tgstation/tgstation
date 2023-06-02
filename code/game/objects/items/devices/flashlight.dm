@@ -118,7 +118,7 @@
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
 
-				M.flash_act(length = 10)//breifly apply flash affect to target
+				M.flash_act(length = 1 SECONDS)//breifly apply flash affect to target
 
 				if(M == user) //they're using it on themselves
 					user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
