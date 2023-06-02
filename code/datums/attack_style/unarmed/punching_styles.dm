@@ -23,6 +23,7 @@
 	successful_hit_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	default_attack_verb = "burn"
+	attack_type = BURN
 
 /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 	attack_effect = ATTACK_EFFECT_CLAW

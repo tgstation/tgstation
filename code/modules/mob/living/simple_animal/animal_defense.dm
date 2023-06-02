@@ -8,15 +8,6 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage = 0, damagetype = BRUTE)
-	if(damage <= 0)
-		return TRUE
-	if(damage * (damage_coeff[damagetype] || 0) <= force_threshold)
-		visible_message(span_warning("[src] looks unharmed!"))
-		return FALSE
-
-	return TRUE
-
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	. = ..()
 	if(!. || QDELETED(src))
@@ -82,20 +73,3 @@
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)
-
-/mob/living/simple_animal/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type = BRUTE)
-	. = ..()
-	if(.)
-		return
-
-	var/tap_vol = 50
-	if(isitem(hitby))
-		var/obj/item/item_hitting = hitby
-		tap_vol = item_hitting.get_clamped_volume()
-		damage_type = item_hitting.damtype
-
-	. = attack_threshold_check(damage, damage_type)
-	if(.)
-		playsound(loc, 'sound/weapons/tap.ogg', tap_vol, TRUE, -1)
-		visible_message(span_warning("[src] looks unharmed!"), blind_message = span_hear("You hear a thud."))
-	return .

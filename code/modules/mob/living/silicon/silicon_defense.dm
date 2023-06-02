@@ -26,9 +26,9 @@
 	. = ..()
 	if(.)
 		return
-	if(damage_type != BRUTE)
+	if(damage_type != BRUTE || attack_text != UNARMED_ATTACK)
 		return FALSE
-	if(attack_text == UNARMED_ATTACK && damage <= 10)
+	if(damage <= 10)
 		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
 		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return TRUE

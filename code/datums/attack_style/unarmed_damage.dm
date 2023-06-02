@@ -2,8 +2,8 @@
  * Unarmed attacks which generically apply damage to the mob it hits.
  */
 /datum/attack_style/unarmed/generic_damage
-	/// Type damage this attack does.
-	var/attack_type = BRUTE
+	/// Type damage this attack does. If null, uses the attacker's [get_attack_type]/
+	var/attack_type
 	/// The verb used for an unarmed attack when using this limb, "punch".
 	var/default_attack_verb = "bump"
 	/// For deaf people, when this punch misses / gets blocked, this is the phrase used
@@ -44,8 +44,9 @@
 /datum/attack_style/unarmed/generic_damage/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
 	var/damage = max(0, select_damage(attacker, smacked, weapon))
 	var/attack_verb = select_attack_verb(attacker, smacked, weapon, damage)
+	var/damage_type = attack_type || attacker.get_attack_type()
 
-	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier))
+	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier, damage_type))
 		smacked.visible_message(
 			span_warning("[smacked] blocks [attacker]'s [attack_verb]!"),
 			span_userdanger("You block [attacker]'s [attack_verb]!"),
@@ -80,6 +81,7 @@
 		log_combat(attacker, smacked, "missed unarmed attack ([attack_verb])")
 		return ATTACK_STYLE_MISSED
 
+	// All unarmed attacks go under melee armor, even ones that use non-standard damage types like burn
 	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration_modifier))
 
 	// melbert todo : probably sounds silly
@@ -95,9 +97,11 @@
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
 
+	// A damage packet is created to pass onto [actually_apply_damage].
+	// This allows for subtypes to overide certain facets of the outgoing damage if they prefer.
 	var/datum/apply_damage_packet/packet = new(
 		/* damage = */damage,
-		/* damagetype = */attack_type,
+		/* damagetype = */damage_type,
 		/* def_zone = */affecting,
 		/* blocked = */armor_block,
 		/* forced = */FALSE,
@@ -148,8 +152,8 @@
 	var/returned_logging = ""
 	packet.execute(smacked)
 	if(can_dismember_limbs && istype(affecting) && (affecting.get_damage() >= affecting.max_damage))
-		returned_logging += "(dismembering [affecting])"
-		affecting.dismember(packet.damage, silent = FALSE)
+		if(affecting.dismember(packet.damagetype, silent = FALSE))
+			returned_logging += "(dismembering [parse_zone(affecting.body_zone)])"
 
 	return returned_logging
 
@@ -201,7 +205,7 @@
 		to_chat(attacker, span_danger("You knock [smacked] down!"))
 		var/knockdown_duration = (4 SECONDS) + (smacked.getStaminaLoss() + (smacked.getBruteLoss() * 0.5)) * 0.8
 		smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, packet.blocked)
-		. += "(stun attack)"
+		. += "(knockdown attack, [DisplayTimeText(knockdown_duration)] duration)"
 
 /*
  * Mob attack unarmed style
@@ -211,7 +215,7 @@
  */
 /datum/attack_style/unarmed/generic_damage/mob_attack
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypartweapon)
+/datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon)
 	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, override_effect)

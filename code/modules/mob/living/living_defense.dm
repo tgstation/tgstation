@@ -409,6 +409,7 @@
  * this means that items which have their own armor penetration are better at shielding
  */
 /mob/living/proc/check_block(atom/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
 		return TRUE
 
