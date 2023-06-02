@@ -35,8 +35,6 @@
 	var/desc = "item description"
 	/// Path to the item to spawn.
 	var/item = null
-	/// Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
-	var/refund_path = null
 	/// Cost of the item.
 	var/cost = 0
 	/// Amount of TC to refund, in case there's a TC penalty for refunds.

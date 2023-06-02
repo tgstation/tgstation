@@ -48,6 +48,7 @@
 	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
 )
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -144,6 +145,18 @@
 
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
+
+	if(!istype(item))
+		return
+
+	var/datum/component/uplink/uplink_item = item.GetComponent(/datum/component/uplink)
+
+	if(!uplink_item)
+		return
+
+	to_chat(user, span_notice("You tap [item] with [parent], and a moment after [item] disappears in a puff of red smoke that seems to enter [parent]!"))
+	uplink_item.add_telecrystals(reimbursable_telecrystals)
+	qdel(source)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

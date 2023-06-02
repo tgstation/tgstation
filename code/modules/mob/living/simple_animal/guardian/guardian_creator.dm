@@ -172,6 +172,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 /obj/item/guardiancreator/tech/choose/traitor
 	allowling = FALSE
 
+/obj/item/guardiancreator/tech/choose/traitor/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/uplink_reimburse, 18)
+
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
