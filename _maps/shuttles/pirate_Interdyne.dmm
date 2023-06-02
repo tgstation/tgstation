@@ -572,7 +572,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
-/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
+/obj/item/reagent_containers/cup/beaker/meta/convermol{
 	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
 	},
 /turf/open/floor/iron/dark,
