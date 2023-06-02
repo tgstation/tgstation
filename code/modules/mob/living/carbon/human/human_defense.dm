@@ -94,7 +94,7 @@
 
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-		if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+		if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
 			P.on_hit(src, 100, def_zone, piercing_hit)
 			return BULLET_ACT_HIT
 
@@ -117,7 +117,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/check_block(atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/check_block(atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	. = ..()
 	if(.)
 		return TRUE
@@ -130,7 +130,7 @@
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration ) / 2, 0, 100)) + block_chance_modifier
-		if(worn_thing.hit_reaction(src, hitby, attack_text, final_block_chance, damage, attack_type))
+		if(worn_thing.hit_reaction(src, hitby, attack_text, final_block_chance, damage, attack_type, damage_type))
 			return TRUE
 
 	return FALSE
@@ -141,6 +141,7 @@
 		if(spec_return)
 			return spec_return
 	var/obj/item/I
+	var/damage_type = BRUTE
 	var/throwpower = 30
 	var/throw_pen = 0
 	if(isitem(AM))
@@ -150,7 +151,7 @@
 		if(I.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
 
-	if(check_block(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, throw_pen))
+	if(check_block(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, throw_pen, damage_type))
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE

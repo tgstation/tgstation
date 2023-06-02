@@ -45,7 +45,8 @@
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
+	if(!forced && !check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+		playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()

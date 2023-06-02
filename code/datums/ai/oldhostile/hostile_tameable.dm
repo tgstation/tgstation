@@ -74,7 +74,7 @@
 	if(old_friend)
 		unfriend(old_friend)
 
-	if(in_range(pawn, new_friend))
+	if(pawn.Adjacent(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> looks at [new_friend] in a friendly manner!", span_notice("[pawn] looks at you in a friendly manner!"))
 	set_blackboard_key(BB_HOSTILE_FRIEND, new_friend)
 	RegisterSignal(new_friend, COMSIG_MOB_POINTED, PROC_REF(check_point))

@@ -462,7 +462,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 	if(load)
 		. += "Current Load: [get_load_name()]"
 
