@@ -1,4 +1,0 @@
-author: "Epoc"
-delete-after: True
-changes:
-  - bugfix: "Speaking in sign language no longer reveals your identity"
