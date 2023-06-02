@@ -698,6 +698,7 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+	nightshift_brightness = 3
 	fire_brightness = 2
 
 /obj/machinery/light/floor/get_light_offset()
