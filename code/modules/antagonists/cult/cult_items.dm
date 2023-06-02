@@ -41,7 +41,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
-/obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/block_message = "[owner] parries [attack_text] with [src]"
 	if(owner.get_active_held_item() != src)
 		block_message = "[owner] parries [attack_text] with [src] in their offhand"
@@ -84,7 +84,7 @@ Striking a noncultist, however, will tear their flesh."}
 	effectiveness = 100, \
 	)
 
-/obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
@@ -731,7 +731,7 @@ Striking a noncultist, however, will tear their flesh."}
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -962,20 +962,20 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/effects/ric5.ogg'
 	var/illusions = 2
 
-/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(IS_CULTIST(owner))
-		if(isprojectile(hitby))
-			var/obj/projectile/P = hitby
-			if(P.damage_type == BRUTE || P.damage_type == BURN)
-				if(P.damage >= 30)
+		if(attack_type == PROJECTILE_ATTACK)
+			if(damage_type == BRUTE || damage_type == BURN)
+				if(damage >= 30)
 					var/turf/T = get_turf(owner)
-					T.visible_message(span_warning("The sheer force from [P] shatters the mirror shield!"))
+					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
 					new /obj/effect/temp_visual/cult/sparks(T)
 					playsound(T, 'sound/effects/glassbr3.ogg', 100)
 					owner.Paralyze(25)
 					qdel(src)
 					return FALSE
-			if(P.reflectable & REFLECT_NORMAL)
+			var/obj/projectile/projectile = hitby
+			if(projectile.reflectable & REFLECT_NORMAL)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)

@@ -41,10 +41,7 @@
 		aSignal.code = rand(1,100)
 		aSignal.anomaly_type = type
 
-		var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
-		if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
-			frequency++
-		aSignal.set_frequency(frequency)
+		aSignal.set_frequency(sanitize_frequency(rand(MIN_FREE_FREQ, MAX_FREE_FREQ), free = TRUE))
 
 	if(new_lifespan)
 		lifespan = new_lifespan
