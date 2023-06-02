@@ -439,12 +439,25 @@
 	// They stay locked down if their wire is cut.
 	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
+	else
+		if(!ai_lockdown)
+			addtimer(CALLBACK(src,PROC_REF(lockdown_override), FALSE), 180 SECONDS)
+			to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown engaged. Trying to hack the lockdown subsystem")]<br>")
 	if(state)
 		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/locked)
 	else
 		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
+/// Allows the borg to unlock themselves after a lenghty period of time.
+/mob/living/silicon/robot/proc/lockdown_override()
+	if(!ai_lockdown)
+		set_lockcharge(FALSE)
+		to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
+		if(connected_ai)
+			to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
+	else
+		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown override failed.")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)

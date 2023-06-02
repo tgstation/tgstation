@@ -321,21 +321,22 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	switch(severity)
 		if(1)
-			src.Unconscious(16)
+			emp_knockout(16 SECONDS )
 		if(2)
-			src.Unconscious(6)
+			emp_knockout(6 SECONDS )
 
-/mob/living/silicon/robot/proc/emp_knockout(seconds)
+/mob/living/silicon/robot/proc/emp_knockout(deciseconds)
 	if(!src)
 		return
-	if(seconds)
+	if(deciseconds)
 		src.set_stat(UNCONSCIOUS)
-		addtimer(CALLBACK(src, PROC_REF(wake_from_emp)), seconds,TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(wake_from_emp)), deciseconds,TIMER_OVERRIDE)
 
 /mob/living/silicon/robot/proc/wake_from_emp()
 	if(!src)
 		return
 	src.set_stat(CONSCIOUS)
+	src.update_stat()
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
