@@ -179,10 +179,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aH" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/light/directional/east,
+/obj/machinery/computer/crew/syndie{
 	dir = 8
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aI" = (
