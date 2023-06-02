@@ -118,7 +118,7 @@
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
 
-				M.flash_act(length = 1 SECONDS)//breifly apply flash affect to target
+				M.flash_act(visual = TRUE, length = 1 SECONDS)//breifly apply flash affect to target
 
 				if(M == user) //they're using it on themselves
 					user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
@@ -134,7 +134,7 @@
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
 					render_list += "<span class='info'>You direct [src] to [M]'s eyes:</span>\n"
 
-					if(M.stat == DEAD)
+					if(M.stat == DEAD || M.is_blind())
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils don't react to the light!</span>\n"//mob is dead
 					else if(brain.damage > 20)
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils contract unevenly!</span>\n"//mob has sustained damage to their brain
