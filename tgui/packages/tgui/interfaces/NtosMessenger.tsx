@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { Box, Button, Dimmer, Icon, Section, Stack, Input, TextArea } from '../components';
 import { NtosWindow } from '../layouts';
 import { Component, createRef, InfernoNode, RefObject } from 'inferno';
-import { createLogger } from '../logging';
+import { sanitizeText } from '../sanitize';
 
 type NtMessage = {
   name: string,
@@ -17,17 +17,15 @@ type NtMessage = {
   everyone: boolean,
   targets: string[],
   target_details: string[],
-}
+};
 
 type NtMessenger = {
   name: string,
   job: string,
   ref: string,
-}
+};
 
-type NtMessengers = {
-  [key: string]: NtMessenger
-}
+type NtMessengers = Record<string, NtMessenger>;
 
 type NtosMessengerData = {
   owner: string,
@@ -42,7 +40,7 @@ type NtosMessengerData = {
   photo: string,
   messages: NtMessage[],
   messengers: NtMessengers,
-}
+};
 
 type CurrentChat = NtMessenger | null;
 
@@ -69,15 +67,10 @@ const NoIDDimmer = () => {
   );
 };
 
-export const NtosMessenger = (props, context) => {
+export const NtosMessenger = (props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const { messages, viewing_messages_of } = data;
-  /* const [curChat, setCurChat] =
-    useLocalState<CurrentChat>(
-      context,
-      'currentChat',
-      null
-    );*/
+
   let content: JSX.Element;
   if (viewing_messages_of !== null) {
     let filteredMsgs = messages.filter(msg =>
@@ -92,16 +85,17 @@ export const NtosMessenger = (props, context) => {
   else {
     content = <ContactsScreen />;
   }
+
   return (
     <NtosWindow width={600} height={800}>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content>
         {content}
       </NtosWindow.Content>
     </NtosWindow>
   );
 };
 
-const ContactsScreen = (props, context) => {
+const ContactsScreen = (props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const {
     owner,
@@ -115,8 +109,6 @@ const ContactsScreen = (props, context) => {
     virus_attach,
     sending_virus,
   } = data;
-
-  const log = createLogger();
 
   const messengerArray = Object.entries(messengers).map(([k, v]) => {
     v.ref = k;
@@ -141,21 +133,17 @@ const ContactsScreen = (props, context) => {
   const noId = !owner && !is_silicon;
 
   return (
-    <>
-      <Stack vertical>
-        <Section fill textAlign="center">
+    <Stack fill vertical>
+      <Section>
+        <Stack vertical textAlign="center">
           <Box bold>
             <Icon name="address-card" mr={1} />
             SpaceMessenger V6.4.8
           </Box>
-          <Box italic opacity={0.3}>
+          <Box italic opacity={0.3} mt={1}>
             Bringing you spy-proof communications since 2467.
           </Box>
-        </Section>
-      </Stack>
-      <Stack vertical>
-        <Section fill textAlign="center">
-          <Box>
+          <Box mt={2}>
             <Button
               icon="bell"
               content={ringer_status ? 'Ringer: On' : 'Ringer: Off'}
@@ -188,22 +176,22 @@ const ContactsScreen = (props, context) => {
                 onClick={() => act('PDA_toggleVirus')} />
             )}
           </Box>
-        </Section>
-      </Stack>
+        </Stack>
+      </Section>
       {!!photo && (
-        <Stack vertical mt={1}>
+        <Stack vertical>
           <Section fill textAlign="center">
             <Icon name="camera" mr={1} />
             Current Photo
           </Section>
-          <Section align="center">
-            <Button onClick={() => act('PDA_clearPhoto')}>
-              <Box mt={1} as="img" src={photo ? photo : null} />
+          <Section align="center" mb={1}>
+            <Button onClick={() => act('PDA_clearPhoto')} >
+              <Box mt={1} as="img" src={photo} />
             </Button>
           </Section>
         </Stack>
       )}
-      <Stack vertical mt={1}>
+      <Stack vertical>
         <Section fill textAlign="center">
           <Icon name="address-card" mr={1} />
           Detected Messengers
@@ -211,22 +199,21 @@ const ContactsScreen = (props, context) => {
             width="220px"
             placeholder="Search by name or job..."
             value={searchUser}
-            onInput={(e, value) => setSearchUser(value)}
+            onInput={(e: any, value: string) => setSearchUser(value)}
             mx={1}
             ml={27}
           />
         </Section>
       </Stack>
-      <Stack vertical mt={1}>
-        <Section fill>
-          <Stack vertical>
+      <Stack vertical fill mt={1}>
+        <Section fill scrollable>
+          <Stack vertical pb={1}>
             {users.length === 0 && 'No users found'}
             {users.map((messenger) => (
               <Button
                 key={messenger.ref}
                 fluid
                 onClick={() => {
-                  log.info(messenger.ref);
                   act('PDA_viewMessages', { ref: messenger.ref });
                 }}>
                 {messenger.name} ({messenger.job})
@@ -237,7 +224,7 @@ const ContactsScreen = (props, context) => {
         {!!can_spam && <SendToAllModal />}
       </Stack>
       {noId && <NoIDDimmer />}
-    </>
+    </Stack>
   );
 };
 
@@ -245,10 +232,14 @@ type ChatMessageProps = {
   sender: string | null,
   msg: string,
   everyone?: boolean,
+  photo_path?: string,
 }
 
 const ChatMessage = (props : ChatMessageProps) => {
-  const { msg, everyone, sender } = props;
+  const { msg, everyone, sender, photo_path } = props;
+  const text = {
+    __html: sanitizeText(msg),
+  };
   return (
     <Box pr={1} pl={1} pt={1} backgroundColor="#151515" maxWidth={30} style={{
         border: "1px solid #202020",
@@ -256,11 +247,14 @@ const ChatMessage = (props : ChatMessageProps) => {
         display: "inline-flex",
       }}>
       <Section title={sender} textAlign="left" minWidth={10}>
-        <Box>
-          <div style={{ "word-wrap": "break-word" }}>{msg}</div>
-        </Box>
+        <Box style={{ "word-wrap": "break-word" }} dangerouslySetInnerHTML={text} />
+        {photo_path !== null && (
+          <Box mt={1} mr={3} as="img" src={photo_path} />
+        )}
         {everyone && (
-          <span class="color-gray" style={{ "font-size": "10px" }}>Sent to everyone</span>
+          <Box textColor="grey" fontSize="0.7em" mt={1}>
+            Sent to everyone
+          </Box>
         )}
       </Section>
     </Box>
@@ -314,7 +308,6 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   handleSendMessage(): void {
     const { act } = useBackend<NtosMessengerData>(this.context);
-    act('PDA_sendMessage');
     act('PDA_sendMessage', {
       ref: this.props.recp.ref,
       name: this.props.recp.name,
@@ -325,7 +318,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     setTimeout(() => this.setState({ canSend: true }), 1000);
   }
 
-  handleMessageInput(_, val: string): void {
+  handleMessageInput(_: any, val: string): void {
     this.setState({ msg: val });
   }
 
@@ -335,17 +328,22 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const { msg, canSend } = this.state;
 
     let lastMsgRef = '';
-    const filteredMessages = msgs
-      .map((msg, index) => {
-        const isSwitch = lastMsgRef !== msg.sender;
-        lastMsgRef = msg.sender;
-        return (
-          <Stack.Item key={index} textAlign={msg.outgoing?"right":""} mt={isSwitch?1:0}>
-            <ChatMessage sender={isSwitch ? (msg.outgoing ? "You" : recp.name) : null} msg={msg.contents}
-              everyone={!!msg.everyone} />
-          </Stack.Item>
-        );
-      });
+    let filteredMessages: JSX.Element[] = [];
+
+    for (let index = 0; index < msgs.length; index++) {
+      let message = msgs[index];
+
+      const isSwitch = lastMsgRef !== message.sender;
+      lastMsgRef = message.sender;
+
+      filteredMessages.push((
+        <Stack.Item key={index} mt={isSwitch ? 1 : 0.5} shrink={0}
+            textAlign={message.outgoing ? "right" : ""}>
+          <ChatMessage sender={isSwitch ? (message.outgoing ? "You" : recp.name) : null}
+            msg={message.contents} everyone={!!message.everyone} photo_path={message.photo_path} />
+        </Stack.Item>
+      ));
+    }
 
     return (
       <Stack vertical fill>
@@ -365,19 +363,16 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         </Stack.Item>
 
         <Stack.Item grow={1}>
-          <Section fill title={`${recp.name} (${recp.job})`}>
-            <Stack vertical fill>
-              <Stack.Item grow={1}>
-                <Section scrollable fill scrollableRef={this.scrollRef}>
-                  <Stack vertical justify="flex-end" fill>
-                    <Stack.Item textAlign="center" fontSize={1} color="gray" >
-                      This is the beginning of your chat with {recp.name}.
-                    </Stack.Item>
-                    <Stack.Divider />
-                    {filteredMessages}
-                  </Stack>
-                </Section>
+          <Section scrollable fill title={`${recp.name} (${recp.job})`}
+            scrollableRef={this.scrollRef}>
+            <Stack vertical justify="flex-end" fill>
+              <Stack.Item textAlign="center" fontSize={1} color="gray" >
+                This is the beginning of your chat with {recp.name}.
               </Stack.Item>
+              <Stack.Divider />
+              {filteredMessages}
+              {/* mb/pb doesnt work with flex-end, this'll have to do */}
+              <Stack.Item height={1} />
             </Stack>
           </Section>
         </Stack.Item>
@@ -387,9 +382,8 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             <Stack fill>
               <Stack.Item grow={1}>
                 <Input placeholder={`Send message to ${recp.name}...`} fluid autofocus
-                  justify id="input" value={msg}
-                  onInput={this.handleMessageInput}
-                  onEnter={this.handleSendMessage} />
+                  justify id="input" value={msg} maxLength={1024}
+                  onInput={this.handleMessageInput} onEnter={this.handleSendMessage} />
               </Stack.Item>
               <Stack.Item>
                 <Button icon="arrow-right" onClick={this.handleSendMessage}
@@ -403,7 +397,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 }
 
-const SendToAllModal = (_, context) => {
+const SendToAllModal = (_: any, context: any) => {
   const { act } = useBackend(context);
 
   const [msg, setMsg] =
@@ -433,61 +427,9 @@ const SendToAllModal = (_, context) => {
       </Section>
       <Section>
         <TextArea height={5} value={msg} placeholder="Send message to everyone..."
-          onInput={(_, v) => setMsg(v)} />
+          onInput={(_: any, v: string) => setMsg(v)} />
       </Section>
     </>
 
   );
 };
-
-/* const MessageListScreen = (props, context) => {
-  const { act, data } = useBackend<NtosMessengerData>(context);
-  const [curChat, setCurChat] = useLocalState<CurrentChat>(context, 'currentChat', null);
-  const { messages = [] } = data;
-  return (
-    <Stack vertical>
-      <Section fill>
-        <Button
-          icon="arrow-left"
-          content="Back"
-          onClick={() => setCurChat(null)}
-        />
-        <Button
-          icon="trash"
-          content="Clear Messages"
-          onClick={() => act('PDA_clearMessages')}
-        />
-      </Section>
-      {messages.map((message) => (
-        <Stack vertical key={message.ref} mt={1}>
-          <Section textAlign="left">
-            <Box italic opacity={0.5} mb={1}>
-              {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
-            </Box>
-            {message.outgoing ? (
-              <Box bold>{message.target_details}</Box>
-            ) : (
-              <Button
-                transparent
-                content={message.name + ' (' + message.job + ')'}
-                onClick={() =>
-                  act('PDA_sendMessage', {
-                    name: message.name,
-                    job: message.job,
-                    ref: message.ref,
-                  })
-                }
-              />
-            )}
-          </Section>
-          <Section fill mt={-1}>
-            <Box italic>{message.contents}</Box>
-            {!!message.photo && (
-              <Box as="img" src={message.photo_path} mt={1} />
-            )}
-          </Section>
-        </Stack>
-      ))}
-    </Stack>
-  );
-}; */
