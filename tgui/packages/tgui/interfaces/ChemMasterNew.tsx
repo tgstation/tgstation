@@ -15,6 +15,9 @@ type Data = {
   categories: Category[];
   selectedContainerRef: string;
   selectedContainerVolume: number;
+  hasContainerSuggestion: BooleanLike;
+  doSuggestContainer: BooleanLike;
+  suggestedContainer: string;
 };
 
 type Category = {
@@ -46,8 +49,10 @@ export const ChemMasterNew = (props, context) => {
     bufferContents,
     bufferCurrentVolume,
     categories,
-    selectedContainerRef,
     selectedContainerVolume,
+    hasContainerSuggestion,
+    doSuggestContainer,
+    suggestedContainer,
   } = data;
 
   const [itemCount, setItemCount] = useLocalState(context, 'itemCount', 1);
@@ -158,15 +163,29 @@ export const ChemMasterNew = (props, context) => {
               </Box>
             )
           }>
+          {!!hasContainerSuggestion && (
+            <Button.Checkbox
+              onClick={() => act('toggleContainerSuggestion')}
+              checked={doSuggestContainer}
+              mb={1}>
+              Guess container by main reagent in the buffer
+            </Button.Checkbox>
+          )}
           {categories.map((category) => (
             <Box key={category.name}>
-              {category.containers.map((container) => (
-                <ContainerButton
-                  key={container.ref}
-                  category={category}
-                  container={container}
-                />
-              ))}
+              {category.containers.map(
+                (container) =>
+                  (!hasContainerSuggestion || // Doesn't have suggestion
+                    (!!hasContainerSuggestion && !doSuggestContainer) || // Has sugestion and it's disabled
+                    (!!doSuggestContainer &&
+                      container.ref === suggestedContainer)) && ( // Suggestion enabled and container matches
+                    <ContainerButton
+                      key={container.ref}
+                      category={category}
+                      container={container}
+                    />
+                  )
+              )}
             </Box>
           ))}
         </Section>
@@ -253,7 +272,7 @@ const ReagentEntry = (props, context) => {
 
 const ContainerButton = ({ container, category }, context) => {
   const { act, data } = useBackend<Data>(context);
-  const selectedContainerRef = data.selectedContainerRef;
+  const { selectedContainerRef } = data;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
   return (
     <Tooltip

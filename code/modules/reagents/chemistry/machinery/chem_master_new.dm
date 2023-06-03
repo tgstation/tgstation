@@ -3,7 +3,6 @@
 #define BEAKER "beaker"
 #define BUFFER "buffer"
 #define CONDIMENTS "condiments"
-#define DEBUG_CONTAINERS "debug"
 #define TUBES "tubes"
 #define PILLS "pills"
 #define PATCHES "patches"
@@ -43,10 +42,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	)),
 	PATCHES = typecacheof(list(
 		/obj/item/reagent_containers/pill/patch/style
-	)),
-	DEBUG_CONTAINERS = typecacheof(list(
-		/obj/item/reagent_containers
-	)),
+	))
 ))
 
 /obj/machinery/chem_master_new
@@ -66,14 +62,22 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/mode = MODE_MOVE
 	/// List of printable container types
 	var/list/printable_containers = list()
-	/// Selected printable container type
+	/// Container used by default to reset to (REF)
+	var/default_container
+	/// Selected printable container type (REF)
 	var/selected_container
+	/// Whether the machine has an option to suggest container
+	var/has_container_suggestion = FALSE
+	/// Whether to suggest container or not
+	var/do_suggest_container = FALSE
+	/// The container suggested by main reagent in the buffer
+	var/suggested_container
 
 /obj/machinery/chem_master_new/Initialize(mapload)
 	create_reagents(100)
 	load_printable_containers()
-	var/obj/item/reagent_containers/default_container = printable_containers[printable_containers[1]][1]
-	selected_container = REF(default_container)
+	default_container = REF(printable_containers[printable_containers[1]][1])
+	selected_container = default_container
 	return ..()
 
 /obj/machinery/chem_master_new/Destroy()
@@ -211,6 +215,20 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	data["mode"] = mode
 
+	data["hasContainerSuggestion"] = !!has_container_suggestion
+	if(has_container_suggestion)
+		data["doSuggestContainer"] = !!do_suggest_container
+		if(do_suggest_container)
+			if(reagents.total_volume > 0)
+				var/master_reagent = reagents.get_master_reagent()
+				suggested_container = get_suggested_container(master_reagent)
+			else
+				suggested_container = default_container
+			data["suggestedContainer"] = suggested_container
+			selected_container = suggested_container
+		else if (isnull(selected_container))
+			selected_container = default_container
+
 	data["selectedContainerRef"] = selected_container
 	var/obj/item/reagent_containers/container = locate(selected_container)
 	data["selectedContainerVolume"] = initial(container.volume)
@@ -234,6 +252,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	if(action == "toggleMode")
 		mode = !mode
+		return TRUE
+
+	if(action == "toggleContainerSuggestion")
+		do_suggest_container = !do_suggest_container
 		return TRUE
 
 	if(action == "selectContainer")
@@ -282,7 +304,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		amount = text2num(input("Enter the amount you want to transfer:", name, ""))
 	if (amount == null || amount <= 0)
 		return FALSE
-	if (!beaker)
+	if (!beaker && target == BEAKER && mode == MODE_MOVE)
 		return FALSE
 
 	use_power(active_power_usage)
@@ -326,27 +348,27 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master_new/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
+	has_container_suggestion = TRUE
 
 /obj/machinery/chem_master_new/condimaster/load_printable_containers()
 	printable_containers = list(
 		CONDIMENTS = GLOB.chem_master_containers[CONDIMENTS],
 	)
 
-/obj/machinery/chem_master_new/debug
-	name = "DebugMaster 3000"
-	desc = "Used to create any reagent containers."
-
-/obj/machinery/chem_master_new/debug/load_printable_containers()
-	printable_containers = list(
-		DEBUG_CONTAINERS = GLOB.chem_master_containers[DEBUG_CONTAINERS],
-	)
+/// Retrieve REF to the best container for provided reagent
+/obj/machinery/chem_master_new/proc/get_suggested_container(datum/reagent/reagent)
+	var/preferred_container = reagent.default_container
+	for(var/category in printable_containers)
+		for(var/container in printable_containers[category])
+			if(container == preferred_container)
+				return REF(container)
+	return default_container
 
 #undef MODE_DESTROY
 #undef MODE_MOVE
 #undef BEAKER
 #undef BUFFER
 #undef CONDIMENTS
-#undef DEBUG_CONTAINERS
 #undef TUBES
 #undef PILLS
 #undef PATCHES
