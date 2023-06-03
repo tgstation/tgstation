@@ -203,7 +203,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/east,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aL" = (
@@ -213,7 +213,7 @@
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/urinal/directional/east,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aN" = (
@@ -250,9 +250,7 @@
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/urinal/directional/east,
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aT" = (

@@ -12,6 +12,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
 		TRAIT_NO_DEBRAIN_OVERLAY,
+		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	mutantstomach = null

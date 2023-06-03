@@ -9,8 +9,9 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
-/// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
+/// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
 
 // /obj/machinery signals
 
@@ -133,7 +134,7 @@
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
-///from base of obj/item/hit_reaction(): (list/args)
+///from base of obj/item/hit_reaction(): (owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
 ///from base of item/sharpener/attackby(): (amount, max)
@@ -427,3 +428,6 @@
 
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
+
+/// from /obj/plunger_act when an object is being plungered
+#define COMSIG_PLUNGER_ACT "plunger_act"

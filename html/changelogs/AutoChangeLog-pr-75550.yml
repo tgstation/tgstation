@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The windows on the waystation ruin now only have one grille underneath, rather than two."

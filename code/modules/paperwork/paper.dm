@@ -16,7 +16,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	worn_icon_state = "paper"
 	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
@@ -24,11 +23,8 @@
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
-	slot_flags = ITEM_SLOT_HEAD
-	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	dog_fashion = /datum/dog_fashion/head
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
@@ -302,7 +298,7 @@
 	if(isnull(n_name) || n_name == "")
 		return
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
-		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
+		name = "paper[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 	update_static_data()
 
