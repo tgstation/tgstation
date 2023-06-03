@@ -1,7 +1,7 @@
 /// Species preference
 /datum/preference/choiced/species
 	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "species"
+	savefile_key = SAVEFILE_KEY_NAME_SPECIES
 	priority = PREFERENCE_PRIORITY_SPECIES
 	randomize_by_default = FALSE
 

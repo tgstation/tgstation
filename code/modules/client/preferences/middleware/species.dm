@@ -1,4 +1,4 @@
-/// Handles the assets for species icons
+/// Handles the assets for species icons and ensuring quirks are compatible with species we change into.
 /datum/preference_middleware/species
 
 /datum/preference_middleware/species/get_ui_assets()
@@ -6,8 +6,20 @@
 		get_asset_datum(/datum/asset/spritesheet/species),
 	)
 
+//We only come into effect if our pref key (species) is changed.
+//We will filter invalid quirks. If it is cancelled out then we will not change anything and not allow the change through.
+//Otherwise we will accept the incoming changes and change the species.
+/datum/preference_middleware/species/pre_set_preference(mob/user, requested_preference_key, value)
+	if(requested_preference_key != SAVEFILE_KEY_NAME_SPECIES)
+		return FALSE
+	var/quirk_response = SSquirks.filter_invalid_quirks(SANITIZE_LIST(preferences.all_quirks), preferences, species_type = GLOB.species_list[value], give_warning = TRUE)
+	if(!quirk_response)
+		return TRUE
+	preferences.all_quirks = quirk_response
+	return FALSE
+
 /datum/asset/spritesheet/species
-	name = "species"
+	name = SAVEFILE_KEY_NAME_SPECIES
 	early = TRUE
 	cross_round_cachable = TRUE
 

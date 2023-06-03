@@ -154,7 +154,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// be valid.
 /// If no changes need to be made, will return the same list.
 /// Expects all quirk names to be unique, but makes no other expectations.
-/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, datum/preferences/supplied_prefs)
+/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, datum/preferences/supplied_prefs, species_type, give_warning)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
@@ -169,8 +169,17 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if ((initial(quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood))
 			continue
 
-		var/datum/species/user_species = supplied_prefs.read_preference(/datum/preference/choiced/species)
+		var/datum/species/user_species = species_type || supplied_prefs.read_preference(/datum/preference/choiced/species)
 		if(quirk_name in species_quirk_blacklist[initial(user_species.id)])
+			if(give_warning)
+				var/warning_tgui_alert = tgui_alert(
+					user = supplied_prefs.parent,
+					message = "The species you are changing to cannot use some quirks you have. Changing species will have them removed.",
+					title = "Species Changing",
+					buttons = list("Change Species", "Nevermind"),
+				)
+				if(warning_tgui_alert != "Change Species")
+					return FALSE
 			continue
 
 		var/blacklisted = FALSE
