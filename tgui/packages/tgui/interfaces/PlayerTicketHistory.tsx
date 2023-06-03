@@ -202,6 +202,11 @@ type TicketViewProps = {
 
 const TicketView = (props: TicketViewProps, context: any) => {
   const { act, data } = useBackend<PthData>(context);
+  const [forceExpand, setForceExpand] = useLocalState(
+    context,
+    'forceExpand',
+    false
+  );
 
   // sort by timestamp
   props.ticket.ticket_log.sort((a, b) => {
@@ -209,10 +214,17 @@ const TicketView = (props: TicketViewProps, context: any) => {
   });
 
   return (
-    <Section>
+    <Section
+      buttons={
+        <Button
+          icon={forceExpand ? 'compress' : 'expand'}
+          onClick={() => setForceExpand(!forceExpand)}
+        />
+      }>
       {props.ticket.ticket_log.map((log, index) => (
         <Collapsible
           tooltip={log.timestamp}
+          open={forceExpand}
           key={`${props.ticket.round_id}-${props.ticket.ticket_number}-${index}`}
           title={`${log.action} - ${log.origin_ckey}${
             log.target_ckey ? ` -> ${log.target_ckey}` : ''
