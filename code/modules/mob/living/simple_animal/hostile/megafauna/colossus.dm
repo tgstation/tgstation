@@ -581,7 +581,8 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	paint_jobs = null
-	var/mob/living/simple_animal/holder_animal
+	///The animal the closet (and the user's body) is inside of
+	var/mob/living/holder_animal
 
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
@@ -592,11 +593,11 @@
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(isliving(arrived) && holder_animal)
-		var/mob/living/L = arrived
-		L.notransform = 1
-		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags |= GODMODE
-		L.mind.transfer_to(holder_animal)
+		var/mob/living/possessor = arrived
+		possessor.notransform = TRUE
+		ADD_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.status_flags |= GODMODE
+		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
 		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
@@ -624,6 +625,7 @@
 /obj/structure/closet/stasis/ex_act()
 	return FALSE
 
+///When our host animal dies in any way, we empty the stasis closet out.
 /obj/structure/closet/stasis/proc/on_holder_animal_death()
 	SIGNAL_HANDLER
 	dump_contents()
