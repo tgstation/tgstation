@@ -583,19 +583,11 @@
 	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
-/obj/structure/closet/stasis/process()
-	if(holder_animal)
-		if(holder_animal.stat == DEAD)
-			dump_contents(TRUE)
-			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			holder_animal.gib()
-			return
-
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
-	START_PROCESSING(SSobj, src)
+		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -610,7 +602,6 @@
 		remove_verb(holder_animal, /mob/living/verb/pulled)
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
-	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/possessor in src)
 		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
 		possessor.status_flags &= ~GODMODE
@@ -622,6 +613,7 @@
 			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
+			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib()
 			return ..()
 	return ..()
@@ -631,6 +623,10 @@
 
 /obj/structure/closet/stasis/ex_act()
 	return FALSE
+
+/obj/structure/closet/stasis/proc/on_holder_animal_death()
+	SIGNAL_HANDLER
+	dump_contents()
 
 /datum/action/exit_possession
 	name = "Exit Possession"
