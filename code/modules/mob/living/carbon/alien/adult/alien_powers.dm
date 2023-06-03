@@ -345,7 +345,7 @@ Doesn't work on other aliens/AI.*/
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-  sneak_alpha = 25
+	sneak_alpha = 25
 
 /datum/action/cooldown/alien/regurgitate
 	name = "Regurgitate"
