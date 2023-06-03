@@ -26,6 +26,9 @@
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
 
+	///The current PDA paintjob. Default value of null means the current sprites are used
+	var/obj/item/modular_computer/pda/paintjob = null
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
@@ -47,9 +50,11 @@
 	)
 
 /obj/item/modular_computer/pda/Initialize(mapload)
-	. = ..()
+	if(isnull(paintjob))
+		paintjob = type
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
+	return ..()
 
 /obj/item/modular_computer/pda/Destroy()
 	if(istype(inserted_item))
@@ -65,6 +70,20 @@
 	for(var/programs as anything in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
+
+/obj/item/modular_computer/pda/update_icon_state()
+	icon_state = initial(paintjob.icon_state)
+	return ..()
+
+/obj/item/modular_computer/pda/update_desc()
+	desc = initial(paintjob.desc)
+	return ..()
+
+/obj/item/modular_computer/pda/update_greyscale()
+	if(initial(paintjob.greyscale_colors) && initial(paintjob.greyscale_config))
+		greyscale_colors = initial(paintjob.greyscale_colors)
+		greyscale_config = initial(paintjob.greyscale_config)
+	return ..()
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()

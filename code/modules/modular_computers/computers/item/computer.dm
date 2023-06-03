@@ -125,7 +125,6 @@
 	set_light_range(comp_light_luminosity)
 	if(looping_sound)
 		soundloop = new(src, enabled)
-	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
 	if(inserted_disk)
@@ -646,11 +645,15 @@
 /obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
 	saved_identification = name || computer_id_slot?.registered_name || saved_identification
 	saved_job = job_name || computer_id_slot?.assignment || saved_job
+	SEND_SIGNAL(src, COMSIG_MODPC_IMPRINT_UPDATED, saved_identification, saved_job)
+	update_appearance(UPDATE_NAME)
 
 ///Resets the imprinted name and job back to null.
 /obj/item/modular_computer/proc/reset_imprint()
 	saved_identification = null
 	saved_job = null
+	SEND_SIGNAL(src, COMSIG_MODPC_IMPRINT_RESET)
+	update_appearance(UPDATE_NAME)
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
@@ -688,11 +691,12 @@
 	set_light_color(color)
 	return TRUE
 
-/obj/item/modular_computer/proc/UpdateDisplay()
+/obj/item/modular_computer/update_name()
 	if(!saved_identification && !saved_job)
 		name = initial(name)
 		return
 	name = "[saved_identification] ([saved_job])"
+	return ..()
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first

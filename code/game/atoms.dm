@@ -825,6 +825,10 @@
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
+	if(updates & UPDATE_GREYSCALE)
+		update_greyscale(updates)
+		. |= UPDATE_GREYSCALE
+
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
 
 /// Updates the icon state of the atom
@@ -876,6 +880,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
 	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
 		return
 	update_atom_colour()

@@ -198,7 +198,6 @@
 
 		if("PC_Imprint_ID")
 			imprint_id()
-			UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		if("PC_Pai_Interact")

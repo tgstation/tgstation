@@ -1146,7 +1146,6 @@
 			var/obj/item/modular_computer/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.imprint_id(name = newname)
-				PDA.UpdateDisplay()
 				if(!search_id)
 					break
 				search_pda = 0

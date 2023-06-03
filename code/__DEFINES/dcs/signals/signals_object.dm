@@ -428,3 +428,8 @@
 
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
+
+/// from /obj/item/modular_computer/imprint_id(): (name, job)
+#define COMSIG_MODPC_IMPRINT_UPDATED "modpc_imprint_updated"
+/// from /obj/item/modular_computer/reset_id(): ()
+#define COMSIG_MODPC_IMPRINT_RESET "modpc_imprint_reset"
