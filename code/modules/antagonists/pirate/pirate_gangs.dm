@@ -147,5 +147,5 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	possible_answers = list("Please don't hurt me.","Grey Shit.")
 
 	response_received = "THEY SERIOUSLY GAVE US THE MONEY??!! WHAT!!.. we are still gona steal the rest."
-	response_too_late = "We all knew it was gonna come to this"
+	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
 	response_not_enough = "Damn it seems you are broke, too bad."
