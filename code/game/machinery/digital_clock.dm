@@ -1,6 +1,6 @@
 /obj/machinery/digital_clock
 	name = "digital clock"
-	desc = "An ultra-futuristic, sleek, advanced, next-gen normal digital clock that tells the time. Despite supposedly being better in every way to classic clocks, it just doesn't feel the same. They just don't make them the way they used to..."
+	desc = "An ultra-futuristic, sleek, advanced, next-gen normal digital clock that tells the time. Powered by bluespace. Despite supposedly being better in every way to classic clocks, it just doesn't feel the same. They just don't make them the way they used to..."
 	icon_state = "digital_clock_base"
 	icon = 'icons/obj/digital_clock.dmi'
 	verb_say = "beeps"
@@ -71,20 +71,17 @@
 /obj/machinery/digital_clock/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
-	if(!disassembled)
+	if(disassembled)
+		new /obj/item/wallframe/digital_clock(drop_location())
+	else
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
-	else
-		new /obj/item/wallframe/digital_clock(drop_location())
 	qdel(src)
-
-//MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock, 32)
 
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSdigital_clock, src)
-	update_appearance()
 
 /obj/machinery/digital_clock/Destroy()
 	STOP_PROCESSING(SSdigital_clock, src)
@@ -118,10 +115,10 @@
 	else
 		station_minutes = text2num(station_time_timestamp(format = "mm"))
 
-	// tence / the '3' in '31' / 31 -> 3.1 -> 3
-	var/station_minute_tence = station_minutes >= 10 ? round(station_minutes * 0.1) : 0
-	// once / the '1' in '31' / 31 -> 31 - (3 * 10) -> 31 - 30 -> 1
-	var/station_minute_once = station_minutes - (station_minute_tence * 10)
+	// tenth / the '3' in '31' / 31 -> 3.1 -> 3
+	var/station_minute_tenth = station_minutes >= 10 ? round(station_minutes * 0.1) : 0
+	// one / the '1' in '31' / 31 -> 31 - (3 * 10) -> 31 - 30 -> 1
+	var/station_minute_one = station_minutes - (station_minute_tenth * 10)
 
 	var/station_hours
 
@@ -130,30 +127,30 @@
 	else
 		station_hours = text2num(station_time_timestamp(format = "hh"))
 
-	// once / the '1' in '12' / 12 -> 1.2 -> 1
-	var/station_hours_tence = station_minutes >= 10 ? round(station_hours * 0.1) : 0
-	// tence / the '2' in '12' / 12 -> 12 - (1 * 10) -> 12 - 10 -> 2
-	var/station_hours_once = station_hours - (station_hours_tence * 10)
+	// one / the '1' in '12' / 12 -> 1.2 -> 1
+	var/station_hours_tenth = station_minutes >= 10 ? round(station_hours * 0.1) : 0
+	// tenth / the '2' in '12' / 12 -> 12 - (1 * 10) -> 12 - 10 -> 2
+	var/station_hours_one = station_hours - (station_hours_tenth * 10)
 
 	var/return_overlays = list()
 
-	var/mutable_appearance/minute_once_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_once]")
-	minute_once_overlay.pixel_w = 0
-	return_overlays += minute_once_overlay
+	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]")
+	minute_one_overlay.pixel_w = 0
+	return_overlays += minute_one_overlay
 
-	var/mutable_appearance/minute_tence_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tence]")
-	minute_tence_overlay.pixel_w = -4
-	return_overlays += minute_tence_overlay
+	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]")
+	minute_tenth_overlay.pixel_w = -4
+	return_overlays += minute_tenth_overlay
 
 	var/mutable_appearance/separator = mutable_appearance('icons/obj/digital_clock.dmi', "+separator")
 	return_overlays += separator
 
-	var/mutable_appearance/hour_once_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_once]")
-	hour_once_overlay.pixel_w = -10
-	return_overlays += hour_once_overlay
+	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_one]")
+	hour_one_overlay.pixel_w = -10
+	return_overlays += hour_one_overlay
 
-	var/mutable_appearance/hour_tence_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tence]")
-	hour_tence_overlay.pixel_w = -14
-	return_overlays += hour_tence_overlay
+	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tenth]")
+	hour_tenth_overlay.pixel_w = -14
+	return_overlays += hour_tenth_overlay
 
 	return return_overlays
