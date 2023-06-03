@@ -89,7 +89,7 @@
 	id_trim = /datum/id_trim/job/chief_medical_officer
 
 /datum/outfit/pirate/grey
-	name = "The Grey Tide-6"
+	name = "The Grey Tide"
 
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/color/grey/ancient
