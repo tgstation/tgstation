@@ -574,7 +574,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		dat += "[I]<br>"
 
 	// Helper for opening directly to player ticket history
-	dat += "<br><br><b>Player Ticket History:</b><br><br>"
+	dat += "<br><br><b>Player Ticket History:</b>"
 	dat += "[FOURSPACES]<A href='?_src_=holder;[HrefToken()];player_ticket_history=[initiator_ckey]'>Open</A>"
 
 	// Append any tickets also opened by this user if relevant
