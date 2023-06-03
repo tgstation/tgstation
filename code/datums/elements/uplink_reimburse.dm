@@ -45,7 +45,13 @@
 
 	examine_list += span_notice(examine_string)
 
-/datum/element/uplink_reimburse/proc/reimburse(datum/target, mob/user)
+/datum/element/uplink_reimburse/proc/reimburse(obj/item/refund_item, mob/user, datum/component/uplink/uplink_comp)
 	SIGNAL_HANDLER
 
-	return refundable_tc
+	if(!uplink_comp)
+		CRASH("No uplink component in arguments detected")
+
+	to_chat(user, span_notice("You tap [uplink_comp.uplink_handler] with [refund_item], and a moment after [refund_item] disappears in a puff of red smoke!"))
+	do_sparks(2, source = uplink_comp.uplink_handler)
+	uplink_comp.add_telecrystals(refundable_tc)
+	qdel(refund_item)

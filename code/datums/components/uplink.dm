@@ -150,14 +150,7 @@
 	if(!istype(item))
 		return
 
-	var/tc_to_reimburse = SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, source, user)
-
-	if(!(tc_to_reimburse))
-		return
-
-	to_chat(user, span_notice("You tap [item] with [parent], and a moment after [item] disappears in a puff of red smoke that seems to enter [parent]!"))
-	add_telecrystals(tc_to_reimburse)
-	qdel(item)
+	SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, user, src)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
