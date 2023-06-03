@@ -103,7 +103,7 @@
 	flavour_text = "The station has refused to fund your research, so you will 'convince' them to donate to your charitable cause."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "an Ex-Interdyne employee"
+	prompt_name = "An Ex-Interdyne employee"
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
 
