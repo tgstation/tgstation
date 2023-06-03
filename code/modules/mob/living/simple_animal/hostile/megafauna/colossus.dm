@@ -586,7 +586,7 @@
 /obj/structure/closet/stasis/process()
 	if(holder_animal)
 		if(holder_animal.stat == DEAD)
-			dump_contents()
+			dump_contents(TRUE)
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib()
 			return
