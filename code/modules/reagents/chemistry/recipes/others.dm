@@ -948,5 +948,5 @@
 /datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in rand(1, created_volume) to created_volume)
-		new /mob/living/simple_animal/hostile/ant(location)
+		new /mob/living/basic/ant(location)
 	..()
