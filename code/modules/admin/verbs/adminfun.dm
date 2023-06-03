@@ -7,19 +7,19 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = input("Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null)
 		return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = input("Range of heavy impact. -1 to none", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = input("Range of light impact. -1 to none", "Input")  as num|null
 	if(light == null)
 		return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = input("Range of flash. -1 to none", "Input")  as num|null
 	if(flash == null)
 		return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = input("Range of flames. -1 to none", "Input")  as num|null
 	if(flames == null)
 		return
 
@@ -40,10 +40,10 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = input("Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null)
 		return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = input("Range of light pulse.", "Input")  as num|null
 	if(light == null)
 		return
 

@@ -320,7 +320,6 @@
 		"guy",
 		"matt",
 		"peace",
-		"poseur tag",
 		"prolizard",
 		"radiation",
 		"revolution",

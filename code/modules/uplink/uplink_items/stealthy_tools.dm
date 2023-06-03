@@ -92,6 +92,13 @@
 	surplus = 30
 	illegal_tech = FALSE
 
+/datum/uplink_item/stealthy_tools/mail_counterfeit
+	name = "GLA Brand Mail Counterfeit Device"
+	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	item = /obj/item/storage/mail_counterfeit_device
+	cost = 1
+	surplus = 30
+
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."

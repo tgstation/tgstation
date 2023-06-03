@@ -10,7 +10,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [ADMIN_LOOKUPFLW(M)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
+	var/msg = input("Message:", "Subtle PM to [M.key]") as text|null
 
 	if(!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(M)]'s prayer")
@@ -80,7 +80,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
+	var/msg = input("Message:", "Enter the text you wish to appear to everyone:") as text|null
 
 	if (!msg)
 		return
@@ -100,7 +100,7 @@
 	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num|null
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
+	var/msg = input("Message:", "Enter the text you wish to appear to everyone within view:") as text|null
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -123,7 +123,7 @@
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text|null
+	var/msg = input("Message:", "Enter the text you wish to appear to your target:") as text|null
 
 	if( !msg )
 		return
