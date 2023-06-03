@@ -55,7 +55,6 @@
 		/mob/living/simple_animal/hostile/alien/queen,
 		/mob/living/simple_animal/hostile/alien/queen/large,
 		/mob/living/simple_animal/hostile/alien/sentinel,
-		/mob/living/simple_animal/hostile/ant,
 		/mob/living/simple_animal/hostile/asteroid,
 		/mob/living/simple_animal/hostile/asteroid/basilisk,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,

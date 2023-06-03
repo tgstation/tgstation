@@ -163,3 +163,9 @@
 	speak = list("gnashes.", "growls lowly.", "snarls.")
 	emote_hear = list("gnashes.")
 	emote_see = list("salivates.")
+
+/datum/ai_planning_subtree/random_speech/ant
+	speech_chance = 1
+	emote_hear = list("buzzes.", "clacks.")
+	emote_see = list("shakes their head.", "twitches their antennae.")
+	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
