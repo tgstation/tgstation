@@ -116,9 +116,9 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey
 	name = "\improper Assistant sleeper"
-	desc = "A cryo sleeper, it looks kind of dirty"
+	desc = "A very dirty cryogenic sleeper. You're not sure if it even works."
 	density = FALSE
-	you_are_text = "You used to be an Assitant contracted by nanotrasen but their rules shackled your potential now you are truly FREE."
+	you_are_text = "You used to be a Nanotrasen assistant, until a riot gone awry. Now you wander space, ransacking any ships you come across!"
 	flavour_text = "You know you can beat the whole station, and you will steal everything they hold dear."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
