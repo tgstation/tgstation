@@ -11,7 +11,7 @@ import {
   TextArea,
 } from '../components';
 import { NtosWindow } from '../layouts';
-import { Component, createRef, InfernoNode, RefObject } from 'inferno';
+import { Component, createRef, InfernoNode, RefObject, SFC } from 'inferno';
 import { sanitizeText } from '../sanitize';
 
 type NtMessage = {
@@ -76,7 +76,7 @@ const NoIDDimmer = () => {
   );
 };
 
-export const NtosMessenger = (props: any, context: any) => {
+export const NtosMessenger = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const { messages, viewing_messages_of } = data;
 
@@ -105,7 +105,7 @@ export const NtosMessenger = (props: any, context: any) => {
   );
 };
 
-const ContactsScreen = (props: any, context: any) => {
+const ContactsScreen = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const {
     owner,
@@ -216,7 +216,7 @@ const ContactsScreen = (props: any, context: any) => {
             width="220px"
             placeholder="Search by name or job..."
             value={searchUser}
-            onInput={(e: any, value: string) => setSearchUser(value)}
+            onInput={(_e: any, value: string) => setSearchUser(value)}
             mx={1}
             ml={27}
           />
@@ -252,7 +252,7 @@ type ChatMessageProps = {
   photo_path?: string;
 };
 
-const ChatMessage = (props: ChatMessageProps) => {
+const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   const { msg, everyone, sender, photo_path } = props;
   const text = {
     __html: sanitizeText(msg),
@@ -319,8 +319,8 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   componentDidUpdate(
     prevProps: ChatScreenProps,
-    prevState: ChatScreenState,
-    snapshot: any
+    _prevState: ChatScreenState,
+    _snapshot: any
   ): void {
     if (prevProps.msgs.length !== this.props.msgs.length) {
       this.scrollToBottom();
