@@ -3072,6 +3072,7 @@
 /area/station/security/prison)
 "ake" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "akr" = (
@@ -8298,6 +8299,10 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"buX" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/science/ordnance/storage)
 "bvk" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -14270,6 +14275,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"dFD" = (
+/obj/machinery/portable_atmospherics/canister/tritium,
+/turf/open/floor/iron,
+/area/station/science/ordnance/storage)
 "dFI" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/seccarts{
@@ -20102,6 +20111,7 @@
 /area/station/security/checkpoint/engineering)
 "fSq" = (
 /obj/structure/sign/warning/fire/directional/south,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "fSr" = (
@@ -22753,6 +22763,7 @@
 /area/station/commons/vacant_room/office)
 "gVI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gVO" = (
@@ -32501,6 +32512,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kIE" = (
@@ -43003,6 +43015,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"oEd" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "oEf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -103349,7 +103365,7 @@ aaa
 hZr
 gZE
 hJN
-wQm
+oEd
 pwG
 vTF
 akP
@@ -119812,9 +119828,9 @@ pHM
 hkN
 gIj
 loa
-ygC
-ygC
-ygC
+dFD
+dFD
+buX
 fSq
 dfz
 hji

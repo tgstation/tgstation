@@ -10168,6 +10168,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance)
 "dyj" = (
@@ -32816,6 +32817,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "kOw" = (
@@ -43034,6 +43036,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "onm" = (
@@ -45064,6 +45067,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "oYi" = (
@@ -56381,6 +56385,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "sIF" = (
@@ -63588,6 +63593,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vaP" = (
@@ -67012,6 +67018,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wbT" = (
@@ -72580,6 +72587,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance)
 "xRE" = (
