@@ -305,24 +305,34 @@
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
-	if(close_enough && !combat_mode && !ismob(clicked_on)) // melbert todo : why did i put the right click check here?
+	if(close_enough && !combat_mode && !ismob(clicked_on))
 		changeNext_move(CLICK_CD_MELEE)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
-	var/datum/attack_style/using_what_style = select_attack_style(clicked_on, clicked_with_what)
+	// Handle swinging at the clicked atom
+	if(combat_mode)
+		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
+		// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
+		if(clicked_with_what.item_flags & NOBLUDGEON)
+			using_what_style = null
+		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
+		else if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
+			var/mob/living/living_clicked = clicked_on
+			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
+				clicked_with_what = null
 
-	// Do an attack
-	if(using_what_style)
-		using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
-		return
+		if(using_what_style)
+			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
+			return
 
-	// Or if we're not meant to be doing an attack, do a normal attack chain
+	// Handle non-combat uses of "attacking", more accurately "using an item on a mob", IE surgery
 	if(close_enough)
+		changeNext_move(CLICK_CD_MELEE)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
-	// Or if we're not adjacent, just do afterattack
+	// Handle afterattack, called regardless of if an attack was done, allowing "ranged click on" interactions for items
 	if(right_clicking)
 		var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
 		if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
@@ -615,37 +625,6 @@
 			return TRUE
 
 	return FALSE
-
-/**
- * This proc is used in click chain to determine what attack style to use when given certain click parameters.
- *
- * * clicked_on - The atom that was clicked on.
- * * holding - The item that being used to click on clicked_on.
- *
- * Return null to not execute any attack style.
- * Return an attack style singleton to attempt to execute that style.
- */
-/mob/proc/select_attack_style(atom/clicked_on, obj/item/holding)
-	return null
-
-/mob/living/select_attack_style(atom/clicked_on, obj/item/holding)
-	. = holding.attack_style
-	if(isnull(.))
-		return null
-
-	if(holding.item_flags & NOBLUDGEON)
-		return null
-
-	if(isliving(clicked_on))
-		if(holding.item_flags & SURGICAL_TOOL)
-			var/mob/living/living_clicked = clicked_on
-			if(length(living_clicked.surgeries))
-				return null
-
-	else if(!combat_mode)
-		return null
-
-	return .
 
 #undef MAX_SAFE_BYOND_ICON_SCALE_TILES
 #undef MAX_SAFE_BYOND_ICON_SCALE_PX
