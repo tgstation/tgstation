@@ -4757,6 +4757,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/coroner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bMp" = (
@@ -5628,6 +5629,7 @@
 /area/station/commons/dorms)
 "cft" = (
 /obj/machinery/light/small/directional/north,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "cfv" = (
@@ -15916,6 +15918,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fYI" = (
@@ -20242,7 +20247,7 @@
 "hzi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/office/tactical{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -29495,8 +29500,7 @@
 /area/station/maintenance/port/fore)
 "kHV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/reinforced,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/vending/wardrobe/coroner_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kIG" = (
@@ -36255,7 +36259,9 @@
 "ndZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small/directional/east,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "neA" = (
@@ -41642,10 +41648,11 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/aisat/exterior)
 "pap" = (
-/obj/machinery/vending/wardrobe/coroner_wardrobe,
 /obj/effect/turf_decal/trimline/neutral/filled/warning{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "pav" = (
@@ -50490,7 +50497,6 @@
 /area/station/engineering/main)
 "shY" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/landmark/start/coroner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -59770,6 +59776,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vvp" = (
@@ -65165,8 +65173,10 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "xsv" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
+/obj/structure/table/reinforced,
+/obj/item/table_clock{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xsy" = (
@@ -93239,7 +93249,7 @@ cSW
 hZV
 xeT
 lxT
-pYo
+kHV
 kOM
 sKG
 uWM
@@ -93494,7 +93504,7 @@ iqz
 dVN
 wrE
 hZV
-kHV
+pYo
 shY
 gdz
 pdV

@@ -10065,6 +10065,9 @@
 	req_access = list("morgue_secure");
 	name = "Secure Morgue Trays"
 	},
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bZN" = (
@@ -10548,9 +10551,7 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "cgw" = (
-/obj/machinery/computer/operating{
-	dir = 8
-	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "cgN" = (
@@ -11544,6 +11545,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -14336,7 +14340,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "dDZ" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/table/optable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dEc" = (
@@ -17601,6 +17605,9 @@
 /area/station/science/ordnance/burnchamber)
 "ePi" = (
 /obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ePj" = (
@@ -24843,8 +24850,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "hHm" = (
-/obj/structure/table/optable,
 /obj/machinery/newscaster/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "hHu" = (
@@ -27315,10 +27325,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "iEt" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "iEz" = (
@@ -29914,6 +29923,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/station/service/theater)
+"jzf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "jzo" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40033,19 +40055,6 @@
 "nim" = (
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
-"niw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/delivery/white{
-	color = "#52B4E9"
-	},
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "niF" = (
 /obj/structure/railing/corner,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -48204,8 +48213,13 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "qfS" = (
-/obj/machinery/smartfridge/organ,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qga" = (
@@ -48921,13 +48935,12 @@
 /area/station/hallway/primary/tram/right)
 "qtQ" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
-/obj/structure/table/reinforced,
-/obj/item/table_clock{
-	pixel_y = 8
-	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/table_clock{
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qtS" = (
@@ -53194,6 +53207,7 @@
 /area/station/command/meeting_room)
 "rYN" = (
 /obj/machinery/light/small/directional/south,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "rYO" = (
@@ -55061,7 +55075,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "sFA" = (
-/obj/structure/mannequin/skeleton,
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "sFE" = (
@@ -69093,7 +69108,9 @@
 /turf/open/floor/iron/freezer,
 /area/station/science/lower)
 "xHx" = (
-/obj/structure/chair/office/tactical,
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xIe" = (
@@ -70534,8 +70551,7 @@
 "yjl" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/table/reinforced,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/computer/operating,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "yjm" = (
@@ -172368,7 +172384,7 @@ clT
 clT
 oIa
 dPo
-niw
+jzf
 oZq
 vrU
 std
