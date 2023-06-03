@@ -228,10 +228,10 @@
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
-	height = 16;
+	height = 100;
 	name = "Deep Space";
 	shuttle_id = "pirate_home";
-	width = 17
+	width = 100
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
