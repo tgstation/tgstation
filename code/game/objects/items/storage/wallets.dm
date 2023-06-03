@@ -30,6 +30,7 @@
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/implanter,
+		/obj/item/laser_pointer,
 		/obj/item/lighter,
 		/obj/item/lipstick,
 		/obj/item/match,
