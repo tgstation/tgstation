@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
-/datum/pirate_gang/grey
+/datum/pirate_gang/interdyne
 	name = "Expharmacist Unrest"
 
 	is_heavy_threat = TRUE
