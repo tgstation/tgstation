@@ -242,8 +242,8 @@
 	open = 0
 	},
 /obj/item/soap/deluxe,
-/obj/machinery/shower/directional/north,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/shower/directional/south,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "O" = (
