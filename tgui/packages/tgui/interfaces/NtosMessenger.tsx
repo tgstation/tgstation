@@ -42,6 +42,7 @@ type NtosMessengerData = {
   is_silicon: boolean;
   ringer_status: boolean;
   can_spam: boolean;
+  on_spam_cooldown: boolean;
   virus_attach: boolean;
   sending_virus: boolean;
   sending_and_receiving: boolean;
@@ -443,7 +444,8 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 }
 
 const SendToAllModal = (_: any, context: any) => {
-  const { act } = useBackend(context);
+  const { data, act } = useBackend<NtosMessengerData>(context);
+  const { on_spam_cooldown } = data;
 
   const [msg, setMsg] = useLocalState<string>(context, 'everyoneMessage', '');
 
@@ -458,7 +460,13 @@ const SendToAllModal = (_: any, context: any) => {
           <Stack.Item>
             <Button
               icon="arrow-right"
-              disabled={msg === ''}
+              disabled={on_spam_cooldown || msg === ''}
+              tooltip={
+                on_spam_cooldown
+                  ? 'Wait before sending more messages!'
+                  : undefined
+              }
+              tooltipPosition="auto-start"
               onClick={() => {
                 act('PDA_sendEveryone', { msg: msg });
                 setMsg('');
