@@ -321,9 +321,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	switch(severity)
 		if(1)
-			emp_knockout(16 SECONDS )
+			emp_knockout(16 SECONDS)
 		if(2)
-			emp_knockout(6 SECONDS )
+			emp_knockout(6 SECONDS)
 
 /mob/living/silicon/robot/proc/emp_knockout(deciseconds)
 	if(!src)
@@ -442,8 +442,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!src.has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
 		src.add_movespeed_modifier(/datum/movespeed_modifier/shove)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), P.throwforce / 5)
-	. = ..()
+	return ..()
 
 /mob/living/silicon/proc/clear_throw_slowdown()
-	if(src)
-		src.remove_movespeed_modifier(/datum/movespeed_modifier/shove)
+	src.remove_movespeed_modifier(/datum/movespeed_modifier/shove)

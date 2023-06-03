@@ -35,10 +35,12 @@
 	attacked_mob.set_confusion_if_lower(5 SECONDS)
 	attacked_mob.adjust_stutter(20 SECONDS)
 	attacked_mob.set_jitter_if_lower(5 SECONDS)
-
-	addtimer()
-
-	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
+	if(issilicon(attacked_mob))
+		attacked_mob.emp_act(1)
+		attacked_mob.visible_message(span_danger("[user] shocks [attacked_mob] with [src]!"), \
+					span_userdanger("[user] shocks you with [src]!"))
+	else
+		attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
