@@ -171,15 +171,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 		var/datum/species/user_species = species_type || supplied_prefs.read_preference(/datum/preference/choiced/species)
 		if(quirk_name in species_quirk_blacklist[initial(user_species.id)])
-			if(give_warning)
-				var/warning_tgui_alert = tgui_alert(
-					user = supplied_prefs.parent,
-					message = "The species you are changing to cannot use some quirks you have. Changing species will have them removed.",
-					title = "Species Changing",
-					buttons = list("Change Species", "Nevermind"),
-				)
-				if(warning_tgui_alert != "Change Species")
-					return FALSE
+			if(give_warning && give_quirk_removal_warning(supplied_prefs))
+				return FALSE
 			continue
 
 		var/blacklisted = FALSE
@@ -225,6 +218,25 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		return quirks
 
 	return new_quirks
+
+/**
+ * give_quirk_removal_warning
+ *
+ * Gives a tgui alert to the user about their quirks not being compatible.
+ * This is meant to be triggered by players manually, never called on its own.
+ * Args:
+ * - supplied_prefs: The preferences of the person we're warning of this.
+ */
+/datum/controller/subsystem/processing/quirks/proc/give_quirk_removal_warning(datum/preferences/supplied_prefs)
+	var/warning_tgui_alert = tgui_alert(
+		user = supplied_prefs.parent,
+		message = "The species you are changing to cannot use some quirks you have. Changing species will have them removed.",
+		title = "Species Changing",
+		buttons = list("Change Species", "Nevermind"),
+	)
+	if(warning_tgui_alert == "Change Species")
+		return TRUE
+	return FALSE
 
 #undef EXP_ASSIGN_WAYFINDER
 #undef RANDOM_QUIRK_BONUS
