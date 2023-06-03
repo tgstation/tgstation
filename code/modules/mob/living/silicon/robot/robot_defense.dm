@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 /mob/living/silicon/on_hit(obj/projectile/P)
 	if(!src.has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
 		src.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), P.throwforce / 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), (P.throwforce / 10) SECONDS)
 	return ..()
 
 /mob/living/silicon/proc/clear_throw_slowdown()
