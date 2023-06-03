@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "interdyne"
 	ship_name_pool = "interdyne_names" //just points to THE ONE AND ONLY
 
-	threat_title = "Fundings for Research"
+	threat_title = "Funding for Research"
 	threat_content = "Greetings, this is the %SHIPNAME. We require some funding for our operations. \
 		%PAYOFF credits should suffice."
 	arrival_announcement = "We humbly ask for a substantial amount of income for the future research of our cause. It sure would be a shame if you got sick, but we can fix that."
