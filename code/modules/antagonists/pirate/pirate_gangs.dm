@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	threat_content = "Greetings, this is the %SHIPNAME. We require some funding for our operations. \
 		%PAYOFF credits should suffice."
 	arrival_announcement = "We humbly ask for a substantial amount of income for the future research of our cause. It sure would be a shame if you got sick, but we can fix that."
-	possible_answers = list("Very well.","Get a job.")
+	possible_answers = list("Very well.","Get a job!")
 
 	response_received = "Thank you for your generosity. Your money will not be wasted."
 	response_too_late = "We hope you like skin cancer!"
