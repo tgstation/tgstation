@@ -85,7 +85,7 @@
 	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
 
 /datum/movespeed_modifier/borg_throw
-	multiplicative_slowdown = 2
+	multiplicative_slowdown = 0.9
 
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
