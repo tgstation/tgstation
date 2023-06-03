@@ -232,8 +232,7 @@ const ContactsScreen = (props: any, context: any) => {
                 fluid
                 onClick={() => {
                   act('PDA_viewMessages', { ref: messenger.ref });
-                }}
-              >
+                }}>
                 {messenger.name} ({messenger.job})
               </Button>
             ))}
@@ -269,8 +268,7 @@ const ChatMessage = (props: ChatMessageProps) => {
         border: '1px solid #202020',
         'border-radius': '3px',
         display: 'inline-flex',
-      }}
-    >
+      }}>
       <Section title={sender} textAlign="left" minWidth={10}>
         <Box
           style={{ 'word-wrap': 'break-word' }}
@@ -371,8 +369,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           key={index}
           mt={isSwitch ? 1 : 0.5}
           shrink={0}
-          textAlign={message.outgoing ? 'right' : ''}
-        >
+          textAlign={message.outgoing ? 'right' : ''}>
           <ChatMessage
             sender={isSwitch ? (message.outgoing ? 'You' : recp.name) : null}
             msg={message.contents}
@@ -401,8 +398,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             scrollable
             fill
             title={`${recp.name} (${recp.job})`}
-            scrollableRef={this.scrollRef}
-          >
+            scrollableRef={this.scrollRef}>
             <Stack vertical justify="flex-end" fill>
               <Stack.Item textAlign="center" fontSize={1} color="gray">
                 This is the beginning of your chat with {recp.name}.
@@ -466,8 +462,7 @@ const SendToAllModal = (_: any, context: any) => {
               onClick={() => {
                 act('PDA_sendEveryone', { msg: msg });
                 setMsg('');
-              }}
-            >
+              }}>
               Send
             </Button>
           </Stack.Item>
