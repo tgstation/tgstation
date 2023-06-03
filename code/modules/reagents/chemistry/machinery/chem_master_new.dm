@@ -3,6 +3,7 @@
 #define BEAKER "beaker"
 #define BUFFER "buffer"
 #define CONDIMENTS "condiments"
+#define DEBUG_CONTAINERS "debug"
 #define TUBES "tubes"
 #define PILLS "pills"
 #define PATCHES "patches"
@@ -42,6 +43,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	)),
 	PATCHES = typecacheof(list(
 		/obj/item/reagent_containers/pill/patch/style
+	)),
+	DEBUG_CONTAINERS = typecacheof(list(
+		/obj/item/reagent_containers
 	)),
 ))
 
@@ -328,11 +332,21 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		CONDIMENTS = GLOB.chem_master_containers[CONDIMENTS],
 	)
 
+/obj/machinery/chem_master_new/debug
+	name = "DebugMaster 3000"
+	desc = "Used to create any reagent containers."
+
+/obj/machinery/chem_master_new/debug/load_printable_containers()
+	printable_containers = list(
+		DEBUG_CONTAINERS = GLOB.chem_master_containers[DEBUG_CONTAINERS],
+	)
+
 #undef MODE_DESTROY
 #undef MODE_MOVE
 #undef BEAKER
 #undef BUFFER
 #undef CONDIMENTS
+#undef DEBUG_CONTAINERS
 #undef TUBES
 #undef PILLS
 #undef PATCHES
