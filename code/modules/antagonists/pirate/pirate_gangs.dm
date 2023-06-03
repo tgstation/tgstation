@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
 
 ///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
-	name = "The Grey Tide-6"
+	name = "The Grey Tide"
 
 	ship_template_id = "grey"
 	ship_name_pool = "grey_names" //just points to THE ONE AND ONLY
