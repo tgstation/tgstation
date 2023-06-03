@@ -49,7 +49,7 @@ GLOBAL_VAR(restart_counter)
  * - Dominion/Cyberboss
  *
  * Where to put init shit quick guide:
- * If you need to happen before the mc is created: world/Genesis. 
+ * If you need it to happen before the mc is created: world/Genesis. 
  * If you need it to happen last: world/New(), 
  * Otherwise, in a subsystem preinit or init. Subsystems can set an init priority.
  */
