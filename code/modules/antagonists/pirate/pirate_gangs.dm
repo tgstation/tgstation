@@ -135,8 +135,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
 
 ///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
-/datum/pirate_gang/grey
-	name = "The Grey Tide-6"
+	name = "The Grey Tide"
 
 	ship_template_id = "grey"
 	ship_name_pool = "grey_names" //just points to THE ONE AND ONLY
@@ -145,8 +144,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	threat_content = "Hey it's %SHIPNAME. Give us money. \
 		%PAYOFF might be enough."
 	arrival_announcement = "Nice stuff you got there, it's ours now."
-	possible_answers = list("Please don't hurt me.","Grey Shit.")
+	possible_answers = list("Please don't hurt me.","GO AWAY GREY SHIT!!.")
 
-	response_received = "THEY SERIOUSLY GAVE US THE MONEY??!! WHAT!!.. we are still gona steal the rest."
-	response_too_late = "We all knew it was gonna come to this"
-	response_not_enough = "Damn it seems you are broke, too bad."
+	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
+	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
+	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."

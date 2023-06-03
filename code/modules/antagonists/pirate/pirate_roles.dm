@@ -97,13 +97,13 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne
 	name = "\improper Interdyne sleeper"
-	desc = "A cryo sleeper, looking impeccably clean!"
+	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
 	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
-	flavour_text = "The station has refused to fund your research, you will now have to convince them to donate to your charitable cause."
+	flavour_text = "The station has refused to fund your research, so you will 'convince' them to donate to your charitable cause."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "an Ex-Interdyne employee"
+	prompt_name = "An Ex-Interdyne employee"
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
 
