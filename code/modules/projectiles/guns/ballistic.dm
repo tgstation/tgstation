@@ -44,6 +44,8 @@
 	var/empty_alarm_volume = 70
 	///whether empty alarm sound varies
 	var/empty_alarm_vary = TRUE
+	///Whether our gun clicks when it approaches an empty magazine/chamber
+	var/click_on_low_ammo = TRUE
 
 	///Whether the gun will spawn loaded with a magazine
 	var/spawnwithmagazine = TRUE
@@ -91,6 +93,8 @@
 	var/recent_rack = 0
 	///Whether the gun can be tacloaded by slapping a fresh magazine directly on it
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
+	///Whether we need to hold the gun in our off-hand to load it. FALSE means we can load it literally anywhere. Important for weapons like bows.
+	var/must_hold_to_load = FALSE
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
@@ -152,11 +156,11 @@
 	var/play_click = round(sqrt(magazine?.max_ammo * 2)) > get_ammo()
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
-		if(play_click)
+		if(play_click && click_on_low_ammo)
 			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
-		if(play_click)
+		if(play_click && click_on_low_ammo)
 			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
@@ -357,6 +361,8 @@
 				balloon_alert(user, "already loaded!")
 		return
 	if (isammocasing(A) || istype(A, /obj/item/ammo_box))
+		if (must_hold_to_load && !check_if_held(user))
+			return
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
 			if (chambered && !chambered.loaded_projectile)
 				chambered.forceMove(drop_location())
@@ -394,6 +400,11 @@
 			return
 
 	return FALSE
+
+/obj/item/gun/ballistic/proc/check_if_held(mob/user)
+	if(src != user.get_inactive_held_item())
+		return FALSE
+	return TRUE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
