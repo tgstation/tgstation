@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	arrival_announcement = "We humbly ask for a substantial amount of income for the future research of our cause. It sure would be a shame if you got sick, but we can fix that."
 	possible_answers = list("Very well.","Get a job.")
 
-	response_received = "Thanks for your generosity, your money wont be wasted."
+	response_received = "Thank you for your generosity. Your money will not be wasted."
 	response_too_late = "We hope you like skin cancer!"
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
 
