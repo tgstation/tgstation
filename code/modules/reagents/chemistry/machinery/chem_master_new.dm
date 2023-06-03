@@ -1,15 +1,15 @@
-#define MODE_DESTROY 0
-#define MODE_MOVE 1
-#define BEAKER "beaker"
-#define BUFFER "buffer"
-#define CONDIMENTS "condiments"
-#define TUBES "tubes"
-#define PILLS "pills"
-#define PATCHES "patches"
+#define TRANSFER_MODE_DESTROY 0
+#define TRANSFER_MODE_MOVE 1
+#define TARGET_BEAKER "beaker"
+#define TARGET_BUFFER "buffer"
+#define CAT_CONDIMENTS "condiments"
+#define CAT_TUBES "tubes"
+#define CAT_PILLS "pills"
+#define CAT_PATCHES "patches"
 
 /// List of containers the Chem Master machine can print
 GLOBAL_LIST_INIT(chem_master_containers, list(
-	CONDIMENTS = list(
+	CAT_CONDIMENTS = list(
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/condiment/flour,
 		/obj/item/reagent_containers/condiment/sugar,
@@ -34,13 +34,13 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		/obj/item/reagent_containers/condiment/honey,
 		/obj/item/reagent_containers/condiment/pack,
 	),
-	TUBES = list(
+	CAT_TUBES = list(
 		/obj/item/reagent_containers/cup/tube
 	),
-	PILLS = typecacheof(list(
+	CAT_PILLS = typecacheof(list(
 		/obj/item/reagent_containers/pill/style
 	)),
-	PATCHES = typecacheof(list(
+	CAT_PATCHES = typecacheof(list(
 		/obj/item/reagent_containers/pill/patch/style
 	))
 ))
@@ -59,7 +59,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// Inserted reagent container
 	var/obj/item/reagent_containers/beaker
 	/// Whether separated reagents should be moved back to container or destroyed.
-	var/mode = MODE_MOVE
+	var/transfer_mode = TRANSFER_MODE_MOVE
+	/// Whether reagent analysis screen is active
+	var/reagent_analysis_mode = FALSE
+	/// Reagent being analyzed
+	var/datum/reagent/analyzed_reagent
 	/// List of printable container types
 	var/list/printable_containers = list()
 	/// Container used by default to reset to (REF)
@@ -159,9 +163,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /obj/machinery/chem_master_new/proc/load_printable_containers()
 	printable_containers = list(
-		TUBES = GLOB.chem_master_containers[TUBES],
-		PILLS = GLOB.chem_master_containers[PILLS],
-		PATCHES = GLOB.chem_master_containers[PATCHES],
+		CAT_TUBES = GLOB.chem_master_containers[CAT_TUBES],
+		CAT_PILLS = GLOB.chem_master_containers[CAT_PILLS],
+		CAT_PATCHES = GLOB.chem_master_containers[CAT_PATCHES],
 	)
 
 /obj/machinery/chem_master_new/ui_assets(mob/user)
@@ -197,41 +201,65 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master_new/ui_data(mob/user)
 	var/list/data = list()
 
-	data["hasBeaker"] = beaker ? TRUE : FALSE
-	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
-	data["beakerMaxVolume"] = beaker ? beaker.volume : null
-	var/list/beaker_contents = list()
-	if(beaker)
-		for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-			beaker_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
-	data["beakerContents"] = beaker_contents
-
-	var/list/buffer_contents = list()
-	if(reagents.total_volume)
-		for(var/datum/reagent/reagent in reagents.reagent_list)
-			buffer_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
-	data["bufferContents"] = buffer_contents
-	data["bufferCurrentVolume"] = round(reagents.total_volume, 0.01)
-
-	data["mode"] = mode
-
-	data["hasContainerSuggestion"] = !!has_container_suggestion
-	if(has_container_suggestion)
-		data["doSuggestContainer"] = !!do_suggest_container
-		if(do_suggest_container)
-			if(reagents.total_volume > 0)
-				var/master_reagent = reagents.get_master_reagent()
-				suggested_container = get_suggested_container(master_reagent)
+	data["reagentAnalysisMode"] = reagent_analysis_mode
+	if(reagent_analysis_mode)
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[analyzed_reagent]
+		var/state
+		switch(reagent.reagent_state)
+			if(SOLID)
+				state = "Solid"
+			if(LIQUID)
+				state = "Liquid"
+			if(GAS)
+				state = "Gas"
 			else
-				suggested_container = default_container
-			data["suggestedContainer"] = suggested_container
-			selected_container = suggested_container
-		else if (isnull(selected_container))
-			selected_container = default_container
+				state = "Unknown"
+		data["analysisData"] = list(
+			"name" = reagent.name,
+			"state" = state,
+			"pH" = reagent.ph,
+			"color" = reagent.color,
+			"description" = reagent.description,
+			"metaRate" = reagent.metabolization_rate,
+			"overdose" = reagent.overdose_threshold,
+			"addictionTypes" = reagents.parse_addictions(reagent),
+		)
+	else
+		data["hasBeaker"] = beaker ? TRUE : FALSE
+		data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
+		data["beakerMaxVolume"] = beaker ? beaker.volume : null
+		var/list/beaker_contents = list()
+		if(beaker)
+			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
+				beaker_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
+		data["beakerContents"] = beaker_contents
 
-	data["selectedContainerRef"] = selected_container
-	var/obj/item/reagent_containers/container = locate(selected_container)
-	data["selectedContainerVolume"] = initial(container.volume)
+		var/list/buffer_contents = list()
+		if(reagents.total_volume)
+			for(var/datum/reagent/reagent in reagents.reagent_list)
+				buffer_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
+		data["bufferContents"] = buffer_contents
+		data["bufferCurrentVolume"] = round(reagents.total_volume, 0.01)
+
+		data["transferMode"] = transfer_mode
+
+		data["hasContainerSuggestion"] = !!has_container_suggestion
+		if(has_container_suggestion)
+			data["doSuggestContainer"] = !!do_suggest_container
+			if(do_suggest_container)
+				if(reagents.total_volume > 0)
+					var/master_reagent = reagents.get_master_reagent()
+					suggested_container = get_suggested_container(master_reagent)
+				else
+					suggested_container = default_container
+				data["suggestedContainer"] = suggested_container
+				selected_container = suggested_container
+			else if (isnull(selected_container))
+				selected_container = default_container
+
+		data["selectedContainerRef"] = selected_container
+		var/obj/item/reagent_containers/container = locate(selected_container)
+		data["selectedContainerVolume"] = initial(container.volume)
 
 	return data
 
@@ -250,8 +278,19 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		var/target = params["target"]
 		return transfer_reagent(reagent_type, amount, target)
 
-	if(action == "toggleMode")
-		mode = !mode
+	if(action == "toggleTransferMode")
+		transfer_mode = !transfer_mode
+		return TRUE
+
+	if(action == "analyze")
+		analyzed_reagent = GLOB.name2reagent[params["id"]]
+		if(analyzed_reagent)
+			reagent_analysis_mode = TRUE
+			return TRUE
+
+	if(action == "stopAnalysis")
+		reagent_analysis_mode = FALSE
+		analyzed_reagent = null
 		return TRUE
 
 	if(action == "toggleContainerSuggestion")
@@ -278,7 +317,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
-	if(!(initial(container_style.reagent_flags) & OPENCONTAINER))
+	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get reagent name and units in the name
 		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([vol_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",
@@ -304,23 +343,23 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		amount = text2num(input("Enter the amount you want to transfer:", name, ""))
 	if (amount == null || amount <= 0)
 		return FALSE
-	if (!beaker && target == BEAKER && mode == MODE_MOVE)
+	if (!beaker && target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		return FALSE
 
 	use_power(active_power_usage)
 
-	if (target == BUFFER)
+	if (target == TARGET_BUFFER)
 		var/datum/reagent/reagent = beaker.reagents.get_reagent(reagent_type)
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
 		beaker.reagents.trans_id_to(src, reagent_type, amount)
 		return TRUE
 
-	if (target == BEAKER && mode == MODE_DESTROY)
+	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_DESTROY)
 		reagents.remove_reagent(reagent_type, amount)
 		return TRUE
 
-	if (target == BEAKER && mode == MODE_MOVE)
+	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		var/datum/reagent/reagent = reagents.get_reagent(reagent_type)
 		if(!check_reactions(reagent, reagents))
 			return FALSE
@@ -352,7 +391,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /obj/machinery/chem_master_new/condimaster/load_printable_containers()
 	printable_containers = list(
-		CONDIMENTS = GLOB.chem_master_containers[CONDIMENTS],
+		CAT_CONDIMENTS = GLOB.chem_master_containers[CAT_CONDIMENTS],
 	)
 
 /// Retrieve REF to the best container for provided reagent
@@ -364,11 +403,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 				return REF(container)
 	return default_container
 
-#undef MODE_DESTROY
-#undef MODE_MOVE
-#undef BEAKER
-#undef BUFFER
-#undef CONDIMENTS
-#undef TUBES
-#undef PILLS
-#undef PATCHES
+#undef TRANSFER_MODE_DESTROY
+#undef TRANSFER_MODE_MOVE
+#undef TARGET_BEAKER
+#undef TARGET_BUFFER
+#undef CAT_CONDIMENTS
+#undef CAT_TUBES
+#undef CAT_PILLS
+#undef CAT_PATCHES
