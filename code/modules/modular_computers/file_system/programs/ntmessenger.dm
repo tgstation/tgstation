@@ -1,12 +1,12 @@
 GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger) // a list of all active and visible messengers
 
 ///Registers an NTMessenger instance to the list of TabletMessengers. If it exists, updates it.
-/proc/add_messenger(obj/item/modular_computer/messenger)
+/proc/add_messenger(datum/computer_file/program/messenger/msgr)
+	var/obj/item/modular_computer/messenger_device = msgr.computer
 	// a bunch of empty PDAs are normally allocated, we don't want that clutter
-	if(!messenger.saved_identification || !messenger.saved_job)
+	if(!messenger_device.saved_identification || !messenger_device.saved_job)
 		return
 
-	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
 	if(!istype(msgr))
 		return
 
@@ -17,8 +17,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	GLOB.TabletMessengers[msgr_ref] = msgr
 
 ///Unregisters an NTMessenger instance from the TabletMessengers table.
-/proc/remove_messenger(obj/item/modular_computer/messenger)
-	var/datum/computer_file/program/messenger/msgr = locate() in messenger.stored_files
+/proc/remove_messenger(datum/computer_file/program/messenger/msgr)
 	if(!istype(msgr))
 		return
 
@@ -89,10 +88,25 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
+/datum/computer_file/program/messenger/on_install()
+	. = ..()
+	RegisterSignal(computer, COMSIG_MODPC_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
+	RegisterSignal(computer, COMSIG_MODPC_IMPRINT_RESET, PROC_REF(on_imprint_reset))
+
+/datum/computer_file/program/messenger/proc/on_imprint_added()
+	SIGNAL_HANDLER
+	add_messenger(src)
+
+/datum/computer_file/program/messenger/proc/on_imprint_reset()
+	SIGNAL_HANDLER
+	remove_messenger(src)
+
 /datum/computer_file/program/messenger/Destroy(force)
 	if(!QDELETED(computer))
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
-	remove_messenger(computer)
+	remove_messenger(src)
+	UnregisterSignal(computer, COMSIG_MODPC_IMPRINT_UPDATED)
+	UnregisterSignal(computer, COMSIG_MODPC_IMPRINT_RESET)
 	return ..()
 
 /datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)
@@ -274,6 +288,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	data["viewing_messages_of"] = viewing_messages_of ? messengers[viewing_messages_of] : null
 	data["photo"] = photo_path
 	data["can_spam"] = spam_mode
+	data["on_spam_cooldown"] = can_send_everyone_message()
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 	if(disk && istype(disk))
@@ -289,7 +304,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/computer_file/program/messenger/target)
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
-	send_message(usr, list(target), input_message)
+	send_message(user, list(target), input_message)
 
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
 	var/list/targets = list()

@@ -265,14 +265,6 @@
 	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
 
-/obj/item/modular_computer/pda/imprint_id(name = null, job_name = null)
-	. = ..()
-	add_messenger(src)
-
-/obj/item/modular_computer/pda/reset_imprint()
-	. = ..()
-	remove_messenger(src)
-
 /**
  * Nuclear PDA
  *
