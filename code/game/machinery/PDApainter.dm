@@ -328,19 +328,16 @@
 					pda_path = path
 					break
 
-			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
-				stored_pda.set_greyscale(initial(pda_path.greyscale_colors), initial(pda_path.greyscale_config))
-			else
-				stored_pda.icon = initial(pda_path.icon)
-			stored_pda.icon_state = initial(pda_path.icon_state)
-			stored_pda.desc = initial(pda_path.desc)
-			stored_pda.reset_imprint()
+			stored_pda.paintjob = pda_path
+			stored_pda.update_appearance(UPDATE_ICON | UPDATE_NAME | UPDATE_DESC)
 
 			return TRUE
-
 		if("reset_pda")
-			stored_pda.reset_imprint()
+			if((machine_stat & BROKEN) || !stored_pda)
+				return TRUE
 
+			stored_pda.reset_imprint()
+			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)
 				return TRUE
