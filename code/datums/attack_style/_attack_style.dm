@@ -131,27 +131,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Main attack loop starts here.
 	while(length(affecting))
 		var/turf/hitting = popleft(affecting)
-		// - The midpoint is always hitable, this isn't very "sensible" but if this wasn't the case
-		// one would be completely immune to being attacked by standing on a dense object.
-		// - The first turf is always hitable, for similar reasons to above.
-		// - Every other turf, though, will block ongoing swings.
-		// Unfortunately this robs us of some cool interactions like not being able to fight in a 1 wide hallways
-		// with a wide arc weapon like a baseball bat, but maybe it's for the better?
-		if(affecting_index != 1 && affecting_index != midpoint)
-			var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
-			if(blocking_us)
-				attacker.visible_message(
-					span_warning("[attacker]'s attack collides with [blocking_us]!"),
-					span_warning("[blocking_us] blocks your attack partway!"),
-				)
-				if(blocking_us.uses_integrity)
-					log_combat(attacker, blocking_us, "hit mid-swing", weapon)
-					blocking_us.take_damage(weapon.force, weapon.damtype, MELEE, TRUE,
-						get_dir(attacker, blocking_us), weapon.armour_penetration)
-				else
-					blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
-
-				return attack_flag | ATTACK_STYLE_BLOCKED
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting_index)
@@ -211,6 +190,24 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			// However, if the attack was a block and not a hit, we stop at this turf.
 			if(attack_flag & ATTACK_STYLE_BLOCKED)
 				break
+
+		// Right after dealing damage we handle getting blocked by dense stuff
+		// If there's something dense in the turf the rest of the swing is cancelled
+		// This means wide arc swinging weapons can't hit in tight corridors
+		var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
+		if(blocking_us)
+			attacker.visible_message(
+				span_warning("[attacker]'s attack collides with [blocking_us]!"),
+				span_warning("[blocking_us] blocks your attack partway!"),
+			)
+			if(blocking_us.uses_integrity)
+				log_combat(attacker, blocking_us, "hit mid-swing", weapon)
+				blocking_us.take_damage(weapon.force, weapon.damtype, MELEE, TRUE,
+					get_dir(attacker, blocking_us), weapon.armour_penetration)
+			else
+				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
+
+			return attack_flag | ATTACK_STYLE_BLOCKED
 
 		// Finally, we handle travel time.
 		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
@@ -343,7 +340,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /// This is essentially the same as item melee attack chain, but with some guff not necessary for combat cut out.
 /datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	. = NONE
+	var/attack_result = NONE
 
 	var/go_to_attack = !right_clicking
 	if(right_clicking)
@@ -358,7 +355,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	if(go_to_attack && weapon.pre_attack(smacked, attacker))
-		return . | ATTACK_STYLE_CANCEL
+		return ATTACK_STYLE_CANCEL
+
+	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
+	if(attacker != smacked && smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
+		return ATTACK_STYLE_BLOCKED
 
 	var/go_to_afterattack = !right_clicking
 	if(right_clicking)
@@ -373,7 +374,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
-		return . | ATTACK_STYLE_CANCEL
+		return ATTACK_STYLE_CANCEL
 
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
@@ -381,28 +382,28 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(attacker == smacked && attacker.client)
 		attacker.client.give_award(/datum/award/achievement/misc/selfouch, attacker)
 
-	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
-	. |= smacked.attacked_by(weapon, attacker)
 	log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
 
-	// Any of these flags means there is no after attack
-	if(. & (ATTACK_STYLE_BLOCKED|ATTACK_STYLE_CANCEL|ATTACK_STYLE_SKIPPED))
-		return .
+	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
+	if(!smacked.attacked_by(weapon, attacker))
+		return ATTACK_STYLE_SKIPPED // Attack did 0 damage
+
+	attack_result |= ATTACK_STYLE_HIT
 
 	if(right_clicking)
 		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return . | ATTACK_STYLE_CANCEL
+				return attack_result | ATTACK_STYLE_CANCEL
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-				return .
+				return attack_result
 			else
 				CRASH("afterattack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	// Don't really care about the return value of after attack.
 	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE)
-	return .
+	return attack_result
 
 /// Creates an image for use in attack animations
 /datum/attack_style/melee_weapon/proc/create_attack_image(mob/living/attacker, obj/item/weapon, turf/initial_loc, angle)

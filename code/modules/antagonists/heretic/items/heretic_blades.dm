@@ -1,3 +1,8 @@
+/datum/attack_style/melee_weapon/swing/heretic_sickle
+	cd = CLICK_CD_MELEE
+	slowdown = 0.6
+	time_per_turf = 0.15 SECONDS
+	sprite_size_multiplier = 1.33
 
 /obj/item/melee/sickly_blade
 	name = "\improper sickly blade"
@@ -21,6 +26,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	attack_style = /datum/attack_style/melee_weapon/swing
+	weapon_sprite_angle = 45
 
 	var/after_use_message = ""
 
@@ -53,7 +59,6 @@
 	if(proximity_flag)
 		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 	else
-		// Melbert todo: Test that this still works
 		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/examine(mob/user)

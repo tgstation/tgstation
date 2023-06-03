@@ -6,7 +6,7 @@
 	return 2
 
 
-/mob/living/silicon/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+/mob/living/silicon/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	. = ..()
 	if(prob(damage))
 		for(var/mob/living/buckled in buckled_mobs)

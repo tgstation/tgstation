@@ -224,7 +224,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+/mob/living/simple_animal/bot/secbot/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	. = ..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return

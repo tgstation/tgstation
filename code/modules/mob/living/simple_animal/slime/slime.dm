@@ -403,7 +403,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/slime/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+/mob/living/simple_animal/slime/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	. = ..()
 	attacked += clamp(damage * 0.5, 0, 10)
 	if(iscarbon(user))

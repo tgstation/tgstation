@@ -329,15 +329,15 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
 
-// Returns for attack style [finalize_attack] and, by extension, [melee_attack_chain].
+// Returns for attack style [finalize_attack]
 /// Fairly obvious, attack hit SOMETHING.
-/// This signifies success - play hitsound at the end of the attack
+/// This signifies success - play hitsound
 #define ATTACK_STYLE_HIT (1<<1)
 /// Fairly obvious, attack missed entirely
 /// This does not necessarily imply failure, but does play misssound at end of the attack
 /// You don't have to set this one manually, it's set by default if no mobs are affected
 #define ATTACK_STYLE_MISSED (1<<2)
-/// Attack was blocked, doesn't go to the next turf but will proceed to either Hit or Miss
+/// Attack was blocked, doesn't go to the next turf
 /// This implies a failure - In an attack execution, the following turf in the swing will not be affected.
 /// However, if there is only one turf attacked, this means very little for the actual result.
 #define ATTACK_STYLE_BLOCKED (1<<3)

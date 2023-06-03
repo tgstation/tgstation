@@ -163,15 +163,12 @@
 	user.changeNext_move(attacking_item.attack_style?.cd || CLICK_CD_MELEE)
 	attacking_item.add_fingerprint(user)
 
-	var/attack_result = attacking_item.attack_wrapper(src, user, params)
-	if(!isnull(attack_result))
-		return attack_result
+	if(user != src && check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+		var/attack_result = attacking_item.attack_wrapper(src, user, params)
+		if(!isnull(attack_result))
+			return attack_result
 
-	var/damage_result = attacked_by(attacking_item, user)
-	if(damage_result & ATTACK_STYLE_CANCEL)
-		return TRUE
-	if(damage_result & ATTACK_STYLE_SKIPPED)
-		return FALSE
+		attacked_by(attacking_item, user)
 
 	if(!attacking_item.force && !HAS_TRAIT(attacking_item, TRAIT_CUSTOM_TAP_SOUND))
 		playsound(user, 'sound/weapons/tap.ogg', attacking_item.get_clamped_volume(), TRUE, -1)
@@ -296,10 +293,6 @@
  * Living attacked_by is where all "this mob is hit and takes damage" code is handled
  *
  * It handles calculating final attack damage, checking blocking, and armor calculations
- *
- * Returns ATTACK_STYLE_BLOCKED if the attack is blocked
- * Returns ATTACK_STYLE_HIT if the attack is a success and damage is dealt
- * Returns ATTACK_STYLE_SKIPPED if the attack ends up dealing 0 damage (from armor or other factors)
  */
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
 
@@ -312,10 +305,6 @@
 		affecting = get_attacked_bodypart(user)
 
 	else
-		// note: this check does not include damage from multipliers, like physiology
-		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
-			return ATTACK_STYLE_BLOCKED
-
 		var/zone_hit_chance = 80
 		if(body_position == LYING_DOWN)
 			// bonus to accuracy for lying down
@@ -325,7 +314,7 @@
 	var/hit_zone = parse_zone(affecting?.body_zone) || "body"
 	send_item_attack_message(attacking_item, user, hit_zone, affecting)
 	if(damage <= 0)
-		return ATTACK_STYLE_SKIPPED
+		return FALSE
 
 	var/armor_block = min(ARMOR_MAX_BLOCK, run_armor_check(
 		def_zone = affecting,
@@ -364,15 +353,14 @@
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
 
-	was_attacked_effects(attacking_item, user, affecting, damage, armor_block)
-	if(damage_type == BRUTE && prob(33))
-		add_blood_from_being_attacked(attacking_item, user, affecting)
-
+	was_attacked_effects(attacking_item, user, affecting, damage, damage_type, armor_block)
 	return ATTACK_STYLE_HIT
 
-/mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+/mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ATTACKED_BY, user, attacking_item)
+	if(damage_type == BRUTE && prob(33))
+		add_blood_from_being_attacked(attacking_item, user, affecting)
 
 /**
  * This takes an item (that's probably attacking us) and gets the final damage

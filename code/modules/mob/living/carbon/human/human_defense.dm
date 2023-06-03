@@ -707,7 +707,7 @@
 		no_protection = dna.species.handle_fire(src, seconds_per_tick, times_fired, no_protection)
 	fire_handler.harm_human(seconds_per_tick, times_fired, no_protection)
 
-/mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, armor_block)
+/mob/living/carbon/human/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	. = ..()
 	if(damage > 10 || (damage >= 5 && prob(33)))
 		force_say(user)

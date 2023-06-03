@@ -15,15 +15,12 @@
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
+	force = 0
+	damtype = STAMINA
 	/// Cost to use the stun arm
 	var/charge_cost = 1000
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
-	// melbert todo : potentially not even necessary
-	if(attacked_mob.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
-		playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return FALSE
-
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell.use(charge_cost))

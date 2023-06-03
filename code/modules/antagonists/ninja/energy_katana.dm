@@ -1,3 +1,9 @@
+/datum/attack_style/melee_weapon/swing/katana
+	cd = CLICK_CD_MELEE
+	slowdown = 0.5
+	time_per_turf = 0.1 SECONDS
+	// In the future, the katana could maybe have a right click swing that stabs instead of swings.
+
 /**
  * # Energy Katana
  *
@@ -35,6 +41,8 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	attack_style = /datum/attack_style/melee_weapon/swing/katana
+	weapon_sprite_angle = 105
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
@@ -45,7 +53,6 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-// Melbert todo: Test that this still works
 /obj/item/energy_katana/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)

@@ -140,9 +140,6 @@
 			to_chat(user, wait_desc)
 		return BATON_ATTACK_DONE
 
-	if(check_parried(target, user))
-		return BATON_ATTACK_DONE
-
 	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
 		to_chat(user, span_danger("You fumble and miss [target]!"))
 		return BATON_ATTACK_DONE
@@ -164,13 +161,6 @@
 
 	if(desc)
 		target.visible_message(desc["visible"], desc["local"])
-
-// melbert todo : likely not even necessary
-/obj/item/melee/baton/proc/check_parried(mob/living/target, mob/living/user)
-	if (target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(target, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return TRUE
-	return FALSE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
