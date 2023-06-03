@@ -39,8 +39,6 @@
 	///are we registered in SSshuttles?
 	var/registered = FALSE
 
-	var/list/datum/shuttle_event/event_list
-
 ///register to SSshuttles
 /obj/docking_port/proc/register()
 	if(registered)
@@ -478,6 +476,8 @@
 	///if this shuttle can move docking ports other than the one it is docked at
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
+	///List of shuttle events that can run or are running
+	var/list/datum/shuttle_event/event_list = list()
 
 #define WORLDMAXX_CUTOFF (world.maxx + 1)
 #define WORLDMAXY_CUTOFF (world.maxx + 1)
@@ -833,7 +833,7 @@
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	check_effects()
-	process_events()
+	//process_events() if you were to add events to non-escape shuttles, uncomment this
 
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
@@ -1166,7 +1166,7 @@
 /obj/docking_port/mobile/proc/process_events()
 	var/list/removees
 	for(var/datum/shuttle_event/event as anything in event_list)
-		if(event.process() == 2) //god it would be so embarassing if I forget to replace this with the define
+		if(event.event_process() == 2) //god it would be so embarassing if I forget to replace this with the define
 			LAZYADD(removees, event)
 	for(var/item in removees)
 		event_list.Remove(item)
