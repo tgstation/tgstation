@@ -48,13 +48,17 @@ GLOBAL_PROTECT(player_ticket_history)
 			WHERE id IN ( \
 				SELECT MAX(id) FROM ticket GROUP BY round_id, ticket \
 			) \
-			AND round_id != [GLOB.round_id] \
+			AND round_id != :current_round \
 		) \
 		SELECT round_id, ticket FROM DISTINCT_TICKETS \
 		WHERE sender = :ckey OR recipient = :ckey \
 		ORDER BY id DESC \
-		LIMIT [entries]",
-		list("ckey" = ckey)
+		LIMIT :max_entries",
+		list(
+			"ckey" = ckey,
+			"current_round" = GLOB.round_id,
+			"max_entries" = entries,
+		)
 	)
 	if(!ticket_lookup.Execute())
 		qdel(ticket_lookup)
