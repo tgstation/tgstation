@@ -251,6 +251,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"js" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -291,6 +295,7 @@
 /obj/machinery/status_display/ai/directional/west{
 	pixel_y = 32
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kH" = (
@@ -356,14 +361,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/cable/layer1,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "mg" = (
@@ -408,8 +411,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
-/obj/structure/cable/layer1,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nG" = (
@@ -464,8 +465,12 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable,
 /turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"oy" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "oT" = (
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
@@ -512,7 +517,6 @@
 	dir = 8;
 	filter_type = list(/datum/gas/nitrogen)
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rq" = (
@@ -694,6 +698,7 @@
 	dir = 9;
 	network = list("ss13","engine","engineering")
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "yN" = (
@@ -952,8 +957,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc/worn_out/directional/north,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "NS" = (
@@ -965,7 +970,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
-/obj/structure/cable/layer1,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Oh" = (
@@ -998,6 +1002,14 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"OX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "PE" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
@@ -1009,6 +1021,7 @@
 /area/station/engineering/supermatter/room)
 "PF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "PQ" = (
@@ -1036,11 +1049,6 @@
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
-"Rd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "Rq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
@@ -1048,7 +1056,6 @@
 "Rr" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "RS" = (
@@ -1118,7 +1125,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Uw" = (
@@ -1158,6 +1164,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "VB" = (
@@ -1196,6 +1203,7 @@
 /area/station/engineering/supermatter/room)
 "Wn" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "XP" = (
@@ -1228,6 +1236,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/east,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Za" = (
@@ -1610,7 +1619,7 @@ fL
 GF
 uv
 Kh
-Rd
+nT
 yN
 ft
 wW
@@ -1621,8 +1630,8 @@ ft
 "}
 (16,1,1) = {"
 Wn
-XW
-Rq
+ht
+js
 jv
 gR
 fn
@@ -1698,7 +1707,7 @@ Zk
 iM
 uv
 wr
-Rd
+nT
 yN
 ft
 wW
@@ -1719,7 +1728,7 @@ ex
 af
 ex
 uv
-tL
+OX
 nT
 ID
 sm
@@ -1741,7 +1750,7 @@ BI
 oT
 Ku
 uv
-tL
+OX
 bJ
 PE
 dS
@@ -1797,17 +1806,17 @@ ft
 "}
 (24,1,1) = {"
 ft
-ft
-ft
+oy
+oy
 PF
-ft
-ft
-ft
-ft
-ft
-ft
-ft
-ft
+oy
+oy
+oy
+oy
+oy
+oy
+oy
+oy
 ft
 SM
 ft

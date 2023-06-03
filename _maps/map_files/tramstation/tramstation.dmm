@@ -3831,6 +3831,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "arY" = (
@@ -11369,7 +11370,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cyU" = (
@@ -12470,7 +12470,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cVl" = (
@@ -16084,6 +16083,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eoE" = (
@@ -16872,7 +16872,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eDG" = (
@@ -35391,13 +35390,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"lJG" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "lJS" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -41791,7 +41783,6 @@
 "odB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
@@ -47566,6 +47557,7 @@
 	dir = 1;
 	pixel_y = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qqv" = (
@@ -68894,7 +68886,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ylw" = (
@@ -99168,7 +99159,7 @@ eTZ
 dhK
 eTZ
 iHV
-hJd
+qVu
 qqo
 aeL
 aeL
@@ -99680,9 +99671,9 @@ hJd
 oYS
 hJd
 qVu
-hJd
+qVu
 eoz
-hJd
+qVu
 arV
 aeL
 aeL
@@ -99938,8 +99929,8 @@ dIn
 eKn
 ylv
 cyH
-lJG
-lJG
+eKn
+eKn
 pfG
 aeL
 aeL
