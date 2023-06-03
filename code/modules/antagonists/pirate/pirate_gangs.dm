@@ -148,4 +148,4 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
-	response_not_enough = "Damn it seems you are broke, too bad."
+	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
