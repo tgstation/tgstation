@@ -27318,6 +27318,7 @@
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "iEz" = (
@@ -40032,6 +40033,19 @@
 "nim" = (
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
+"niw" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "niF" = (
 /obj/structure/railing/corner,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -172354,7 +172368,7 @@ clT
 clT
 oIa
 dPo
-jtM
+niw
 oZq
 vrU
 std
