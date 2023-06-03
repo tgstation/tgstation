@@ -1,4 +1,3 @@
-
 /obj/machinery/digital_clock
 	name = "digital clock"
 	desc = "An ultra-futuristic, sleek, advanced, next-gen normal digital clock that tells the time. Despite supposedly being better in every way to classic clocks, it just doesn't feel the same. They just don't make them the way they used to..."
@@ -9,14 +8,14 @@
 	verb_exclaim = "blares"
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/wallframe/digital_clock
 	name = "digital clock frame"
 	desc = "Used to build digital clocks, just secure to the wall."
 	icon_state = "digital_clock_base"
 	icon = 'icons/obj/digital_clock.dmi'
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/digital_clock
 	pixel_shift = 28
 
@@ -25,7 +24,7 @@
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
@@ -36,7 +35,7 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it doesn't need repairs!")
 		return TRUE
-	user.balloon_alert_to_viewers("repairing display...", "repairing...")
+	balloon_alert(user, "repairing display...")
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
 	balloon_alert(user, "repaired")
@@ -50,10 +49,10 @@
 		return
 	if(!(obj_flags & EMAGGED))
 		return
-	balloon_alert(user, "resetting")
+	balloon_alert(user, "resetting...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "reset")
 		obj_flags &= ~EMAGGED
 		return TRUE
@@ -61,8 +60,8 @@
 /obj/machinery/digital_clock/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	do_sparks(3, FALSE, src)
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, src)
 	obj_flags |= EMAGGED
 
 /obj/machinery/digital_clock/emp_act(severity)
@@ -89,7 +88,7 @@
 
 /obj/machinery/digital_clock/Destroy()
 	STOP_PROCESSING(SSdigital_clock, src)
-	. = ..()
+	return ..()
 
 /obj/machinery/digital_clock/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
@@ -102,7 +101,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		set_light(0)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(l_range = 1.5, l_power = 0.7, l_color = LIGHT_COLOR_BLUE) // blue light
 
 /obj/machinery/digital_clock/update_overlays()
 	. = ..()
@@ -113,7 +112,6 @@
 	return .
 
 /obj/machinery/digital_clock/proc/update_time()
-
 	var/station_minutes
 	if(obj_flags & EMAGGED)
 		station_minutes = rand(0, 99)
