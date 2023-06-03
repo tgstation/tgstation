@@ -31,7 +31,12 @@ enum Pages {
 export const PlayerTicketHistory = (props: any, context: any) => {
   const { act, data } = useBackend<PthData>(context);
 
-  const [page, setPage] = useLocalState(context, 'page', 1);
+  const [page, setPage] = useLocalState(
+    context,
+    'page',
+    data.target_ckey ? Pages.TicketHistory : Pages.Cache
+  );
+
   const [cacheInput, setCacheInput] = useLocalState(context, 'cacheInput', '');
   const [cacheCount, setCacheCount] = useLocalState(context, 'cacheCount', 5);
 

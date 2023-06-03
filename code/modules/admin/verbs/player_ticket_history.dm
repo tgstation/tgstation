@@ -33,11 +33,14 @@ GLOBAL_PROTECT(player_ticket_history)
 	/// Assosciative list of user_ckey -> target_ckey
 	var/list/user_selections = list()
 
-/datum/ticket_history_holder/proc/cache_history_for_ckey(ckey, entries)
-	var/list/datum/ticket_history/history_cache = list()
-	ticket_histories[ckey] = history_cache
+/datum/ticket_history_holder/proc/cache_history_for_ckey(ckey, entries = 5)
+	ckey = lowertext(ckey)
+
 	if(!isnum(entries) || entries <= 0)
 		return
+
+	var/list/datum/ticket_history/history_cache = list()
+	ticket_histories[ckey] = history_cache
 
 	var/datum/db_query/ticket_lookup = SSdbcore.NewQuery("\
 		WITH DISTINCT_TICKETS AS ( \
@@ -45,6 +48,7 @@ GLOBAL_PROTECT(player_ticket_history)
 			WHERE id IN ( \
 				SELECT MAX(id) FROM ticket GROUP BY round_id, ticket \
 			) \
+			AND round_id != [GLOB.round_id] \
 		) \
 		SELECT round_id, ticket FROM DISTINCT_TICKETS \
 		WHERE sender = :ckey OR recipient = :ckey \
@@ -181,7 +185,10 @@ GLOBAL_PROTECT(player_ticket_history)
 
 /datum/ticket_history_holder/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(isnull(ui))
-		ui = new(user, src, "PlayerTicketHistory")
-		ui.set_autoupdate(FALSE)
-		ui.open()
+	if(!isnull(ui))
+		ui.send_full_update()
+		return
+
+	ui = new(user, src, "PlayerTicketHistory")
+	ui.set_autoupdate(FALSE)
+	ui.open()
