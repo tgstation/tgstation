@@ -21,6 +21,7 @@
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/coupon,
 		/obj/item/flashlight/pen,
+		/obj/item/folder/biscuit,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
