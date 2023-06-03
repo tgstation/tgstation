@@ -33,7 +33,9 @@
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	. = ..()
 
-	var/static/list/crate_paint_jobs = list(
+	var/static/list/crate_paint_jobs
+	if(isnull(crate_paint_jobs))
+		crate_paint_jobs = list(
 		"Internals" = list("icon_state" = "o2crate"),
 		"Medical" = list("icon_state" = "medicalcrate"),
 		"Radiation" = list("icon_state" = "radiation"),
@@ -42,7 +44,7 @@
 		"Solar" = list("icon_state" = "engi_e_crate"),
 		"Engineering" = list("icon_state" = "engi_crate")
 	)
-	if(!isnull(paint_jobs))
+	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 
 /obj/structure/closet/crate/Destroy()
@@ -67,12 +69,15 @@
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
-	if(broken)
-		. += "securecrateemag"
-	else if(locked)
-		. += "securecrater"
-	else if(secure)
-		. += "securecrateg"
+
+	if(!opened)
+		if(broken)
+			. += "securecrateemag"
+		else if(locked)
+			. += "securecrater"
+		else if(secure)
+			. += "securecrateg"
+
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
 		lid.pixel_x = lid_x
