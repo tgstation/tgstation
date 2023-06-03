@@ -171,7 +171,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 		var/datum/species/user_species = species_type || supplied_prefs.read_preference(/datum/preference/choiced/species)
 		if(quirk_name in species_quirk_blacklist[initial(user_species.id)])
-			if(give_warning && give_quirk_removal_warning(supplied_prefs))
+			if(give_warning)
+				INVOKE_ASYNC(src, PROC_REF(give_quirk_removal_warning), supplied_prefs)
 				return FALSE
 			continue
 
@@ -228,15 +229,9 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
  * - supplied_prefs: The preferences of the person we're warning of this.
  */
 /datum/controller/subsystem/processing/quirks/proc/give_quirk_removal_warning(datum/preferences/supplied_prefs)
-	var/warning_tgui_alert = tgui_alert(
-		user = supplied_prefs.parent,
-		message = "The species you are changing to cannot use some quirks you have. Changing species will have them removed.",
-		title = "Species Changing",
-		buttons = list("Change Species", "Nevermind"),
-	)
-	if(warning_tgui_alert == "Change Species")
-		return TRUE
-	return FALSE
+	var/datum/species/species_name = supplied_prefs.read_preference(/datum/preference/choiced/species)
+	tgui_alert(usr, "The species you're trying to change to ([species_name.name]) cannot use the following quirk(s): [species_quirk_blacklist[initial(species_name.id)]]. Please modify your quirks.")
+	return
 
 #undef EXP_ASSIGN_WAYFINDER
 #undef RANDOM_QUIRK_BONUS
