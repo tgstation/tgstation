@@ -737,11 +737,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "nZ" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "pd" = (
@@ -860,7 +861,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/iv_drip/saline,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/white/side,
 /area/shuttle/syndicate/medical)
 "zL" = (
