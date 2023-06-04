@@ -107,7 +107,7 @@
 						'sound/misc/earth_rumble_distant1.ogg',
 						'sound/misc/earth_rumble_distant2.ogg',
 						'sound/misc/earth_rumble_distant3.ogg',
-						'sound/misc/earth_rumble_distant4.ogg'
+						'sound/misc/earth_rumble_distant4.ogg',
 					),
 					75,
 				)
