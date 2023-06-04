@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Radios tuned to things other than common respond properly to turning on the speaker"
