@@ -831,10 +831,19 @@
 
 /// Given an atom, will return what color it should be to match the event/holiday
 
+/// Proc to return holiday themed colors for recoloring atoms
 /datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern)
-	return
+	return // This is the base proc for holidays with no colors. Subtypes will have their specific proc.
 
 /proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	switch(pattern)
+		if(PATTERN_RANDOM)
+			return "#[random_short_color()]"
+		if(PATTERN_RAINBOW)
+			var/rainbow_color = CALLBACK(TYPE_PROC_REF(/datum/holiday/pride_week, get_holiday_colors), thing_to_color, PATTERN_DEFAULT)
+			return rainbow_color
+	if(!length(GLOB.holidays))
+		return
 	for(var/holiday_key in GLOB.holidays)
 		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
 		return holiday_real.get_holiday_colors(thing_to_color, pattern)

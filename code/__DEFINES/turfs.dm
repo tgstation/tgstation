@@ -95,9 +95,13 @@
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
 
-/// Generate horizontal striped color turf decals (holidays and rainbow tile)
+/// Define the alpha for holiday/colored tile decals
+#define DECAL_ALPHA 60
+/// Generate horizontal striped color turf decals
 #define PATTERN_DEFAULT "default"
-/// Generate vertical striped color turf decals (holidays and rainbow tile)
+/// Generate vertical striped color turf decals
 #define PATTERN_VERTICAL_STRIPE "vertical"
-/// Generate random color turf decals (holidays and rainbow tile)
+/// Generate random color turf decals
 #define PATTERN_RANDOM "random"
+/// Generate rainbow color turf decals
+#define PATTERN_RAINBOW "rainbow"

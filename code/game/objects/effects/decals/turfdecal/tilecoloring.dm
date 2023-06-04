@@ -4,20 +4,8 @@
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 
-#define DECAL_ALPHA 60
-
-/// Certain holidays have flags/holiday colors set for decals
-///obj/effect/turf_decal/tile/Initialize(mapload)
-//	if(length(GLOB.holidays))
-//		color = request_holiday_colors(src)
-//		alpha = DECAL_ALPHA
-//	return ..()
-
-/obj/effect/turf_decal/tile/neutral/tram/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
-		alpha = DECAL_ALPHA
-	return ..()
+/obj/effect/turf_decal/tile/neutral/tram
+	pattern = PATTERN_VERTICAL_STRIPE
 
 /// Automatically generates all subtypes for a decal with the given path.
 #define TILE_DECAL_SUBTYPE_HELPER(path)\
@@ -148,31 +136,28 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 
-/// Random tiles
-
-/obj/effect/turf_decal/tile/random // so many colors
-	name = "colorful tile decal"
-	color = "#E300FF" //bright pink as default for mapping
-
-TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
-
-/obj/effect/turf_decal/tile/random/Initialize(mapload)
-	color = request_holiday_colors(src, PATTERN_RANDOM)
-	return ..()
-
-/// Holiday tiles
-
-/obj/effect/turf_decal/tile/holiday
-	name = "holiday tile decal"
-	color = "#00ffff" //bright cyan as default for mapping
-	var/pattern = PATTERN_DEFAULT
-
-TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday)
+/// Date-specific tiles
 
 /obj/effect/turf_decal/tile/holiday/Initialize(mapload)
 	color = request_holiday_colors(src, pattern)
 	alpha = DECAL_ALPHA
 	return ..()
+
+/obj/effect/turf_decal/tile/holiday/rainbow
+	name = "rainbow tile decal"
+	color = "#00ffff" //bright cyan as default for mapping
+	pattern = PATTERN_RAINBOW
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/rainbow)
+
+/// Random tiles
+
+/obj/effect/turf_decal/tile/holiday/random // so many colors
+	name = "colorful tile decal"
+	color = "#E300FF" //bright pink as default for mapping
+	pattern = PATTERN_RANDOM
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 
 #undef TILE_DECAL_SUBTYPE_HELPER
 
@@ -181,29 +166,33 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday)
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 	icon_state = "trimline_box"
+	use_holiday_colors = TRUE
 
-/obj/effect/turf_decal/trimline/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src)
-		alpha = DECAL_ALPHA
-	return ..()
+/obj/effect/turf_decal/trimline/tram
+	pattern = PATTERN_VERTICAL_STRIPE
 
-/obj/effect/turf_decal/trimline/tram/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
-		alpha = DECAL_ALPHA
-	return ..()
+/obj/effect/turf_decal/trimline/tram/filled/corner
+	pattern = PATTERN_VERTICAL_STRIPE
+
+/obj/effect/turf_decal/trimline/tram/filled/line
+	pattern = PATTERN_VERTICAL_STRIPE
 
 /obj/effect/turf_decal/trimline/tram/filled/corner/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
 	else
 		color = "#ffc875"
 	return ..()
 
 /obj/effect/turf_decal/trimline/tram/filled/line/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
 	else
 		color = "#ffc875"
 	return ..()

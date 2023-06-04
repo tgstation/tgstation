@@ -156,11 +156,12 @@
 	return
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
-	if(length(GLOB.holidays))
-		color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	. = ..()
+	var/current_holiday_color = request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
+	if(current_holiday_color)
+		color = current_holiday_color
 	else
 		color = "#EFB341"
-	return ..()
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
