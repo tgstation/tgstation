@@ -9,8 +9,6 @@
 /datum/shuttle_event
 	///probability of this event to run from 0 to 100
 	var/probability
-	///behaviour of spawning objects, if we spawn
-	var/spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
 	///Track if we're allowed to run, gets turned to TRUE when the activation timer hits
 	var/active = FALSE
 	///fraction of the escape timer at which we activate, 0 means we start running immediately
@@ -21,8 +19,6 @@
 	var/activate_at
 	///Our reference to the docking port and thus the shuttle
 	var/obj/docking_port/mobile/port
-	///List of valid spawning turfs, generated from generate_spawning_turfs()
-	var/list/turf/spawning_turfs
 
 /datum/shuttle_event/New(obj/docking_port/mobile/port)
 	. = ..()
@@ -31,8 +27,6 @@
 
 /datum/shuttle_event/proc/start_up_event(evacuation_duration)
 	activate_at = world.time + evacuation_duration * activation_fraction
-
-	generate_spawning_turfs(port.return_coords(), spawning_flags, port.preferred_direction)
 
 ///We got activated
 /datum/shuttle_event/proc/activate()
@@ -48,9 +42,30 @@
 		active = TRUE
 		. = activate()
 
+///Spawns objects, mobs, whatever with all the necessary code to make it hit and/or miss the shuttle
+/datum/shuttle_event/simple_spawner
+	///behaviour of spawning objects, if we spawn
+	var/spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
+	///List of valid spawning turfs, generated from generate_spawning_turfs(), that will HIT the shuttle
+	var/list/turf/spawning_turfs_hit
+	///List of valid spawning turfs, generated from generate_spawning_turfs(), that will MISS the shuttle
+	var/list/turf/spawning_turfs_miss
+	///Change, from 0 to 100, for something to spawn
+	var/spawn_probability_per_process = 0
+	///Increment if you want more stuff to spawn at once
+	var/spawns_per_spawn = 1
+	///weighted list with spawnable movables
+	var/list/spawning_list = list()
+
+/datum/shuttle_event/simple_spawner/start_up_event(evacuation_duration)
+	..()
+
+	generate_spawning_turfs(port.return_coords(), spawning_flags, port.preferred_direction)
+
 ///Bounding coords are list(x0, y0, x1, y1) where x0 and y0 are top-left
-/datum/shuttle_event/proc/generate_spawning_turfs(list/bounding_coords, spawning_behaviour, direction)
-	spawning_turfs = list()
+/datum/shuttle_event/simple_spawner/proc/generate_spawning_turfs(list/bounding_coords, spawning_behaviour, direction)
+	spawning_turfs_hit = list()
+	spawning_turfs_miss = list()
 	var/list/step_dir
 	var/list/target_corner
 	var/list/spawn_offset
@@ -78,21 +93,13 @@
 		var/tile_amount = abs((direction == NORTH || SOUTH) ? bounding_coords[1] - bounding_coords[3] :  bounding_coords[2] - bounding_coords[4])
 		for(var/i in 0 to tile_amount)
 			var/list/target_coords = list(target_corner[1] + step_dir[1] * i + spawn_offset[1], target_corner[2] + step_dir[2] * i + spawn_offset[2])
-			spawning_turfs.Add(locate(target_coords[1], target_coords[2], port.z))
+			spawning_turfs_hit.Add(locate(target_coords[1], target_coords[2], port.z))
 	if(spawning_behaviour & SHUTTLE_EVENT_MISS_SHUTTLE)
-		for(var/i in 0 to SHUTTLE_TRANSIT_BORDER)
-			spawning_turfs.Add(locate(target_corner[1] - step_dir[1] * i + spawn_offset[1], target_corner[2] - step_dir[2] * i + spawn_offset[2], port.z))
-		for(var/i in 0 to SHUTTLE_TRANSIT_BORDER)
+		for(var/i in 1 to SHUTTLE_TRANSIT_BORDER)
+			spawning_turfs_miss.Add(locate(target_corner[1] - step_dir[1] * i + spawn_offset[1], target_corner[2] - step_dir[2] * i + spawn_offset[2], port.z))
+		for(var/i in 1 to SHUTTLE_TRANSIT_BORDER)
 			var/corner_delta = list(bounding_coords[3] - bounding_coords[1], bounding_coords[2] - bounding_coords[4])
-			spawning_turfs.Add(locate(target_corner[1] + corner_delta[1] * step_dir[1] + step_dir[1] * i + spawn_offset[1], target_corner[2] + corner_delta[2] * step_dir[2] + step_dir[2] * i + spawn_offset[2], port.z))
-
-/datum/shuttle_event/simple_spawner
-	///Change, from 0 to 100, for something to spawn
-	var/spawn_probability_per_process = 0
-	///Increment if you want more stuff to spawn at once
-	var/spawns_per_spawn = 1
-	///weighted list with spawnable movables
-	var/list/spawning_list = list()
+			spawning_turfs_miss.Add(locate(target_corner[1] + corner_delta[1] * step_dir[1] + step_dir[1] * i + spawn_offset[1], target_corner[2] + corner_delta[2] * step_dir[2] + step_dir[2] * i + spawn_offset[2], port.z))
 
 /datum/shuttle_event/simple_spawner/event_process()
 	. = ..()
@@ -104,21 +111,58 @@
 		for(var/i in 0 to spawns_per_spawn)
 			spawn_stuff()
 
+/datum/shuttle_event/simple_spawner/proc/get_spawn_turf()
+	RETURN_TYPE(/turf)
+	return pick(spawning_turfs_hit + spawning_turfs_miss)
+
 ///Spawn stuff! Draws from spawning_list. It's fine if your event doesnt use this, most just do
 /datum/shuttle_event/simple_spawner/proc/spawn_stuff()
 	var/spawn_type = pick_weight(spawning_list)
-	post_spawn(new spawn_type (pick(spawning_turfs)))
+	post_spawn(new spawn_type (get_spawn_turf()))
 
 ///Do any post-spawn edits you need to do
 /datum/shuttle_event/simple_spawner/proc/post_spawn(atom/movable/spawnee)
 	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT, src)
+	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, src)
 	var/turf/target = spawnee.loc
-	target.Entered(spawnee) //tell the transit turf we have arrived!
+	target.Entered(spawnee) //tell the transit turf we have arrived! otherwise our hyperspace drift doesnt register
 
-uhh doe dat waar de border ALTIJD dingen weg teleporteerd want ja fuck
+/datum/shuttle_event/simple_spawner/meteor/spawn_stuff()
+	var/spawn_type = pick_weight(spawning_list)
+	var/turf/spawn_turf = get_spawn_turf()
+	//invert the dir cause we shoot in the opposite direction we're flying
+	post_spawn(new spawn_type (spawn_turf, get_edge_target_turf(spawn_turf, angle2dir(dir2angle(port.preferred_direction) - 180))))
+
+/datum/shuttle_event/simple_spawner/meteor
+	spawning_list = list(/obj/effect/meteor)
+
+/datum/shuttle_event/simple_spawner/meteor/post_spawn(atom/movable/spawnee)
+	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_MOVEMENT, src)
+	..()
+
+/datum/shuttle_event/simple_spawner/meteor/dust
+	probability = 2
+	spawn_probability_per_process = 100
+	spawns_per_spawn = 5
+	spawning_list = list(/obj/effect/meteor/dust = 1, /obj/effect/meteor/sand = 1)
+	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
+
+/datum/shuttle_event/simple_spawner/meteor/dust/get_spawn_turf()
+	return prob(99) ? pick(spawning_turfs_miss) : pick(spawning_turfs_hit)
+
 /datum/shuttle_event/simple_spawner/italian
-	probability = 100
+	probability = 0.1
 	spawns_per_spawn = 5
 	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
 	spawn_probability_per_process = 100
-	spawning_list = list(/obj/item/food/spaghetti/boiledspaghetti = 5, /obj/item/food/meatball = 1, /obj/item/food/spaghetti/pastatomato = 2, /obj/item/food/spaghetti/meatballspaghetti = 2)
+	spawning_list = list(/obj/item/food/spaghetti/boiledspaghetti = 5, /obj/item/food/meatball = 1, /obj/item/food/spaghetti/pastatomato = 2,
+		 /obj/item/food/spaghetti/meatballspaghetti = 2)
+
+///Okay this spawns a lot of really bad meteors, but they never hit the shuttle so it's perfectly safe (unless you go outside lol)
+/datum/shuttle_event/simple_spawner/meteor/safe
+	probability = 5
+	spawn_probability_per_process = 100
+	spawns_per_spawn = 6
+	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE
+	spawning_list = list(/obj/effect/meteor/medium = 10, /obj/effect/meteor/big = 5, /obj/effect/meteor/flaming = 3, /obj/effect/meteor/cluster = 1,
+	/obj/effect/meteor/irradiated = 3, /obj/effect/meteor/bluespace = 2, /obj/effect/meteor/banana = 1)

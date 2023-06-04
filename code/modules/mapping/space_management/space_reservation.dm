@@ -110,7 +110,7 @@
 	SIGNAL_HANDLER
 
 	if(!HAS_TRAIT(enterer, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT))
-		dump_in_space(enterer)
+		space_dump(source, enterer)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
 	src.width = width

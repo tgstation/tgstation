@@ -52,6 +52,10 @@
 
 ///Dump a movable in a random valid spacetile
 /proc/dump_in_space(atom/movable/dumpee)
+	if(HAS_TRAIT(dumpee, TRAIT_DEL_ON_SPACE_DUMP))
+		qdel(dumpee)
+		return
+
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
