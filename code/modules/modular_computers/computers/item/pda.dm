@@ -75,7 +75,7 @@
 	icon_state = paintjob ? initial(paintjob.icon_state) : initial(icon_state)
 	return ..()
 
-/obj/item/modular_computer/update_name()
+/obj/item/modular_computer/pda/update_name()
 	if(!saved_identification && !saved_job)
 		name = paintjob ? initial(paintjob.name) : initial(name)
 		return
