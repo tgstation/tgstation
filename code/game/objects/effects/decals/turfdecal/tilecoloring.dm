@@ -165,12 +165,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 /obj/effect/turf_decal/trimline/tram
 	pattern = PATTERN_VERTICAL_STRIPE
 
-/obj/effect/turf_decal/trimline/tram/filled/corner
-	pattern = PATTERN_VERTICAL_STRIPE
-
-/obj/effect/turf_decal/trimline/tram/filled/line
-	pattern = PATTERN_VERTICAL_STRIPE
-
 /obj/effect/turf_decal/trimline/tram/filled/corner/Initialize(mapload)
 	if(use_holiday_colors)
 		var/current_holiday_color = request_holiday_colors(src, pattern)
