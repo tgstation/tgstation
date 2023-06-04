@@ -374,11 +374,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	// Print and fill containers
 	is_printing = TRUE
-	use_power(active_power_usage)
 	update_appearance(UPDATE_ICON)
 	printing_progress = 0
 	printing_total = item_count
 	for(var/i in 1 to item_count)
+		use_power(active_power_usage)
 		stoplag(printing_speed)
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
 		adjust_item_drop_location(item)
