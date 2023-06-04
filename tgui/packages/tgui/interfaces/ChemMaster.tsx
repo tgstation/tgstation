@@ -33,7 +33,7 @@ type Analysis = {
   description: string;
   metaRate: number;
   overdose: number;
-  addictionTypes: number;
+  addictionTypes: string[];
 };
 
 type Category = {
@@ -364,7 +364,16 @@ const ContainerButton = ({ container, category }, context) => {
 
 const AnalysisResults = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { analysisData } = data;
+  const {
+    name,
+    state,
+    pH,
+    color,
+    description,
+    metaRate,
+    overdose,
+    addictionTypes,
+  } = data.analysisData;
   return (
     <Section
       title="Analysis Results"
@@ -376,24 +385,22 @@ const AnalysisResults = (props, context) => {
         />
       }>
       <LabeledList>
-        <LabeledList.Item label="Name">{analysisData.name}</LabeledList.Item>
-        <LabeledList.Item label="State">{analysisData.state}</LabeledList.Item>
-        <LabeledList.Item label="pH">{analysisData.pH}</LabeledList.Item>
+        <LabeledList.Item label="Name">{name}</LabeledList.Item>
+        <LabeledList.Item label="State">{state}</LabeledList.Item>
+        <LabeledList.Item label="pH">{pH}</LabeledList.Item>
         <LabeledList.Item label="Color">
-          <ColorBox color={analysisData.color} mr={1} />
-          {analysisData.color}
+          <ColorBox color={color} mr={1} />
+          {color}
         </LabeledList.Item>
-        <LabeledList.Item label="Description">
-          {analysisData.description}
-        </LabeledList.Item>
+        <LabeledList.Item label="Description">{description}</LabeledList.Item>
         <LabeledList.Item label="Metabolization Rate">
-          {analysisData.metaRate} units/second
+          {metaRate} units/second
         </LabeledList.Item>
         <LabeledList.Item label="Overdose Threshold">
-          {analysisData.overdose > 0 ? `${analysisData.overdose} units` : 'N/A'}
+          {overdose > 0 ? `${overdose} units` : 'N/A'}
         </LabeledList.Item>
         <LabeledList.Item label="Addiction Types">
-          {analysisData.addictionTypes}
+          {addictionTypes.length > 0 ? addictionTypes.toString() : 'N/A'}
         </LabeledList.Item>
       </LabeledList>
     </Section>
