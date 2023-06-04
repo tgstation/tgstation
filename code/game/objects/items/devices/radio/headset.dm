@@ -153,18 +153,18 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_sec
 	name = "security radio headset"
-	desc = "This is used by your elite security force."
+	desc = "This is used by your elite security force. Equipped with the panic button for requesting backup."
 	icon_state = "sec_headset"
 	worn_icon_state = "sec_headset"
 	keyslot = /obj/item/encryptionkey/headset_sec
+	panic_button = TRUE
+	actions_types = list(/datum/action/item_action/panic)
 
 /obj/item/radio/headset/headset_sec/alt
 	name = "security bowman headset"
 	desc = "This is used by your elite security force. Equipped with the panic button for requesting backup. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
 	worn_icon_state = "sec_headset_alt"
-	panic_button = TRUE
-	actions_types = list(/datum/action/item_action/panic)
 
 /obj/item/radio/headset/headset_sec/alt/Initialize(mapload)
 	. = ..()
