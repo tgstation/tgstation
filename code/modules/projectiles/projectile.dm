@@ -199,6 +199,8 @@
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
+	/// If this projectile has been parried before
+	var/parried = FALSE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -206,6 +208,7 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -242,14 +245,14 @@
  * pierce_hit - are we piercing through or regular hitting
  */
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
-	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/obj/item/bodypart/hit_limb
 	if(isliving(target))
 		var/mob/living/L = target
 		hit_limb = L.check_limb_hit(def_zone)
+	if(fired_from)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
@@ -375,6 +378,42 @@
 	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
+
+/// Signal proc for when a projectile enters a turf.
+/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
+
+	if(isturf(loc))
+		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
+
+/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
+/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(parried)
+		return FALSE
+
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
+		on_parry(user, modifiers)
+		return TRUE
+
+	return FALSE
+
+
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
+/obj/projectile/proc/on_parry(mob/user, list/modifiers)
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
+		return
+
+	parried = TRUE
+	set_angle(dir2angle(user.dir) + rand(-3, 3))
+	firer = user
+	speed *= 0.8 // Go 20% faster when parried
+	damage *= 1.15 // And do 15% more damage
+	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+
 
 /**
  * Called when the projectile hits something
@@ -740,6 +779,7 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))

@@ -70,12 +70,7 @@
 		return
 
 	// And non-mapload panels link in Initialize
-	var/datum/lift_master/lift = get_associated_lift()
-	if(!lift)
-		return
-
-	lift_weakref = WEAKREF(lift)
-	populate_destinations_list(lift)
+	link_with_lift(log_error = FALSE)
 
 /obj/machinery/elevator_control_panel/LateInitialize()
 	. = ..()
@@ -85,13 +80,21 @@
 
 	// This is exclusively for linking in mapload, just to ensure all elevator parts are created,
 	// and also so we can throw mapping errors to let people know if they messed up setup.
+	link_with_lift(log_error = TRUE)
+
+/// Link with associated lift objects, only log failure to find a lift in LateInit because those are mapped in
+/obj/machinery/elevator_control_panel/proc/link_with_lift(log_error = FALSE)
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
-		log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		if (log_error)
+			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
 	lift_weakref = WEAKREF(lift)
 	populate_destinations_list(lift)
+	if ((linked_elevator_id in GLOB.elevator_music))
+		var/obj/effect/abstract/elevator_music_zone/music = GLOB.elevator_music[linked_elevator_id]
+		music.link_to_panel(src)
 
 /obj/machinery/elevator_control_panel/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -112,7 +115,7 @@
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
-			continue			
+			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED

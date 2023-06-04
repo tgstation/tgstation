@@ -28,7 +28,6 @@
 	if(!.)
 		return FALSE
 
-	host_role.add_note("N[game.turn] - Vested")
 	charges--
 	return TRUE
 

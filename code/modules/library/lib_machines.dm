@@ -9,15 +9,12 @@
  * Book Binder
  */
 
-#define DEFAULT_UPLOAD_CATAGORY "Fiction"
-#define DEFAULT_SEARCH_CATAGORY "Any"
+GLOBAL_VAR_INIT(library_table_modified, 0)
 
-///How many books should we load per page?
-#define BOOKS_PER_PAGE 18
-///How many checkout records should we load per page?
-#define CHECKOUTS_PER_PAGE 17
-///How many inventory items should we load per page?
-#define INVENTORY_PER_PAGE 19
+/// Increments every time WE update the library db table, causes all existing consoles to repull when they next check
+/proc/library_updated()
+	GLOB.library_table_modified = (GLOB.library_table_modified + 1) % (SHORT_REAL_LIMIT - 1)
+
 /*
  * Library Public Computer
  */
@@ -28,8 +25,9 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
-	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
-	pixel_y = 8
+	anchored_tabletop_offset = 8
+	///The current book id we're searching for
+	var/book_id = null
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -74,6 +72,7 @@
 	data["category"] = category
 	data["author"] = author
 	data["title"] = title
+	data["book_id"] = book_id
 	data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
 	data["our_page"] = search_page + 1
 	data["pages"] = page_content
@@ -86,6 +85,12 @@
 	if(.)
 		return
 	switch(action)
+		if("set_search_id")
+			var/newid = text2num(params["id"])
+			if(newid != book_id)
+				params_changed = TRUE
+			book_id = newid
+			return TRUE
 		if("set_search_title")
 			var/newtitle = params["title"]
 			if(newtitle != title)
@@ -185,7 +190,7 @@
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/proc/hash_search_info()
-	return "[title]-[author]-[category]-[search_page]-[page_count]"
+	return "[GLOB.library_table_modified]-[book_id]-[title]-[author]-[category]-[search_page]-[page_count]"
 
 /obj/machinery/computer/libraryconsole/proc/update_page_contents()
 	if(sending_request) //Final defense against nerds spamming db requests
@@ -199,9 +204,10 @@
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 		ORDER BY id DESC
 		LIMIT :skip, :take
-	"}, list("author" = author, "title" = title, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
+	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
 
 	var/query_succeeded = query_library_list_books.Execute()
 	sending_request = FALSE
@@ -226,7 +232,8 @@
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
-	"}, list("author" = author, "title" = title, "category" = category))
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
+	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category))
 
 	if(!query_library_count_books.warn_execute())
 		qdel(query_library_count_books)
@@ -302,8 +309,6 @@
 	var/inventory_page = 0
 	///Should we load our inventory from the bookselves in our area?
 	var/dynamic_inv_load = FALSE
-	///Toggled if some bit of code wants to override hashing and allow for page updates
-	var/ignore_hash = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
 	///Our cooldown on using the printer
@@ -568,14 +573,6 @@
 		return
 	obj_flags |= EMAGGED
 
-/obj/machinery/computer/libraryconsole/bookmanagement/has_anything_changed()
-	if(..())
-		return TRUE
-	if(!ignore_hash)
-		return FALSE
-	ignore_hash = FALSE
-	return TRUE
-
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)
 	screen_state = clamp(new_state, MIN_LIBRARY, MAX_LIBRARY)
 
@@ -632,8 +629,8 @@
 		return
 	usr.log_message(msg, LOG_GAME)
 	qdel(query_library_upload)
+	library_updated()
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
-	ignore_hash = TRUE
 	update_db_info()
 
 /// Call this proc to attempt a print. It will return false if the print failed, true otherwise, longside some ux
@@ -648,7 +645,7 @@
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_bible()
-	var/obj/item/storage/book/bible/holy_book = new(loc)
+	var/obj/item/book/bible/holy_book = new(loc)
 	if(!GLOB.bible_icon_state || !GLOB.bible_inhand_icon_state)
 		return
 	holy_book.icon_state = GLOB.bible_icon_state
@@ -776,7 +773,12 @@
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
 	density = TRUE
+
+	/// Are we currently binding a book?
 	var/busy = FALSE
+
+	/// Name of the author for the book, set by scanning your ID.
+	var/scanned_name
 
 /obj/machinery/bookbinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -786,17 +788,32 @@
 /obj/machinery/bookbinder/attackby(obj/hitby, mob/user, params)
 	if(istype(hitby, /obj/item/paper))
 		prebind_book(user, hitby)
-		return
+		return TRUE
+
+	if(isidcard(hitby))
+		var/obj/item/card/id/idcard = hitby
+		scanned_name = idcard.registered_name
+		balloon_alert(user, "scanned")
+		return TRUE
+
 	return ..()
 
 /obj/machinery/bookbinder/proc/prebind_book(mob/user, obj/item/paper/draw_from)
 	if(machine_stat)
 		return
+
 	if(busy)
 		to_chat(user, span_warning("The book binder is busy. Please wait for completion of previous operation."))
 		return
+
+	if(!scanned_name)
+		scanned_name = "unknown author"
+		say("No ID detected. Please scan your ID if you would like to be credited for this book. Otherwise please enter your paper again.")
+		return
+
 	if(!user.transferItemToLoc(draw_from, src))
 		return
+
 	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
@@ -808,21 +825,21 @@
 	busy = FALSE
 	if(!draw_from) //What the fuck did you do
 		return
+
 	if(machine_stat)
 		draw_from.forceMove(drop_location())
 		return
+
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 	var/obj/item/book/bound_book = new(loc)
 	bound_book.book_data.set_content_using_paper(draw_from)
+	bound_book.book_data.set_author(scanned_name, trusted = FALSE)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
+	scanned_name = null
+
 	qdel(draw_from)
 
-#undef BOOKS_PER_PAGE
-#undef CHECKOUTS_PER_PAGE
-#undef DEFAULT_SEARCH_CATAGORY
-#undef DEFAULT_UPLOAD_CATAGORY
-#undef INVENTORY_PER_PAGE
 #undef LIBRARY_ARCHIVE
 #undef LIBRARY_CHECKOUT
 #undef LIBRARY_INVENTORY

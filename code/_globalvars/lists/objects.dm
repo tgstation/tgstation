@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
 GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
+GLOBAL_LIST_INIT(surgeries_list, init_surgeries()) //list of all surgeries by name, associated with their path.
 
 /// Global list of all non-cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(crafting_recipes)

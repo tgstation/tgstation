@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pill"
 	inhand_icon_state = "pill"
-	worn_icon_state = "pen"
+	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
@@ -142,6 +142,12 @@
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/mannitol = 14)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/sansufentanyl
+	name = "sansufentanyl pill"
+	desc = "Used to treat Hereditary Manifold Sickness. Temporary side effects include - nausea, dizziness, impaired motor coordination."
+	icon_state = "pill19"
+	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 5)
 
 //Lower quantity mannitol pills (50u pills heal 250 brain damage, 5u pills heal 25)
 /obj/item/reagent_containers/pill/mannitol/braintumor

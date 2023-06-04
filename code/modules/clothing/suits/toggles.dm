@@ -8,6 +8,8 @@
 	var/alternative_mode = FALSE
 	///Whether the hood is flipped up
 	var/hood_up = FALSE
+	/// What should be added to the end of the icon state when the hood is up? Set to "" for the suit sprite to not change at all
+	var/hood_up_affix = "_t"
 	/// Are we zipped? Mostly relevant for wintercoats, leaving this here to simplify logic and so someone else can extend it if they ever wish to.
 	var/zipped = FALSE
 
@@ -86,7 +88,7 @@
 					RemoveHood()
 				return
 			hood_up = TRUE
-			icon_state = "[initial(icon_state)]_t"
+			icon_state = "[initial(icon_state)][hood_up_affix]"
 			worn_icon_state = icon_state
 			zipped = TRUE // Just to maintain the same behavior, and so we avoid any bugs that otherwise relied on this behavior of zipping the jacket when bringing up the hood
 			H.update_worn_oversuit()

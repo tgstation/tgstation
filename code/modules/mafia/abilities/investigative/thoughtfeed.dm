@@ -14,8 +14,6 @@
 
 	if((target_role.role_flags & ROLE_UNDETECTABLE))
 		to_chat(host_role.body,span_warning("[target_role.body.real_name]'s memories reveal that they are the [pick(game.all_roles - target_role)]."))
-		host_role.add_note("N[game.turn] - [target_role.body.real_name] - Assistant")
 	else
 		to_chat(host_role.body,span_warning("[target_role.body.real_name]'s memories reveal that they are the [target_role.name]."))
-		host_role.add_note("N[game.turn] - [target_role.body.real_name] - [target_role.name]")
 	return TRUE

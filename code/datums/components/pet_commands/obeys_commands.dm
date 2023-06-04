@@ -83,7 +83,7 @@
 			continue
 		radial_options += choice
 
-	var/pick = show_radial_menu(clicker, clicker, radial_options, require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(clicker, clicker, radial_options, tooltips = TRUE)
 	if (!pick)
 		return
 	var/datum/pet_command/picked_command = available_commands[pick]

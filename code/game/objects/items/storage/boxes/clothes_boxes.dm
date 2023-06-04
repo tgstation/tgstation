@@ -186,3 +186,13 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+
+/obj/item/storage/box/holy/divine_archer
+	name = "Divine Archer Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer
+
+/obj/item/storage/box/holy/divine_archer/PopulateContents()
+	new /obj/item/clothing/under/rank/civilian/chaplain/divine_archer(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
+	new /obj/item/clothing/gloves/divine_archer(src)
+	new /obj/item/clothing/shoes/divine_archer(src)

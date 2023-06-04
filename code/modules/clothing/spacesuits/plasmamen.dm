@@ -44,7 +44,7 @@
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 80
@@ -189,20 +189,48 @@
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
 	icon_state = "security_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_security
+	armor_type = /datum/armor/head_helmet/plasmaman
+
+/datum/armor/head_helmet/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
+
+/obj/item/clothing/head/helmet/space/plasmaman/security/detective
+	name = "detective's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for detectives, protecting them from burning alive, alongside other undesirables."
+	icon_state = "white_envirohelm"
+	inhand_icon_state = null
+	armor_type = /datum/armor/fedora_det_hat/plasmaman
+
+/datum/armor/fedora_det_hat/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	name = "warden's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for the warden. A pair of white stripes being added to differeciate them from other members of security."
 	icon_state = "warden_envirohelm"
 	inhand_icon_state = null
+	armor_type = /datum/armor/hats_warden/plasmaman
+
+/datum/armor/hats_warden/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
 	name = "head of security's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Security. A pair of gold stripes are added to differentiate them from other members of security."
 	icon_state = "hos_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/security_head_of_security
+	armor_type = /datum/armor/hats_hos/plasmaman
+
+/datum/armor/hats_hos/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	name = "prisoner's plasma envirosuit helmet"
@@ -214,6 +242,12 @@
 	name = "medical doctor's plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman medical doctors, having two stripes down its length to denote as much."
 	icon_state = "doctor_envirohelm"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/coroner
+	name = "coroners's plasma envirosuit helmet"
+	desc = "An envirohelmet designed for plasmaman coroners, having more edge than the usual model."
+	icon_state = "coroner_envirohelm"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/helmet/space/plasmaman/paramedic

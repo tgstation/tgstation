@@ -53,7 +53,7 @@
 "an" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -497,7 +497,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
@@ -964,7 +964,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/hallway/aft)
 "oj" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
 	dir = 1
@@ -1011,14 +1011,14 @@
 /area/ruin/space/ks13/hallway/aft)
 "oC" = (
 /obj/structure/table/wood,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
 "oD" = (
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/item/stock_parts/scanning_module{
 	pixel_x = -11
 	},
@@ -1601,7 +1601,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
 "rH" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/chair{
 	dir = 1
 	},
@@ -1900,7 +1900,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "sT" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
@@ -2659,7 +2659,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "xy" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
 "xA" = (
@@ -3481,7 +3481,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "BH" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/chair{
 	dir = 1
 	},
@@ -3540,7 +3540,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/sec)
 "BV" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
@@ -3879,7 +3879,7 @@
 /obj/item/stock_parts/capacitor{
 	pixel_y = 4
 	},
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
 "DM" = (
@@ -5397,7 +5397,7 @@
 /area/ruin/space/ks13/engineering/singulo)
 "Mb" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 1
@@ -5589,7 +5589,7 @@
 /area/ruin/space/ks13/command/bridge_hall)
 "Nc" = (
 /obj/structure/frame/machine,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = -5
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -5605,7 +5605,7 @@
 /area/ruin/space/ks13/engineering/atmos)
 "Nh" = (
 /obj/structure/table,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = 3
 	},
 /obj/item/stock_parts/matter_bin{
@@ -5764,7 +5764,7 @@
 "NZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/manipulator{
+/obj/item/stock_parts/servo{
 	pixel_x = -8;
 	pixel_y = 7
 	},
@@ -7490,7 +7490,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "WF" = (
-/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/servo,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
@@ -7654,7 +7654,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "Xz" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
 	dir = 4

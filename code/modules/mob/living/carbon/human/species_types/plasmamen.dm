@@ -14,6 +14,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -28,7 +29,7 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	payday_modifier = 0.75
-	breathid = "plas"
+	breathid = GAS_PLASMA
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -175,6 +176,16 @@
 			H.adjust_hallucinations(2.5 SECONDS * seconds_per_tick)
 		// Do normal metabolism
 		return FALSE
+	if(chem.type == /datum/reagent/consumable/milk)
+		if(chem.volume > 50)
+			H.reagents.remove_reagent(chem.type, chem.volume - 5)
+			to_chat(H, span_warning("The excess milk is dripping off your bones!"))
+		H.heal_bodypart_damage(2.5 * REM * seconds_per_tick)
+
+		for(var/datum/wound/iter_wound as anything in H.all_wounds)
+			iter_wound.on_xadone(1 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return FALSE
 
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
@@ -240,12 +251,6 @@
 			SPECIES_PERK_ICON = "fire",
 			SPECIES_PERK_NAME = "Living Torch",
 			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Plasma Breathing",
-			SPECIES_PERK_DESC = "Plasmamen must breathe plasma to survive. You receive a tank when you arrive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

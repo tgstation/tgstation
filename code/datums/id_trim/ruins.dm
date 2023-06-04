@@ -26,9 +26,9 @@
 	assignment = "Charlie Station Engineer"
 
 /// Trim for the oldstation ruin/Charlie station to access APCs and other equipment
-/datum/id_trim/away/old/apc
-	access = list(ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP)
-	assignment = "Engineering Equipment Access"
+/datum/id_trim/away/old/equipment
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP)
+	assignment = "Engine Equipment Access"
 
 /// Trim for the oldstation ruin/Charlie station to access robots, and downloading of paper publishing software for experiments
 /datum/id_trim/away/old/robo
@@ -121,12 +121,6 @@
 
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
-
-/datum/id_trim/pirate/psykers
-	assignment = "Psyker-gang Member"
-
-/datum/id_trim/pirate/captain/psykers
-	assignment = "Psyker-gang Leader"
 
 //Trims for Dangerous Research, used in ``dangerous_research.dm``
 /datum/id_trim/away/dangerous_research

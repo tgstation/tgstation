@@ -170,7 +170,7 @@
 	for(var/required_path in recipe.tool_paths)
 		var/found_this_tool = FALSE
 		for(var/tool_path in available_tools)
-			if(!ispath(required_path, tool_path))
+			if(!ispath(tool_path, required_path))
 				continue
 			found_this_tool = TRUE
 			break
@@ -462,7 +462,8 @@
 				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 					user.put_in_hands(result)
 				else
-					result.forceMove(user.drop_location())
+					if(!istype(result, /obj/effect/spawner))
+						result.forceMove(user.drop_location())
 				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
@@ -486,14 +487,24 @@
 		get_asset_datum(/datum/asset/spritesheet/crafting),
 		get_asset_datum(/datum/asset/spritesheet/crafting/cooking),
 	)
-///
+
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
 	var/list/data = list()
 	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
-	data["result"] = atoms.Find(atom)
+
+	//load sprite sheets and select the correct one based on the mode
+	var/static/list/sprite_sheets
+	if(isnull(sprite_sheets))
+		sprite_sheets = ui_assets()
+	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
+
+	//infer icon size of this atom
+	var/atom_id = atoms.Find(atom)
+	var/icon_size = sheet.icon_size_id("a[atom_id]")
+	data["icon"] = "[icon_size] a[atom_id]"
 
 	var/recipe_data = recipe.crafting_ui_data()
 	for(var/new_data in recipe_data)

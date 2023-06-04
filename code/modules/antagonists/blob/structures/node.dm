@@ -11,7 +11,6 @@
 	pulse_range = BLOB_NODE_PULSE_RANGE
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
-	max_spores = BLOB_NODE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
 
@@ -57,4 +56,3 @@
 	if(overmind)
 		pulse_area(overmind, claim_range, pulse_range, expand_range)
 		reinforce_area(seconds_per_tick)
-		produce_spores()

@@ -16,14 +16,28 @@
 	limited_stock = 1 //please don't spam deadchat
 	surplus = 5
 
-/datum/uplink_item/role_restricted/bureaucratic_error_remote
-	name = "Organic Resources Disturbance Inducer"
-	desc = "A device that raises hell in organic resources indirectly. Single use."
+/datum/uplink_item/role_restricted/mail_counterfeit_kit
+	name = "GLA Brand Mail Counterfeit Kit"
+	desc = "A box full of mail counterfeit devices. Devices that actually able to counterfeit NT's mail. Those devices also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also counterfieted mail might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs. \nNothing stops the mail."
+	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
-	limited_stock = 1
-	item = /obj/item/devices/bureaucratic_error_remote
-	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
+	illegal_tech = FALSE
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/bureaucratic_error
+	name = "Organic Capital Disturbance Virus"
+	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	limited_stock = 1
+	cost = 2
+	restricted = TRUE
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
+
+/datum/uplink_item/role_restricted/bureaucratic_error/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	force_event(/datum/round_event_control/bureaucratic_error, "a syndicate virus")
+	return source
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
