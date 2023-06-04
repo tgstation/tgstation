@@ -249,8 +249,7 @@
 
 	SET_PLANE_IMPLICIT(src, plane)
 
-	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
-		update_greyscale()
+	update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -880,11 +879,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
-	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
-		return
-	update_atom_colour()
-	QUEUE_SMOOTH(src)
+		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
 
 /**
  * An atom we are buckled or is contained within us has tried to move

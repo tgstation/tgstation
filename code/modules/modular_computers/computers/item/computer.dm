@@ -691,13 +691,6 @@
 	set_light_color(color)
 	return TRUE
 
-/obj/item/modular_computer/update_name()
-	if(!saved_identification && !saved_job)
-		name = initial(name)
-		return
-	name = "[saved_identification] ([saved_job])"
-	return ..()
-
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
 	if(isidcard(attacking_item) && InsertID(attacking_item, user))

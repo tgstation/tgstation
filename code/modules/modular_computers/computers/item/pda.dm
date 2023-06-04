@@ -72,11 +72,18 @@
 		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_icon_state()
-	icon_state = initial(paintjob.icon_state)
+	icon_state = paintjob ? initial(paintjob.icon_state) : initial(icon_state)
+	return ..()
+
+/obj/item/modular_computer/update_name()
+	if(!saved_identification && !saved_job)
+		name = paintjob ? initial(paintjob.name) : initial(name)
+		return
+	name = "[saved_identification] ([saved_job])"
 	return ..()
 
 /obj/item/modular_computer/pda/update_desc()
-	desc = initial(paintjob.desc)
+	desc = paintjob ? initial(paintjob.desc) : initial(desc)
 	return ..()
 
 /obj/item/modular_computer/pda/update_greyscale()
@@ -205,7 +212,7 @@
 		balloon_alert(user, "removed [inserted_item]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
