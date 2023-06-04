@@ -318,7 +318,7 @@
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "nC" = (
-/obj/item/food/grilled_cheese_sandwich{
+/obj/item/food/sandwich/cheese/grilled{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
@@ -961,7 +961,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Oe" = (
-/obj/item/food/notasandwich{
+/obj/item/food/sandwich/notasandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,

@@ -57,8 +57,8 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 	"birds" = typecacheof(list(
-		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chicken,
+		/mob/living/basic/chick,
+		/mob/living/basic/chicken,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/penguin,
 	)),
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/cockroach,
 		/mob/living/simple_animal/hostile/bee,
 	)),
-	"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
+	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"robots" = typecacheof(list(
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,

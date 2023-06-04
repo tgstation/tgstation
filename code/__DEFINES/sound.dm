@@ -8,6 +8,7 @@
 #define CHANNEL_BUZZ 1018
 #define CHANNEL_TRAITOR 1017
 #define CHANNEL_CHARGED_SPELL 1016
+#define CHANNEL_ELEVATOR 1015
 
 ///Default range of a sound.
 #define SOUND_RANGE 17

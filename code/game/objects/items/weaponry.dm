@@ -853,13 +853,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	splattable = typecacheof(list(
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/ant,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/obj/item/queen_bee,
 		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/ant,
+		/mob/living/simple_animal/hostile/bee,
 		/obj/effect/decal/cleanable/ants,
+		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
 		/mob/living/basic/giant_spider,
@@ -994,7 +994,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
-/obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
