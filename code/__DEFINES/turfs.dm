@@ -96,6 +96,8 @@
 #define TURF_PATHING_PASS_NO 2
 
 /// Generate horizontal striped color turf decals (holidays and rainbow tile)
-#define COLOR_STRIPE_HORIZONTAL 0
+#define PATTERN_DEFAULT "default"
 /// Generate vertical striped color turf decals (holidays and rainbow tile)
-#define COLOR_STRIPE_VERTICAL 1
+#define PATTERN_VERTICAL_STRIPE "vertical"
+/// Generate random color turf decals (holidays and rainbow tile)
+#define PATTERN_RANDOM "random"

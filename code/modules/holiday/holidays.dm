@@ -25,6 +25,7 @@
 	var/poster_name = "generic celebration poster"
 	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
 	var/poster_icon = "holiday_unfinished"
+	var/list/holiday_colors
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -332,8 +333,23 @@
 	name = PRIDE_WEEK
 	begin_month = JUNE
 	// Stonewall was June 28th, this captures its week.
-	begin_day = 23
+	begin_day = 1
 	end_day = 29
+	holiday_colors = list(
+	COLOR_PRIDE_PURPLE,
+	COLOR_PRIDE_BLUE,
+	COLOR_PRIDE_GREEN,
+	COLOR_PRIDE_YELLOW,
+	COLOR_PRIDE_ORANGE,
+	COLOR_PRIDE_RED,
+	)
+
+/datum/holiday/pride_week/get_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	switch(pattern)
+		if(PATTERN_DEFAULT)
+			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
+		if(PATTERN_VERTICAL_STRIPE)
+			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
 
 // JULY
 
@@ -727,17 +743,6 @@
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
 
-// HOLIDAY DECAL COLORS
-
-GLOBAL_LIST_INIT(holiday_colors, list(
-	COLOR_PRIDE_PURPLE,
-	COLOR_PRIDE_BLUE,
-	COLOR_PRIDE_GREEN,
-	COLOR_PRIDE_YELLOW,
-	COLOR_PRIDE_ORANGE,
-	COLOR_PRIDE_RED,
-))
-
 // HOLIDAY ADDONS
 
 /datum/holiday/xmas/celebrate()
@@ -823,3 +828,13 @@ GLOBAL_LIST_INIT(holiday_colors, list(
 /proc/print_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
 	var/list/deets = poll_holiday(path, min_month, max_month, min_year, max_year, max_day)
 	message_admins("The accepted dates for [path] in the input range [min_year]-[max_year]/[min_month]-[max_month]/1-[max_day] are [deets.Join("\n")]")
+
+/// Given an atom, will return what color it should be to match the event/holiday
+
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern)
+	return
+
+/proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	for(var/holiday_key in GLOB.holidays)
+		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
+		return holiday_real.get_holiday_colors(thing_to_color, pattern)

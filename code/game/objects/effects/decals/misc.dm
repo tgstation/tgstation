@@ -89,14 +89,3 @@
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
 	density = TRUE
-
-/// Given an atom, will return what color it should be to match the event/holiday
-/obj/effect/proc/get_holiday_color(atom/thing_to_color, axis = COLOR_STRIPE_HORIZONTAL)
-	switch(axis)
-		if(COLOR_STRIPE_HORIZONTAL)
-			return GLOB.holiday_colors[(thing_to_color.y % GLOB.holiday_colors.len) + 1]
-		if(COLOR_STRIPE_VERTICAL)
-			return GLOB.holiday_colors[(thing_to_color.x % GLOB.holiday_colors.len) + 1]
-		else
-			stack_trace("Atom requested holiday color without correct argument.")
-			return COLOR_WHITE
