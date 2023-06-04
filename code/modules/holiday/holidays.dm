@@ -25,7 +25,6 @@
 	var/poster_name = "generic celebration poster"
 	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
 	var/poster_icon = "holiday_unfinished"
-	var/list/holiday_colors
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -221,6 +220,9 @@
 		if(P.client)
 			P.client.playtitlemusic()
 
+/datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
+	return "#[random_short_color()]"
+
 /datum/holiday/spess
 	name = "Cosmonautics Day"
 	begin_day = 12
@@ -333,9 +335,9 @@
 	name = PRIDE_WEEK
 	begin_month = JUNE
 	// Stonewall was June 28th, this captures its week.
-	begin_day = 1
+	begin_day = 23
 	end_day = 29
-	holiday_colors = list(
+	var/static/list/pride_colors = list(
 	COLOR_PRIDE_PURPLE,
 	COLOR_PRIDE_BLUE,
 	COLOR_PRIDE_GREEN,
@@ -347,9 +349,9 @@
 /datum/holiday/pride_week/get_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
 	switch(pattern)
 		if(PATTERN_DEFAULT)
-			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
+			return pride_colors[(thing_to_color.y % pride_colors.len) + 1]
 		if(PATTERN_VERTICAL_STRIPE)
-			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
+			return pride_colors[(thing_to_color.x % pride_colors.len) + 1]
 
 // JULY
 
@@ -836,12 +838,8 @@
 	return // This is the base proc for holidays with no colors. Subtypes will have their specific proc.
 
 /proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
-	switch(pattern)
-		if(PATTERN_RANDOM)
-			return "#[random_short_color()]"
-		if(PATTERN_RAINBOW)
-			var/rainbow_color = CALLBACK(TYPE_PROC_REF(/datum/holiday/pride_week, get_holiday_colors), thing_to_color, PATTERN_DEFAULT)
-			return rainbow_color
+	if(pattern == PATTERN_RANDOM)
+		return "#[random_short_color()]"
 	if(!length(GLOB.holidays))
 		return
 	for(var/holiday_key in GLOB.holidays)

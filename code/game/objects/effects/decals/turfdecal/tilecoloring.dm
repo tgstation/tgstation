@@ -3,6 +3,7 @@
 	icon_state = "tile_corner"
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
+	use_holiday_colors = TRUE
 
 /obj/effect/turf_decal/tile/neutral/tram
 	pattern = PATTERN_VERTICAL_STRIPE
@@ -142,13 +143,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 	color = request_holiday_colors(src, pattern)
 	alpha = DECAL_ALPHA
 	return ..()
-
-/obj/effect/turf_decal/tile/holiday/rainbow
-	name = "rainbow tile decal"
-	color = "#00ffff" //bright cyan as default for mapping
-	pattern = PATTERN_RAINBOW
-
-TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/rainbow)
 
 /// Random tiles
 
