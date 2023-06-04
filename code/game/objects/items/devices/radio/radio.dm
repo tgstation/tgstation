@@ -83,6 +83,13 @@
 	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
 	var/overlay_mic_active = "m_active"
 
+	/// If true, radio will have a panic button, which announces that the user needs help
+	var/panic_button = FALSE
+	/// Rate at which panic button recharges after being pressed
+	var/panic_rate = 60
+	/// The current time that has passed since last panic button press
+	var/panic_time = 0
+
 	/// When set to FALSE, will avoid calling update_icon() in set_broadcasting and co.
 	/// Used to save time on updating icon several times over initialization.
 	VAR_PRIVATE/perform_update_icon = TRUE
@@ -584,5 +591,24 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+/obj/item/radio/ui_action_click(mob/user, action)
+	if(emped)
+		to_chat(user, span_warning("The panic button is broken!"))
+		return
+
+	panic(user)
+
+/// The panic button, alerts Security channel that the user currently needs help
+/obj/item/radio/proc/panic(mob/user)
+
+	if(panic_time > world.time)
+		to_chat(user, span_warning("The panic button cooldown didn't pass yet!"))
+		return
+
+	src.talk_into(talking_movable = src, message = "[user] is requesting immediate backup to their location!!", channel = RADIO_CHANNEL_SECURITY)
+	say("Backup has been requested!")
+	playsound(source = src, soundin = 'sound/machines/terminal_alert.ogg', vol = 70)
+	panic_time = world.time + panic_rate
 
 #undef FREQ_LISTENING
