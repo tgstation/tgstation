@@ -99,7 +99,7 @@
 			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				to_chat(quake_victim, span_warning("Damn, I wonder what that rumbling noise is?")) ///You're about to find out
-				quake_victim.playsound_local(quake_victim, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //get a better noise
+				playsound(epicenter, 'sound/misc/metal_creak.ogg', 100, TRUE)
 
 	// Step one of the destruction, which wrecks the turfs in the "underbelly" of the earthquake zone.
 	// This should clear out any rock/snow walls below, allowing a proper chasm to form if the underbelly area isn't clear.
@@ -110,7 +110,7 @@
 				SSexplosions.lowturf += turf_to_shred
 		for(var/turf/turf_to_shred in underbelly)
 			SSexplosions.lowturf += turf_to_shred
-		playsound(epicenter, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //get a better noise
+		playsound(epicenter, 'sound/misc/metal_creak.ogg', 100, TRUE)
 
 /datum/round_event/earthquake/end()
 	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100)
