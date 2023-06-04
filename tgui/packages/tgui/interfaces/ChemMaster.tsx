@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip, LabeledList, ColorBox, ProgressBar } from '../components';
+import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip, LabeledList, ColorBox, ProgressBar, Stack, Divider } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -59,7 +59,7 @@ export const ChemMaster = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { reagentAnalysisMode } = data;
   return (
-    <Window width={400} height={600}>
+    <Window width={400} height={620}>
       <Window.Content scrollable>
         {reagentAnalysisMode ? <AnalysisResults /> : <ChemMasterContent />}
       </Window.Content>
@@ -211,6 +211,7 @@ const ChemMasterContent = (props, context) => {
           )}
           {categories.map((category) => (
             <Box key={category.name}>
+              <GroupTitle title={category.name} />
               {category.containers.map(
                 (container) =>
                   (!hasContainerSuggestion || // Doesn't have suggestion
@@ -407,4 +408,24 @@ const AnalysisResults = (props, context) => {
       </LabeledList>
     </Section>
   );
+};
+
+const GroupTitle = ({ title }) => {
+  return (
+    <Stack my={1}>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+      <Stack.Item
+        style={{
+          'text-transform': 'capitalize',
+        }}
+        color={'gray'}>
+        {title}
+      </Stack.Item>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+    </Stack>
+  ) as any;
 };
