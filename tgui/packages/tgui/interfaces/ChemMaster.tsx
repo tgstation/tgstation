@@ -1,12 +1,14 @@
 import { BooleanLike, classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip, LabeledList, ColorBox } from '../components';
+import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip, LabeledList, ColorBox, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   reagentAnalysisMode: BooleanLike;
   analysisData: Analysis;
+  isPrinting: BooleanLike;
+  printingProgress: number;
   transferMode: BooleanLike;
   hasBeaker: BooleanLike;
   beakerCurrentVolume: number;
@@ -67,6 +69,8 @@ export const ChemMaster = (props, context) => {
 const ChemMasterContent = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
+    isPrinting,
+    printingProgress,
     transferMode,
     hasBeaker,
     beakerCurrentVolume,
@@ -154,75 +158,99 @@ const ChemMasterContent = (props, context) => {
           ))}
         </Table>
       </Section>
-      <Section
-        title="Packaging"
-        buttons={
-          bufferContents.length !== 0 && (
-            <Box>
-              <NumberInput
-                unit={'items'}
-                step={1}
-                value={itemCount}
-                minValue={1}
-                maxValue={10}
-                onChange={(e, value) => {
-                  setItemCount(value);
-                }}
-              />
-              <Box inline mx={1}>
-                {`${
-                  Math.round(
-                    Math.min(
-                      selectedContainerVolume,
-                      bufferCurrentVolume / itemCount
-                    ) * 100
-                  ) / 100
-                } u. each`}
+      {!isPrinting && (
+        <Section
+          title="Packaging"
+          buttons={
+            bufferContents.length !== 0 &&
+            (!isPrinting ? (
+              <Box>
+                <NumberInput
+                  unit={'items'}
+                  step={1}
+                  value={itemCount}
+                  minValue={1}
+                  maxValue={10}
+                  onChange={(e, value) => {
+                    setItemCount(value);
+                  }}
+                />
+                <Box inline mx={1}>
+                  {`${
+                    Math.round(
+                      Math.min(
+                        selectedContainerVolume,
+                        bufferCurrentVolume / itemCount
+                      ) * 100
+                    ) / 100
+                  } u. each`}
+                </Box>
+                <Button
+                  content="Print"
+                  icon="flask"
+                  onClick={() =>
+                    act('create', {
+                      itemCount: itemCount,
+                    })
+                  }
+                />
               </Box>
-              <Button
-                content="Create"
-                onClick={() =>
-                  act('create', {
-                    itemCount: itemCount,
-                  })
-                }
-              />
+            ) : (
+              <Button content="Printing..." icon="gear" iconSpin disabled />
+            ))
+          }>
+          {!!hasContainerSuggestion && (
+            <Button.Checkbox
+              onClick={() => act('toggleContainerSuggestion')}
+              checked={doSuggestContainer}
+              mb={1}>
+              Guess container by main reagent in the buffer
+            </Button.Checkbox>
+          )}
+          {categories.map((category) => (
+            <Box key={category.name}>
+              {category.containers.map(
+                (container) =>
+                  (!hasContainerSuggestion || // Doesn't have suggestion
+                    (!!hasContainerSuggestion && !doSuggestContainer) || // Has sugestion and it's disabled
+                    (!!doSuggestContainer &&
+                      container.ref === suggestedContainer)) && ( // Suggestion enabled and container matches
+                    <ContainerButton
+                      key={container.ref}
+                      category={category}
+                      container={container}
+                    />
+                  )
+              )}
             </Box>
-          )
-        }>
-        {!!hasContainerSuggestion && (
-          <Button.Checkbox
-            onClick={() => act('toggleContainerSuggestion')}
-            checked={doSuggestContainer}
-            mb={1}>
-            Guess container by main reagent in the buffer
-          </Button.Checkbox>
-        )}
-        {categories.map((category) => (
-          <Box key={category.name}>
-            {category.containers.map(
-              (container) =>
-                (!hasContainerSuggestion || // Doesn't have suggestion
-                  (!!hasContainerSuggestion && !doSuggestContainer) || // Has sugestion and it's disabled
-                  (!!doSuggestContainer &&
-                    container.ref === suggestedContainer)) && ( // Suggestion enabled and container matches
-                  <ContainerButton
-                    key={container.ref}
-                    category={category}
-                    container={container}
-                  />
-                )
-            )}
-          </Box>
-        ))}
-      </Section>
+          ))}
+        </Section>
+      )}
+      {!!isPrinting && (
+        <Section title="Printing">
+          <ProgressBar
+            value={printingProgress}
+            minValue={0}
+            maxValue={itemCount}
+            color="good">
+            <Box
+              lineHeight={1.9}
+              style={{
+                'text-shadow': '1px 1px 0 black',
+              }}>
+              {`Printing ${printingProgress} out of ${itemCount}`}
+            </Box>
+          </ProgressBar>
+        </Section>
+      )}
     </Box>
   );
 };
 
 const ReagentEntry = (props, context) => {
-  const { act } = useBackend(context);
+  const { data, act } = useBackend<Data>(context);
   const { chemical, transferTo } = props;
+  const { isPrinting } = data;
   return (
     <Table.Row key={chemical.id}>
       <Table.Cell color="label">
@@ -233,6 +261,7 @@ const ReagentEntry = (props, context) => {
       <Table.Cell collapsing>
         <Button
           content="1"
+          disabled={isPrinting}
           onClick={() => {
             act('transfer', {
               reagentId: chemical.id,
@@ -243,6 +272,7 @@ const ReagentEntry = (props, context) => {
         />
         <Button
           content="5"
+          disabled={isPrinting}
           onClick={() =>
             act('transfer', {
               reagentId: chemical.id,
@@ -253,6 +283,7 @@ const ReagentEntry = (props, context) => {
         />
         <Button
           content="10"
+          disabled={isPrinting}
           onClick={() =>
             act('transfer', {
               reagentId: chemical.id,
@@ -263,6 +294,7 @@ const ReagentEntry = (props, context) => {
         />
         <Button
           content="All"
+          disabled={isPrinting}
           onClick={() =>
             act('transfer', {
               reagentId: chemical.id,
@@ -274,6 +306,7 @@ const ReagentEntry = (props, context) => {
         <Button
           icon="ellipsis-h"
           title="Custom amount"
+          disabled={isPrinting}
           onClick={() =>
             act('transfer', {
               reagentId: chemical.id,
@@ -298,7 +331,7 @@ const ReagentEntry = (props, context) => {
 
 const ContainerButton = ({ container, category }, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { selectedContainerRef } = data;
+  const { isPrinting, selectedContainerRef } = data;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
   return (
     <Tooltip
@@ -310,6 +343,7 @@ const ContainerButton = ({ container, category }, context) => {
         width={isPillPatch ? '32px' : '48px'}
         height={isPillPatch ? '32px' : '48px'}
         selected={container.ref === selectedContainerRef}
+        disabled={isPrinting}
         p={0}
         onClick={() => {
           act('selectContainer', {

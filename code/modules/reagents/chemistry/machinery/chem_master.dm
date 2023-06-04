@@ -80,6 +80,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/do_suggest_container = FALSE
 	/// The container suggested by main reagent in the buffer
 	var/suggested_container
+	/// Whether the machine is busy with printing containers
+	var/is_printing = FALSE
+	/// Number of printed containers in the current printing cycle for UI progress bar
+	var/printing_progress
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -118,7 +122,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	if(panel_open)
 		. += mutable_appearance(icon, base_icon_state + "_overlay_panel")
 
-	. += mutable_appearance(icon, base_icon_state + "_overlay_extruder")
+	if(is_printing)
+		. += mutable_appearance(icon, base_icon_state + "_overlay_extruder_active")
+	else
+		. += mutable_appearance(icon, base_icon_state + "_overlay_extruder")
 
 	// Screen overlay
 	if(!panel_open && !(machine_stat & (NOPOWER | BROKEN)))
@@ -127,6 +134,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			screen_overlay += "_analysis"
 		else if(reagents.total_volume > 0)
 			screen_overlay += "_main"
+		else if(is_printing)
+			screen_overlay += "_active"
 		. += mutable_appearance(icon, screen_overlay)
 		. += emissive_appearance(icon, base_icon_state + "_overlay_lightmask", src, alpha = src.alpha)
 
@@ -249,6 +258,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			"addictionTypes" = reagents.parse_addictions(reagent),
 		)
 	else
+		data["isPrinting"] = is_printing
+		data["printingProgress"] = printing_progress
 		data["hasBeaker"] = beaker ? TRUE : FALSE
 		data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 		data["beakerMaxVolume"] = beaker ? beaker.volume : null
@@ -354,15 +365,19 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		return FALSE
 
 	// Print and fill containers
+	is_printing = TRUE
 	use_power(active_power_usage)
-	flick_overlay_view("[base_icon_state]_overlay_active", 1.5 SECONDS)
-	stoplag(1.5 SECONDS)
+	update_appearance(UPDATE_ICON)
+	printing_progress = 0
 	for(var/i in 1 to item_count)
+		stoplag(1.5 SECONDS) // Duration of printing animation
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
 		adjust_item_drop_location(item)
 		item.name = item_name
 		item.reagents.clear_reagents()
 		reagents.trans_to(item, vol_each, transfered_by = src)
+		printing_progress++
+	is_printing = FALSE
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
