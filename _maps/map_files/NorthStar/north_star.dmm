@@ -29203,7 +29203,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
 /obj/item/bonesetter,
-/obj/item/stack/medical/bone_gel/four,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "hBe" = (
