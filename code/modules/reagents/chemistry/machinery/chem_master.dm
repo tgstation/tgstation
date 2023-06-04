@@ -84,6 +84,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/is_printing = FALSE
 	/// Number of printed containers in the current printing cycle for UI progress bar
 	var/printing_progress
+	var/printing_total
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -132,10 +133,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		var/screen_overlay = base_icon_state + "_overlay_screen"
 		if(reagent_analysis_mode)
 			screen_overlay += "_analysis"
-		else if(reagents.total_volume > 0)
-			screen_overlay += "_main"
 		else if(is_printing)
 			screen_overlay += "_active"
+		else if(reagents.total_volume > 0)
+			screen_overlay += "_main"
 		. += mutable_appearance(icon, screen_overlay)
 		. += emissive_appearance(icon, base_icon_state + "_overlay_lightmask", src, alpha = src.alpha)
 
@@ -260,6 +261,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	else
 		data["isPrinting"] = is_printing
 		data["printingProgress"] = printing_progress
+		data["printingTotal"] = printing_total
 		data["hasBeaker"] = beaker ? TRUE : FALSE
 		data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 		data["beakerMaxVolume"] = beaker ? beaker.volume : null
@@ -369,6 +371,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	use_power(active_power_usage)
 	update_appearance(UPDATE_ICON)
 	printing_progress = 0
+	printing_total = item_count
 	for(var/i in 1 to item_count)
 		stoplag(1.5 SECONDS) // Duration of printing animation
 		var/obj/item/reagent_containers/item = new container_style(drop_location())

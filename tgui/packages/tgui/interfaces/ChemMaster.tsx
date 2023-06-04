@@ -9,6 +9,7 @@ type Data = {
   analysisData: Analysis;
   isPrinting: BooleanLike;
   printingProgress: number;
+  printingTotal: number;
   transferMode: BooleanLike;
   hasBeaker: BooleanLike;
   beakerCurrentVolume: number;
@@ -71,6 +72,7 @@ const ChemMasterContent = (props, context) => {
   const {
     isPrinting,
     printingProgress,
+    printingTotal,
     transferMode,
     hasBeaker,
     beakerCurrentVolume,
@@ -231,14 +233,14 @@ const ChemMasterContent = (props, context) => {
           <ProgressBar
             value={printingProgress}
             minValue={0}
-            maxValue={itemCount}
+            maxValue={printingTotal}
             color="good">
             <Box
               lineHeight={1.9}
               style={{
                 'text-shadow': '1px 1px 0 black',
               }}>
-              {`Printing ${printingProgress} out of ${itemCount}`}
+              {`Printing ${printingProgress} out of ${printingTotal}`}
             </Box>
           </ProgressBar>
         </Section>
