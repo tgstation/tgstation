@@ -1,0 +1,5 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "After a thorough dressing down and threats of fines from the Fire Marshal, Nanotrasen has reluctantly installed several missing fire alarms and other safety equipment in the North Star's Cargo Bay and a few other lower deck areas."
+  - bugfix: "Fixed minor area definition errors in North Star's cargo area."
