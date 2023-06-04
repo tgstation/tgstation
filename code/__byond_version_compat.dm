@@ -66,7 +66,7 @@
 /// fcopy will crash on 515 linux if given a non-existant file, instead of returning 0 like on 514 linux or 515 windows
 /// var case matches documentation for fcopy.
 /world/proc/__fcopy(Src, Dst)
-	if (!fexists(Src))
+	if (istext(Src) && !fexists(Src))
 		return 0
 	return fcopy(Src, Dst)
 	
