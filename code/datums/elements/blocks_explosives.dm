@@ -19,15 +19,13 @@
 	else if(moving_target.loc)
 		block_loc(moving_target.loc, moving_target.explosion_block)
 
-/datum/element/blocks_explosives/Detach(datum/source)
+/datum/element/blocks_explosives/Detach(atom/movable/source)
 	. = ..()
-	if(ismovable(source))
-		var/atom/movable/target = source
-		if(length(target.locs) > 1)
-			for(var/atom/location as anything in target.locs)
-				unblock_loc(location, target.explosion_block)
-		else if(target.loc)
-			unblock_loc(target.loc, target.explosion_block)
+	if(length(source.locs) > 1)
+		for(var/atom/location as anything in source.locs)
+			unblock_loc(location, source.explosion_block)
+	else if(source.loc)
+		unblock_loc(source.loc, source.explosion_block)
 	REMOVE_TRAIT(source, TRAIT_BLOCKING_EXPLOSIVES, TRAIT_GENERIC)
 
 /// Call this when our blocking well, changes. we'll update our turf(s) with the details
