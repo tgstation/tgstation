@@ -1,18 +1,11 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import {
-  Box,
-  Button,
-  Dimmer,
-  Icon,
-  Section,
-  Stack,
-  Input,
-  TextArea,
-} from '../components';
+import { Box, Button, Dimmer, Icon, Section, Stack, Input, TextArea } from '../components';
 import { NtosWindow } from '../layouts';
 import { Component, createRef, InfernoNode, RefObject, SFC } from 'inferno';
 import { sanitizeText } from '../sanitize';
+
+import '../styles/interfaces/NtosMessenger.scss';
 
 type NtMessage = {
   name: string;
@@ -51,8 +44,6 @@ type NtosMessengerData = {
   messages: NtMessage[];
   messengers: NtMessengers;
 };
-
-type CurrentChat = NtMessenger | null;
 
 const NoIDDimmer = () => {
   return (
@@ -247,41 +238,30 @@ const ContactsScreen = (_props: any, context: any) => {
 };
 
 type ChatMessageProps = {
-  sender: string | null;
+  isSelf: boolean;
   msg: string;
   everyone?: boolean;
-  photo_path?: string;
+  photoPath?: string;
 };
 
 const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const { msg, everyone, sender, photo_path } = props;
+  const { msg, everyone, isSelf, photoPath } = props;
   const text = {
     __html: sanitizeText(msg),
   };
+
   return (
-    <Box
-      pr={1}
-      pl={1}
-      pt={1}
-      backgroundColor="#151515"
-      maxWidth={30}
-      style={{
-        border: '1px solid #202020',
-        'border-radius': '3px',
-        display: 'inline-flex',
-      }}>
-      <Section title={sender} textAlign="left" minWidth={10}>
-        <Box
-          style={{ 'word-wrap': 'break-word' }}
-          dangerouslySetInnerHTML={text}
-        />
-        {photo_path !== null && <Box mt={1} mr={3} as="img" src={photo_path} />}
-        {everyone && (
-          <Box textColor="grey" fontSize="0.7em" mt={1}>
-            Sent to everyone
-          </Box>
-        )}
-      </Section>
+    <Box className={`NtosMessenger__ChatMessage${isSelf ? '__outgoing' : ''}`}>
+      <Box
+        className="NtosMessenger__ChatMessage__content"
+        dangerouslySetInnerHTML={text}
+      />
+      {photoPath !== null && <Box as="img" src={photoPath} />}
+      {everyone && (
+        <Box className="NtosMessenger__ChatMessage__everyone">
+          Sent to everyone
+        </Box>
+      )}
     </Box>
   );
 };
@@ -366,16 +346,12 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       lastMsgRef = message.sender;
 
       filteredMessages.push(
-        <Stack.Item
-          key={index}
-          mt={isSwitch ? 1 : 0.5}
-          shrink={0}
-          textAlign={message.outgoing ? 'right' : ''}>
+        <Stack.Item key={index} mt={isSwitch ? 1 : 0.5}>
           <ChatMessage
-            sender={isSwitch ? (message.outgoing ? 'You' : recp.name) : null}
+            isSelf={message.outgoing}
             msg={message.contents}
-            everyone={!!message.everyone}
-            photo_path={message.photo_path}
+            everyone={message.everyone}
+            photoPath={message.photo_path}
           />
         </Stack.Item>
       );
@@ -401,7 +377,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical justify="flex-end" fill>
-              <Stack.Item textAlign="center" fontSize={1} color="gray">
+              <Stack.Item textAlign="center" fontSize={1}>
                 This is the beginning of your chat with {recp.name}.
               </Stack.Item>
               <Stack.Divider />

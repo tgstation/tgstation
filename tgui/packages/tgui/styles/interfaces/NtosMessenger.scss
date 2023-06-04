@@ -1,0 +1,63 @@
+@use 'sass:color';
+@use '../base';
+@use '../functions';
+
+$chatmessage-color-incoming: hsl(213, 50%, 35%);
+$chatmessage-color-outgoing: hsl(213, 0%, 35%);
+
+$chatmessage-padding: 0.7rem;
+
+// very nasty theme hacks inbound
+
+.theme-ntOS95 {
+  .NtosMessenger__ChatMessage {
+    color: white !important;
+
+    border: base.em(2px) outset #c3c3c3;
+    padding: $chatmessage-padding - base.rem(2px);
+
+    border-radius: 0;
+
+    background-color: lighten($chatmessage-color-incoming, 10%);
+    &__outgoing {
+      background-color: lighten($chatmessage-color-outgoing, 20%);
+    }
+  }
+}
+
+.NtosMessenger__ChatMessage {
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 30rem;
+
+  padding: $chatmessage-padding;
+
+  border-radius: 3px;
+  background-color: $chatmessage-color-incoming;
+
+  &__outgoing {
+    @extend .NtosMessenger__ChatMessage;
+    background-color: $chatmessage-color-outgoing;
+    text-align: right;
+  }
+
+  &__inner {
+    text-align: left;
+    min-width: 10rem;
+  }
+
+  &__content {
+    word-wrap: break-word;
+  }
+
+  &__everyone {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    color: lightgrey;
+  }
+
+  img {
+    margin-top: 1rem;
+    margin-right: 3rem;
+  }
+}

@@ -76,6 +76,7 @@
 @include meta.load-css('./interfaces/Fabricator.scss');
 @include meta.load-css('./interfaces/Emojipedia.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');
+@include meta.load-css('./interfaces/NtosMessenger.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
