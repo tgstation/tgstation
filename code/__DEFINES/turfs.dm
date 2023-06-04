@@ -94,3 +94,8 @@
 #define TURF_PATHING_PASS_PROC 1
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
+
+/**
+ * Finds the midpoint of two given turfs.
+ */
+#define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))

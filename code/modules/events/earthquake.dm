@@ -3,10 +3,9 @@
 ///Much of the actual structural damage is done through the explosions subsystem. Objects, machines, and especially people
 ///that aren't moved out of the impact area (indicated by the wobbly tiles) will not just be thrown down a z-level, but also be destroyed/maimed in the process.
 ///This event uses generic_event_spawn landmarks which are located in public areas/workplaces, making it not only structurally devastating but also incredibly disruptive.
-///Weight should generally be on-par with that of a meteor storm or rod, since it's somewhere between the two in terms of targeted destructive power.
 /datum/round_event_control/earthquake
 	name = "Chasmic Earthquake"
-	description = "After a brief warning, creates a large chasm in the structure of the station, demolishing anything caught in the fault."
+	description = "Causes an earthquake, demolishing anything caught in the fault."
 	typepath = /datum/round_event/earthquake
 	category = EVENT_CATEGORY_ENGINEERING
 	min_players = 20
@@ -49,17 +48,37 @@
 	message_admins("An earthquake event is about to strike the [get_area_name(epicenter)][ADMIN_JMP(epicenter)].")
 
 	// Picks two points generally opposite from each other
-	var/turf/fracture_point_high = locate(epicenter.x + rand(3, 8), epicenter.y + rand(3, 8), epicenter.z)
-
-	var/turf/fracture_point_low = locate(epicenter.x - rand(3, 8), epicenter.y - rand(3, 8), epicenter.z)
+	var/turf/fracture_point_high = locate(epicenter.x + rand(4, 10), epicenter.y + rand(4, 8), epicenter.z)
+	var/turf/fracture_point_low = locate(epicenter.x - rand(4, 10), epicenter.y - rand(4, 8), epicenter.z)
 
 	turfs_to_shred = block(fracture_point_high, fracture_point_low)
 
-	// Filter out some of the points that are a certain distance away from the epicenter/fracture points.
+	// Now, we filter out some of the points that are a certain distance away from a rough approximation of the fault line.
 	// This should create a pattern more akin to a fracture in the ground, rather than a rectangle-shaped crater of destroyed ground.
+	var/turf/high_midpoint = TURF_MIDPOINT(fracture_point_high, epicenter)
+	var/turf/low_midpoint = TURF_MIDPOINT(fracture_point_low, epicenter)
+
+	// We populate a list with the midpoints and midpoints of midpoints to create a rough line of turfs to compare distances against.
+	var/list/turfs_to_compare = list(
+			fracture_point_high,
+			fracture_point_low,
+			high_midpoint,
+			low_midpoint,
+			TURF_MIDPOINT(fracture_point_high, high_midpoint),
+			TURF_MIDPOINT(fracture_point_low, low_midpoint),
+			TURF_MIDPOINT(high_midpoint, epicenter),
+			TURF_MIDPOINT(low_midpoint, epicenter),
+		)
+
+	// Find the shortest distance between each turf in the list and the rough fault line we've just established
 	for(var/turf/turf_to_check in turfs_to_shred)
-		var/total_distance = get_dist(turf_to_check, epicenter) + get_dist(turf_to_check, fracture_point_high) + get_dist(turf_to_check, fracture_point_low)
-		if(total_distance > (get_dist(fracture_point_high, fracture_point_low) * 1.5))
+		var/nearest_distance = get_dist(turf_to_check, epicenter)
+
+		for(var/turf/turf_to_compare in turfs_to_compare)
+			nearest_distance = min(get_dist(turf_to_check, turf_to_compare), nearest_distance)
+
+		// If the turf is too far from any point on our fault line estimate, we remove it.
+		if(nearest_distance > 2)
 			turfs_to_shred -= turf_to_check
 
 	// Grab a list of turfs below the ones we're going to destroy.
@@ -85,21 +104,23 @@
 				shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
 				earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 75)
 
+			for(var/turf/turf_to_quake in underbelly)
+				turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
+
 	if(activeFor == end_when - 2)
 		for(var/turf/turf_to_quake in turfs_to_shred)
 			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
-				quake_victim.Knockdown(3 SECONDS)
-				quake_victim.Paralyze(3 SECONDS)
+				quake_victim.Knockdown(7 SECONDS)
+				quake_victim.Paralyze(5 SECONDS)
 				if(quake_victim.client)
 					quake_victim.client.give_award(/datum/award/achievement/misc/earthquake_victim, quake_victim)
-				to_chat(quake_victim, span_warning("The ground quakes beneath you, throwing you off your feet!"))
+				to_chat(quake_victim, span_warning("The ground quakes violently beneath you, throwing you off your feet!"))
 
 		for(var/turf/turf_to_quake in underbelly)
 			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				to_chat(quake_victim, span_warning("Damn, I wonder what that rumbling noise is?")) ///You're about to find out
-				playsound(epicenter, 'sound/misc/metal_creak.ogg', 100, TRUE)
 
 	// Step one of the destruction, which wrecks the turfs in the "underbelly" of the earthquake zone.
 	// This should clear out any rock/snow walls below, allowing a proper chasm to form if the underbelly area isn't clear.
@@ -110,10 +131,10 @@
 				SSexplosions.lowturf += turf_to_shred
 		for(var/turf/turf_to_shred in underbelly)
 			SSexplosions.lowturf += turf_to_shred
-		playsound(epicenter, 'sound/misc/metal_creak.ogg', 100, TRUE)
+		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 100)
+	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 125)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
