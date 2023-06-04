@@ -1,8 +1,7 @@
 ///Earthquake random event.
-///Draws a line of turfs between a high and low point. These turfs will shake and eventually "collapse", forming a deep cut in the station that drops to the z-level below.
+///Draws a curve of turfs between a high and low point. These turfs will shake and eventually "collapse", forming a cut in the station that drops to the z-level below.
 ///Much of the actual structural damage is done through the explosions subsystem. Objects, machines, and especially people
-///that aren't moved out of the impact area (indicated by the wobbly tiles) will not just be thrown down a z-level, but also be destroyed/maimed in the process.
-///This event uses generic_event_spawn landmarks which are located in public areas/workplaces, making it not only structurally devastating but also incredibly disruptive.
+///that aren't moved out of the epicenter area (indicated by the wobbly tiles) will not just be thrown down a z-level, but also be destroyed/maimed in the process.
 /datum/round_event_control/earthquake
 	name = "Chasmic Earthquake"
 	description = "Causes an earthquake, demolishing anything caught in the fault."
@@ -102,7 +101,16 @@
 				if(!is_station_level(earthquake_witness.z))
 					continue
 				shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
-				earthquake_witness.playsound_local(earthquake_witness, pick('sound/misc/earth_rumble_distant1.ogg', 'sound/misc/earth_rumble_distant2.ogg', 'sound/misc/earth_rumble_distant3.ogg', 'sound/misc/earth_rumble_distant4.ogg'), 75)
+				earthquake_witness.playsound_local(
+					earthquake_witness,
+					pick(
+						'sound/misc/earth_rumble_distant1.ogg',
+						'sound/misc/earth_rumble_distant2.ogg',
+						'sound/misc/earth_rumble_distant3.ogg',
+						'sound/misc/earth_rumble_distant4.ogg'
+					),
+					75,
+				)
 
 			for(var/turf/turf_to_quake in underbelly)
 				turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
@@ -139,7 +147,7 @@
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
-		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 100)
+		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 75)
 
 	// Step two of the destruction, which detonates the turfs in the earthquake zone. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
 	// All turfs, and everything else that IS in the earthquake zone, however, will behave as if it were bombed.
@@ -150,5 +158,5 @@
 		else
 			SSexplosions.highturf += turf_to_shred
 
-		if(isasteroidturf(turf_to_shred) && prob(90))
+		if(isasteroidturf(turf_to_shred) && prob(95))
 			turf_to_shred.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
