@@ -4820,7 +4820,7 @@
 "Dk" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp Shuttle Prisoner Airlock";
-	space_dir = 8
+	space_dir = null
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -7216,7 +7216,7 @@
 "SL" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp Shuttle Prisoner Airlock";
-	space_dir = 8
+	space_dir = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
