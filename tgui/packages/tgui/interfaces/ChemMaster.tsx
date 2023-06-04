@@ -172,7 +172,7 @@ const ChemMasterContent = (props, context) => {
                   step={1}
                   value={itemCount}
                   minValue={1}
-                  maxValue={10}
+                  maxValue={50}
                   onChange={(e, value) => {
                     setItemCount(value);
                   }}
