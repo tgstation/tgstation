@@ -708,7 +708,6 @@
 	canSmoothWith = null
 	can_buckle = 1
 	buckle_lying = 90
-	buckle_requires_restraints = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
