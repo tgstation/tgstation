@@ -1,8 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ai" = (
-/obj/structure/broken_flooring/pile/directional/west,
-/turf/template_noop,
-/area/template_noop)
 "ar" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/green,
@@ -364,19 +360,6 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
-"gE" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_y = 32
-	},
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
 "gT" = (
 /obj/structure/sink/kitchen/directional/south{
 	dir = 8;
@@ -1168,10 +1151,6 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"sm" = (
-/obj/structure/broken_flooring/pile/directional/east,
-/turf/template_noop,
-/area/template_noop)
 "su" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1196,10 +1175,6 @@
 "tb" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
-"tf" = (
-/obj/structure/broken_flooring/pile/directional/north,
-/turf/template_noop,
-/area/template_noop)
 "tg" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -1549,16 +1524,16 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"zV" = (
-/obj/structure/broken_flooring/pile/directional/west,
-/turf/closed/mineral/random/low_chance,
-/area/ruin/space)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
+"Ak" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "Ar" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -2345,6 +2320,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/supply,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
+"Pf" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "Pj" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 9
@@ -2374,6 +2353,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
+"Pz" = (
+/obj/structure/sign/poster/contraband/missing_gloves/directional/north,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/power)
 "PK" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2709,6 +2699,10 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
+"VA" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
 "VE" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
@@ -2937,6 +2931,10 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
+"YS" = (
+/obj/structure/broken_flooring/pile/directional/north,
+/turf/template_noop,
+/area/template_noop)
 "YX" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -4565,7 +4563,7 @@ Sj
 Sj
 no
 Sj
-sm
+Pf
 Ya
 Ya
 Ya
@@ -4620,7 +4618,7 @@ TT
 Ya
 Ya
 Ya
-ai
+Ak
 vi
 no
 Sj
@@ -4714,7 +4712,7 @@ pK
 pK
 pK
 yg
-gE
+Pz
 dE
 Yu
 yg
@@ -4774,7 +4772,7 @@ iJ
 iJ
 pK
 pK
-zV
+VA
 yg
 Mu
 Mu
@@ -4872,7 +4870,7 @@ Wd
 XF
 no
 Sj
-tf
+YS
 no
 Ya
 Ya

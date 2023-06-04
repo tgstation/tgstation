@@ -48,7 +48,7 @@
 		var/name = L.name
 		while(name in track.names)
 			track.namecounts[name]++
-			name = text("[] ([])", name, track.namecounts[name])
+			name = "[name] ([track.namecounts[name]])"
 		track.names.Add(name)
 		track.namecounts[name] = 1
 

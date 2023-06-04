@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - server: "del logging is now done by outputting to a json file again, but this time we're using ACTUAL json and not just a big text string with newlines and shit"

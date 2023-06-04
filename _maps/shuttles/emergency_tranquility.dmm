@@ -42,22 +42,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"bd" = (
-/obj/structure/sign/poster/official/there_is_no_gas_giant{
-	pixel_y = -32
-	},
-/obj/structure/bookcase/random/nonfiction,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"bi" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
-/turf/open/floor/stone,
-/area/shuttle/escape)
 "bq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -73,26 +57,6 @@
 	dir = 8
 	},
 /turf/open/water/jungle,
-/area/shuttle/escape)
-"bG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/corporate_perks_vacation{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"bP" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "bS" = (
 /obj/structure/railing{
@@ -110,6 +74,15 @@
 	dir = 8
 	},
 /turf/open/water/jungle,
+/area/shuttle/escape)
+"cc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/ion_rifle/directional/north,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "ct" = (
 /obj/structure/table/wood,
@@ -135,6 +108,21 @@
 /area/shuttle/escape)
 "cM" = (
 /turf/open/floor/iron/chapel,
+/area/shuttle/escape)
+"dd" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/stasis,
+/obj/structure/sign/poster/official/moth_epi/directional/north,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"dA" = (
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "dI" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -250,6 +238,17 @@
 "fL" = (
 /turf/template_noop,
 /area/template_noop)
+"fW" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
 "fY" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -430,12 +429,6 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"iY" = (
-/obj/structure/sign/poster/official/download{
-	pixel_x = 32
-	},
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "jb" = (
 /obj/machinery/barsign/all_access/directional/north,
 /obj/machinery/vending/boozeomat/all_access,
@@ -452,26 +445,6 @@
 	dir = 10
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape)
-"jt" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 8
-	},
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 4
-	},
-/obj/structure/sign/poster/contraband/blood_geometer{
-	pixel_y = 32
-	},
-/turf/open/water,
 /area/shuttle/escape)
 "ju" = (
 /obj/structure/table/reinforced,
@@ -565,6 +538,24 @@
 	dir = 8
 	},
 /turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"kM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/north,
+/turf/open/water,
 /area/shuttle/escape)
 "kU" = (
 /obj/effect/turf_decal/plaque,
@@ -924,45 +915,6 @@
 /obj/item/radio,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"qm" = (
-/obj/structure/closet/cardboard,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 32
-	},
-/obj/item/clothing/suit/hooded/wintercoat/custom,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/item/clothing/shoes/sandal{
-	pixel_y = -11;
-	pixel_x = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "qn" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -987,6 +939,14 @@
 /area/shuttle/escape)
 "qU" = (
 /turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"rd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/poster/official/high_class_martini/directional/north,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "ri" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1066,15 +1026,6 @@
 /obj/structure/flora/bush/ferny,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"sW" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/poster/official/jim_nortons{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "sY" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -1130,6 +1081,43 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
+"tS" = (
+/obj/structure/closet/cardboard,
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
+/obj/item/clothing/suit/hooded/wintercoat/custom,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ux" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -1141,18 +1129,6 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"uK" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi{
-	pixel_y = 32
-	},
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "uR" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1371,6 +1347,14 @@
 	},
 /turf/open/water/jungle,
 /area/shuttle/escape)
+"yQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "yV" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
@@ -1490,6 +1474,10 @@
 "AQ" = (
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
+"AT" = (
+/obj/structure/sign/poster/official/download/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
 "Bf" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -1575,6 +1563,15 @@
 "CR" = (
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"CV" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4;
+	pixel_y = 4
+	},
+/obj/structure/sign/poster/official/midtown_slice/directional/west,
+/turf/open/floor/stone,
+/area/shuttle/escape)
 "Dd" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/computer/operating{
@@ -1607,17 +1604,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark/herringbone,
-/area/shuttle/escape)
-"DZ" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/ion_rifle{
-	pixel_y = 32
-	},
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "Ec" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1706,26 +1692,6 @@
 /obj/structure/chair/sofa/right/brown,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Fv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 8
-	},
-/obj/structure/railing{
-	color = "#A47449";
-	dir = 4
-	},
-/obj/structure/sign/poster/official/festive{
-	pixel_y = -32
-	},
-/turf/open/water,
-/area/shuttle/escape)
 "FS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1773,6 +1739,23 @@
 /obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
+"Gh" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/rack,
+/obj/item/storage/medkit{
+	pixel_y = 10
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Gl" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1801,23 +1784,6 @@
 "Gz" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/escape)
-"GA" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/rack,
-/obj/item/storage/medkit{
-	pixel_y = 10
-	},
-/obj/item/storage/medkit/brute{
-	pixel_y = 5
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin{
-	pixel_y = -6
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "GK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -1898,17 +1864,6 @@
 "IG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/red,
-/area/shuttle/escape)
-"IH" = (
-/obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 4;
-	pixel_y = 4
-	},
-/obj/structure/sign/poster/official/midtown_slice{
-	pixel_x = -32
-	},
-/turf/open/floor/stone,
 /area/shuttle/escape)
 "IJ" = (
 /obj/item/food/baguette{
@@ -2111,6 +2066,11 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"LB" = (
+/obj/structure/sign/poster/official/there_is_no_gas_giant/directional/south,
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "LD" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
@@ -2145,6 +2105,13 @@
 "MO" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
+/area/shuttle/escape)
+"MQ" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
+/turf/open/floor/stone,
 /area/shuttle/escape)
 "MU" = (
 /obj/machinery/door/airlock/hatch,
@@ -2251,6 +2218,24 @@
 "OG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
+/area/shuttle/escape)
+"OK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/structure/sign/poster/official/festive/directional/south,
+/turf/open/water,
 /area/shuttle/escape)
 "OM" = (
 /obj/structure/table/reinforced,
@@ -2554,6 +2539,13 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"UP" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/closet/emcloset/anchored,
+/obj/structure/sign/poster/official/jim_nortons/directional/north,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "UU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -2703,19 +2695,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
-"YB" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/storage/bag/trash{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/mop,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/hacking_guide{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/shuttle/escape)
 "YO" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood/end{
@@ -2745,13 +2724,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"ZF" = (
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = 32
-	},
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "ZJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2882,7 +2854,7 @@ Ec
 yj
 IZ
 LD
-YB
+fW
 Rm
 eD
 ux
@@ -2901,7 +2873,7 @@ fL
 fL
 fL
 ux
-bi
+MQ
 ZJ
 hm
 WM
@@ -2934,7 +2906,7 @@ IZ
 ux
 eW
 hx
-bd
+LB
 ux
 fL
 fL
@@ -2957,7 +2929,7 @@ ux
 ux
 vx
 ux
-ZF
+dA
 lQ
 rV
 ux
@@ -2976,7 +2948,7 @@ fL
 Wo
 ux
 cD
-IH
+CV
 hT
 Pi
 ux
@@ -3048,7 +3020,7 @@ ux
 gd
 gd
 ux
-bP
+rd
 Pg
 Pg
 Pg
@@ -3096,7 +3068,7 @@ RL
 (14,1,1) = {"
 ux
 zf
-Fv
+OK
 ux
 Rx
 Qq
@@ -3114,7 +3086,7 @@ sY
 qB
 AC
 ux
-jt
+kM
 Kg
 ux
 "}
@@ -3145,7 +3117,7 @@ fe
 "}
 (16,1,1) = {"
 ux
-sW
+UP
 NC
 ux
 zo
@@ -3348,7 +3320,7 @@ Wo
 ux
 SU
 ux
-bG
+yQ
 Kt
 Oh
 Gp
@@ -3364,7 +3336,7 @@ Hu
 NV
 SA
 ux
-qm
+tS
 ux
 Wo
 "}
@@ -3401,7 +3373,7 @@ fL
 ux
 nG
 hh
-iY
+AT
 wp
 er
 Zh
@@ -3458,7 +3430,7 @@ hP
 jI
 TV
 Sz
-GA
+Gh
 wm
 Dd
 ux
@@ -3525,7 +3497,7 @@ fL
 fL
 fL
 ux
-DZ
+cc
 xQ
 mj
 ux
@@ -3533,7 +3505,7 @@ Sz
 KV
 Sz
 ux
-uK
+dd
 VZ
 ts
 ux

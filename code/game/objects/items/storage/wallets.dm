@@ -39,6 +39,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
 		/obj/item/screwdriver,
+		/obj/item/spess_knife,
 		/obj/item/stamp),
 		list(/obj/item/screwdriver/power))
 

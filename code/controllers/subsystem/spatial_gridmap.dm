@@ -435,18 +435,18 @@ SUBSYSTEM_DEF(spatial_grid)
 	for(var/type in spatial_grid_categories[old_target.spatial_grid_key])
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				var/list/old_target_contents = old_target.important_recursive_contents?[type] || old_target
+				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target_contents)
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				var/list/old_target_contents = old_target.important_recursive_contents?[type] || old_target
+				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target_contents)
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
-				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), old_target)
+				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(type), old_target)
 
 	return TRUE
 
@@ -467,14 +467,14 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			var/list/old_target_contents = old_target.important_recursive_contents?[exclusive_type] || old_target //cache for sanic speeds (lists are references anyways)
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents)
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			var/list/old_target_contents = old_target.important_recursive_contents
-			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			var/list/old_target_contents = old_target.important_recursive_contents?[exclusive_type] || old_target
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents)
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents)
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
@@ -565,7 +565,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 #ifdef UNIT_TESTS
 	if(untracked_movable_error(to_remove))
-		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=FALSE) //dont remove from cells because we should be able to see 2 errors
 		return
 #endif
 
