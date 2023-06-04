@@ -85,6 +85,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// Number of printed containers in the current printing cycle for UI progress bar
 	var/printing_progress
 	var/printing_total
+	/// Default duration of printing for one container
+	var/printing_speed = 1.5 SECONDS // Duration of animation
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -106,6 +108,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
+	var/speed_increase = 1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed_increase = max(speed_increase, servo.tier)
+	printing_speed = initial(printing_speed) / speed_increase
 
 /obj/machinery/chem_master/update_appearance(updates=ALL)
 	. = ..()
@@ -373,7 +379,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	printing_progress = 0
 	printing_total = item_count
 	for(var/i in 1 to item_count)
-		stoplag(1.5 SECONDS) // Duration of printing animation
+		stoplag(printing_speed)
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
 		adjust_item_drop_location(item)
 		item.name = item_name
@@ -442,6 +448,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			if(container == preferred_container)
 				return REF(container)
 	return default_container
+
+/obj/machinery/chem_master/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Container print time reduced by <b>[100 - 100 * (printing_speed / initial(printing_speed))]%</b>.")
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
