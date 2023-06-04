@@ -109,3 +109,18 @@
       and tweaked the burn medkits to look a bit less orange
   axietheaxolotl / viro:
   - image: brand new crate sprites, wowie zowie!!
+2023-06-04:
+  Rhials:
+  - rscadd: The scrubber clog event is now the ventilation clog event. It uses vents
+      instead of scrubbers now. It is now the ventilation clog event.
+  - rscadd: Ventilation clogs now produce a lot of filth in addition to produced mobs,
+      and make the surrounding area dirty.
+  - balance: Ventilation clogs may produce more mobs at once, and have a higher limit
+      on how many can occur per round.
+  - code_imp: The ventilation clog event is now self-contained, and handles all logic/behavior
+      in the event itself (rather than on the targeted vent).
+  TheVekter:
+  - image: Added a cross to the top of the new medical crate for readability's sake.
+  san7890:
+  - refactor: Giant ants are now more capable of distinguishing friend and foe.
+  - refactor: Chicks are now a bit smarter, be careful not to squish them!
