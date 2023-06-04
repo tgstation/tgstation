@@ -15,7 +15,9 @@
 	var/quirk_response = SSquirks.filter_invalid_quirks(SANITIZE_LIST(preferences.all_quirks), preferences, species_type = GLOB.species_list[value], give_warning = TRUE)
 	if(!quirk_response)
 		return TRUE
-	preferences.all_quirks = quirk_response
+	if(preferences.all_quirks != quirk_response)
+		preferences.all_quirks = quirk_response
+		preferences.update_static_data(user)
 	return FALSE
 
 /datum/asset/spritesheet/species
