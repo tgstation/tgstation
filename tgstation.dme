@@ -4657,7 +4657,6 @@
 #include "code\modules\reagents\chemistry\machinery\chem_heater.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_mass_spec.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_master.dm"
-#include "code\modules\reagents\chemistry\machinery\chem_master_new.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_recipe_debug.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_separator.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_synthesizer.dm"

@@ -52,7 +52,7 @@ type Container = {
   volume: number;
 };
 
-export const ChemMasterNew = (props, context) => {
+export const ChemMaster = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { reagentAnalysisMode } = data;
   return (
