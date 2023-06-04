@@ -57,8 +57,8 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 	"birds" = typecacheof(list(
+		/mob/living/basic/chick,
 		/mob/living/basic/chicken,
-		/mob/living/simple_animal/chick,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/penguin,
 	)),

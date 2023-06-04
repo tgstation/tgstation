@@ -393,6 +393,20 @@
 /obj/item/flashlight/lantern,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
+"ou" = (
+/obj/structure/closet/syndicate,
+/obj/item/clothing/under/syndicate,
+/obj/item/pickaxe,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/flashlight/lantern,
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas/syndicate,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space)
 "pl" = (
 /obj/item/ammo_casing/a357/spent{
 	dir = 8;
@@ -619,8 +633,8 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
-/obj/item/gun/energy/e_gun/mini,
 /obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
 "xT" = (
@@ -762,8 +776,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/full,
-/obj/item/grenade/c4,
 /mob/living/simple_animal/hostile/mining_drone,
+/obj/item/grenade/c4,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "Do" = (
@@ -825,21 +839,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
-"Gf" = (
-/obj/structure/closet/syndicate,
-/obj/item/clothing/suit/space/syndicate/black/red{
-	pixel_y = -2;
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/gas/syndicate,
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
-/obj/item/pickaxe,
-/obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/fuel_pool,
-/obj/item/flashlight/lantern,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space)
 "Gi" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -877,16 +876,17 @@
 /area/ruin/space)
 "HI" = (
 /obj/structure/closet/syndicate,
-/obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate,
-/obj/item/clothing/suit/space/syndicate/black/red{
-	pixel_y = -4
-	},
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
 /obj/item/pickaxe,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/flashlight/lantern,
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_y = -2;
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "IF" = (
@@ -2008,7 +2008,7 @@ Cf
 Cf
 Er
 ED
-Gf
+ou
 qO
 ED
 FV
