@@ -14340,7 +14340,10 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "dDZ" = (
-/obj/structure/table/optable,
+/obj/structure/table/optable{
+	desc = "A cold, hard place for your final rest.";
+	name = "Morgue Slab"
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dEc" = (
@@ -48937,10 +48940,7 @@
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/table_clock{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qtS" = (
@@ -53207,7 +53207,10 @@
 /area/station/command/meeting_room)
 "rYN" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/table/reinforced,
+/obj/item/table_clock{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "rYO" = (
