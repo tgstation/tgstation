@@ -154,7 +154,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// be valid.
 /// If no changes need to be made, will return the same list.
 /// Expects all quirk names to be unique, but makes no other expectations.
-/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, datum/preferences/supplied_prefs, species_type, give_warning)
+/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, datum/preferences/supplied_prefs, datum/species/species_type, give_warning = FALSE)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
