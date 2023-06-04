@@ -603,7 +603,7 @@
 /obj/item/radio/proc/panic(mob/user)
 
 	if(panic_time > world.time)
-		to_chat(user, span_warning("The panic button cooldown didn't pass yet!"))
+		balloon_alert(user, "on cooldown!")
 		return
 
 	src.talk_into(talking_movable = src, message = "[user] is requesting immediate backup to their location!!", channel = RADIO_CHANNEL_SECURITY)
