@@ -92302,7 +92302,6 @@
 "xWy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xWF" = (
