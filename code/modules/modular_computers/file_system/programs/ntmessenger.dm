@@ -263,11 +263,12 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/data = ..()
 
-	data["owner"] = list(
-		"name" = computer.saved_identification,
-		"job" = computer.saved_job,
-		"ref" = REF(src),
-	)
+	data["owner"] = ((REF(src) in GLOB.TabletMessengers) ? list(
+			"name" = computer.saved_identification,
+			"job" = computer.saved_job,
+			"ref" = REF(src)
+		) : null)
+
 	data["is_silicon"] = issilicon(user)
 
 	return data
