@@ -72,25 +72,25 @@
 		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_icon_state()
+	. = ..()
 	icon_state = paintjob ? initial(paintjob.icon_state) : initial(icon_state)
-	return ..()
 
 /obj/item/modular_computer/pda/update_name()
+	. = ..()
 	if(!saved_identification && !saved_job)
 		name = paintjob ? initial(paintjob.name) : initial(name)
 		return
 	name = "[saved_identification] ([saved_job])"
-	return ..()
 
 /obj/item/modular_computer/pda/update_desc()
+	. = ..()
 	desc = paintjob ? initial(paintjob.desc) : initial(desc)
-	return ..()
 
 /obj/item/modular_computer/pda/update_greyscale()
-	if(initial(paintjob.greyscale_colors) && initial(paintjob.greyscale_config))
+	. = ..()
+	if(paintjob && initial(paintjob.greyscale_colors) && initial(paintjob.greyscale_config))
 		greyscale_colors = initial(paintjob.greyscale_colors)
 		greyscale_config = initial(paintjob.greyscale_config)
-	return ..()
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
