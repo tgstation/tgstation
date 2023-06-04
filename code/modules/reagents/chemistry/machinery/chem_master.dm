@@ -361,6 +361,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /// Create N selected containers with reagents from buffer split between them
 /obj/machinery/chem_master/proc/create_containers(item_count = 1)
 	var/obj/item/reagent_containers/container_style = locate(selected_container)
+	var/is_pill_subtype = ispath(container_style, /obj/item/reagent_containers/pill)
 	var/vol_each = reagents.total_volume / item_count
 
 	// Generate item name
@@ -385,7 +386,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		if(!is_printing)
 			break
 		use_power(active_power_usage)
-		stoplag(printing_speed)
+		stoplag(is_pill_subtype ? printing_speed * 0.5 : printing_speed)
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
 		adjust_item_drop_location(item)
 		item.name = item_name
