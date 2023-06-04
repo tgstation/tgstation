@@ -385,6 +385,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		item.name = item_name
 		item.reagents.clear_reagents()
 		reagents.trans_to(item, vol_each, transfered_by = src)
+		update_appearance(UPDATE_ICON)
 		printing_progress++
 	is_printing = FALSE
 	update_appearance(UPDATE_ICON)
