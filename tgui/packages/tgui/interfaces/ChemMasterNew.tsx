@@ -14,6 +14,7 @@ type Data = {
   beakerContents: Reagent[];
   bufferContents: Reagent[];
   bufferCurrentVolume: number;
+  bufferMaxVolume: number;
   categories: Category[];
   selectedContainerRef: string;
   selectedContainerVolume: number;
@@ -73,6 +74,7 @@ const ChemMasterContent = (props, context) => {
     beakerContents,
     bufferContents,
     bufferCurrentVolume,
+    bufferMaxVolume,
     categories,
     selectedContainerVolume,
     hasContainerSuggestion,
@@ -126,12 +128,13 @@ const ChemMasterContent = (props, context) => {
         buttons={
           <>
             <Box inline color="label" mr={1}>
-              Transfer mode:
+              <AnimatedNumber value={bufferCurrentVolume} initial={0} />
+              {` / ${bufferMaxVolume} units`}
             </Box>
             <Button
               color={transferMode ? 'good' : 'bad'}
-              icon={transferMode ? 'exchange-alt' : 'times'}
-              content={transferMode ? 'Transfer' : 'Destroy'}
+              icon={transferMode ? 'exchange-alt' : 'trash'}
+              content={transferMode ? 'Moving reagents' : 'Destroying reagents'}
               onClick={() => act('toggleTransferMode')}
             />
           </>

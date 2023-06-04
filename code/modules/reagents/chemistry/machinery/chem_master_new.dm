@@ -56,6 +56,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
+	/// Icons for different percentages of buffer reagents
+	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon_state = "chemmaster"
+	var/list/fill_icon_thresholds = list(10,20,30,40,50,60,70,80,90,100)
 	/// Inserted reagent container
 	var/obj/item/reagent_containers/beaker
 	/// Whether separated reagents should be moved back to container or destroyed.
@@ -98,25 +102,39 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
 
-/obj/machinery/chem_master_new/update_icon_state()
-	icon_state = "[base_icon_state]"
-
-	if(machine_stat & BROKEN)
-		icon_state += "_broken"
-	else if(machine_stat & NOPOWER)
-		icon_state += "_nopower"
-
-	return ..()
+/obj/machinery/chem_master_new/update_appearance(updates=ALL)
+	. = ..()
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
+		set_light(0)
+	else
+		set_light(1, 1, "#fffb00")
 
 /obj/machinery/chem_master_new/update_overlays()
 	. = ..()
 	if(!isnull(beaker))
-		. += mutable_appearance(icon, base_icon_state + "_overlay_container_idle")
-	if(!(machine_stat & (NOPOWER | BROKEN)))
-		. += emissive_appearance(icon, base_icon_state + "_overlay_lightmask", src, alpha = src.alpha)
+		. += mutable_appearance(icon, base_icon_state + "_overlay_container")
 	if(machine_stat & BROKEN)
-		. += mutable_appearance(icon, base_icon_state + "_overlay_brokenlight")
-		. += emissive_appearance(icon, base_icon_state + "_overlay_brokenlight", src, alpha = src.alpha)
+		. += mutable_appearance(icon, base_icon_state + "_overlay_broken")
+	if(panel_open)
+		. += mutable_appearance(icon, base_icon_state + "_overlay_panel")
+
+	. += mutable_appearance(icon, base_icon_state + "_overlay_extruder")
+
+	if(!panel_open && !(machine_stat & (NOPOWER | BROKEN)))
+		. += mutable_appearance(icon, base_icon_state + "_overlay_screen")
+		. += emissive_appearance(icon, base_icon_state + "_overlay_lightmask", src, alpha = src.alpha)
+
+	// Buffer reagents overlay
+	if(reagents.total_volume)
+		var/threshold = null
+		for(var/i in 1 to fill_icon_thresholds.len)
+			if(ROUND_UP(100 * reagents.total_volume / reagents.maximum_volume) >= fill_icon_thresholds[i])
+				threshold = i
+		if(threshold)
+			var/fill_name = "[fill_icon_state][fill_icon_thresholds[threshold]]"
+			var/mutable_appearance/filling = mutable_appearance(fill_icon, fill_name)
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
+			. += filling
 
 /obj/machinery/chem_master_new/attackby(obj/item/item, mob/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
@@ -240,6 +258,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 				buffer_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
 		data["bufferContents"] = buffer_contents
 		data["bufferCurrentVolume"] = round(reagents.total_volume, 0.01)
+		data["bufferMaxVolume"] = reagents.maximum_volume
 
 		data["transferMode"] = transfer_mode
 
@@ -335,6 +354,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		item.name = item_name
 		item.reagents.clear_reagents()
 		reagents.trans_to(item, vol_each, transfered_by = src)
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /// Transfer reagents to specified target from the opposite source
@@ -353,10 +373,12 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
 		beaker.reagents.trans_id_to(src, reagent_type, amount)
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_DESTROY)
 		reagents.remove_reagent(reagent_type, amount)
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
@@ -364,6 +386,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		if(!check_reactions(reagent, reagents))
 			return FALSE
 		reagents.trans_id_to(beaker, reagent_type, amount)
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	return FALSE
@@ -384,16 +407,6 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		say("Cannot move reagent during reaction!")
 	return canMove
 
-/obj/machinery/chem_master_new/condimaster
-	name = "CondiMaster 3000"
-	desc = "Used to create condiments and other cooking supplies."
-	has_container_suggestion = TRUE
-
-/obj/machinery/chem_master_new/condimaster/load_printable_containers()
-	printable_containers = list(
-		CAT_CONDIMENTS = GLOB.chem_master_containers[CAT_CONDIMENTS],
-	)
-
 /// Retrieve REF to the best container for provided reagent
 /obj/machinery/chem_master_new/proc/get_suggested_container(datum/reagent/reagent)
 	var/preferred_container = reagent.default_container
@@ -402,6 +415,17 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			if(container == preferred_container)
 				return REF(container)
 	return default_container
+
+/obj/machinery/chem_master_new/condimaster
+	name = "CondiMaster 3000"
+	desc = "Used to create condiments and other cooking supplies."
+	icon_state = "condimaster"
+	has_container_suggestion = TRUE
+
+/obj/machinery/chem_master_new/condimaster/load_printable_containers()
+	printable_containers = list(
+		CAT_CONDIMENTS = GLOB.chem_master_containers[CAT_CONDIMENTS],
+	)
 
 #undef TRANSFER_MODE_DESTROY
 #undef TRANSFER_MODE_MOVE
