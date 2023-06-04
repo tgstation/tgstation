@@ -398,8 +398,8 @@
  */
 /obj/item/mod/module/shooting_assistant
 	name = "MOD shooting assistant module"
-	desc = "A botched prototype meant to boost the TGMC's crayon eaters' ability with firearms. \
-		It only has only two modes available in its configurations: \
+	desc = "A botched prototype meant to boost the TGMC crayon eaters' ability with firearms. \
+		It has only two modes available in its configurations: \
 		'Quick Fire Stormtrooper' and 'Slow Ricochet Sharpshooter', \
 		both incompatible with dual wielding firearms."
 	icon_state = "shooting_assistant"
