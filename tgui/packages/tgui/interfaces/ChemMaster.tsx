@@ -230,7 +230,16 @@ const ChemMasterContent = (props, context) => {
         </Section>
       )}
       {!!isPrinting && (
-        <Section title="Printing">
+        <Section
+          title="Printing"
+          buttons={
+            <Button
+              color="bad"
+              icon="times"
+              content="Stop"
+              onClick={() => act('stopPrinting')}
+            />
+          }>
           <ProgressBar
             value={printingProgress}
             minValue={0}

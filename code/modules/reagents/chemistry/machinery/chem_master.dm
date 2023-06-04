@@ -337,6 +337,10 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		analyzed_reagent = null
 		return TRUE
 
+	if(action == "stopPrinting")
+		is_printing = FALSE
+		return TRUE
+
 	if(action == "toggleContainerSuggestion")
 		do_suggest_container = !do_suggest_container
 		return TRUE
@@ -378,6 +382,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	printing_progress = 0
 	printing_total = item_count
 	for(var/i in 1 to item_count)
+		if(!is_printing)
+			break
 		use_power(active_power_usage)
 		stoplag(printing_speed)
 		var/obj/item/reagent_containers/item = new container_style(drop_location())
