@@ -130,15 +130,15 @@
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				to_chat(quake_victim, span_warning("Damn, I wonder what that rumbling noise is?")) ///You're about to find out
 
-	// Step one of the destruction, which wrecks the turfs in the "underbelly" of the earthquake zone.
-	// This should clear out any rock/snow walls below, allowing a proper chasm to form if the underbelly area isn't clear.
-	// If not it just causes light structural damage and injures people underneath.
+	// Step one of the destruction, which clears natural tiles out from the underbelly and does a bit of initial damage to the topside.
 	if(activeFor == end_when - 1)
 		for(var/turf/turf_to_shred in turfs_to_shred)
 			if(prob(90))
 				SSexplosions.lowturf += turf_to_shred
-		for(var/turf/turf_to_shred in underbelly)
-			SSexplosions.lowturf += turf_to_shred
+		for(var/turf/turf_to_clear in underbelly)
+			if(ismineralturf(turf_to_clear))
+				var/turf/closed/mineral/rock_to_clear = turf_to_clear
+				rock_to_clear.gets_drilled(give_exp = FALSE)
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
