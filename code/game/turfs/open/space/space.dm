@@ -251,6 +251,7 @@
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
+	ASSERT(SSmapping.get_turf_below(src)) // openspace is invalid without something below it
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
