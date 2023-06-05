@@ -3004,6 +3004,7 @@
 #include "code\modules\cargo\packs\general.dm"
 #include "code\modules\cargo\packs\imports.dm"
 #include "code\modules\cargo\packs\livestock.dm"
+#include "code\modules\cargo\packs\science.dm"
 #include "code\modules\cargo\packs\service.dm"
 #include "code\modules\cargo\packs\materials.dm"
 #include "code\modules\cargo\packs\medical.dm"
