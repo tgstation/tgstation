@@ -671,11 +671,15 @@
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+//The feedback from getting attacked by an item
 /obj/structure/emergency_shield/modular/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	visible_message(span_danger("The blow ripples across the field making it more unstable!"), null, null, COMBAT_MESSAGE_RANGE)
 
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item], causing the field to weaken!"), \
-		span_danger("You hit the [src] with [attacking_item], causing the field to weaken!"), null, COMBAT_MESSAGE_RANGE)
-	log_combat(user, src, "attacked", attacking_item)
+//The feedback from getting attacked by a projectile
+/obj/structure/emergency_shield/modular/bullet_act(obj/projectile/P)
+	. = ..()
+	visible_message(span_danger("The impact ripples across the field making it more unstable!"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
