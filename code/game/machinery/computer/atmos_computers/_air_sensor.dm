@@ -39,7 +39,6 @@
 
 	//switched off version of this air sensor but still anchored to the ground
 	var/obj/item/air_sensor/sensor = new(drop_location())
-	sensor.drop_contents = drop_contents
 	sensor.set_anchored(TRUE)
 	sensor.balloon_alert(user, "sensor turned off")
 
@@ -97,8 +96,7 @@
 	desc = "It's an switched off air sensor."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor0"
-	//should we drop an gas analyzer & metal sheet on unwelding. FALSE when it's made an RPED to stop free material drops
-	var/drop_contents = FALSE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/air_sensor/Initialize(mapload)
 	. = ..()
@@ -169,7 +167,6 @@
 
 		//make real air sensor in it's place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
-		new_sensor.drop_contents = drop_contents
 		new_sensor.balloon_alert(user, "sensor turned on")
 
 		qdel(src)
@@ -185,20 +182,16 @@
 	if(!tool.tool_start_check(user, amount = 1))
 		return
 
-	loc.balloon_alert(user, "[drop_contents ? "dismantling" : "destroying"] sensor")
+	loc.balloon_alert(user, "dismantling sensor")
 	if(!tool.use_tool(src, user, 20, volume = 30, amount = 1))
 		return
-	loc.balloon_alert(user, "sensor [drop_contents ? "dismanteled" : "destroyed"]")
+	loc.balloon_alert(user, "sensor dismanteled")
 
 	deconstruct(TRUE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/air_sensor/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1) && drop_contents)
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/analyzer(loc)
 		new /obj/item/stack/sheet/iron(loc, 1)
 	return ..()
-
-// only crafted air sensors can drop stuff on deconstruction and not the ones made by the RPED else player's would get free stuff
-/obj/item/air_sensor/crafted
-	drop_contents = TRUE

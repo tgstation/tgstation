@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
 		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
 		new /datum/pipe_info/meter("Meter"),
-		new /datum/pipe_info/sensor("Air Sensor")
 	),
 	"Heat Exchange" = list(
 		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
@@ -121,13 +120,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		))
 
 	return rows
-
-/datum/pipe_info/sensor
-	dirtype = PIPE_ONEDIR
-
-/datum/pipe_info/sensor/New(label)
-	name = label
-	icon_state = "gsensor0"
 
 /datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
 	name = label
@@ -531,14 +523,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
-				else if(recipe.type == /datum/pipe_info/sensor)
-					if(do_after(user, atmos_build_speed, target = attack_target))
-						activate()
-						var/obj/item/air_sensor/sensor = new(get_turf(attack_target))
-						if(mode & WRENCH_MODE)
-							tool_behaviour = TOOL_WRENCH //hacky way to buypass toolcheck
-							sensor.wrench_act(user, src)
-							tool_behaviour = NONE
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						balloon_alert(user, "cant build on this layer!")

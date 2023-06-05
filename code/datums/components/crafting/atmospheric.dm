@@ -19,7 +19,7 @@
 
 /datum/crafting_recipe/air_sensor
 	name = "Monitered Air Sensor"
-	result = /obj/item/air_sensor/crafted
+	result = /obj/item/air_sensor
 	reqs = list(
 		/obj/item/analyzer = 1,
 		/obj/item/stack/sheet/iron = 1,
