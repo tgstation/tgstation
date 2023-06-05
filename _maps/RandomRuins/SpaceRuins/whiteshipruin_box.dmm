@@ -937,7 +937,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "CV" = (
 /obj/structure/lattice,
-/obj/machinery/modular_computer/console{
+/obj/machinery/modular_computer{
 	dir = 8
 	},
 /obj/item/shard,

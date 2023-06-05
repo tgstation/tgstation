@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
 	for(var/programs in default_programs + starting_programs)
-		var/datum/computer_file/program/program_type = new programs
+		var/datum/computer_file/program_type = new programs
 		store_file(program_type)
 
 /obj/item/modular_computer/Destroy()

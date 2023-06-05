@@ -1,0 +1,1 @@
+/obj/machinery/modular_computer/console/@SUBTYPES : /obj/machinery/modular_computer/@SUBTYPES{@OLD}

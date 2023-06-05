@@ -4344,7 +4344,6 @@
 #include "code\modules\modular_computers\computers\item\disks\virus_disk.dm"
 #include "code\modules\modular_computers\computers\machinery\console_presets.dm"
 #include "code\modules\modular_computers\computers\machinery\modular_computer.dm"
-#include "code\modules\modular_computers\computers\machinery\modular_console.dm"
 #include "code\modules\modular_computers\file_system\computer_file.dm"
 #include "code\modules\modular_computers\file_system\data.dm"
 #include "code\modules\modular_computers\file_system\program.dm"

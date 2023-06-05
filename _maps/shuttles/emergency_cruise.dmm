@@ -423,7 +423,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "yH" = (
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/preset/research{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{

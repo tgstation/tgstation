@@ -4413,7 +4413,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "ux" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
 /obj/machinery/button/door/indestructible{
@@ -6128,7 +6128,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
 "Cs" = (
-/obj/machinery/modular_computer/console/preset/command{
+/obj/machinery/modular_computer/preset/command{
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/east,
@@ -8892,7 +8892,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
 "RU" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
@@ -9028,7 +9028,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "SI" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9657,7 +9657,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "VL" = (
-/obj/machinery/modular_computer/console/preset/id/centcom{
+/obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
 	},
 /turf/open/floor/iron/grimy,
@@ -9789,7 +9789,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "Wq" = (
-/obj/machinery/modular_computer/console/preset/id/centcom,
+/obj/machinery/modular_computer/preset/id/centcom,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";

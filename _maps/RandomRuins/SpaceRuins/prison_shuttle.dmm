@@ -19,7 +19,7 @@
 /turf/open/floor/carpet/red/airless,
 /area/ruin/space/prison_shuttle)
 "f" = (
-/obj/machinery/modular_computer/console,
+/obj/machinery/modular_computer,
 /turf/closed/mineral/random/stationside/asteroid,
 /area/ruin/space/prison_shuttle)
 "g" = (

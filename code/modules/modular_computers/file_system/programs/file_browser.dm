@@ -57,6 +57,8 @@
 			var/datum/computer_file/F = computer.find_file_by_name(params["name"])
 			if(!F)
 				return
+			if(computer.find_file_by_name(params["name"], computer.inserted_disk))
+				return
 			var/datum/computer_file/C = F.clone(FALSE)
 			computer.inserted_disk.add_file(C)
 			return TRUE
