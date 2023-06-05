@@ -52156,7 +52156,7 @@
 	},
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/north,
-/mob/living/simple_animal/chick{
+/mob/living/basic/chick/permanent{
 	name = "Morgan"
 	},
 /turf/open/floor/grass,

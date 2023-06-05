@@ -333,8 +333,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return TRUE
 	return ..()
 
-/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	return
+/obj/proc/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	return SEND_SIGNAL(src, COMSIG_PLUNGER_ACT, attacking_plunger, user, reinforced)
 
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()
