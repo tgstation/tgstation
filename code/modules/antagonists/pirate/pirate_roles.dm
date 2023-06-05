@@ -122,7 +122,7 @@
 	flavour_text = "There's nothing a toolbox can't whack in the head enough times to spill blood, or in this case money. Loot everything!"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "An assitant gone loose"
+	prompt_name = "An assistant gone loose"
 	outfit = /datum/outfit/pirate/grey
 	rank = "Tider"
 
