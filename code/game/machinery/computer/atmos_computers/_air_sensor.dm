@@ -185,10 +185,10 @@
 	if(!tool.tool_start_check(user, amount = 1))
 		return
 
-	loc.balloon_alert(user, "[drop_contents ? "Dismantling" : "Destroying"] Sensor")
+	loc.balloon_alert(user, "[drop_contents ? "dismantling" : "destroying"] sensor")
 	if(!tool.use_tool(src, user, 20, volume = 30, amount = 1))
 		return
-	loc.balloon_alert(user, "Sensor [drop_contents ? "Dismanteled" : "Destroyed"]")
+	loc.balloon_alert(user, "sensor [drop_contents ? "dismanteled" : "destroyed"]")
 
 	deconstruct(TRUE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
