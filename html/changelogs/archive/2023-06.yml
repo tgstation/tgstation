@@ -124,3 +124,30 @@
   san7890:
   - refactor: Giant ants are now more capable of distinguishing friend and foe.
   - refactor: Chicks are now a bit smarter, be careful not to squish them!
+2023-06-05:
+  Crushtoe:
+  - bugfix: Fixed tram morgue mapping issues and underpass shutter buttons.
+  DaydreamIQ:
+  - qol: Icebox Perma's fridges are no longer locked to access they'll never have
+  MTandi:
+  - image: new trash bin sprite
+  - bugfix: trash bin shows correct indicator when spawns non-empty
+  Potato-Masher:
+  - bugfix: Removes the misplaced extra chem dispenser from NorthStar pharmacy.
+  - bugfix: NorthStar medbay now has lightswitches in some rooms as opposed to none.
+  TheVekter:
+  - balance: Replaced one of the mini energy guns on the Caravan Ambush space ruin
+      with a survival knife.
+  - balance: Replaced the red-and-black softsuit on the Old Infiltrator space ruin
+      with a suit that can't be obtained otherwise. Look in the suit storage units.
+  - balance: Removed a magazine from the WT-550 rifle spawn on the Waystation space
+      ruin.
+  - balance: Replaced red-and-black softsuits on the Faceoff space ruin with Syndicate
+      variants of the explorer.
+  - rscadd: Added a Syndicate variant of the explorer suit. The armor is identical
+      to the Goliath cloak with slightly more bomb and ballistic resistance.
+  YehnBeep:
+  - bugfix: After a thorough dressing down and threats of fines from the Fire Marshal,
+      Nanotrasen has reluctantly installed several missing fire alarms and other safety
+      equipment in the North Star's Cargo Bay and a few other lower deck areas.
+  - bugfix: Fixed minor area definition errors in North Star's cargo area.
