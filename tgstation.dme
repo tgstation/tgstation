@@ -3004,7 +3004,6 @@
 #include "code\modules\cargo\packs\general.dm"
 #include "code\modules\cargo\packs\imports.dm"
 #include "code\modules\cargo\packs\livestock.dm"
-#include "code\modules\cargo\packs\livestock.dm"
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
