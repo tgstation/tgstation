@@ -3072,7 +3072,6 @@
 /area/station/security/prison)
 "ake" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "akr" = (
@@ -14275,10 +14274,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"dFD" = (
-/obj/machinery/portable_atmospherics/canister/tritium,
-/turf/open/floor/iron,
-/area/station/science/ordnance/storage)
 "dFI" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/seccarts{
@@ -22763,7 +22758,6 @@
 /area/station/commons/vacant_room/office)
 "gVI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gVO" = (
@@ -119828,8 +119822,8 @@ pHM
 hkN
 gIj
 loa
-dFD
-dFD
+ygC
+ygC
 buX
 fSq
 dfz

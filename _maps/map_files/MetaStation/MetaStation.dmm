@@ -26198,7 +26198,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
 "jCn" = (
@@ -40955,7 +40954,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "oRT" = (
@@ -57220,7 +57218,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
 "uDr" = (
@@ -60261,7 +60258,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
 "vGN" = (
@@ -65693,7 +65690,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "xEt" = (

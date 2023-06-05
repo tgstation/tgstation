@@ -3967,7 +3967,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/atmos)
 "aXC" = (
@@ -7541,7 +7540,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "bNR" = (
@@ -28709,7 +28708,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "hHi" = (
@@ -31194,13 +31193,6 @@
 	dir = 6
 	},
 /area/station/hallway/floor1/fore)
-"irO" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/bz,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/storage)
 "irS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -75917,7 +75909,6 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "ujT" = (
@@ -316165,7 +316156,7 @@ ucA
 lln
 lln
 xvL
-irO
+jxz
 ujQ
 lln
 lln

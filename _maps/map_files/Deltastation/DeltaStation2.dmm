@@ -6067,7 +6067,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "buj" = (
@@ -10069,7 +10068,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/ordnance/storage)
 "coX" = (
@@ -40917,7 +40915,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "jUo" = (
@@ -65370,7 +65367,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -87555,7 +87552,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -91853,7 +91850,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wuE" = (

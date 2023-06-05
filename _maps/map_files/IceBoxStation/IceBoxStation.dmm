@@ -3439,7 +3439,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
-/obj/machinery/portable_atmospherics/canister/tritium,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "bgd" = (
@@ -73453,11 +73452,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/aft)
-"xpx" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/portable_atmospherics/canister/tritium,
-/turf/open/floor/iron,
-/area/station/science/ordnance)
 "xpE" = (
 /obj/structure/table,
 /obj/item/knife/kitchen,
@@ -189354,7 +189348,7 @@ qKt
 tUo
 aQn
 hFb
-xpx
+vqv
 qiN
 pkP
 uIf
@@ -189611,7 +189605,7 @@ aNu
 tPG
 xEQ
 qaL
-xpx
+vqv
 brt
 brt
 uIf
