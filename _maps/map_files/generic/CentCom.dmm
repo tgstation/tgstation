@@ -417,16 +417,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/bar,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"cl" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/white,
-/area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
 /obj/structure/closet/secure_closet/ert_engi,
 /obj/machinery/airalarm/directional/north,
@@ -542,15 +532,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"cT" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/quirk/engineering_slogan{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "cW" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
@@ -590,6 +571,17 @@
 /obj/effect/landmark/start/new_player,
 /turf/closed/indestructible/start_area,
 /area/misc/start)
+"dh" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "di" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -872,18 +864,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/observation)
-"eO" = (
-/obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder/blue,
-/obj/item/melee/chainofcommand,
-/obj/item/stamp/head/captain,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/admin)
 "eP" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -961,6 +941,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"fl" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "fm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1239,6 +1226,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"gL" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/plush/lizard_plushie/space/green{
+	name = "Escapes-on-Pods"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "gO" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/briefing)
@@ -2745,23 +2739,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"nb" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "ni" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -3192,6 +3169,15 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"oT" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/yellow,
+/obj/item/stamp/head/qm,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "oU" = (
 /obj/structure/closet/emcloset,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -3262,15 +3248,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
-"pi" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/supply)
 "pj" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -3402,11 +3379,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/ert)
-"pV" = (
-/obj/structure/lattice,
-/obj/structure/window/reinforced/spawner,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pW" = (
 /obj/effect/landmark/ai_multicam_room,
 /turf/open/ai_visible,
@@ -5792,6 +5764,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"AN" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "AO" = (
 /obj/machinery/computer/communications{
 	dir = 8
@@ -6364,19 +6341,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
-"DA" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "DF" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/indestructible/riveted,
@@ -6483,6 +6447,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"EB" = (
+/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/evacuation/ship)
 "ED" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
@@ -6511,20 +6479,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
-"EL" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/obey{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "EN" = (
 /obj/structure/flora/bush/sparsegrass,
 /obj/machinery/light/directional/south,
@@ -6907,6 +6861,11 @@
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
+"Ig" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
 "Io" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -7352,20 +7311,6 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
-"KP" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/structure/sign/poster/official/ian{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "KQ" = (
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -7469,11 +7414,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
-"Lo" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "Lp" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -7485,22 +7425,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
-"Lt" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/centcom/central_command_areas/evacuation/ship)
-"Lu" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark{
-	dir = 4
-	},
+"Ls" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = -32
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
+/obj/structure/sign/poster/official/ian/directional/west,
 /turf/open/floor/iron/dark/textured_large,
+/area/centcom/central_command_areas/evacuation/ship)
+"Lt" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -7632,12 +7570,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
-"LR" = (
-/obj/structure/sign/poster/official/tactical_game_cards{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "LU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8149,13 +8081,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"OC" = (
-/obj/structure/table/reinforced,
-/obj/item/toy/plush/space_lizard_plushie{
-	name = "Escapes-on-Pods"
-	},
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "OD" = (
 /obj/machinery/microwave{
 	desc = "Cooks and boils stuff, somehow.";
@@ -8766,6 +8691,30 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"Rm" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/obey/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/central_command_areas/evacuation/ship)
+"Rn" = (
+/obj/structure/table/wood,
+/obj/item/clipboard,
+/obj/item/folder/blue,
+/obj/item/melee/chainofcommand,
+/obj/item/stamp/head/captain,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "Ro" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
@@ -9230,6 +9179,21 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
+/area/centcom/central_command_areas/evacuation/ship)
+"Tw" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/enlist/directional/east,
+/turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "Ty" = (
 /obj/structure/table/reinforced,
@@ -9856,6 +9820,18 @@
 /obj/effect/landmark/ert_spawn,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"Wz" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "WD" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -10192,6 +10168,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/one)
+"XG" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/machinery/requests_console/directional/north{
+	department = "Captain's Desk"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/admin)
 "XJ" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -10421,21 +10408,18 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
-"YZ" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/obj/machinery/requests_console/directional/north{
-	department = "Captain's Desk";
-	assistance_requestable = 1;
-	anon_tips_receiver = 1;
-	can_send_announcements = 1
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/central_command_areas/admin)
 "Za" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/fore)
+"Zb" = (
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/official/periodic_table/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/central_command_areas/evacuation/ship)
 "Ze" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
@@ -37061,10 +37045,10 @@ aa
 aa
 aa
 fT
-Lo
+AN
 Lf
 Sd
-pV
+Ig
 aa
 aa
 aa
@@ -37326,7 +37310,7 @@ aa
 aa
 KH
 Lt
-cl
+Zb
 HR
 Gi
 Lt
@@ -38365,15 +38349,15 @@ Iv
 NI
 NI
 Lw
-KP
+Ls
 JE
 Vv
 of
 LD
 KV
-EL
+Rm
 Ew
-Lu
+Wz
 KV
 LD
 TM
@@ -38867,7 +38851,7 @@ sm
 Lt
 OG
 Lt
-LR
+EB
 Tm
 Tm
 Ff
@@ -38881,13 +38865,13 @@ eR
 Lw
 KO
 LA
-nb
+Tw
 sB
 zx
 ZA
 Lp
 sB
-DA
+dh
 LA
 Lp
 FE
@@ -40145,10 +40129,10 @@ aa
 aa
 aa
 fT
-Lo
+AN
 Rk
 Sd
-pV
+Ig
 aa
 aa
 aa
@@ -41172,9 +41156,9 @@ aa
 aa
 KH
 Lt
-cT
+fl
 Hb
-OC
+gL
 ep
 cP
 KQ
@@ -48831,7 +48815,7 @@ On
 vo
 fP
 On
-YZ
+XG
 XV
 hd
 To
@@ -50116,7 +50100,7 @@ mG
 nl
 pd
 On
-eO
+Rn
 EJ
 QV
 QV
@@ -50889,7 +50873,7 @@ nG
 iF
 yd
 GL
-pi
+oT
 FO
 Tq
 YU

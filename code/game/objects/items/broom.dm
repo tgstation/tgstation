@@ -68,22 +68,26 @@
 	if (!isturf(current_item_loc))
 		return
 	var/turf/new_item_loc = get_step(current_item_loc, user.dir)
-	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in new_item_loc.contents
+
+	var/list/items_to_sweep = list()
 	var/i = 1
 	for (var/obj/item/garbage in current_item_loc.contents)
-		if (!garbage.anchored)
-			if (target_bin)
-				garbage.forceMove(target_bin)
-			else
-				garbage.Move(new_item_loc, user.dir)
-			i++
-		if (i > BROOM_PUSH_LIMIT)
+		if(garbage.anchored)
+			continue
+		items_to_sweep += garbage
+		i++
+		if(i > BROOM_PUSH_LIMIT)
 			break
-	if (i > 1)
-		if (target_bin)
-			target_bin.update_appearance()
-			to_chat(user, span_notice("You sweep the pile of garbage into [target_bin]."))
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+
+	SEND_SIGNAL(new_item_loc, COMSIG_TURF_RECEIVE_SWEEPED_ITEMS, src, user, items_to_sweep)
+
+	if(!length(items_to_sweep))
+		return
+
+	for (var/obj/item/garbage in items_to_sweep)
+		garbage.Move(new_item_loc, user.dir)
+
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 
 /obj/item/pushbroom/cyborg

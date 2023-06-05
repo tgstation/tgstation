@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 		update_atom_languages()
-		log_mob_tag("SPECIES: [key_name(src)] \[[mrace]\]")
+		log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()

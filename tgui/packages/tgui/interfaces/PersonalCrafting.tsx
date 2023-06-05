@@ -26,6 +26,7 @@ const TYPE_ICONS = {
   [Food.Pineapple]: 'apple-alt',
   [Food.Raw]: 'drumstick-bite',
   [Food.Seafood]: 'fish',
+  [Food.Stone]: 'gem',
   [Food.Sugar]: 'candy-cane',
   [Food.Toxic]: 'biohazard',
   [Food.Vegetables]: 'carrot',
@@ -104,7 +105,7 @@ type Material = {
 
 type Recipe = {
   ref: string;
-  result: number;
+  icon: string;
   name: string;
   desc: string;
   category: string;
@@ -605,12 +606,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
     <Section>
       <Stack my={-0.75}>
         <Stack.Item>
-          <Box
-            className={classes([
-              mode ? 'cooking32x32' : 'crafting32x32',
-              'a' + item.result,
-            ])}
-          />
+          <Box className={item.icon} />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
@@ -724,16 +720,11 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
         <Stack.Item>
           <Box width={'64px'} height={'64px'} mr={1}>
             <Box
-              width={'32px'}
-              height={'32px'}
               style={{
-                'transform': 'scale(2)',
+                'transform': 'scale(1.5)',
               }}
               m={'16px'}
-              className={classes([
-                mode ? 'cooking32x32' : 'crafting32x32',
-                'a' + item.result,
-              ])}
+              className={item.icon}
             />
           </Box>
         </Stack.Item>
@@ -895,7 +886,7 @@ const ToolContent = ({ tool }) => {
         inline
         my={-1}
         mr={0.5}
-        className={classes(['crafting32x32', tool])}
+        className={classes(['crafting32x32', tool.replace(/ /g, '')])}
       />
       <Box inline verticalAlign="middle">
         {tool}

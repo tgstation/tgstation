@@ -31,14 +31,13 @@
 	crate_name = "medipen crate"
 
 /datum/supply_pack/medical/coroner_crate
-	name = "Autospy Kit"
+	name = "Autopsy Kit"
 	desc = "Contains an autopsy scanner, when you lose your own and really \
 		need to complete your dissection experiments."
 	cost = CARGO_CRATE_VALUE * 2.5
 	contains = list(
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/storage/box/bodybags = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 	crate_name = "autopsy kit crate"
 
@@ -113,6 +112,12 @@
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
+/datum/supply_pack/medical/experimentalmedicine
+	name = "Experimental Medicine Crate"
+	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
+	crate_name = "experimental medicine crate"
 
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"

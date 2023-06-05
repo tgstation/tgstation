@@ -14,6 +14,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
+"aI" = (
+/obj/effect/turf_decal/siding/red,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/flashlight/lamp{
+	on = 0;
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "aO" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/cable,
@@ -32,15 +43,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/waystation/dorms)
-"bg" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 2;
-	on = 0
-	},
-/turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
 "bt" = (
 /obj/effect/turf_decal/bot,
@@ -109,6 +111,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
+"cO" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/button/door/directional/north{
+	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, it's bloody handprint still visible.";
+	name = "Vault Lockdown"
+	},
+/obj/item/modular_computer/laptop/preset/civilian,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "cT" = (
 /obj/machinery/oven/range,
 /obj/machinery/light/small/directional/north,
@@ -182,33 +196,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
-"dX" = (
-/obj/effect/turf_decal/siding/red,
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 2;
-	on = 0
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
-"dY" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/item/ammo_casing/c45/spent{
-	pixel_y = 1
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = 5;
-	pixel_y = -4;
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "dZ" = (
 /obj/structure/chair/stool{
 	dir = 1;
@@ -242,10 +229,44 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
+"ey" = (
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/enzyme{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/soysauce{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = -7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/waystation/kitchen)
 "ez" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
+"eJ" = (
+/obj/structure/table,
+/obj/item/folder{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen,
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/flashlight/lamp{
+	on = 0;
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "eV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -260,30 +281,6 @@
 /obj/effect/mob_spawn/corpse/human/waystation/cargo_technician,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"fd" = (
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 1;
-	pixel_y = 17
-	},
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 1;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 1;
-	pixel_y = 8;
-	pixel_x = -11
-	},
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 1;
-	pixel_y = 24;
-	pixel_x = -11
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargobay)
 "fg" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -300,12 +297,22 @@
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/dorms)
+"fH" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate/preopen,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "fI" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"fJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "fU" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/iron/freezer,
@@ -367,28 +374,6 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
-"gE" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_y = 32
-	},
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
-"gT" = (
-/obj/structure/sink/kitchen/directional/south{
-	dir = 8;
-	pixel_y = 0;
-	pixel_x = 17
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/waystation/kitchen)
 "hd" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -427,13 +412,6 @@
 "hR" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargobay)
-"ib" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ic" = (
@@ -499,21 +477,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
-"jg" = (
-/obj/structure/sink/kitchen/directional/south{
-	dir = 8;
-	pixel_y = 0;
-	pixel_x = 17
-	},
-/obj/structure/mirror/directional/east,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/waystation/dorms)
-"jv" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/mapping_helpers/damaged_window,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "jy" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /obj/item/kirbyplants/random,
@@ -543,18 +506,17 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"jN" = (
-/obj/effect/turf_decal/bot_red,
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/wt550{
-	pin = /obj/item/firing_pin/explorer
-	},
-/obj/item/ammo_box/magazine/wt550m9,
-/obj/item/ammo_box/magazine/wt550m9,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "jV" = (
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/dorms)
+"jW" = (
+/obj/structure/sink/kitchen/directional/south{
+	dir = 8;
+	pixel_x = 17;
+	pixel_y = 0
+	},
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/dorms)
 "ka" = (
 /obj/effect/turf_decal/bot,
@@ -605,6 +567,17 @@
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/ruin/space/has_grav/waystation/cargobay)
+"kG" = (
+/obj/structure/sign/poster/contraband/missing_gloves/directional/north,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/power)
 "kX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -694,36 +667,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"my" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/item/ammo_casing/c45/spent{
-	dir = 8
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_x = 8
-	},
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = 5;
-	pixel_y = -2;
-	dir = 8
-	},
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = 5;
-	pixel_y = -8;
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "mI" = (
 /obj/structure/table/wood,
 /obj/effect/mapping_helpers/broken_floor,
@@ -1089,32 +1032,6 @@
 /obj/structure/closet/crate,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"rn" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = -4;
-	dir = 8
-	},
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = 5;
-	pixel_y = -4;
-	dir = 1
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargobay)
 "ro" = (
 /obj/structure/table/reinforced,
 /obj/item/disk/holodisk/ruin/waystation,
@@ -1149,6 +1066,10 @@
 /obj/effect/gibspawner/human,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
+"rO" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/waystation/assaultpod)
 "rQ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
@@ -1234,21 +1155,21 @@
 /obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"tB" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/waystation/assaultpod)
 "ub" = (
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/flasher/portable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
-"ur" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/cargobay)
+"uc" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lamp{
+	on = 0;
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/waystation/dorms)
 "ut" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -1292,18 +1213,6 @@
 /obj/structure/girder,
 /turf/template_noop,
 /area/template_noop)
-"vn" = (
-/obj/effect/turf_decal/siding/red{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/button/door/directional/north{
-	name = "Vault Lockdown";
-	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, it's bloody handprint still visible."
-	},
-/obj/item/modular_computer/laptop/preset/civilian,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "vw" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/iron/grimy,
@@ -1352,6 +1261,32 @@
 /obj/item/food/cake/birthday,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
+"vU" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "we" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -1360,6 +1295,22 @@
 /obj/item/stack/rods/two,
 /turf/template_noop,
 /area/template_noop)
+"wj" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/ammo_casing/c45/spent{
+	pixel_y = 1
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "wm" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/toy_figure,
@@ -1622,6 +1573,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
+"Bv" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/ballistic/automatic/wt550{
+	pin = /obj/item/firing_pin/explorer
+	},
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "Bw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
@@ -1753,6 +1713,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
+"ED" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "EK" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
@@ -1823,6 +1795,24 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
+"FP" = (
+/obj/effect/turf_decal/siding/red,
+/obj/structure/table/reinforced,
+/obj/structure/windoor_assembly{
+	dir = 2
+	},
+/obj/item/shard,
+/obj/item/stack/cable_coil,
+/obj/item/newspaper{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "FV" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -1885,6 +1875,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
+"HL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "HN" = (
 /obj/structure/cable,
 /obj/structure/fluff/paper/stack{
@@ -1918,24 +1915,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
-"IU" = (
-/obj/structure/table,
-/obj/item/folder{
-	pixel_y = 3;
-	pixel_x = 6
-	},
-/obj/item/pen,
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 2;
-	on = 0
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "IZ" = (
 /obj/effect/turf_decal/loading_area/red{
 	dir = 8
@@ -2039,6 +2018,30 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/waystation/dorms)
+"KG" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_y = 17
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_x = -11;
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "KI" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2125,16 +2128,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"LL" = (
-/obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 2;
-	on = 0
-	},
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/waystation/dorms)
 "LQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -2269,18 +2262,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
-"NC" = (
-/obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
-	pixel_y = 3;
-	pixel_x = 9
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargobay)
 "NI" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/r_wall,
@@ -2390,6 +2371,45 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
+"Pt" = (
+/obj/structure/sink/kitchen/directional/south{
+	dir = 8;
+	pixel_x = 17;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/waystation/kitchen)
+"Px" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/ammo_casing/c45/spent{
+	dir = 8
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "PK" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2413,28 +2433,21 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
-"PS" = (
-/obj/structure/table,
-/obj/item/reagent_containers/condiment/enzyme{
-	pixel_y = 4;
-	pixel_x = 2
-	},
-/obj/item/reagent_containers/condiment/soysauce{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/cup/beaker{
-	pixel_x = -7
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/waystation/kitchen)
 "PV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/dorms)
+"PW" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp{
+	on = 0;
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
 "PX" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -2566,14 +2579,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"SL" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/mapping_helpers/damaged_window,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargooffice)
 "Ta" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/structure/crate_loot,
@@ -2663,57 +2668,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"Va" = (
-/obj/effect/decal/cleanable/blood,
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 9;
-	pixel_x = 2;
-	pixel_y = -5
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 9;
-	pixel_x = 6
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_y = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8
-	},
-/obj/item/ammo_casing/c45/spent{
-	pixel_x = -4
-	},
-/obj/item/ammo_casing/c45/spent{
-	dir = 8;
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/structure/chair/office,
-/obj/item/ammo_box/magazine/m45{
-	start_empty = 1;
-	pixel_y = -6;
-	pixel_x = -10
-	},
-/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "Vb" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -2997,24 +2951,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
-"ZJ" = (
-/obj/effect/turf_decal/siding/red,
-/obj/structure/table/reinforced,
-/obj/structure/windoor_assembly{
-	dir = 2
-	},
-/obj/item/shard,
-/obj/item/stack/cable_coil,
-/obj/item/newspaper{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
-	pixel_y = -1;
-	pixel_x = 6
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "ZP" = (
 /obj/structure/chair/stool/directional{
 	dir = 4
@@ -3025,6 +2961,57 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
+"ZU" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 9;
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 9;
+	pixel_x = 6
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8
+	},
+/obj/item/ammo_casing/c45/spent{
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/c45/spent{
+	dir = 8;
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/structure/chair/office,
+/obj/item/ammo_box/magazine/m45{
+	pixel_x = -10;
+	pixel_y = -6;
+	start_empty = 1
+	},
+/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "ZW" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -4049,22 +4036,22 @@ pK
 pK
 pK
 Ls
-bg
+PW
 Of
 Ls
-LL
+uc
 Of
 lB
-bg
+PW
 dW
 Ls
-LL
+uc
 dW
 Ls
-bg
+PW
 dW
 Ls
-bg
+PW
 TL
 QN
 Dj
@@ -4554,7 +4541,7 @@ rC
 Qd
 do
 Rs
-PS
+ey
 nu
 do
 iA
@@ -4613,7 +4600,7 @@ xH
 yg
 be
 Ls
-jg
+jW
 do
 Ez
 ez
@@ -4629,7 +4616,7 @@ Fw
 lP
 Dc
 ow
-jv
+fJ
 ms
 tv
 MS
@@ -4688,12 +4675,12 @@ xw
 jV
 UG
 lx
-IU
+eJ
 Dc
 fc
 zh
 Bi
-dY
+wj
 Ze
 tb
 Wd
@@ -4731,7 +4718,7 @@ pK
 pK
 pK
 yg
-gE
+kG
 dE
 Yu
 yg
@@ -4753,9 +4740,9 @@ ov
 wX
 Dc
 Qx
-SL
+HL
 jG
-my
+Px
 xk
 tb
 FM
@@ -4824,7 +4811,7 @@ Wz
 dM
 Wz
 hq
-tB
+rO
 no
 Ya
 Ya
@@ -4874,7 +4861,7 @@ xw
 jV
 UG
 xv
-IU
+eJ
 Dc
 Cx
 Pd
@@ -4926,7 +4913,7 @@ Cc
 fU
 do
 Kg
-gT
+Pt
 KU
 do
 kq
@@ -5056,7 +5043,7 @@ Bq
 jH
 Vb
 Xr
-rn
+vU
 Vb
 Vb
 Vb
@@ -5103,9 +5090,9 @@ pK
 pK
 pK
 yi
-vn
+cO
 LQ
-dX
+aI
 Oj
 WS
 yi
@@ -5166,8 +5153,8 @@ pK
 pK
 yi
 Lt
-Va
-ZJ
+ZU
+FP
 er
 hd
 aP
@@ -5241,10 +5228,10 @@ UH
 KI
 GI
 oo
-fd
+KG
 ka
 VG
-NC
+ED
 xD
 hH
 Ii
@@ -5476,7 +5463,7 @@ pK
 pK
 yi
 Ok
-jN
+Bv
 er
 nD
 Ar
@@ -5544,7 +5531,7 @@ qJ
 PX
 yi
 rj
-ib
+fH
 eV
 fm
 fm
@@ -5565,7 +5552,7 @@ hm
 hm
 hm
 nQ
-ib
+fH
 mr
 pK
 pK
@@ -5607,10 +5594,10 @@ yi
 yi
 mr
 mr
-ur
-ur
-ur
-ur
+IQ
+IQ
+IQ
+IQ
 mr
 mr
 IQ
@@ -5622,10 +5609,10 @@ BZ
 IQ
 mr
 iY
-ur
-ur
-ur
-ur
+IQ
+IQ
+IQ
+IQ
 mr
 mr
 mr

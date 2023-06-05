@@ -26,7 +26,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 			continue
 		if(AI.deployed_shell)
 			AI.deployed_shell.undeploy()
-		AI.change_mob_type(/mob/living/silicon/robot , null, null)
+		AI.change_mob_type_unchecked(/mob/living/silicon/robot)
 		AI.gib()
 
 	for(var/mob/living/silicon/robot/robot in GLOB.player_list)

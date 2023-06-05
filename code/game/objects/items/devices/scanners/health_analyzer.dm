@@ -547,6 +547,51 @@
 
 	woundscan(user, patient, src)
 
+/obj/item/healthanalyzer/disease
+	name = "disease state analyzer"
+	icon_state = "adv_spectrometer"
+	desc = "A disease status analyzer to determine the state of an infection to encourage responsible medication consumption."
+
+
+/proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+	if(!istype(patient) || user.incapacitated())
+		return
+
+	var/render_list = ""
+	for(var/thing in patient.diseases)
+		var/datum/disease/D = thing
+		if(!(D.visibility_flags & HIDDEN_SCANNER))
+			render_list += "<span class='alert ml-1'><b>Warning: [D.form] detected</b>\n\
+			<div class='ml-2'>Name: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</div>\
+			</span>"
+
+	if(render_list == "")
+		// Only emit the cheerful scanner message if this scan came from a scanner
+		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+		to_chat(user, span_notice("The patient has no diseases."))
+	else
+		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+
+/obj/item/healthanalyzer/disease/attack_self(mob/user)
+	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	var/list/encouragements = list("encourages you to take your medication", "briefly displays a spinning cartoon heart", "reasures you about your condition", \
+			"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a message saying how proud it is that you're taking care of yourself", "formally absolves you of all your sins")
+	to_chat(user, span_notice("\The [src] makes a happy ping and [pick(encouragements)]!"))
+
+/obj/item/healthanalyzer/disease/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	if(!user.can_read(src) || user.is_blind())
+		return
+
+	add_fingerprint(user)
+	user.visible_message(span_notice("[user] scans [patient] for diseases."), span_notice("You scan [patient] for diseases."))
+
+	if(!istype(user))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
+		return
+
+	diseasescan(user, patient, src)
+
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
 #undef SCANMODE_COUNT

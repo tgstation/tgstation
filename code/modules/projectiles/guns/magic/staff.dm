@@ -89,7 +89,7 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
-		
+
 /obj/item/gun/magic/staff/healing/examine(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
@@ -207,6 +207,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
@@ -223,7 +224,7 @@
 		butcher_sound = hitsound, \
 	)
 
-/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0
 	return ..()

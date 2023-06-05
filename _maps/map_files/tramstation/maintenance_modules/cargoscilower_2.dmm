@@ -30,6 +30,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
+"ei" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
 "eG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -87,13 +94,6 @@
 	key = "cargoscilower_attachment_a";
 	name = "cargoscilower_attachment_a"
 	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/central)
-"nh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille,
-/obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "ni" = (
@@ -996,7 +996,7 @@ Uw
 VL
 DJ
 fj
-nh
+ei
 RR
 eG
 dS

@@ -479,14 +479,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"ri" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "rr" = (
 /obj/structure/cable,
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
@@ -1023,6 +1015,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"Oh" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "Oo" = (
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -1521,7 +1519,7 @@ bW
 Lx
 Rn
 Zi
-ri
+Oh
 aY
 Lb
 vU
