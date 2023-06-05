@@ -232,10 +232,6 @@
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/hall)
-"bc" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/charlie/hall)
 "be" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -1308,10 +1304,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
-"fy" = (
-/obj/effect/decal/cleanable/oil,
-/turf/closed/wall/r_wall,
-/area/ruin/space/ancientstation/delta/ai)
 "fE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -13006,7 +12998,7 @@ aa
 aa
 aT
 aT
-bc
+hi
 Vz
 Tp
 IO
@@ -15250,7 +15242,7 @@ be
 bp
 YU
 cY
-fy
+ad
 ad
 aa
 aa

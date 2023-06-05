@@ -74,7 +74,7 @@
 
 	var/atom/movable/movable_source = source
 	var/turf/current_turf = movable_source.loc
-	if(!isturf(current_turf))
+	if(!isturf(current_turf) || isclosedturf(current_turf) || isgroundlessturf(current_turf))
 		return
 	if(!prob(blood_spawn_chance))
 		return

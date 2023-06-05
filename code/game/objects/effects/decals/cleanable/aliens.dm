@@ -39,9 +39,12 @@
 	if(!step_to(src, get_step(src, direction), 0))
 		return
 	if(mapload)
-		for (var/i in 1 to range)
-			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
-			if (!step_to(src, get_step(src, direction), 0))
+		for (var/i = 1, i < range, i++)
+			var/turf/turf_sending = get_step(src, direction)
+			if(isclosedturf(turf_sending) || (isgroundlessturf(turf_sending) && !SSmapping.get_turf_below(turf_sending)))
+				continue
+			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc, streak_diseases)
+			if (!step_to(src, turf_sending, 0))
 				break
 		return
 
