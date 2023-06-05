@@ -30173,12 +30173,6 @@
 	dir = 1
 	},
 /area/station/command/gateway)
-"hOP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/obj/structure/sign/delamination_counter/directional/east,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "hOR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/meter,
@@ -138771,7 +138765,7 @@ oqA
 bNR
 klY
 klY
-hOP
+klY
 nHv
 cAf
 klY
