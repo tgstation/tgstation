@@ -1,0 +1,4 @@
+author: "kinneb"
+delete-after: True
+changes:
+  - image: "modified gift and package crate sprites to match the resprited crate"

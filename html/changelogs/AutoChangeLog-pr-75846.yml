@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Changes syndicate surgery duffelbags to contain advanced tools, sterilizine, surgical tape, and a roller bed."
+  - rscadd: "Changed the Syndicate Infiltrators' surgery areas to contain a full syndicate surgery duffelbag."
+  - rscadd: "The normal infiltrator now has a operating computer and a closet of misc. surgical clothing and anesthesic tank."

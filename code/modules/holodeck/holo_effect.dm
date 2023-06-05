@@ -83,8 +83,8 @@
 	. = ..()
 	mobtype = list(
 		/mob/living/basic/butterfly,
+		/mob/living/basic/chick/permanent,
 		/mob/living/basic/rabbit,
-		/mob/living/simple_animal/chick/holo,
 		/mob/living/simple_animal/pet/fox,
 	)
 	mobtype += pick(
