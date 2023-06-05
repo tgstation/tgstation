@@ -228,7 +228,11 @@
 
 /datum/attack_style/melee_weapon/swing/requires_wield/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	. = ..()
-	if(prob(50) && !(. & ATTACK_STYLE_CANCEL))
+	if(!istype(weapon))
+		return
+	if(. & ATTACK_SWING_CANCEL)
+		return
+	if(prob(50))
 		INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item/dualsaber, jedi_spin), attacker)
 
 // melbert todo

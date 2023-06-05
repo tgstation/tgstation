@@ -51,5 +51,5 @@
 /datum/attack_style/melee_weapon/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		attacker.balloon_alert(attacker, "wield your weapon!")
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 	return ..()

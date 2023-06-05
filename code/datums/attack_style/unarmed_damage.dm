@@ -55,16 +55,16 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] blocks your [attack_verb]!"))
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?
 	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.harm_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
-				return ATTACK_STYLE_HIT
+				return ATTACK_SWING_HIT
 			if(MARTIAL_ATTACK_FAIL)
-				return ATTACK_STYLE_MISSED
+				return ATTACK_SWING_MISSED
 
 	var/obj/item/bodypart/affecting = smacked.get_bodypart(smacked.get_random_valid_zone(attacker.zone_selected))
 	var/miss_chance = calculate_miss_chance(attacker, smacked, weapon, damage)
@@ -79,7 +79,7 @@
 		)
 		to_chat(attacker, span_warning("Your [attack_verb] misses [smacked]!"))
 		log_combat(attacker, smacked, "missed unarmed attack ([attack_verb])")
-		return ATTACK_STYLE_MISSED
+		return ATTACK_SWING_MISSED
 
 	// All unarmed attacks go under melee armor, even ones that use non-standard damage types like burn
 	var/armor_block = min(ARMOR_MAX_BLOCK, smacked.run_armor_check(affecting, MELEE, armour_penetration = attack_penetration_modifier))
@@ -124,7 +124,7 @@
 
 	smacked.was_attacked_effects(null, attacker, affecting, damage, armor_block)
 	log_combat(attacker, smacked, "unarmed attack", addition = additional_logging)
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT
 
 /**
  * Called when the damage actually is being applied to the smacked mob

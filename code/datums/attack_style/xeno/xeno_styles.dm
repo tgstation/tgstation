@@ -20,7 +20,7 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_notice("You caress [smacked] with your scythe-like arm."))
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT
 
 /datum/attack_style/unarmed/help/larva
 
@@ -31,7 +31,7 @@
 		ignored_mobs = attacker,
 	)
 	to_chat(attacker, span_notice("You rubs its head against [smacked]."))
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT
 
 /*
  * Xeno harm
@@ -44,7 +44,7 @@
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
 	if(isalien(smacked))
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SWING_SKIPPED
 	return ..()
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/adult
@@ -84,7 +84,7 @@
 			)
 			to_chat(attacker, span_danger("You force [robot_hit] back!"))
 			playsound(robot_hit, 'sound/weapons/pierce.ogg', 30, TRUE, -1)
-		return ATTACK_STYLE_HIT
+		return ATTACK_SWING_HIT
 
 	var/obj/item/weapon = smacked.get_active_held_item()
 	if(weapon && smacked.dropItemToGround(weapon))
@@ -109,4 +109,4 @@
 		to_chat(attacker, span_danger("You tackle [smacked] down!"))
 		playsound(smacked, 'sound/weapons/pierce.ogg', 30, TRUE, -1)
 		log_combat(attacker, smacked, "tackled")
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT

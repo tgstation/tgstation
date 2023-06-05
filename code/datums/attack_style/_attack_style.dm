@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	return styles
 
-/datum/movespeed_modifier/attack_style_executed
+/datum/movespeed_modifier/ATTACK_SWING_executed
 	variable = TRUE
 
 /**
@@ -77,24 +77,20 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
 
+	// Make sure they can't attack while swinging
+	attacker.changeNext_move(2 * time_per_turf * length(affecting))
 	// Make sure they don't move while swinging
 	var/pre_set_dir = attacker.set_dir_on_move
 	attacker.set_dir_on_move = FALSE
-	// Make sure they can't attack while swinging
-	attacker.changeNext_move(2 * time_per_turf * length(affecting))
-	// Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
-	var/attack_result = execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking)
-	// Restore this
+	var/attack_result = execute_attack(attacker, weapon, affecting, aimed_towards, right_clicking) // Prioritise the atom we clicked on initially, so if two mobs are on one turf, we hit the one we clicked on
 	attacker.set_dir_on_move = pre_set_dir
-	// Check the result.
-	if(attack_result & ATTACK_STYLE_CANCEL)
-		// Just apply a small second CD so they don't spam failed attacks
-		attacker.changeNext_move(0.33 SECONDS)
+
+	if(attack_result & ATTACK_SWING_CANCEL)
 		return FALSE
 
 	if(slowdown > 0)
-		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/attack_style_executed, multiplicative_slowdown = slowdown)
-		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
+		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/ATTACK_SWING_executed, multiplicative_slowdown = slowdown)
+		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/ATTACK_SWING_executed), cd * 0.2)
 	if(cd > 0)
 		attacker.changeNext_move(cd)
 	return TRUE
@@ -167,29 +163,20 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		// This is where attack swings enter attack chain.
 		for(var/mob/living/smack_who as anything in foes)
 			already_hit += smack_who
-			var/new_results = finalize_attack(attacker, smack_who, weapon, right_clicking)
-			if(!(new_results & ATTACK_STYLE_HIT))
+			attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+			if(attack_flag & ATTACK_SWING_CANCEL)
+				return attack_flag
+			if(attack_flag & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
 				continue
-			attack_flag |= new_results
-			total_hit++
+			if(attack_flag & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
+				total_hit++
+				if(!hitsound_played)
+					hitsound_played = TRUE
+					playsound(attacker, get_hit_sound(weapon), hit_volume, TRUE)
 			if(total_hit >= hits_per_turf_allowed)
 				break
 
 		total_total_hit += total_hit
-		// Immediately check if the attack was cancelled from the attack chain.
-		// Cancel = completely stop everything, return no other flags, do not pass go, do not collect $200.
-		if(attack_flag & ATTACK_STYLE_CANCEL)
-			return ATTACK_STYLE_CANCEL
-		// A hit or block was made, so we can play a hitsound if one is set.
-		if(attack_flag & (ATTACK_STYLE_HIT|ATTACK_STYLE_BLOCKED))
-			if(!hitsound_played)
-				hitsound_played = TRUE
-				var/hitsound_to_use = get_hit_sound(weapon)
-				if(hitsound_to_use)
-					playsound(attacker, hitsound_to_use, hit_volume, TRUE)
-			// However, if the attack was a block and not a hit, we stop at this turf.
-			if(attack_flag & ATTACK_STYLE_BLOCKED)
-				break
 
 		// Right after dealing damage we handle getting blocked by dense stuff
 		// If there's something dense in the turf the rest of the swing is cancelled
@@ -207,22 +194,25 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			else
 				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
 
-			return attack_flag | ATTACK_STYLE_BLOCKED
+			attack_flag |= ATTACK_SWING_BLOCKED
+
+		if(attack_flag & ATTACK_SWING_BLOCKED)
+			break
 
 		// Finally, we handle travel time.
 		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
-			sleep(time_per_turf) // probably shouldn't use stoplag?
+			sleep(time_per_turf) // probably shouldn't use stoplag? May result in undesired behavior during high load
 
-			// Sanity checking
+			// Sanity checking. We don't need to care about the other flags set if these fail
 			if(QDELETED(attacker))
-				return ATTACK_STYLE_CANCEL
+				return ATTACK_SWING_CANCEL
 			if(started_holding && (QDELETED(weapon) || !attacker.is_holding(weapon)))
-				return ATTACK_STYLE_CANCEL
+				return ATTACK_SWING_CANCEL
 			if(attacker.incapacitated())
-				return ATTACK_STYLE_CANCEL
+				return ATTACK_SWING_CANCEL
 			if(attacker.loc != starting_loc)
 				if(!isturf(attacker.loc))
-					return ATTACK_STYLE_CANCEL
+					return ATTACK_SWING_CANCEL
 
 				// At this point we've moved a turf but can continue attacking, so we'll
 				// soft restart the swing from this point at the new turf.
@@ -231,12 +221,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				affecting.Cut(1, affecting_index)
 
 	// All relevant turfs have been hit so we're wrapping up the attack at this point
-
 	if(total_total_hit <= 0)
 		// counts as a miss if we don't hit anyone, duh
-		attack_flag |= ATTACK_STYLE_MISSED
+		attack_flag |= ATTACK_SWING_MISSED
 
-	if(attack_flag & ATTACK_STYLE_MISSED)
+	if(attack_flag & ATTACK_SWING_MISSED)
 		if(miss_sound)
 			playsound(attacker, miss_sound, miss_volume, TRUE)
 
@@ -346,7 +335,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(right_clicking)
 		switch(weapon.pre_attack_secondary(smacked, attacker))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_CANCEL
+				return ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -355,17 +344,17 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	if(go_to_attack && weapon.pre_attack(smacked, attacker))
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
 	if(attacker != smacked && smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_SWING_BLOCKED
 
 	var/go_to_afterattack = !right_clicking
 	if(right_clicking)
 		switch(weapon.attack_secondary(smacked, attacker))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_STYLE_CANCEL
+				return ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -374,7 +363,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	smacked.lastattacker = attacker.real_name
 	smacked.lastattackerckey = attacker.ckey
@@ -386,14 +375,14 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
 	if(!smacked.attacked_by(weapon, attacker))
-		return ATTACK_STYLE_SKIPPED // Attack did 0 damage
+		return ATTACK_SWING_SKIPPED // Attack did 0 damage
 
-	attack_result |= ATTACK_STYLE_HIT
+	attack_result |= ATTACK_SWING_HIT
 
 	if(right_clicking)
 		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return attack_result | ATTACK_STYLE_CANCEL
+				return attack_result | ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				// pass()
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)

@@ -330,25 +330,19 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BATON_ATTACKING 3
 
 // Returns for attack style [finalize_attack]
-/// Fairly obvious, attack hit SOMETHING.
-/// This signifies success - play hitsound
-#define ATTACK_STYLE_HIT (1<<1)
-/// Fairly obvious, attack missed entirely
-/// This does not necessarily imply failure, but does play misssound at end of the attack
+/// The swing hit some mob in the process
+#define ATTACK_SWING_HIT (1<<1)
+/// The swing did not hit a single mob
 /// You don't have to set this one manually, it's set by default if no mobs are affected
-#define ATTACK_STYLE_MISSED (1<<2)
-/// Attack was blocked, doesn't go to the next turf
-/// This implies a failure - In an attack execution, the following turf in the swing will not be affected.
-/// However, if there is only one turf attacked, this means very little for the actual result.
-#define ATTACK_STYLE_BLOCKED (1<<3)
-/// Cancels the attack entirely, stops the next turf from being attacked and stops all hitsounds - quits entirely, failure state
-/// This is also used in the context of the attack chain to stop the chain entirely - no afterattack.
-/// Do not pass go, do not collect $200.
-#define ATTACK_STYLE_CANCEL (1<<4)
-/// Used when the attack is skipped.
-/// Similar to cancelling but used in context of the attack chain to allow afterattacks (where cancelling would stop it entirely).
-/// Essentially a cancel but not indicating failure, just no-op.
-#define ATTACK_STYLE_SKIPPED (1<<5)
+#define ATTACK_SWING_MISSED (1<<2)
+/// The swing was blocked by something in the process, either by a mob or some dense thing
+/// The following turf in the swing will not be hit - the swing stops here
+/// This means very little if the attack only affects a single turf
+#define ATTACK_SWING_BLOCKED (1<<3)
+/// Cancels the swing entirely
+#define ATTACK_SWING_CANCEL (1<<4)
+/// Similar to cancel, but doesn't stop the entire swing
+#define ATTACK_SWING_SKIPPED (1<<5)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living

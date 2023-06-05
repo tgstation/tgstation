@@ -407,13 +407,13 @@
 
 	if(isnull(implant))
 		stack_trace("Muscle arm attack style found on mob without a muscle arm!")
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 	if(HAS_TRAIT(attacker, TRAIT_HULK))
 		stack_trace("Muscle arm attack style executed on a hulk mob, hulk should have priority!")
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 	if(implant.hand != weapon)
 		stack_trace("Muscle arm attack triggered a mob from a limb that is not the muscle arm!")
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	if(implant.organ_flags & ORGAN_FAILING)
 		if(attacker.body_position != LYING_DOWN && smacked != attacker && prob(50))
@@ -423,7 +423,7 @@
 		else
 			to_chat(attacker, span_danger("Your muscles spasm!"))
 			attacker.Paralyze(1 SECONDS)
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	// A little dirty, but from here on the "weapon" is the IMPLANT and not the ARM
 	weapon = implant

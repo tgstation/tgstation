@@ -354,7 +354,7 @@
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
 
 	was_attacked_effects(attacking_item, user, affecting, damage, damage_type, armor_block)
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT
 
 /mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SHOULD_CALL_PARENT(TRUE)

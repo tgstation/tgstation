@@ -47,7 +47,7 @@
 
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	var/datum/attack_style/unarmed/give_them_the_heat = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/boxing]
-	if(give_them_the_heat.process_attack(attacker, attacker.get_active_hand(), defender) & ATTACK_STYLE_HIT)
+	if(give_them_the_heat.process_attack(attacker, attacker.get_active_hand(), defender) & ATTACK_SWING_HIT)
 		return MARTIAL_ATTACK_SUCCESS
 
 	return MARTIAL_ATTACK_FAIL

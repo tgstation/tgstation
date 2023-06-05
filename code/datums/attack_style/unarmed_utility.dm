@@ -4,15 +4,15 @@
 
 /datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(attacker.body_position != STANDING_UP)
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 	if(attacker.loc in affecting)
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	return ..()
 
 /datum/attack_style/unarmed/disarm/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(attacker == smacked || attacker.loc == smacked.loc)
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	var/shove_verb = smacked.response_disarm_simple || "shove"
 
@@ -25,7 +25,7 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] blocks your [shove_verb]!"))
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_SWING_BLOCKED
 
 	if(attacker.move_force < smacked.move_resist)
 		smacked.visible_message(
@@ -36,7 +36,7 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] resists your [shove_verb]!"))
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_SWING_BLOCKED
 
 	if (ishuman(smacked))
 		var/mob/living/carbon/human/human_smacked = smacked
@@ -47,9 +47,9 @@
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.disarm_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
-				return ATTACK_STYLE_HIT
+				return ATTACK_SWING_HIT
 			if(MARTIAL_ATTACK_FAIL)
-				return ATTACK_STYLE_MISSED
+				return ATTACK_SWING_MISSED
 
 	return disarm_target(attacker, smacked, shove_verb)
 
@@ -61,7 +61,7 @@
 	//Are we hitting anything? or
 	var/pre_sig_return = SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE)
 	if(pre_sig_return & DISARM_STOP)
-		return ATTACK_STYLE_MISSED
+		return ATTACK_SWING_MISSED
 
 	// At this point a shove is going to happen
 	SEND_SIGNAL(smacked, COMSIG_LIVING_DISARM_HIT, attacker, attacker.zone_selected)
@@ -90,7 +90,7 @@
 		to_chat(attacker, span_danger("You kick [smacked] onto [smacked.p_their()] side!"))
 		addtimer(CALLBACK(smacked, TYPE_PROC_REF(/mob/living, SetKnockdown), 0 SECONDS), SHOVE_CHAIN_PARALYZE)
 		log_combat(attacker, smacked, "kicks", "onto their side (paralyzing)")
-		. |= ATTACK_STYLE_HIT
+		. |= ATTACK_SWING_HIT
 
 	var/directional_blocked = FALSE
 	var/can_hit_something = (!smacked.is_shove_knockdown_blocked() && !smacked.buckled)
@@ -112,7 +112,7 @@
 	if(can_hit_something)
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, attacker, smacked, shove_blocked) & DISARM_SHOVE_HANDLED))
-			return . | ATTACK_STYLE_HIT
+			return . | ATTACK_SWING_HIT
 
 		if(directional_blocked || shove_blocked)
 			smacked.Knockdown(SHOVE_KNOCKDOWN_SOLID)
@@ -125,7 +125,7 @@
 			)
 			to_chat(attacker, span_danger("You [shove_verb] [smacked], knocking [smacked.p_them()] down!"))
 			log_combat(attacker, smacked, "shoved", "knocking them down")
-			return . | ATTACK_STYLE_HIT
+			return . | ATTACK_SWING_HIT
 
 	smacked.visible_message(
 		span_danger("[attacker] [shove_verb]s [smacked]!"),
@@ -163,7 +163,7 @@
 		)
 
 	log_combat(attacker, smacked, "shoved", append_message)
-	return . | ATTACK_STYLE_HIT
+	return . | ATTACK_SWING_HIT
 
 /datum/attack_style/unarmed/grab
 	attack_effect = null
@@ -180,16 +180,16 @@
 			ignored_mobs = attacker,
 		)
 		to_chat(attacker, span_warning("[smacked] blocks your grab!"))
-		return ATTACK_STYLE_BLOCKED
+		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?
 	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.grab_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
-				return ATTACK_STYLE_HIT
+				return ATTACK_SWING_HIT
 			if(MARTIAL_ATTACK_FAIL)
-				return ATTACK_STYLE_MISSED
+				return ATTACK_SWING_MISSED
 
 	smacked.grabbedby(attacker)
-	return ATTACK_STYLE_HIT
+	return ATTACK_SWING_HIT

@@ -42,7 +42,7 @@
 
 /datum/attack_style/melee_weapon/swing/requires_wield/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	. = ..()
-	if(!istype(weapon) || !(. & ATTACK_STYLE_HIT))
+	if(!istype(weapon) || !(. & (ATTACK_SWING_HIT|ATTACK_SWING_BLOCKED)))
 		return
 	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
 		return

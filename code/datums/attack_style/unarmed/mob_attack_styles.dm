@@ -18,11 +18,11 @@
 		// can't attack while eating!
 		if(attacker in smacked.buckled_mobs)
 			attacker.Feedstop()
-		return ATTACK_STYLE_SKIPPED
+		return ATTACK_SWING_SKIPPED
 
 	if(isAI(smacked))
 		// AIs are immune to slime glomps
-		return ATTACK_STYLE_CANCEL
+		return ATTACK_SWING_CANCEL
 
 	return ..()
 
