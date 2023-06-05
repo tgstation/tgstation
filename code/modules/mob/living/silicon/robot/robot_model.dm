@@ -277,6 +277,7 @@
 	cyborg.notransform = TRUE
 	if(locked_transform)
 		cyborg.SetLockdown(TRUE)
+		cyborg.ai_lockdown = TRUE
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
 	sleep(0.1 SECONDS)
@@ -284,6 +285,7 @@
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
+	cyborg.ai_lockdown = FALSE
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
 	cyborg.notransform = FALSE
