@@ -13,7 +13,7 @@
 	var/atom/movable/moving
 	///Defines how different move loops override each other. Higher numbers beat lower numbers
 	var/priority = MOVEMENT_DEFAULT_PRIORITY
-	///Bitfield of different things that affect how a loop operates
+	///Bitfield of different things that affect how a loop operates, and other mechanics around it as well.
 	var/flags
 	///Time till we stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
@@ -113,7 +113,10 @@
 		return
 
 	var/visual_delay = controller.visual_delay
+
+	owner?.processing_move_loop_flags = flags|MOVED_BY_MOVEMENT_LOOP
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+	owner?.processing_move_loop_flags = NONE
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 

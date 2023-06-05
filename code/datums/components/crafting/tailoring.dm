@@ -317,3 +317,12 @@
 	)
 
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/paper_hat
+	name = "Paper Hat"
+	result = /obj/item/clothing/head/costume/paper_hat
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/paper = 1,
+	)
+	category = CAT_CLOTHING
