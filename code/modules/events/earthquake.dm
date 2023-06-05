@@ -34,6 +34,8 @@
 	var/list/turfs_to_shred
 	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
 	var/list/underbelly = list()
+	///The edges of our fault line, to recieve light damage.
+	var/list/edges = list()
 
 /datum/round_event/earthquake/setup()
 	epicenter = get_turf(pick(GLOB.generic_event_spawns))
@@ -76,8 +78,10 @@
 		for(var/turf/turf_to_compare in turfs_to_compare)
 			nearest_distance = min(get_dist(turf_to_check, turf_to_compare), nearest_distance)
 
-		// If the turf is too far from any point on our fault line estimate, we remove it.
+		// If the turf is too far from any point on our fault line estimate, we remove it. If it's on the edge, we lightly damage it
 		if(nearest_distance > 2)
+			if(nearest_distance == 3)
+				edges += turf_to_check
 			turfs_to_shred -= turf_to_check
 
 	// Grab a list of turfs below the ones we're going to destroy.
@@ -139,6 +143,8 @@
 			if(ismineralturf(turf_to_clear))
 				var/turf/closed/mineral/rock_to_clear = turf_to_clear
 				rock_to_clear.gets_drilled(give_exp = FALSE)
+		for(var/turf/turf_to_quake in edges)
+			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
@@ -160,3 +166,9 @@
 
 		if(isasteroidturf(turf_to_shred) && prob(95))
 			turf_to_shred.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+	for(var/turf/edge_to_damage in edges)
+		if(prob(25))
+			SSexplosions.medturf += edge_to_damage
+		else
+			SSexplosions.lowturf += edge_to_damage
