@@ -179,3 +179,7 @@
 	fire = 100
 	acid = 50
 	wound = 5
+
+/obj/item/clothing/head/nanner_crown/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
