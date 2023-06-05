@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Update the atom's smoothing. (More accurately, queue it for an update)
 #define UPDATE_SMOOTHING (1<<5)
 /// Update the atom's icon
-#define UPDATE_ICON (UPDATE_ICON_STATE|UPDATE_OVERLAYS|UPDATE_GREYSCALE)
+#define UPDATE_ICON (UPDATE_ICON_STATE|UPDATE_OVERLAYS)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY (1<<0)

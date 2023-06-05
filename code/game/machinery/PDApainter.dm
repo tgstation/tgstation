@@ -329,7 +329,7 @@
 					break
 
 			stored_pda.paintjob = pda_path
-			stored_pda.update_appearance(UPDATE_ICON | UPDATE_NAME | UPDATE_DESC)
+			stored_pda.update_appearance(UPDATE_ICON | UPDATE_GREYSCALE | UPDATE_NAME | UPDATE_DESC)
 
 			return TRUE
 		if("reset_pda")
