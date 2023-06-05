@@ -248,10 +248,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/list/data = list()
 
 	data["reagentAnalysisMode"] = reagent_analysis_mode
-	if(reagent_analysis_mode)
-		var/datum/reagent/reagent = GLOB.chemical_reagents_list[analyzed_reagent]
+	if(reagent_analysis_mode && analyzed_reagent)
 		var/state
-		switch(reagent.reagent_state)
+		switch(analyzed_reagent.reagent_state)
 			if(SOLID)
 				state = "Solid"
 			if(LIQUID)
@@ -261,14 +260,15 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			else
 				state = "Unknown"
 		data["analysisData"] = list(
-			"name" = reagent.name,
+			"name" = analyzed_reagent.name,
 			"state" = state,
-			"pH" = reagent.ph,
-			"color" = reagent.color,
-			"description" = reagent.description,
-			"metaRate" = reagent.metabolization_rate,
-			"overdose" = reagent.overdose_threshold,
-			"addictionTypes" = reagents.parse_addictions(reagent),
+			"pH" = analyzed_reagent.ph,
+			"color" = analyzed_reagent.color,
+			"description" = analyzed_reagent.description,
+			"purity" = analyzed_reagent.purity,
+			"metaRate" = analyzed_reagent.metabolization_rate,
+			"overdose" = analyzed_reagent.overdose_threshold,
+			"addictionTypes" = reagents.parse_addictions(analyzed_reagent),
 		)
 	else
 		data["isPrinting"] = is_printing
@@ -280,13 +280,13 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		var/list/beaker_contents = list()
 		if(beaker)
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beaker_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
+				beaker_contents.Add(list(list("name" = reagent.name, "ref" = REF(reagent), "volume" = round(reagent.volume, 0.01))))
 		data["beakerContents"] = beaker_contents
 
 		var/list/buffer_contents = list()
 		if(reagents.total_volume)
 			for(var/datum/reagent/reagent in reagents.reagent_list)
-				buffer_contents.Add(list(list("name" = reagent.name, "id" = ckey(reagent.name), "volume" = round(reagent.volume, 0.01))))
+				buffer_contents.Add(list(list("name" = reagent.name, "ref" = REF(reagent), "volume" = round(reagent.volume, 0.01))))
 		data["bufferContents"] = buffer_contents
 		data["bufferCurrentVolume"] = round(reagents.total_volume, 0.01)
 		data["bufferMaxVolume"] = reagents.maximum_volume
@@ -323,17 +323,17 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		return TRUE
 
 	if(action == "transfer")
-		var/reagent_type = GLOB.name2reagent[params["reagentId"]]
+		var/reagent_ref = params["reagentRef"]
 		var/amount = text2num(params["amount"])
 		var/target = params["target"]
-		return transfer_reagent(reagent_type, amount, target)
+		return transfer_reagent(reagent_ref, amount, target)
 
 	if(action == "toggleTransferMode")
 		transfer_mode = !transfer_mode
 		return TRUE
 
 	if(action == "analyze")
-		analyzed_reagent = GLOB.name2reagent[params["id"]]
+		analyzed_reagent = locate(params["reagentRef"])
 		if(analyzed_reagent)
 			reagent_analysis_mode = TRUE
 			return TRUE
@@ -405,34 +405,34 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	return TRUE
 
 /// Transfer reagents to specified target from the opposite source
-/obj/machinery/chem_master/proc/transfer_reagent(reagent_type, amount, target)
+/obj/machinery/chem_master/proc/transfer_reagent(reagent_ref, amount, target)
 	if (amount == -1)
 		amount = text2num(input("Enter the amount you want to transfer:", name, ""))
 	if (amount == null || amount <= 0)
 		return FALSE
 	if (!beaker && target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		return FALSE
+	var/datum/reagent/reagent = locate(reagent_ref)
+	if (!reagent)
+		return FALSE
 
 	use_power(active_power_usage)
 
 	if (target == TARGET_BUFFER)
-		var/datum/reagent/reagent = beaker.reagents.get_reagent(reagent_type)
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
-		beaker.reagents.trans_id_to(src, reagent_type, amount)
+		beaker.reagents.trans_id_to(src, reagent.type, amount)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_DESTROY)
-		reagents.remove_reagent(reagent_type, amount)
+		reagents.remove_reagent(reagent.type, amount)
 		update_appearance(UPDATE_ICON)
 		return TRUE
-
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
-		var/datum/reagent/reagent = reagents.get_reagent(reagent_type)
 		if(!check_reactions(reagent, reagents))
 			return FALSE
-		reagents.trans_id_to(beaker, reagent_type, amount)
+		reagents.trans_id_to(beaker, reagent.type, amount)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 

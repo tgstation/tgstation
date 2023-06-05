@@ -32,6 +32,7 @@ type Analysis = {
   pH: number;
   color: string;
   description: string;
+  purity: number;
   metaRate: number;
   overdose: number;
   addictionTypes: string[];
@@ -43,7 +44,7 @@ type Category = {
 };
 
 type Reagent = {
-  id: number;
+  ref: string;
   name: string;
   volume: number;
 };
@@ -122,7 +123,7 @@ const ChemMasterContent = (props, context) => {
         <Table>
           {beakerContents.map((chemical) => (
             <ReagentEntry
-              key={chemical.id}
+              key={chemical.ref}
               chemical={chemical}
               transferTo="buffer"
             />
@@ -153,7 +154,7 @@ const ChemMasterContent = (props, context) => {
         <Table>
           {bufferContents.map((chemical) => (
             <ReagentEntry
-              key={chemical.id}
+              key={chemical.ref}
               chemical={chemical}
               transferTo="beaker"
             />
@@ -264,7 +265,7 @@ const ReagentEntry = (props, context) => {
   const { chemical, transferTo } = props;
   const { isPrinting } = data;
   return (
-    <Table.Row key={chemical.id}>
+    <Table.Row key={chemical.ref}>
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
@@ -276,7 +277,7 @@ const ReagentEntry = (props, context) => {
           disabled={isPrinting}
           onClick={() => {
             act('transfer', {
-              reagentId: chemical.id,
+              reagentRef: chemical.ref,
               amount: 1,
               target: transferTo,
             });
@@ -287,7 +288,7 @@ const ReagentEntry = (props, context) => {
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
-              reagentId: chemical.id,
+              reagentRef: chemical.ref,
               amount: 5,
               target: transferTo,
             })
@@ -298,7 +299,7 @@ const ReagentEntry = (props, context) => {
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
-              reagentId: chemical.id,
+              reagentRef: chemical.ref,
               amount: 10,
               target: transferTo,
             })
@@ -309,7 +310,7 @@ const ReagentEntry = (props, context) => {
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
-              reagentId: chemical.id,
+              reagentRef: chemical.ref,
               amount: 1000,
               target: transferTo,
             })
@@ -321,7 +322,7 @@ const ReagentEntry = (props, context) => {
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
-              reagentId: chemical.id,
+              reagentRef: chemical.ref,
               amount: -1,
               target: transferTo,
             })
@@ -332,7 +333,7 @@ const ReagentEntry = (props, context) => {
           title="Analyze"
           onClick={() =>
             act('analyze', {
-              id: chemical.id,
+              reagentRef: chemical.ref,
             })
           }
         />
@@ -382,6 +383,7 @@ const AnalysisResults = (props, context) => {
     pH,
     color,
     description,
+    purity,
     metaRate,
     overdose,
     addictionTypes,
@@ -398,8 +400,9 @@ const AnalysisResults = (props, context) => {
       }>
       <LabeledList>
         <LabeledList.Item label="Name">{name}</LabeledList.Item>
-        <LabeledList.Item label="State">{state}</LabeledList.Item>
+        <LabeledList.Item label="Purity">{`${purity * 100}%`}</LabeledList.Item>
         <LabeledList.Item label="pH">{pH}</LabeledList.Item>
+        <LabeledList.Item label="State">{state}</LabeledList.Item>
         <LabeledList.Item label="Color">
           <ColorBox color={color} mr={1} />
           {color}
@@ -412,7 +415,7 @@ const AnalysisResults = (props, context) => {
           {overdose > 0 ? `${overdose} units` : 'N/A'}
         </LabeledList.Item>
         <LabeledList.Item label="Addiction Types">
-          {addictionTypes.length > 0 ? addictionTypes.toString() : 'N/A'}
+          {addictionTypes.length ? addictionTypes.toString() : 'N/A'}
         </LabeledList.Item>
       </LabeledList>
     </Section>
