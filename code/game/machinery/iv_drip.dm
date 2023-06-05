@@ -317,7 +317,8 @@
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
 	if(isliving(target))
-		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob/living, throw_alert), ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+		var/mob/living/target_mob = target
+		target_mob.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	attached = target
 	START_PROCESSING(SSmachines, src)
 	update_appearance(UPDATE_ICON)
@@ -329,7 +330,8 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 		if(isliving(attached))
-			INVOKE_ASYNC(attached, TYPE_PROC_REF(/mob/living, clear_alert), ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+			var/mob/living/attached_mob = attached
+			attached_mob.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	attached = null
 	update_appearance(UPDATE_ICON)
