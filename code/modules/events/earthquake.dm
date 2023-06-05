@@ -61,15 +61,15 @@
 
 	// We populate a list with the midpoints and midpoints of midpoints to create a rough line of turfs to compare distances against.
 	var/list/turfs_to_compare = list(
-			fracture_point_high,
-			fracture_point_low,
-			high_midpoint,
-			low_midpoint,
-			TURF_MIDPOINT(fracture_point_high, high_midpoint),
-			TURF_MIDPOINT(fracture_point_low, low_midpoint),
-			TURF_MIDPOINT(high_midpoint, epicenter),
-			TURF_MIDPOINT(low_midpoint, epicenter),
-		)
+		fracture_point_high,
+		fracture_point_low,
+		high_midpoint,
+		low_midpoint,
+		TURF_MIDPOINT(fracture_point_high, high_midpoint),
+		TURF_MIDPOINT(fracture_point_low, low_midpoint),
+		TURF_MIDPOINT(high_midpoint, epicenter),
+		TURF_MIDPOINT(low_midpoint, epicenter),
+	)
 
 	// Find the shortest distance between each turf in the list and the rough fault line we've just established
 	for(var/turf/turf_to_check in turfs_to_shred)
@@ -98,7 +98,7 @@
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 5))
 		for(var/turf/turf_to_quake in turfs_to_shred)
-			turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
+			turf_to_quake.Shake(pixelshiftx = 0.1, pixelshifty = 0.1, duration = 1 SECONDS)
 
 		if(ISMULTIPLE(activeFor, 10))
 			for(var/mob/earthquake_witness as anything in GLOB.player_list)
@@ -117,20 +117,18 @@
 				)
 
 			for(var/turf/turf_to_quake in underbelly)
-				turf_to_quake.Shake(0.1, 0.1, 1 SECONDS)
+				turf_to_quake.Shake(pixelshiftx = 0.1, pixelshifty = 0.1, duration = 1 SECONDS)
 
 	if(activeFor == end_when - 2)
 		for(var/turf/turf_to_quake in turfs_to_shred)
-			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
-			for(var/mob/living/carbon/quake_victim in turf_to_quake)
+			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
+			for(var/mob/living/quake_victim in turf_to_quake)
 				quake_victim.Knockdown(7 SECONDS)
 				quake_victim.Paralyze(5 SECONDS)
-				if(quake_victim.client)
-					quake_victim.client.give_award(/datum/award/achievement/misc/earthquake_victim, quake_victim)
 				to_chat(quake_victim, span_warning("The ground quakes violently beneath you, throwing you off your feet!"))
 
 		for(var/turf/turf_to_quake in underbelly)
-			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
+			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
 			for(var/mob/living/carbon/quake_victim in turf_to_quake)
 				to_chat(quake_victim, span_warning("Damn, I wonder what that rumbling noise is?")) ///You're about to find out
 
@@ -144,7 +142,7 @@
 				var/turf/closed/mineral/rock_to_clear = turf_to_clear
 				rock_to_clear.gets_drilled(give_exp = FALSE)
 		for(var/turf/turf_to_quake in edges)
-			turf_to_quake.Shake(0.5, 0.5, 1 SECONDS)
+			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
@@ -166,6 +164,10 @@
 
 		if(isasteroidturf(turf_to_shred) && prob(95))
 			turf_to_shred.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+		for(var/mob/living/carbon/quake_victim in turf_to_shred)
+			if(quake_victim.client)
+				quake_victim.client.give_award(/datum/award/achievement/misc/earthquake_victim, quake_victim)
 
 	for(var/turf/edge_to_damage in edges)
 		if(prob(25))
