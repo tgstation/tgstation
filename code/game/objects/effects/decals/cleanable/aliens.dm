@@ -43,7 +43,7 @@
 			var/turf/turf_sending = get_step(src, direction)
 			if(isclosedturf(turf_sending) || (isgroundlessturf(turf_sending) && !SSmapping.get_turf_below(turf_sending)))
 				continue
-			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc, streak_diseases)
+			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
 			if (!step_to(src, turf_sending, 0))
 				break
 		return
