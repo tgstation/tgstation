@@ -11,9 +11,6 @@
 	/// The unique string that represents which atmos chamber to associate with.
 	var/chamber_id
 
-	// When turned off it create's an air sensor that drop's content's on welding
-	var/drop_contents = FALSE
-
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
 	var/static/list/multitool_tips = list(
