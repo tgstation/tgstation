@@ -163,3 +163,19 @@
 								'monkestation/sound/misc/jones/jones1.ogg',
 								'monkestation/sound/misc/jones/jones2.ogg',
 								'monkestation/sound/misc/jones/jones3.ogg')
+
+/obj/item/clothing/head/nanner_crown
+	name = "Banana Crown"
+	desc = "Looks like someone stuck bananas on this crown's spikes. It doesn't look half bad..."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "nanner_crown"
+	armor_type = /datum/armor/nanner_crown
+	resistance_flags = FIRE_PROOF
+
+/datum/armor/nanner_crown
+	melee = 15
+	energy = 10
+	fire = 100
+	acid = 50
+	wound = 5
