@@ -5310,6 +5310,7 @@
 #include "monkestation\code\modules\aesthetics\walls\iron.dm"
 #include "monkestation\code\modules\cargo\crates\engineering.dm"
 #include "monkestation\code\modules\cargo\crates\engineering.dm"
+#include "monkestation\code\modules\cargo\crates\materials.dm"
 #include "monkestation\code\modules\cargo\crates\medical.dm"
 #include "monkestation\code\modules\cargo\crates\medical.dm"
 #include "monkestation\code\modules\cargo\crates\medical.dm"
