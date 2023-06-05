@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "The reviver implant will no longer leave its user looping between soft and hard critical states."
