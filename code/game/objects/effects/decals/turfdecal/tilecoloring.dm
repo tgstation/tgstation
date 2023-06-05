@@ -138,13 +138,22 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 
 /// Date-specific tiles
+/obj/effect/turf_decal/tile/holiday
+	name = "ERROR tile decal"
+	color = "#FF0000"
 
 /obj/effect/turf_decal/tile/holiday/Initialize(mapload)
 	color = request_holiday_colors(src, pattern)
 	alpha = DECAL_ALPHA
 	return ..()
 
-/// Random tiles
+/// Pattern tiles
+/obj/effect/turf_decal/tile/holiday/rainbow
+	name = "rainbow tile decal"
+	color = "#75C9EB" //bright blue as default for mapping
+	pattern = PATTERN_RAINBOW
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/rainbow)
 
 /obj/effect/turf_decal/tile/holiday/random // so many colors
 	name = "colorful tile decal"
