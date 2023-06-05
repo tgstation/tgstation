@@ -48,7 +48,8 @@
  */
 /datum/mafia_ability/proc/validate_action_target(datum/mafia_role/potential_target, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-
+	if(host_role.game_status == MAFIA_DEAD)
+		return FALSE
 	if(host_role.mafia_game_controller.phase != valid_use_period)
 		return FALSE
 	if(host_role.role_flags & ROLE_ROLEBLOCKED)
