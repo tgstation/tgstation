@@ -473,16 +473,18 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	else
 		votes[vote_type][voter] = target
 	if(old_vote && old_vote == target)
-		voter.body.maptext_y = initial(voter.body.maptext_y)
-		voter.body.maptext_x = initial(voter.body.maptext_x)
-		voter.body.maptext_width = initial(voter.body.maptext_width)
-		voter.body.maptext = null
+		if(!teams)
+			voter.body.maptext_y = initial(voter.body.maptext_y)
+			voter.body.maptext_x = initial(voter.body.maptext_x)
+			voter.body.maptext_width = initial(voter.body.maptext_width)
+			voter.body.maptext = null
 		send_message(span_notice("[voter.body.real_name] retracts their vote for [target.body.real_name]!"), team = teams)
 	else
-		voter.body.maptext_y = 12
-		voter.body.maptext_x = -16
-		voter.body.maptext_width = 64
-		voter.body.maptext = "<span class='maptext' style='text-align: center; vertical-align: top'>[target.body.real_name]</span>"
+		if(!teams)
+			voter.body.maptext_y = 12
+			voter.body.maptext_x = -16
+			voter.body.maptext_width = 64
+			voter.body.maptext = "<span class='maptext' style='text-align: center; vertical-align: top'>[target.body.real_name]</span>"
 		send_message(span_notice("[voter.body.real_name] voted for [target.body.real_name]!"), team = teams)
 	if(!teams)
 		target.body.update_appearance() //Update the vote display if it's a public vote
@@ -512,7 +514,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: the mafia role the proc tries to get the amount of votes for
  * * vote_type: the vote type (getting how many day votes were for the role, or mafia night votes for the role)
  */
-/datum/mafia_controller/proc/get_vote_count(role,vote_type)
+/datum/mafia_controller/proc/get_vote_count(role, vote_type)
 	var/total_votes = 0
 	for(var/datum/mafia_role/votee as anything in votes[vote_type])
 		if(votes[vote_type][votee] == role)
@@ -551,12 +553,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * source: the body of the role getting the overlays
  * * overlay_list: signal var passing the overlay list of the mob
  */
-/datum/mafia_controller/proc/display_votes(atom/source, list/overlay_list)
+/datum/mafia_controller/proc/display_votes(mob/source, list/overlay_list)
 	SIGNAL_HANDLER
-
 	if(phase != MAFIA_PHASE_VOTING)
 		return
-	var/v = get_vote_count(player_role_lookup[source],"Day")
+	var/v = get_vote_count(player_role_lookup[source.client], "Day")
 	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v > 12 ? "over_12" : v]")
 	overlay_list += MA
 
@@ -588,7 +589,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		if(player_client)
 			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.body = H
-		player_role_lookup[H] = role
+		player_role_lookup[player_client] = role
 		role.put_player_in_body(player_client)
 		role.greet()
 
@@ -599,13 +600,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
 	data["all_roles"] = current_setup_text
 
-	var/datum/mafia_role/user_role = player_role_lookup[user]
+	var/datum/mafia_role/user_role = player_role_lookup[user.client]
 	if(user_role)
 		data["roleinfo"] = list(
 			"role" = user_role.name,
 			"desc" = user_role.desc,
 			"hud_icon" = user_role.hud_icon,
 			"revealed_icon" = user_role.revealed_icon,
+			"role_dead" = (user_role.game_status == MAFIA_DEAD)
 		)
 
 	return data
@@ -628,7 +630,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0 //the tgui menu counts this down.
 
-	var/datum/mafia_role/user_role = player_role_lookup[user]
+	var/datum/mafia_role/user_role = player_role_lookup[user.client]
 	if(user_role)
 		data["user_notes"] = user_role.written_notes
 
@@ -642,7 +644,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 		if(user_role) //not observer
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-				if(action.validate_action_target(src, potential_target = role, silent = TRUE))
+				if(action.validate_action_target(potential_target = role, silent = TRUE))
 					player_info["possible_actions"] += list(list("name" = action, "ref" = REF(action)))
 
 		data["players"] += list(player_info)
@@ -658,7 +660,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	. = ..()
 	if(.)
 		return
-	var/datum/mafia_role/user_role = player_role_lookup[usr]
+	var/datum/mafia_role/user_role = player_role_lookup[usr.client]
 	//Admin actions
 	if(usr.client?.holder)
 		switch(action)
@@ -799,7 +801,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 					used_action.using_ability = TRUE
 					used_action.perform_action_target(src, target)
 				if(MAFIA_PHASE_NIGHT)
-					used_action.set_target(src, target)
+					used_action.set_target(target)
 			return TRUE
 
 	if(user_role != on_trial)

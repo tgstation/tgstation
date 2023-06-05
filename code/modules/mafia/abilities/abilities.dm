@@ -17,12 +17,12 @@
 	///The mafia role this ability is targeting, if necessary.
 	var/datum/mafia_role/target_role
 
-/datum/mafia_ability/New(datum/mafia_controller/game, datum/mafia_role/host_role)
+/datum/mafia_ability/New(datum/mafia_controller/mafia_game, datum/mafia_role/host_role)
 	. = ..()
 	src.host_role = host_role
 	if(action_priority)
-		RegisterSignal(game, action_priority, PROC_REF(perform_action_target))
-		RegisterSignal(game, COMSIG_MAFIA_NIGHT_END, PROC_REF(clean_action_refs))
+		RegisterSignal(host_role.mafia_game_controller, action_priority, PROC_REF(perform_action_target))
+		RegisterSignal(host_role.mafia_game_controller, COMSIG_MAFIA_NIGHT_END, PROC_REF(clean_action_refs))
 
 /datum/mafia_ability/Destroy(force, ...)
 	host_role = null
@@ -46,10 +46,10 @@
  * potential_target - The player we are attempting to validate the action on.
  * silent - Whether to give feedback to the player about why the action cannot be used.
  */
-/datum/mafia_ability/proc/validate_action_target(datum/mafia_controller/game, datum/mafia_role/potential_target, silent = FALSE)
+/datum/mafia_ability/proc/validate_action_target(datum/mafia_role/potential_target, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(game.phase != valid_use_period)
+	if(host_role.mafia_game_controller.phase != valid_use_period)
 		return FALSE
 	if(host_role.role_flags & ROLE_ROLEBLOCKED)
 		to_chat(host_role.body, span_warning("You were roleblocked!"))
@@ -85,7 +85,7 @@
 		return FALSE
 	if(host_role.game_status == MAFIA_DEAD)
 		return FALSE
-	if(!validate_action_target(game, target_role))
+	if(!validate_action_target(target_role))
 		return FALSE
 
 	if(target_role)
@@ -102,8 +102,8 @@
  * Sets the ability's target, which will cause the action to be performed on them at the end of the night.
  * Subtypes can override this for things like self-abilities (such as shooting visitors).
  */
-/datum/mafia_ability/proc/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
-	if(!validate_action_target(game, new_target))
+/datum/mafia_ability/proc/set_target(datum/mafia_role/new_target)
+	if(!validate_action_target(new_target))
 		return FALSE
 
 	var/feedback_text = "You will %WILL_PERFORM% [ability_action]%SELF%"
@@ -123,3 +123,7 @@
 
 	to_chat(host_role.body, span_notice(feedback_text))
 	return TRUE
+
+///Called when the game is finished setting up, for things like adding innate traits.
+/datum/mafia_ability/proc/post_greet()
+	return

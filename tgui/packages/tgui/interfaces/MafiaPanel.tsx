@@ -11,6 +11,7 @@ type RoleInfo = {
   desc: string;
   hud_icon: string;
   revealed_icon: string;
+  role_dead: string;
 };
 
 type PlayerInfo = {
@@ -59,7 +60,7 @@ export const MafiaPanel = (props, context) => {
       height={580}>
       <Window.Content>
         <Stack fill vertical>
-          {!roleinfo && (
+          {phase === 'No Game' && (
             <Stack.Item grow>
               <MafiaLobby />
             </Stack.Item>
@@ -201,7 +202,7 @@ const MafiaRole = (props, context) => {
   return (
     <Section
       title={phase + turn}
-      minHeight="100px"
+      minHeight="110px"
       maxHeight="50px"
       buttons={
         <Box
@@ -214,10 +215,16 @@ const MafiaRole = (props, context) => {
           {formatTime(timeleft)}
         </Box>
       }>
-      <Stack align="center">
-        <Stack.Item grow>
-          <Box bold>You are the {roleinfo.role}</Box>
-          <Box italic>{roleinfo.desc}</Box>
+      <Stack>
+        <Stack.Item fill grow>
+          <Box fontSize="16px">You are the {roleinfo.role}</Box>
+          {!!roleinfo.role_dead && (
+            <Box bold>
+              You are currently dead. Orbit the Mafia Panel to speak with the
+              Chaplain during the night!
+            </Box>
+          )}
+          {!roleinfo.role_dead && <Box italic>{roleinfo.desc}</Box>}
         </Stack.Item>
         <Stack.Item>
           <Box

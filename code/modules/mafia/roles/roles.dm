@@ -36,13 +36,17 @@
 	///set this to something cool for antagonists and their window will look different
 	var/special_ui_theme
 
+	///The mafia controller board this mafia role is tied to.
+	var/datum/mafia_controller/mafia_game_controller
+
 	///The cooldown between being able to send your will in chat.
 	COOLDOWN_DECLARE(note_chat_sending_cooldown)
 
-/datum/mafia_role/New(datum/mafia_controller/game)
+/datum/mafia_role/New(datum/mafia_controller/mafia_game_controller)
 	. = ..()
+	src.mafia_game_controller = mafia_game_controller
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)
-		role_unique_actions += new abilities(game, src)
+		role_unique_actions += new abilities(mafia_game_controller, src)
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
@@ -75,6 +79,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_KILL, game, attacker, lynch) & MAFIA_PREVENT_KILL)
 		return FALSE
 	if(game_status != MAFIA_DEAD)
+		ADD_TRAIT(body, TRAIT_MAFIA_SEANCE, MAFIA_TRAIT)
 		game_status = MAFIA_DEAD
 		body.death()
 	if(lynch)
@@ -95,6 +100,8 @@
 		if(MAFIA_TEAM_SOLO)
 			to_chat(body,span_danger("You are not aligned to town or mafia. Accomplish your own objectives!"))
 	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
+	for(var/datum/mafia_ability/abilities as anything in role_unique_actions)
+		abilities.post_greet()
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))

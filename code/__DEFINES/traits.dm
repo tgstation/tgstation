@@ -270,6 +270,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
+/// Can hear Chaplains and Observers during Mafia (applies to both living and dead).
+#define TRAIT_MAFIA_SEANCE "mafia_seance"
 #define TRAIT_FEARLESS "fearless"
 /// Ignores darkness for hearing
 #define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"

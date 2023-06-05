@@ -1,41 +1,11 @@
 /obj/effect/landmark/mafia_game_area //locations where mafia will be loaded by the datum
 	name = "Mafia Area Spawn"
-	var/game_id = "mafia"
 
 /obj/effect/landmark/mafia
 	name = "Mafia Player Spawn"
-	var/game_id = "mafia"
 
 /obj/effect/landmark/mafia/town_center
 	name = "Mafia Town Center"
-
-//for ghosts/admins
-/obj/mafia_game_board
-	name = "Mafia Game Board"
-	icon = 'icons/obj/mafia.dmi'
-	icon_state = "board"
-	anchored = TRUE
-	var/game_id = "mafia"
-	var/datum/mafia_controller/MF
-
-/obj/mafia_game_board/attack_ghost(mob/user)
-	. = ..()
-	if(!MF)
-		MF = GLOB.mafia_game
-	if(!MF)
-		MF = create_mafia_game()
-	MF.ui_interact(user)
-
-/area/centcom/mafia
-	name = "Mafia Minigame"
-	icon_state = "mafia"
-	static_lighting = FALSE
-
-	base_lighting_alpha = 255
-	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
-	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
 
 /datum/map_template/mafia
 	should_place_on_top = FALSE

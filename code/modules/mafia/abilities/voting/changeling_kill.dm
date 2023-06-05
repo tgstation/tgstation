@@ -11,6 +11,9 @@
 	///Boolean on whether a Changeling has been sent to attack someone yet.
 	var/static/ling_sent = FALSE
 
+/datum/mafia_ability/changeling_kill/post_greet()
+	RegisterSignal(host_role.body, COMSIG_MOB_SAY, PROC_REF(handle_message))
+
 /datum/mafia_ability/changeling_kill/clean_action_refs(datum/mafia_controller/game)
 	ling_sent = FALSE
 	game.reset_votes("Mafia")
@@ -34,8 +37,22 @@
 	game.send_message(span_danger("[host_role.body.real_name] was selected to attack [target_role.body.real_name] tonight!"), MAFIA_TEAM_MAFIA)
 	return TRUE
 
-/datum/mafia_ability/changeling_kill/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
-	if(!validate_action_target(game, new_target))
+/datum/mafia_ability/changeling_kill/set_target(datum/mafia_role/new_target)
+	if(!validate_action_target(new_target))
 		return FALSE
 	using_ability = TRUE
-	game.vote_for(host_role, new_target, "Mafia", MAFIA_TEAM_MAFIA)
+	host_role.mafia_game_controller.vote_for(host_role, new_target, "Mafia", MAFIA_TEAM_MAFIA)
+
+/**
+ * handle_message
+ *
+ * During the night, Changelings talking will instead redirect it to Changeling chat.
+ */
+/datum/mafia_ability/changeling_kill/proc/handle_message(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	if (host_role.mafia_game_controller.phase != MAFIA_PHASE_NIGHT)
+		return FALSE
+
+	var/phrase = html_decode(speech_args[SPEECH_MESSAGE])
+	host_role.mafia_game_controller.send_message(span_changeling("<b>[host_role.body.real_name]:</b> [phrase]"), MAFIA_TEAM_MAFIA)
+	speech_args[SPEECH_MESSAGE] = ""
