@@ -26,10 +26,11 @@
 
 ///BACK FOR REVENGE!!!
 /datum/shuttle_event/simple_spawner/player_controlled/alien_queen
+	name = "ALIEN QUEEN! (Kinda dangerous!)"
 	spawning_list = list(/mob/living/carbon/alien/adult/royal/queen = 1, /obj/vehicle/sealed/mecha/working/ripley = 1)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
 
-	probability = 0.1
+	probability = 0.2
 	spawn_probability_per_process = 10
 	activation_fraction = 0.5
 

@@ -7,6 +7,8 @@
 
 ///An event that can run during shuttle flight
 /datum/shuttle_event
+	///How we're announced to ghosts and stuff
+	var/name = "The concept of a shuttle event"
 	///probability of this event to run from 0 to 100
 	var/probability
 	///Track if we're allowed to run, gets turned to TRUE when the activation timer hits
@@ -56,7 +58,7 @@
 	var/spawns_per_spawn = 1
 	///weighted list with spawnable movables
 	var/list/spawning_list = list()
-	///If set to TRUE, every object can only be spawned once. You can add more of the same instance to the spawning list if you need multiple of the same
+	///If set to TRUE, every time an object is spawned their weight is decreased untill they are removed
 	var/remove_from_list_when_spawned = FALSE
 	///If set to true, we'll delete ourselves if we cant spawn anything anymore. Useful in conjunction with remove_from_list_when_spawned
 	var/self_destruct_when_empty = FALSE
@@ -132,7 +134,9 @@
 /datum/shuttle_event/simple_spawner/proc/get_type_to_spawn()
 	. = pick_weight(spawning_list)
 	if(remove_from_list_when_spawned)
-		spawning_list.Remove(.)
+		spawning_list[.] -= 1
+		if(spawning_list[.] < 1)
+			spawning_list.Remove(.)
 
 ///Do any post-spawn edits you need to do
 /datum/shuttle_event/simple_spawner/proc/post_spawn(atom/movable/spawnee)

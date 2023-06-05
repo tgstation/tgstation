@@ -15,18 +15,26 @@
 
 ///Very weak meteors, but may very rarely actually hit the shuttle!
 /datum/shuttle_event/simple_spawner/meteor/dust
+	name = "Dust Meteors! (Mostly Safe)"
 	probability = 2
+	activation_fraction = 0.1
+
 	spawn_probability_per_process = 100
 	spawns_per_spawn = 5
 	spawning_list = list(/obj/effect/meteor/dust = 1, /obj/effect/meteor/sand = 1)
 	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
+	///We can, occassionally, hit the shuttle, but we dont do a lot of damage and should only do so pretty rarely
+	var/hit_the_shuttle_chance = 1
 
 /datum/shuttle_event/simple_spawner/meteor/dust/get_spawn_turf()
-	return prob(99) ? pick(spawning_turfs_miss) : pick(spawning_turfs_hit)
+	return prob(hit_the_shuttle_chance) ? pick(spawning_turfs_hit) : pick(spawning_turfs_miss)
 
 ///Okay this spawns a lot of really bad meteors, but they never hit the shuttle so it's perfectly safe (unless you go outside lol)
 /datum/shuttle_event/simple_spawner/meteor/safe
+	name = "Various Meteors! (Safe)"
 	probability = 5
+	activation_fraction = 0.1
+
 	spawn_probability_per_process = 100
 	spawns_per_spawn = 6
 	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE

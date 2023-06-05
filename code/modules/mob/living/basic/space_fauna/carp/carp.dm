@@ -257,3 +257,25 @@
 	new_overlays += disk_overlay
 
 #undef RARE_CAYENNE_CHANCE
+
+///Wild carp that just vibe ya know
+/mob/living/basic/carp/passive
+	name = "passive carp"
+	desc = "A ferocious, sucker-bearing creature that resembles a fish. "
+
+	icon_state = "base_friend"
+	icon_living = "base_friend"
+	icon_dead = "base_friend_dead"
+	greyscale_config = /datum/greyscale_config/friend
+
+	attack_verb_continuous = "suckers"
+	attack_verb_simple = "suck"
+
+	melee_damage_lower = 4
+	melee_damage_upper = 4
+	ai_controller = /datum/ai_controller/basic_controller/carp/passive
+
+/mob/living/basic/carp/passive/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
