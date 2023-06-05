@@ -12,13 +12,6 @@
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
 
-/obj/item/modular_computer/processor/update_name()
-	. = ..()
-
-	//update our name to match the computer's name
-	//blatantly ignore the COMSIG_ATOM_UPDATE_NAME call, this item is never visible anyways
-	name = machinery_computer.name
-
 /obj/item/modular_computer/processor/Initialize(mapload)
 	if(!istype(loc, /obj/machinery/modular_computer))
 		CRASH("A non '/obj/machinery/modular_computer' had a [src] initialized in it!")
