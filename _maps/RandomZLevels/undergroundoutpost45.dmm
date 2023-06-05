@@ -4939,7 +4939,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/awaymission/undergroundoutpost45)
 "mn" = (
 /obj/structure/closet/emcloset,
@@ -11197,7 +11197,7 @@
 /area/awaymission/undergroundoutpost45)
 "CZ" = (
 /obj/machinery/computer/security/telescreen/entertainment,
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/awaymission/undergroundoutpost45)
 "Da" = (
 /obj/effect/decal/cleanable/dirt,
@@ -13309,7 +13309,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "QF" = (
 /obj/item/storage/secure/safe/directional,
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/awaymission/undergroundoutpost45)
 "QG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -13554,7 +13554,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "Se" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/awaymission/undergroundoutpost45)
 "Sf" = (
 /obj/machinery/light/small/directional/south,
