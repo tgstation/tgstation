@@ -1,8 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes:
-  - balance: "Replaced one of the mini energy guns on the Caravan Ambush space ruin with a survival knife."
-  - balance: "Replaced the red-and-black softsuit on the Old Infiltrator space ruin with a suit that can't be obtained otherwise. Look in the suit storage units."
-  - balance: "Removed a magazine from the WT-550 rifle spawn on the Waystation space ruin."
-  - balance: "Replaced red-and-black softsuits on the Faceoff space ruin with Syndicate variants of the explorer."
-  - rscadd: "Added a Syndicate variant of the explorer suit. The armor is identical to the Goliath cloak with slightly more bomb and ballistic resistance."
