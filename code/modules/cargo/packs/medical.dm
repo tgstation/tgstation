@@ -1,6 +1,5 @@
 /datum/supply_pack/medical
 	group = "Medical"
-	access_view = ACCESS_MEDICAL
 	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/bloodpacks
