@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - balance: "the cake hat wounds more"
+  - bugfix: "the cake hat no longer balds you"

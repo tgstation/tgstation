@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - admin: "mob tags are now part of the mob tag log again"
