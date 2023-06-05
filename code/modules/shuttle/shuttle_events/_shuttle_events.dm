@@ -56,6 +56,10 @@
 	var/spawns_per_spawn = 1
 	///weighted list with spawnable movables
 	var/list/spawning_list = list()
+	///If set to TRUE, every object can only be spawned once. You can add more of the same instance to the spawning list if you need multiple of the same
+	var/remove_from_list_when_spawned = FALSE
+	///If set to true, we'll delete ourselves if we cant spawn anything anymore. Useful in conjunction with remove_from_list_when_spawned
+	var/self_destruct_when_empty = FALSE
 
 /datum/shuttle_event/simple_spawner/start_up_event(evacuation_duration)
 	..()
@@ -107,18 +111,28 @@
 	if(!.)
 		return FALSE
 
+	if(!LAZYLEN(spawning_list))
+		if(self_destruct_when_empty)
+			return 2 //god it would be so embarassing
+		return
+
 	if(prob(spawn_probability_per_process))
-		for(var/i in 0 to spawns_per_spawn)
-			spawn_stuff()
+		for(var/i in 1 to spawns_per_spawn)
+			spawn_movable(get_type_to_spawn())
 
 /datum/shuttle_event/simple_spawner/proc/get_spawn_turf()
 	RETURN_TYPE(/turf)
 	return pick(spawning_turfs_hit + spawning_turfs_miss)
 
 ///Spawn stuff! Draws from spawning_list. It's fine if your event doesnt use this, most just do
-/datum/shuttle_event/simple_spawner/proc/spawn_stuff()
-	var/spawn_type = pick_weight(spawning_list)
+/datum/shuttle_event/simple_spawner/proc/spawn_movable(spawn_type)
 	post_spawn(new spawn_type (get_spawn_turf()))
+
+///Not tecccccccccccchnically a getter since we can also pop the type out of the spawning list, but thats optional anyway
+/datum/shuttle_event/simple_spawner/proc/get_type_to_spawn()
+	. = pick_weight(spawning_list)
+	if(remove_from_list_when_spawned)
+		spawning_list.Remove(.)
 
 ///Do any post-spawn edits you need to do
 /datum/shuttle_event/simple_spawner/proc/post_spawn(atom/movable/spawnee)
@@ -126,43 +140,3 @@
 	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, src)
 	var/turf/target = spawnee.loc
 	target.Entered(spawnee) //tell the transit turf we have arrived! otherwise our hyperspace drift doesnt register
-
-/datum/shuttle_event/simple_spawner/meteor/spawn_stuff()
-	var/spawn_type = pick_weight(spawning_list)
-	var/turf/spawn_turf = get_spawn_turf()
-	//invert the dir cause we shoot in the opposite direction we're flying
-	post_spawn(new spawn_type (spawn_turf, get_edge_target_turf(spawn_turf, angle2dir(dir2angle(port.preferred_direction) - 180))))
-
-/datum/shuttle_event/simple_spawner/meteor
-	spawning_list = list(/obj/effect/meteor)
-
-/datum/shuttle_event/simple_spawner/meteor/post_spawn(atom/movable/spawnee)
-	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_MOVEMENT, src)
-	..()
-
-/datum/shuttle_event/simple_spawner/meteor/dust
-	probability = 2
-	spawn_probability_per_process = 100
-	spawns_per_spawn = 5
-	spawning_list = list(/obj/effect/meteor/dust = 1, /obj/effect/meteor/sand = 1)
-	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
-
-/datum/shuttle_event/simple_spawner/meteor/dust/get_spawn_turf()
-	return prob(99) ? pick(spawning_turfs_miss) : pick(spawning_turfs_hit)
-
-/datum/shuttle_event/simple_spawner/italian
-	probability = 0.1
-	spawns_per_spawn = 5
-	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
-	spawn_probability_per_process = 100
-	spawning_list = list(/obj/item/food/spaghetti/boiledspaghetti = 5, /obj/item/food/meatball = 1, /obj/item/food/spaghetti/pastatomato = 2,
-		 /obj/item/food/spaghetti/meatballspaghetti = 2)
-
-///Okay this spawns a lot of really bad meteors, but they never hit the shuttle so it's perfectly safe (unless you go outside lol)
-/datum/shuttle_event/simple_spawner/meteor/safe
-	probability = 5
-	spawn_probability_per_process = 100
-	spawns_per_spawn = 6
-	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE
-	spawning_list = list(/obj/effect/meteor/medium = 10, /obj/effect/meteor/big = 5, /obj/effect/meteor/flaming = 3, /obj/effect/meteor/cluster = 1,
-	/obj/effect/meteor/irradiated = 3, /obj/effect/meteor/bluespace = 2, /obj/effect/meteor/banana = 1)

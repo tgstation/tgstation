@@ -578,7 +578,7 @@
 
 ///Generate a list of events to run during the departure
 /obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
-	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event) - /datum/shuttle_event/simple_spawner)
+	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event))
 		if(prob(initial(event.probability)))
 			event_list.Add(new event(src))
 
