@@ -6,8 +6,6 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 *
 * Not-entirely-flightless domesticated birds that lay eggs, which are then consumed by humans and other animals.
 */
-
-
 /mob/living/basic/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -69,7 +67,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	if(GLOB.chicken_count <= MAX_CHICKENS && fertile && prob(25))
 		egg.AddComponent(\
 			/datum/component/fertile_egg,\
-			embryo_type = /mob/living/simple_animal/chick,\
+			embryo_type = /mob/living/basic/chick,\
 			minimum_growth_rate = 1,\
 			maximum_growth_rate = 2,\
 			total_growth_required = 200,\
@@ -94,3 +92,4 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/chicken,
 	)
+

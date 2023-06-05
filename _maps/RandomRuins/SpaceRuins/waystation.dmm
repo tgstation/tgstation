@@ -545,7 +545,6 @@
 	pin = /obj/item/firing_pin/explorer
 	},
 /obj/item/ammo_box/magazine/wt550m9,
-/obj/item/ammo_box/magazine/wt550m9,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "jV" = (
