@@ -17,6 +17,18 @@
 	time = 0.5 SECONDS
 	category = CAT_ATMOSPHERIC
 
+/datum/crafting_recipe/air_sensor
+	name = "Monitered Air Sensor"
+	result = /obj/item/air_sensor/crafted
+	reqs = list(
+		/obj/item/analyzer = 1,
+		/obj/item/stack/sheet/iron = 1,
+		)
+	blacklist = list(/obj/item/analyzer/ranged)
+	one_per_turf = TRUE
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+
 /datum/crafting_recipe/pipe/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/smart

@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
 		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
 		new /datum/pipe_info/meter("Meter"),
+		new /datum/pipe_info/sensor("Air Sensor")
 	),
 	"Heat Exchange" = list(
 		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
@@ -41,34 +42,6 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("4-Way Manifold", /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w, FALSE),
 		new /datum/pipe_info/pipe("Junction", /obj/machinery/atmospherics/pipe/heat_exchanging/junction, FALSE),
 		new /datum/pipe_info/pipe("Heat Exchanger", /obj/machinery/atmospherics/components/unary/heat_exchanger, FALSE),
-	),
-	"Air Sensors" = list(
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/plasma_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/oxygen_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrogen_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/mix_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrous_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/air_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/carbon_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/bz_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/freon_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/halon_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/healium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hydrogen_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/hypernoblium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/miasma_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/nitrium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/pluoxium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/proto_nitrate_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/tritium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/water_vapor_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/zauker_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/helium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/antinoblium_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/incinerator_tank),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_burn_chamber),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_freezer_chamber),
-		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/engine_chamber),
 	)
 ))
 
@@ -109,9 +82,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
-
-/datum/pipe_info/proc/Params()
-	return ""
 
 /datum/pipe_info/proc/get_preview(selected_dir, selected = FALSE)
 	var/list/dirs
@@ -155,10 +125,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /datum/pipe_info/sensor
 	dirtype = PIPE_ONEDIR
 
-/datum/pipe_info/sensor/New(obj/machinery/air_sensor/sensor)
-	id = sensor
-	name = capitalize(replacetext(initial(sensor.name), "gas sensor", ""))
-	icon_state = "gsensor1"
+/datum/pipe_info/sensor/New(label)
+	name = label
+	icon_state = "gsensor0"
 
 /datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
 	name = label
@@ -168,18 +137,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/obj/item/pipe/c = initial(path.construction_type)
 	dirtype = initial(c.RPD_type)
 
-/datum/pipe_info/pipe/Params()
-	return "makepipe=[id]&type=[dirtype]"
-
 /datum/pipe_info/meter
 	icon_state = "meter"
 	dirtype = PIPE_ONEDIR
 
 /datum/pipe_info/meter/New(label)
 	name = label
-
-/datum/pipe_info/meter/Params()
-	return "makemeter=[id]&type=[dirtype]"
 
 /datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
@@ -190,9 +153,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		icon_state = "con[icon_state]"
 
 	dirtype = dt
-
-/datum/pipe_info/disposal/Params()
-	return "dmake=[id]&type=[dirtype]"
 
 /datum/pipe_info/transit/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
@@ -307,12 +267,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	ui_interact(user)
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
-	if(istype(target, /obj/machinery/air_sensor))
-		if(!do_after(user, destroy_speed, target))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		qdel(target)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color && target.piping_layer)
@@ -375,13 +329,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
 
-			//skip sensors which are already in the world so we dont create duplicate ones
-			if(info.type == /datum/pipe_info/sensor)
-				var/datum/pipe_info/sensor/sensor_info = info
-				var/obj/machinery/air_sensor/sensor = sensor_info.id
-				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
-					continue
-
 			r += list(list(
 				"pipe_name" = info.name,
 				"pipe_index" = i,
@@ -389,8 +336,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			))
 			if(info == recipe)
 				data["selected_category"] = c
-		if(r.len == 0) //when all air sensors are installed this list will become empty
-			continue
+
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
@@ -588,11 +534,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				else if(recipe.type == /datum/pipe_info/sensor)
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
-						var/datum/pipe_info/sensor/sensor_recipe = recipe
-						var/obj/machinery/air_sensor/sensor_blueprint = sensor_recipe.id
-						new sensor_blueprint(get_turf(attack_target))
-						//change the recipe as the current one becomes unavailable
-						recipe = first_atmos
+						var/obj/item/air_sensor/sensor = new(get_turf(attack_target))
+						if(mode & WRENCH_MODE)
+							tool_behaviour = TOOL_WRENCH //hacky way to buypass toolcheck
+							sensor.wrench_act(user, src)
+							tool_behaviour = NONE
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						balloon_alert(user, "cant build on this layer!")

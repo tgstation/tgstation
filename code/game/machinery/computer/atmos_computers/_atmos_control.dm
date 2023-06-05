@@ -83,7 +83,7 @@
 		chamber_info["name"] = atmos_chambers[chamber_id]
 
 		var/obj/machinery/sensor = GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(chamber_id)]
-		if (!isnull(sensor))
+		if (!QDELETED(sensor))
 			chamber_info["gasmix"] = gas_mixture_parser(sensor.return_air())
 
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag[CHAMBER_INPUT_FROM_ID(chamber_id)]
