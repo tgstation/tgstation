@@ -21,10 +21,10 @@
 	database_id = MAFIA_MEDAL_PSYCHOLOGIST
 	icon = "town"
 
-/datum/award/achievement/mafia/chaplain
-	name = "Chaplain Victory"
+/datum/award/achievement/mafia/coroner
+	name = "Coroner Victory"
 	desc = "Useless... until the one night the thoughtfeeder confidently claims themselves as detective. Mafia's true bullshit detector."
-	database_id = MAFIA_MEDAL_CHAPLAIN
+	database_id = MAFIA_MEDAL_CORONER
 	icon = "town"
 
 /datum/award/achievement/mafia/md
@@ -49,6 +49,12 @@
 	name = "Head of Personnel Victory"
 	desc = "King of Assistants, waster of a single mafia's night, thrower of games."
 	database_id = MAFIA_MEDAL_HOP
+	icon = "town"
+
+/datum/award/achievement/mafia/chaplain
+	name = "Chaplain Victory"
+	desc = "The curse finally broken."
+	database_id = MAFIA_MEDAL_CHAPLAIN
 	icon = "town"
 
 /datum/award/achievement/mafia/warden

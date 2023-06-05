@@ -28,7 +28,6 @@
 	desc = "You're a changeling variant that feeds on the memories of others. Use ':j' talk prefix to talk to your fellow lings, and visit people at night to learn their role."
 	role_type = MAFIA_SPECIAL
 	hud_icon = "hudthoughtfeeder"
-	revealed_icon = "thoughtfeeder"
 	winner_award = /datum/award/achievement/mafia/thoughtfeeder
 
 	role_unique_actions = list(/datum/mafia_ability/changeling_kill, /datum/mafia_ability/thoughtfeeder)

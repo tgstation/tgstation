@@ -53,7 +53,7 @@
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
 	special_ui_theme = "neutral"
-	hud_icon = "hudclown"
+	hud_icon = SECHUD_CLOWN
 	revealed_icon = "clown"
 	winner_award = /datum/award/achievement/mafia/clown
 

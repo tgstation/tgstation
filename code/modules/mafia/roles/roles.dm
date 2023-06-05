@@ -30,7 +30,7 @@
 	var/game_status = MAFIA_ALIVE
 
 	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
-	var/hud_icon = "hudassistant"
+	var/hud_icon = SECHUD_ASSISTANT
 	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
 	var/revealed_icon = "assistant"
 	///set this to something cool for antagonists and their window will look different

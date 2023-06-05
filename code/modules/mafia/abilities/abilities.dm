@@ -30,7 +30,7 @@
 	return ..()
 
 /**
- * Called when refs need to be cleared, when the target is no longer set.
+ * Called when refs need to be cleared, the last thing that is called in a night cycle.
  */
 /datum/mafia_ability/proc/clean_action_refs(datum/mafia_controller/game)
 	SIGNAL_HANDLER
