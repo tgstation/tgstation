@@ -15,6 +15,7 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/gunner = allocate(/mob/living/carbon/human/consistent)
 	ADD_TRAIT(victim, TRAIT_PIERCEIMMUNE, INNATE_TRAIT) // So the human isn't randomly affected by shrapnel
+	test_gun.can_misfire = FALSE //just in case
 
 	var/obj/item/ammo_casing/loaded_casing = test_gun.chambered
 	TEST_ASSERT(loaded_casing, "Gun started without round chambered, should be loaded")
