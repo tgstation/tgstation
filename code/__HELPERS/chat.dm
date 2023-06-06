@@ -30,7 +30,7 @@ WHERE_TO_SEND_SNIFF_BUTTS asdf
 
 It will be sent to channels 1 and 2
 
-Alternatively if you set the config option to:
+Alternatively if you set the config option to just:
 
 WHERE_TO_SEND_SNIFF_BUTTS
 
