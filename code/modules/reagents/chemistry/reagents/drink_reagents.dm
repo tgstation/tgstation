@@ -1401,15 +1401,15 @@
 
 	var/newsize = pick(0.5, 0.75, 1, 1.50, 2)
 	newsize *= RESIZE_DEFAULT_SIZE
-	current_size = newsize
 	affected_mob.update_transform(newsize/current_size)
+	current_size = newsize
 	if(SPT_PROB(23, seconds_per_tick))
 		affected_mob.emote("sneeze")
 	..()
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/affected_mob)
-	current_size = RESIZE_DEFAULT_SIZE
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
+	current_size = RESIZE_DEFAULT_SIZE
 	..()
 
 /datum/reagent/consumable/bungojuice

@@ -2319,13 +2319,13 @@
 		if(200 to INFINITY)
 			newsize = 3.5*RESIZE_DEFAULT_SIZE
 
-	current_size = newsize
 	affected_mob.update_transform(newsize/current_size)
+	current_size = newsize
 	..()
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/affected_mob)
-	current_size = RESIZE_DEFAULT_SIZE
 	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
+	current_size = RESIZE_DEFAULT_SIZE
 	..()
 
 /datum/reagent/plastic_polymers
