@@ -203,12 +203,14 @@
 /area/misc/survivalpod)
 "H" = (
 /obj/structure/sink/directional/east,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "I" = (
 /obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/east,
 /obj/structure/urinal/directional/north,
+/obj/structure/mirror/directional/east,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "J" = (
