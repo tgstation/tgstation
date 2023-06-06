@@ -388,6 +388,8 @@ const AnalysisResults = (props, context) => {
     overdose,
     addictionTypes,
   } = data.analysisData;
+  const purityLevel =
+    purity <= 0.5 ? 'bad' : purity <= 0.75 ? 'average' : 'good'; // Color names
   return (
     <Section
       title="Analysis Results"
@@ -400,7 +402,15 @@ const AnalysisResults = (props, context) => {
       }>
       <LabeledList>
         <LabeledList.Item label="Name">{name}</LabeledList.Item>
-        <LabeledList.Item label="Purity">{`${purity * 100}%`}</LabeledList.Item>
+        <LabeledList.Item label="Purity">
+          <Box
+            style={{
+              'text-transform': 'capitalize',
+            }}
+            color={purityLevel}>
+            {purityLevel}
+          </Box>
+        </LabeledList.Item>
         <LabeledList.Item label="pH">{pH}</LabeledList.Item>
         <LabeledList.Item label="State">{state}</LabeledList.Item>
         <LabeledList.Item label="Color">
