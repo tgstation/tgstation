@@ -6,7 +6,7 @@
 	hud_type = /datum/hud/living
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
-	var/current_size = 1
+	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null
 	var/lastattackerckey = null
 
