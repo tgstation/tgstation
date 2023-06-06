@@ -340,6 +340,59 @@ You would then get the following output:
 
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
 
+#### Methods: Any Value Fits All and Naming Conventions
+But what if you simply want to rename the variable `maxHealth` to `good_boy_points` for `/mob/living/github_user` that have it edited, regardless of value? Since you're required to state a value in your input anyway, in this case it'll be `@ANY`. To set the value of the newly named `good_boy_points` all we need to do is set the name, followed by `@OLD:` (colon included) and the name of the old variable `maxHealth`.
+
+```txt
+/mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{good_boy_points=@OLD:maxHealth}
+```
+
+...except this is wrong. If you read the previous methods, you'd know that without the `@OLD` (the one without colon), this will discard any other variable edit, so it's important to add it BEFORE the other paraments (as well as `maxHealth` followed by `:@SKIP`) if you're renaming the variable to something else:
+
+```txt
+/mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{@OLD; maxHealth=@SKIP; good_boy_points=@OLD:maxHealth}
+```
+
+Done that, from a map like this:
+
+```dm
+"a" = (
+/mob/living/basic/mouse{
+	maxHealth = 15
+	},
+/turf/open/floor/iron,
+/area/github),
+"b" = (
+/mob/living/github_user{
+	name = "ShizCalev";
+	desc= "It has more good boy points than a megafauna has health.";
+	maxHealth = 2083
+	},
+/turf/open/floor/iron,
+/area/github),
+```
+
+You would then get the following output:
+
+```dm
+"a" = (
+/mob/living/basic/mouse{
+	maxHealth = 15
+	},
+/turf/open/floor/iron,
+/area/github),
+"b" = (
+/mob/living/github_user{
+	name = "ShizCalev";
+	desc= "It has more good boy points than a megafauna has health.";
+	good_boy_points = 2083
+	},
+/turf/open/floor/iron,
+/area/github),
+```
+
+As addendum, you don't have to use both `@ANY` and `@OLD:prop_name` together. I'm merely providing a single example for the both of them and their most practical usage.
+
 ### Blend it all together
 
 All of the examples provided within are not mutually exclusive! They can be mixed-and-matched in several ways (old scripts might have a few good examples of these), and the only limit here is your imagination. You can do some very powerful things with UpdatePaths, with your scripts lasting for years to come.
