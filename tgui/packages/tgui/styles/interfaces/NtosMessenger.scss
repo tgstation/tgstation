@@ -13,21 +13,27 @@ $chatmessage-padding: 0.7rem;
   .NtosMessenger__ChatMessage {
     color: white !important;
 
-    border: base.em(2px) outset #c3c3c3;
     padding: $chatmessage-padding - base.rem(2px);
 
     border-radius: 0;
 
     background-color: lighten($chatmessage-color-incoming, 10%);
     &__outgoing {
+      border-color: lighten($chatmessage-color-outgoing, 20%);
       background-color: lighten($chatmessage-color-outgoing, 20%);
     }
+  }
+
+  .NtosMessenger__ChatLog {
+    background-color: white;
   }
 }
 
 .NtosMessenger__ChatMessage {
   display: inline-flex;
   flex-direction: column;
+
+  min-width: 10rem;
   max-width: 30rem;
 
   padding: $chatmessage-padding;
@@ -39,11 +45,11 @@ $chatmessage-padding: 0.7rem;
     @extend .NtosMessenger__ChatMessage;
     background-color: $chatmessage-color-outgoing;
     text-align: right;
+    align-self: flex-end;
   }
 
-  &__inner {
+  .NtosMessenger__ChatMessage__inner {
     text-align: left;
-    min-width: 10rem;
   }
 
   &__content {
@@ -60,4 +66,10 @@ $chatmessage-padding: 0.7rem;
     margin-top: 1rem;
     margin-right: 3rem;
   }
+}
+
+.NtosMessenger__ChatLog {
+  padding: 1rem;
+  justify-content: flex-end;
+  margin: 0;
 }

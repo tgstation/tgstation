@@ -316,6 +316,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   handleSendMessage(): void {
+    if (this.state.msg === '') return;
     const { act } = useBackend<NtosMessengerData>(this.context);
     act('PDA_sendMessage', {
       ref: this.props.recp.ref,
@@ -346,11 +347,11 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       lastMsgRef = message.sender;
 
       filteredMessages.push(
-        <Stack.Item key={index} mt={isSwitch ? 1 : 0.5}>
+        <Stack.Item key={index} mt={isSwitch ? 2 : 0.5}>
           <ChatMessage
             isSelf={message.outgoing}
             msg={message.contents}
-            everyone={message.everyone}
+            everyone={!!message.everyone}
             photoPath={message.photo_path}
           />
         </Stack.Item>
@@ -374,16 +375,15 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           <Section
             scrollable
             fill
+            fitted
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
-            <Stack vertical justify="flex-end" fill>
+            <Stack vertical fill className="NtosMessenger__ChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
                 This is the beginning of your chat with {recp.name}.
               </Stack.Item>
               <Stack.Divider />
               {filteredMessages}
-              {/* mb/pb doesnt work with flex-end, this'll have to do */}
-              <Stack.Item height={1} />
             </Stack>
           </Section>
         </Stack.Item>
