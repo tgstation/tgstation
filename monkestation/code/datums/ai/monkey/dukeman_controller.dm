@@ -7,4 +7,4 @@
 		/datum/ai_planning_subtree/generic_play_instrument,
 		/datum/ai_planning_subtree/monkey_shenanigans,
 	)
-	idle_behavior = /datum/idle_behavior/idle_dukeman/dukeman
+	idle_behavior = /datum/idle_behavior/idle_monkey/dukeman

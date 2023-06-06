@@ -1,5 +1,5 @@
-/datum/idle_behavior/idle_dukeman/dukeman
-	var/list/common_emotes = list(
+/datum/idle_behavior/idle_monkey/dukeman
+	common_emotes = list(
 		"screech",
 		"roar",
 		"twitch",
@@ -9,7 +9,7 @@
 		"spin",
 	)
 
-	var/list/rare_emotes = list(
+	rare_emotes = list(
 		"scratch",
 		"tail",
 		"ooga",
