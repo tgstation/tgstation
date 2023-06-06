@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
+	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Initialize(mapload)
 	id_tag = CHAMBER_INPUT_FROM_ID(chamber_id)

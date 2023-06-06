@@ -59,25 +59,12 @@
 	multi_tool.buffer = src
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
-	. = ..()
-	if(.)
-		disconnect_chamber()
-
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
-		chamber_id = null
-
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
 
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
-
-	disconnect_chamber()
 
 	return ..()
 

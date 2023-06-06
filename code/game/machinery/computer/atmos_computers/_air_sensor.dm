@@ -5,14 +5,27 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	resistance_flags = FIRE_PROOF
-
+	power_channel = AREA_USAGE_ENVIRON
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
 	var/on = TRUE
 
 	/// The unique string that represents which atmos chamber to associate with.
 	var/chamber_id
+	/// The inlet[injector] controlled by this sensor
+	var/inlet_id
+	/// The outlet[vent pump] controlled by this sensor
+	var/outlet_id
 
 /obj/machinery/air_sensor/Initialize(mapload)
-	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
+	id_tag = assign_random_name()
+
+	//this global list of air sensors is available to all station monitering consoles round start and to new consoles made during the round
+	if(mapload)
+		GLOB.map_loaded_sensors[chamber_id] = id_tag
+		inlet_id = CHAMBER_INPUT_FROM_ID(chamber_id)
+		outlet_id = CHAMBER_OUTPUT_FROM_ID(chamber_id)
+
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents",
@@ -20,11 +33,28 @@
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
+
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
 	reset()
 	return ..()
+
+/obj/machinery/air_sensor/return_air()
+	if(!on)
+		return null
+	. = ..()
+	use_power(active_power_usage) //use power for analyzing gases
+
+/obj/machinery/air_sensor/process()
+	//update appearance according to power state
+	if(machine_stat & NOPOWER)
+		if(on)
+			on = FALSE
+			update_appearance()
+	else if(!on)
+		on = TRUE
+		update_appearance()
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
@@ -35,7 +65,7 @@
 	. = ..()
 
 	//switched off version of this air sensor but still anchored to the ground
-	var/obj/item/air_sensor/sensor = new(drop_location())
+	var/obj/item/air_sensor/sensor = new(drop_location(), inlet_id, outlet_id)
 	sensor.set_anchored(TRUE)
 	sensor.balloon_alert(user, "sensor turned off")
 
@@ -47,16 +77,8 @@
 	return ..()
 
 /obj/machinery/air_sensor/proc/reset()
-	var/input_id = CHAMBER_INPUT_FROM_ID(chamber_id)
-	if(GLOB.objects_by_id_tag[input_id] != null)
-		var/obj/machinery/atmospherics/components/unary/outlet_injector/injector = GLOB.objects_by_id_tag[input_id]
-		injector.disconnect_chamber()
-
-	var/output_id = CHAMBER_OUTPUT_FROM_ID(chamber_id)
-	if(GLOB.objects_by_id_tag[output_id] != null)
-		var/obj/machinery/atmospherics/components/unary/vent_pump/pump  = GLOB.objects_by_id_tag[output_id]
-		pump.disconnect_chamber()
-
+	inlet_id = null
+	outlet_id = null
 
 ///right click with multi tool to disconnect everything
 /obj/machinery/air_sensor/multitool_act_secondary(mob/living/user, obj/item/tool)
@@ -69,8 +91,8 @@
 
 	if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/outlet_injector))
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = multi_tool.buffer
-		input.chamber_id = chamber_id
-		GLOB.objects_by_id_tag[CHAMBER_INPUT_FROM_ID(chamber_id)] = input
+		inlet_id = input.id_tag
+		multi_tool.buffer = null
 		balloon_alert(user, "connected to input")
 
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
@@ -82,22 +104,33 @@
 		output.pressure_checks = ATMOS_INTERNAL_BOUND
 		output.internal_pressure_bound = 4000
 		output.external_pressure_bound = 0
-		output.chamber_id = chamber_id
-		GLOB.objects_by_id_tag[CHAMBER_OUTPUT_FROM_ID(chamber_id)] = output
+		//finally assign it to this sensor
+		outlet_id = output.id_tag
+		multi_tool.buffer = null
 		balloon_alert(user, "connected to output")
+
+	else
+		multi_tool.buffer = src
+		balloon_alert(user, "added to multitool buffer")
 
 	return TRUE
 
 /obj/item/air_sensor
 	name = "Air Sensor"
-	desc = "It's an switched off air sensor."
+	desc = "A device designed to detect gases and their concentration in an area."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor0"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	/// The injector linked with this sensor
+	var/input_id
+	/// The vent pump linked with this sensor
+	var/output_id
 
-/obj/item/air_sensor/Initialize(mapload)
+/obj/item/air_sensor/Initialize(mapload, inlet, outlet)
 	. = ..()
 	register_context()
+	input_id = inlet
+	output_id = outlet
 
 /obj/item/air_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
@@ -126,19 +159,18 @@
 	if(!anchored)
 		return
 
-	//Each air sensor has a unique ID so find how many unique ID's we have left.
+	//List of air sensor's by name
 	var/list/available_sensors = list()
 	for(var/chamber_id in GLOB.station_gas_chambers)
-		if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(chamber_id)] != null)
+		//don't let it conflict with existing distro & waste moniter meter's
+		if(chamber_id == ATMOS_GAS_MONITOR_DISTRO)
+			continue
+		if(chamber_id == ATMOS_GAS_MONITOR_WASTE)
 			continue
 		available_sensors += GLOB.station_gas_chambers[chamber_id]
-	//none left
-	if(!available_sensors.len)
-		user.balloon_alert(user, "no unique id's for sensors available!")
-		return
 
 	//make the choice
-	var/chamber_name = tgui_input_list(user, "Select Gas Sensor", "Select Sensor ID", available_sensors)
+	var/chamber_name = tgui_input_list(user, "Select Sensor Purpose", "Select Sensor ID", available_sensors)
 	if(isnull(chamber_name))
 		return
 
@@ -147,10 +179,6 @@
 	for(var/chamber_id in GLOB.station_gas_chambers)
 		if(GLOB.station_gas_chambers[chamber_id] != chamber_name)
 			continue
-		//id was taken at some point during input list selection
-		if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(chamber_id)] != null)
-			user.balloon_alert(user, "sensor already exists in world!")
-			return
 		target_chamber = chamber_id
 		break
 
@@ -164,14 +192,15 @@
 
 		//make real air sensor in it's place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
+		new_sensor.inlet_id = input_id
+		new_sensor.outlet_id = output_id
 		new_sensor.balloon_alert(user, "sensor turned on")
-
 		qdel(src)
+
 		break
 
 /obj/item/air_sensor/wrench_act(mob/living/user, obj/item/tool)
-	//when wrenching this via RPED it's instant
-	if(default_unfasten_wrench(user, tool, time = istype(tool, /obj/item/pipe_dispenser) ? 0 : 20) == SUCCESSFUL_UNFASTEN)
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
 

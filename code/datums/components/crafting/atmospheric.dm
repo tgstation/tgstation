@@ -18,7 +18,7 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/air_sensor
-	name = "Monitered Air Sensor"
+	name = "Monitored Air Sensor"
 	result = /obj/item/air_sensor
 	reqs = list(
 		/obj/item/analyzer = 1,
