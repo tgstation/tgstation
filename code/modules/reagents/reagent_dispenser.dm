@@ -266,9 +266,9 @@
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
-	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-		log_bomber(P.firer, "detonated a", src, "via projectile")
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/hitting_projectile)
+	if(hitting_projectile.damage > 0 && ((hitting_projectile.damage_type == BURN) || (hitting_projectile.damage_type == BRUTE)))
+		log_bomber(hitting_projectile.firer, "detonated a", src, "via projectile")
 		boom()
 		return BULLET_ACT_HIT
 
