@@ -245,6 +245,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
 	GLOB.requests.client_login(src)
+
+	if(src.ckey in GLOB.interviews.cooldown_ckeys)
+		qdel(src)
+
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]

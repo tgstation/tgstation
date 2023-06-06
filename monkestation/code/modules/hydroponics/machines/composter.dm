@@ -73,8 +73,3 @@
 		update_desc()
 		transform = transform.Scale(scale_multiplier, scale_multiplier)
 		qdel(attacking_cube)
-
-/obj/item/bio_cube/update_desc(updates)
-	. = ..()
-	. += "A cube made of pure biomatter does wonders on plant trays"
-	. += "Lasts a total of [total_duration *0.1] Seconds"

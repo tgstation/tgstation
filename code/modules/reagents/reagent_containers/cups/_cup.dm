@@ -84,7 +84,7 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	var/obj/item/organ/internal/bladder/contained_bladder = target_mob.get_organ_slot(ORGAN_SLOT_BLADDER)
 	if(contained_bladder)
-		contained_bladder.consume_act(reagents, gulp_size)
+		contained_bladder.consume_act(reagents, gulp_size * 0.2)
 	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)

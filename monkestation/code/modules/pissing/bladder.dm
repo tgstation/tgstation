@@ -3,6 +3,7 @@
 	description = "Exactly what you think. Should be useful."
 	color = "#c0d121"
 	taste_description = "piss"
+	evaporation_rate = 4
 
 /obj/item/organ/internal/bladder
 	name = "bladder"
@@ -98,6 +99,21 @@
 
 	owner.visible_message(span_warning("[owner] pisses all over the floor!"))
 	stored_piss -= per_piss_usage
+
+
+	var/obj/machinery/camera/located_camera = locate() in range(7, owner)
+	if(located_camera)
+		var/datum/record/crew/records = find_record(owner.name)
+		var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in the [owner_turf.loc]", author = "Automated Criminal Detection Service")
+		records.crimes += new_crime
+		records.wanted_status = WANTED_ARREST
+
+	var/obj/effect/decal/cleanable/piss_stain/stain = locate() in owner_turf
+	if(!(stain in owner_turf.contents) && !owner_turf.liquids)
+		new /obj/effect/decal/cleanable/piss_stain(owner_turf)
+		return
+
+	qdel(stain)
 	owner_turf.add_liquid(pissin_reagent, piss_amount, FALSE, piss_temperature)
 
 
