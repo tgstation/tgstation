@@ -1509,7 +1509,7 @@
 /obj/item/stack/medical/ointment{
 	pixel_x = 5
 	},
-/obj/item/stack/medical/bone_gel/four,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "WI" = (
