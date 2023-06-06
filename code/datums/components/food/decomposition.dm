@@ -89,10 +89,18 @@
 	remove_timer()
 	return ..()
 
+/// Returns the time remaining in decomp, either from our potential timer or our own value, whichever is more useful
+/datum/component/decomposition/proc/get_time()
+	if(!timerid)
+		return time_remaining
+	return timeleft(timerid)
+
 /datum/component/decomposition/proc/remove_timer()
-	if(active_timers) // Makes sure there's an active timer to delete.
-		time_remaining = timeleft(timerid)
-		deltimer(timerid)
+	if(!timerid)
+		return
+	time_remaining = timeleft(timerid)
+	deltimer(timerid)
+	timerid = null
 
 /datum/component/decomposition/proc/dropped()
 	SIGNAL_HANDLER
@@ -118,11 +126,7 @@
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	var/time_d = 0
-	if(active_timers) // Is the timer currently applied to this?
-		time_d = timeleft(timerid)
-	else
-		time_d = time_remaining
+	var/time_d = get_time()
 	switch(time_d / original_time)
 		if(0.5 to 0.75) // 25% rotten
 			examine_list += span_notice("[parent] looks kinda stale.")
