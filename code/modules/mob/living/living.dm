@@ -1794,6 +1794,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(var_value == 0) //prevents divisions by zero.
 				return FALSE
 			update_transform(var_value/current_size)
+			. = TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
