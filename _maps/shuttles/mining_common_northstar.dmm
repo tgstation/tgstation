@@ -54,7 +54,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
-/obj/machinery/light/small/red/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/mining)
 "A" = (
@@ -115,7 +115,7 @@
 "U" = (
 /obj/structure/table/reinforced,
 /obj/item/radio,
-/obj/machinery/light/small/red/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 
