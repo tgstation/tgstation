@@ -3952,7 +3952,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "aWs" = (
-/obj/structure/sign/incident/delam,
+/obj/machinery/incident_display/delam,
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
 "aWu" = (

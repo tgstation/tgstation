@@ -547,7 +547,7 @@ SUBSYSTEM_DEF(persistence)
 	highscore_since_engine_exploded = text2num(file2text(DELAMINATION_HIGHSCORE_FILEPATH))
 	if (fexists(DELAMINATION_HIGHSCORE_FILEPATH))
 		highscore_since_engine_exploded = text2num(file2text(DELAMINATION_HIGHSCORE_FILEPATH))
-	for (var/obj/structure/sign/incident/sign as anything in GLOB.map_delamination_counters)
+	for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
 		sign.update_delam_count(rounds_since_engine_exploded, highscore_since_engine_exploded)
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
