@@ -14,8 +14,6 @@
 	time += seconds_per_tick * 10
 	if(time >= EGG_INCUBATION_TIME)
 		pop()
-		Remove(owner)
-		qdel(src)
 
 /// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
 /obj/item/organ/internal/body_egg/changeling_egg/proc/pop()
@@ -40,5 +38,6 @@
 
 	owner.investigate_log("has been gibbed by a changeling egg burst.", INVESTIGATE_DEATHS)
 	owner.gib()
+	qdel(src)
 
 #undef EGG_INCUBATION_TIME
