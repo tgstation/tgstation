@@ -155,6 +155,8 @@
  * Other dispensers will scatter their contents within range.
  */
 /obj/structure/reagent_dispensers/proc/boom()
+	if(QDELETED(src))
+		return // little bit of sanity sauce before we wreck ourselves somehow
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0
 	if(istype(volatiles) && volatiles.volume >= 25)
