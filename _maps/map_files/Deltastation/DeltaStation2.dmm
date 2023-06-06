@@ -87845,6 +87845,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
+"vyM" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "vyO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -152605,7 +152609,7 @@ cVV
 itW
 nJg
 jHw
-vxr
+vyM
 jMs
 iOc
 fwL

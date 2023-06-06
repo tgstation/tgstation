@@ -46182,6 +46182,14 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/bar)
+"mlj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron/dark/side,
+/area/station/security/prison)
 "mlx" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical{
@@ -326977,7 +326985,7 @@ bej
 emJ
 fiR
 niG
-tvm
+mlj
 xko
 kjz
 waV

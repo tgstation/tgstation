@@ -59406,6 +59406,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
+"uDT" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "uEw" = (
 /obj/machinery/button/door/directional/east{
 	id = "miningdorm3";
@@ -86602,7 +86606,7 @@ cOo
 mXb
 wyM
 lkP
-rBz
+uDT
 ung
 cQD
 adO
