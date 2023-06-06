@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(garbage)
 	var/refid = text_ref(D)
 	var/static/uid = 0
 	if (D.gc_destroyed <= 0)
-		uid = WRAP(uid+1, 1, (2**24)-1)
+		uid = WRAP(uid+1, 1, SHORT_REAL_LIMIT - 1)
 		D.gc_destroyed = uid
 #endif
 
