@@ -222,9 +222,9 @@
 			var/target = text2num(params["rate"])
 			if(isnull(target))
 				return TRUE
-			target = clamp(target, 0, MAX_TRANSFER_RATE)
+			target = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
 
-			output.internal_pressure_bound = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
+			output.internal_pressure_bound = target
 		if("reconnect")
 			reconnect(usr)
 
