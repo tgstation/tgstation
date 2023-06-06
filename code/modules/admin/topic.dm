@@ -866,14 +866,13 @@
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
-				var/newtime = null
-				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
-				if(!newtime)
-					to_chat(src.owner, "Setting to amount of positions filled for the job", confidential = TRUE)
-					job.total_positions = job.current_positions
-					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [job.total_positions]")
+				var/newslots = null
+				newslots = input(usr, "How many job slots do you want?", "Add job slots", "[newslots]") as num|null
+				if(!isnull(newslots))
+					to_chat(src.owner, "Job slots for [job.title] set to [newslots]" , confidential = TRUE)
+					job.total_positions = newslots
+					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [newslots]")
 					break
-				job.total_positions = newtime
 
 		src.manage_free_slots()
 
