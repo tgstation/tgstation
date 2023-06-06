@@ -8,7 +8,7 @@
 
 /datum/supply_pack/engineering/cones
 	name = "Engineering hat crate"
-	desc = "A complete set of headwear to fit the heads of an entire engineering crew. Includes 6 cones."
+	desc = "A complete set of headwear to fit the heads of an entire engineering crew. Includes six cones."
 	cost = CARGO_CRATE_VALUE * 1.5
 	contains = list(/obj/item/clothing/head/cone = 6)
 	crate_name = "engineering hat crate"
