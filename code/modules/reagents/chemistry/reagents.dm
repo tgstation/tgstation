@@ -123,6 +123,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/bypass_restriction = FALSE
 	///chemicals that aren't typepathed but are useless so we remove
 	var/restricted = FALSE
+	/// do we have a turf exposure (used to prevent liquids doing un-needed processes)
+	var/turf_exposure = FALSE
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

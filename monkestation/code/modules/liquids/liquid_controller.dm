@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(liquids)
 					return
 				var/datum/liquid_group/LG = g
 				LG.build_turf_reagent()
+				if(!LG.exposure)
+					continue
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
 						break
