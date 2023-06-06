@@ -159,6 +159,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
+#define TRAIT_CHUNKYFINGERS_IGNORE_BATON "chunkyfingers_ignore_baton"
 /// Allows you to mine with your bare hands
 #define TRAIT_FIST_MINING "fist_mining"
 #define TRAIT_DUMB "dumb"
@@ -464,9 +465,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
 /// Trait applied to mob/living to mark that spiders should not gain further enriched eggs from eating their corpse.
 #define TRAIT_SPIDER_CONSUMED "spider_consumed"
-/// Whether we're sneaking, from the alien sneak ability.
-/// Maybe worth generalizing into a general "is sneaky" / "is stealth" trait in the future.
-#define TRAIT_ALIEN_SNEAK "sneaking_alien"
+/// Whether we're sneaking, from the creature sneak ability.
+#define TRAIT_SNEAK "sneaking_creatures"
 
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
@@ -748,6 +748,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a living mob and any observer mobs that stem from them if they suicide.
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
+
+///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
+#define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

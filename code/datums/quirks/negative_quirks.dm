@@ -381,15 +381,9 @@
 /datum/quirk/item_quirk/nearsighted/add_unique(client/client_source)
 	var/glasses_name = client_source?.prefs.read_preference(/datum/preference/choiced/glasses) || "Regular"
 	var/obj/item/clothing/glasses/glasses_type
-	switch(glasses_name)
-		if ("Thin")
-			glasses_type = /obj/item/clothing/glasses/regular/thin
-		if ("Circle")
-			glasses_type = /obj/item/clothing/glasses/regular/circle
-		if ("Hipster")
-			glasses_type = /obj/item/clothing/glasses/regular/hipster
-		else
-			glasses_type = /obj/item/clothing/glasses/regular
+
+	glasses_name = glasses_name == "Random" ? pick(GLOB.nearsighted_glasses) : glasses_name
+	glasses_type = GLOB.nearsighted_glasses[glasses_name]
 
 	give_item_to_holder(glasses_type, list(
 		LOCATION_EYES = ITEM_SLOT_EYES,
@@ -896,6 +890,23 @@
 			quirk_holder.clear_mood_event("wrong_cigs")
 			return
 		quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+
+/datum/quirk/item_quirk/chronic_illness
+	name = "Chronic Illness"
+	desc = "You have a chronic illness that requires constant medication to keep under control."
+	icon = FA_ICON_DISEASE
+	value = -12
+	gain_text = span_danger("You feel a bit off today.")
+	lose_text = span_notice("You feel a bit better today.")
+	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
+	hardcore_value = 12
+	mail_goodies = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/quirk/item_quirk/chronic_illness/add_unique(client/client_source)
+	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+	quirk_holder.ForceContractDisease(hms)
+	give_item_to_holder(/obj/item/storage/pill_bottle/sansufentanyl, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK),flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.")
+	give_item_to_holder(/obj/item/healthanalyzer/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
 
 /datum/quirk/unstable
 	name = "Unstable"

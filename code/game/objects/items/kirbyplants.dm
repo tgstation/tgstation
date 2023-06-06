@@ -3,6 +3,7 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	base_icon_state = "plant-01"
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -15,6 +16,8 @@
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE
+	/// Whether this plant is dead and requires a seed to revive
+	var/dead = FALSE
 	var/list/static/random_plant_states
 
 /obj/item/kirbyplants/Initialize(mapload)
@@ -23,13 +26,23 @@
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 	AddElement(/datum/element/beauty, 500)
 
+/obj/item/kirbyplants/update_icon_state()
+	. = ..()
+	icon_state = dead ? "plant-25" : base_icon_state
+
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
 		if(do_after(user,3 SECONDS,target=src))
 			to_chat(user,span_notice("You finish trimming [src]."))
 			change_visual()
+	if(dead && istype(I, /obj/item/seeds))
+		to_chat(user,span_notice("You start planting a new seed into the pot."))
+		if(do_after(user,3 SECONDS,target=src))
+			qdel(I)
+			dead = FALSE
+			update_appearance(UPDATE_ICON)
 
 /// Cycle basic plant visuals
 /obj/item/kirbyplants/proc/change_visual()
@@ -52,7 +65,7 @@
 
 /obj/item/kirbyplants/proc/generate_states()
 	random_plant_states = list()
-	for(var/i in 1 to 25)
+	for(var/i in 1 to 24)
 		var/number
 		if(i < 10)
 			number = "0[i]"
@@ -61,12 +74,15 @@
 		random_plant_states += "plant-[number]"
 	random_plant_states += "applebush"
 
-
 /obj/item/kirbyplants/dead
+	name = "dead potted plant"
+	desc = "The unidentifiable plant remnants make you feel like planting something new in the pot."
+	icon_state = "plant-25"
+	dead = TRUE
+
+/obj/item/kirbyplants/dead/research_director
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
-	icon_state = "plant-25"
-	trimmable = FALSE
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"

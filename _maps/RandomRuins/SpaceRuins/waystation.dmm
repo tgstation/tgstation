@@ -368,9 +368,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/north,
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
@@ -546,7 +544,6 @@
 /obj/item/gun/ballistic/automatic/wt550{
 	pin = /obj/item/firing_pin/explorer
 	},
-/obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)

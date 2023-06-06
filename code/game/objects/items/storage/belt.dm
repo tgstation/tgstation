@@ -74,6 +74,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
+		/obj/item/spess_knife,
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -244,6 +245,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -270,7 +272,7 @@
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
@@ -296,7 +298,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -845,6 +847,7 @@
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
