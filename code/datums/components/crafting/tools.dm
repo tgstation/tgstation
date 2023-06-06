@@ -44,8 +44,5 @@
 		/obj/item/knife = 1,
 		/obj/item/stack/sticky_tape = 1,
 	)
-	blacklist = list(
-		/obj/item/crowbar/cyborg,
-	)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
