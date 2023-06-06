@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -o pipefail
 
 MAP=$1
 

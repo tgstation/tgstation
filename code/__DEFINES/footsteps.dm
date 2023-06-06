@@ -8,6 +8,7 @@
 #define FOOTSTEP_LAVA "lava"
 #define FOOTSTEP_MEAT "meat"
 #define FOOTSTEP_CATWALK "catwalk"
+#define FOOTSTEP_BALL "ballpit"
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
 #define FOOTSTEP_WOOD_CLAW "woodclaw"
@@ -91,6 +92,8 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/catwalk3.ogg',
 		'sound/effects/footstep/catwalk4.ogg',
 		'sound/effects/footstep/catwalk5.ogg'), 100, 1),
+	FOOTSTEP_BALL = list(list(
+		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 ))
 //bare footsteps lists
 GLOBAL_LIST_INIT(barefootstep, list(
@@ -134,6 +137,8 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
+	FOOTSTEP_BALL = list(list(
+		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 ))
 
 //claw footsteps lists
@@ -178,6 +183,8 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
+	FOOTSTEP_BALL = list(list(
+		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 ))
 
 //heavy footsteps list
@@ -196,5 +203,7 @@ GLOBAL_LIST_INIT(heavyfootstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_MEAT = list(list(
 		'sound/effects/meatslap.ogg'), 100, 0),
+	FOOTSTEP_BALL = list(list(
+		'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 ))
 

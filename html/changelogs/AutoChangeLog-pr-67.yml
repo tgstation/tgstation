@@ -1,0 +1,6 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "hardlight spear"
+  - rscadd: "super glue"
+  - rscadd: "admin shotguns"

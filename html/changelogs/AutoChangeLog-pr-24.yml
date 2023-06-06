@@ -1,0 +1,4 @@
+author: "NanoCats"
+delete-after: True
+changes:
+  - qol: "Made northstar less agonizing"
