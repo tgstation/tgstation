@@ -205,7 +205,6 @@
 				return TRUE
 			target = clamp(target, 0, MAX_TRANSFER_RATE)
 
-
 			input.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
 		if("adjust_output")
 			if (!(chamber in atmos_chambers))
