@@ -59,7 +59,7 @@
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
 	. += span_notice("Use multitool to link it to an injector/vent or reset it's ports")
-	. += span_notice("Attack with hand to turn it off.")
+	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -153,6 +153,7 @@
 	else
 		. += span_notice("It should be [EXAMINE_HINT("wrenched")] in place to turn it on.")
 	. +=  span_notice("It could be [EXAMINE_HINT("welded")] apart.")
+	. +=  span_notice("Click with hand to turn it on.")
 
 /obj/item/air_sensor/attack_hand(mob/user, list/modifiers)
 	. = ..()
