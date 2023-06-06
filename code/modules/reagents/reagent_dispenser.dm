@@ -265,13 +265,14 @@
 		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
-	. = ..()
-	if(QDELETED(src)) //wasn't deleted by the projectile's effects.
-		return
-
 	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 		log_bomber(P.firer, "detonated a", src, "via projectile")
 		boom()
+		return BULLET_ACT_HIT
+
+	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
+	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
+	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
