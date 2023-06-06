@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "gibbing colossus possessor crystal possessed animals will no longer stick the user's body and their stuff into the shadow realm. the animals will properly drop your corpse when killed or gibbed"

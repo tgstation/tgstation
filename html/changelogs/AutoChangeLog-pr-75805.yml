@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - bugfix: "Fixes an edge case of an air alarm warning not reseting properly and being repeated when another atmos issue without a warning message, like Plasma in the air, triggered the alarm."

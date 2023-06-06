@@ -151,3 +151,52 @@
       Nanotrasen has reluctantly installed several missing fire alarms and other safety
       equipment in the North Star's Cargo Bay and a few other lower deck areas.
   - bugfix: Fixed minor area definition errors in North Star's cargo area.
+2023-06-06:
+  DATA-xPUNGED:
+  - qol: Nanotrasen has issued a new wallet model, which lets you put biscuit papers
+      in them!
+  Fikou:
+  - balance: the cake hat wounds more
+  - bugfix: the cake hat no longer balds you
+  Guillaume Prata:
+  - bugfix: Fixes an edge case of an air alarm warning not reseting properly and being
+      repeated when another atmos issue without a warning message, like Plasma in
+      the air, triggered the alarm.
+  JohnFulpWillard, tatax:
+  - qol: '[Mafia] Players are now sent back to their in-game character''s bodies when
+      they finish a game.'
+  - image: '[Mafia] Mafia now has a new sprite for the main action button in-game.'
+  - bugfix: '[Mafia] Chaplains can now use their ability.'
+  - bugfix: '[Mafia] The game no longer ends in a Draw if Town or Changelings win.'
+  - bugfix: '[Mafia] The role list now properly shows roles once.'
+  JoshAdamPowell:
+  - admin: allow admins to allow non-clowns to drive clown cars
+  LT3:
+  - bugfix: IVs again work with non-living containers
+  Melbert:
+  - bugfix: Admin forced latejoins reset correctly after next latejoin
+  Pickle-Coding:
+  - bugfix: Fix movable explosive blockers leaving remnants of explosive protection
+      on turfs after they get destroyed.
+  Rex9001:
+  - bugfix: fixes moffic grilled hard cheese burning on the grill instantly
+  Sealed101:
+  - bugfix: gibbing colossus possessor crystal possessed animals will no longer stick
+      the user's body and their stuff into the shadow realm. the animals will properly
+      drop your corpse when killed or gibbed
+  Tattle:
+  - admin: mob tags are now part of the mob tag log again
+  Wallem:
+  - qol: Adds a button that lets you recolor air canisters to enable easier organization.
+  YehnBeep:
+  - bugfix: The reviver implant will no longer leave its user looping between soft
+      and hard critical states.
+  carlarctg:
+  - rscadd: Changes syndicate surgery duffelbags to contain advanced tools, sterilizine,
+      surgical tape, and a roller bed.
+  - rscadd: Changed the Syndicate Infiltrators' surgery areas to contain a full syndicate
+      surgery duffelbag.
+  - rscadd: The normal infiltrator now has a operating computer and a closet of misc.
+      surgical clothing and anesthesic tank.
+  kinneb:
+  - image: modified gift and package crate sprites to match the resprited crate
