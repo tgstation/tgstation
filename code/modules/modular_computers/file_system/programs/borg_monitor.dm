@@ -62,7 +62,6 @@
 			loglist.Insert(1,"System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
-		update_static_data_for_all_viewers()
 		return
 
 	DL_progress += 25
@@ -100,11 +99,9 @@
 		)
 		data["cyborgs"] += list(cyborg_data)
 		data["DL_progress"] = DL_progress
-	return data
-
-/datum/computer_file/program/borg_monitor/ui_static_data(mob/user)
-	var/list/data = list()
+	
 	data["borglog"] = loglist
+	
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
