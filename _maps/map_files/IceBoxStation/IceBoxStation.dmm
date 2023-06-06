@@ -99,8 +99,8 @@
 /area/station/hallway/secondary/entry)
 "acr" = (
 /obj/effect/spawner/random_bar/icebox,
-/turf/open/space/basic,
-/area/space)
+/turf/open/openspace,
+/area/station/commons/lounge)
 "act" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4;
@@ -18620,8 +18620,8 @@
 /turf/open/floor/wood,
 /area/station/maintenance/space_hut/cabin)
 "fWU" = (
-/turf/open/space/basic,
-/area/space)
+/turf/open/openspace,
+/area/station/commons/lounge)
 "fWX" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/snowed/icemoon,
