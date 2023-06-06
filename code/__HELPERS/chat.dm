@@ -11,7 +11,7 @@ In TGS3 it will always be sent to all connected designated game chats.
 In TGS4+ they use the new tagging system
 
 The second parameter is a string, this string should be read from a config.
-What this does is dictacte which TGS channels can be sent to.
+What this does is dictate which TGS channels can be sent to.
 
 For example if you have the following channels in tgs4 set up
 - Channel 1, Tag: asdf
