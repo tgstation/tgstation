@@ -381,7 +381,12 @@
 
 /datum/component/riding/creature/goliath/handle_specials()
 	. = ..()
+	var/atom/movable/movable_parent = parent
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_dir_offsets(SOUTH, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(NORTH, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(EAST, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(WEST, movable_parent.pixel_x, 0)
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
