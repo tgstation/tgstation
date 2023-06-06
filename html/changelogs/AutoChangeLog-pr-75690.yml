@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "light replacer displaying error message  after it finished replacing the light"
+  - refactor: "merged the `can_use()` proc with the `Use()` proc to perform both actions at once"
+  - refactor: "`/obj/item/lightreplacer/attackby()` returns TRUE to prevent calling it's `after_attack()` code and calls it's parent proc"
