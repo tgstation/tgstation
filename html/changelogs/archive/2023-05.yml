@@ -1141,3 +1141,55 @@
       are not currently equipped with them.
   - balance: Syndicate corpses dropped from killing a Legion no longer come with a
       MODSuit.
+2023-05-31:
+  Epoc:
+  - bugfix: Speaking in sign language no longer reveals your identity
+  FlufflesTheDog:
+  - bugfix: Anomalies shouldn't spawn with frequencies that can't be selected on signalers
+      anymore
+  Ghommie:
+  - bugfix: basic mobs & co no longer indiscriminately perform close-range actions
+      in the presence of obstacles such as directional windows between them and their
+      target.
+  - bugfix: Doggos should look at you with longing eyes once again if you dare pick
+      up an edible they are trying to eat.
+  Guillaume Prata:
+  - bugfix: Air Alarms will properly shut up when atmos is fixed.
+  Helg2:
+  - bugfix: Syndicate mod-suit in Tactical NukeOps Metagame Syndi-kit (the one with
+      bulldog shotgun) now doesn't require any access, so you don't need to buy agent
+      card to simply use it.
+  JohnFulpWillard:
+  - balance: Golems' 55% species innate armor has been lowered to 10%
+  Kubisopplay:
+  - qol: Admins can make a portal not spark when teleporting
+  Licks-the-Crystal:
+  - bugfix: Stops grilles from electrocuting or tesla-ing when there's a floor between
+      the grille and the cable.
+  MTandi:
+  - image: Resprited many condiment containers
+  - image: Added a sprite for cooking oil / corn oil container
+  - image: Replaced old condiment bottles with the newer bottles in Condi Master
+  Pickle-Coding:
+  - balance: Engineering, janitor and medical holosign projector projection time reduced
+      to 1 second.
+  - balance: Engineering, janitor, and medical holosign integrity reduced to 1.
+  - balance: Engineering holosign projector max capacity increased to 12.
+  - balance: Medical holosign projector max capacity increased to 6.
+  Time-Green:
+  - bugfix: Hardcore random pays your score again as non-antag
+  ZephyrTFA:
+  - admin: new log viewer, try it out. (View Round Logs)
+  moocowswag:
+  - bugfix: You can no longer pulse the wire on an unpowered shield generator to activate
+      shields
+  - bugfix: External only setting on modular shield generators now properly uses terrestrial
+      turfs such as lavawastes.
+  nikothedude:
+  - code_imp: Modularized plasmamen plasma breathing species trait code to automatically
+      apply to all species
+  - code_imp: Liver shrugging differences/Alcohol tolerance differences now displayed
+      in the species trait panel
+  - code_imp: Nobreath and Nogenes now accounted for in species trait code
+  - rscadd: Podpeople now have species traits
+  - rscadd: Plasmamen genelessness is now displayed in their species panel

@@ -316,7 +316,7 @@
 						target_path = path
 
 					var/obj/item/part
-					while(req_components[path] > 0 && (part = locate(target_path) in part_list))
+					while(req_components[path] > 0 && (part = look_for(part_list, target_path, ispath(path, /obj/item/stack/ore/bluespace_crystal) ? /obj/item/stack/sheet/bluespace_crystal : null)))
 						part_list -= part
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part
@@ -349,16 +349,19 @@
 
 				var/stock_part_path
 
-				if (ispath(stock_part_base, /obj/item))
+				if(ispath(stock_part_base, /obj/item))
 					stock_part_path = stock_part_base
-				else if (ispath(stock_part_base, /datum/stock_part))
+				else if(ispath(stock_part_base, /datum/stock_part))
 					var/datum/stock_part/stock_part_datum_type = stock_part_base
 					stock_part_path = initial(stock_part_datum_type.physical_object_type)
 				else
 					stack_trace("Bad stock part in req_components: [stock_part_base]")
 					continue
 
-				if (!istype(P, stock_part_path))
+				//if we require an bluespace crystall and we have an full sheet of them we can allow that
+				if(ispath(stock_part_path, /obj/item/stack/ore/bluespace_crystal) && istype(P, /obj/item/stack/sheet/bluespace_crystal))
+					//allow it
+				else if(!istype(P, stock_part_path))
 					continue
 
 				if(isstack(P))
@@ -401,6 +404,18 @@
 			return FALSE
 	if(user.combat_mode)
 		return ..()
+
+/// returns instance of path1 in list else path2 in list
+/obj/structure/frame/machine/proc/look_for(list/parts, path1, path2 = null)
+	//look for path1 in list
+	var/part = locate(path1) in parts
+	if(!isnull(part))
+		return part
+
+	//optional look for path2 in list
+	if(!isnull(path2))
+		part = locate(path2) in parts
+	return part
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
