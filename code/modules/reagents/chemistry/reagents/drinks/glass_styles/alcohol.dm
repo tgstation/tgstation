@@ -95,8 +95,6 @@
 	name = "glass of amaretto"
 	desc = "A sweet and syrupy looking drink."
 	icon_state = "amarettoglass"
-
-
 /datum/glass_style/drinking_glass/cognac
 	required_drink_type = /datum/reagent/consumable/ethanol/cognac
 	name = "glass of cognac"
