@@ -87,6 +87,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/printing_total
 	/// Default duration of printing for one container
 	var/printing_speed = 1.5 SECONDS // Duration of animation
+	/// The amount of containers printed in one cycle
+	var/printing_amount = 1
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -114,10 +116,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
-	var/speed_increase = 1
+	printing_amount = 0
 	for(var/datum/stock_part/servo/servo in component_parts)
-		speed_increase = max(speed_increase, servo.tier)
-	printing_speed = initial(printing_speed) / speed_increase
+		printing_amount += servo.tier
 
 /obj/machinery/chem_master/update_appearance(updates=ALL)
 	. = ..()
@@ -369,6 +370,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	var/obj/item/reagent_containers/container_style = locate(selected_container)
 	var/is_pill_subtype = ispath(container_style, /obj/item/reagent_containers/pill)
 	var/vol_each = reagents.total_volume / item_count
+	var/printing_amount_current = is_pill_subtype ? printing_amount * 2 : printing_amount
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
@@ -388,18 +390,22 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	update_appearance(UPDATE_ICON)
 	printing_progress = 0
 	printing_total = item_count
-	for(var/i in 1 to item_count)
+	while(item_count > 0)
 		if(!is_printing)
 			break
 		use_power(active_power_usage)
-		stoplag(is_pill_subtype ? printing_speed * 0.5 : printing_speed)
-		var/obj/item/reagent_containers/item = new container_style(drop_location())
-		adjust_item_drop_location(item)
-		item.name = item_name
-		item.reagents.clear_reagents()
-		reagents.trans_to(item, vol_each, transfered_by = src)
-		update_appearance(UPDATE_ICON)
-		printing_progress++
+		stoplag(printing_speed)
+		for(var/i in 1 to printing_amount_current)
+			if(!item_count)
+				continue
+			var/obj/item/reagent_containers/item = new container_style(drop_location())
+			adjust_item_drop_location(item)
+			item.name = item_name
+			item.reagents.clear_reagents()
+			reagents.trans_to(item, vol_each, transfered_by = src)
+			update_appearance(UPDATE_ICON)
+			printing_progress++
+			item_count--
 	is_printing = FALSE
 	update_appearance(UPDATE_ICON)
 	return TRUE
@@ -466,7 +472,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Container print time reduced by <b>[100 - 100 * (printing_speed / initial(printing_speed))]%</b>.")
+		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Number of containers printed at once increased by <b>[100 * (printing_amount / initial(printing_amount)) - 100]%</b>.")
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
