@@ -835,9 +835,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
