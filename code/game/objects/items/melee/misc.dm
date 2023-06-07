@@ -310,7 +310,7 @@
 	desc = "The ultimate weapon against rowdy assistants."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "dadbelt"
-	inhand_icon_state = "dadsbelt"
+	inhand_icon_state = "dadsmad"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	worn_icon_state = "dadbeltworn"
