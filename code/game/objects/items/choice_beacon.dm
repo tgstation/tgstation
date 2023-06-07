@@ -187,13 +187,29 @@
 	var/static/list/pet_list
 	if(!pet_list)
 		// Bug SeeBeeSee on Discord if you want an animal type added
+		// (no, you cannot have a pet goliath or other hostile mob)
 		pet_list = list()
 		var/list/selectable_pets = list(
 			/mob/living/basic/mothroach,
-			/mob/living/basic/axolotl
+			/mob/living/basic/axolotl,
+			/mob/living/basic/mouse,
+			/mob/living/basic/mouse/rat,
+			/mob/living/simple_animal/parrot,
+			/mob/living/simple_animal/butterfly,
+			/mob/living/simple_animal/crab,
+			/mob/living/simple_animal/crab/evil,
+			/mob/living/simple_animal/pet/penguin/baby,
+			/mob/living/simple_animal/pet/fox,
+			/mob/living/simple_animal/pet/cat,
+			/mob/living/simple_animal/pet/cat/kitten,
+			/mob/living/basic/pet/dog/corgi,
+			/mob/living/basic/pet/dog/pug,
+			/mob/living/basic/pet/dog/bullterrier,
+			/mob/living/simple_animal/hostile/lizard,
+			/mob/living/simple_animal/hostile/ant
 		)
 
-		for(var/mob/living/basic/basic_mob as anything in selectable_pets)
+		for(var/mob/living/basic_mob as anything in selectable_pets)
 			pet_list[initial(basic_mob.name)] = basic_mob
 
 	return pet_list
