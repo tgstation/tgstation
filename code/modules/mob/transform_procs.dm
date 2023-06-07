@@ -114,7 +114,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE, )
+/mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/t in bodyparts)
