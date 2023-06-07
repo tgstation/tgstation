@@ -295,7 +295,7 @@ export const SmartPipeBlockSection = (props, context) => {
   const { init_directions = [] } = data;
   return (
     <Section fill>
-      <Stack vertical textAlign="center" justify="space-around">
+      <Stack vertical textAlign="center">
         <Stack.Item>
           <Stack>
             <Stack.Item>
