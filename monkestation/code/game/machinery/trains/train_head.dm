@@ -30,5 +30,9 @@
 		listed_network = new
 		listed_network.train_head = src
 
+	visible_message("[usr] attempts to connect the [name] and [over.name] together")
+	if(!do_after(usr, 2 SECONDS, over))
+		return
+
 	if(istype(over, /obj/machinery/cart))
 		listed_network.connect_train(over)
