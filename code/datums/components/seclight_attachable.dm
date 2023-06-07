@@ -96,7 +96,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
@@ -108,7 +108,7 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ITEM_UI_ACTION_CLICK,
 		COMSIG_ATOM_ATTACKBY,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_QDELETING,
 	))
 
@@ -251,7 +251,7 @@
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
 
-/// Signal proc for [COMSIG_PARENT_EXAMINE] that shows our item can have / does have a seclite attached.
+/// Signal proc for [COMSIG_ATOM_EXAMINE] that shows our item can have / does have a seclite attached.
 /datum/component/seclite_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 

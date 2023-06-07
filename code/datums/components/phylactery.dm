@@ -51,7 +51,7 @@
 	obj_parent.add_atom_colour(phylactery_color, ADMIN_COLOUR_PRIORITY)
 	obj_parent.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
-	RegisterSignal(obj_parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(obj_parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	SSpoints_of_interest.make_point_of_interest(obj_parent)
 
@@ -62,7 +62,7 @@
 	// Stationloving items should really never be made a phylactery so I feel safe in doing this
 	qdel(obj_parent.GetComponent(/datum/component/stationloving))
 
-	UnregisterSignal(obj_parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(obj_parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	// Sweep up any revive signals left on the mind's current
 	UnregisterSignal(lich_mind.current, COMSIG_LIVING_REVIVE)
@@ -71,7 +71,7 @@
 	return ..()
 
 /**
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  *
  * Gives some flavor for the phylactery on examine.
  */

@@ -29,7 +29,7 @@
 
 /datum/component/nuclear_bomb_operator/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(owner_attacked_atom)) // This only works for players, but I am not sure this should have AI anyway
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(atom_exited_owner))
@@ -39,7 +39,7 @@
 /datum/component/nuclear_bomb_operator/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_QDELETING,
 		COMSIG_ATOM_ATTACK_HAND,
