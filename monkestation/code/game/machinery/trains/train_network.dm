@@ -25,6 +25,8 @@
 		members -= disconnecting_train
 		disconnecting_train.linked_network = null
 		disconnecting_train.anchored = FALSE
+		///we want to set the new end cart to be the last cart in the list
+		end_cart = members[length(members)]
 		return
 
 	var/list/disconnected_parts = list()

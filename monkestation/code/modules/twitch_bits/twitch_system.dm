@@ -37,19 +37,12 @@ SUBSYSTEM_DEF(twitch)
 		return
 
 	var/datum/twitch_event/chosen_one
-	switch(incoming[3])
-		if("amongus-all15")
-			chosen_one = new /datum/twitch_event/amongus
-		if("amongus-ook10")
-			chosen_one = new /datum/twitch_event/amongus/ook
-		if("skinny-5")
-			chosen_one = new /datum/twitch_event/skinny
-		if("buff-5")
-			chosen_one = new /datum/twitch_event/buff
-		if("anime-ook")
-			chosen_one = new /datum/twitch_event/anime_ook
-		else
-			return
+	for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
+		if(incoming[3] != initial(listed_events.id_tag))
+			continue
+		chosen_one = new listed_events
+	if(!chosen_one)
+		return
 
 	switch(SSticker.current_state)
 		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
@@ -67,19 +60,17 @@ SUBSYSTEM_DEF(twitch)
 /datum/controller/subsystem/twitch/proc/run_deferred()
 	for(var/listed_item in deferred_handlers)
 		var/datum/twitch_event/chosen_one
-		switch(listed_item)
-			if("amongus-all15")
-				chosen_one = new /datum/twitch_event/amongus
-			if("amongus-ook10")
-				chosen_one = new /datum/twitch_event/amongus/ook
-			if("skinny-5")
-				chosen_one = new /datum/twitch_event/skinny
-			if("buff-5")
-				chosen_one = new /datum/twitch_event/buff
-			if("anime-ook")
-				chosen_one = new /datum/twitch_event/anime_ook
-			else
-				return
+		for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
+			if(listed_item != initial(listed_events.id_tag))
+				continue
+			chosen_one = new listed_events
+		if(!chosen_one)
+			return
 		chosen_one.run_event()
 		running_events[chosen_one] = world.time + chosen_one.event_duration
 		deferred_handlers -= listed_item
+
+/datum/controller/subsystem/twitch/proc/add_to_queue(choice_id)
+	deferred_handlers += choice_id
+
+

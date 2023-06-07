@@ -9,6 +9,8 @@
 	var/random_count = 0
 	///list of targets
 	var/list/targets = list()
+	///the tag tied to this event
+	var/id_tag
 
 /datum/twitch_event/proc/run_event()
 	if(event_flags & TWITCH_AFFECTS_STREAMER)

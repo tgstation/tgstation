@@ -131,6 +131,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/spawn_liquid,
 	/client/proc/summon_ert,
+	/client/proc/summon_twitch_event,
 	/client/proc/toggle_nuke,
 	/client/proc/toggle_random_events,
 	))
