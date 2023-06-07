@@ -364,7 +364,14 @@
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
-	additional_module = /obj/item/mod/module/rad_protection
+	applied_modules = list(
+		/obj/item/mod/module/rad_protection,
+		/obj/item/mod/module/tether,
+		/obj/item/mod/module/magboot/advanced,
+	)
+	default_pins = list(
+		/obj/item/mod/module/magboot/advanced,
+	)
 
 /obj/item/mod/control/pre_equipped/responsory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
