@@ -364,8 +364,16 @@
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
-	additional_module = /obj/item/mod/module/rad_protection
-	additional_module = /obj/item/mod/module/magboot/advanced
+	applied_modules = list(
+		/obj/item/mod/module/insignia/engineer,
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/rad_protection,
+	)
 	default_pins = list(
 		/obj/item/mod/module/magboot/advanced,
 	)
