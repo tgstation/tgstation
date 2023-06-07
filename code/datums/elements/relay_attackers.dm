@@ -65,7 +65,7 @@
 	var/mob/thrown_by = hit_item.thrownby?.resolve()
 	if(!ismob(thrown_by))
 		return
-	relay_attacker(target, thrown_by, hit_item.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
+	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
 /datum/element/relay_attackers/proc/on_attack_hulk(atom/target, mob/attacker)
 	SIGNAL_HANDLER
