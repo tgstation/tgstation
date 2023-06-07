@@ -5,7 +5,7 @@
 	id_tag = "chucklenuts-ook"
 
 
-/datum/twitch_event/chucklenuts
+/datum/twitch_event/chucklenuts/random
 	event_name = "Think Fast"
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_RANDOM
