@@ -466,6 +466,10 @@
 	if(!iscarbon(exposed_mob))
 		return
 	var/mob/living/carbon/carbies = exposed_mob
+	if(ishuman(carbies))
+		var/mob/living/carbon/human/humans = carbies
+		if(istype(humans.dna.species, /datum/species/ipc))
+			return
 	if(carbies.stat == DEAD)
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))

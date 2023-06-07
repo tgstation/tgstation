@@ -71,44 +71,26 @@
 /obj/effect/abstract/liquid_turf/proc/set_new_liquid_state(new_state)
 	if(no_effects)
 		return
-	cut_overlays()
 	liquid_state = new_state
-	switch(new_state)
-		if(LIQUID_STATE_PUDDLE)
-			QUEUE_SMOOTH(src)
-			QUEUE_SMOOTH_NEIGHBORS(src)
-		if(LIQUID_STATE_ANKLES)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_bottom", offset_spokesman = src)
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage1_top", offset_spokesman = src)
-			overlay.plane = GAME_PLANE_UPPER
-			overlay.layer = ABOVE_MOB_LAYER
-			underlay.plane = GAME_PLANE
-			underlay.layer = GATEWAY_UNDERLAY_LAYER
-			add_overlay(overlay)
-			add_overlay(underlay)
-		if(LIQUID_STATE_WAIST)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_bottom", offset_spokesman = src)
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage2_top", offset_spokesman = src)
-			overlay.plane = GAME_PLANE_UPPER
-			overlay.layer = ABOVE_MOB_LAYER
-			underlay.plane = GAME_PLANE
-			underlay.layer = GATEWAY_UNDERLAY_LAYER
-			add_overlay(overlay)
-			add_overlay(underlay)
-		if(LIQUID_STATE_SHOULDERS)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_bottom", offset_spokesman = src)
-			var/mutable_appearance/underlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage3_top", offset_spokesman = src)
-			overlay.plane = GAME_PLANE_UPPER
-			overlay.layer = ABOVE_MOB_LAYER
-			underlay.plane = GAME_PLANE
-			underlay.layer = GATEWAY_UNDERLAY_LAYER
-			add_overlay(overlay)
-			add_overlay(underlay)
-		if(LIQUID_STATE_FULLTILE)
-			var/mutable_appearance/overlay = mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage4_bottom", offset_spokesman = src)
-			overlay.plane = GAME_PLANE
-			overlay.layer = ABOVE_MOB_LAYER
-			add_overlay(overlay)
+
+	var/number = new_state - 1
+	if(number != 0)
+		icon_state = null
+		base_icon_state = null
+		update_appearance()
+
+	else
+		icon_state = initial(icon_state)
+		base_icon_state = initial(base_icon_state)
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
+
+/obj/effect/abstract/liquid_turf/update_overlays()
+	. = ..()
+	var/number = liquid_state - 1
+	if(number != 0)
+		. += mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_spokesman = my_turf, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER)
+		. += mutable_appearance('monkestation/icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_spokesman = my_turf, plane =GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER)
 
 /obj/effect/abstract/liquid_turf/proc/set_fire_effect()
 	if(displayed_content)

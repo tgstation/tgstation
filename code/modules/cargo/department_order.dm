@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	var/max = CARGO_CRATE_VALUE * 15
 	credits = clamp(credits, min, max)
 	var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
-	time_y = 10 MINUTES * time_y
+	time_y = 5 MINUTES * time_y
 	GLOB.department_order_cooldowns[type] = world.time + time_y
 
 /obj/machinery/computer/department_orders/service
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	department_delivery_areas = list(/area/station/science/research)
 	override_access = ACCESS_RD
 	req_one_access = REGION_ACCESS_RESEARCH
-	dep_groups = list("Science", "Livestock")
+	dep_groups = list("Science", "Livestock", "Canisters & Materials")
 
 /obj/machinery/computer/department_orders/security
 	name = "security order console"
