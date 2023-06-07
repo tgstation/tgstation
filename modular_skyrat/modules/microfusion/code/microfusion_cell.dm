@@ -32,10 +32,6 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	var/empty_alarm_sound = 'sound/weapons/gun/general/empty_alarm.ogg'
 	/// Do we have the self charging upgrade?
 	var/self_charging = FALSE
-	/// We use this to edit the reload time of the gun
-	var/reloading_time = 4 SECONDS
-	/// We use this to edit the tactical reload time of the gun
-	var/reloading_time_tactical = 6 SECONDS
 	/// The probability of the cell failing, either through being makeshift or being used in something it shouldn't
 	var/fail_prob = 10
 
@@ -45,12 +41,17 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	/// Do we show the microfusion readout instead of KJ?
 	var/microfusion_readout = FALSE
 
+/obj/item/stock_parts/cell/microfusion/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
 /obj/item/stock_parts/cell/microfusion/Destroy()
 	if(attachments.len)
 		for(var/obj/item/iterating_item as anything in attachments)
 			iterating_item.forceMove(get_turf(src))
 		attachments = null
 	parent_gun = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/stock_parts/cell/microfusion/attackby(obj/item/attacking_item, mob/living/user, params)

@@ -31,7 +31,7 @@
 	microfusion_gun.chambered?.refresh_shot()
 	return
 
-/obj/item/microfusion_gun_attachment/proc/process_attachment(obj/item/gun/microfusion/microfusion_gun)
+/obj/item/microfusion_gun_attachment/proc/process_attachment(obj/item/gun/microfusion/microfusion_gun, seconds_per_tick)
 	return
 
 //Firing the gun right before we let go of it, tis is called.
