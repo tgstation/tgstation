@@ -306,7 +306,7 @@
 	hitsound = 'sound/weapons/whip.ogg'
 	
 /obj/item/melee/curator_whip/dadbelt
-	name = "dad's belt"
+	name = "complaints department"
 	desc = "The ultimate weapon against rowdy assistants."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "dadbelt"
