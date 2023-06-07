@@ -689,6 +689,7 @@
 #include "code\datums\ruins.dm"
 #include "code\datums\saymode.dm"
 #include "code\datums\shuttles.dm"
+#include "code\datums\signals.dm"
 #include "code\datums\spawners_menu.dm"
 #include "code\datums\station_alert.dm"
 #include "code\datums\station_integrity.dm"
