@@ -152,7 +152,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/emp_act(severity)
 	. = ..()
 	if(prob(50))
-		set_machine_stat(machine_stat & BROKEN)
+		set_machine_stat(machine_stat | BROKEN)
 		update_appearance()
 		return
 	name = NAME_DUAL
