@@ -342,11 +342,13 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		analyzed_reagent = locate(params["reagentRef"])
 		if(analyzed_reagent)
 			reagent_analysis_mode = TRUE
+			update_appearance(UPDATE_ICON)
 			return TRUE
 
 	if(action == "stopAnalysis")
 		reagent_analysis_mode = FALSE
 		analyzed_reagent = null
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 	if(action == "stopPrinting")
