@@ -408,6 +408,9 @@
  * Toggles a closet open or closed, to the opposite state. Does not respect locked or welded states, however.
  */
 /obj/structure/closet/proc/toggle(mob/living/user)
+	if(cant_grab)
+		to_chat(user, span_notice("The latches on the cart prevent you from opening or closing this crate."))
+		return FALSE
 	if(opened)
 		return close(user)
 	else

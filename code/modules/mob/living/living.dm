@@ -251,6 +251,8 @@
 
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM, force = move_force)
+	if(AM.cant_grab)
+		return FALSE
 	if(now_pushing)
 		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
