@@ -42,7 +42,7 @@
 	human_to_equip.dna.species.stunmod = 0
 
 	var/list/taller_list = list(HUMAN_HEIGHT_TALL, HUMAN_HEIGHT_TALLER, HUMAN_HEIGHT_TALLEST)
-	var/tall_index
+	var/tall_index = 0
 	for(var/i in 1 to 3)
 		if(!prob(taller_chance))
 			break
