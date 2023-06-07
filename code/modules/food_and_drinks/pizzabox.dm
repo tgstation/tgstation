@@ -51,7 +51,7 @@
 
 /obj/item/pizzabox/proc/clear_bomb(datum/source)
 	SIGNAL_HANDLER
-	if(!bomb)
+	if(isnull(bomb))
 		return
 	UnregisterSignal(bomb, COMSIG_PARENT_QDELETING)
 	bomb = null
