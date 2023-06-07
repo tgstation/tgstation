@@ -9,7 +9,6 @@
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE
 	anchored = FALSE
-	weight_class
 
 	var/datum/train_network/linked_network
 	var/obj/attached_object
