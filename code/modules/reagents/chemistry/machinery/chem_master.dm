@@ -369,13 +369,13 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master/proc/create_containers(item_count = 1)
 	var/obj/item/reagent_containers/container_style = locate(selected_container)
 	var/is_pill_subtype = ispath(container_style, /obj/item/reagent_containers/pill)
-	var/vol_each = reagents.total_volume / item_count
+	var/volume_in_each = reagents.total_volume / item_count
 	var/printing_amount_current = is_pill_subtype ? printing_amount * 2 : printing_amount
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
 	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get reagent name and units in the name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([vol_each]u)"
+		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([volume_in_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",
 		"Name",
@@ -402,8 +402,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			adjust_item_drop_location(item)
 			item.name = item_name
 			item.reagents.clear_reagents()
-			reagents.trans_to(item, vol_each, transfered_by = src)
-			update_appearance(UPDATE_ICON)
+			reagents.trans_to(item, volume_in_each, transfered_by = src)
 			printing_progress++
 			item_count--
 	is_printing = FALSE
