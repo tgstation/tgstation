@@ -174,3 +174,49 @@
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice_path]")
 	GLOB.holy_armor_type = choice_path
 	return ..()
+
+// Pet Beacon for Monkecoin shop
+
+/obj/item/choice_beacon/pet
+	name = "Deluxe Pet Delivery Beacon"
+	desc = "For those shifts when you need a little piece of home and some company."
+	company_message = span_bold("Pet request received. Your friend is on the way.")
+	var/default_name = "Stinko"
+	var/mob_choice = /mob/living/basic/mothroach
+
+/obj/item/choice_beacon/pet/generate_display_names()
+	var/static/list/pet_list
+	if(!pet_list)
+		// Bug SeeBeeSee on Discord if you want an animal type added
+		pet_list = list()
+		var/list/selectable_pets = list(
+			/mob/living/basic/mothroach,
+			/mob/living/basic/axolotl
+		)
+
+		for(var/mob/living/basic/basic_mob as anything in selectable_pets)
+			pet_list[initial(basic_mob.name)] = basic_mob
+
+	return pet_list
+
+// /obj/item/choice_beacon/pet/proc/generate_options(mob/living/M)
+// 	var/input_name = stripped_input(M, "What would you like your new pet to be named?", "New Pet Name", default_name, MAX_NAME_LEN)
+// 	if(!input_name)
+// 		return
+// 	spawn_mob(M,input_name)
+// 	uses--
+// 	if(!uses)
+// 		qdel(src)
+// 	else
+// 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
+
+// /obj/item/choice_beacon/pet/proc/spawn_mob(mob/living/M,name)
+// 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+// 	var/mob/your_pet = new mob_choice(pod)
+// 	pod.explosionSize = list(0,0,0,0)
+// 	your_pet.name = name
+// 	your_pet.real_name = name
+// 	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+// 	to_chat(M, msg)
+// 	new /obj/effect/pod_landingzone(get_turf(src), pod)
+
