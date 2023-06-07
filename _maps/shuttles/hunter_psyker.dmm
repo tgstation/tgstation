@@ -342,8 +342,6 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Fortune Telling"
 	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/carpet/black,
 /area/shuttle/hunter)
 "sB" = (

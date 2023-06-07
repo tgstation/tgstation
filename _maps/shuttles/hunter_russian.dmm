@@ -417,10 +417,14 @@
 "FG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -576,6 +580,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cargo Hold Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "QG" = (
