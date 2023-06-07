@@ -90,9 +90,9 @@
 /datum/component/proc/_JoinParent()
 	var/datum/P = parent
 	//lazy init the parent's dc list
-	var/list/dc = P.datum_components
+	var/list/dc = P._datum_components
 	if(!dc)
-		P.datum_components = dc = list()
+		P._datum_components = dc = list()
 
 	//set up the typecache
 	var/our_type = type
@@ -127,7 +127,7 @@
  */
 /datum/component/proc/_RemoveFromParent()
 	var/datum/parent = src.parent
-	var/list/parents_components = parent.datum_components
+	var/list/parents_components = parent._datum_components
 	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = parents_components[I]
 
@@ -143,7 +143,7 @@
 			parents_components -= I
 
 	if(!parents_components.len)
-		parent.datum_components = null
+		parent._datum_components = null
 
 	UnregisterFromParent()
 
@@ -220,9 +220,9 @@
 		RegisterSignals(target, signal_type, proctype, override)
 		return
 
-	var/list/procs = (signal_procs ||= list())
+	var/list/procs = (_signal_procs ||= list())
 	var/list/target_procs = (procs[target] ||= list())
-	var/list/lookup = (target.comp_lookup ||= list())
+	var/list/lookup = (target._comp_lookup ||= list())
 
 	if(!override && target_procs[signal_type])
 		var/override_message = "[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]"
@@ -258,13 +258,13 @@
  * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
  */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	var/list/lookup = target.comp_lookup
-	if(!signal_procs || !signal_procs[target] || !lookup)
+	var/list/lookup = target._comp_lookup
+	if(!_signal_procs || !_signal_procs[target] || !lookup)
 		return
 	if(!islist(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
-		if(!signal_procs[target][sig])
+		if(!_signal_procs[target][sig])
 			if(!istext(sig))
 				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
@@ -272,25 +272,25 @@
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
 			if(1)
-				stack_trace("[target] ([target.type]) somehow has single length list inside comp_lookup")
+				stack_trace("[target] ([target.type]) somehow has single length list inside _comp_lookup")
 				if(src in lookup[sig])
 					lookup -= sig
 					if(!length(lookup))
-						target.comp_lookup = null
+						target._comp_lookup = null
 						break
 			if(0)
 				if(lookup[sig] != src)
 					continue
 				lookup -= sig
 				if(!length(lookup))
-					target.comp_lookup = null
+					target._comp_lookup = null
 					break
 			else
 				lookup[sig] -= src
 
-	signal_procs[target] -= sig_type_or_types
-	if(!signal_procs[target].len)
-		signal_procs -= target
+	_signal_procs[target] -= sig_type_or_types
+	if(!_signal_procs[target].len)
+		_signal_procs -= target
 
 /**
  * Called on a component when a component of the same type was added to the same parent
@@ -354,17 +354,17 @@
  * Use the [SEND_SIGNAL] define instead
  */
 /datum/proc/_SendSignal(sigtype, list/arguments)
-	var/target = comp_lookup[sigtype]
+	var/target = _comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		return NONE | call(listening_datum, listening_datum._signal_procs[src][sigtype])(arglist(arguments))
 	. = NONE
 	// This exists so that even if one of the signal receivers unregisters the signal,
 	// all the objects that are receiving the signal get the signal this final time.
 	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
 	var/list/queued_calls = list()
 	for(var/datum/listening_datum as anything in target)
-		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
+		queued_calls[listening_datum] = listening_datum._signal_procs[src][sigtype]
 	for(var/datum/listening_datum as anything in queued_calls)
 		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
 
@@ -381,7 +381,7 @@
 	RETURN_TYPE(c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
-	var/list/dc = datum_components
+	var/list/dc = _datum_components
 	if(!dc)
 		return null
 	. = dc[c_type]
@@ -401,7 +401,7 @@
 	RETURN_TYPE(c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
-	var/list/dc = datum_components
+	var/list/dc = _datum_components
 	if(!dc)
 		return null
 	var/datum/component/C = dc[c_type]
@@ -419,7 +419,7 @@
  * * c_type The component type path
  */
 /datum/proc/GetComponents(c_type)
-	var/list/components = datum_components?[c_type]
+	var/list/components = _datum_components?[c_type]
 	if(!components)
 		return list()
 	return islist(components) ? components : list(components)
@@ -590,7 +590,7 @@
  * * /datum/target the target to move the components to
  */
 /datum/proc/TransferComponents(datum/target)
-	var/list/dc = datum_components
+	var/list/dc = _datum_components
 	if(!dc)
 		return
 	var/comps = dc[/datum/component]

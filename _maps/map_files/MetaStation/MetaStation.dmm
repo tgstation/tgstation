@@ -3741,6 +3741,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/closet/crate/secure{
+	desc = "A secure crate containing various materials for building a customised test-site.";
+	name = "Test Site Materials Crate";
+	req_access = list("ordnance")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "brA" = (
@@ -3965,11 +3970,6 @@
 "buG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/closet/crate/secure{
-	desc = "A secure crate containing various materials for building a customised test-site.";
-	name = "Test Site Materials Crate";
-	req_access = list("ordnance")
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,

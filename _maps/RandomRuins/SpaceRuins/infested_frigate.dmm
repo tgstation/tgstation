@@ -1107,10 +1107,7 @@
 	icon_state = "warningline_white";
 	dir = 8
 	},
-/obj/machinery/vending/medical{
-	req_access = list("theatre");
-	products = list(/obj/item/stack/medical/gauze=0,/obj/item/reagent_containers/syringe=7,/obj/item/reagent_containers/dropper=3,/obj/item/healthanalyzer=0,/obj/item/wrench/medical=0,/obj/item/stack/sticky_tape/surgical=0,/obj/item/healthanalyzer/wound=0,/obj/item/stack/medical/ointment=0,/obj/item/stack/medical/suture=1,/obj/item/stack/medical/bone_gel/four=1,/obj/item/cane/white=2)
-	},
+/obj/machinery/vending/medical/infested_frigate,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "sQ" = (
