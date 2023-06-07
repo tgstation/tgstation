@@ -100,3 +100,7 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 /datum/store_item/pocket/newspaper
 	name = "Newspaper"
 	item_path = /obj/item/newspaper
+
+/datum/store_item/pocket/pet_beacon
+	name = "Pet Delivery Beacon"
+	item_path = /obj/item/choice_beacon/pet

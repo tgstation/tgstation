@@ -178,12 +178,10 @@
 // Pet Beacon for Monkecoin shop
 
 /obj/item/choice_beacon/pet
-	name = "Deluxe Pet Delivery Beacon"
+	name = "Pet Delivery Beacon"
 	desc = "For those shifts when you need a little piece of home and some company."
-	uses = 3
 	company_message = span_bold("Pet request received. Your friend is on the way.")
 	var/default_name = "Stinko"
-	var/mob_choice = /mob/living/basic/mothroach
 
 /obj/item/choice_beacon/pet/generate_display_names()
 	var/static/list/pet_list
@@ -229,19 +227,7 @@
 
 	uses--
 	if(uses <= 0)
-		do_sparks(3, source = src)
 		qdel(src)
 		return
 
 	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
-
-/obj/item/choice_beacon/pet/proc/spawn_mob(mob/living/M,name)
-	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-	var/mob/your_pet = new mob_choice(pod)
-	pod.explosionSize = list(0,0,0,0)
-	your_pet.name = name
-	your_pet.real_name = name
-	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
-	to_chat(M, msg)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
-
