@@ -304,6 +304,16 @@
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
+	
+/obj/item/melee/curator_whip/dadbelt
+	name = "dad's belt"
+	desc = "The ultimate weapon against rowdy assistants."
+	icon = 'icons/obj/weapons/whip.dmi'
+	icon_state = "dadbelt"
+	inhand_icon_state = "dadsbelt"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	worn_icon_state = "dadbeltworn"
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
 	. = ..()
