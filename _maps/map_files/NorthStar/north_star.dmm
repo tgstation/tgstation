@@ -29219,7 +29219,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
 /obj/item/bonesetter,
-/obj/item/stack/medical/bone_gel/four,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "hBe" = (
@@ -31432,7 +31432,10 @@
 /area/station/command/heads_quarters/cmo)
 "ihg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/plush/lizard_plushie/green,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Bites-The-Wires";
+	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future."
+	},
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
 	},
@@ -67477,7 +67480,9 @@
 /obj/effect/turf_decal/tile/green/full,
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/instrument/musicalmoth,
+/obj/item/instrument/musicalmoth{
+	name = "Congo Ralis"
+	},
 /obj/item/clothing/head/mothcap,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
@@ -81975,7 +81980,10 @@
 /area/station/science/cytology)
 "vpU" = (
 /obj/structure/rack,
-/obj/item/toy/plush/plasmamanplushie,
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Nitrous II";
+	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself."
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
 "vqb" = (
@@ -87164,7 +87172,10 @@
 /obj/structure/chair/sofa/left{
 	dir = 8
 	},
-/obj/item/toy/plush/beeplushie,
+/obj/item/toy/plush/beeplushie{
+	name = "Bee Haave";
+	desc = "A cute bee toy to calm down hysteric patients."
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "wFT" = (

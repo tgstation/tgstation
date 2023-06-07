@@ -156,7 +156,6 @@
 		/mob/living/simple_animal/hostile/guardian/ranged,
 		/mob/living/simple_animal/hostile/guardian/standard,
 		/mob/living/simple_animal/hostile/guardian/support,
-		/mob/living/simple_animal/hostile/headcrab,
 		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/heretic_summon/armsy,
 		/mob/living/simple_animal/hostile/heretic_summon/armsy/prime,

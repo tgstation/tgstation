@@ -798,7 +798,7 @@
 /datum/chemical_reaction/bone_gel/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/bone_gel(location)
+		new /obj/item/stack/medical/bone_gel/one(location)
 
 ////Ice and water
 

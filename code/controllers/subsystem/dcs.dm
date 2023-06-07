@@ -6,7 +6,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/list/elements_by_type = list()
 
 /datum/controller/subsystem/processing/dcs/Recover()
-	comp_lookup = SSdcs.comp_lookup
+	_comp_lookup = SSdcs._comp_lookup
 
 /datum/controller/subsystem/processing/dcs/proc/GetElement(list/arguments)
 	var/datum/element/eletype = arguments[1]
