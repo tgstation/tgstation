@@ -11755,10 +11755,6 @@
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/prison/mess)
 "eHj" = (
-/obj/item/target/clown,
-/obj/item/target/clown,
-/obj/item/target/syndicate,
-/obj/item/target/alien,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -41302,6 +41298,10 @@
 	name = "Test Site Materials Crate";
 	req_access = list("ordnance")
 	},
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/syndicate,
+/obj/item/target/alien,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
