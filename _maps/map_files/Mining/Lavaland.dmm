@@ -4818,12 +4818,11 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Dk" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	space_dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/mine/laborcamp)
 "Dl" = (
@@ -7214,14 +7213,13 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp/security)
 "SL" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	space_dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/mine/laborcamp)
 "SO" = (

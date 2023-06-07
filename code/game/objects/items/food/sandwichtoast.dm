@@ -40,7 +40,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 		/datum/reagent/carbon = 4,
 	)
-	foodtypes = GRAIN | DAIRY
+	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
 	burns_on_grill = TRUE
 
 /obj/item/food/sandwich/jelly

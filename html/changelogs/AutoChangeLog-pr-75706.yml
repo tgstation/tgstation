@@ -1,4 +1,0 @@
-author: "moocowswag"
-delete-after: True
-changes:
-  - bugfix: "Tramstation departures is no longer missing a window"

@@ -87,12 +87,7 @@
 			return
 		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
 		var/list/components = list()
-		var/all_components_on_target = LAZYACCESS(target.datum_components, /datum/component)
-		if(islist(all_components_on_target))
-			for(var/datum/component/component in LAZYACCESS(target.datum_components, /datum/component))
-				components += component.type
-		else if(all_components_on_target)
-			var/datum/component/component = all_components_on_target
+		for(var/datum/component/component in target.GetComponents(/datum/component))
 			components += component.type
 		var/list/names = list()
 		names += "---Components---"

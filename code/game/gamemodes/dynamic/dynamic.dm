@@ -706,6 +706,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(!handle_executing_latejoin(forced_latejoin_rule, newPlayer, forced = TRUE))
 			message_admins("The forced latejoin ruleset [forced_latejoin_rule.name] couldn't be executed \
 				as the most recent latejoin did not fulfill the ruleset's requirements.")
+		forced_latejoin_rule = null
 		return
 
 	if(!forced_injection)

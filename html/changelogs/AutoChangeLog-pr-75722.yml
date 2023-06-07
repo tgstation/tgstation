@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - rscadd: "Igniter's can be crafted"
+  - rscadd: "Spraker's can be printed in the autolathe"
+  - rscadd: "ignition controller can be printed in the autolathe"
