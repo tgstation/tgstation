@@ -154,6 +154,7 @@
 	id = "russia_ship_bolt_s";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
+	req_access = list("hunter");
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -318,6 +319,7 @@
 	id = "russia_ship_bolt_n";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
+	req_access = list("hunter");
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,

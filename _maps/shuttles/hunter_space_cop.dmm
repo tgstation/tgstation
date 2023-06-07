@@ -40,7 +40,7 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "Interpolship";
-	req_access = hunter
+	req_access = list("hunter")
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
