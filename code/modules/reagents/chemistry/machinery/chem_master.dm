@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	/// Number of printed containers in the current printing cycle for UI progress bar
 	var/printing_progress
 	var/printing_total
-	/// Default duration of printing for one container
+	/// Default duration of printing cycle
 	var/printing_speed = 1.5 SECONDS // Duration of animation
 	/// The amount of containers printed in one cycle
 	var/printing_amount = 1
