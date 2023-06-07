@@ -118,6 +118,9 @@
 /area/shuttle/hunter)
 "x" = (
 /obj/structure/table,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 4
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "y" = (
