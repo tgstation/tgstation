@@ -104,7 +104,7 @@
 
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_CIRCUIT_SHELL_REMOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_CIRCUIT_SET_SHELL,
 	))
 
@@ -175,7 +175,7 @@
 		new_physical_object = attached_circuit
 
 	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, PROC_REF(on_circuit_shell_removed))
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_deleting))
+	RegisterSignal(attached_circuit, COMSIG_QDELETING, PROC_REF(on_circuit_deleting))
 	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, PROC_REF(on_set_shell))
 	set_physical_object(new_physical_object)
 

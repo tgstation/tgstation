@@ -38,7 +38,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_CLICK_ALT,
 		COMSIG_LIVING_DEATH,
-		COMSIG_PARENT_QDELETING
+		COMSIG_QDELETING
 	))
 	unfriend()
 	return ..() //Run parent at end

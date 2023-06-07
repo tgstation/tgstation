@@ -133,7 +133,7 @@
 	attached_item.forceMove(src)
 	attached_item.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
 	vis_contents += attached_item
-	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_delete))
+	RegisterSignal(attached_item, COMSIG_QDELETING, PROC_REF(on_attached_delete))
 	handle_density()
 
 /**
@@ -143,7 +143,7 @@
  */
 /obj/structure/training_machine/proc/on_attached_delete()
 	SIGNAL_HANDLER
-	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(attached_item, COMSIG_QDELETING)
 	vis_contents -= attached_item
 	attached_item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	attached_item = null
@@ -162,7 +162,7 @@
 	if (!attached_item)
 		return
 	if (istype(attached_item, /obj/item/storage/toolbox/syndicate))
-		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(attached_item, COMSIG_QDELETING)
 		qdel(attached_item)
 	else if (user)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), attached_item)

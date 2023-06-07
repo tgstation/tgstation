@@ -43,7 +43,7 @@
 	src.stun_per_resurrection = stun_per_resurrection
 	src.phylactery_color = phylactery_color
 
-	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, PROC_REF(on_lich_mind_lost))
+	RegisterSignal(lich_mind, COMSIG_QDELETING, PROC_REF(on_lich_mind_lost))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(check_if_lich_died))
 
 	var/obj/obj_parent = parent
@@ -93,7 +93,7 @@
 		examine_list += span_green("A terrible aura surrounds this item. Its very existence is offensive to life itself...")
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] registered on the lich's mind.
+ * Signal proc for [COMSIG_QDELETING] registered on the lich's mind.
  *
  * Minds shouldn't be getting deleted but if for some ungodly reason
  * the lich'd mind is deleted our component should go with it, as

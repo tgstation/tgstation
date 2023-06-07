@@ -86,7 +86,7 @@
 
 	limb._embed_object(weapon) // on the inside... on the inside...
 	weapon.forceMove(victim)
-	RegisterSignals(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(weaponDeleted))
+	RegisterSignals(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(weaponDeleted))
 	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.plaintext_zone]!"))
 
 	var/damage = weapon.throwforce
@@ -108,7 +108,7 @@
 		victim.clear_alert(ALERT_EMBEDDED_OBJECT)
 		victim.clear_mood_event("embedded")
 	if(weapon)
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	weapon = null
 	limb = null
 	return ..()
@@ -221,10 +221,10 @@
 
 	var/mob/living/carbon/victim = parent
 	limb._unembed_object(weapon)
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
 
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if(to_hands)
 			INVOKE_ASYNC(to_hands, TYPE_PROC_REF(/mob, put_in_hands), weapon)
 		else

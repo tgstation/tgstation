@@ -69,7 +69,7 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
 
@@ -80,7 +80,7 @@
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_PARENT_EXAMINE,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
@@ -181,7 +181,7 @@
 	if(thing.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		thermite_melt(user)
 
-/// Signal handler for COMSIG_PARENT_QDELETING, necessary because turfs can be weird with qdel()
+/// Signal handler for COMSIG_QDELETING, necessary because turfs can be weird with qdel()
 /datum/component/thermite/proc/parent_qdeleting(datum/source)
 	SIGNAL_HANDLER
 

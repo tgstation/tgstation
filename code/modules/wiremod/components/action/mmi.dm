@@ -101,7 +101,7 @@
 	if(to_add.brainmob)
 		update_mmi_mob(to_add, null, to_add.brainmob)
 	brain = to_add
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, PROC_REF(remove_current_brain))
+	RegisterSignal(to_add, COMSIG_QDELETING, PROC_REF(remove_current_brain))
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(mmi_moved))
 
 /obj/item/circuit_component/mmi/proc/mmi_moved(atom/movable/mmi)
@@ -118,7 +118,7 @@
 	if(brain.brainmob)
 		update_mmi_mob(brain, brain.brainmob)
 	UnregisterSignal(brain, list(
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_MOVABLE_MOVED
 	))
 	if(brain.loc == src)

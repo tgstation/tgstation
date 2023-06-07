@@ -52,7 +52,7 @@
 	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_interference), override = TRUE)
 	//severe flubs (insta match ender, no winners) conditions
 	RegisterSignal(sparring, COMSIG_LIVING_DEATH, PROC_REF(death_flub))
-	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, PROC_REF(deletion_flub))
+	RegisterSignal(sparring, COMSIG_QDELETING, PROC_REF(deletion_flub))
 
 /datum/sparring_match/proc/unhook_signals(mob/living/carbon/human/sparring)
 	if(!sparring)
@@ -71,7 +71,7 @@
 		COMSIG_ATOM_HITBY,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_LIVING_DEATH,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 
 ///someone is changing health state, end the fight in crit

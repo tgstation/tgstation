@@ -47,13 +47,13 @@
 /obj/item/pizzabox/proc/register_bomb(new_bomb)
 	bomb = new_bomb
 	if(istype(bomb))
-		RegisterSignal(bomb, COMSIG_PARENT_QDELETING, PROC_REF(clear_bomb))
+		RegisterSignal(bomb, COMSIG_QDELETING, PROC_REF(clear_bomb))
 
 /obj/item/pizzabox/proc/clear_bomb(datum/source)
 	SIGNAL_HANDLER
 	if(isnull(bomb))
 		return
-	UnregisterSignal(bomb, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(bomb, COMSIG_QDELETING)
 	bomb = null
 
 /obj/item/pizzabox/Destroy()

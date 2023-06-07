@@ -53,7 +53,7 @@
 			/* food_buff = */ snack_type,
 			/* owner = */ parent,
 		)
-		RegisterSignal(golem_snack, COMSIG_PARENT_QDELETING, PROC_REF(on_food_destroyed))
+		RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 	golem_snack.attack(target, user, click_parameters)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -90,7 +90,7 @@
 	src.food_buff = food_buff
 	src.owner = owner
 
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroyed))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_parent_destroyed))
 
 /// Clean ourselves up if our parent dies
 /obj/item/food/golem_food/proc/on_parent_destroyed(datum/destroyed_thing)

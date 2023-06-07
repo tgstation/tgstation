@@ -120,14 +120,14 @@
 	SIGNAL_HANDLER
 
 	if(wearer)
-		UnregisterSignal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING))
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
 
 /datum/component/shielded/proc/set_wearer(mob/user)
 	wearer = user
 	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, PROC_REF(lost_wearer))
+	RegisterSignal(wearer, COMSIG_QDELETING, PROC_REF(lost_wearer))
 	if(current_charges)
 		wearer.update_appearance(UPDATE_ICON)
 
