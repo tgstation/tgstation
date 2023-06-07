@@ -43080,7 +43080,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/incident_display/tram/directional/north{
+	name = "darwin award counter";
+	desc = "A display that indicates how many dents that'll need fixed after the shift is over."
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "onW" = (
@@ -44407,6 +44410,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "oRV" = (
@@ -49358,11 +49362,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
-/obj/machinery/incident_display/tram{
-	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
-	name = "darwin award counter";
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
