@@ -405,6 +405,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			reagents.trans_to(item, volume_in_each, transfered_by = src)
 			printing_progress++
 			item_count--
+		update_appearance(UPDATE_ICON)
 	is_printing = FALSE
 	update_appearance(UPDATE_ICON)
 	return TRUE
