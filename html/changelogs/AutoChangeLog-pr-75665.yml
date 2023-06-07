@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram platform tiles now have proper stack types"
-  - refactor: "Pride week tile coloring refactored into a generic holiday decal system"
-  - spellcheck: "Tile decals are no longer all named 'corner'"

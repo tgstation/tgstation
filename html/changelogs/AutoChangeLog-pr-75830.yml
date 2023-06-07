@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - admin: "Player Ticket History - view a player's ticket history without the need to use external tooling."
