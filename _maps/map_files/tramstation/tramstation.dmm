@@ -18739,7 +18739,7 @@
 /area/station/science/ordnance/testlab)
 "fnl" = (
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -28118,9 +28118,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "iWm" = (
-/obj/machinery/incident_display/tram{
-	pixel_x = -32
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
 	pixel_x = -5;
@@ -28130,6 +28127,7 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "iWz" = (
