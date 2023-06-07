@@ -222,7 +222,7 @@
 
 	var/list/procs = (_signal_procs ||= list())
 	var/list/target_procs = (procs[target] ||= list())
-	var/list/lookup = (target._comp_lookup ||= list())
+	var/list/lookup = (target._listen_lookup ||= list())
 
 	if(!override && target_procs[signal_type])
 		var/override_message = "[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]"
@@ -258,7 +258,7 @@
  * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
  */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	var/list/lookup = target._comp_lookup
+	var/list/lookup = target._listen_lookup
 	if(!_signal_procs || !_signal_procs[target] || !lookup)
 		return
 	if(!islist(sig_type_or_types))
@@ -272,18 +272,18 @@
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
 			if(1)
-				stack_trace("[target] ([target.type]) somehow has single length list inside _comp_lookup")
+				stack_trace("[target] ([target.type]) somehow has single length list inside _listen_lookup")
 				if(src in lookup[sig])
 					lookup -= sig
 					if(!length(lookup))
-						target._comp_lookup = null
+						target._listen_lookup = null
 						break
 			if(0)
 				if(lookup[sig] != src)
 					continue
 				lookup -= sig
 				if(!length(lookup))
-					target._comp_lookup = null
+					target._listen_lookup = null
 					break
 			else
 				lookup[sig] -= src
@@ -354,7 +354,7 @@
  * Use the [SEND_SIGNAL] define instead
  */
 /datum/proc/_SendSignal(sigtype, list/arguments)
-	var/target = _comp_lookup[sigtype]
+	var/target = _listen_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
 		return NONE | call(listening_datum, listening_datum._signal_procs[src][sigtype])(arglist(arguments))
