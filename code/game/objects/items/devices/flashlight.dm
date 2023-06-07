@@ -122,7 +122,7 @@
 
 				if(M == user) //they're using it on themselves
 					user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
-					render_list += "<span class='info'>You direct [src] to into your eyes:</span>\n"
+					render_list += span_info("You direct [src] to into your eyes:\n")
 
 					if(M.is_blind())
 						render_list += "<span class='notice ml-1'>You're not entirely certain what you were expecting...</span>\n"
@@ -132,7 +132,7 @@
 					//M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
 				else
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
-					render_list += "<span class='info'>You direct [src] to [M]'s eyes:</span>\n"
+					render_list += span_info("You direct [src] to [M]'s eyes:\n")
 
 					if(M.stat == DEAD || M.is_blind())
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils don't react to the light!</span>\n"//mob is dead
@@ -189,7 +189,7 @@
 									can_use_mirror = mirror.pixel_x < 0
 
 					M.visible_message(span_notice("[M] directs [src] to [ M.p_their()] mouth."), ignored_mobs = user)
-					render_list += "<span class='info'>You point [src] into your mouth:</span>\n"
+					render_list += span_info("You point [src] into your mouth:\n")
 					if(!can_use_mirror)
 						to_chat(user, span_notice("You can't see anything without a mirror."))
 						return
@@ -202,7 +202,7 @@
 
 				else //if we're looking in someone elses mouth
 					user.visible_message(span_notice("[user] directs [src] to [M]'s mouth."), ignored_mobs = user)
-					render_list += "<span class='info'>You point [src] into [M]'s mouth:</span>\n"
+					render_list += span_info("You point [src] into [M]'s mouth:\n")
 					if(organ_count)
 						render_list += "<span class='notice ml-1'>Inside [ M.p_their()] mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>\n"
 					else
@@ -226,9 +226,9 @@
 
 				//assess blood level
 				if(M == user)
-					render_list += "<span class='info'>You press a finger to your gums:</span>\n"
+					render_list += span_info("You press a finger to your gums:\n")
 				else
-					render_list += "<span class='info'>You press a finger to [M.p_their()] gums:</span>\n"
+					render_list += span_info("You press a finger to [M.p_their()] gums:\n")
 
 				if(M.blood_volume <= BLOOD_VOLUME_SAFE && M.blood_volume > BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>Color returns slowly!</span>\n"//low blood

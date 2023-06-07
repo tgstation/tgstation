@@ -204,16 +204,17 @@
 			to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear"))
 			return
 		else
-			render_list += "<span class='info'>You place [src] against [carbon_patient]'s [body_part]:</span>\n"
+			render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
+
 
 	else if(body_part == BODY_ZONE_PRECISE_GROIN)//We're feeling their abdomen
-		render_list += "<span class='info'>You carefully press down on [carbon_patient]'s abdomen:</span>\n"
+		render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")
 		user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
 	else if(body_part == BODY_ZONE_HEAD)//We're feeling their pulse on their neck
-		render_list += "<span class='info'>You carefully press your fingers to [carbon_patient]'s neck:</span>\n"
+		render_list += span_info("You carefully press your fingers to [carbon_patient]'s neck:\n")
 		user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s neck."), ignored_mobs = user)
 	else if(body_part != BODY_ZONE_CHEST && body_part != BODY_ZONE_PRECISE_GROIN && body_part != BODY_ZONE_PRECISE_EYES && body_part != BODY_ZONE_PRECISE_MOUTH)//We're feeling their pulse on an extremity
-		render_list += "<span class='info'>You carefully press your fingers to [carbon_patient]'s [body_part]:</span>\n"
+		render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
 		user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
 	else//We're targeting their mouth or eyes. Try again.
 		balloon_alert(user, "can't do that!")
@@ -253,14 +254,14 @@
 				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 			else
 				if(heart.damage > 10)
-					heart_strength = "<span class='danger'>irregular</span>"//their heart is damaged
+					heart_strength = span_danger("irregular")//their heart is damaged
 				else
-					heart_strength = "<span class='notice'>regular</span>"//they're okay :D
+					heart_strength = span_notice("regular")//they're okay :D
 
 				if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
-					pulse_pressure = "<span class='danger'>thready</span>"//low blood
+					pulse_pressure = span_danger("thready")//low blood
 				else
-					pulse_pressure = "<span class='notice'>strong</span>"//they're okay :D
+					pulse_pressure = span_notice("strong")//they're okay :D
 
 				render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
