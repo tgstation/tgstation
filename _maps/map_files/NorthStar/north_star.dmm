@@ -30173,6 +30173,12 @@
 	dir = 1
 	},
 /area/station/command/gateway)
+"hOP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
+/obj/structure/sign/delamination_counter/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "hOR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/meter,
@@ -36360,16 +36366,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"jxd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/incident/delam/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "jxi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -42115,11 +42111,11 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kWD" = (
+/obj/structure/fireaxecabinet/directional/north,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/sign/incident/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kWM" = (
@@ -71448,7 +71444,6 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/fireaxecabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sAa" = (
@@ -85134,7 +85129,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/structure/sign/incident/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wfx" = (
@@ -93124,7 +93118,6 @@
 "yhO" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/structure/window/spawner/directional/east,
-/obj/structure/sign/incident/delam/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -138776,7 +138769,7 @@ oqA
 bNR
 klY
 klY
-klY
+hOP
 nHv
 cAf
 klY
@@ -139027,7 +139020,7 @@ oIy
 bIW
 oIy
 oIy
-jxd
+pso
 xgW
 xgW
 pUf

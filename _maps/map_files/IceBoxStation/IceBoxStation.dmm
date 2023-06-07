@@ -17996,6 +17996,7 @@
 /area/station/engineering/atmos)
 "fFy" = (
 /obj/machinery/space_heater,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fFC" = (
@@ -45548,7 +45549,6 @@
 "oxe" = (
 /obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/structure/sign/incident/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "oxh" = (
@@ -66469,6 +66469,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/command/heads_quarters/ce)
 "vkC" = (
@@ -73468,7 +73469,6 @@
 "xss" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/structure/sign/incident/delam/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "xsv" = (
@@ -74340,8 +74340,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "xFM" = (
-/obj/machinery/incident_display/delam,
-/turf/closed/wall/r_wall,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/sign/delamination_counter/directional/north,
+/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xFU" = (
 /obj/structure/barricade/wooden,
@@ -235466,7 +235471,7 @@ gTK
 gTK
 myX
 sSJ
-xFM
+gka
 eEh
 fab
 eDC
@@ -235734,7 +235739,7 @@ spv
 dwy
 spv
 wuo
-pry
+xFM
 kUz
 mLV
 gka
