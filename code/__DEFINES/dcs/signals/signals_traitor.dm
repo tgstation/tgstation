@@ -32,3 +32,6 @@
 #define COMSIG_TRAITOR_GRAFFITI_DRAWN "traitor_rune_drawn"
 /// Called when someone slips on some seditious graffiti. Pass the mind of the viewer.
 #define COMSIG_TRAITOR_GRAFFITI_SLIPPED "traitor_demoralise_event"
+
+/// Called when a discounted item is bought with the updated TC as argument.
+#define COMSIG_TRAITOR_BUY_ITEM_DISCOUNTED "traitor_discounted_item"

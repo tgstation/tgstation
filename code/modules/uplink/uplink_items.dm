@@ -17,6 +17,7 @@
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
 		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
 		uplink_item.item = taken_item.item
+		uplink_item.discounted = TRUE
 
 		sales += uplink_item
 	return sales
@@ -37,14 +38,12 @@
 	var/item = null
 	/// Cost of the item.
 	var/cost = 0
-	/// Amount of TC to refund, in case there's a TC penalty for refunds.
-	var/refund_amount = 0
-	/// Whether this item is refundable or not.
-	var/refundable = FALSE
 	// Chance of being included in the surplus crate.
 	var/surplus = 100
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
+	/// If discounted, is true. Used to send a signal to update reimbursement.
+	var/discounted = FALSE
 	/// If this value is changed on two items they will share stock, defaults to not sharing stock with any other item
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
@@ -123,6 +122,8 @@
 		A = new spawn_path(get_turf(user))
 	else
 		A = spawn_path
+	if(discounted)
+		SEND_SIGNAL(A, COMSIG_TRAITOR_BUY_ITEM_DISCOUNTED)
 	if(ishuman(user) && isitem(A))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))

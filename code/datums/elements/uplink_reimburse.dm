@@ -21,15 +21,20 @@
 
 	src.refundable_tc = refundable_tc
 
+	RegisterSignal(target, COMSIG_TRAITOR_BUY_ITEM_DISCOUNTED, PROC_REF(update_tc))
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
-	// Due to how our attack chain is terrible and doesn't have some sort of usable inverted attackby() apparently the best method here is
-	// to just make the uplink component check for this element. Yay.
 
 /datum/element/uplink_reimburse/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 	return ..()
+
+///signal called when item is bought!
+/datum/element/uplink_reimburse/proc/update_tc(datum/uplink_item/item_datum)
+	SIGNAL_HANDLER
+
+	refundable_tc = item_datum.cost
 
 ///signal called on parent being examined
 /datum/element/uplink_reimburse/proc/on_examine(datum/target, mob/user, list/examine_list)
