@@ -91,7 +91,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	prompt_name = "a psyker seer"
-	you_are_text = "Ugh, I'm the Psyker Seer"
+	you_are_text = "Ugh, I'm the Psyker Seer."
 	flavour_text = "Oh great, the fortunte-tellers want my help with something again. They picked up up while I was space-hitchhiking, said they would take me anywhere \
 		if I assisted them with my 'flesh-gaze'. They're a bunch of freaks, but at least they leave me be after I'm done helping them..."
 	back_story = HUNTER_PACK_PSYKER
