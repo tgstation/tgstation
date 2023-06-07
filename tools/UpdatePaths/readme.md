@@ -365,7 +365,7 @@ Perfect, so now let's assume the following map:
 "b" = (
 /mob/living/github_user{
 	name = "ShizCalev";
-	desc= "It has more good boy points than a megafauna has health.";
+	desc= "Has more good boy points than a megafauna has health.";
 	maxHealth = 2083
 	},
 /turf/open/floor/iron,
@@ -384,7 +384,7 @@ You would then get the following output:
 "b" = (
 /mob/living/github_user{
 	name = "ShizCalev";
-	desc= "It has more good boy points than a megafauna has health.";
+	desc= "Has more good boy points than a megafauna has health.";
 	good_boy_points = 2083
 	},
 /turf/open/floor/iron,
