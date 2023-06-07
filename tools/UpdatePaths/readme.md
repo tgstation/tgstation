@@ -341,19 +341,19 @@ You would then get the following output:
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
 
 #### Methods: Any Value Fits All and Naming Conventions
-But what if you simply want to rename the variable `maxHealth` to `good_boy_points` for `/mob/living/github_user` that have it edited, regardless of value? Since you're required to state a value in your input anyway, in this case it'll be `@ANY`. To set the value of the newly named `good_boy_points` all we need to do is set the name, followed by `@OLD:` (colon included) and the name of the old variable `maxHealth`.
+But what if you just want to rename the variable `maxHealth` to `good_boy_points` for all instances of `/mob/living/github_user`? Using the `@ANY` parameter after a variable name, you can capture any path that has it edited in a map. Meanwhile, to set the value of the newly named `good_boy_points` we'll use `@OLD:maxHealth` after declaring the new variable name to achieve that. The result'll be something like this:
 
 ```txt
 /mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{good_boy_points=@OLD:maxHealth}
 ```
 
-...except this is wrong. If you read the previous methods, you'd know that without the `@OLD` (the one without colon), this will discard any other variable edit, so it's important to add it BEFORE the other paraments (as well as `maxHealth` followed by `:@SKIP`) if you're renaming the variable to something else:
+Though, If you read the previous methods, you'd know that without the `@OLD` parameter (the one without colon), every other variable edit will also be discarded, so it's important to add that BEFORE any other parament, as well as `maxHealth=@SKIP` since we're renaming that variable. So, take two:
 
 ```txt
 /mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{@OLD; maxHealth=@SKIP; good_boy_points=@OLD:maxHealth}
 ```
 
-Done that, from a map like this:
+Perfect, so now let's assume the following map:
 
 ```dm
 "a" = (
