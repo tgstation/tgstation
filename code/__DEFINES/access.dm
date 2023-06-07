@@ -188,6 +188,8 @@
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
+/// HUNTERS
+#define ACCESS_HUNTER "hunter"
 
 /// - - - END ACCESS IDS - - -
 

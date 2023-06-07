@@ -50,5 +50,8 @@
 /// Trim for Bounty Hunters NOT hired by centcom. (?)
 /datum/id_trim/bounty_hunter
 	assignment = "Bounty Hunter"
+	trim_state = "trim_deathcommando"
 	department_color = COLOR_PRISONER_ORANGE
 	subdepartment_color = COLOR_PRISONER_BLACK
+
+	access = list(ACCESS_HUNTER)
