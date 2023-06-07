@@ -180,6 +180,7 @@
 /obj/item/choice_beacon/pet
 	name = "Deluxe Pet Delivery Beacon"
 	desc = "For those shifts when you need a little piece of home and some company."
+	uses = 3
 	company_message = span_bold("Pet request received. Your friend is on the way.")
 	var/default_name = "Stinko"
 	var/mob_choice = /mob/living/basic/mothroach
@@ -199,24 +200,48 @@
 
 	return pet_list
 
-// /obj/item/choice_beacon/pet/proc/generate_options(mob/living/M)
-// 	var/input_name = stripped_input(M, "What would you like your new pet to be named?", "New Pet Name", default_name, MAX_NAME_LEN)
-// 	if(!input_name)
-// 		return
-// 	spawn_mob(M,input_name)
-// 	uses--
-// 	if(!uses)
-// 		qdel(src)
-// 	else
-// 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
+/obj/item/choice_beacon/pet/open_options_menu(mob/living/user)
+	var/input_name = stripped_input(user, "What would you like your new pet to be named?", "New Pet Name", default_name, MAX_NAME_LEN)
+	if (!input_name)
+		return
+	var/list/display_names = generate_display_names()
+	if(!length(display_names))
+		return
+	var/choice = tgui_input_list(user, "Which pet would you like to order?", "Select a new friend", display_names)
+	if(isnull(choice) || isnull(display_names[choice]))
+		return
+	if(!can_use_beacon(user))
+		return
 
-// /obj/item/choice_beacon/pet/proc/spawn_mob(mob/living/M,name)
-// 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-// 	var/mob/your_pet = new mob_choice(pod)
-// 	pod.explosionSize = list(0,0,0,0)
-// 	your_pet.name = name
-// 	your_pet.real_name = name
-// 	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
-// 	to_chat(M, msg)
-// 	new /obj/effect/pod_landingzone(get_turf(src), pod)
+	consume_use(display_names[choice], user, input_name)
+
+/obj/item/choice_beacon/pet/consume_use(obj/choice_path, mob/living/user, name)
+	to_chat(user, span_hear("You hear something crackle from the beacon for a moment before a voice speaks. \
+		\"Please stand by for a message from [company_source]. Message as follows: [company_message] Message ends.\""))
+
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	var/mob/your_pet = new choice_path(pod)
+	pod.explosionSize = list(0,0,0,0)
+	your_pet.name = name
+	your_pet.real_name = name
+
+	new /obj/effect/pod_landingzone(get_turf(src), pod)
+
+	uses--
+	if(uses <= 0)
+		do_sparks(3, source = src)
+		qdel(src)
+		return
+
+	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
+
+/obj/item/choice_beacon/pet/proc/spawn_mob(mob/living/M,name)
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	var/mob/your_pet = new mob_choice(pod)
+	pod.explosionSize = list(0,0,0,0)
+	your_pet.name = name
+	your_pet.real_name = name
+	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	to_chat(M, msg)
+	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
