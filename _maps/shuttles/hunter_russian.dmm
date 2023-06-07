@@ -132,6 +132,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "ho" = (
@@ -148,6 +149,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/binoculars,
+/obj/item/pinpointer/shuttle,
 /obj/machinery/button/door/directional/south{
 	id = "russia_ship_bolt_s";
 	name = "External Bolt Control";
@@ -165,6 +167,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "kL" = (
@@ -207,6 +210,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "qF" = (
@@ -238,6 +242,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cockpit Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "vZ" = (
@@ -276,6 +281,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "yo" = (
@@ -484,16 +490,16 @@
 /area/shuttle/hunter/russian)
 "JS" = (
 /obj/docking_port/mobile{
-	shuttle_id = "huntership";
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
-	rechargeTime = 1800
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	shuttle_id = "pirate_home";
 	name = "Deep Space";
+	shuttle_id = "pirate_home";
 	width = 17
 	},
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -504,6 +510,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "JU" = (
@@ -578,6 +585,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Se" = (
@@ -614,6 +622,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Uu" = (
@@ -681,6 +690,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Xu" = (

@@ -280,6 +280,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "oL" = (
@@ -326,6 +327,7 @@
 	name = "Sanctuary In The Garden Of Mind"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "rF" = (
@@ -341,6 +343,7 @@
 	name = "Fortune Telling"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/carpet/black,
 /area/shuttle/hunter)
 "sB" = (
@@ -395,6 +398,7 @@
 	name = "Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/iron,
 /area/shuttle/hunter)
 "vw" = (
@@ -465,6 +469,7 @@
 	name = "Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "yd" = (
@@ -590,6 +595,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Dw" = (
@@ -608,6 +614,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "En" = (
@@ -621,6 +628,7 @@
 	name = "Gear Storage"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "Gv" = (
@@ -713,6 +721,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/iron/freezer,
 /area/shuttle/hunter)
 "Kp" = (
@@ -815,6 +824,7 @@
 	name = "Fortune Telling Curtains";
 	pixel_x = -24
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/carpet/black,
 /area/shuttle/hunter)
 "Ph" = (
@@ -823,6 +833,7 @@
 	name = "Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Pv" = (
@@ -1032,6 +1043,8 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "Zb" = (
@@ -1043,6 +1056,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "ZC" = (
@@ -1060,6 +1074,9 @@
 	pixel_y = 3
 	},
 /obj/item/megaphone,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 7
+	},
 /obj/item/clothing/glasses/thermal/monocle{
 	pixel_y = 2
 	},
