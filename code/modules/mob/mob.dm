@@ -98,7 +98,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
+	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 /**
  * Generate the tag for this mob
@@ -834,7 +834,7 @@
  */
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
+		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
 		src << browse(null, t1)
 
@@ -1115,7 +1115,7 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
-	log_mob_tag("RENAMED: [key_name(src)]")
+	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
 	return TRUE
 

@@ -154,7 +154,7 @@
 		if(stored_mob)
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
-		else if(fromtendril)
+		else if(from_spawner)
 			new /obj/effect/mob_spawn/corpse/human/charredskeleton(T)
 		else if(dwarf_mob)
 			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(T)
@@ -163,7 +163,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE
 
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -307,6 +307,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
 	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/portal
+	from_spawner = TRUE
 
 // Snow Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow

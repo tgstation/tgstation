@@ -59234,7 +59234,7 @@
 /area/station/cargo/storage)
 "sQc" = (
 /obj/structure/table,
-/obj/item/food/grilled_cheese_sandwich{
+/obj/item/food/sandwich/cheese/grilled{
 	name = "idiot sandwich";
 	pixel_y = 8
 	},
@@ -68328,9 +68328,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "vPt" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	req_access = "0"
-	},
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
 "vPx" = (
@@ -74939,10 +74937,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "xQm" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	req_access = "0"
-	},
 /obj/machinery/airalarm/directional/west,
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
 "xQu" = (

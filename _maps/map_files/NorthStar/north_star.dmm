@@ -642,6 +642,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/corner,
 /area/station/cargo/drone_bay)
 "ahG" = (
@@ -2144,6 +2145,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/disposal)
 "aAx" = (
@@ -3487,6 +3489,7 @@
 /area/station/science/lab)
 "aSg" = (
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "aSj" = (
@@ -6707,6 +6710,7 @@
 /area/station/hallway/secondary/entry)
 "bBb" = (
 /obj/machinery/duct,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/cargo/miningdock)
 "bBw" = (
@@ -7928,6 +7932,10 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/service/chapel)
+"bTh" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/tcommsat/computer)
 "bTk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
@@ -11191,6 +11199,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningdock)
 "cKO" = (
@@ -13060,6 +13069,7 @@
 "dmk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "dmx" = (
@@ -14891,6 +14901,7 @@
 "dLm" = (
 /obj/structure/weightmachine,
 /obj/effect/turf_decal/stripes,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/station/medical/psychology)
 "dLt" = (
@@ -17371,6 +17382,7 @@
 /area/station/hallway/floor4/aft)
 "ert" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "erN" = (
@@ -22223,6 +22235,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/dresser,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "fLu" = (
@@ -25466,6 +25479,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/cmo)
 "gCm" = (
@@ -26949,6 +26963,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "gXs" = (
@@ -27392,6 +27407,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "hdg" = (
@@ -29203,7 +29219,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
 /obj/item/bonesetter,
-/obj/item/stack/medical/bone_gel/four,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "hBe" = (
@@ -29700,6 +29716,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hJc" = (
@@ -29862,6 +29879,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hKN" = (
@@ -30018,6 +30036,7 @@
 "hMu" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/ore_silo,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "hMw" = (
@@ -30154,6 +30173,12 @@
 	dir = 1
 	},
 /area/station/command/gateway)
+"hOP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
+/obj/structure/sign/delamination_counter/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "hOR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/meter,
@@ -30605,7 +30630,7 @@
 	},
 /obj/structure/sink/directional/south,
 /turf/open/floor/plating,
-/area/station/maintenance/disposal)
+/area/station/cargo/sorting)
 "hVk" = (
 /obj/machinery/light/red/dim/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -31407,7 +31432,10 @@
 /area/station/command/heads_quarters/cmo)
 "ihg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/plush/lizard_plushie/green,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Bites-The-Wires";
+	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future."
+	},
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
 	},
@@ -32043,6 +32071,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
+"ipl" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ipn" = (
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/hop)
@@ -32971,7 +33003,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/smooth_large,
-/area/station/cargo/sorting)
+/area/station/cargo/lobby)
 "iBF" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -37493,6 +37525,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/disposal)
 "jLI" = (
@@ -38140,6 +38173,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -41502,7 +41536,6 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/chemistry,
 /obj/item/hand_labeler,
-/obj/machinery/chem_dispenser,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pharmacy)
 "kPk" = (
@@ -49141,6 +49174,7 @@
 	name = "Chief Engineer's Fax Machine"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/ce)
 "mKf" = (
@@ -51235,6 +51269,7 @@
 	},
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "njj" = (
@@ -52351,6 +52386,9 @@
 /area/station/maintenance/floor4/port/aft)
 "nwF" = (
 /obj/machinery/duct,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nwL" = (
@@ -52710,6 +52748,7 @@
 /area/station/medical/psychology)
 "nBb" = (
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/chemistry)
 "nBg" = (
@@ -61515,6 +61554,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pSI" = (
@@ -61536,6 +61576,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -63279,6 +63320,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/miningoffice)
 "qsh" = (
@@ -63404,6 +63446,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/corner{
 	dir = 4
 	},
@@ -67437,7 +67480,9 @@
 /obj/effect/turf_decal/tile/green/full,
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/instrument/musicalmoth,
+/obj/item/instrument/musicalmoth{
+	name = "Congo Ralis"
+	},
 /obj/item/clothing/head/mothcap,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
@@ -67752,6 +67797,7 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -78157,6 +78203,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "urO" = (
@@ -78520,6 +78567,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/atmos)
+"uwu" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/textured_large,
+/area/station/medical/chemistry)
 "uww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/hatch{
@@ -78617,6 +78668,7 @@
 /area/station/maintenance/floor2/port/aft)
 "uxQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/patients_rooms)
 "uxR" = (
@@ -80756,6 +80808,10 @@
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -10;
+	pixel_x = -24
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "uZF" = (
@@ -81924,7 +81980,10 @@
 /area/station/science/cytology)
 "vpU" = (
 /obj/structure/rack,
-/obj/item/toy/plush/plasmamanplushie,
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Nitrous II";
+	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself."
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
 "vqb" = (
@@ -85553,6 +85612,7 @@
 /area/station/command/bridge)
 "wlP" = (
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "wlX" = (
@@ -87112,7 +87172,10 @@
 /obj/structure/chair/sofa/left{
 	dir = 8
 	},
-/obj/item/toy/plush/beeplushie,
+/obj/item/toy/plush/beeplushie{
+	name = "Bee Haave";
+	desc = "A cute bee toy to calm down hysteric patients."
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "wFT" = (
@@ -88008,6 +88071,10 @@
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -10;
+	pixel_x = -24
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "wPw" = (
@@ -88755,6 +88822,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "wZS" = (
@@ -89725,7 +89793,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/smooth_large,
-/area/station/cargo/sorting)
+/area/station/cargo/lobby)
 "xng" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
@@ -91760,6 +91828,20 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
+"xOH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "xOW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -117347,7 +117429,7 @@ gVm
 hIV
 iyD
 jzP
-mnR
+ipl
 dMs
 npD
 nUM
@@ -124794,7 +124876,7 @@ rJy
 rJy
 rJy
 aWr
-vkW
+xOH
 ehG
 ehG
 ehG
@@ -125079,7 +125161,7 @@ kzE
 clP
 lMH
 nBb
-kOR
+uwu
 kOR
 eXp
 kOR
@@ -129953,7 +130035,7 @@ cax
 mFW
 kSN
 jKt
-jIG
+bTh
 uVY
 dqB
 nHL
@@ -138687,7 +138769,7 @@ oqA
 bNR
 klY
 klY
-klY
+hOP
 nHv
 cAf
 klY

@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - bugfix: "Air Alarms will properly shut up when atmos is fixed."

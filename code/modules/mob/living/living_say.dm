@@ -142,6 +142,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			say_dead(original_message)
 			return
 
+	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
+		message_mods[WHISPER_MODE] = MODE_WHISPER
+
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
 		if(!COOLDOWN_FINISHED(client, say_slowmode))
 			to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
@@ -288,7 +291,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
-		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods, FALSE, TRUE)
 
 		if(speaker != src)
 			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
