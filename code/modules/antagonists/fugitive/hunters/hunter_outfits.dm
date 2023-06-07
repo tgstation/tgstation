@@ -23,7 +23,7 @@
 	W.update_label()
 	W.update_icon()
 
-///A slightly more modest and less badass looking ID, for the most trustworthy bounty hunter team.
+
 /datum/id_trim/bounty_hunter/police
 	assignment = "Police Officer"
 	trim_state = "trim_warden"
