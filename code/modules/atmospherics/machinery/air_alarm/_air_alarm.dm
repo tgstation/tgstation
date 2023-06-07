@@ -574,6 +574,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
 			warning_message = "Danger! High temperature detected."
 			return
+		else
+			warning_message = null
 
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
