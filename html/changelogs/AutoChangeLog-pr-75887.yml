@@ -1,0 +1,5 @@
+author: "Archimus12"
+delete-after: True
+changes:
+  - bugfix: "fixed admin custom job slot cancel button"
+  - spellcheck: "fixed a typo that spelled \"jobs\" as \"jebs\""
