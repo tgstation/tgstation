@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "Headslugs (the really small slug-like changeling form) are now basic mobs. They only wander around aimlessly now instead of attacking corpses all the time, and examining will let you know what type. Should probably still smash them before they suddenly gain sapience..."

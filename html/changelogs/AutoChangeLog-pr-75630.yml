@@ -1,8 +1,0 @@
-author: "Chadley"
-delete-after: True
-changes:
-  - rscadd: "Adds some new quirks!!"
-  - rscadd: "Adds the bilingual quirk, which gives a new random language."
-  - rscadd: "Adds the big hand quirk which stops the usage of most guns."
-  - rscadd: "Adds the soft spoken quirk which forces you to whisper."
-  - rscadd: "Adds the clumsy quirk enabling the clumsy trait."
