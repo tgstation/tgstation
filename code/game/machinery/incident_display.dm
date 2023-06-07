@@ -29,28 +29,26 @@ DEFINE_BITFIELD(sign_features, list(
 /obj/machinery/incident_display
 	name = NAME_DELAM
 	desc = DESC_DELAM
-	icon = 'icons/obj/stat_display.dmi'
+	icon = 'icons/obj/machines/incident_display.dmi'
 	icon_preview = "stat_display_delam"
 	icon_state = "stat_display_delam"
 	verb_say = "beeps"
 	verb_ask = "bloops"
 	verb_exclaim = "blares"
+	idle_power_usage = 450
+	max_integrity = 150
+	integrity_failure = 0.75
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 4)
 	/// What statistics we want the sign to display
 	var/sign_features = DISPLAY_DELAM
+	/// Tram hits before hazard warning
 	var/hit_threshold = 0
+	/// Tram hits
 	var/hit_count = 0
+	/// Shifts without delam
 	var/last_delam = 0
+	/// Delam record high-score
 	var/delam_record = 0
-
-/obj/item/wallframe/incident_display
-	name = "incident display frame"
-	desc = "Used to build safety incident displays, just secure to the wall."
-	icon = 'icons/obj/stat_display.dmi'
-	icon_state = "stat_display_blank"
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 4)
-	result_path = /obj/machinery/incident_display
-	pixel_shift = 28
 
 /obj/machinery/incident_display/dual
 	name = NAME_DUAL
@@ -82,49 +80,43 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/incident_display/LateInitialize()
+	. = ..()
+	GLOB.map_delamination_counters += src
+	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
+	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
+		RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
+
+	update_appearance()
+
 /obj/machinery/incident_display/Destroy()
 	GLOB.map_delamination_counters -= src
 	return ..()
 
-/obj/machinery/incident_display/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	balloon_alert(user, "[anchored ? "un" : ""]securing...")
-	tool.play_tool_sound(src)
-	if(tool.use_tool(src, user, 7 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
-		balloon_alert(user, "[anchored ? "un" : ""]secured")
-		deconstruct()
-		return TRUE
-
 /obj/machinery/incident_display/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return
-	if(atom_integrity >= max_integrity)
+
+	if(atom_integrity >= max_integrity && !(machine_stat & BROKEN))
 		balloon_alert(user, "it doesn't need repairs!")
 		return TRUE
+
 	balloon_alert(user, "repairing display...")
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
+
 	balloon_alert(user, "repaired")
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
 	return TRUE
 
+// Switch modes with multitool
 /obj/machinery/incident_display/multitool_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return
-	if(sign_features & DISPLAY_DELAM)
-		tool.play_tool_sound(src)
-		balloon_alert(user, "set to tram")
-		name = NAME_TRAM
-		desc = DESC_TRAM
-		icon_state = "stat_display_tram"
-		sign_features = DISPLAY_TRAM
-		update_tram_count(SSpersistence.tram_hits_this_round)
-		update_appearance()
-		return TRUE
-	else if(sign_features & DISPLAY_TRAM)
+
+	if(sign_features == DISPLAY_TRAM)
 		tool.play_tool_sound(src)
 		balloon_alert(user, "set to dual")
 		name = NAME_DUAL
@@ -132,10 +124,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		icon_state = "stat_display_dual"
 		sign_features = DISPLAY_DELAM | DISPLAY_TRAM
 		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
-		update_tram_count(SSpersistence.tram_hits_this_round)
+		update_tram_count(src, SSpersistence.tram_hits_this_round)
 		update_appearance()
 		return TRUE
-	else if(sign_features & DISPLAY_DELAM & DISPLAY_TRAM)
+	else if(sign_features == DISPLAY_DELAM)
+		tool.play_tool_sound(src)
+		balloon_alert(user, "set to tram")
+		name = NAME_TRAM
+		desc = DESC_TRAM
+		icon_state = "stat_display_tram"
+		sign_features = DISPLAY_TRAM
+		update_tram_count(src, SSpersistence.tram_hits_this_round)
+		update_appearance()
+		return TRUE
+	else if(sign_features == (DISPLAY_DELAM + DISPLAY_TRAM))
 		tool.play_tool_sound(src)
 		balloon_alert(user, "set to delam")
 		name = NAME_DELAM
@@ -146,8 +148,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		update_appearance()
 		return TRUE
 
+// EMP causes the display to display random numbers or outright break.
 /obj/machinery/incident_display/emp_act(severity)
 	. = ..()
+	if(prob(50))
+		set_machine_stat(machine_stat & BROKEN)
+		update_appearance()
+		return
 	name = NAME_DUAL
 	desc = DESC_DUAL
 	icon_state = "stat_display_dual"
@@ -158,15 +165,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	delam_record = rand(1,99)
 	update_appearance()
 
-/obj/machinery/incident_display/deconstruct(disassembled = TRUE)
+/obj/machinery/incident_display/deconstruct()
 	if(flags_1 & NODECONSTRUCT_1)
 		return
-	if(disassembled)
-		new /obj/item/wallframe/incident_display(drop_location())
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
+
 	qdel(src)
 
 /obj/machinery/incident_display/proc/update_delam_count(new_count, record)
@@ -174,48 +180,53 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	last_delam = min(new_count, 99)
 	update_appearance()
 
-/obj/machinery/incident_display/proc/update_tram_count(tram_collisions)
-	hit_count = tram_collisions
-	update_appearance()
-
-/obj/machinery/incident_display/LateInitialize()
-	. = ..()
-	GLOB.map_delamination_counters += src
-	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
-	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
-		RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(tram_hit))
-	update_appearance()
-
-/obj/machinery/incident_display/proc/tram_hit(source, tram_collisions)
+/obj/machinery/incident_display/proc/update_tram_count(source, tram_collisions)
 	SIGNAL_HANDLER
 
-	hit_count = tram_collisions
+	hit_count = min(tram_collisions, 99)
 	update_appearance()
 
 /obj/machinery/incident_display/update_appearance(updates=ALL)
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & NOPOWER)
+		icon_state = "stat_display_blank"
 		set_light(0)
 		return
+
+	if(machine_stat & BROKEN)
+		icon_state = "stat_display_broken"
+		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_DARK_BLUE)
+		return
+
+	if(sign_features == (DISPLAY_DELAM + DISPLAY_TRAM))
+		icon_state = "stat_display_dual"
+	else if(sign_features == DISPLAY_DELAM)
+		icon_state = "stat_display_delam"
+	else if(sign_features == DISPLAY_TRAM)
+		icon_state = "stat_display_tram"
+
 	set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_BLUE)
 
 /obj/machinery/incident_display/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	var/mutable_appearance/moff_base_emissive = emissive_appearance(icon, "moff_base_emissive", src, alpha = 128)
+
+	var/mutable_appearance/moff_base_emissive = emissive_appearance(icon, "moff_base_emissive", src, alpha = src.alpha)
 	. += moff_base_emissive
+
 	if(sign_features & DISPLAY_DELAM)
-		var/mutable_appearance/delam_base_emissive = emissive_appearance(icon, "delam_base_emissive", src, alpha = 128)
+		var/mutable_appearance/delam_base_emissive = emissive_appearance(icon, "delam_base_emissive", src, alpha = src.alpha)
 		var/delam_display_color
 		. += delam_base_emissive
 		if(!last_delam)
-			delam_display_color = "#FF0000"
+			delam_display_color = COLOR_VIVID_RED
 		else
-			delam_display_color = "#FBD641"
+			delam_display_color = COLOR_VERY_SOFT_YELLOW
+
 		var/delam_pos1 = last_delam % 10
 		var/mutable_appearance/delam_pos1_overlay = mutable_appearance(icon, "num_[delam_pos1]")
-		var/mutable_appearance/delam_pos1_emissive = emissive_appearance(icon, "num_[delam_pos1]", src, alpha = 128)
+		var/mutable_appearance/delam_pos1_emissive = emissive_appearance(icon, "num_[delam_pos1]_e", src, alpha = src.alpha)
 		delam_pos1_overlay.color = delam_display_color
 		delam_pos1_overlay.pixel_w = 9
 		delam_pos1_emissive.pixel_w = 9
@@ -226,7 +237,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 		var/delam_pos2 = (last_delam / 10) % 10
 		var/mutable_appearance/delam_pos2_overlay = mutable_appearance(icon, "num_[delam_pos2]")
-		var/mutable_appearance/delam_pos2_emissive = emissive_appearance(icon, "num_[delam_pos2]", src, alpha = 128)
+		var/mutable_appearance/delam_pos2_emissive = emissive_appearance(icon, "num_[delam_pos2]_e", src, alpha = src.alpha)
 		delam_pos2_overlay.color = delam_display_color
 		delam_pos2_overlay.pixel_w = 4
 		delam_pos2_emissive.pixel_w = 4
@@ -237,8 +248,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 		if(last_delam == delam_record)
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_RISING)
-			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, TREND_RISING, src, alpha = 128)
-			delam_trend_overlay.color = "#00FF00"
+			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
+			delam_trend_overlay.color = COLOR_SERVICE_LIME
 			delam_trend_overlay.pixel_w = 1
 			delam_trend_emissive.pixel_w = 1
 			delam_trend_overlay.pixel_z = 6
@@ -247,8 +258,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 			. += delam_trend_emissive
 		else
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_FALLING)
-			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, TREND_FALLING, src, alpha = 128)
-			delam_trend_overlay.color = "#FF0000"
+			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
+			delam_trend_overlay.color = COLOR_VIVID_RED
 			delam_trend_overlay.pixel_w = 1
 			delam_trend_emissive.pixel_w = 1
 			delam_trend_overlay.pixel_z = 6
@@ -257,11 +268,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 			. += delam_trend_emissive
 
 	if(sign_features & DISPLAY_TRAM)
-		var/mutable_appearance/tram_base_emissive = emissive_appearance(icon, "tram_base_emissive", src, alpha = 128)
-		var/tram_display_color = "#66CCFF"
+		var/mutable_appearance/tram_base_emissive = emissive_appearance(icon, "tram_base_emissive", src, alpha = src.alpha)
+		var/tram_display_color = COLOR_BRIGHT_BLUE
+
 		var/tram_pos1 = hit_count % 10
 		var/mutable_appearance/tram_pos1_overlay = mutable_appearance(icon, "num_[tram_pos1]")
-		var/mutable_appearance/tram_pos1_emissive = emissive_appearance(icon, "num_[tram_pos1]", src, alpha = 128)
+		var/mutable_appearance/tram_pos1_emissive = emissive_appearance(icon, "num_[tram_pos1]_e", src, alpha = src.alpha)
 		. += tram_base_emissive
 		tram_pos1_overlay.color = tram_display_color
 		tram_pos1_overlay.pixel_w = 9
@@ -273,7 +285,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 		var/tram_pos2 = (hit_count / 10) % 10
 		var/mutable_appearance/tram_pos2_overlay = mutable_appearance(icon, "num_[tram_pos2]")
-		var/mutable_appearance/tram_pos2_emissive = emissive_appearance(icon, "num_[tram_pos2]", src, alpha = 128)
+		var/mutable_appearance/tram_pos2_emissive = emissive_appearance(icon, "num_[tram_pos2]_e", src, alpha = src.alpha)
 		tram_pos2_overlay.color = tram_display_color
 		tram_pos2_overlay.pixel_w = 4
 		tram_pos2_emissive.pixel_w = 4
@@ -284,8 +296,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 		if(hit_count > SSpersistence.tram_hits_last_round)
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_RISING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, TREND_RISING, src, alpha = 128)
-			tram_trend_overlay.color = "#FF0000"
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
+			tram_trend_overlay.color = COLOR_VIVID_RED
 			tram_trend_overlay.pixel_w = 1
 			tram_trend_emissive.pixel_w = 1
 			tram_trend_overlay.pixel_z = -4
@@ -294,8 +306,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 			. += tram_trend_emissive
 		else
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_FALLING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, TREND_FALLING, src, alpha = 128)
-			tram_trend_overlay.color = "#00FF00"
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
+			tram_trend_overlay.color = COLOR_SERVICE_LIME
 			tram_trend_overlay.pixel_w = 1
 			tram_trend_emissive.pixel_w = 1
 			tram_trend_overlay.pixel_z = -4
@@ -307,7 +319,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 
 	if(sign_features & DISPLAY_DELAM)
-		. += span_info("It has been [last_delam] day\s since the last delamination event at this Nanotrasen facility.")
+		. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
 		switch (last_delam)
 			if(0)
 				. += span_info("In case you didn't notice.<br/>")
@@ -340,3 +352,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 #undef DISPLAY_DELAM
 #undef DISPLAY_TRAM
+
+#undef NAME_DUAL
+#undef NAME_DELAM
+#undef NAME_TRAM
+
+#undef DESC_DUAL
+#undef DESC_DELAM
+#undef DESC_TRAM

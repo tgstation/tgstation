@@ -8168,7 +8168,6 @@
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light_switch/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Fore";
 	name = "engineering camera"
@@ -19181,8 +19180,8 @@
 "eNt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "eNB" = (
@@ -20129,9 +20128,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eYy" = (
@@ -45138,10 +45135,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ljO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/status_display/ai/directional/north,
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "ljP" = (
@@ -49149,7 +49144,6 @@
 /area/station/engineering/main)
 "mnh" = (
 /obj/structure/table/reinforced,
-/obj/machinery/airalarm/directional/north,
 /obj/effect/spawner/random/entertainment/cigarette_pack{
 	pixel_x = 3;
 	pixel_y = 2
@@ -50117,7 +50111,6 @@
 /area/station/command/corporate_showroom)
 "mzO" = (
 /obj/structure/table/reinforced,
-/obj/machinery/newscaster/directional/north,
 /obj/item/clipboard,
 /obj/item/toy/figure/engineer{
 	pixel_x = -6
@@ -50125,6 +50118,7 @@
 /obj/item/toy/figure/atmos{
 	pixel_x = 6
 	},
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "mzV" = (
@@ -76868,7 +76862,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "tou" = (
-/obj/structure/sign/delamination_counter/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/engine_access,
 /turf/open/floor/engine,
@@ -79885,6 +79878,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "tZi" = (
@@ -86878,6 +86872,9 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "vLd" = (
@@ -90075,7 +90072,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/delamination_counter/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wyN" = (
@@ -117025,7 +117022,7 @@ glb
 dRK
 wcP
 yeO
-nbZ
+ljO
 nCi
 kmS
 fCk
@@ -117283,7 +117280,7 @@ vrs
 qJI
 iQV
 nbZ
-akM
+nCi
 cOx
 uGn
 axu
@@ -119327,7 +119324,7 @@ jZV
 jZV
 gAw
 gAw
-ljO
+qJs
 okr
 bWa
 nrP
@@ -122146,7 +122143,7 @@ elK
 jyz
 xbD
 kgP
-lDV
+tqo
 bVI
 vvH
 oks

@@ -786,6 +786,7 @@
 /area/station/engineering/supermatter/room)
 "aqV" = (
 /obj/structure/chair/sofa/bench/left,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "aqW" = (
@@ -4188,11 +4189,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
-"bNJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/iron/small,
-/area/station/engineering/atmos)
 "bNK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7362,6 +7358,7 @@
 "dcp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/incident_display/dual/directional/north,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos)
 "dcG" = (
@@ -8167,7 +8164,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "dst" = (
@@ -12437,6 +12433,7 @@
 /area/station/engineering/atmos)
 "eVb" = (
 /obj/structure/closet/secure_closet/engineering_welding,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos)
 "eVe" = (
@@ -14296,6 +14293,7 @@
 /obj/structure/chair/sofa/bench/right,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "fDC" = (
@@ -17096,6 +17094,7 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "gEc" = (
@@ -17250,7 +17249,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/incident_display/dual/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "gHA" = (
@@ -17268,7 +17267,6 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/north,
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "gHJ" = (
@@ -17277,6 +17275,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 5
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "gHP" = (
@@ -30535,7 +30534,6 @@
 /area/station/maintenance/starboard/greater)
 "lib" = (
 /obj/structure/chair/sofa/bench,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "liG" = (
@@ -35302,6 +35300,7 @@
 /obj/structure/chair/sofa/bench/right,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "mRl" = (
@@ -39789,6 +39788,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "oAA" = (
@@ -49112,6 +49112,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "rAn" = (
@@ -58064,7 +58065,7 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "usJ" = (
@@ -86914,7 +86915,7 @@ cnL
 bpG
 eiK
 ybO
-bNJ
+bNg
 xif
 eXx
 lPf
