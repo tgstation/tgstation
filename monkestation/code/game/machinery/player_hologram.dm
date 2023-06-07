@@ -37,11 +37,11 @@
 	if(!current_mob)
 		return
 
-	var/the_string_of_destiny = "<span class='ol c pixel'><span style='color: #40b0ff;'>[current_mob.getOxyLoss()]</span> - <span style='color: #33ff33;'>[current_mob.getToxLoss()]</span>\n<span style='color: #ffee00;'>[current_mob.getFireLoss()]</span> - <span style='color: #ff6666;'>[current_mob.getBruteLoss()]</span></span>"
+	var/the_string_of_destiny = "<span class='ol c pixel'><span style='color: #40b0ff;'>[current_mob.getOxyLoss()]</span> - <span style='color: #33ff33;'>[current_mob.getToxLoss()]</span> - <span style='color: #ffee00;'>[current_mob.getFireLoss()]</span> - <span style='color: #ff6666;'>[current_mob.getBruteLoss()]</span></span>"
 	if(stored_maptext)
 		stored_maptext.maptext = the_string_of_destiny
 	else
-		stored_maptext = generate_maptext(src, the_string_of_destiny, x_offset = 8, y_offset = 0)
+		stored_maptext = generate_maptext(src, the_string_of_destiny, x_offset = -8, y_offset = 32)
 	update_appearance()
 
 /obj/machinery/player_hologram/update_overlays()
