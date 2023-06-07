@@ -58,11 +58,12 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/storage/box/ids = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/hop
+	belt = /obj/item/melee/curator_whip/dadbelt
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/hop
+	l_pocket = /obj/item/modular_computer/pda/heads/hop
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
