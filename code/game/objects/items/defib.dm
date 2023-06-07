@@ -344,6 +344,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
+	attack_style = null
 
 	var/revivecost = 1000
 	var/cooldown = FALSE

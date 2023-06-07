@@ -188,6 +188,8 @@
 	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
+	attack_style = /datum/attack_style/melee_weapon/swing
+	weapon_sprite_angle = 30
 
 /datum/armor/crowbar_mechremoval
 	bomb = 100

@@ -23,6 +23,9 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
+	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : this shouldn't hit the right, just forward and left
+	weapon_sprite_angle = 90
+
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop

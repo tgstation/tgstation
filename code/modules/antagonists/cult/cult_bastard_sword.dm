@@ -25,6 +25,9 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
+	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : maybe a unique style for spin2win
+	weapon_sprite_angle = 45
+
 	///if we are using our attack_self ability
 	var/spinning = FALSE
 

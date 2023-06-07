@@ -25,6 +25,7 @@
 	light_range = 5
 	light_on = FALSE
 	attack_style = /datum/attack_style/melee_weapon/swing
+	weapon_sprite_angle = 45
 
 	var/list/trophies = list()
 	var/charged = TRUE

@@ -28,6 +28,7 @@
 	armour_penetration = 35
 	attack_style = /datum/attack_style/melee_weapon/stab_out
 	block_sound = 'sound/weapons/parry.ogg'
+	weapon_sprite_angle = 45
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -79,6 +80,8 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_style = /datum/attack_style/melee_weapon/swing
+	weapon_sprite_angle = 45
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
@@ -95,19 +98,21 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		return FALSE
 
-/obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!IS_CULTIST(user))
-		user.Paralyze(100)
-		user.dropItemToGround(src, TRUE)
-		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
-				span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
-		if(ishuman(user))
-			var/mob/living/carbon/human/miscreant = user
-			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		else
-			user.adjustBruteLoss(rand(force/2,force))
+/obj/item/melee/cultblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
 		return
-	..()
+	if(IS_CULTIST(user))
+		return
+
+	user.Paralyze(10 SECONDS)
+	user.dropItemToGround(src, TRUE)
+	user.visible_message(
+		span_warning("A powerful force shoves [user] away from [target]!"),
+		span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""),
+	)
+	user.apply_damage(rand(force / 2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	return TRUE // cancel attack chain
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"

@@ -360,7 +360,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ATTACKED_BY, user, attacking_item)
 	if(damage_type == BRUTE && prob(33))
-		add_blood_from_being_attacked(attacking_item, user, affecting)
+		add_blood_from_being_attacked(attacking_item, user, hit_limb)
 
 /**
  * This takes an item (that's probably attacking us) and gets the final damage

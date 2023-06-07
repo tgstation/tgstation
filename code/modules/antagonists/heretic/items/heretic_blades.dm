@@ -25,19 +25,21 @@
 	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style = /datum/attack_style/melee_weapon/swing/heretic_sickle
 	weapon_sprite_angle = 45
 
 	var/after_use_message = ""
 
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!IS_HERETIC_OR_MONSTER(user))
-		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
-		var/mob/living/carbon/human/human_user = user
-		human_user.AdjustParalyzed(5 SECONDS)
-		return TRUE
+/obj/item/melee/sickly_blade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+	if(IS_HERETIC_OR_MONSTER(user))
+		return
 
-	return ..()
+	to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
+	user.AdjustParalyzed(5 SECONDS)
+	return TRUE // cancel attack chain
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
