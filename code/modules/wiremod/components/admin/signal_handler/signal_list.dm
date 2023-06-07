@@ -27,8 +27,8 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 
 	return list(
 		COMSIG_QDELETING = list(),
-		COMSIG_PARENT_ATTACKBY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
-		COMSIG_PARENT_ATTACKBY_SECONDARY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
+		COMSIG_ATOM_ATTACKBY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
+		COMSIG_ATOM_ATTACKBY_SECONDARY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
 		COMSIG_PARENT_EXAMINE = list(user),
 
 		COMSIG_ATOM_ATTACK_HAND = list(cancel_attack, user),

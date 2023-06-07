@@ -95,7 +95,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
 
@@ -107,7 +107,7 @@
 		COMSIG_ATOM_UPDATE_ICON_STATE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ITEM_UI_ACTION_CLICK,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_QDELETING,
 	))
@@ -211,7 +211,7 @@
 
 	return COMPONENT_ACTION_HANDLED
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
+/// Signal proc for [COMSIG_ATOM_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
 /datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
 	SIGNAL_HANDLER
 
