@@ -11,20 +11,27 @@
 	ears = /obj/item/radio/headset
 	l_pocket = /obj/item/ammo_box/magazine/m45
 	r_pocket = /obj/item/restraints/handcuffs
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/bountyhunter
+	id_trim = /datum/id_trim/bounty_hunter/police
 
 /datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Police Officer"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
 
+///A slightly more modest and less badass looking ID, for the most trustworthy bounty hunter team.
+/datum/id_trim/bounty_hunter/police
+	assignment = "Police Officer"
+	trim_state = "trim_warden"
+	department_color = COLOR_STRONG_BLUE
+
+	access = list(ACCESS_HUNTER)
+
 /datum/outfit/russian_hunter
 	name = "Russian Hunter"
-	id = /obj/item/card/id/advanced
 	uniform = /obj/item/clothing/under/costume/soviet
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
@@ -36,6 +43,7 @@
 	shoes = /obj/item/clothing/shoes/russian
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
+	id = /obj/item/card/id/advanced/bountyhunter
 
 /datum/outfit/russian_hunter/pre_equip(mob/living/carbon/human/equip_to)
 
@@ -203,6 +211,7 @@
 	shoes = /obj/item/clothing/shoes/sandal
 	l_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
+	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
 
