@@ -93,11 +93,8 @@
 		if(dropped_cart.attached_object)
 			return
 		visible_message("[usr] attempts to attach the [name] to the [over.name]")
-		var/use_time = 6 SECONDS
-		if(!over.anchored)
-			user_time = 2 SECONDS
 
-		if(!do_after(usr, use_time, over))
+		if(!do_after(usr, 3 SECONDS, over))
 			return
 		dropped_cart.attached_object = src
 
