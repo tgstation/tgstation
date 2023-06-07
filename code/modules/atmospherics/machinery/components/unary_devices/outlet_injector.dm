@@ -42,12 +42,17 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (!istype(multi_tool))
-		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		sensor.inlet_id = id_tag
+		multi_tool.buffer = null
+		balloon_alert(user, "input linked to sensor")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
 	multi_tool.buffer = src
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
