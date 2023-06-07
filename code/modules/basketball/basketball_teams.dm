@@ -13,6 +13,10 @@
 		ITEM_SLOT_MASK, ITEM_SLOT_EYES, ITEM_SLOT_ID,
 		ITEM_SLOT_HEAD, ITEM_SLOT_BACK, ITEM_SLOT_NECK,
 	)
+	//Chance for the wearer to have their height increased
+	var/taller_chance = 45
+	//When above probability passes, this is the chance for them to be even taller.
+	var/tallest_chance = 25
 
 /datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -39,6 +43,9 @@
 
 	human_to_equip.dna.species.stunmod = 0
 
+	if(prob(taller_chance))
+		human_to_equip.set_mob_height(prob(tallest_chance) ? HUMAN_HEIGHT_TALLEST : HUMAN_HEIGHT_TALL)
+
 /datum/outfit/basketball/referee
 	name = "Basketball Referee"
 	uniform = /obj/item/clothing/under/costume/referee
@@ -46,6 +53,8 @@
 	mask = /obj/item/clothing/mask/whistle/minigame
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/soft/black
+	taller_chance = 15
+	tallest_chance = 5
 
 /datum/outfit/basketball/nanotrasen
 	name = "Basketball NT Team"
