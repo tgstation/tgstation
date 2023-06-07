@@ -577,7 +577,7 @@
 	. = FALSE
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, ignore_anim = !outside_storage))
+	if(!user.put_in_active_hand(src, ignore_animation = !outside_storage))
 		user.dropItemToGround(src)
 		return TRUE
 
