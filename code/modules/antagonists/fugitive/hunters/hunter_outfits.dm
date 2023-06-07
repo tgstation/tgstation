@@ -19,6 +19,7 @@
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
+	W.icon_state = "card_black" //Less flamey, more modest, still unique enough to convey that they're fugitive hunters.
 	W.update_label()
 	W.update_icon()
 
