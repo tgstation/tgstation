@@ -41247,6 +41247,7 @@
 /obj/effect/turf_decal/box/red/corners{
 	dir = 8
 	},
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage)
 "jYC" = (
@@ -87844,6 +87845,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
+"vyM" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "vyO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -97396,6 +97401,15 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/security/prison)
+"xPE" = (
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xPH" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -147499,7 +147513,7 @@ vra
 qZs
 gft
 clO
-jvs
+xPE
 eJv
 mON
 xTW
@@ -152595,7 +152609,7 @@ cVV
 itW
 nJg
 jHw
-vxr
+vyM
 jMs
 iOc
 fwL

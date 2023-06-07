@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(liquids)
 
 				LG.process_cached_edges()
 				LG.process_group()
-				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES)
+				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur
 						evaporation_queue |= listed_turf
@@ -135,9 +135,11 @@ SUBSYSTEM_DEF(liquids)
 					return
 				var/datum/liquid_group/LG = g
 				LG.build_turf_reagent()
+				if(!LG.exposure)
+					continue
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
-						return
+						break
 					LG.process_member(member)
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS

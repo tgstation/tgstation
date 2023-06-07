@@ -35,7 +35,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(4, 5)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,

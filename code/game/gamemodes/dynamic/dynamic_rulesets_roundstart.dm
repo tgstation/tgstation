@@ -32,6 +32,9 @@
 	scaling_cost = 9
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 38)
+
+	minimum_players = 8
+
 	var/autotraitor_cooldown = (15 MINUTES)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
@@ -125,6 +128,9 @@
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
+
+	minimum_players = 20
+
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
@@ -186,6 +192,9 @@
 	weight = 3
 	cost = 16
 	scaling_cost = 10
+
+	minimum_players = 25
+
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list("denominator" = 29)
 
@@ -238,6 +247,9 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
+
+	minimum_players = 25
+
 	scaling_cost = 9
 	requirements = list(101,101,60,30,30,25,20,15,10,10)
 	antag_cap = list("denominator" = 24)
@@ -290,6 +302,9 @@
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
+
+	minimum_players = 30
+
 
 /datum/dynamic_ruleset/roundstart/wizard/ready(forced = FALSE)
 	if(!check_candidates())
@@ -361,6 +376,8 @@
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
+
+	minimum_players = 30
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
@@ -436,6 +453,8 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
+
+	minimum_players = 30
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
@@ -639,6 +658,9 @@
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
+
+	minimum_players = 30
+
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()

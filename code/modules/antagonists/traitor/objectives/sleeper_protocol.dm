@@ -127,6 +127,6 @@
 /datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
 	progression_minimum = 30 MINUTES
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = 3
 
 	inverted_limitation = TRUE

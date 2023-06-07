@@ -98,23 +98,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Basically, if this is set to 5, then for every 5 threat, one midround roll will be added.
 	/// The equation this is used in rounds up, meaning that if this is set to 5, and you have 6
 	/// threat, then you will get 2 midround rolls.
-	var/threat_per_midround_roll = 14
+	var/threat_per_midround_roll = 10
 
 	/// A number between -5 and +5.
 	/// A negative value will give a more peaceful round and
 	/// a positive value will give a round with higher threat.
-	var/threat_curve_centre = -2
+	var/threat_curve_centre = 0
 
 	/// A number between 0.5 and 4.
 	/// Higher value will favour extreme rounds and
 	/// lower value rounds closer to the average.
-	var/threat_curve_width = 0.7
+	var/threat_curve_width = 1.8
 
 	/// A number between -5 and +5.
 	/// Equivalent to threat_curve_centre, but for the budget split.
 	/// A negative value will weigh towards midround rulesets, and a positive
 	/// value will weight towards roundstart ones.
-	var/roundstart_split_curve_centre = 1
+	var/roundstart_split_curve_centre = 1.5
 
 	/// A number between 0.5 and 4.
 	/// Equivalent to threat_curve_width, but for the budget split.

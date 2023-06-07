@@ -1604,9 +1604,9 @@
 				var/choice = input(usr, "Choose a displacement to add", "Choose a Displacement") as null|anything in subtypesof(/obj/effect/distortion/large)
 				if(!choice)
 					return
-				apply_large_displacement_icon(choice)
+				apply_displacement_icon(choice)
 			if("No")
-				apply_large_displacement_icon(/obj/effect/distortion/large)
+				apply_displacement_icon(/obj/effect/distortion/large)
 			else
 				return
 

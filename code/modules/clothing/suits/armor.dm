@@ -43,6 +43,11 @@
 
 /obj/item/clothing/suit/armor/vest/alt/sec
 	icon_state = "armor_sec"
+	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/armor/vest/alt/sec/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"

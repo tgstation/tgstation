@@ -32,6 +32,11 @@
 	icon_state = "fox"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_head/cat
+	name = "Cat Ears"
+	icon_state = "cat"
+	hasinner = TRUE
+
 /datum/sprite_accessory/anime_middle
 	icon = 'monkestation/icons/mob/anime/anime_middle.dmi'
 	color_src = ANIME
@@ -109,3 +114,7 @@
 	name = "Nine Tailed Fox"
 	icon_state = "nine_tails"
 	hasinner = TRUE
+
+/datum/sprite_accessory/anime_bottom/cat
+	name = "Cat Tail"
+	icon_state = "cat"
