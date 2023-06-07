@@ -62,7 +62,7 @@
 		HUNTER_PACK_BOUNTY,
 		HUNTER_PACK_PSYKER,
 	)
-	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
