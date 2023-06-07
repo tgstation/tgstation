@@ -15,6 +15,7 @@
 		merge_networks(connecting_train.linked_network, connecting_train)
 		return
 	connecting_train.linked_network = src
+	connecting_train.anchored = TRUE
 	members += connecting_train
 	end_cart = connecting_train
 
@@ -23,6 +24,7 @@
 		end_cart = null
 		members -= disconnecting_train
 		disconnecting_train.linked_network = null
+		disconnecting_train.anchored = FALSE
 		return
 
 	var/list/disconnected_parts = list()
@@ -38,8 +40,10 @@
 /datum/train_network/proc/make_new_group(obj/vehicle/ridden/cargo_train/new_head, list/new_members)
 	var/datum/train_network/new_group = new
 	new_group.train_head = new_head
-	new_group.members = new_members
-
+	new_head.listed_network = new_group
+	for(var/obj/machinery/cart/new_member in new_members)
+		new_member.linked_network = null
+		new_group.connect_train(new_member)
 
 /datum/train_network/proc/relay_move(oldloc)
 	for(var/obj/machinery/cart/member in members)
@@ -50,8 +54,11 @@
 		oldloc = next_turf
 
 /datum/train_network/proc/merge_networks(datum/train_network/incoming_network, obj/machinery/cart/incoming_cart)
-	if(incoming_network.train_head || incoming_cart != incoming_network.members[0])
+	if(incoming_network.train_head)
 		return
+	if(incoming_cart in members)
+		return
+
 	for(var/obj/machinery/cart/listed_cart in incoming_network.members)
 		listed_cart.linked_network = src
 		members += listed_cart

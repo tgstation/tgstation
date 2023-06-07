@@ -99,6 +99,10 @@
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
 
+
+	///can we grab this object?
+	var/cant_grab = FALSE
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -460,6 +464,9 @@
 	if(QDELETED(pulled_atom))
 		return FALSE
 	if(!(pulled_atom.can_be_pulled(src, state, force)))
+		return FALSE
+
+	if(cant_grab)
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
