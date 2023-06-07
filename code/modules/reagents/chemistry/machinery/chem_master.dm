@@ -165,6 +165,11 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 			filling.color = mix_color_from_reagents(reagents.reagent_list)
 			. += filling
 
+/obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/chem_master/attackby(obj/item/item, mob/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
 		update_appearance(UPDATE_ICON)
