@@ -54683,6 +54683,12 @@
 /obj/effect/turf_decal/trimline/blue/end,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"tJH" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/security/prison)
 "tJL" = (
 /obj/structure/table,
 /obj/item/folder/red{
@@ -90098,7 +90104,7 @@ tdW
 qNI
 uRT
 gQw
-mQr
+tJH
 aCQ
 aEl
 wZz

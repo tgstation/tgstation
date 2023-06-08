@@ -6152,6 +6152,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/carbon/human/species/monkey/dukeman,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
