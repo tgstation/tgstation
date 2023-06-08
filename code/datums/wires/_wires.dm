@@ -197,7 +197,6 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-		S.forceMove(holder.drop_location())
 		return S
 
 /// Called from [/atom/proc/emp_act]
