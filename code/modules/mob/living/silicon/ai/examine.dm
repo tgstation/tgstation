@@ -11,6 +11,11 @@
 				. += span_warning("Its access panel lock is sparking, the cover can be <b>pried</b> open.")
 		else
 			. += span_notice("Its neural network connection could be <b>cut</b>, its access panel cover can be <b>pried</b> back into place.")
+			if(radio.keyslot)
+				. += span_notice("It looks like there is an encryption key in there. It can be <b>removed</b> with a screwdriver.")
+			else
+				. += span_notice("It looks like there is a slot for a radio encryption key in there.")
+
 	if(stat != DEAD)
 		if (getBruteLoss())
 			if (getBruteLoss() < 30)

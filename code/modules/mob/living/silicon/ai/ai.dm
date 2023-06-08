@@ -1034,6 +1034,13 @@
 		return
 
 	else if(mind)
+		if(src.radio.keyslot && !target.radio.keyslot)
+			target.radio.keyslot = new src.radio.keyslot.type // Creates a new key for the shell, otherwise the cores key gets destroyed if the shell is destroyed.
+			target.radio.recalculateChannels()
+		else if(!src.radio.keyslot && target.radio.keyslot) //if key was removed from core, remove from shell.
+			target.radio.keyslot = null
+			target.radio.recalculateChannels()
+
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 		deployed_shell = target
 		target.deploy_init(src)

@@ -7,6 +7,14 @@
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
+
+	if(istype(W, /obj/item/encryptionkey) && opened)
+		if(radio)
+			radio.attackby(W,user)
+		else
+			to_chat(user, span_warning("Unable to locate a radio!"))
+		return
+
 	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
@@ -159,4 +167,16 @@
 	to_chat(src, span_danger("You feel incredibly confused and disorientated."))
 	if(!ai_mob_to_structure())
 		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/mob/living/silicon/ai/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(user.combat_mode)
+		return
+	if(opened)
+		if(radio)
+			radio.screwdriver_act(user, tool)
+		else
+			to_chat(user, span_warning("Unable to locate a radio!"))
+			
 	return TOOL_ACT_TOOLTYPE_SUCCESS
