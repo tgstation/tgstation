@@ -46,9 +46,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	dir = 1
-	},
+/obj/structure/broken_flooring/corner/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "ao" = (
@@ -785,10 +783,7 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "dm" = (
 /obj/machinery/door/firedoor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "dn" = (
@@ -1483,10 +1478,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -3692,15 +3684,6 @@
 	},
 /turf/template_noop,
 /area/space/nearstation)
-"qB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
-/area/ruin/space/ancientstation/delta/biolab)
 "qE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -3852,10 +3835,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/engine_safety/directional/west,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
-	},
+/obj/structure/broken_flooring/pile/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -4179,10 +4159,7 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 8
-	},
+/obj/structure/broken_flooring/side/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "ug" = (
@@ -4595,9 +4572,7 @@
 "xd" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/trash/garbage,
-/obj/structure/fluff/broken_flooring{
-	dir = 8
-	},
+/obj/structure/broken_flooring/corner/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "xg" = (
@@ -4899,10 +4874,7 @@
 "zO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 1
-	},
+/obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "zQ" = (
@@ -5079,10 +5051,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "AZ" = (
@@ -5413,10 +5382,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Eg" = (
@@ -5544,10 +5510,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 1
-	},
+/obj/structure/broken_flooring/pile/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "ES" = (
@@ -5625,9 +5588,7 @@
 "Fm" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "Fo" = (
@@ -5683,9 +5644,7 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "FF" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -6038,7 +5997,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "HJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -6365,7 +6324,7 @@
 	pixel_y = -8;
 	pixel_x = 13
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "Jr" = (
@@ -6835,9 +6794,7 @@
 "Ml" = (
 /obj/machinery/atmospherics/components/binary/pump/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	dir = 1
-	},
+/obj/structure/broken_flooring/corner/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Mp" = (
@@ -7046,10 +7003,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 1
-	},
+/obj/structure/broken_flooring/side/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -7060,10 +7014,7 @@
 "NV" = (
 /obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "NY" = (
@@ -7616,9 +7567,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side"
-	},
+/obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "RD" = (
@@ -7651,9 +7600,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/fluff/broken_flooring{
-	dir = 4
-	},
+/obj/structure/broken_flooring/corner/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -7858,10 +7805,7 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 1
-	},
+/obj/structure/broken_flooring/pile/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Ts" = (
@@ -8316,9 +8260,7 @@
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	dir = 4
-	},
+/obj/structure/broken_flooring/corner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
 "Xx" = (
@@ -8352,9 +8294,7 @@
 "XE" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side"
-	},
+/obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "XF" = (
@@ -8560,9 +8500,7 @@
 "YQ" = (
 /obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -8602,10 +8540,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 4
-	},
+/obj/structure/broken_flooring/side/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -15468,14 +15403,14 @@ aa
 aa
 XR
 KS
-qB
-qB
+Ob
+Ob
 EH
-qB
+Ob
 HN
 HJ
 NA
-qB
+Ob
 Ob
 qO
 XR
