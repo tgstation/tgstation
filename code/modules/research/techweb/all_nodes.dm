@@ -1108,6 +1108,7 @@
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
 		"clown_firing_pin",
+		"borg_upgrade_cringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
