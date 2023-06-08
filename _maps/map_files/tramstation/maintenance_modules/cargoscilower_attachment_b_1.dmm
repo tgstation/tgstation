@@ -44,7 +44,7 @@
 "B" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "F" = (

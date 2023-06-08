@@ -116,82 +116,164 @@
 			examine_texts += span_notice("It has [amt] units of [lowertext(M.name)] stored.")
 
 /// Proc that allows players to fill the parent with mats
-/datum/component/material_container/proc/on_attackby(datum/source, obj/item/I, mob/living/user)
+/datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/list/tc = allowed_item_typecache
-	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
-		return
-	if(I.item_flags & ABSTRACT)
-		return
-	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
-		if(!(mat_container_flags & MATCONTAINER_SILENT))
-			to_chat(user, span_warning("[parent] won't accept [I]!"))
-		return
-	. = COMPONENT_NO_AFTERATTACK
-	var/datum/callback/pc = precondition
-	if(pc && !pc.Invoke(user))
-		return
-	var/material_amount = get_item_material_amount(I, mat_container_flags)
-	if(!material_amount)
-		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [parent]."))
-		return
-	if(!has_space(material_amount))
-		if(isstack(I))
-			//figure out how much space is left
-			var/space_left = max_amount - total_amount
-			//figure out the amount of sheets that can fit that space
-			var/obj/item/stack/stack_to_split = I
-			var/material_per_sheet = material_amount / stack_to_split.amount
-			var/sheets_to_insert = round(space_left / material_per_sheet)
-			if(!sheets_to_insert)
-				to_chat(user, span_warning("[parent] can't hold any more of [I] sheets."))
-				return
-			//split the amount we don't need off
-			INVOKE_ASYNC(stack_to_split, TYPE_PROC_REF(/obj/item/stack, split_stack), user, stack_to_split.amount - sheets_to_insert)
-		else
-			to_chat(user, span_warning("[I] contains more materials than [parent] has space to hold."))
-			return
-	user_insert(I, user, mat_container_flags)
+	user_insert(weapon, user)
 
-/// Proc used for when player inserts materials
+	return COMPONENT_NO_AFTERATTACK
+
+/**
+ * inserts an item from the players hand into the container. Loops through all the contents inside reccursively
+ * Arguments
+ * * held_item - the item to insert
+ * * user - the mob inserting this item
+ * * breakdown_flags - how this item and all it's contents inside are broken down during insertion. This is unique to the machine doing the insertion
+ */
 /datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, breakdown_flags = mat_container_flags)
 	set waitfor = FALSE
-	var/requested_amount
-	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(isstack(held_item) && precise_insertion)
-		var/atom/current_parent = parent
-		var/obj/item/stack/item_stack = held_item
-		requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
-		if(!requested_amount || QDELETED(held_item) || QDELETED(user) || QDELETED(src))
-			return
-		if(parent != current_parent || user.get_active_held_item() != active_held)
-			return
-	if(!user.temporarilyRemoveItemFromInventory(held_item))
-		to_chat(user, span_warning("[held_item] is stuck to you and cannot be placed into [parent]."))
+	. = 0
+
+	//differs from held_item when using TK
+	var/active_held = user.get_active_held_item()
+	//don't attack the machine
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
-	var/inserted = insert_item(held_item, stack_amt = requested_amount, breakdown_flags= mat_container_flags)
-	if(inserted)
-		to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
-		qdel(held_item)
-		if(after_insert)
-			after_insert.Invoke(held_item, last_inserted_id, inserted)
-	else if(held_item == active_held)
-		user.put_in_active_hand(held_item)
+	//user defined conditions
+	if(precondition && !precondition.Invoke(user))
+		return
+
+	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
+	var/list/contents = held_item.get_all_contents_type(/obj/item)
+	for(var/i = length(contents); i >= 1 ; i--)
+		var/obj/item/target = contents[i]
+
+		//not a solid sub type
+		if(target.item_flags & ABSTRACT)
+			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
+				user.put_in_active_hand(target)
+			continue
+		//item is either not real, not allowed for redemption, not in the allowed types
+		if((target.flags_1 & HOLOGRAM_1) || (target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
+			if(!(mat_container_flags & MATCONTAINER_SILENT))
+				to_chat(user, span_warning("[parent] won't accept [target]!"))
+			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
+				user.put_in_active_hand(target)
+			continue
+
+		//if stack, check if we want to read precise amount of sheets to insert
+		var/obj/item/stack/item_stack = null
+		if(isstack(target) && precise_insertion)
+			var/atom/current_parent = parent
+			item_stack = target
+			var/requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
+			if(!requested_amount || QDELETED(target) || QDELETED(user) || QDELETED(src))
+				continue
+			if(parent != current_parent || user.get_active_held_item() != active_held)
+				continue
+			if(requested_amount != item_stack.amount) //only split if its not the whole amount
+				target = split_stack(item_stack, requested_amount) //split off the requested amount
+			requested_amount = 0
+
+		//is this item a stack and was it split by the player?
+		var/was_stack_split = !isnull(item_stack) && item_stack != target
+		//if it was split then item_stack has the reference to the original stack/item
+		var/original_item = was_stack_split ? item_stack : target
+		//if this item is not the one the player is holding then don't remove it from their hand
+		if(original_item != active_held)
+			original_item = null
+		if(!isnull(original_item) && !user.temporarilyRemoveItemFromInventory(original_item)) //remove from hand(if split remove the original stack else the target)
+			to_chat(user, span_warning("[held_item] is stuck to you and cannot be placed into [parent]."))
+			return
+
+		//insert the item
+		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
+		if(inserted > 0)
+			. += inserted
+
+			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
+			if((!QDELETED(target) || was_stack_split))
+
+				//stack was split by player and that portion was not fully consumed, merge whats left back with the original stack
+				if(!QDELETED(target) && was_stack_split)
+					var/obj/item/stack/inserting_stack = target
+					item_stack.add(inserting_stack.amount)
+					qdel(inserting_stack)
+
+				//was this the original item in the players hand? put what's left back in the player's hand
+				if(!isnull(original_item))
+					user.put_in_active_hand(original_item)
+
+			to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
+		else
+			//decode the error & print it
+			var/error_msg
+			if(inserted == -2)
+				error_msg = "[parent] has insufficient space to accept the [target]"
+			else
+				error_msg = "[target] has insufficient materials to be accepted by [parent]"
+			to_chat(user, span_warning(error_msg))
+
+			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
+			if(!isnull(item_stack) && was_stack_split)
+				var/obj/item/stack/inserting_stack = target
+				item_stack.add(inserting_stack.amount)
+				qdel(inserting_stack)
+
+			//was this the original item in the players hand? put it back because we coudn't salvage it
+			if(!isnull(original_item))
+				user.put_in_active_hand(original_item)
+
+/**
+ * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
+ * This proc is also more faster because it doesn't deal with mobs, copying evidences or refreshing atom storages
+ */
+/datum/component/material_container/proc/split_stack(obj/item/stack/target, amount)
+	if(!target.use(amount, TRUE, FALSE))
+		return null
+
+	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
+	target.loc.atom_storage?.refresh_views()
+
+	target.is_zero_amount(delete_if_zero = TRUE)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt, breakdown_flags = mat_container_flags)
-	if(QDELETED(I))
-		return FALSE
-
+/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags)
+	if(QDELETED(weapon))
+		return -1
 	multiplier = CEILING(multiplier, 0.01)
 
-	var/material_amount = get_item_material_amount(I, breakdown_flags)
-	if(!material_amount || !has_space(material_amount))
-		return FALSE
+	var/obj/item/target = weapon
 
-	last_inserted_id = insert_item_materials(I, multiplier, breakdown_flags)
-	return material_amount
+	var/material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
+	if(!material_amount)
+		return -1
+	var/obj/item/stack/item_stack
+	if(isstack(weapon) && !has_space(material_amount)) //not enugh space split and feed as many sheets possible
+		item_stack = weapon
+		var/space_left = max_amount - total_amount
+		if(!space_left)
+			return -2
+		var/material_per_sheet = material_amount / item_stack.amount
+		var/sheets_to_insert = round(space_left / material_per_sheet)
+		if(!sheets_to_insert)
+			return -2
+		target = split_stack(item_stack, sheets_to_insert)
+		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
+	if(!has_space(material_amount))
+		return -2
+
+	last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
+	if(!isnull(last_inserted_id))
+		if(after_insert)
+			after_insert.Invoke(target, last_inserted_id, material_amount)
+		qdel(target) //item gone
+		return material_amount
+	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
+		var/obj/item/stack/inserting_stack = target
+		item_stack.add(inserting_stack.amount)
+		qdel(inserting_stack)
+	return 0
 
 /**
  * Inserts the relevant materials from an item into this material container.

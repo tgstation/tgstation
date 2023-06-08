@@ -1,5 +1,0 @@
-author: "@Krysonism, @Imaginos16, @MTandi, @san7890"
-delete-after: True
-changes:
-  - image: "updated smart fridge sprites for all variants"
-  - bugfix: "smart fridges no longer overlap with walls, but they can be welded down to a floor and mapspawn welded"

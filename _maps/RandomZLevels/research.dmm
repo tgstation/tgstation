@@ -1831,7 +1831,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iK" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iL" = (
@@ -1846,9 +1846,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iO" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iP" = (
@@ -3866,9 +3864,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Re" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)

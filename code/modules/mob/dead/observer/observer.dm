@@ -320,7 +320,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(stat != DEAD)
+	if(stat != CONSCIOUS && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below

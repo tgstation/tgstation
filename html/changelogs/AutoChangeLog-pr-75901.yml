@@ -1,0 +1,7 @@
+author: "Youtubeboy139"
+delete-after: True
+changes:
+  - rscadd: "Added new EMT belt (really just renamed the Paramedic belt path)"
+  - image: "Added new EMT belt sprite"
+  - image: "Added shiny new belts and detective/syndicate holsters (`onmob` sprites included)"
+  - image: "Removed old, unused red military belt sprite"

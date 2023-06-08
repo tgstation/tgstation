@@ -10,6 +10,7 @@
 #define CURABLE (1<<0)
 #define CAN_CARRY (1<<1)
 #define CAN_RESIST (1<<2)
+#define CHRONIC (1<<3)
 
 //Spread Flags
 #define DISEASE_SPREAD_SPECIAL (1<<0)
@@ -34,3 +35,5 @@
 #define DISEASE_SEVERITY_DANGEROUS "Dangerous"
 /// Diseases that can quickly kill an unprepared victim (fungal tb, gbs)
 #define DISEASE_SEVERITY_BIOHAZARD "BIOHAZARD"
+/// Diseases that are uncurable (hms)
+#define DISEASE_SEVERITY_UNCURABLE "Uncurable"

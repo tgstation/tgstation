@@ -7,7 +7,7 @@
 /datum/mafia_ability/seance
 	name = "Seance"
 	ability_action = "commune with the spirit of"
-	use_flags = CAN_USE_ON_DEAD
+	use_flags = CAN_USE_ON_OTHERS|CAN_USE_ON_DEAD
 
 /datum/mafia_ability/seance/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()

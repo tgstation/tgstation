@@ -210,7 +210,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -389,14 +389,12 @@
 			return FALSE
 		if(istype(obj_to_insert, /obj/effect/supplypod_rubble))
 			return FALSE
-		if((obj_to_insert.comp_lookup && obj_to_insert.comp_lookup[COMSIG_OBJ_HIDE]) && reverse_option_list["Underfloor"])
-			return TRUE
-		else if ((obj_to_insert.comp_lookup && obj_to_insert.comp_lookup[COMSIG_OBJ_HIDE]) && !reverse_option_list["Underfloor"])
-			return FALSE
-		if(isProbablyWallMounted(obj_to_insert) && reverse_option_list["Wallmounted"])
-			return TRUE
-		else if (isProbablyWallMounted(obj_to_insert) && !reverse_option_list["Wallmounted"])
-			return FALSE
+
+		if(HAS_TRAIT(obj_to_insert, TRAIT_UNDERFLOOR))
+			return !!reverse_option_list["Underfloor"]
+		if(isProbablyWallMounted(obj_to_insert))
+			return !!reverse_option_list["Wallmounted"]
+
 		if(!obj_to_insert.anchored && reverse_option_list["Unanchored"])
 			return TRUE
 		if(obj_to_insert.anchored && !ismecha(obj_to_insert) && reverse_option_list["Anchored"]) //Mecha are anchored but there is a separate option for them
@@ -434,16 +432,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
