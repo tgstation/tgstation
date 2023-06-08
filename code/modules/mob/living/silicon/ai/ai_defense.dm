@@ -12,7 +12,7 @@
 		if(radio)
 			radio.attackby(W,user)
 		else
-			to_chat(user, span_warning("Unable to locate a radio!"))
+			balloon_alert(user,"Unable to locate a radio!")
 		return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
