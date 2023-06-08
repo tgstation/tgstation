@@ -42,6 +42,7 @@
 			desc = initial(ref_plant.desc)
 			icon_state = initial(ref_plant.icon_state)
 			trimmable = initial(ref_plant.trimmable)
+			qdel(ref_plant)
 			update_appearance(UPDATE_ICON)
 
 /// Cycle basic plant visuals
