@@ -73,7 +73,7 @@
 	name = "Ex-Interdyne Pharmacist"
 
 	id = /obj/item/card/id/advanced/black
-	id_trim = /datum/id_trim/job/medical_doctor
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	back = /obj/item/storage/backpack/satchel/med
@@ -86,7 +86,7 @@
 /datum/outfit/pirate/interdyne/captain
 	name = "Ex-Interdyne Senior Resident"
 
-	id_trim = /datum/id_trim/job/chief_medical_officer
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist_director
 
 /datum/outfit/pirate/grey
 	name = "The Grey Tide"
