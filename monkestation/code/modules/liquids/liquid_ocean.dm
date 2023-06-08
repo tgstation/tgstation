@@ -4,6 +4,10 @@
 	icon_state = "space"
 	requires_power = TRUE
 	always_unpowered = TRUE
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
+	base_lighting_color = COLOR_STARLIGHT
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -76,7 +80,7 @@
 	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
 	SSliquids.active_ocean_turfs -= src
 	SSliquids.ocean_turfs -= src
-	for(var/turf/open/floor/plating/ocean/listed_ocean in ocean_turfs)
+	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
 
 /turf/open/floor/plating/ocean/proc/assume_self()
@@ -96,6 +100,9 @@
 
 	if(open_turfs.len)
 		SSliquids.active_ocean_turfs |= src
+	if(ocean_turfs.len)
+		for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
+			listed_ocean.rebuild_adjacent()
 	SSliquids.unvalidated_oceans -= src
 
 /turf/open/floor/plating/ocean/proc/process_turf()
@@ -139,6 +146,7 @@
 	layer = ABOVE_MOB_LAYER
 	vis_flags = NONE
 	mouse_opacity = FALSE
+	alpha = 120
 
 /obj/effect/abstract/ocean_overlay/Initialize(mapload, list/ocean_contents)
 	. = ..()
@@ -189,3 +197,76 @@
 
 	if(!(src in SSliquids.active_ocean_turfs))
 		SSliquids.active_ocean_turfs |= src
+
+
+GLOBAL_LIST_INIT(scrollable_turfs, list())
+GLOBAL_LIST_INIT(the_lever, list())
+/turf/open/floor/plating/ocean/false_movement
+	icon = 'goon/icons/turf/ocean.dmi'
+	icon_state = "sand"
+	var/scroll_state = "scroll"
+
+
+/turf/open/floor/plating/ocean/false_movement/Initialize()
+	. = ..()
+	GLOB.scrollable_turfs += src
+	if(GLOB.the_lever.len)
+		for(var/obj/machinery/movement_lever/lever as anything in GLOB.the_lever)
+			set_scroll(lever.lever_on)
+			break
+
+/turf/open/floor/plating/ocean/false_movement/Destroy()
+	. = ..()
+	GLOB.scrollable_turfs -= src
+
+/turf/open/floor/plating/ocean/false_movement/proc/set_scroll(is_scrolling)
+	if(is_scrolling)
+		icon_state = "sand_[scroll_state]"
+	else
+		icon_state = "sand"
+
+
+/obj/machinery/movement_lever
+	name = "braking lever"
+	desc = "Stops the ship from moving."
+
+	icon = 'goon/icons/obj/decorations.dmi'
+	icon_state = "lever1"
+	var/static/lever_on = TRUE
+	var/static/lever_locked = FALSE
+
+/obj/machinery/movement_lever/Initialize(mapload)
+	. = ..()
+	GLOB.the_lever += src
+
+/obj/machinery/movement_lever/Destroy()
+	. = ..()
+	GLOB.the_lever -= src
+
+/obj/machinery/movement_lever/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(lever_locked)
+		to_chat(user, span_notice("The lever is locked in place and can't be moved"))
+		return
+	lever_on = !lever_on
+	update_appearance()
+	for(var/turf/open/floor/plating/ocean/false_movement/listed_turf as anything in GLOB.scrollable_turfs)
+		listed_turf.set_scroll(lever_on)
+
+/obj/machinery/movement_lever/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(do_after(user, 10 SECONDS, src))
+			if(!lever_locked)
+				visible_message(span_warning("[user] locks the [src] preventing it from being pulled."))
+				lever_locked = TRUE
+			else
+				visible_message(span_warning("[user] unlocks the [src] allowing it to be pulled."))
+				lever_locked = FALSE
+			update_appearance()
+
+/obj/machinery/movement_lever/update_icon(updates)
+	. = ..()
+	icon_state = "lever[lever_on]"
+	if(lever_locked)
+		icon_state = "[icon_state]-locked"
