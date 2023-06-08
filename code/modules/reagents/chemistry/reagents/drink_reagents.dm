@@ -661,9 +661,13 @@
 	desc = "Surprisingly it isn't grey."
 	icon_state = "grey_bull_glass"
 
-/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/affected_mob)
+/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/carbon/buller)
 	..()
-	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+	ADD_TRAIT(buller, TRAIT_SHOCKIMMUNE, type)
+	var/obj/item/organ/internal/liver/liver = buller.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		buller.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		metabolization_rate *= 0.8
 
 /datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/affected_mob)
 	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)

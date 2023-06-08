@@ -325,9 +325,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 6) //2.6 per 2 seconds
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
+/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/pumper)
 	..()
-	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
+	ADD_TRAIT(pumper, TRAIT_BATON_RESISTANCE, type)
+	var/obj/item/organ/internal/liver/liver = pumper.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		pumper.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		metabolization_rate *= 0.8
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)

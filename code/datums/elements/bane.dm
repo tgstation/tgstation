@@ -33,7 +33,15 @@
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/bane/proc/check_bane(mob/living/bane_applier, atom/target)
+/datum/element/bane/proc/check_bane(bane_applier, target, bane_weapon)
+	if(!check_biotype_path(bane_applier, target))
+		return
+	var/atom/movable/atom_owner = bane_weapon
+	if(SEND_SIGNAL(atom_owner, COMSIG_OBJECT_PRE_BANING, target) & COMPONENT_CANCEL_BANING)
+		return
+	return TRUE
+
+/datum/element/bane/proc/check_biotype_path(mob/living/bane_applier, atom/target)
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
@@ -78,3 +86,4 @@
 	var/extra_damage = max(0, (force_boosted * damage_multiplier) + added_damage)
 	baned_target.apply_damage(extra_damage, applied_dam_type, hit_zone)
 	SEND_SIGNAL(baned_target, COMSIG_LIVING_BANED, bane_applier, baned_target) // for extra effects when baned.
+	SEND_SIGNAL(element_owner, COMSIG_OBJECT_ON_BANING, baned_target)
