@@ -47,3 +47,28 @@
 /datum/quirk/gourmand/remove()
 	var/mob/living/carbon/human/holder = quirk_holder
 	holder.max_food_buffs --
+
+/datum/quirk/fluffy_tongue
+	name = "Fluffy Tongue"
+	desc = "After spending too much time watching anime you have developed a horrible speech impediment."
+	value = 5
+	icon = FA_ICON_CAT
+
+/datum/quirk/fluffy_tongue/add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/quirk/fluffy_tongue/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	var/message = speech_args[SPEECH_MESSAGE]
+
+	if(message[1] != "*")
+		message = replacetext(message, "ne", "nye")
+		message = replacetext(message, "nu", "nyu")
+		message = replacetext(message, "na", "nya")
+		message = replacetext(message, "no", "nyo")
+		message = replacetext(message, "ove", "uv")
+		message = replacetext(message, "r", "w")
+		message = replacetext(message, "l", "w")
+	speech_args[SPEECH_MESSAGE] = message
+
