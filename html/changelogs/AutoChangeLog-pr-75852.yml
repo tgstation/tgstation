@@ -1,4 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "[Metastation] [Birdshot] Test Site Materials Crates now contain targets instead of existing near them purposelessly and empty."
