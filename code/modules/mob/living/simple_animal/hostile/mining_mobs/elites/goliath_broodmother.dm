@@ -20,11 +20,14 @@
 	name = "goliath broodmother"
 	desc = "An example of sexual dimorphism, this female goliath looks much different than the males of her species.  She is, however, just as dangerous, if not more."
 	gender = FEMALE
+	icon = 'icons/mob/simple/lavaland/lavaland_elites_64.dmi'
 	icon_state = "broodmother"
 	icon_living = "broodmother"
 	icon_aggro = "broodmother"
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
+	pixel_x = -16
+	base_pixel_x = -16
 	health_doll_icon = "broodmother"
 	maxHealth = 1000
 	health = 1000
@@ -97,7 +100,7 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //Checks if they are dead as a rock.
 		return
@@ -247,7 +250,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
-	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
+	if(prob(bonus_value) && target.stat != DEAD)
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
 
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
@@ -264,3 +267,8 @@
 	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
+
+#undef CALL_CHILDREN
+#undef RAGE
+#undef SPAWN_CHILDREN
+#undef TENTACLE_PATCH

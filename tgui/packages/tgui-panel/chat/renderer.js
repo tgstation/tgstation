@@ -180,30 +180,79 @@ class ChatRenderer {
     }
   }
 
-  setHighlight(text, color, matchWord, matchCase) {
-    if (!text || !color) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
+  setHighlight(highlightSettings, highlightSettingById) {
+    this.highlightParsers = null;
+    if (!highlightSettings) {
       return;
     }
-    const lines = String(text)
-      .split(',')
-      // eslint-disable-next-line no-useless-escape
-      .map((str) => str.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
-      // Must be longer than one character
-      .filter((str) => str && str.length > 1);
-    // Nothing to match, reset highlighting
-    if (lines.length === 0) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
-      return;
-    }
-    const pattern = `${matchWord ? '\\b' : ''}(${lines.join('|')})${
-      matchWord ? '\\b' : ''
-    }`;
-    const flags = 'g' + (matchCase ? '' : 'i');
-    this.highlightRegex = new RegExp(pattern, flags);
-    this.highlightColor = color;
+    highlightSettings.map((id) => {
+      const setting = highlightSettingById[id];
+      const text = setting.highlightText;
+      const highlightColor = setting.highlightColor;
+      const highlightWholeMessage = setting.highlightWholeMessage;
+      const matchWord = setting.matchWord;
+      const matchCase = setting.matchCase;
+      const allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+      const lines = String(text)
+        .split(',')
+        .map((str) => str.trim())
+        .filter(
+          (str) =>
+            // Must be longer than one character
+            str &&
+            str.length > 1 &&
+            // Must be alphanumeric (with some punctuation)
+            allowedRegex.test(str) &&
+            // Reset lastIndex so it does not mess up the next word
+            ((allowedRegex.lastIndex = 0) || true)
+        );
+      let highlightWords;
+      let highlightRegex;
+      // Nothing to match, reset highlighting
+      if (lines.length === 0) {
+        return;
+      }
+      let regexExpressions = [];
+      // Organize each highlight entry into regex expressions and words
+      for (let line of lines) {
+        // Regex expression syntax is /[exp]/
+        if (line.charAt(0) === '/' && line.charAt(line.length - 1) === '/') {
+          const expr = line.substring(1, line.length - 1);
+          // Check if this is more than one character
+          if (/^(\[.*\]|\\.|.)$/.test(expr)) {
+            continue;
+          }
+          regexExpressions.push(expr);
+        } else {
+          // Lazy init
+          if (!highlightWords) {
+            highlightWords = [];
+          }
+          highlightWords.push(line);
+        }
+      }
+      const regexStr = regexExpressions.join('|');
+      const flags = 'g' + (matchCase ? '' : 'i');
+      // setting regex overrides matchword
+      if (regexStr) {
+        highlightRegex = new RegExp('(' + regexStr + ')', flags);
+      } else {
+        const pattern = `${matchWord ? '\\b' : ''}(${lines.join('|')})${
+          matchWord ? '\\b' : ''
+        }`;
+        highlightRegex = new RegExp(pattern, flags);
+      }
+      // Lazy init
+      if (!this.highlightParsers) {
+        this.highlightParsers = [];
+      }
+      this.highlightParsers.push({
+        highlightWords,
+        highlightRegex,
+        highlightColor,
+        highlightWholeMessage,
+      });
+    });
   }
 
   scrollToBottom() {
@@ -352,13 +401,18 @@ class ChatRenderer {
         }
 
         // Highlight text
-        if (!message.avoidHighlighting && this.highlightRegex) {
-          const highlighted = highlightNode(node, this.highlightRegex, (text) =>
-            createHighlightNode(text, this.highlightColor)
-          );
-          if (highlighted) {
-            node.className += ' ChatMessage--highlighted';
-          }
+        if (!message.avoidHighlighting && this.highlightParsers) {
+          this.highlightParsers.map((parser) => {
+            const highlighted = highlightNode(
+              node,
+              parser.highlightRegex,
+              parser.highlightWords,
+              (text) => createHighlightNode(text, parser.highlightColor)
+            );
+            if (highlighted && parser.highlightWholeMessage) {
+              node.className += ' ChatMessage--highlighted';
+            }
+          });
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');

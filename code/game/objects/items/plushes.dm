@@ -87,12 +87,12 @@
 
 	var/i
 	var/obj/item/toy/plush/P
-	for(i=1, i<=scorned.len, i++)
+	for(i=1, i <= scorned.len, i++)
 		P = scorned[i]
 		P.bad_news(src)
 	scorned = null
 
-	for(i=1, i<=scorned_by.len, i++)
+	for(i=1, i <= scorned_by.len, i++)
 		P = scorned_by[i]
 		P.bad_news(src)
 	scorned_by = null
@@ -386,7 +386,9 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
@@ -529,20 +531,25 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
-/obj/item/toy/plush/space_lizard_plushie
+/obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
-	icon_state = "plushie_spacelizard"
-	inhand_icon_state = null
+	icon_state = "map_plushie_spacelizard"
+	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+
+/obj/item/toy/plush/lizard_plushie/space/green
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "plushie_snake"
+	icon_state = "map_plushie_snake"
+	greyscale_config = /datum/greyscale_config/plush_snake
+	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
 	attack_verb_simple = list("bite", "hiss", "tail slap")
@@ -569,7 +576,9 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
@@ -585,6 +594,53 @@
 /obj/item/toy/plush/awakenedplushie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/whiny_plushie
+	name = "whiny plushie"
+	desc = "An ancient plushie that demands constant companionship, after being forgotten for too long."
+	icon_state = "plushie_whiny"
+	inhand_icon_state = null
+	/// static list of cry messages it picks from to speak when it is insecure from no movement
+	var/static/list/cry_still_messages
+	/// static list of cry messages it picks from to speak when it is insecure from no holder
+	var/static/list/cry_alone_messages
+	/// cooldown for it sending messages, it will every 10 seconds
+	COOLDOWN_DECLARE(cry_cooldown)
+
+/obj/item/toy/plush/whiny_plushie/Initialize(mapload)
+	. = ..()
+	if(!cry_still_messages)
+		cry_still_messages = list(
+			"WHY DID WE STOP MOVING?! ARE YOU GOING TO LEAVE ME?!!",
+			"WE COULD GET ATTACKED WE'RE SITTING DUCKS MOVE MOOOOOOOVE!!",
+			"YOU'RE PLANNING ON DROPPING ME AREN'T YOU I KNOW YOU AAAAAAAREE!!",
+			"THE SYNDICATE ARE TRIANGULATING OUR LOCAAAAAAAATIONNN!!",
+			"THIS PLACE IS SCARY I WANNA LEEEEEAAAAAVVVEEEEEE!!",
+			"CHELP, CHELP CCCCHHHHEEEEEEEEEEEEEEELLLLLLLPPPPPP!!",
+		)
+		cry_alone_messages = list(
+			"NOOOOOOOOOOOOOOOOOO DON'T LEAVE MEEEEE!!",
+			"WUH WHERE DID EVERYONE GOOOOOOHHHHHHH WAHHH!!",
+			"SOMEONE, ANYONEEEEEEEEE PICK ME UPP!!",
+			"I DIDN'T DESERVE ITTTTTTTTTT!!",
+			"I WILL DIE TO JUST ONE ATTTTTTAAAAACKKKKKK!!",
+			"I WILLLLLL NOT DROP GOOOD IITITTEEEEEMMMS!!",
+		)
+	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)))
+
+/obj/item/toy/plush/whiny_plushie/proc/secured_process(last_move)
+	icon_state = initial(icon_state)
+
+/obj/item/toy/plush/whiny_plushie/proc/unsecured_process(last_move)
+	if(!COOLDOWN_FINISHED(src, cry_cooldown))
+		return
+	COOLDOWN_START(src, cry_cooldown, 10 SECONDS)
+	icon_state = "plushie_whiny_crying"
+	if(isturf(loc))
+		say(pick(cry_alone_messages))
+	else
+		say(pick(cry_still_messages))
+	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
@@ -694,6 +750,7 @@
 	name = "runner plushie"
 	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
 	icon_state = "rouny"
+	item_flags = XENOMORPH_HOLDABLE
 	inhand_icon_state = null
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
@@ -721,11 +778,11 @@
 	)
 
 /obj/item/toy/plush/greek_cucumber
-	name = "cucumber greek"
+	name = "greek cucumber"
 	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
 	icon_state = "cucumber"
 	inhand_icon_state = null
-	attack_verb_continuous = list("squishуы", "creakes", "crunches")
+	attack_verb_continuous = list("squishes", "creaks", "crunches")
 	attack_verb_simple = list("squish", "creak", "crunch")
 	squeak_override = list(
 		'sound/effects/slosh.ogg' = 1,

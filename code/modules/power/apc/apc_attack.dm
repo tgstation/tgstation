@@ -50,7 +50,7 @@
 			balloon_alert(user, "remove the floor plating!")
 			return
 		if(terminal)
-			balloon_alert(user, "APC is already wired!")
+			balloon_alert(user, "already wired!")
 			return
 		if(!has_electronics)
 			balloon_alert(user, "no board to wire!")
@@ -136,15 +136,17 @@
 		return
 
 	if(istype(attacking_object, /obj/item/wallframe/apc) && opened)
-		if(!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
+		if(!(machine_stat & BROKEN || opened == APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
 			balloon_alert(user, "no reason for repairs!")
 			return
-		if(!(machine_stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
+				update_integrity(30) //needs to be welded to fully repair but can work without
+				set_machine_stat(machine_stat & ~(BROKEN|MAINT))
 				opened = APC_COVER_OPENED
 				update_appearance()
 			return
@@ -154,11 +156,11 @@
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
 		if(do_after(user, 50, target = src))
-			balloon_alert(user, "APC frame replaced")
+			balloon_alert(user, "replaced frame")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)
 			atom_integrity = max_integrity
-			if(opened==APC_COVER_REMOVED)
+			if(opened == APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
 			update_appearance()
 		return
@@ -173,12 +175,12 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !isturf(loc))
 		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/apc_interactor = user
-	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
@@ -192,7 +194,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/ethereal = user
-	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.get_organ_slot(ORGAN_SLOT_STOMACH)
 	// how long we wanna wait before we show the balloon alert. don't want it to be very long in case the ethereal wants to opt-out of doing that action, just long enough to where it doesn't collide with previously queued balloon alerts.
 	var/alert_timer_duration = 0.75 SECONDS
 
@@ -286,9 +288,9 @@
 		return TRUE
 	var/mob/living/silicon/ai/AI = user
 	var/mob/living/silicon/robot/robot = user
-	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
+	if(aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai != AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 		if(!loud)
-			balloon_alert(user, "APC has been disabled!")
+			balloon_alert(user, "it's disabled!")
 		return FALSE
 	return TRUE
 

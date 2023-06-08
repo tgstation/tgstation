@@ -12,20 +12,25 @@
 
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
+		/obj/item/coupon,
 		/obj/item/flashlight/pen,
+		/obj/item/folder/biscuit,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
+		/obj/item/food/chococoin,
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/implanter,
+		/obj/item/laser_pointer,
 		/obj/item/lighter,
 		/obj/item/lipstick,
 		/obj/item/match,
@@ -36,6 +41,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
 		/obj/item/screwdriver,
+		/obj/item/spess_knife,
 		/obj/item/stamp),
 		list(/obj/item/screwdriver/power))
 
@@ -150,6 +156,7 @@
 
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet" // for mapping purposes
+	worn_icon_state = "wallet"
 
 /obj/item/storage/wallet/random/Initialize(mapload)
 	. = ..()

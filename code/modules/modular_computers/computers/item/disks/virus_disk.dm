@@ -9,7 +9,7 @@
 	///How many charges the virus has left
 	var/charges = 5
 
-/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return FALSE
@@ -26,7 +26,7 @@
 /obj/item/computer_disk/virus/clown
 	name = "\improper H.O.N.K. disk"
 
-/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -43,7 +43,7 @@
 /obj/item/computer_disk/virus/mime
 	name = "\improper sound of silence disk"
 
-/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -64,7 +64,7 @@
 	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -77,10 +77,10 @@
 
 	var/original_host = source
 	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakename || source != original_host || !user.canUseTopic(source, be_close = TRUE))
+	if(!fakename || source != original_host || !user.can_perform_action(source))
 		return
 	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!fakejob || source != original_host || !user.canUseTopic(source, be_close = TRUE))
+	if(!fakejob || source != original_host || !user.can_perform_action(source))
 		return
 
 	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
@@ -89,8 +89,7 @@
 	charges--
 	user.show_message(span_notice("Success!"))
 	var/reference = REF(src)
-	ADD_TRAIT(target, TRAIT_PDA_CAN_EXPLODE, reference)
-	ADD_TRAIT(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference)
+	target.add_traits(list(TRAIT_PDA_CAN_EXPLODE, TRAIT_PDA_MESSAGE_MENU_RIGGED), reference)
 	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
 	return TRUE
 
@@ -120,14 +119,14 @@
 	telecrystal_stack.use(telecrystal_stack.amount)
 
 
-/obj/item/computer_disk/virus/frame/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/frame/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	charges--
-	var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-	to_chat(user, span_notice("Success! The unlock code to the target is: [lock_code]"))
+	var/unlock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+	to_chat(user, span_notice("Success! The unlock code to the target is: [unlock_code]"))
 	var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
 	if(!hidden_uplink)
 		var/datum/mind/target_mind
@@ -144,6 +143,7 @@
 			else
 				target_mind = pick(backup_players)
 		hidden_uplink = target.AddComponent(/datum/component/uplink, target_mind, enabled = TRUE, starting_tc = telecrystals, has_progression = TRUE)
+		hidden_uplink.unlock_code = unlock_code
 		hidden_uplink.uplink_handler.has_objectives = TRUE
 		hidden_uplink.uplink_handler.owner = target_mind
 		hidden_uplink.uplink_handler.can_take_objectives = FALSE

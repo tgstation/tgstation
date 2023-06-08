@@ -30,16 +30,11 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	return ..()
-
 
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
@@ -79,16 +74,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //INCAPACITATED
@@ -192,11 +181,11 @@
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
-		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
 			healing += 0.1
 
 		// sleeping in silence is always better
-		if(HAS_TRAIT(src, TRAIT_DEAF))
+		if(HAS_TRAIT(owner, TRAIT_DEAF))
 			healing += 0.1
 
 		// check for beds
@@ -206,16 +195,17 @@
 			healing += 0.1
 
 		// don't forget the bedsheet
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
-				continue
+		if(locate(/obj/item/bedsheet) in owner.loc)
 			healing += 0.1
-			break //Only count the first bedsheet
+
+		// you forgot the pillow
+		if(locate(/obj/item/pillow) in owner.loc)
+			healing += 0.1
 
 		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing)
-			owner.adjustFireLoss(-1 * healing)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE)
+			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -261,8 +251,7 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -275,8 +264,7 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -288,25 +276,6 @@
 	name = "Stasis"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
-
-/datum/status_effect/pacify
-	id = "pacify"
-	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
-	duration = 100
-	alert_type = null
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -335,7 +304,7 @@
 
 /datum/status_effect/cultghost/on_apply()
 	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
-	owner.set_see_in_dark(2)
+	return TRUE
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
@@ -410,23 +379,33 @@
 	alert_type = null
 	duration = -1
 
+/datum/status_effect/neck_slice/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+	if(!owner.get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
+	return TRUE
+
 /datum/status_effect/neck_slice/tick()
-	var/mob/living/carbon/human/H = owner
-	var/obj/item/bodypart/throat = H.get_bodypart(BODY_ZONE_HEAD)
-	if(H.stat == DEAD || !throat)
-		H.remove_status_effect(/datum/status_effect/neck_slice)
+	var/obj/item/bodypart/throat = owner.get_bodypart(BODY_ZONE_HEAD)
+	if(owner.stat == DEAD || !throat) // they can lose their head while it's going.
+		qdel(src)
+		return
 
 	var/still_bleeding = FALSE
-	for(var/thing in throat.wounds)
-		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
+	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
+		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
-		H.remove_status_effect(/datum/status_effect/neck_slice)
+		qdel(src)
+		return
 
 	if(prob(10))
-		H.emote(pick("gasp", "gag", "choke"))
+		owner.emote(pick("gasp", "gag", "choke"))
+
+/datum/status_effect/neck_slice/get_examine_text()
+	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
@@ -526,14 +505,12 @@
 
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), CLOTHING_TRAIT)
 	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), CLOTHING_TRAIT)
 	owner.clear_mood_event(type)
 	return ..()
 
@@ -583,11 +560,10 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear())
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
+
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
-	if(hearing_speaker == owner)
-		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
@@ -696,7 +672,7 @@
 		owner.gib() //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
@@ -793,7 +769,7 @@
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)
-		if(new_owner.stat < UNCONSCIOUS) // Unconcious people won't get messages
+		if(new_owner.stat < UNCONSCIOUS) // Unconscious people won't get messages
 			to_chat(new_owner, span_userdanger("You're covered in ants!"))
 		ants_remaining += amount_left
 		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(ants_washed))
@@ -802,7 +778,7 @@
 /datum/status_effect/ants/refresh(effect, amount_left)
 	var/mob/living/carbon/human/victim = owner
 	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat < HARD_CRIT)
-		if(victim.stat < UNCONSCIOUS) // Unconcious people won't get messages
+		if(victim.stat < UNCONSCIOUS) // Unconscious people won't get messages
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
@@ -850,7 +826,7 @@
 					leg.receive_damage(3,0)
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
-					victim.blur_eyes(3)
+					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
@@ -933,3 +909,13 @@
 /datum/status_effect/discoordinated/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
 	return ..()
+
+///Maddly teleports the victim around all of space for 10 seconds
+/datum/status_effect/teleport_madness
+	id = "teleport_madness"
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.1 SECONDS
+
+/datum/status_effect/teleport_madness/tick()
+	dump_in_space(owner)

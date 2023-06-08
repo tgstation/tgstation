@@ -6,9 +6,18 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/structure_holosign
+	// How can you freeze a trick of the light?
+	resistance_flags = FREEZE_PROOF
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
+
+/datum/armor/structure_holosign
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 20
+	acid = 20
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
@@ -75,6 +84,7 @@
 	desc = "When it says walk it means walk."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
+	max_integrity = 1
 
 /obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -88,6 +98,7 @@
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 	rad_insulation = RAD_LIGHT_INSULATION
+	max_integrity = 1
 
 /obj/structure/holosign/barrier/atmos
 	name = "holofirelock"
@@ -98,7 +109,7 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"
@@ -141,6 +152,7 @@
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
+	max_integrity = 1
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 

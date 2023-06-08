@@ -22,6 +22,7 @@
 	grill_loop = new(src, FALSE)
 
 /obj/machinery/grill/Destroy()
+	grilled_item = null
 	QDEL_NULL(grill_loop)
 	return ..()
 
@@ -76,22 +77,22 @@
 
 	..()
 
-/obj/machinery/grill/process(delta_time)
+/obj/machinery/grill/process(seconds_per_tick)
 	..()
 	update_appearance()
 	if(grill_fuel <= 0)
 		return
 	else
-		grill_fuel -= GRILL_FUELUSAGE_IDLE * delta_time
-		if(DT_PROB(0.5, delta_time))
+		grill_fuel -= GRILL_FUELUSAGE_IDLE * seconds_per_tick
+		if(SPT_PROB(0.5, seconds_per_tick))
 			var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 			smoke.set_up(1, holder = src, location = loc)
 			smoke.start()
 	if(grilled_item)
-		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time)
-		grill_time += delta_time
-		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * delta_time)
-		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * delta_time
+		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick)
+		grill_time += seconds_per_tick
+		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * seconds_per_tick)
+		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
 		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/gone, direction)
@@ -100,14 +101,10 @@
 		grilled_item = null
 	return ..()
 
-/obj/machinery/grill/Destroy()
-	grilled_item = null
-	. = ..()
-
 /obj/machinery/grill/handle_atom_del(atom/A)
 	if(A == grilled_item)
 		grilled_item = null
-	. = ..()
+	return ..()
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -135,7 +132,8 @@
 
 /obj/machinery/grill/proc/finish_grill()
 	if(grilled_item)
-		grilled_item.AddElement(/datum/element/grilled_item, grill_time)
+		if(grill_time >= 20)
+			grilled_item.AddElement(/datum/element/grilled_item, grill_time)
 		UnregisterSignal(grilled_item, COMSIG_ITEM_GRILLED)
 	grill_time = 0
 	grill_loop.stop()

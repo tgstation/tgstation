@@ -11,8 +11,8 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -20,44 +20,25 @@
 
 
 	overfloor_placed = TRUE
-
-	/// Determines the type of damage overlay that will be used for the tile
-	var/damaged_dmi = 'icons/turf/damaged.dmi'
-	var/broken = FALSE
-	var/burnt = FALSE
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
-	var/list/broken_states
-	var/list/burnt_states
 	/// Determines if you can deconstruct this with a RCD
 	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
-	if (broken_states)
-		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
-	else
-		broken_states = string_list(setup_broken_states())
-	if (burnt_states)
-		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
-	else
-		var/list/new_burnt_states = setup_burnt_states()
-		if(new_burnt_states)
-			burnt_states = string_list(new_burnt_states)
-	if(!broken && broken_states && (icon_state in broken_states))
-		broken = TRUE
-	if(!burnt && burnt_states && (icon_state in burnt_states))
-		burnt = TRUE
 	if(mapload && prob(33))
 		MakeDirty()
+
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/turf/open/floor/proc/setup_broken_states()
+/turf/open/floor/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/proc/setup_burnt_states()
-	return
+/turf/open/floor/burnt_states()
+	return list()
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
@@ -82,9 +63,8 @@
 		if(EXPLODE_HEAVY)
 			switch(rand(1, 3))
 				if(1)
-					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-						ReplaceWithLattice()
+					if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+						attempt_lattice_replacement()
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
@@ -104,6 +84,8 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
+	return FALSE
+
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		return 1
@@ -114,40 +96,11 @@
 /turf/open/floor/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/turf/open/floor/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers)
-
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
 	if(!istype(T))
 		return
 	T.break_tile()
-
-/turf/open/floor/break_tile()
-	if(broken)
-		return
-	broken = TRUE
-	update_appearance()
-
-/turf/open/floor/burn_tile()
-	if(burnt)
-		return
-	burnt = TRUE
-	update_appearance()
-
-/turf/open/floor/update_overlays()
-	. = ..()
-	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states))
-	else if(burnt)
-		if(LAZYLEN(burnt_states))
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
-		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
@@ -235,8 +188,6 @@
 		if(STAGE_FIVE to INFINITY)
 			if(prob(70))
 				sheer = TRUE
-			else if(prob(50) && (/turf/open/space in baseturfs))
-				ReplaceWithLattice()
 	if(sheer)
 		if(has_tile())
 			remove_tile(null, TRUE, TRUE, TRUE)
@@ -250,6 +201,7 @@
 /turf/open/floor/acid_melt()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
+/// if you are updating this make to to update /turf/open/misc/rcd_vals() too
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
@@ -260,6 +212,8 @@
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
 			)
+		if(RCD_REFLECTOR)
+			return list("mode" = RCD_REFLECTOR, "delay" = 20, "cost" = 30)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -276,10 +230,38 @@
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+		if(RCD_FLOODLIGHT)
+			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
 		if(RCD_FURNISHING)
-			return list("mode" = RCD_FURNISHING, "delay" = the_rcd.furnish_delay, "cost" = the_rcd.furnish_cost)
+			var/cost = 0
+			var/delay = 0
+			if(the_rcd.furnish_type == /obj/structure/chair || the_rcd.furnish_type == /obj/structure/chair/stool)
+				cost = 8
+				delay = 10
+			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
+				cost = 4
+				delay = 5
+			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
+				cost = 4
+				delay = 5
+			else if(the_rcd.furnish_type == /obj/structure/table)
+				cost = 15
+				delay = 20
+			else if(the_rcd.furnish_type == /obj/structure/table/glass)
+				cost = 12
+				delay = 15
+			else if(the_rcd.furnish_type == /obj/structure/rack)
+				cost = 20
+				delay = 25
+			else if(the_rcd.furnish_type == /obj/structure/bed)
+				cost = 10
+				delay = 15
+			if(cost == 0)
+				return FALSE
+			return list("mode" = RCD_FURNISHING, "delay" = cost, "cost" = delay)
 	return FALSE
 
+/// if you are updating this make to to update /turf/open/misc/rcd_act() too
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
@@ -287,17 +269,24 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, passed_mode)
 
-			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
-		if(RCD_AIRLOCK)
-			for(var/obj/machinery/door/door in src)
-				if(door.sub_door)
-					continue
-				to_chat(user, span_notice("There is another door here!"))
+		if(RCD_REFLECTOR)
+			if(locate(/obj/structure/reflector) in src)
 				return FALSE
+			var/obj/structure/reflector/reflector_base = new(src)
+			reflector_base.set_anchored(TRUE)
+			return TRUE
+		if(RCD_AIRLOCK)
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
-				to_chat(user, span_notice("You build a windoor."))
+				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "there's already a windoor!")
+					return FALSE
+				for(var/obj/machinery/door/door in src)
+					if(istype(door, /obj/machinery/door/window))
+						continue
+					balloon_alert(user, "there's already a door!")
+					return FALSE
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir, the_rcd.airlock_electronics?.unres_sides)
 				if(the_rcd.airlock_electronics)
 					new_window.name = the_rcd.airlock_electronics.passed_name || initial(new_window.name)
@@ -308,7 +297,12 @@
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
-			to_chat(user, span_notice("You build an airlock."))
+
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				balloon_alert(user, "there's already a door!")
+				return FALSE
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
 			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
 			if(the_rcd.airlock_electronics)
@@ -317,6 +311,7 @@
 				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_airlock.electronics.passed_name = the_rcd.airlock_electronics.passed_name
 				new_airlock.electronics.passed_cycle_id = the_rcd.airlock_electronics.passed_cycle_id
+				new_airlock.electronics.shell = the_rcd.airlock_electronics.shell
 			if(new_airlock.electronics.one_access)
 				new_airlock.req_one_access = new_airlock.electronics.accesses
 			else
@@ -336,16 +331,12 @@
 			if(rcd_proof)
 				balloon_alert(user, "it's too thick!")
 				return FALSE
-			else
-				var/old_turf_name = name
-				if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
-					return FALSE
-				to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
-				return TRUE
+			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
+				return FALSE
+			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
-			to_chat(user, span_notice("You construct the grille."))
 			var/obj/structure/grille/new_grille = new(src)
 			new_grille.set_anchored(TRUE)
 			return TRUE
@@ -364,6 +355,15 @@
 			new_computer.set_anchored(TRUE)
 			new_computer.state = 1
 			new_computer.setDir(the_rcd.computer_dir)
+			return TRUE
+		if(RCD_FLOODLIGHT)
+			if(locate(/obj/structure/floodlight_frame) in src)
+				return FALSE
+			var/obj/structure/floodlight_frame/new_floodlight = new(src)
+			new_floodlight.name = "secured [new_floodlight.name]"
+			new_floodlight.desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
+			new_floodlight.icon_state = "floodlight_c3"
+			new_floodlight.state = FLOODLIGHT_NEEDS_LIGHTS
 			return TRUE
 		if(RCD_FURNISHING)
 			if(locate(the_rcd.furnish_type) in src)

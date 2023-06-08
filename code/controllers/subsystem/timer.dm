@@ -1,7 +1,7 @@
 /// Controls how many buckets should be kept, each representing a tick. (1 minutes worth)
 #define BUCKET_LEN (world.fps*1*60)
 /// Helper for getting the correct bucket for a given timer
-#define BUCKET_POS(timer) (((round((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag)+1) % BUCKET_LEN)||BUCKET_LEN)
+#define BUCKET_POS(timer) (((ROUND_UP((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag)+1) % BUCKET_LEN) || BUCKET_LEN)
 /// Gets the maximum time at which timers will be invoked from buckets, used for deferring to secondary queue
 #define TIMER_MAX(timer_ss) (timer_ss.head_offset + TICKS2DS(BUCKET_LEN + timer_ss.practical_offset - 1))
 /// Max float with integer precision
@@ -420,7 +420,7 @@ SUBSYSTEM_DEF(timer)
 		CRASH("Invalid timer state: Timer created that would require a backtrack to run (addtimer would never let this happen): [SStimer.get_timer_debug_string(src)]")
 
 	if (callBack.object != GLOBAL_PROC && !QDESTROYING(callBack.object))
-		LAZYADD(callBack.object.active_timers, src)
+		LAZYADD(callBack.object._active_timers, src)
 
 	bucketJoin()
 
@@ -429,9 +429,9 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE && hash)
 		timer_subsystem.hashes -= hash
 
-	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
-		callBack.object.active_timers -= src
-		UNSETEMPTY(callBack.object.active_timers)
+	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object._active_timers)
+		callBack.object._active_timers -= src
+		UNSETEMPTY(callBack.object._active_timers)
 
 	callBack = null
 

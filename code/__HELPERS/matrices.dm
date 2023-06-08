@@ -207,7 +207,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	for(y in 1 to 5)
 		offset = (y-1)*4
 		for(x in 1 to 4)
-			output[offset+x] = round(A[offset+1]*B[x] + A[offset+2]*B[x+4] + A[offset+3]*B[x+8] + A[offset+4]*B[x+12]+(y==5?B[x+16]:0), 0.001)
+			output[offset+x] = round(A[offset+1]*B[x] + A[offset+2]*B[x+4] + A[offset+3]*B[x+8] + A[offset+4]*B[x+12]+(y == 5?B[x+16]:0), 0.001)
 	return output
 
 ///Converts RGB shorthands into RGBA matrices complete of constants rows (ergo a 20 keys list in byond).

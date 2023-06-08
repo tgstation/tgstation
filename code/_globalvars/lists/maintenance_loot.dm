@@ -24,6 +24,8 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/raisins = 1,
 		/obj/item/trash/sosjerky = 1,
+		/obj/item/trash/flare = 1,
+		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
@@ -61,7 +63,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 
 	list(//tier 1 stock parts
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/scanning_module = 1,
@@ -172,6 +174,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/roller = 1,
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
+		/obj/item/market_uplink/blackmarket = 1,
 		) = 8,
 
 	list(//equipment
@@ -205,6 +208,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stock_parts/cell/high = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -249,6 +253,13 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//computer disks
+		/obj/item/computer_disk/maintenance/scanner = 1,
+		/obj/item/computer_disk/maintenance/camera = 1,
+		/obj/item/computer_disk/maintenance/modsuit_control = 1,
+		/obj/item/computer_disk/maintenance/theme = 3,
+	) = 4,
+
 	list(//modsuits
 		/obj/effect/spawner/random/mod/maint = 3,
 		/obj/item/mod/construction/broken_core = 1,
@@ -291,6 +302,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/master = 1,
+		/obj/item/spess_knife = 1,
 		) = 1,
 
 	list(//equipment
@@ -336,6 +348,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
+		/obj/item/folder/ancient_paperwork = 1,
 		) = 1,
 
 ))

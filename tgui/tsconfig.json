@@ -17,8 +17,5 @@
     "strictNullChecks": true,
     "target": "ES3"
   },
-  "include": [
-    "./*.d.ts",
-    "./packages"
-  ]
+  "include": ["./*.d.ts", "./packages"]
 }

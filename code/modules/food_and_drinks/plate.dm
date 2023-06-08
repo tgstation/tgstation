@@ -12,6 +12,14 @@
 	var/max_height_offset = 5
 	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
 	var/placement_offset = -15
+	/// If the plate will shatter when thrown
+	var/fragile = TRUE
+
+/obj/item/plate/Initialize(mapload)
+	. = ..()
+
+	if(fragile)
+		AddElement(/datum/element/shatters_when_thrown)
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
@@ -48,6 +56,11 @@
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
 	RegisterSignal(item_to_plate, COMSIG_PARENT_QDELETING, PROC_REF(ItemMoved))
+	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
+	item_to_plate.pixel_w = item_to_plate.pixel_x
+	item_to_plate.pixel_z = item_to_plate.pixel_y
+	item_to_plate.pixel_x = 0
+	item_to_plate.pixel_y = 0
 	update_appearance()
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
@@ -56,34 +69,16 @@
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	// Resettt
+	removed_item.pixel_x = removed_item.pixel_w
+	removed_item.pixel_y = removed_item.pixel_z
+	removed_item.pixel_w = 0
+	removed_item.pixel_z = 0
 
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromPlate(moved_item)
-
-#define PLATE_SHARD_PIECES 5
-
-/obj/item/plate/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(.)
-		return
-	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
-	var/scatter_turf = get_turf(hit_atom)
-
-	for(var/obj/item/scattered_item as anything in contents)
-		ItemRemovedFromPlate(scattered_item)
-		scattered_item.forceMove(scatter_turf)
-		var/list/scatter_vector = scatter_gen.Rand()
-		scattered_item.pixel_x = scatter_vector[1]
-		scattered_item.pixel_y = scatter_vector[2]
-
-	for(var/iteration in 1 to PLATE_SHARD_PIECES)
-		var/obj/item/plate_shard/shard = new(scatter_turf)
-		shard.icon_state = "[shard.base_icon_state][iteration]"
-		shard.pixel_x = rand(-4, 4)
-		shard.pixel_y = rand(-4, 4)
-	playsound(scatter_turf, 'sound/items/ceramic_break.ogg', 60, TRUE)
-	qdel(src)
 
 /obj/item/plate/large
 	name = "buffet plate"
@@ -110,7 +105,12 @@
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED
+	/// How many variants of shard there are
+	var/variants = 5
 
 /obj/item/plate_shard/Initialize(mapload)
 	. = ..()
+
 	AddComponent(/datum/component/caltrop, min_damage = force)
+
+	icon_state = "[base_icon_state][pick(1,variants)]"

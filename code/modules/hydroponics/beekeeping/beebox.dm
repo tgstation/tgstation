@@ -93,7 +93,7 @@
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
-				var/obj/item/reagent_containers/honeycomb/HC = new(src)
+				var/obj/item/food/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
 					HC.set_reagent(queen_bee.beegent.type)
 				honeycombs += HC
@@ -213,7 +213,7 @@
 			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
 	else
 		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
-		if(!option || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE))
+		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 		switch(option)
 			if("Honey Frame")
@@ -230,7 +230,7 @@
 					var/amtH = HF.honeycomb_capacity
 					var/fallen = 0
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
-						var/obj/item/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
+						var/obj/item/food/honeycomb/HC = pick_n_take(honeycombs)
 						if(HC)
 							HC.forceMove(drop_location())
 							amtH--
@@ -265,3 +265,9 @@
 
 /obj/structure/beebox/unwrenched
 	anchored = FALSE
+
+#undef BEE_PROB_NEW_BEE
+#undef BEE_RESOURCE_HONEYCOMB_COST
+#undef BEE_RESOURCE_NEW_BEE_COST
+#undef BEEBOX_MAX_FRAMES
+#undef BEES_RATIO

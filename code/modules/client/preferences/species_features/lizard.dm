@@ -97,7 +97,7 @@
 	relevant_mutant_bodypart = "legs"
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
-	return assoc_to_keys(GLOB.legs_list)
+	return assoc_to_keys_features(GLOB.legs_list)
 
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
@@ -122,7 +122,7 @@
 	relevant_mutant_bodypart = "spines"
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
-	return assoc_to_keys(GLOB.spines_list)
+	return assoc_to_keys_features(GLOB.spines_list)
 
 /datum/preference/choiced/lizard_spines/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["spines"] = value
@@ -134,7 +134,7 @@
 	relevant_external_organ = /obj/item/organ/external/tail/lizard
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
-	return assoc_to_keys(GLOB.tails_list_lizard)
+	return assoc_to_keys_features(GLOB.tails_list_lizard)
 
 /datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["tail_lizard"] = value

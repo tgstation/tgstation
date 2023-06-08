@@ -1,21 +1,3 @@
-/// If an object needs to be rotated with a wrench
-#define ROTATION_REQUIRE_WRENCH (1<<0)
-/// If ghosts can rotate an object (if the ghost config is enabled)
-#define ROTATION_GHOSTS_ALLOWED (1<<1)
-/// If an object will ignore anchored for rotation (used for chairs)
-#define ROTATION_IGNORE_ANCHORED (1<<2)
-/// If an object will omit flipping from rotation (used for pipes since they use custom handling)
-#define ROTATION_NO_FLIPPING (1<<3)
-/// If an object needs to have an empty spot available in target direction (used for windoors and railings)
-#define ROTATION_NEEDS_ROOM (1<<4)
-
-/// Rotate an object clockwise
-#define ROTATION_CLOCKWISE -90
-/// Rotate an object counterclockwise
-#define ROTATION_COUNTERCLOCKWISE 90
-/// Rotate an object upside down
-#define ROTATION_FLIP 180
-
 /datum/component/simple_rotation
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
@@ -45,25 +27,10 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(ExamineMessage))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
-/datum/component/simple_rotation/proc/AddVerbs()
-	var/obj/rotated_obj = parent
-	rotated_obj.verbs += /atom/movable/proc/SimpleRotateClockwise
-	rotated_obj.verbs += /atom/movable/proc/SimpleRotateCounterclockwise
-	if(!(rotation_flags & ROTATION_NO_FLIPPING))
-		rotated_obj.verbs += /atom/movable/proc/SimpleRotateFlip
-
-/datum/component/simple_rotation/proc/RemoveVerbs()
-	if(parent)
-		var/obj/rotated_obj = parent
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateFlip
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateClockwise
-		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
-
 /datum/component/simple_rotation/proc/RemoveSignals()
 	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/simple_rotation/RegisterWithParent()
-	AddVerbs()
 	AddSignals()
 	. = ..()
 
@@ -74,7 +41,6 @@
 	return COMPONENT_NOTRANSFER
 
 /datum/component/simple_rotation/UnregisterFromParent()
-	RemoveVerbs()
 	RemoveSignals()
 	. = ..()
 
@@ -84,7 +50,6 @@
 	. = ..()
 
 /datum/component/simple_rotation/ClearFromParent()
-	RemoveVerbs()
 	return ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
@@ -119,7 +84,7 @@
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
-	if(isliving(user) && user.canUseTopic(parent, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(isliving(user) && user.can_perform_action(parent, NEED_DEXTERITY))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
@@ -127,6 +92,8 @@
 
 /datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees, silent=FALSE)
 	var/obj/rotated_obj = parent
+	if(!rotated_obj.Adjacent(user))
+		silent = TRUE
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		if(!isliving(user))
@@ -147,7 +114,7 @@
 		var/target_dir = turn(rotated_obj.dir, degrees)
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
-		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
+		if(!valid_build_direction(rotated_obj.loc, target_dir, is_fulltile = fulltile))
 			if(!silent)
 				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
@@ -155,30 +122,6 @@
 
 /datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
 	return
-
-/atom/movable/proc/SimpleRotateClockwise()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_CLOCKWISE)
-
-/atom/movable/proc/SimpleRotateCounterclockwise()
-	set name = "Rotate Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_COUNTERCLOCKWISE)
-
-/atom/movable/proc/SimpleRotateFlip()
-	set name = "Flip"
-	set category = "Object"
-	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-	if(rotcomp)
-		rotcomp.Rotate(usr, ROTATION_FLIP)
 
 // maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
 /datum/component/simple_rotation/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)

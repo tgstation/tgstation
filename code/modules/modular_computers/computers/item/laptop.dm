@@ -7,7 +7,6 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
-	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_idle_programs = 3
@@ -85,7 +84,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 
 	toggle_open(user)
@@ -111,7 +110,6 @@
 		w_class = w_class_open
 
 	screen_on = !screen_on
-	display_overlays = screen_on
 	update_appearance()
 
 

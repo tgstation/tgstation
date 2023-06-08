@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	var/change_position_cooldown = 30
 	///Jobs blacklisted from having their slots edited.
-	var/list/blacklisted = list(
+	var/static/list/blacklisted = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_HEAD_OF_SECURITY,
@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/opened_positions = list()
 
 /datum/computer_file/program/job_management/New()
-	..()
+	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 
@@ -67,20 +67,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 
 /datum/computer_file/program/job_management/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-
 	var/obj/item/card/id/user_id = computer.computer_id_slot
 	if(!user_id || !(ACCESS_CHANGE_IDS in user_id.access))
-		return
+		return TRUE
 
 	switch(action)
 		if("PRG_open_job")
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j || !can_open_job(j))
-				return
+				return TRUE
 			if(opened_positions[edit_job_target] >= 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
@@ -92,7 +88,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j || !can_close_job(j))
-				return
+				return TRUE
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] <= 0)
 				GLOB.time_last_changed_position = world.time / 10
@@ -105,9 +101,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			var/priority_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(priority_target)
 			if(!j || !can_edit_job(j))
-				return
+				return TRUE
 			if(j.total_positions <= j.current_positions)
-				return
+				return TRUE
 			if(j in SSjob.prioritized_jobs)
 				SSjob.prioritized_jobs -= j
 			else
@@ -120,7 +116,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 
 /datum/computer_file/program/job_management/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	var/authed = FALSE
 	var/obj/item/card/id/user_id = computer.computer_id_slot

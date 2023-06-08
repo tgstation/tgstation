@@ -1,6 +1,6 @@
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
-	desc = "They seem to pulse slightly with an inner life."
+	desc = "There's something alive in there, and sooner or later it's going to find its way out."
 	icon_state = "eggs"
 	/// Mob spawner handling the actual spawn of the spider
 	var/obj/effect/mob_spawn/ghost_role/spider/spawner
@@ -19,6 +19,22 @@
 	if(spawner)
 		spawner.attack_ghost(user)
 	return ..()
+
+/obj/structure/spider/eggcluster/examine_more(mob/user)
+	. = ..()
+
+	if(istype(user, /mob/living/basic/giant_spider/midwife))
+		switch(spawner.amount_grown)
+			if(0 to 24)
+				. += span_info("These eggs look shrunken and dormant.")
+			if(25 to 49)
+				. += span_info("These eggs have begun to move, pulsating, gestating...")
+			if(50 to 74)
+				. += span_info("These eggs are rippling, unseen life stirring beneath its skin.")
+			if(75 to 99)
+				. += span_info("These eggs swell with unseen life. They are almost ready to burst.")
+			if(100 to INFINITY)
+				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
@@ -43,7 +59,7 @@
 	you_are_text = "You are a spider."
 	flavour_text = "For the hive! Choose a spider and fulfill your role to take over the station... if that is within your directives, of course."
 	important_text = "Follow your directives at all costs."
-	faction = list("spiders")
+	faction = list(FACTION_SPIDER)
 	spawner_job_path = /datum/job/spider
 	role_ban = ROLE_ALIEN
 	prompt_ghost = FALSE
@@ -59,9 +75,12 @@
 	var/obj/structure/spider/eggcluster/egg
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider,
-		/mob/living/simple_animal/hostile/giant_spider/hunter,
-		/mob/living/simple_animal/hostile/giant_spider/nurse,
+		/mob/living/basic/spiderling/nurse,
+		/mob/living/basic/spiderling/hunter,
+		/mob/living/basic/spiderling/ambush,
+		/mob/living/basic/spiderling/tangle,
+		/mob/living/basic/spiderling/guard,
+		/mob/living/basic/spiderling/scout,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
@@ -76,8 +95,8 @@
 	egg = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/spider/process(delta_time)
-	amount_grown += rand(0, 1) * delta_time
+/obj/effect/mob_spawn/ghost_role/spider/process(seconds_per_tick)
+	amount_grown += rand(5, 15) * seconds_per_tick
 	if(amount_grown >= 100 && !ready)
 		ready = TRUE
 		notify_ghosts("[src] is ready to hatch!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
@@ -102,14 +121,11 @@
 			to_chat(user, span_warning("\The [src] is not ready to hatch yet!"))
 		return FALSE
 
-/obj/effect/mob_spawn/ghost_role/spider/equip(mob/living/simple_animal/hostile/giant_spider/spawned_spider)
-	if(spawned_spider)
-		spawned_spider.directive = directive
-
-/obj/effect/mob_spawn/ghost_role/spider/special(mob/user)
-	. = ..()
+/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/giant_spider/spawned_mob, mob/mob_possessor)
+	spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
+	return ..()
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
@@ -117,9 +133,9 @@
 	you_are_text = "You are an enriched spider."
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider/tarantula,
-		/mob/living/simple_animal/hostile/giant_spider/viper,
-		/mob/living/simple_animal/hostile/giant_spider/midwife,
+		/mob/living/basic/spiderling/tarantula,
+		/mob/living/basic/spiderling/viper,
+		/mob/living/basic/spiderling/midwife,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/bloody
@@ -130,7 +146,7 @@
 	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,
+		/mob/living/basic/spiderling/hunter/flesh,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/midwife
@@ -140,7 +156,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider/midwife,
+		/mob/living/basic/spiderling/midwife,
 	)
 
 /**
@@ -156,8 +172,9 @@
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/simple_animal/hostile/giant_spider/spider = choice
-		spider_list[initial(spider.name)] = choice
+		var/mob/living/basic/spiderling/chosen_spiderling = choice
+		var/mob/living/basic/giant_spider/spider = initial(chosen_spiderling.grow_as)
+		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
@@ -177,5 +194,5 @@
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
 	mob_type = chosen_spider
-	mob_name = "[mob_name] ([rand(1, 1000)])"
+	mob_name = "spiderling"
 	return ..()

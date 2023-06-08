@@ -38,7 +38,7 @@ Slimecrossing Mobs
 	return
 
 //Slime corgi - Chilling Pink
-/mob/living/simple_animal/pet/dog/corgi/puppy/slime
+/mob/living/basic/pet/dog/corgi/puppy/slime
 	name = "\improper slime corgi puppy"
 	real_name = "slime corgi puppy"
 	desc = "An unbearably cute pink slime corgi puppy."
@@ -48,5 +48,8 @@ Slimecrossing Mobs
 	nofur = TRUE
 	gold_core_spawnable = NO_SPAWN
 	speak_emote = list("blorbles", "bubbles", "borks")
-	emote_hear = list("bubbles!", "splorts.", "splops!")
-	emote_see = list("gets goop everywhere.", "flops.", "jiggles!")
+
+/mob/living/basic/pet/dog/corgi/puppy/slime/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+	speech.speak = string_list(list())
+	speech.emote_hear = string_list(list("bubbles!", "splorts.", "splops!"))
+	speech.emote_see = string_list(list("gets goop everywhere.", "flops.", "jiggles!"))

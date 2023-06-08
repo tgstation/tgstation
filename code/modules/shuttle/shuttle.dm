@@ -196,8 +196,12 @@
 
 	var/last_dock_time
 
+	/// Map template to load when the dock is loaded
 	var/datum/map_template/shuttle/roundstart_template
+	/// Used to check if the shuttle template is enabled in the config file
 	var/json_key
+	///If true, the shuttle can always dock at this docking port, despite its area checks, or if something is already docked
+	var/override_can_dock_checks = FALSE
 
 /obj/docking_port/stationary/register(replace = FALSE)
 	. = ..()
@@ -275,10 +279,52 @@
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
 
+/// Subtype for escape pod ports so that we can give them trait behaviour
+/obj/docking_port/stationary/escape_pod
+	name = "escape pod loader"
+	height = 5
+	width = 3
+	dwidth = 1
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default
+	/// Set to true if you have a snowflake escape pod dock which needs to always have the normal pod or some other one
+	var/enforce_specific_pod = FALSE
+
+/obj/docking_port/stationary/escape_pod/Initialize(mapload)
+	. = ..()
+	if (enforce_specific_pod)
+		return
+
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		roundstart_template = /datum/map_template/shuttle/escape_pod/cramped
+		return
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_BIGGER_PODS))
+		roundstart_template = /datum/map_template/shuttle/escape_pod/luxury
+
+// should fit the syndicate infiltrator, and smaller ships like the battlecruiser corvettes and fighters
+/obj/docking_port/stationary/syndicate
+	name = "near the station"
+	dheight = 1
+	dwidth = 12
+	height = 17
+	width = 23
+	shuttle_id = "syndicate_nearby"
+
+/obj/docking_port/stationary/syndicate/northwest
+	name = "northwest of station"
+	shuttle_id = "syndicate_nw"
+
+/obj/docking_port/stationary/syndicate/northeast
+	name = "northeast of station"
+	shuttle_id = "syndicate_ne"
+
 /obj/docking_port/stationary/transit
 	name = "In Transit"
+	override_can_dock_checks = TRUE
+	/// The turf reservation returned by the transit area request
 	var/datum/turf_reservation/reserved_area
+	/// The area created during the transit area reservation
 	var/area/shuttle/transit/assigned_area
+	/// The mobile port that owns this transit port
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/Initialize(mapload)
@@ -431,6 +477,69 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
+#define WORLDMAXX_CUTOFF (world.maxx + 1)
+#define WORLDMAXY_CUTOFF (world.maxx + 1)
+/**
+ * Calculated and populates the information used for docking and some internal vars.
+ * This can also be used to calculate from shuttle_areas so that you can expand/shrink shuttles!
+ *
+ * Arguments:
+ * * loading_from - The template that the shuttle was loaded from, if not given we iterate shuttle_areas to calculate information instead
+ */
+/obj/docking_port/mobile/proc/calculate_docking_port_information(datum/map_template/shuttle/loading_from)
+	var/port_x_offset = loading_from?.port_x_offset
+	var/port_y_offset = loading_from?.port_y_offset
+	var/width = loading_from?.width
+	var/height = loading_from?.height
+	if(!loading_from)
+		if(!length(shuttle_areas))
+			CRASH("Attempted to calculate a docking port's information without a template before it was assigned any areas!")
+		// no template given, use shuttle_areas to calculate width and height
+		var/min_x = -1
+		var/min_y = -1
+		var/max_x = WORLDMAXX_CUTOFF
+		var/max_y = WORLDMAXY_CUTOFF
+		for(var/area/area as anything in shuttle_areas)
+			for(var/turf/turf in area)
+				min_x = max(turf.x, min_x)
+				max_x = min(turf.x, max_x)
+				min_y = max(turf.y, min_y)
+				max_y = min(turf.y, max_y)
+			CHECK_TICK
+
+		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
+			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
+		if(min_y == -1 || max_y == WORLDMAXY_CUTOFF)
+			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
+
+		width = (max_x - min_x) + 1
+		height = (max_y - min_y) + 1
+		port_x_offset = min_x - x
+		port_y_offset = min_y - y
+
+	if(dir in list(EAST, WEST))
+		src.width = height
+		src.height = width
+	else
+		src.width = width
+		src.height = height
+
+	switch(dir)
+		if(NORTH)
+			dwidth = port_x_offset - 1
+			dheight = port_y_offset - 1
+		if(EAST)
+			dwidth = height - port_y_offset
+			dheight = port_x_offset - 1
+		if(SOUTH)
+			dwidth = width - port_x_offset
+			dheight = height - port_y_offset
+		if(WEST)
+			dwidth = port_y_offset - 1
+			dheight = width - port_x_offset
+#undef WORLDMAXX_CUTOFF
+#undef WORLDMAXY_CUTOFF
+
 /**
  * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
  *
@@ -476,7 +585,9 @@
 	unregister()
 	destination = null
 	previous = null
-	QDEL_NULL(assigned_transit) //don't need it where we're goin'!
+	if(!QDELETED(assigned_transit))
+		qdel(assigned_transit, force = TRUE)
+		assigned_transit = null
 	shuttle_areas = null
 	remove_ripples()
 	return ..()
@@ -518,28 +629,28 @@
 /obj/docking_port/mobile/proc/canMove()
 	return TRUE
 
-//this is to check if this shuttle can physically dock at dock S
-/obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/S)
-	if(!istype(S))
+//this is to check if this shuttle can physically dock at dock stationary_dock
+/obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/stationary_dock)
+	if(!istype(stationary_dock))
 		return SHUTTLE_NOT_A_DOCKING_PORT
 
-	if(istype(S, /obj/docking_port/stationary/transit))
+	if(stationary_dock.override_can_dock_checks)
 		return SHUTTLE_CAN_DOCK
 
-	if(dwidth > S.dwidth)
+	if(dwidth > stationary_dock.dwidth)
 		return SHUTTLE_DWIDTH_TOO_LARGE
 
-	if(width-dwidth > S.width-S.dwidth)
+	if(width-dwidth > stationary_dock.width-stationary_dock.dwidth)
 		return SHUTTLE_WIDTH_TOO_LARGE
 
-	if(dheight > S.dheight)
+	if(dheight > stationary_dock.dheight)
 		return SHUTTLE_DHEIGHT_TOO_LARGE
 
-	if(height-dheight > S.height-S.dheight)
+	if(height-dheight > stationary_dock.height-stationary_dock.dheight)
 		return SHUTTLE_HEIGHT_TOO_LARGE
 
 	//check the dock isn't occupied
-	var/currently_docked = S.get_docked()
+	var/currently_docked = stationary_dock.get_docked()
 	if(currently_docked)
 		// by someone other than us
 		if(currently_docked != src)
@@ -652,19 +763,13 @@
 		var/turf/oldT = old_turfs[i]
 		if(!oldT || !istype(oldT.loc, area_type))
 			continue
-		var/area/old_area = oldT.loc
-		old_area.turfs_to_uncontain += oldT
-		underlying_area.contents += oldT
-		underlying_area.contained_turfs += oldT
-		oldT.transfer_area_lighting(old_area, underlying_area)
+		oldT.change_area(oldT.loc, underlying_area)
 		oldT.empty(FALSE)
 
 		// Here we locate the bottommost shuttle boundary and remove all turfs above it
-		var/list/baseturf_cache = oldT.baseturfs
-		for(var/k in 1 to length(baseturf_cache))
-			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))
-				oldT.ScrapeAway(baseturf_cache.len - k + 1)
-				break
+		var/shuttle_tile_depth = oldT.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
+		if (!isnull(shuttle_tile_depth))
+			oldT.ScrapeAway(shuttle_tile_depth)
 
 	qdel(src, force=TRUE)
 
@@ -677,7 +782,7 @@
 	for(var/turf/turfs as anything in return_turfs())
 		for(var/mob/living/sunset_mobs in turfs.get_all_contents())
 			// If they have a mind and they're not in the brig, they escaped
-			if(sunset_mobs.mind && !istype(turfs, /turf/open/floor/mineral/plastitanium/red/brig))
+			if(sunset_mobs.mind && !istype(get_area(sunset_mobs), /area/shuttle/escape/brig))
 				sunset_mobs.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
 			sunset_mobs.notransform = TRUE
@@ -706,8 +811,6 @@
 		var/turf/T1 = L1[i]
 		if(!T0 || !T1)
 			continue  // out of bounds
-		if(T0.type == T0.baseturfs)
-			continue  // indestructible
 		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
 			continue  // not part of the shuttle
 		ripple_turfs += T1
@@ -1045,7 +1148,8 @@
 
 //Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
+	// Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space,
+	// just let them keep flying off "into the sunset" for their greentext.
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
@@ -1056,3 +1160,7 @@
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
+
+#ifdef TESTING
+#undef DOCKING_PORT_HIGHLIGHT
+#endif

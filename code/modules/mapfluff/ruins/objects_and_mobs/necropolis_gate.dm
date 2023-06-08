@@ -249,6 +249,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "stone tile"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
+	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

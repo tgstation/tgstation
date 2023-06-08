@@ -2,10 +2,14 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = SPECIES_SKELETON
-	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, NO_DNA_COPY, NOAPPENDIX)
+	species_traits = list(
+		NOTRANSSTING,
+		NOEYESPRITES,
+		NO_DNA_COPY,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
@@ -23,13 +27,19 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
+		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
+	mutantappendix = null
+	mutantheart = null
+	mutantliver = null
+	mutantlungs = null
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
-	wings_icons = list("Skeleton")
+	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
@@ -54,12 +64,12 @@
 	return ..()
 
 //Can still metabolize milk through meme magic
-/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
-		if(DT_PROB(10, delta_time))
+		H.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
+		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
+		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -68,7 +78,7 @@
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)
-			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
+			if(SPT_PROB(2, seconds_per_tick) && iscarbon(H)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
@@ -79,8 +89,18 @@
 				else
 					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
 					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return TRUE
+	if(chem.type == /datum/reagent/consumable/milk)
+		if(chem.volume > 50)
+			H.reagents.remove_reagent(chem.type, chem.volume - 5)
+			to_chat(H, span_warning("The excess milk is dripping off your bones!"))
+		H.heal_bodypart_damage(2.5 * REM * seconds_per_tick, 2.5 * REM * seconds_per_tick)
+
+		for(var/datum/wound/iter_wound as anything in H.all_wounds)
+			iter_wound.on_xadone(1 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return FALSE
 
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \

@@ -52,7 +52,7 @@
 		disease_id = "[type]|[overmind?.tag]"
 	return disease_id
 
-/datum/disease/advance/sentient_disease/GenerateCure()
+/datum/disease/advance/sentient_disease/generate_cure()
 	if(cures.len)
 		return
 	var/list/not_used = advance_cures.Copy()

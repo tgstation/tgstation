@@ -2,8 +2,9 @@
 	name = "Manse Link"
 	desc = "This spell allows you to pierce through reality and connect minds to one another \
 		via your Mansus Link. All minds connected to your Mansus Link will be able to communicate discreetly across great distances."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mansus_link"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 

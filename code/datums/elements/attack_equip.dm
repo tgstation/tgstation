@@ -41,7 +41,7 @@
 
 	attire.item_start_equip(sharp_dresser, attire, user)
 
-	if(!do_mob(user, sharp_dresser, equip_time))
+	if(!do_after(user, equip_time, sharp_dresser))
 		return
 
 	if(!user.Adjacent(sharp_dresser)) // Due to teleporting shenanigans

@@ -67,7 +67,7 @@
 /datum/action/cooldown/spell/thermal_vision
 	name = "Activate Thermal Vision"
 	desc = "You can see thermal signatures, at the cost of your eyesight."
-	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	button_icon_state = "augmented_eyesight"
 
 	cooldown_time = 25 SECONDS

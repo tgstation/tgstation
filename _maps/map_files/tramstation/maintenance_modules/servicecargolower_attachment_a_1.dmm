@@ -1,0 +1,346 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 13;
+	pixel_x = 9
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/closet,
+/obj/effect/spawner/random/mod/maint,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/light/small/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/money_small,
+/obj/effect/spawner/random/entertainment/money_medium,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_y = 15;
+	pixel_x = -9
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/trash/janitor_supplies,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"q" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"r" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/deck,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/dice,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"F" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Da Clubbe"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/drugs,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"V" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+a
+a
+a
+r
+r
+e
+e
+e
+e
+e
+e
+"}
+(2,1,1) = {"
+a
+a
+a
+r
+S
+b
+A
+g
+r
+Q
+e
+"}
+(3,1,1) = {"
+a
+a
+a
+r
+J
+x
+m
+g
+r
+c
+e
+"}
+(4,1,1) = {"
+a
+a
+a
+r
+O
+O
+O
+O
+r
+o
+e
+"}
+(5,1,1) = {"
+a
+a
+a
+r
+H
+O
+O
+s
+r
+v
+e
+"}
+(6,1,1) = {"
+a
+a
+a
+r
+r
+r
+F
+r
+r
+O
+e
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+Z
+f
+O
+O
+V
+O
+e
+"}
+(8,1,1) = {"
+r
+n
+O
+L
+O
+O
+O
+O
+L
+N
+e
+"}
+(9,1,1) = {"
+r
+j
+O
+q
+O
+O
+O
+O
+V
+O
+e
+"}
+(10,1,1) = {"
+r
+W
+W
+r
+p
+r
+r
+r
+r
+M
+e
+"}
+(11,1,1) = {"
+r
+B
+G
+r
+t
+r
+a
+a
+r
+O
+e
+"}
+(12,1,1) = {"
+r
+r
+r
+r
+r
+r
+e
+e
+e
+e
+e
+"}

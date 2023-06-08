@@ -106,7 +106,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
-	allowed_inactive = TRUE
+	allow_flags = MODULE_ALLOW_INACTIVE
 	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
@@ -199,7 +199,7 @@
 	/// Our linked bodybag.
 	var/obj/structure/closet/body_bag/linked_bodybag
 
-/obj/item/mod/module/criminalcapture/on_process(delta_time)
+/obj/item/mod/module/criminalcapture/on_process(seconds_per_tick)
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 
@@ -364,10 +364,10 @@
 		Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 4
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
-	cooldown_time = 25 SECONDS
+	cooldown_time = 15 SECONDS
 
 /obj/item/mod/module/active_sonar/on_use()
 	. = ..()

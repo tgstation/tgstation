@@ -16,7 +16,7 @@
 
 	create_notice()
 
-	RegisterSignal(
+	RegisterSignals(
 		ticket,
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
@@ -93,7 +93,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/atom/movable/screen/admin_popup/process(delta_time)
+/atom/movable/screen/admin_popup/process(seconds_per_tick)
 	update_text()
 
 /atom/movable/screen/admin_popup/proc/update_text()

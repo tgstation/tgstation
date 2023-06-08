@@ -1,6 +1,6 @@
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
-	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries. Alt-click to remove link."
+	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "supplypod_beacon"
 	inhand_icon_state = "radio"
@@ -79,7 +79,7 @@
 	to_chat(user, span_notice("[src] linked to [C]."))
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.canUseTopic(src, !issilicon(user)))
+	if (!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if (express_console)
 		unlink_console()
@@ -92,7 +92,7 @@
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	name += " ([tag])"
 

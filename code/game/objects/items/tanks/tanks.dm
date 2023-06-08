@@ -24,10 +24,12 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
+	/// If we are in the process of exploding, stops multi explosions
+	var/igniting = FALSE
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
 	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
@@ -48,6 +50,11 @@
 	var/mob/living/carbon/breathing_mob = null
 
 /// Closes the tank if dropped while open.
+/datum/armor/item_tank
+	bomb = 10
+	fire = 80
+	acid = 30
+
 /obj/item/tank/dropped(mob/living/user, silent)
 	. = ..()
 	// Close open air tank if its current user got sent to the shadowrealm.
@@ -68,10 +75,18 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
+	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
+	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
+	SIGNAL_HANDLER
+	items += "Internal Atmosphere Info: [name]"
+	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
+	items += "Distribution Pressure: [distribute_pressure] kPa"
 
 /// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
@@ -106,9 +121,8 @@
 	return
 
 /obj/item/tank/Destroy()
-	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
-	air_contents = null
 	STOP_PROCESSING(SSobj, src)
+	air_contents = null
 	return ..()
 
 /obj/item/tank/examine(mob/user)
@@ -121,7 +135,7 @@
 			. += span_notice("If you want any more information you'll need to get closer.")
 		return
 
-	. += span_notice("The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.")
+	. += span_notice("The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.")
 
 	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
@@ -259,13 +273,13 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/tank/process(delta_time)
+/obj/item/tank/process(seconds_per_tick)
 	if(!air_contents)
 		return
 
 	//Allow for reactions
 	excited = (excited | air_contents.react(src))
-	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | handle_tolerances(seconds_per_tick))
 	excited = (excited | leaking)
 
 	if(!excited)
@@ -285,9 +299,9 @@
  *
  * Returns true if it did anything of significance, false otherwise
  * Arguments:
- * - delta_time: How long has passed between ticks.
+ * - seconds_per_tick: How long has passed between ticks.
  */
-/obj/item/tank/proc/handle_tolerances(delta_time)
+/obj/item/tank/proc/handle_tolerances(seconds_per_tick)
 	if(!air_contents)
 		return FALSE
 
@@ -295,13 +309,13 @@
 	var/temperature = air_contents.return_temperature()
 	if(temperature >= TANK_MELT_TEMPERATURE)
 		var/temperature_damage_ratio = (temperature - TANK_MELT_TEMPERATURE) / temperature
-		take_damage(max_integrity * temperature_damage_ratio * delta_time, BURN, FIRE, FALSE, NONE)
+		take_damage(max_integrity * temperature_damage_ratio * seconds_per_tick, BURN, FIRE, FALSE, NONE)
 		if(QDELETED(src))
 			return TRUE
 
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
-		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
+		take_damage(max_integrity * pressure_damage_ratio * seconds_per_tick, BRUTE, BOMB, FALSE, NONE)
 		return TRUE
 	return FALSE
 
@@ -347,4 +361,72 @@
 /obj/item/tank/proc/explosion_information()
 	return list(TANK_RESULTS_REACTION = reaction_info, TANK_RESULTS_MISC = explosion_info)
 
+/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
+	if(igniting)
+		stack_trace("Attempted to ignite a /obj/item/tank multiple times")
+		return //no double ignite
+	igniting = TRUE
+	// This is done in return_air call, but even then it actually makes zero sense, this tank is going to be deleted
+	// before ever getting a chance to process.
+	//START_PROCESSING(SSobj, src)
+	var/datum/gas_mixture/our_mix = return_air()
+
+	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	our_mix.garbage_collect()
+	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
+	var/strength = 1
+
+	var/turf/ground_zero = get_turf(loc)
+
+	if(bomb_mixture.temperature > (T0C + 400))
+		strength = (fuel_moles/15)
+
+		if(strength >= 2)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
+		else if(strength >= 1)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
+		else if(strength >= 0.2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(1000, 125)
+
+	else if(bomb_mixture.temperature > (T0C + 250))
+		strength = (fuel_moles/20)
+
+		if(strength >= 1)
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(1000, 125)
+
+	else if(bomb_mixture.temperature > (T0C + 100))
+		strength = (fuel_moles/25)
+
+		if(strength >= 1)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(1000, 125)
+
+	else
+		ground_zero.assume_air(bomb_mixture)
+		ground_zero.hotspot_expose(1000, 125)
+
+	if(master)
+		qdel(master)
+	qdel(src)
+
+/obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
+	var/datum/gas_mixture/our_mix = return_air()
+	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	T.assume_air(removed)
 #undef ASSUME_AIR_DT_FACTOR

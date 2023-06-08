@@ -3,7 +3,7 @@
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
 	scan_desc = "psychotic schizophrenic delusions"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
-	lose_text = "<span class='warning'>The voices in your head fall silent.</span>"
+	lose_text = span_warning("The voices in your head fall silent.")
 	can_gain = TRUE
 	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
@@ -25,7 +25,7 @@
 			lose_text = ""
 			qdel(src)
 			return
-	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
+	gain_text = span_warning("You hear a sickening, raspy voice in your head. It wants one small task of you...")
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src
@@ -36,7 +36,7 @@
 	antagonist.greet()
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 
-/datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,10 +50,10 @@
 		viewing = FALSE
 	if(viewing)
 		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += delta_time SECONDS
+		total_time_creeping += seconds_per_tick SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedobsessedobj.timer -= delta_time SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+			attachedobsessedobj.timer -= seconds_per_tick SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
@@ -95,7 +95,7 @@
 	switch(rand(1, 100))
 		if(1 to 40)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("blink", "blink_r"))
-			owner.blur_eyes(10)
+			owner.set_eye_blur_if_lower(20 SECONDS)
 			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
 		if(41 to 80)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")

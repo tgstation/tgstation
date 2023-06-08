@@ -208,7 +208,7 @@
 		switch(pick(possible_punishments))
 			if(PUNISHMENT_OMEN)
 				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
-				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
+				interfering.AddComponent(/datum/component/omen)
 			if(PUNISHMENT_LIGHTNING)
 				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
 				lightningbolt(interfering)
@@ -216,7 +216,7 @@
 				var/mob/living/carbon/human/branded = interfering
 				to_chat(interfering, span_warning("[GLOB.deity] brands your flesh for interfering with [chaplain]'s sparring match!!"))
 				var/obj/item/bodypart/branded_limb = pick(branded.bodyparts)
-				branded_limb.force_wound_upwards(/datum/wound/burn/severe/brand)
+				branded_limb.force_wound_upwards(/datum/wound/burn/severe/brand, wound_source = "divine intervention")
 				branded.emote("scream")
 
 	flubs--

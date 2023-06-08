@@ -14,24 +14,24 @@
 	program_icon = "terminal"
 
 /datum/computer_file/program/robotact/on_start(mob/living/user)
-	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
+	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
 		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
-		var/obj/item/modular_computer/tablet/integrated/tablet = computer
-		if(tablet.device_theme == "syndicate")
+		var/obj/item/modular_computer/pda/silicon/tablet = computer
+		if(tablet.device_theme == PDA_THEME_SYNDICATE)
 			program_icon_state = "command-syndicate"
 		return TRUE
 	return FALSE
 
 /datum/computer_file/program/robotact/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(!iscyborg(user))
 		return data
 
 	//Implied, since we can't run on non tablets
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
 
@@ -77,19 +77,16 @@
 		return data
 	var/mob/living/silicon/robot/cyborg = user
 	//Implied
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 
 	data["Laws"] = cyborg.laws.get_law_list(TRUE, TRUE, FALSE)
 	data["borgLog"] = tablet.borglog
 	data["borgUpgrades"] = cyborg.upgrades
 	return data
 
-/datum/computer_file/program/robotact/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/robotact/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	//Implied type, memes
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/obj/item/modular_computer/pda/silicon/tablet = computer
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
 
 	switch(action)
@@ -140,17 +137,3 @@
 				return
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)
-
-/**
- * Forces a full update of the UI, if currently open.
- *
- * Forces an update that includes refreshing ui_static_data. Called by
- * law changes and borg log additions.
- */
-/datum/computer_file/program/robotact/proc/force_full_update()
-	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
-		return
-	var/obj/item/modular_computer/tablet/integrated/tablet = computer
-	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.silicon_owner, src)
-	if(active_ui)
-		active_ui.send_full_update()

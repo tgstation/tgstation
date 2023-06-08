@@ -1,0 +1,3 @@
+/obj/structure/grille:
+  banned_neighbors:
+  - /obj/structure/grille

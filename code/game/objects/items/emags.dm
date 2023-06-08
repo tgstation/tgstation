@@ -51,13 +51,16 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack()
+/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if (!proximity_flag)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/window/tram/)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/attack()
 	return
@@ -67,6 +70,7 @@
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!can_emag(target, user))
 		return
 	log_combat(user, A, "attempted to emag")
@@ -135,7 +139,7 @@
 	desc = "An ominous card that contains the location of the station, and when applied to a communications console, \
 	the ability to long-distance contact the Syndicate fleet."
 	icon_state = "battlecruisercaller"
-	worn_icon_state = "battlecruisercaller"
+	worn_icon_state = "emag"
 	///whether we have called the battlecruiser
 	var/used = FALSE
 	/// The battlecruiser team that the battlecruiser will get added to

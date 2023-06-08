@@ -9,8 +9,8 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/card.dmi'
-	icon_state = "data_3"
+	icon = 'icons/obj/module.dmi'
+	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -149,8 +149,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -183,8 +183,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -248,7 +248,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/internal/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 

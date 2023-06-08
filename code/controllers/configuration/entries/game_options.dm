@@ -319,7 +319,6 @@
 /datum/config_entry/string/overflow_job
 	default = JOB_ASSISTANT
 
-/datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
 
 /datum/config_entry/number/lavaland_budget
@@ -338,6 +337,8 @@
 	min_val = 0
 
 /datum/config_entry/flag/allow_random_events // Enables random events mid-round when set
+
+/datum/config_entry/flag/forbid_station_traits
 
 /datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
 	default = 1
@@ -379,6 +380,11 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
+/datum/config_entry/number/shift_time_start_hour
+	default = 12
+	min_val = 0
+	max_val = 23
+
 /datum/config_entry/number/monkeycap
 	default = 64
 	min_val = 0
@@ -412,3 +418,14 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
+/datum/config_entry/string/tts_http_url
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/tts_http_token
+	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/number/tts_max_concurrent_requests
+	default = 4
+	min_val = 1
+
+/datum/config_entry/flag/give_tutorials_without_db

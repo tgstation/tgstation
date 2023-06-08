@@ -42,6 +42,7 @@
 		else
 			target_zone = ran_zone()
 		casing.fire_casing(target, firer, null, null, null, target_zone, 0,  firer)
+		casing.AddElement(/datum/element/temporary_atom, 30 SECONDS)
 
 	else if(projectiletype)
 		var/obj/projectile/P = new projectiletype(startloc)

@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /datum/adventure_loot_generator/pet
 	id = "pets"
 	var/carrier_type = /obj/item/pet_carrier/biopod
-	var/list/possible_pets = list(/mob/living/simple_animal/pet/cat/space,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/pet/penguin/baby,/mob/living/simple_animal/pet/dog/pug)
+	var/list/possible_pets = list(/mob/living/simple_animal/pet/cat/space,/mob/living/basic/pet/dog/corgi,/mob/living/simple_animal/pet/penguin/baby,/mob/living/basic/pet/dog/pug)
 
 /datum/adventure_loot_generator/pet/generate()
 	var/obj/item/pet_carrier/carrier = new carrier_type()
@@ -165,6 +165,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /obj/item/firelance/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!HAS_TRAIT(src,TRAIT_WIELDED))
 		to_chat(user,span_notice("You need to wield [src] in two hands before you can fire it."))
 		return

@@ -91,12 +91,14 @@
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
-	equip_cooldown = 8
+	equip_cooldown = 1.5 SECONDS
 	name = "\improper CH-DS \"Peacemaker\" disabler"
-	desc = "A weapon for combat exosuits. Shoots basic disablers."
+	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
-	energy_drain = 30
-	projectile = /obj/projectile/beam/disabler
+	energy_drain = 100
+	projectile = /obj/projectile/beam/disabler/weak
+	variance = 25
+	projectiles_per_shot = 5
 	fire_sound = 'sound/weapons/taser2.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
@@ -197,7 +199,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)
@@ -455,7 +457,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
 	. = ..()
-	if(action == "toggle")
+	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
@@ -483,6 +485,7 @@
 	name = "punching glove"
 	desc = "INCOMING HONKS"
 	throwforce = 35
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "punching_glove"
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -169,7 +169,7 @@
 	if(compare_list(our_scoops, icecream_order.wanted_flavors))
 		return COMPONENT_CORRECT_ORDER
 
-/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
+/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
 	//the price of ice cream scales with the number of scoops. Yummy.
@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	icon_state = "icecream_mob"
 	desc = "filled with bright red ice cream. That's probably not strawberry..."
 	desc_prefix = "A suspicious $CONE_NAME"
-	reagent_type = /datum/reagent/liquidgibs
+	reagent_type = /datum/reagent/consumable/liquidgibs
 	hidden = TRUE
 
 /datum/ice_cream_flavour/custom

@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 400
 	light_range = 3
-	faction = list("mining", "boss")
+	faction = list(FACTION_MINING, FACTION_BOSS)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
@@ -46,8 +46,6 @@
 	var/recovery_time = 0
 	/// If this is a megafauna that is real (has achievements, gps signal)
 	var/true_spawn = TRUE
-	/// Range the megafauna can move from their nest (if they have one
-	var/nest_range = 10
 	/// The chosen attack by the megafauna
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
@@ -60,9 +58,8 @@
 	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -74,13 +71,6 @@
 	//Safety check
 	if(!loc)
 		return ..()
-	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
-		var/turf/closest = get_turf(nest.parent)
-		for(var/i = 1 to nest_range)
-			closest = get_step(closest, get_dir(closest, src))
-		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
-		LoseTarget()
-		return
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
@@ -157,6 +147,8 @@
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
+	return TRUE
+
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	if(!ignore_staggered && has_status_effect(/datum/status_effect/stagger))
@@ -181,7 +173,7 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		L?.mind.add_memory(MEMORY_MEGAFAUNA_KILL, list(DETAIL_PROTAGONIST = L, DETAIL_DEUTERAGONIST = src), STORY_VALUE_LEGENDARY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
+		L.add_mob_memory(/datum/memory/megafauna_slayer, antagonist = src)
 		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))
@@ -192,7 +184,7 @@
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = ""
 	var/chosen_message
 	var/chosen_attack_num = 0

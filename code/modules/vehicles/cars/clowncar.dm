@@ -3,7 +3,7 @@
 	desc = "How someone could even fit in there is byond me."
 	icon_state = "clowncar"
 	max_integrity = 150
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/car_clowncar
 	enter_delay = 20
 	max_occupants = 50
 	movedelay = 0.6
@@ -21,6 +21,16 @@
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
+	///Does the driver require the clown role to drive it
+	var/enforce_clown_role = TRUE
+
+/datum/armor/car_clowncar
+	melee = 70
+	bullet = 40
+	laser = 40
+	bomb = 30
+	fire = 80
+	acid = 80
 
 /obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
@@ -40,7 +50,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
+		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, PROC_REF(fire_cannon_at))
 			M.log_message("has entered [src] as a possible driver", LOG_GAME)
@@ -100,7 +110,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped) && !istype(bumped, /mob/living/simple_animal/deer))
+	if(isliving(bumped) && !istype(bumped, /mob/living/basic/deer))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped

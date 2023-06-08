@@ -28,7 +28,7 @@
 
 	///Note that this spawn list is also in the icemoon generator
 	weighted_feature_spawn_list = list(
-		/obj/structure/geyser/wittel = 6,
+		/obj/structure/geyser/wittel = 10,
 		/obj/structure/geyser/random = 2,
 		/obj/structure/geyser/plasma_oxide = 10,
 		/obj/structure/geyser/protozine = 10,
@@ -39,3 +39,7 @@
 	smoothing_iterations = 50
 	birth_limit = 4
 	death_limit = 3
+
+/datum/map_generator/cave_generator/lavaland/ruin_version
+	weighted_open_turf_types = list(/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins = 1)
+	weighted_closed_turf_types = list(/turf/closed/mineral/random/volcanic/do_not_chasm = 1)

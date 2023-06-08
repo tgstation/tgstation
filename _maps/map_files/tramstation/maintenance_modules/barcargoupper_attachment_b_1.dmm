@@ -1,0 +1,74 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"u" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"F" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"N" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Storage Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"O" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"T" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+F
+F
+F
+F
+F
+"}
+(2,1,1) = {"
+u
+a
+T
+a
+F
+"}
+(3,1,1) = {"
+u
+Q
+x
+O
+F
+"}
+(4,1,1) = {"
+u
+N
+u
+u
+u
+"}

@@ -22,6 +22,11 @@
 	var/obj/item/drone_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
+	var/poster_name = "generic celebration poster"
+	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
+	var/poster_icon = "holiday_unfinished"
+	/// Color scheme for this holiday
+	var/list/holiday_colors
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -72,6 +77,29 @@
 
 	return FALSE
 
+/// Procs to return holiday themed colors for recoloring atoms
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	if(!holiday_colors)
+		return
+	switch(pattern)
+		if(PATTERN_DEFAULT)
+			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
+		if(PATTERN_VERTICAL_STRIPE)
+			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
+
+/proc/request_holiday_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	switch(pattern)
+		if(PATTERN_RANDOM)
+			return "#[random_short_color()]"
+		if(PATTERN_RAINBOW)
+			var/datum/holiday/pride_week/rainbow_datum = new()
+			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
+	if(!length(GLOB.holidays))
+		return
+	for(var/holiday_key in GLOB.holidays)
+		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
+		return holiday_real.get_holiday_colors(thing_to_color, pattern)
+
 // The actual holidays
 
 // JANUARY
@@ -116,6 +144,9 @@
 	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
+	poster_name = "lovey poster"
+	poster_desc = "A poster celebrating all the relationships built today. Of course, you probably don't have one."
+	poster_icon = "holiday_love"
 
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
@@ -125,6 +156,9 @@
 	begin_day = 16
 	begin_month = FEBRUARY
 	drone_hat = /obj/item/clothing/head/costume/festive
+	poster_name = "station birthday poster"
+	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
+	poster_icon = "holiday_cake" // is a lie
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -157,6 +191,9 @@
 	name = "Random Acts of Kindness Day"
 	begin_day = 17
 	begin_month = FEBRUARY
+	poster_name = "act of kindness poster"
+	poster_desc = "A poster notifying the reader today is 'Act of Kindness' day. What a nice thing to do."
+	poster_icon = "holiday_kind"
 
 /datum/holiday/random_kindness/greet()
 	return "Go do some random acts of kindness for a stranger!" //haha yeah right
@@ -172,6 +209,9 @@
 	name = "Pi Day"
 	begin_day = 14
 	begin_month = MARCH
+	poster_name = "pi day poster"
+	poster_desc = "A poster celebrating the 3.141529th day of the year. At least theres free pie."
+	poster_icon = "holiday_pi"
 
 /datum/holiday/pi/getStationPrefix()
 	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")
@@ -204,6 +244,9 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+
+/datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)
+	return "#[random_short_color()]"
 
 /datum/holiday/spess
 	name = "Cosmonautics Day"
@@ -312,26 +355,21 @@
 	name = "Summer Solstice"
 	begin_day = 21
 	begin_month = JUNE
+
 /datum/holiday/pride_week
 	name = PRIDE_WEEK
 	begin_month = JUNE
 	// Stonewall was June 28th, this captures its week.
 	begin_day = 23
 	end_day = 29
-
-	var/static/list/rainbow_colors = list(
-		COLOR_PRIDE_PURPLE,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_RED,
+	holiday_colors = list(
+	COLOR_PRIDE_PURPLE,
+	COLOR_PRIDE_BLUE,
+	COLOR_PRIDE_GREEN,
+	COLOR_PRIDE_YELLOW,
+	COLOR_PRIDE_ORANGE,
+	COLOR_PRIDE_RED,
 	)
-
-/// Given an atom, will return what color it should be to match the pride flag.
-/datum/holiday/pride_week/proc/get_floor_tile_color(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return rainbow_colors[(turf.y % rainbow_colors.len) + 1]
 
 // JULY
 
@@ -725,7 +763,6 @@
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
 
-
 // HOLIDAY ADDONS
 
 /datum/holiday/xmas/celebrate()
@@ -743,7 +780,7 @@
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state_on = "entertainment_xmas"
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 

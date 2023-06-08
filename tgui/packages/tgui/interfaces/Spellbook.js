@@ -324,7 +324,7 @@ const Randomize = (props, context) => {
   return (
     <Stack fill vertical>
       {points < 10 && <PointLocked />}
-      <Stack.Item grow mt={10}>
+      <Stack.Item>
         Semi-Randomize will ensure you at least get some mobility and lethality.
         Guaranteed to have {semi_random_bonus} points worth of spells.
       </Stack.Item>

@@ -20,6 +20,7 @@
 #define KIT_MR_FREEZE "mr_freeze"
 #define KIT_TRAITOR_2006 "ancient"
 
+/// last audited december 2022
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
@@ -44,7 +45,7 @@
 			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
 			new /obj/item/grenade/frag(src) // ~2 tc each?
 			new /obj/item/grenade/frag(src)
-			new /obj/item/flashlight/emp(src)
+			new /obj/item/flashlight/emp(src) // 4 tc
 
 		if(KIT_BLOODY_SPAI)
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
@@ -61,90 +62,99 @@
 			new /obj/item/chameleon(src) // 7 tc
 
 		if(KIT_STEALTHY)
-			new /obj/item/gun/energy/recharge/ebow(src)
-			new /obj/item/pen/sleepy(src)
-			new /obj/item/healthanalyzer/rad_laser(src)
-			new /obj/item/chameleon(src)
-			new /obj/item/soap/syndie(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/flashlight/emp(src)
-			new /obj/item/jammer(src)
+			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
+			new /obj/item/pen/sleepy(src) // 4 tc
+			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
+			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/soap/syndie(src) // 1 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/jammer(src) // 5 tc
 
 		if(KIT_GUN)
-			new /obj/item/gun/ballistic/revolver(src)
+			new /obj/item/gun/ballistic/revolver/syndicate(src) // 13 tc
+			new /obj/item/ammo_box/a357(src) // 4tc
 			new /obj/item/ammo_box/a357(src)
-			new /obj/item/ammo_box/a357(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/grenade/c4(src)
-			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc replaced the emag with the doorjack
+			new /obj/item/grenade/c4(src) // 1 tc
+			new /obj/item/clothing/gloves/latex/nitrile(src) // ~1 tc for whole outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
 			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_SCREWED)
-			new /obj/item/sbeacondrop/bomb(src)
-			new /obj/item/grenade/syndieminibomb(src)
-			new /obj/item/sbeacondrop/powersink(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/encryptionkey/syndicate(src)
+			new /obj/item/sbeacondrop/bomb(src) // 11 tc
+			new /obj/item/grenade/syndieminibomb(src) // 6 tc
+			new /obj/item/sbeacondrop/powersink(src) // 11 tc
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 
 		if(KIT_MURDER)
-			new /obj/item/melee/energy/sword/saber(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src)
-			new /obj/item/encryptionkey/syndicate(src)
-			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/melee/energy/sword/saber(src) // 8 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
+			new /obj/item/grenade/syndieminibomb(src) // 6 tc
 
 		if(KIT_IMPLANTS)
-			new /obj/item/implanter/freedom(src)
-			new /obj/item/implanter/uplink/precharged(src)
-			new /obj/item/implanter/emp(src)
-			new /obj/item/implanter/explosive(src)
-			new /obj/item/implanter/storage(src)
+			new /obj/item/implanter/freedom(src) // 5 tc
+			new /obj/item/implanter/uplink/precharged(src) // 10 tc is inside this thing
+			new /obj/item/implanter/emp(src) // 1 tc
+			new /obj/item/implanter/explosive(src) // 2 tc
+			new /obj/item/implanter/storage(src) // 8 tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
-			new /obj/item/ai_module/syndicate(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/ai_module/toy_ai(src)
-			new /obj/item/multitool/ai_detect(src)
-			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/camera_bug(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/card/id/advanced/chameleon(src)
+			new /obj/item/ai_module/syndicate(src) // 4 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/encryptionkey/binary(src) // 5 tc
+			new /obj/item/ai_module/toy_ai(src) // ~6 tc
+			new /obj/item/multitool/ai_detect(src) // 1 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 
-		if(KIT_LORD_SINGULOTH) //can't loose the goose anymore without SM :(
-			new /obj/item/sbeacondrop(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/card/emag(src)
-			new /obj/item/storage/toolbox/syndicate(src)
+		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
+			new /obj/item/sbeacondrop(src) // 10 tc
+			var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+			new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+			var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+			new spess_helmet(src) // 4 TC for the space gear
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
-			new /obj/item/stack/spacecash/c10000(src)
-			new /obj/item/toy/spinningtoy(src) //lol
+			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
+			if(prob(70))
+				new /obj/item/toy/spinningtoy(src) //lol
+			else
+				new /obj/item/toy/spinningtoy/dark_matter(src) //edgy lol
 
 		if(KIT_SABOTAGE)
-			/obj/item/storage/backpack/duffelbag/syndie/sabotage
-			new /obj/item/camera_bug(src)
-			new /obj/item/sbeacondrop/powersink(src)
-			new /obj/item/computer_disk/virus/detomatix(src)
-			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/pizzabox/bomb(src)
-			new /obj/item/storage/box/syndie_kit/emp(src)
+			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
+			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/sbeacondrop/powersink(src) // 11 tc
+			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
+			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+			new /obj/item/pizzabox/bomb(src) // 6 tc
+			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
 
 		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
-			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
+			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
+			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
+			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
 			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_NUKEOPS_METAGAME)
-			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
+			new /obj/item/mod/control/pre_equipped/nuclear/unrestricted(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -166,31 +176,40 @@
 		KIT_TRAITOR_2006 = 1
 		)))
 		if(KIT_JAMES_BOND)
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/suppressor(src)
+			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 tc
+			new /obj/item/suppressor(src) // 3 tc
+			new /obj/item/ammo_box/magazine/m9mm(src) // 1 tc
 			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/card/id/advanced/chameleon(src)
-			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/clothing/under/chameleon(src) // 1 tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			new /obj/item/reagent_containers/cup/rag(src)
+			new /obj/item/implanter/freedom(src) // 5 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/grenade/c4/x4(src) // 1ish tc
+			new /obj/item/reagent_containers/pill/cyanide(src)
+			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
-				new /obj/item/throwing_star(src) // ~5 tc for all 6
-			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
+				new /obj/item/throwing_star(src) // 1 tc
+			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
+			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb. 1 tc
+			new /obj/item/clothing/shoes/bhop(src) // mining item, lets you jump at people, at least 2 tc
 
 		if(KIT_DARK_LORD)
-			new /obj/item/dualsaber(src)
-			new /obj/item/dnainjector/telemut/darkbundle(src)
+			new /obj/item/dualsaber/red(src) // 16 tc
+			new /obj/item/dnainjector/telemut/darkbundle(src) // ~ 4 tc for tk
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-			new /obj/item/card/id/advanced/chameleon(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
-			new /obj/item/book/granter/action/spell/summonitem(src)
+			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //2 tc ,because slipping while being a dark lord sucks
+			new /obj/item/book/granter/action/spell/summonitem(src) // ~2 tc
+			new /obj/item/book/granter/action/spell/lightningbolt(src) // 4 tc
 
 		if(KIT_WHITE_WHALE_HOLY_GRAIL) //Unique items that don't appear anywhere else
 			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
@@ -198,6 +217,7 @@
 			new /obj/item/clothing/suit/hooded/carp_costume/spaceproof(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+			new /obj/item/toy/plush/carpplushie/dehy_carp(src) // 1 tc, for use as a personal mount
 
 		if(KIT_MAD_SCIENTIST)
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
@@ -211,17 +231,17 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
-			new /obj/item/pen/edagger(src)
-			new /obj/item/gun/energy/wormhole_projector/core_inserted(src)
-			new /obj/item/gun/energy/decloner/unrestricted(src)
+			new /obj/item/pen/edagger(src) // 2 tc
+			new /obj/item/gun/energy/wormhole_projector/core_inserted(src) // 5 tc easily
+			new /obj/item/gun/energy/decloner/unrestricted(src) // 5 tc at least also
 
 		if(KIT_BEES)
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
 			new /obj/item/clothing/mask/animal/small/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
-			new /obj/item/grenade/spawnergrenade/buzzkill(src)
-			new /obj/item/grenade/spawnergrenade/buzzkill(src)
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // these are the random super bees this is definitely all of the tc budget for this one
+			new /obj/item/grenade/spawnergrenade/buzzkill(src) // 10 tc per grenade
 			new /obj/item/reagent_containers/cup/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
@@ -231,14 +251,15 @@
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/clothing/suit/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/grenade/gluon(src) // whole belt is 22 and gluon is weight 4 so lets just go with like 7 total
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
-			new /obj/item/grenade/gluon(src)
-			new /obj/item/dnainjector/geladikinesis(src)
+			new /obj/item/dnainjector/geladikinesis(src) // both abilities are probably 3 tc total
 			new /obj/item/dnainjector/cryokinesis(src)
-			new /obj/item/gun/energy/temperature/security(src)
-			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
+			new /obj/item/gun/energy/temperature/freeze(src) // ~6 tc
+			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
+			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
@@ -246,12 +267,13 @@
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
-	new /obj/item/card/emag(src)
-	new /obj/item/pen/sleepy(src)
+	new /obj/item/card/emag(src) // 4 tc
+	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
+	new /obj/item/pen/sleepy(src) // 4 tc
 	new /obj/item/reagent_containers/pill/cyanide(src)
-	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
-	new /obj/item/gun/ballistic/revolver(src)
-	new /obj/item/implanter/freedom(src)
+	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
+	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
+	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
 /obj/item/storage/box/syndicate/contract_kit
@@ -391,13 +413,10 @@
 	atom_storage.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	if(prob(50))
-		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
-	else
-		new /obj/item/clothing/head/helmet/space/syndicate(src)
-		new /obj/item/clothing/suit/space/syndicate(src)
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
@@ -406,6 +425,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
+
+/obj/item/storage/box/syndie_kit/mail_counterfeit
+	name = "mail counterfeit kit"
+	desc = "A box full of mail counterfeit devices. Nothing stops the mail."
+
+/obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/storage/mail_counterfeit_device(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
@@ -475,7 +502,7 @@
 	new /obj/item/storage/belt/chameleon(src)
 	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
-	new /obj/item/modular_computer/tablet/pda/chameleon(src)
+	new /obj/item/modular_computer/pda/chameleon(src)
 	new /obj/item/gun/energy/laser/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
@@ -509,6 +536,12 @@
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
 
+/obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
+	new /obj/item/food/baguette/combat(src)
+	for(var/i in 1 to 2)
+		new /obj/item/food/croissant/throwing(src)
+	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
+
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -516,7 +549,7 @@
 	new /obj/item/radio/headset/headset_cent/empty(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/modular_computer/tablet/pda/heads(src)
+	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
@@ -532,7 +565,7 @@
 	new /obj/item/storage/belt/chameleon/broken(src)
 	new /obj/item/radio/headset/chameleon/broken(src)
 	new /obj/item/stamp/chameleon/broken(src)
-	new /obj/item/modular_computer/tablet/pda/chameleon/broken(src)
+	new /obj/item/modular_computer/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
 
 /obj/item/storage/box/syndie_kit/bee_grenades
@@ -548,6 +581,16 @@
 	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
+
+/// Surplus Ammo Box
+
+/obj/item/storage/box/syndie_kit/surplus
+	name = "surplus .50 BMG magazine box"
+	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
+
+/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
@@ -585,6 +628,125 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+
+/obj/item/storage/box/syndie_kit/stickers
+	name = "sticker kit"
+
+/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+
+/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+	var/list/types = subtypesof(/obj/item/sticker/syndicate)
+	for(var/i in 1 to atom_storage.max_slots)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/pinata
+	name = "weapons grade pinata kit"
+	desc = "Contains a weapons grade pinata and 2 belts for carrying its contents."
+
+/obj/item/storage/box/syndie_kit/pinata/PopulateContents()
+	new /obj/item/pinata/syndie(src)
+	new /obj/item/storage/belt/grenade(src)
+	new /obj/item/storage/belt/military/snack(src)
+
+/obj/item/storage/box/syndie_kit/induction_kit
+	name = "syndicate induction kit"
+	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
+
+/obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
+	// Basic weaponry, so they have something to use.
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
+	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/pen/edagger(src) // 2 TC
+	// The necessary equipment to help secure that disky.
+	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
+	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
+	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
+	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	// Tacticool gear
+	new /obj/item/clothing/shoes/combat(src)
+	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/book/manual/nuclear(src) // Very important
+	// The most important part of the kit, the implant that gives them the syndicate faction.
+	new /obj/item/implanter/induction_implant(src)
+	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
+	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
+	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
+
+/obj/item/implanter/induction_implant
+	name = "implanter (nuclear operative)"
+	desc = "A sterile automatic implant injector. You can see a tiny, somehow legible sticker on the side: 'NOT A BRAINWASH DEVICE'"
+	imp_type = /obj/item/implant/nuclear_operative
+
+/obj/item/implant/nuclear_operative
+	name = "nuclear operative implant"
+	desc = "Registers you as a member of a Syndicate nuclear operative team."
+	implant_color = "r"
+
+/obj/item/implant/nuclear_operative/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Suspicious Implant<BR>
+				<b>Life:</b> UNKNOWN <BR>
+				<b>Implant Details:</b> <BR>
+				<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."}
+	return dat
+
+/obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(!. || !ishuman(target) || !(target.mind))
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+
+	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
+		if(human_target == user)
+			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
+			human_target.Stun(10 SECONDS)
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 10)
+			return FALSE
+		else
+			to_chat(user, span_notice("You finish implanting [human_target], but you don't really notice a difference. Huh."))
+			to_chat(human_target, span_userdanger("Nothing seems to really happen, but you start to feel a little ill.."))
+			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
+			return FALSE
+
+	/// If no antag datums which allow induction are there, disallow induction! No self-antagging.
+	var/allowed = FALSE
+	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
+		if((antag_datum.antag_flags & FLAG_ANTAG_CAN_BE_INDUCTED))
+			allowed = TRUE
+
+	if(!allowed) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
+		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
+		return FALSE
+
+	var/datum/antagonist/nukeop/nuke_datum = new()
+	nuke_datum.send_to_spawnpoint = FALSE
+	nuke_datum.nukeop_outfit = null
+	human_target.mind?.add_antag_datum(nuke_datum)
+	human_target.faction |= ROLE_SYNDICATE
+	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
+	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
+	return TRUE
+
+/obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(!. || !isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
+	living_target.faction -= ROLE_SYNDICATE
+	to_chat(target, span_notice("You feel a little less nuclear."))
+	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
+	return TRUE
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

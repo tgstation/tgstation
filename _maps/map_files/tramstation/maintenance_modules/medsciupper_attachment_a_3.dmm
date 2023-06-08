@@ -1,0 +1,344 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"b" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"n" = (
+/obj/structure/training_machine,
+/obj/item/target/syndicate,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"p" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/syringes,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32;
+	name = "TESTING RANGE sign";
+	desc = "A warning sign which reads 'TESTING RANGE'."
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"r" = (
+/obj/structure/rack,
+/obj/item/gun/energy/laser/redtag,
+/obj/item/gun/energy/laser/bluetag{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"x" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/firing_pin/test_range,
+/obj/item/firing_pin/test_range{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/mob_spawn/corpse/human/monkey,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"A" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Testing Range Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"J" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/syringe{
+	pixel_y = -3;
+	pixel_x = -1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"K" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"U" = (
+/obj/structure/table,
+/obj/item/target/syndicate,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/target/clown,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32;
+	name = "TESTING RANGE sign";
+	desc = "A warning sign which reads 'TESTING RANGE'."
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"Z" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/beaker{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+b
+b
+K
+K
+K
+K
+K
+K
+"}
+(6,1,1) = {"
+b
+A
+o
+B
+B
+r
+J
+K
+"}
+(7,1,1) = {"
+b
+b
+i
+q
+h
+h
+N
+K
+"}
+(8,1,1) = {"
+b
+b
+i
+k
+h
+t
+N
+K
+"}
+(9,1,1) = {"
+b
+b
+U
+x
+O
+Z
+p
+K
+"}
+(10,1,1) = {"
+b
+b
+b
+d
+c
+G
+K
+K
+"}
+(11,1,1) = {"
+b
+b
+b
+z
+n
+v
+K
+b
+"}
+(12,1,1) = {"
+b
+b
+b
+K
+K
+K
+K
+b
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}

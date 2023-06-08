@@ -14,7 +14,7 @@
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
 	///Sets the type for catalyst
-	var/catalyst_type = /obj/item/storage/book/bible
+	var/catalyst_type = /obj/item/book/bible
 	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
 	var/force_catalyst_afterattack = FALSE
 	var/datum/callback/after_sect_select_cb
@@ -120,9 +120,9 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when selecting a sect.")
 		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
+		to_chat(user, span_warning("You are not the high priest, and therefore cannot select a religious sect."))
 		return
-	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You cannot select a sect at this time."))
 		return
 	if(GLOB.religious_sect)
@@ -152,7 +152,7 @@
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
-	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You are not close enough to perform the rite."))
 		return
 	performing_rite = new path(parent)

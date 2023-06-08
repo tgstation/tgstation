@@ -5,8 +5,9 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 60, ACID = 30)
+	armor_type = /datum/armor/machinery_portable_atmospherics
 	anchored = FALSE
+	layer = ABOVE_OBJ_LAYER
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
@@ -30,6 +31,11 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
+
+/datum/armor/machinery_portable_atmospherics
+	energy = 100
+	fire = 60
+	acid = 30
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
@@ -153,7 +159,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)) || !can_interact(user))
+	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
 		return
 	if(!holding)
 		return
@@ -249,3 +255,5 @@
 
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null
+
+#undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT

@@ -1,0 +1,3 @@
+# replace simple animal fugu with basic animal
+
+/mob/living/simple_animal/hostile/asteroid/fugu : /mob/living/basic/wumborian_fugu{@OLD}

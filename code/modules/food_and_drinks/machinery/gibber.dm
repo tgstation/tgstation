@@ -27,19 +27,19 @@
 	. = ..()
 	gibtime = 40
 	meat_produced = initial(meat_produced)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		meat_produced += B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gibtime -= 5 * M.rating
-		if(M.rating >= 2)
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		meat_produced += matter_bin.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		gibtime -= 5 * servo.tier
+		if(servo.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
-		for(var/obj/item/stock_parts/manipulator/M in component_parts)
-			if(M.rating >= 2)
+		for(var/datum/stock_part/servo/servo in component_parts)
+			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()
@@ -85,7 +85,7 @@
 			to_chat(user, span_warning("This item is not suitable for [src]!"))
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.has_buckled_mobs())
+		if(C.buckled || C.has_buckled_mobs())
 			to_chat(user, span_warning("[C] is attached to something!"))
 			return
 
@@ -117,7 +117,7 @@
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
-	else if(default_pry_open(P))
+	else if(default_pry_open(P, close_after_pry = TRUE))
 		return
 
 	else if(default_deconstruction_crowbar(P))
@@ -131,7 +131,7 @@
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -190,7 +190,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first

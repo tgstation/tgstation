@@ -6,19 +6,18 @@
 /obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/machines.dmi'
 	icon_state = "crystallizer-off"
+	base_icon_state = "crystallizer"
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
+	armor_type = /datum/armor/binary_crystallizer
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
 
-	///Base icon state for the machine to be used in update_icon()
-	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
 	///Var that controls how much gas gets injected in moles per tick
@@ -32,13 +31,31 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
+/datum/armor/binary_crystallizer
+	energy = 100
+	fire = 80
+	acid = 30
+
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
+	register_context()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon]-open", "[base_icon]-off", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -92,19 +109,24 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon_state()
 	. = ..()
 	if(panel_open)
-		icon_state = "[base_icon]-open"
+		icon_state = "[base_icon_state]-open"
 	else if(on && is_operational)
-		icon_state = "[base_icon]-on"
+		icon_state = "[base_icon_state]-on"
 	else
-		icon_state = "[base_icon]-off"
+		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(obj/item/tool, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
 	if(!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return
 	on = !on
+	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
 	if(internal.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && internal.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
@@ -270,12 +292,14 @@
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
 			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+			"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
 			"amount" = round(internal.gases[gasid][MOLES], 0.01),
 			)))
 	else
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
 				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data

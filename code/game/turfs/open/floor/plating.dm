@@ -16,20 +16,20 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	//Can this plating have reinforced floors placed ontop of it
-	var/attachment_holes = TRUE 
+	var/attachment_holes = TRUE
 
 	//Used for upgrading this into R-Plating
-	var/upgradable = TRUE 
+	var/upgradable = TRUE
 
 	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
 	/// And if our baseturfs are compatible.
 	/// See [/obj/item/stack/tile/proc/place_tile].
 	var/allow_replacement = TRUE
 
-/turf/open/floor/plating/setup_broken_states()
+/turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
-/turf/open/floor/plating/setup_burnt_states()
+/turf/open/floor/plating/burnt_states()
 	return list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plating/examine(mob/user)
@@ -176,6 +176,7 @@
 /turf/open/floor/plating/foam/ex_act()
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return
@@ -212,7 +213,7 @@
 		if(PLATE_BOLTS_LOOSENED)
 			return span_notice("The plating reinforcement is <i>unscrewed</i> but <b>welded</b> firmly to the plating.")
 		if(PLATE_CUT)
-			return span_notice("The plating reinforcements have been <i>sliced through</i> but is still <b>loosly</b> held in place.")
+			return span_notice("The plating reinforcements have been <i>sliced through</i> but are still <b>loosely</b> held in place.")
 
 /turf/open/floor/plating/reinforced/update_icon_state()
 	icon_state = "r_plate-[deconstruction_state]"

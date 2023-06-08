@@ -23,6 +23,8 @@
 	var/tox_loss = 0
 	/// The starting value of oxygen loss at the beginning of the effect
 	var/oxy_loss = 0
+	/// The starting value of stamina loss at the beginning of the effect
+	var/stamina_loss = 0
 	/// The starting value of brain loss at the beginning of the effect
 	var/brain_loss = 0
 	/// The starting value of brute loss at the beginning of the effect
@@ -47,7 +49,8 @@
 		clone_loss = L.getCloneLoss()
 		tox_loss = L.getToxLoss()
 		oxy_loss = L.getOxyLoss()
-		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
+		stamina_loss = L.getStaminaLoss()
+		brain_loss = L.get_organ_loss(ORGAN_SLOT_BRAIN)
 		rewind_type = PROC_REF(rewind_living)
 
 	if(iscarbon(parent))
@@ -55,9 +58,9 @@
 		saved_bodyparts = C.save_bodyparts()
 		rewind_type = PROC_REF(rewind_carbon)
 
-	else if(isanimal(parent))
-		var/mob/living/simple_animal/M = parent
-		brute_loss = M.bruteloss
+	else if(isanimal_or_basicmob(parent))
+		var/mob/living/animal = parent
+		brute_loss = animal.bruteloss
 		rewind_type = PROC_REF(rewind_animal)
 
 	else if(isobj(parent))
@@ -96,6 +99,7 @@
 	master.setCloneLoss(clone_loss)
 	master.setToxLoss(tox_loss)
 	master.setOxyLoss(oxy_loss)
+	master.setStaminaLoss(stamina_loss)
 	master.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
 	rewind()
 
@@ -106,7 +110,7 @@
 	rewind_living()
 
 /datum/component/dejavu/proc/rewind_animal()
-	var/mob/living/simple_animal/master = parent
+	var/mob/living/master = parent
 	master.bruteloss = brute_loss
 	master.updatehealth()
 	rewind_living()

@@ -469,6 +469,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	for (var/name in sprite_accessories)
 		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
+		if(sprite_accessory.locked)
+			continue
 
 		var/icon/final_icon
 
@@ -509,7 +511,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return rand(minimum, maximum)
 
 /datum/preference/numeric/is_valid(value)
-	return isnum(value) && value >= minimum && value <= maximum
+	return isnum(value) && value >= round(minimum, step) && value <= round(maximum, step)
 
 /datum/preference/numeric/compile_constant_data()
 	return list(

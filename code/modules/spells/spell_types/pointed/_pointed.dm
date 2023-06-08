@@ -10,8 +10,6 @@
 /datum/action/cooldown/spell/pointed
 	click_to_activate = TRUE
 
-	/// The base icon state of the spell's button icon, used for editing the icon "on" and "off"
-	var/base_icon_state
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg
 	/// Message showing to the spell owner upon deactivating pointed spell.
@@ -53,9 +51,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	to_chat(on_who, span_notice("[active_msg] <B>Left-click to cast the spell on a target!</B>"))
-	if(base_icon_state)
-		button_icon_state = "[base_icon_state]1"
-		UpdateButtons()
+	build_all_button_icons()
 	return TRUE
 
 /// Called when the spell is deactivated / the click ability is unset from our spell
@@ -65,9 +61,7 @@
 	if(refund_cooldown)
 		// Only send the "deactivation" message if they're willingly disabling the ability
 		to_chat(on_who, span_notice("[deactive_msg]"))
-	if(base_icon_state)
-		button_icon_state = "[base_icon_state]0"
-		UpdateButtons()
+	build_all_button_icons()
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/click_target)

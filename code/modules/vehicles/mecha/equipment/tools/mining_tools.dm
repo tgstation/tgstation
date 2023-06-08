@@ -121,7 +121,7 @@
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
 		else
-			investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
+			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
 			target.gib()
 	else
 		//drill makes a hole

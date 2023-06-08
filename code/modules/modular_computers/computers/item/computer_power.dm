@@ -23,15 +23,16 @@
 
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure()
-	if(enabled) // Shut down the computer
-		if(active_program)
-			active_program.event_powerfailure(0)
-		for(var/datum/computer_file/program/programs as anything in idle_threads)
-			programs.event_powerfailure(background = TRUE)
-		shutdown_computer(0)
+	if(!enabled) // Shut down the computer
+		return
+	if(active_program)
+		active_program.event_powerfailure()
+	for(var/datum/computer_file/program/programs as anything in idle_threads)
+		programs.event_powerfailure()
+	shutdown_computer(loud = FALSE)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
-/obj/item/modular_computer/proc/handle_power(delta_time)
+/obj/item/modular_computer/proc/handle_power(seconds_per_tick)
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 
 	if(use_power(power_usage))
@@ -46,5 +47,5 @@
 	return FALSE
 
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
-/obj/item/modular_computer/tablet/integrated/check_power_override()
+/obj/item/modular_computer/pda/silicon/check_power_override()
 	return TRUE

@@ -176,7 +176,7 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, floor_okay = TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
@@ -285,7 +285,7 @@
 		return
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
-		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST)
+		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST, attacking_item = attached_item)
 	playsound(src, 'sound/weapons/smash.ogg', 15, TRUE)
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
@@ -344,7 +344,7 @@
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold separately!"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'

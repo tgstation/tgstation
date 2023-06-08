@@ -5,7 +5,7 @@
 	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
@@ -15,10 +15,13 @@
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
 
+/datum/armor/shoes_roman
+	bio = 10
+
 /obj/item/clothing/shoes/griffin/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -80,3 +83,24 @@
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
 	icon_state = "saints_shoes"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/ducky_shoes
+	name = "ducky shoes"
+	desc = "I got boots, that go *quack quack quack quack quack."
+	icon_state = "ducky_shoes"
+	inhand_icon_state = "ducky_shoes"
+
+/obj/item/clothing/shoes/ducky_shoes/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
+
+/obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_FEET)
+		user.AddElement(/datum/element/waddling)
+
+/obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
+	. = ..()
+	user.RemoveElement(/datum/element/waddling)

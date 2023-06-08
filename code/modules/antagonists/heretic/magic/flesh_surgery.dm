@@ -3,8 +3,9 @@
 	desc = "A touch spell that allows you to either harvest or restore flesh of target. \
 		Left-clicking will extract the organs of a victim without needing to complete surgery or disembowel. \
 		Right-clicking, if done on summons or minions, will restore health. Can also be used to heal damaged organs."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
 	sound = null
 
@@ -91,7 +92,7 @@
 
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
 	if(to_heal.damage < organ_hp_to_heal)
-		to_heal.setOrganDamage(organ_hp_to_heal)
+		to_heal.set_organ_damage(organ_hp_to_heal)
 		to_heal.balloon_alert(caster, "organ healed")
 		playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
@@ -127,7 +128,7 @@
 /// If cast on a carbon, we'll try to steal one of their organs directly from their person.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/steal_organ_from_mob(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	var/mob/living/carbon/carbon_victim = victim
-	if(!istype(carbon_victim) || !length(carbon_victim.internal_organs))
+	if(!istype(carbon_victim) || !length(carbon_victim.organs))
 		victim.balloon_alert(caster, "no organs!")
 		return FALSE
 
@@ -136,7 +137,7 @@
 	var/parsed_zone = parse_zone(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
-	for(var/obj/item/organ/organ as anything in carbon_victim.internal_organs)
+	for(var/obj/item/organ/organ as anything in carbon_victim.organs)
 		// Only show organs which are in our generic zone
 		if(deprecise_zone(organ.zone) != zone_to_check)
 			continue
@@ -220,7 +221,7 @@
 
 /// Extra checks ran while we're healing something (organ, mob).
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_checks(obj/item/melee/touch_attack/hand, atom/healing, mob/living/carbon/caster)
-	if(QDELETED(src) || QDELETED(hand) ||QDELETED(healing) || !IsAvailable())
+	if(QDELETED(src) || QDELETED(hand) || QDELETED(healing) || !IsAvailable())
 		return FALSE
 
 	return TRUE
@@ -228,5 +229,6 @@
 /obj/item/melee/touch_attack/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

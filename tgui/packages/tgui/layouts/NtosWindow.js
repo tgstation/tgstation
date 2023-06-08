@@ -10,7 +10,7 @@ import { Box, Button } from '../components';
 import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
-  const { title, width = 575, height = 700, theme = 'ntos', children } = props;
+  const { title, width = 575, height = 700, children } = props;
   const { act, data } = useBackend(context);
   const {
     PC_device_theme,
@@ -24,7 +24,7 @@ export const NtosWindow = (props, context) => {
     PC_showexitprogram,
   } = data;
   return (
-    <Window title={title} width={width} height={height} theme={theme}>
+    <Window title={title} width={width} height={height} theme={PC_device_theme}>
       <div className="NtosWindow">
         <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
@@ -41,8 +41,7 @@ export const NtosWindow = (props, context) => {
               {PC_stationtime}
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
-              {PC_device_theme === 'ntos' && 'NtOS'}
-              {PC_device_theme === 'syndicate' && 'Syndix'}
+              {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
             </Box>
           </div>
           <div className="NtosHeader__right">

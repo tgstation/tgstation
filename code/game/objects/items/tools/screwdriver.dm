@@ -16,14 +16,14 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=75)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	armor_type = /datum/armor/item_screwdriver
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
@@ -35,14 +35,18 @@
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/screwdriver_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#ff0000",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#ffa500"
+		COLOR_TOOL_BLUE,
+		COLOR_TOOL_RED,
+		COLOR_TOOL_PINK,
+		COLOR_TOOL_BROWN,
+		COLOR_TOOL_GREEN,
+		COLOR_TOOL_CYAN,
+		COLOR_TOOL_YELLOW,
 	)
+
+/datum/armor/item_screwdriver
+	fire = 50
+	acid = 30
 
 /obj/item/screwdriver/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -50,8 +54,7 @@
 
 /obj/item/screwdriver/Initialize(mapload)
 	if(random_color)
-		var/our_color = pick(screwdriver_colors)
-		set_greyscale(colors=list(screwdriver_colors[our_color]))
+		set_greyscale(colors = list(pick(screwdriver_colors)))
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
@@ -62,7 +65,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver_a"
 	inhand_icon_state = "screwdriver_nuke"
-	custom_materials = list(/datum/material/iron=5000, /datum/material/silver=2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
@@ -81,7 +84,7 @@
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=3500, /datum/material/silver=1500, /datum/material/titanium=2500) //what research value?
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.75, /datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT*1.25) //what research value?
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
 	throw_speed = 2
@@ -105,7 +108,9 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*

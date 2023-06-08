@@ -7,6 +7,9 @@
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 
+/// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
+#define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
+
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
 #define DEFAULT_BIBLE "Default Bible Name"
@@ -53,6 +56,7 @@
 #define JOB_STATION_ENGINEER "Station Engineer"
 #define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
 //Medical
+#define JOB_CORONER "Coroner"
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
@@ -126,18 +130,19 @@
 #define JOB_DISPLAY_ORDER_PARAMEDIC 24
 #define JOB_DISPLAY_ORDER_CHEMIST 25
 #define JOB_DISPLAY_ORDER_VIROLOGIST 26
-#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 27
-#define JOB_DISPLAY_ORDER_SCIENTIST 28
-#define JOB_DISPLAY_ORDER_ROBOTICIST 29
-#define JOB_DISPLAY_ORDER_GENETICIST 30
-#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 31
-#define JOB_DISPLAY_ORDER_WARDEN 32
-#define JOB_DISPLAY_ORDER_DETECTIVE 33
-#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
-#define JOB_DISPLAY_ORDER_PRISONER 35
+#define JOB_DISPLAY_ORDER_CORONER 27
+#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 28
+#define JOB_DISPLAY_ORDER_SCIENTIST 29
+#define JOB_DISPLAY_ORDER_ROBOTICIST 30
+#define JOB_DISPLAY_ORDER_GENETICIST 31
+#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 32
+#define JOB_DISPLAY_ORDER_WARDEN 33
+#define JOB_DISPLAY_ORDER_DETECTIVE 34
+#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 35
+#define JOB_DISPLAY_ORDER_PRISONER 36
 
 
-#define DEPARTMENT_UNASSIGNED "No department assigned"
+#define DEPARTMENT_UNASSIGNED "No Department"
 
 #define DEPARTMENT_BITFLAG_SECURITY (1<<0)
 #define DEPARTMENT_SECURITY "Security"

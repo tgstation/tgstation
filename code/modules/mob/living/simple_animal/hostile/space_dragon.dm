@@ -24,8 +24,8 @@
 	name = "Space Dragon"
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way. Looks slightly similar to a space carp."
 	gender = NEUTER
-	maxHealth = 320
-	health = 320
+	maxHealth = 400
+	health = 400
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
@@ -59,7 +59,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	faction = list("carp")
+	faction = list(FACTION_CARP)
 	pressure_resistance = 200
 	/// How much endlag using Wing Gust should apply.  Each use of wing gust increments this, and it decreases over time.
 	var/tiredness = 0
@@ -85,9 +85,7 @@
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)
@@ -103,9 +101,9 @@
 	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
 	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
-/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/space_dragon/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	tiredness = max(tiredness - (0.5 * delta_time), 0)
+	tiredness = max(tiredness - (0.5 * seconds_per_tick), 0)
 	for(var/mob/living/consumed_mob in src)
 		if(consumed_mob.stat == DEAD)
 			continue
@@ -174,9 +172,12 @@
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	var/was_dead = stat == DEAD
 	. = ..()
 	add_dragon_overlay()
-	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
+
+	if (was_dead)
+		RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
 
 /**
  * Allows space dragon to choose its own name.
@@ -282,7 +283,7 @@
 		for(var/obj/machinery/door/D in T.contents)
 			if(D.density)
 				return
-		delayFire += 1.5
+		delayFire += 1.0
 		addtimer(CALLBACK(src, PROC_REF(dragon_fire_line), T), delayFire)
 
 /**
@@ -294,23 +295,52 @@
  * Arguments:
  * * turf/T - The turf to trigger the effects on.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/fire_turf)
 	var/list/hit_list = list()
 	hit_list += src
-	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700,50,1)
-	for(var/mob/living/L in T.contents)
-		if(L in hit_list)
+	new /obj/effect/hotspot(fire_turf)
+	fire_turf.hotspot_expose(700,50,1)
+	for(var/mob/living/living_target in fire_turf.contents)
+		if(living_target.faction_check_mob(src) && living_target != src)
+			hit_list += living_target
+			start_carp_speedboost(living_target)
+		if(living_target in hit_list)
 			continue
-		hit_list += L
-		L.adjustFireLoss(30)
-		to_chat(L, span_userdanger("You're hit by [src]'s fire breath!"))
+		if(living_target.mind?.has_antag_datum(/datum/antagonist/space_carp))
+			continue
+		hit_list += living_target
+		living_target.adjustFireLoss(30)
+		to_chat(living_target, span_userdanger("You're hit by [src]'s fire breath!"))
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		if(M in hit_list)
+	for(var/obj/vehicle/sealed/mecha/mech_target in fire_turf.contents)
+		if(mech_target in hit_list)
 			continue
-		hit_list += M
-		M.take_damage(50, BRUTE, MELEE, 1)
+		hit_list += mech_target
+		mech_target.take_damage(50, BRUTE, MELEE, 1)
+
+/**
+ * Applies the speed boost to carps when hit by space dragon's flame breath
+ *
+ * Applies the dragon rage effect to carps temporarily, giving them a glow and a speed boost.
+ * This lasts for 8 seconds.
+ * Arguments:
+ * * mob/living/target - The carp being affected.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/start_carp_speedboost(mob/living/target)
+	target.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 2))
+	target.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+	addtimer(CALLBACK(src, PROC_REF(end_carp_speedboost), target), 8 SECONDS)
+
+/**
+ * Remove the speed boost from carps when hit by space dragon's flame breath
+ *
+ * Removes the dragon rage effect from carps, removing their glow and speed boost.
+ * Arguments:
+ * * mob/living/target - The carp being affected.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/end_carp_speedboost(mob/living/target)
+	target.remove_filter("anger_glow")
+	target.remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /**
  * Handles consuming and storing consumed things inside Space Dragon
@@ -322,7 +352,7 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
-		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
+		playsound(src, 'sound/magic/demon_attack1.ogg', 60, TRUE)
 		visible_message(span_warning("[src] swallows [A] whole!"))
 		A.forceMove(src)
 		return TRUE
@@ -354,7 +384,7 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/useGust(timer)
 	if(timer != 10)
 		pixel_y = pixel_y + 2;
-		addtimer(CALLBACK(src, PROC_REF(useGust), timer + 1), 1.5)
+		addtimer(CALLBACK(src, PROC_REF(useGust), timer + 1), 1.2)
 		return
 	pixel_y = 0
 	icon_state = "spacedragon_gust_2"
@@ -363,20 +393,22 @@
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
-	var/gust_locs = spiral_range_turfs(gust_distance, get_turf(src))
-	var/list/hit_things = list()
-	for(var/turf/T in gust_locs)
-		for(var/mob/living/L in T.contents)
-			if(L == src)
-				continue
-			hit_things += L
-			visible_message(span_boldwarning("[L] is knocked back by the gust!"))
-			to_chat(L, span_userdanger("You're knocked back by the gust!"))
-			var/dir_to_target = get_dir(get_turf(src), get_turf(L))
-			var/throwtarget = get_edge_target_turf(target, dir_to_target)
-			L.safe_throw_at(throwtarget, 10, 1, src)
-			L.Paralyze(50)
+	for (var/mob/living/candidate in view(gust_distance, src))
+		if(candidate == src || candidate.faction_check_mob(src))
+			continue
+		visible_message(span_boldwarning("[candidate] is knocked back by the gust!"))
+		to_chat(candidate, span_userdanger("You're knocked back by the gust!"))
+		var/dir_to_target = get_dir(get_turf(src), get_turf(candidate))
+		var/throwtarget = get_edge_target_turf(target, dir_to_target)
+		candidate.safe_throw_at(throwtarget, 10, 1, src)
+		candidate.Paralyze(50)
 	addtimer(CALLBACK(src, PROC_REF(reset_status)), 4 + ((tiredness * tiredness_mult) / 10))
 	tiredness = tiredness + (gust_tiredness * tiredness_mult)
+
+/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag
+
+/mob/living/simple_animal/hostile/space_dragon/spawn_with_antag/mind_initialize()
+	. = ..()
+	mind.add_antag_datum(/datum/antagonist/space_dragon)
 
 #undef DARKNESS_THRESHOLD

@@ -15,7 +15,7 @@
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard =SHEET_MATERIAL_AMOUNT)
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
@@ -44,8 +44,21 @@
 	update_appearance()
 	register_context()
 
+/obj/item/pizzabox/proc/register_bomb(new_bomb)
+	bomb = new_bomb
+	if(istype(bomb))
+		RegisterSignal(bomb, COMSIG_PARENT_QDELETING, PROC_REF(clear_bomb))
+
+/obj/item/pizzabox/proc/clear_bomb(datum/source)
+	SIGNAL_HANDLER
+	if(isnull(bomb))
+		return
+	UnregisterSignal(bomb, COMSIG_PARENT_QDELETING)
+	bomb = null
+
 /obj/item/pizzabox/Destroy()
 	unprocess()
+	clear_bomb()
 	return ..()
 
 /obj/item/pizzabox/update_desc()
@@ -151,12 +164,12 @@
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
 				balloon_alert(user, "removed bomb")
-				bomb = null
+				clear_bomb()
 				update_appearance()
 				return
 			else
 				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
-				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
@@ -209,7 +222,7 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			wires = new /datum/wires/explosive/pizza(src)
-			bomb = I
+			register_bomb(I)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
@@ -221,7 +234,7 @@
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
-			if(!user.canUseTopic(src, be_close = TRUE))
+			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")
 			boxtag_set = TRUE
@@ -232,10 +245,10 @@
 			wires.interact(user)
 	..()
 
-/obj/item/pizzabox/process(delta_time)
+/obj/item/pizzabox/process(seconds_per_tick)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
 		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
-		bomb_timer -= delta_time
+		bomb_timer -= seconds_per_tick
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
 			bomb.detonate()
@@ -295,7 +308,7 @@
 	if(!pizza)
 		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
 		pizza = new randompizza(src)
-	bomb = new(src)
+	register_bomb(new /obj/item/bombcore/miniature/pizza(src))
 	wires = new /datum/wires/explosive/pizza(src)
 
 /obj/item/pizzabox/bomb/armed

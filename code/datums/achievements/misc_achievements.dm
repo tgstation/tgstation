@@ -158,6 +158,12 @@
 	database_id = MEDAL_BLADE_ASCENSION
 	icon = "bladeascend"
 
+/datum/award/achievement/misc/cosmic_ascension
+	name = "It arrived"
+	desc = "You managed to teleport an entity on the station that really shouldn't be there."
+	database_id = MEDAL_COSMOS_ASCENSION
+	icon = "cosmicascend"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
@@ -211,3 +217,9 @@
 	desc = "Don't be such a baby, it's just a heart attack. You've bounced back from worse!"
 	database_id = MEDAL_HEALTHY
 	icon = "picofhealth"
+
+/datum/award/achievement/misc/gods_wrath
+	name = "God's Wrath"
+	desc = "Did you think you could get away with defiling the word of God?"
+	database_id = MEDAL_GODS_WRATH
+	icon = "godswrath"

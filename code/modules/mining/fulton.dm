@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!beacon)
 		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return
@@ -61,9 +62,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_notice("You start attaching the pack to [A]..."))
 		if(do_after(user,50,target=A))
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
-			if(loc == user && istype(user.back, /obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = user.back
-				B.atom_storage?.attempt_insert(src, user)
+			if(loc == user)
+				user.back?.atom_storage?.attempt_insert(src, user)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetUnconscious(0)
-				L.set_drowsyness(0)
+				L.remove_status_effect(/datum/status_effect/drowsiness)
 				L.SetSleeping(0)
 			sleep(3 SECONDS)
 			var/list/flooring_near_beacon = list()

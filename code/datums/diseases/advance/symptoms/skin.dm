@@ -9,6 +9,7 @@
 /datum/symptom/polyvitiligo
 	name = "Polyvitiligo"
 	desc = "The virus replaces the melanin in the skin with reactive pigment."
+	illness = "Chroma Imbalance"
 	stealth = -1
 	resistance = 3
 	stage_speed = 1

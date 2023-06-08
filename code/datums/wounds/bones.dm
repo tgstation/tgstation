@@ -62,7 +62,7 @@
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
-/datum/wound/blunt/handle_process(delta_time, times_fired)
+/datum/wound/blunt/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
@@ -71,19 +71,20 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_creature = victim.get_biological_state() == BIO_JUST_BONE
-	if(!gelled || (!taped && !is_bone_creature))
+	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	if(!gelled || (!taped && !is_bone_limb))
 		return
 
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
-		if(DT_PROB(30, delta_time))
+		if(SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
-		if(victim.IsSleeping() && DT_PROB(30, delta_time))
+		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
 
-	if(!is_bone_creature && DT_PROB(severity * 1.5, delta_time))
-		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
+	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
+		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
+		victim.adjustStaminaLoss(rand(2, severity * 2.5))
 		if(prob(33))
 			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
 
@@ -121,7 +122,7 @@
 		return
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(NOBLOOD in human_victim.dna?.species.species_traits)
+		if(HAS_TRAIT(human_victim, TRAIT_NOBLOOD))
 			return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
@@ -361,7 +362,7 @@
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 // doesn't make much sense for "a" bone to stick out of your head
-/datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
+/datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
 	if(L.body_zone == BODY_ZONE_HEAD)
 		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
 		examine_desc = "has an unsettling indent, with bits of skull poking out"
@@ -370,7 +371,7 @@
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
-	if(victim.get_biological_state() == BIO_JUST_BONE)
+	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
 		skelly_gel(I, user)
 		return
 
@@ -407,14 +408,12 @@
 			return
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
-	limb.receive_damage(25, stamina=100, wound_bonus=CANT_WOUND)
+	limb.receive_damage(25, wound_bonus=CANT_WOUND)
+	victim.adjustStaminaLoss(100)
 	gelled = TRUE
 
 /// skellies are less averse to bone gel, since they're literally all bone
 /datum/wound/blunt/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
-	if(victim.get_biological_state() != BIO_JUST_BONE)
-		return // poser
-
 	if(gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already coated with bone gel!"))
 		return
@@ -473,7 +472,7 @@
 	. += "<div class='ml-3'>"
 
 	if(severity > WOUND_SEVERITY_MODERATE)
-		if(victim.get_biological_state() == BIO_JUST_BONE)
+		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
 			if(!gelled)
 				. += "Recommended Treatment: Apply bone gel directly to injured limb. Creatures of pure bone don't seem to mind bone gel application nearly as much as fleshed individuals. Surgical tape will also be unnecessary.\n"
 			else

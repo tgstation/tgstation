@@ -82,7 +82,7 @@
 	if(!payload?["channel"])
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
-	if(payload["channel"] != OOC_CHANNEL)
+	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL)
 		start_thinking()
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators enabled.")
@@ -117,10 +117,10 @@
 		close()
 		return TRUE
 	if (type == "thinking")
-		if(payload["mode"] == TRUE)
+		if(payload["visible"] == TRUE)
 			start_thinking()
 			return TRUE
-		if(payload["mode"] == FALSE)
+		if(payload["visible"] == FALSE)
 			stop_thinking()
 			return TRUE
 		return FALSE

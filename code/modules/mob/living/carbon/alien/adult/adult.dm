@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
 /mob/living/carbon/alien/adult/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/stomach/alien()
+	organs += new /obj/item/organ/internal/stomach/alien()
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return FALSE
 
 /mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
-	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_ALIEN_SNEAK))
+	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_SNEAK))
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
@@ -134,12 +134,12 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			span_userdanger("[src] is attempting to devour you!"))
 
 	playsound(lucky_winner, 'sound/creatures/alien_eat.ogg', 100)
-	if(!do_mob(src, lucky_winner, devour_time, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
+	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))
 		return TRUE
 
-	var/obj/item/organ/internal/stomach/alien/melting_pot = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(melting_pot))
 		visible_message(span_clown("[src] can't seem to consume [lucky_winner]!"), \
 			span_alien("You feel a pain in your... chest? You can't get [lucky_winner] down."))

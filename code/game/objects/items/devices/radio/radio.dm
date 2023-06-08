@@ -16,8 +16,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
-	obj_flags = USES_TGUI
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
 	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
@@ -84,6 +83,13 @@
 	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
 	var/overlay_mic_active = "m_active"
 
+	/// When set to FALSE, will avoid calling update_icon() in set_broadcasting and co.
+	/// Used to save time on updating icon several times over initialization.
+	VAR_PRIVATE/perform_update_icon = TRUE
+
+	/// If TRUE, will set the icon in initializations.
+	VAR_PRIVATE/should_update_icon = FALSE
+
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	secure_radio_connections = list()
@@ -94,10 +100,15 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
+	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
 	set_frequency(sanitize_frequency(frequency, freerange, syndie))
 	set_on(on)
+	perform_update_icon = TRUE
+
+	if (should_update_icon)
+		update_appearance(UPDATE_ICON)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
@@ -148,7 +159,7 @@
 	for(var/channel_name in channels)
 		add_radio(src, GLOB.radiochannels[channel_name])
 
-	add_radio(src, FREQ_COMMON)
+	add_radio(src, frequency)
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -200,7 +211,11 @@
 		readd_listening_radio_channels()
 	else if(!listening)
 		remove_radio_all(src)
-	update_icon()
+
+	if (perform_update_icon && !isnull(overlay_speaker_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
 
 /**
  * setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
@@ -219,7 +234,11 @@
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
-	update_icon()
+
+	if (perform_update_icon && !isnull(overlay_mic_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
 
 ///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)
@@ -326,7 +345,7 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
@@ -565,3 +584,5 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+#undef FREQ_LISTENING

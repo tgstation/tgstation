@@ -31,7 +31,6 @@
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
 
-	var/network_id = NETWORK_BOTS_CARGO
 	/// unique identifier in case there are multiple mulebots.
 	var/id
 
@@ -84,10 +83,6 @@
 	suffix = null
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
-
-	if(network_id)
-		AddComponent(/datum/component/ntnet_interface, network_id)
-
 
 /mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
 	if(A == load)
@@ -213,7 +208,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	load_overlay.pixel_y = initial(load.pixel_y) + 11
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -226,6 +221,8 @@
 			wires.cut_random()
 		if(EXPLODE_LIGHT)
 			wires.cut_random()
+
+	return TRUE
 
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
@@ -465,7 +462,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 	if(load)
 		. += "Current Load: [get_load_name()]"
 
@@ -528,7 +525,7 @@
 						return
 					var/oldloc = loc
 					var/moved = step_towards(src, next) // attempt to move
-					if(moved && oldloc!=loc) // successful move
+					if(moved && oldloc != loc) // successful move
 						SEND_SIGNAL(src, COMSIG_MOB_BOT_STEP)
 						blockcount = 0
 						path -= loc
@@ -719,7 +716,9 @@
 									// the we will navigate there
 			destination = new_destination
 			target = NB.loc
-			var/direction = NB.dir // this will be the load/unload dir
+			var/direction = NB.codes[NAVBEACON_DELIVERY_DIRECTION] // this will be the load/unload dir
+			if(!direction)
+				direction = NB.dir // fallback
 			if(direction)
 				loaddir = text2num(direction)
 			else

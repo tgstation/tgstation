@@ -1,0 +1,1 @@
+/obj/item/storage/belt/cummerbund : /obj/item/storage/belt/fannypack/cummerbund{@OLD}

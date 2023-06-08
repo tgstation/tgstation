@@ -1,16 +1,4 @@
 /*
-Tooltips v1.1 - 22/10/15
-Developed by Wire (#goonstation on irc.synirc.net)
-- Added support for screen_loc pixel offsets. Should work. Maybe.
-- Added init function to more efficiently send base vars
-
-Configuration:
-- Set control to the correct skin element (remember to actually place the skin element)
-- Set file to the correct path for the .html file (remember to actually place the html file)
-- Attach the datum to the user client on login, e.g.
-	/client/New()
-		src.tooltips = new /datum/tooltip(src)
-
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
 	/atom/movable/screen/hud
@@ -26,8 +14,6 @@ Customization:
 
 Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
-- This is entirely untested in any other codebase besides goonstation so I have no idea if it will port nicely. Good luck!
-	- After testing and discussion (Wire, Remie, MrPerson, AnturK) ToolTips are ok and work for /tg/station13
 */
 
 
@@ -37,6 +23,7 @@ Notes:
 	var/showing = 0
 	var/queueHide = 0
 	var/init = 0
+	var/atom/last_target
 
 
 /datum/tooltip/New(client/C)
@@ -52,6 +39,14 @@ Notes:
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return FALSE
+
+	if (!isnull(last_target))
+		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel))
+
+	last_target = thing
+
 	if (!init)
 		//Initialize some vars
 		init = 1
@@ -96,11 +91,18 @@ Notes:
 
 	return TRUE
 
+/datum/tooltip/proc/on_target_qdel()
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(hide))
+	last_target = null
+
 /datum/tooltip/proc/do_hide()
 	winshow(owner, control, FALSE)
 
-/* TG SPECIFIC CODE */
-
+/datum/tooltip/Destroy(force, ...)
+	last_target = null
+	return ..()
 
 //Open a tooltip for user, at a location based on params
 //Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)

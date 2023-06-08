@@ -7,7 +7,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	worn_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list(5)
@@ -134,7 +133,7 @@
 		update_appearance()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = FALSE, floor_okay = TRUE))
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
@@ -255,7 +254,7 @@
 		return
 
 	to_chat(user,span_notice("You start manually releasing the low-pressure gauge..."))
-	if(!do_mob(user, affected_mob, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
+	if(!do_after(user, 10 SECONDS, affected_mob, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5

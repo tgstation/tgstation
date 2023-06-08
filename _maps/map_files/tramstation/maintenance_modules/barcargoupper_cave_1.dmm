@@ -1,0 +1,1120 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/cargo)
+"c" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"d" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/paper{
+	default_raw_text = "Please leave on-site equipment alone as they are on loan from Nanotrasen Mining Co and need returned soon.";
+	name = "NOTICE"
+	},
+/turf/open/floor/plating,
+/area/station/asteroid)
+"g" = (
+/turf/closed/wall/rust,
+/area/station/asteroid)
+"h" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/mask/gas/explorer{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"i" = (
+/obj/item/assembly/signaler,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"j" = (
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"k" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"l" = (
+/turf/template_noop,
+/area/template_noop)
+"m" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"n" = (
+/turf/closed/wall,
+/area/station/asteroid)
+"o" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"p" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/rack,
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/obj/item/pickaxe{
+	pixel_x = 5
+	},
+/turf/open/floor/plating,
+/area/station/asteroid)
+"q" = (
+/obj/machinery/mineral/unloading_machine{
+	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 2
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"r" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"s" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "tram_mining"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"v" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"x" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"y" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
+	name = "mining cart"
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"z" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"A" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"B" = (
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"D" = (
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"G" = (
+/turf/closed/wall/rock/porous,
+/area/station/asteroid)
+"H" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "tram_mining";
+	name = "smelter conveyor"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"I" = (
+/obj/effect/turf_decal/loading_area,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"J" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "tram_mining"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"K" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"M" = (
+/obj/item/relic,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"O" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"Q" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"R" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/cargo)
+"T" = (
+/obj/item/gps/mining,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"U" = (
+/obj/machinery/conveyor{
+	id = "tram_mining"
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"V" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"W" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"X" = (
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Y" = (
+/obj/machinery/mineral/processing_unit_console,
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"Z" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1;
+	input_dir = 8;
+	output_dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+m
+m
+m
+m
+r
+b
+m
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(2,1,1) = {"
+V
+V
+V
+n
+d
+n
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(3,1,1) = {"
+V
+V
+V
+n
+O
+n
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(4,1,1) = {"
+V
+V
+V
+k
+x
+G
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(5,1,1) = {"
+V
+V
+V
+n
+k
+g
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(6,1,1) = {"
+V
+V
+V
+g
+k
+k
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(7,1,1) = {"
+V
+V
+V
+k
+x
+G
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(8,1,1) = {"
+V
+V
+V
+V
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(9,1,1) = {"
+V
+V
+V
+V
+k
+n
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(10,1,1) = {"
+V
+V
+V
+x
+x
+V
+V
+V
+V
+D
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(11,1,1) = {"
+V
+V
+V
+x
+x
+x
+x
+V
+V
+x
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(12,1,1) = {"
+V
+V
+V
+V
+x
+V
+x
+x
+V
+x
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(13,1,1) = {"
+V
+V
+V
+V
+x
+x
+x
+k
+x
+x
+x
+x
+x
+D
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(14,1,1) = {"
+V
+V
+V
+x
+x
+p
+V
+x
+x
+x
+x
+K
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(15,1,1) = {"
+V
+V
+V
+x
+k
+Q
+V
+B
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(16,1,1) = {"
+V
+V
+A
+z
+x
+V
+V
+B
+x
+k
+x
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(17,1,1) = {"
+V
+V
+V
+V
+x
+V
+V
+V
+G
+k
+x
+V
+V
+V
+V
+x
+x
+V
+l
+l
+l
+l
+l
+l
+"}
+(18,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+v
+x
+x
+x
+x
+V
+V
+V
+j
+A
+G
+l
+l
+l
+l
+l
+l
+"}
+(19,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+x
+k
+V
+V
+z
+A
+A
+V
+l
+l
+l
+l
+l
+l
+"}
+(20,1,1) = {"
+V
+V
+V
+V
+V
+V
+K
+x
+x
+k
+x
+x
+V
+G
+A
+z
+M
+z
+l
+l
+l
+l
+l
+l
+"}
+(21,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+k
+G
+V
+V
+x
+A
+z
+z
+A
+l
+l
+l
+l
+l
+l
+"}
+(22,1,1) = {"
+l
+V
+V
+V
+V
+V
+x
+x
+x
+k
+V
+V
+V
+x
+i
+z
+A
+A
+l
+l
+l
+l
+l
+l
+"}
+(23,1,1) = {"
+l
+V
+V
+V
+V
+V
+V
+V
+V
+x
+x
+V
+V
+V
+V
+x
+x
+G
+l
+l
+l
+l
+l
+l
+"}
+(24,1,1) = {"
+l
+l
+l
+V
+V
+V
+x
+x
+x
+x
+V
+V
+V
+V
+V
+V
+T
+x
+l
+l
+l
+l
+l
+l
+"}
+(25,1,1) = {"
+l
+l
+l
+V
+V
+V
+V
+V
+x
+x
+V
+V
+V
+V
+V
+V
+V
+x
+l
+l
+l
+l
+l
+l
+"}
+(26,1,1) = {"
+l
+l
+l
+V
+V
+V
+V
+y
+x
+x
+h
+c
+G
+v
+V
+x
+x
+x
+l
+l
+l
+l
+l
+l
+"}
+(27,1,1) = {"
+l
+l
+l
+V
+V
+R
+b
+H
+x
+k
+x
+x
+x
+x
+V
+V
+V
+x
+l
+l
+l
+l
+l
+l
+"}
+(28,1,1) = {"
+l
+l
+l
+l
+l
+b
+q
+o
+x
+x
+x
+x
+x
+x
+V
+x
+x
+x
+l
+l
+l
+l
+l
+l
+"}
+(29,1,1) = {"
+l
+l
+l
+l
+l
+R
+J
+Y
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+l
+l
+l
+l
+l
+l
+"}
+(30,1,1) = {"
+l
+l
+l
+l
+l
+m
+Z
+m
+X
+x
+x
+x
+x
+x
+x
+x
+V
+x
+l
+l
+l
+l
+l
+l
+"}
+(31,1,1) = {"
+l
+l
+l
+l
+l
+m
+s
+U
+I
+x
+x
+x
+x
+x
+V
+D
+V
+x
+l
+l
+l
+l
+l
+l
+"}
+(32,1,1) = {"
+l
+l
+l
+l
+l
+m
+m
+b
+x
+x
+x
+x
+x
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(33,1,1) = {"
+l
+l
+l
+l
+l
+V
+V
+V
+V
+G
+W
+V
+W
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+"}
+(34,1,1) = {"
+l
+l
+l
+l
+l
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+"}
+(35,1,1) = {"
+l
+l
+l
+l
+l
+V
+l
+V
+V
+V
+V
+V
+V
+V
+V
+V
+l
+l
+l
+l
+l
+l
+l
+l
+"}

@@ -58,6 +58,16 @@
 		PATH_ASH = "white",
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
+		PATH_COSMIC = "purple",
+	)
+	var/static/list/path_to_rune_color = list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -158,12 +168,6 @@
 	icon.Crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
-
-/datum/antagonist/heretic/greet()
-	. = ..()
-	var/policy = get_policy(ROLE_HERETIC)
-	if(policy)
-		to_chat(owner, policy)
 
 /datum/antagonist/heretic/farewell()
 	if(!silent)
@@ -308,14 +312,24 @@
 /datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
+	var/rune_colour = path_to_rune_color[heretic_path]
 	target_turf.balloon_alert(user, "drawing rune...")
+	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect
+	if (drawing_time >= (30 SECONDS))
+		drawing_effect = new(target_turf, rune_colour)
+	else
+		drawing_effect = new /obj/effect/temp_visual/drawing_heretic_rune/fast(target_turf, rune_colour)
+
 	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks))
 		target_turf.balloon_alert(user, "interrupted!")
+		new /obj/effect/temp_visual/drawing_heretic_rune/fail(target_turf, rune_colour)
+		qdel(drawing_effect)
 		drawing_rune = FALSE
 		return
 
+	qdel(drawing_effect)
 	target_turf.balloon_alert(user, "rune created")
-	new /obj/effect/heretic_rune/big(target_turf)
+	new /obj/effect/heretic_rune/big(target_turf, rune_colour)
 	drawing_rune = FALSE
 
 /**
@@ -340,16 +354,14 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
-/// all of our organs are "deleted" and regenerated (cause it's a full heal)
-/// which unfortunately means we lose our living heart.
-/// So, we'll give them some lee-way and give them back the living heart afterwards
-/// (Maybe put this behind only admin_revives only? Not sure.)
-/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
+/// Gives the heretic aliving heart on aheal or organ refresh
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
-	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-	heart_knowledge.on_research(source)
+	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(source, src)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
@@ -655,7 +667,7 @@
  * and returns HERETIC_HAS_LIVING_HEART if they have a living heart
  */
 /datum/antagonist/heretic/proc/has_living_heart()
-	var/obj/item/organ/our_living_heart = owner.current?.getorganslot(living_heart_organ_slot)
+	var/obj/item/organ/our_living_heart = owner.current?.get_organ_slot(living_heart_organ_slot)
 	if(!our_living_heart)
 		return HERETIC_NO_HEART_ORGAN
 
@@ -747,8 +759,3 @@
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-
-/datum/outfit/heretic/post_equip(mob/living/carbon/human/equipper, visualsOnly)
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipper
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()

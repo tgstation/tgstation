@@ -15,7 +15,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
@@ -31,7 +31,8 @@
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	var/examine_laws = display_laws()
-	. += "\n" + examine_laws
+	if(examine_laws)
+		. += "\n" + examine_laws
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()

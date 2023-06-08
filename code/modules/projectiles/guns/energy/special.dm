@@ -24,6 +24,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
+	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 
@@ -170,8 +171,8 @@
 
 	return TRUE
 
-/obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+/obj/item/gun/energy/plasmacutter/use(used)
+	return (!QDELETED(cell) && cell.use(used ? used * charge_weld : charge_weld))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 
@@ -337,6 +338,12 @@
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/energy/temperature/freeze
+	name = "cryogenic temperature gun"
+	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/temp)
+
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
@@ -404,7 +411,7 @@
 	else
 		. += "It has infinite coins available for use."
 
-/obj/item/gun/energy/marksman_revolver/process(delta_time)
+/obj/item/gun/energy/marksman_revolver/process(seconds_per_tick)
 	if(!max_coins || coin_count >= max_coins)
 		STOP_PROCESSING(SSobj, src)
 		return

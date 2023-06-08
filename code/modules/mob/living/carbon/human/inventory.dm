@@ -1,5 +1,8 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
+/mob/living/carbon/human/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) == COMPONENT_BLOCK_EQUIP)
+		return FALSE
+
+	return dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -104,6 +107,39 @@
 		s_store,
 		)
 
+/// Returns items which are currently visible on the mob
+/mob/living/carbon/human/proc/get_visible_items()
+	var/static/list/visible_slots = list(
+		ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_ICLOTHING,
+		ITEM_SLOT_GLOVES,
+		ITEM_SLOT_EYES,
+		ITEM_SLOT_EARS,
+		ITEM_SLOT_MASK,
+		ITEM_SLOT_HEAD,
+		ITEM_SLOT_FEET,
+		ITEM_SLOT_ID,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_BACK,
+		ITEM_SLOT_NECK,
+		ITEM_SLOT_HANDS,
+		ITEM_SLOT_BACKPACK,
+		ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_HANDCUFFED,
+		ITEM_SLOT_LEGCUFFED,
+	)
+	var/list/obscured = check_obscured_slots()
+	var/list/visible_items = list()
+	for (var/slot in visible_slots)
+		if (obscured & slot)
+			continue
+		var/obj/item/equipped = get_item_by_slot(slot)
+		if (equipped)
+			visible_items += equipped
+	for (var/obj/item/held in held_items)
+		visible_items += held
+	return visible_items
+
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
@@ -137,9 +173,7 @@
 				update_glasses_color(G, 1)
 			if(G.tint)
 				update_tint()
-			if(G.vision_correction)
-				clear_fullscreen("nearsighted")
-			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+			if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
 				update_sight()
 			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
@@ -163,7 +197,7 @@
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
-				update_action_buttons_icon() //certain action buttons will no longer be usable.
+				update_mob_action_buttons() //certain action buttons will no longer be usable.
 			update_worn_oversuit()
 		if(ITEM_SLOT_ICLOTHING)
 			if(w_uniform)
@@ -202,19 +236,16 @@
 		. += thing?.slowdown
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
-	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-	if(index && !QDELETED(src) && dna.species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
-		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 			drop_all_held_items() //suit is restraining
-			update_action_buttons_icon() //certain action buttons may be usable again.
+			update_mob_action_buttons() //certain action buttons may be usable again.
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
@@ -245,10 +276,7 @@
 			update_glasses_color(G, 0)
 		if(G.tint)
 			update_tint()
-		if(G.vision_correction)
-			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
-				overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
+		if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
 			update_worn_glasses()
@@ -385,6 +413,11 @@
 			equipped_item.attack_hand(src)
 		else
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
+		return
+	if(!storage.supports_smart_equip)
+		return
+	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in or take something out so we dont give out information on contents (or lack of)
+		to_chat(src, span_warning("The [equipped_item.name] is locked!"))
 		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))

@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "soap"
 	inhand_icon_state = "soap"
 	worn_icon_state = "soap"
@@ -56,7 +56,7 @@
 
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
-	grind_results = list(/datum/reagent/liquidgibs = 9, /datum/reagent/lye = 9)
+	grind_results = list(/datum/reagent/consumable/liquidgibs = 9, /datum/reagent/lye = 9)
 	icon_state = "soapgibs"
 	inhand_icon_state = "soapgibs"
 	worn_icon_state = "soapgibs"
@@ -112,7 +112,9 @@
 /obj/item/soap/suicide_act(mob/living/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!"))
-	new /obj/effect/particle_effect/fluid/foam(loc)
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	foam.set_up(1, holder = src, location = get_turf(user))
+	foam.start()
 	return TOXLOSS
 
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
@@ -144,10 +146,11 @@
 	to_chat(user, span_warning("The soap has ran out of chemicals"))
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
+	. = isitem(target) ? AFTERATTACK_PROCESSED_ITEM : NONE
 	if(uses <= 0)
 		to_chat(user, span_warning("No good, you need to recharge!"))
-		return
-	return ..()
+		return .
+	return ..() | .
 
 /obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
 	return !user?.combat_mode  // only cleans a storage item if on combat
@@ -159,7 +162,7 @@
 /obj/item/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/horn.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
 	worn_icon_state = "horn"

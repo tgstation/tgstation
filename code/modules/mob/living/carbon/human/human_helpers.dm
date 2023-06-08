@@ -4,6 +4,27 @@
 		return FALSE
 	return TRUE
 
+///returns a list of "damtype" => damage description based off of which bodypart description is most common
+///used in human examines
+/mob/living/carbon/human/proc/get_majority_bodypart_damage_desc()
+	var/list/seen_damage = list() // This looks like: ({Damage type} = list({Damage description for that damage type} = {number of times it has appeared}, ...), ...)
+	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
+	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		for(var/damage_type in part.damage_examines)
+			var/damage_desc = part.damage_examines[damage_type]
+			if(!seen_damage[damage_type])
+				seen_damage[damage_type] = list()
+
+			if(!seen_damage[damage_type][damage_desc])
+				seen_damage[damage_type][damage_desc] = 1
+			else
+				seen_damage[damage_type][damage_desc] += 1
+
+			if(seen_damage[damage_type][damage_desc] > most_seen_damage[damage_type])
+				most_seen_damage[damage_type] = seen_damage[damage_type][damage_desc]
+				final_descriptions[damage_type] = damage_desc
+	return final_descriptions
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
@@ -68,7 +89,7 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/tablet/pda/pda = wear_id
+	var/obj/item/modular_computer/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
@@ -89,8 +110,8 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
-	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
+/mob/living/carbon/human/reagent_check(datum/reagent/R, seconds_per_tick, times_fired)
+	return dna.species.handle_chemicals(R, src, seconds_per_tick, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
@@ -107,6 +128,7 @@
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
 		return TRUE
 	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
+
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
@@ -205,9 +227,6 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 	WRITE_FILE(F["current_scar_index"], sanitize_integer(scar_index))
 
-/mob/living/carbon/human/get_biological_state()
-	return dna.species.get_biological_state()
-
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
@@ -215,7 +234,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -239,3 +258,63 @@
 
 		if (preference.is_randomizable())
 			preference.apply_to_human(src, preference.create_random_value(preferences))
+
+/**
+ * Setter for mob height
+ *
+ * Exists so that the update is done immediately
+ *
+ * Returns TRUE if changed, FALSE otherwise
+ */
+/mob/living/carbon/human/proc/set_mob_height(new_height)
+	if(mob_height == new_height)
+		return FALSE
+	if(new_height == HUMAN_HEIGHT_DWARF)
+		CRASH("Don't set height to dwarf height directly, use dwarf trait")
+
+	mob_height = new_height
+	regenerate_icons()
+	return TRUE
+
+/**
+ * Getter for mob height
+ *
+ * Mainly so that dwarfism can adjust height without needing to override existing height
+ *
+ * Returns a mob height num
+ */
+/mob/living/carbon/human/proc/get_mob_height()
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	return mob_height
+
+/**
+ * Makes a full copy of src and returns it.
+ * Attempts to copy as much as possible to be a close to the original.
+ * This includes job outfit (which handles skillchips), quirks, and mutations.
+ * We do not set a mind here, so this is purely the body.
+ * Args:
+ * location - The turf the human will be spawned on.
+ */
+/mob/living/carbon/human/proc/make_full_human_copy(turf/location, client/quirk_client)
+	RETURN_TYPE(/mob/living/carbon/human)
+
+	var/mob/living/carbon/human/clone = new(location)
+
+	clone.fully_replace_character_name(null, dna.real_name)
+	copy_clothing_prefs(clone)
+	clone.age = age
+	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+
+	clone.dress_up_as_job(SSjob.GetJob(job))
+
+	for(var/datum/quirk/original_quircks as anything in quirks)
+		clone.add_quirk(original_quircks.type, override_client = client)
+	for(var/datum/mutation/human/mutations in dna.mutations)
+		clone.dna.add_mutation(mutations)
+
+	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	clone.domutcheck()
+
+	return clone

@@ -2,7 +2,7 @@
 	name = "health sensor"
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
-	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
 	attachable = TRUE
 
 	var/scanning = FALSE
@@ -13,6 +13,13 @@
 	. = ..()
 	. += "Use it in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode."
 	. += "[src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen" : "The sensor is off"]."
+
+/obj/item/assembly/health/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(iscarbon(old_loc))
+		UnregisterSignal(old_loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	if(iscarbon(loc))
+		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /obj/item/assembly/health/activate()
 	if(!..())
@@ -74,5 +81,9 @@
 	if (secured)
 		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
 	else
-		balloon_alert(user, span_warning("secure it first!"))
+		balloon_alert(user, "secure it first!")
 	toggle_scan()
+
+/obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+	SIGNAL_HANDLER
+	items += "Health: [round((source.health / source.maxHealth) * 100)]%"

@@ -68,7 +68,7 @@ Difficulty: Hard
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
-	faction = list("mining", "boss", "hell")
+	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
 	/// Actual time where enrage ends
@@ -274,7 +274,7 @@ Difficulty: Hard
 	set_varspeed(move_to_delay)
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = ..()
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
@@ -340,10 +340,10 @@ Difficulty: Hard
 		new /obj/effect/decal/cleanable/blood(get_turf(src))
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()
@@ -398,3 +398,7 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
+
+#undef BUBBLEGUM_CAN_ENRAGE
+#undef BUBBLEGUM_IS_ENRAGED
+#undef BUBBLEGUM_SMASH

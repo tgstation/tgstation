@@ -28,9 +28,7 @@
 /area/shuttle/arrival)
 "g" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/official/enlist{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/enlist/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "h" = (
@@ -52,9 +50,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "l" = (

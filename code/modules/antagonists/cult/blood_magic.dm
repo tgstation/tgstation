@@ -21,17 +21,20 @@
 		var/our_view = hud.mymob?.client?.view || "15x15"
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
-		var/spells_iterated = 0
+		var/list/position_list = list()
+		for(var/possible_position in 1 to MAX_BLOODCHARGE)
+			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
-			spells_iterated += 1
 			if(blood_spell.positioned)
+				position_list.Remove(blood_spell.positioned)
 				continue
 			var/atom/movable/screen/movable/action_button/moving_button = blood_spell.viewers[hud]
 			if(!moving_button)
 				continue
-			var/our_x = position[1] + spells_iterated * world.icon_size // Offset any new buttons into our list
+			var/first_available_slot = position_list[1]
+			var/our_x = position[1] + first_available_slot * world.icon_size // Offset any new buttons into our list
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
-			blood_spell.positioned = TRUE
+			blood_spell.positioned = first_available_slot
 
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
@@ -167,7 +170,7 @@
 		span_cultitalic("You speak the cursed words, emitting an EMP blast from your hand."))
 	empulse(owner, 2, 5)
 	charges--
-	if(charges<=0)
+	if(charges <= 0)
 		qdel(src)
 
 /datum/action/innate/cult/blood_spell/shackles
@@ -251,7 +254,7 @@
 	charges--
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtons()
+	build_all_button_icons()
 	if(charges <= 0)
 		to_chat(caller, span_cult("You have exhausted the spell's power!"))
 		qdel(src)
@@ -305,11 +308,11 @@
 		revealing = FALSE
 		name = "Conceal Runes"
 		button_icon_state = "gone"
-	if(charges<= 0)
+	if(charges <= 0)
 		qdel(src)
 	desc = base_desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
@@ -324,7 +327,7 @@
 /obj/item/melee/blood_magic
 	name = "\improper magical aura"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/hand.dmi'
 	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
@@ -358,7 +361,7 @@
 			source.charges = uses
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-			source.UpdateButtons()
+			source.build_all_button_icons()
 	return ..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
@@ -379,15 +382,15 @@
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)
 		if(user.active_hand_index == 1)
-			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM)
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM, wound_bonus = CANT_WOUND)
 		else
-			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM)
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM, wound_bonus = CANT_WOUND)
 	if(uses <= 0)
 		qdel(src)
 	else if(source)
 		source.desc = source.base_desc
 		source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
-		source.UpdateButtons()
+		source.build_all_button_icons()
 
 //Stun
 /obj/item/melee/blood_magic/stun
@@ -502,7 +505,7 @@
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 		C.visible_message(span_danger("[user] begins restraining [C] with dark magic!"), \
 								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
-		if(do_mob(user, C, 30))
+		if(do_after(user, 30, C))
 			if(!C.handcuffed)
 				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
 				C.update_handcuffed()
@@ -553,6 +556,7 @@
 		if(channeling)
 			to_chat(user, span_cultitalic("You are already invoking twisted construction!"))
 			return
+		. |= AFTERATTACK_PROCESSED_ITEM
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
@@ -631,7 +635,7 @@
 		else
 			to_chat(user, span_warning("The spell will not work on [target]!"))
 			return
-		..()
+		return . | ..()
 
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -676,8 +680,8 @@
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(NOBLOOD in H.dna.species.species_traits)
-				to_chat(user,span_warning("Blood rites do not work on species with no blood!"))
+			if(HAS_TRAIT(H, TRAIT_NOBLOOD))
+				to_chat(user,span_warning("Blood rites do not work on people with no blood!"))
 				return
 			if(IS_CULTIST(H))
 				if(H.stat == DEAD)
@@ -706,9 +710,9 @@
 					if(ratio>1)
 						ratio = 1
 						uses -= round(overall_damage)
-						H.visible_message(span_warning("[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic!"))
+						H.visible_message(span_warning("[H] is fully healed by [H == user ? "[H.p_their()]":"[H]'s"] blood magic!"))
 					else
-						H.visible_message(span_warning("[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic."))
+						H.visible_message(span_warning("[H] is partially healed by [H == user ? "[H.p_their()]":"[H]'s"] blood magic."))
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
@@ -781,7 +785,7 @@
 		var/static/list/spells = list(
 			"Bloody Halberd (150)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
 			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
-			"Blood Beam (500)" = image(icon = 'icons/obj/weapons/items_and_weapons.dmi', icon_state = "disintegrate")
+			"Blood Beam (500)" = image(icon = 'icons/obj/weapons/hand.dmi', icon_state = "disintegrate")
 			)
 		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user))

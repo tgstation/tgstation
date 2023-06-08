@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 	cam_background.add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 
-	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	vis_contents += TURF_NEIGHBORS(center_turf)
 	cam_background.icon_state = "scanline4"
 	cam_background.color = "#adadff"
 	cam_background.alpha = 128

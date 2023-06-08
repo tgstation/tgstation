@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
+	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -10,8 +10,10 @@
 	light_power = 1
 	light_on = FALSE
 	bare_wound_bonus = 20
+	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NO_BLOOD_ON_ITEM
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -29,6 +31,10 @@
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
 	var/active_heat = 3500
+
+/datum/armor/melee_energy
+	fire = 100
+	acid = 30
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
@@ -54,7 +60,9 @@
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
 		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
-		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
+		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/suicide_act(mob/living/user)
@@ -63,10 +71,7 @@
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/melee/energy/add_blood_DNA(list/blood_dna)
-	return FALSE
-
-/obj/item/melee/energy/process(delta_time)
+/obj/item/melee/energy/process(seconds_per_tick)
 	if(heat)
 		open_flame()
 
@@ -100,7 +105,7 @@
 	if(active)
 		if(sword_color_icon)
 			icon_state = "[icon_state]_[sword_color_icon]"
-			inhand_icon_state = "[inhand_icon_state]_[sword_color_icon]"
+			inhand_icon_state = "[inhand_icon_state]_on_[sword_color_icon]"
 			if(ismob(loc))
 				var/mob/loc_mob = loc
 				loc_mob.update_held_items()
@@ -174,9 +179,10 @@
 	throw_range = 5
 	armour_penetration = 35
 	block_chance = 50
+	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
-/obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(blade_active)
 		return ..()
 	return FALSE
@@ -220,7 +226,7 @@
 	active_force = 30
 	sword_color_icon = null // Stops icon from breaking when turned on.
 
-/obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	return FALSE
 
 // The colored energy swords we all know and love.

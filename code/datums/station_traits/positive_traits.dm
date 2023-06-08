@@ -15,7 +15,7 @@
 	. = ..()
 	COOLDOWN_START(src, party_cooldown, rand(PARTY_COOLDOWN_LENGTH_MIN, PARTY_COOLDOWN_LENGTH_MAX))
 
-/datum/station_trait/lucky_winner/process(delta_time)
+/datum/station_trait/lucky_winner/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, party_cooldown))
 		return
 
@@ -333,3 +333,15 @@
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+
+/datum/station_trait/luxury_escape_pods
+	name = "Luxury Escape Pods"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Due to good performance, we've provided your station with luxury escape pods."
+	trait_to_give = STATION_TRAIT_BIGGER_PODS
+	blacklist = list(/datum/station_trait/cramped_escape_pods)
+
+#undef PARTY_COOLDOWN_LENGTH_MIN
+#undef PARTY_COOLDOWN_LENGTH_MAX

@@ -72,6 +72,8 @@
 	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
@@ -85,7 +87,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
-	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubbershot/fire slug load."
+	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
 	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
@@ -96,6 +98,10 @@
 	. = ..()
 	alt_mag_type = alt_mag_type || mag_type
 	alternate_magazine = new alt_mag_type(src)
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Destroy()
+	QDEL_NULL(alternate_magazine)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
 	if(!chambered && magazine.contents.len)
@@ -115,7 +121,7 @@
 		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	rack()
 
@@ -131,6 +137,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
+	projectile_damage_multiplier = 1.2
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
@@ -157,6 +164,10 @@
 	secondary_magazine_type = secondary_magazine_type || mag_type
 	secondary_magazine = new secondary_magazine_type(src)
 	update_appearance()
+
+/obj/item/gun/ballistic/shotgun/bulldog/Destroy()
+	QDEL_NULL(secondary_magazine)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/bulldog/examine(mob/user)
 	. = ..()
@@ -195,7 +206,7 @@
 	toggle_magazine()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(secondary_magazine)
 		toggle_magazine()
 	return SECONDARY_ATTACK_CALL_NORMAL
@@ -267,7 +278,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
@@ -305,6 +316,10 @@
 /obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
+
+/obj/item/gun/ballistic/shotgun/hook/Destroy()
+	QDEL_NULL(hook)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()

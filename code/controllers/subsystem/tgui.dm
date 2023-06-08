@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(tgui)
 	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
 	polyfill = "<script>\n[polyfill]\n</script>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
@@ -199,7 +200,7 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
 		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-			ui.process(wait * 0.1, force = 1)
+			INVOKE_ASYNC(ui, TYPE_PROC_REF(/datum/tgui, process), wait * 0.1, TRUE)
 			count++
 	return count
 

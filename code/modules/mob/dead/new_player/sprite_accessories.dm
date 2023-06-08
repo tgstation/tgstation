@@ -16,7 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female,roundstart = FALSE, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
 	if(!istype(male))
@@ -25,10 +25,6 @@
 		female = list()
 
 	for(var/path in subtypesof(prototype))
-		if(roundstart)
-			var/datum/sprite_accessory/P = path
-			if(initial(P.locked))
-				continue
 		var/datum/sprite_accessory/D = new path()
 
 		if(D.icon_state)
@@ -107,6 +103,10 @@
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
 
+/datum/sprite_accessory/hair/allthefuzz
+	name = "All The Fuzz"
+	icon_state = "hair_allthefuzz"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
@@ -131,6 +131,10 @@
 	name = "Bedhead 3"
 	icon_state = "hair_bedheadv3"
 
+/datum/sprite_accessory/hair/bedheadv4
+	name = "Bedhead 4x"
+	icon_state = "hair_bedheadv4"
+
 /datum/sprite_accessory/hair/bedheadlong
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
@@ -138,6 +142,10 @@
 /datum/sprite_accessory/hair/bedheadfloorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
+
+/datum/sprite_accessory/hair/badlycut
+	name = "Shorter Long Bedhead"
+	icon_state = "hair_verybadlycut"
 
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
@@ -250,6 +258,10 @@
 /datum/sprite_accessory/hair/buzz
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
+
+/datum/sprite_accessory/hair/chinbob
+	name = "Chin-Length Bob Cut"
+	icon_state = "hair_chinbob"
 
 /datum/sprite_accessory/hair/comet
 	name = "Comet"
@@ -522,6 +534,10 @@
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+
+/datum/sprite_accessory/hair/hair_overeyetwo
+	name = "Over Eye 2"
+	icon_state = "hair_overeyetwo"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -802,6 +818,10 @@
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"
 	icon_state = "hair_wisp"
+
+/datum/sprite_accessory/hair/ziegler
+	name = "Ziegler"
+	icon_state = "hair_ziegler"
 
 /*
 /////////////////////////////////////
@@ -1583,6 +1603,10 @@
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
+/datum/sprite_accessory/socks/fishnet_knee
+	name = "Knee-high (Fishnet)"
+	icon_state = "fishnet_knee"
+
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -1635,6 +1659,10 @@
 	name = "Stockings (Yellow)"
 	icon_state = "stockings_yellow"
 
+/datum/sprite_accessory/socks/stockings_fishnet
+	name = "Stockings (Fishnet)"
+	icon_state = "fishnet_full"
+
 /datum/sprite_accessory/socks/ace_thigh
 	name = "Thigh-high (Ace)"
 	icon_state = "ace_thigh"
@@ -1678,6 +1706,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/fishnet_thigh
+	name = "Thigh-high (Fishnet)"
+	icon_state = "fishnet_thigh"
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"
@@ -1734,7 +1766,7 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
-	icon_state = "cat"
+	icon_state = "default"
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/monkey
@@ -1855,6 +1887,7 @@
 	icon_state = "fox"
 	hasinner = TRUE
 	color_src = HAIR
+	locked = TRUE
 
 /datum/sprite_accessory/wings/none
 	name = "None"

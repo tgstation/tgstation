@@ -10,7 +10,8 @@ Bonus
 */
 /datum/symptom/flesh_eating
 	name = "Necrotizing Fasciitis"
-	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
+	desc = "The virus aggressively attacks bone cells, causing excessive wobbliness and falling down a lot."
+	illness = "Jellyitis"
 	stealth = -3
 	resistance = -4
 	stage_speed = 0
@@ -51,7 +52,7 @@ Bonus
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,25) * power
-	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
 	if(pain)
 		M.adjustStaminaLoss(get_damage * 2)
 	if(bleed)
@@ -82,6 +83,7 @@ Bonus
 
 	name = "Autophagocytosis Necrosis"
 	desc = "The virus rapidly consumes infected cells, leading to heavy and widespread damage."
+	illness = "Premature Mummification"
 	stealth = -2
 	resistance = -2
 	stage_speed = 1
@@ -123,7 +125,7 @@ Bonus
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(6,10)
-	M.take_overall_damage(brute = get_damage, required_status = BODYTYPE_ORGANIC)
+	M.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 	if(zombie)

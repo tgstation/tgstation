@@ -4,6 +4,12 @@
 	has_gravity = FALSE
 	area_flags = UNIQUE_AREA
 
+/area/ruin/space/unpowered
+	always_unpowered = TRUE
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY
 
@@ -19,7 +25,6 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/way_home
 	name = "\improper Salvation"
@@ -185,6 +190,44 @@
 /area/ruin/space/has_grav/abandonedzoo
 	name = "\improper Abandoned Zoo"
 
+//Ruin of Dangerous Research
+
+/area/ruin/space/has_grav/dangerous_research
+	name = "\improper ASRC Lobby"
+
+/area/ruin/space/has_grav/dangerous_research/medical
+	name = "\improper ASRC Medical Facilities"
+
+/area/ruin/space/has_grav/dangerous_research/dorms
+	name = "\improper ASRC Dorms"
+
+/area/ruin/space/has_grav/dangerous_research/lab
+	name = "\improper ASRC Laboratory"
+
+/area/ruin/space/has_grav/dangerous_research/maint
+	name = "\improper ASRC Maintenance"
+
+//Interdyne Ruin
+
+/area/ruin/space/has_grav/interdyne
+	name = "\improper Interdyne Research Base"
+
+//Ruin of Crashed Ship
+
+/area/ruin/space/has_grav/crashedship/aft
+	name = "\improper Crashed Ship's Aft"
+
+/area/ruin/space/has_grav/crashedship/midship
+	name = "\improper Crashed Ship's Midship"
+
+/area/ruin/space/has_grav/crashedship/fore
+	name = "\improper Crashed Ship's Fore"
+
+/area/ruin/space/has_grav/crashedship/big_asteroid
+	name = "\improper Asteroid"
+
+/area/ruin/space/has_grav/crashedship/small_asteroid
+	name = "\improper Asteroid"
 
 //Ruin of ancient Space Station (OldStation)
 
@@ -269,7 +312,6 @@
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
@@ -513,7 +555,11 @@
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
-	network_root_id = STATION_NETWORK_ROOT
+
+// CRASHED PRISON SHUTTLE
+/area/ruin/space/prison_shuttle
+	name = "\improper Crashed Prisoner Shuttle"
+
 
 //ABANDONED BOX WHITESHIP
 
@@ -543,8 +589,96 @@
 /area/ruin/space/has_grav/spinwardsmoothies
 	name = "Spinward Smoothies"
 
-
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
 	ambientsounds = list('sound/ambience/clown.ogg')
+
+//DERELICT SULACO
+/area/ruin/space/has_grav/derelictsulaco
+	name = "\improper Derelict Sulaco"
+
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
+//Mass-driver hub ruin
+/area/ruin/space/massdriverhub
+	name = "\improper Mass Driver Router"
+	always_unpowered = FALSE
+
+// The abandoned capsule 'The Traveler's Rest'
+/area/ruin/space/has_grav/travelers_rest
+	name = "\improper Traveler's Rest"
+
+// The Phonebooth
+/area/ruin/space/has_grav/powered/space_phone_booth
+	name = "\improper Phonebooth"
+
+// Botnanical Haven
+/area/ruin/space/has_grav/powered/botanical_haven
+	name = "\improper Botanical Haven"
+
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
+
+// Ruin of Waystation
+/area/ruin/space/has_grav/waystation
+	name = "Waystation Maintenance"
+
+/area/ruin/space/has_grav/waystation/qm
+	name = "Quartermaster Office"
+
+/area/ruin/space/has_grav/waystation/dorms
+	name = "Living Space"
+
+/area/ruin/space/has_grav/waystation/kitchen
+	name = "Kitchen"
+
+/area/ruin/space/has_grav/waystation/cargobay
+	name = "Cargo Bay"
+
+/area/ruin/space/has_grav/waystation/securestorage
+	name = "Secure Storage"
+
+/area/ruin/space/has_grav/waystation/cargooffice
+	name = "Cargo Office"
+
+/area/ruin/space/has_grav/powered/waystation/assaultpod
+	name = "Assault Pod"
+
+/area/ruin/space/has_grav/waystation/power
+	name = "Waystation Electrical"
+
+// Ruin of The All-American Diner
+/area/ruin/space/has_grav/allamericandiner
+	name = "\improper The All-American Diner"
+
+// Transit Booth
+/area/ruin/space/has_grav/transit_booth
+	name = "transit_booth"
+	icon = 'icons/area/areas_ruins.dmi'
+	icon_state = "ruins"
+	requires_power = FALSE
+	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+
+// the outlet
+/area/ruin/space/has_grav/the_outlet/storefront
+	name = "\improper outlet storefront"
+
+/area/ruin/space/has_grav/the_outlet/employeesection
+	name = "\improper outlet employees only"
+
+/area/ruin/space/has_grav/the_outlet/researchrooms
+	name = "\improper outlet research rooms"
+
+/area/ruin/space/has_grav/the_outlet/cultinfluence
+	name = "\improper outlet cult corruption"
+
+//SYN-C Brutus, derelict frigate
+/area/ruin/space/has_grav/infested_frigate
+	name = "SYN-C Brutus"

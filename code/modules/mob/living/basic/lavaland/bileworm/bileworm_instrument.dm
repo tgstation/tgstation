@@ -15,4 +15,4 @@
 		/obj/item/crusher_trophy/bileworm_spewlet = 1,
 	)
 	result = /obj/item/instrument/bilehorn
-	category = CAT_PRIMAL
+	category = CAT_ENTERTAINMENT

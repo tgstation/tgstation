@@ -3,9 +3,10 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	attachable = TRUE
+	/// The ID of the blast door electronics to match to the ID of the blast door being used.
 	var/id = null
-	var/can_change_id = 0
-	var/cooldown = FALSE //Door cooldowns
+	/// Cooldown of the door's controller. Updates when pressed (activate())
+	var/cooldown = FALSE
 	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
@@ -15,9 +16,10 @@
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
+	balloon_alert(user, "id changed")
 	to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
@@ -83,7 +85,10 @@
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
-					D.locked = !D.locked
+					if(D.locked)
+						D.unlock()
+					else
+						D.lock()
 					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
@@ -111,14 +116,16 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
-	sleep(1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage2)), 1 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage2()
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage3)), 6 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage3()
 	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
@@ -140,9 +147,7 @@
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 
@@ -183,7 +188,7 @@
 	///ID to link to allow us to link to one specific tram in the world
 	var/specific_lift_id = MAIN_STATION_TRAM
 	///this is our destination's landmark, so we only have to find it the first time.
-	var/datum/weakref/to_where
+	var/datum/weakref/destination_platform
 
 /obj/item/assembly/control/tram/Initialize(mapload)
 	..()
@@ -193,12 +198,12 @@
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
 	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
-		if(our_destination.destination_id == initial_id)
-			to_where = WEAKREF(our_destination)
+		if(our_destination.platform_code == initial_id)
+			destination_platform = WEAKREF(our_destination)
 			break
 
 /obj/item/assembly/control/tram/Destroy()
-	to_where = null
+	destination_platform = null
 	return ..()
 
 /obj/item/assembly/control/tram/activate()
@@ -213,18 +218,18 @@
 			tram = possible_match
 			break
 
-	if(!tram)
-		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
+	if(!tram || !tram.is_operational) //tram is QDEL or has no power
+		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
 	if(tram.travelling) //in use
-		say("The tram is already travelling to [tram.from_where].")
+		say("The tram is already travelling to [tram.idle_platform].")
 		return
-	if(!to_where)
+	if(!destination_platform)
 		return
-	var/obj/effect/landmark/tram/current_location = to_where.resolve()
+	var/obj/effect/landmark/tram/current_location = destination_platform.resolve()
 	if(!current_location)
 		return
-	if(tram.from_where == current_location) //already here
+	if(tram.idle_platform == current_location) //already here
 		say("The tram is already here. Please board the tram and select a destination.")
 		return
 

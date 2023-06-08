@@ -68,6 +68,7 @@
 	name = "advanced mop"
 	max_reagent_volume = 10
 	icon_state = "advmop"
+	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 12
@@ -92,8 +93,8 @@
 	to_chat(user, span_notice("You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
-/obj/item/mop/advanced/process(delta_time)
-	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * delta_time)
+/obj/item/mop/advanced/process(seconds_per_tick)
+	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * seconds_per_tick)
 	if(amadd > 0)
 		reagents.add_reagent(refill_reagent, amadd)
 

@@ -19,6 +19,7 @@
  *
  * Functionally identical to [QDEL_HINT_QUEUE] if [GC_FAILURE_HARD_LOOKUP] is not enabled in _compiler_options.dm.
 */
+#warn TG0001 qdel REFERENCE_TRACKING enabled
 #define QDEL_HINT_FINDREFERENCE 5
 /// Behavior as [QDEL_HINT_FINDREFERENCE], but only if the GC fails and a hard delete is forced.
 #define QDEL_HINT_IFFAIL_FINDREFERENCE 6
@@ -29,6 +30,13 @@
 #define GC_QUEUE_CHECK 2 //! main queue that waits 5 minutes because thats the longest byond can hold a reference to our shit.
 #define GC_QUEUE_HARDDELETE 3 //! short queue for things that hard delete instead of going thru the gc subsystem, this is purely so if they *can* softdelete, they will soft delete rather then wasting time with a hard delete.
 #define GC_QUEUE_COUNT 3 //! Number of queues, used for allocating the nested lists. Don't forget to increase this if you add a new queue stage
+
+
+// Defines for the ssgarbage queue items
+#define GC_QUEUE_ITEM_QUEUE_TIME 1 //! Time this item entered the queue
+#define GC_QUEUE_ITEM_REF 2 //! Ref to the item
+#define GC_QUEUE_ITEM_GCD_DESTROYED 3 //! Item's gc_destroyed var value. Used to detect ref reuse.
+#define GC_QUEUE_ITEM_INDEX_COUNT 3 //! Number of item indexes, used for allocating the nested lists. Don't forget to increase this if you add a new queue item index
 
 // Defines for the time an item has to get its reference cleaned before it fails the queue and moves to the next.
 #define GC_FILTER_QUEUE (1 SECONDS)

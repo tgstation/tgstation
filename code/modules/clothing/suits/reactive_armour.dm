@@ -14,6 +14,7 @@
 		/obj/effect/anomaly/bioscrambler = /obj/item/clothing/suit/armor/reactive/bioscrambling,
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
+		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -33,7 +34,7 @@
 	icon_state = "reactiveoff"
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/armor_reactive
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50
@@ -50,9 +51,13 @@
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 
+/datum/armor/armor_reactive
+	fire = 100
+	acid = 100
+
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
@@ -64,7 +69,7 @@
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type = BRUTE)
 	if(!active || !prob(hit_reaction_chance))
 		return FALSE
 	if(world.time < reactivearmor_cooldown)
@@ -401,29 +406,7 @@
 	for(var/mob/living/carbon/nearby in range(range, get_turf(src)))
 		if(!can_hit_owner && nearby == owner)
 			continue
-		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
-			continue //We are protected
-		var/picked_zone = pick(zones)
-		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
-		var/obj/item/bodypart/picked_part
-		switch(picked_zone)
-			if(BODY_ZONE_HEAD)
-				picked_part = pick(heads)
-			if(BODY_ZONE_CHEST)
-				picked_part = pick(chests)
-			if(BODY_ZONE_L_ARM)
-				picked_part = pick(l_arms)
-			if(BODY_ZONE_R_ARM)
-				picked_part = pick(r_arms)
-			if(BODY_ZONE_L_LEG)
-				picked_part = pick(l_legs)
-			if(BODY_ZONE_R_LEG)
-				picked_part = pick(r_legs)
-		var/obj/item/bodypart/new_part = new picked_part()
-		new_part.replace_limb(nearby, TRUE)
-		qdel(picked_user_part)
-		nearby.update_body(TRUE)
-		balloon_alert(nearby, "something has changed about you")
+		nearby.bioscramble(name)
 
 // When the wearer gets hit, this armor will push people nearby and spawn some blocking objects.
 /obj/item/clothing/suit/armor/reactive/barricade
@@ -487,3 +470,22 @@
 	qdel(theme)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
+
+/obj/item/clothing/suit/armor/reactive/ectoplasm
+	name = "reactive possession armor"
+	desc = "An experimental suit of armor that animates nearby objects with a ghostly possession."
+	emp_message = span_warning("The reactive armor lets out a horrible noise, and ghostly whispers fill your ears...")
+	cooldown_message = span_danger("Ectoplasmic Matrix out of balance. Please wait for calibration to complete!")
+	reactivearmor_cooldown_duration = 40 SECONDS
+
+/obj/item/clothing/suit/armor/reactive/ectoplasm/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	playsound(get_turf(owner),'sound/hallucinations/veryfar_noise.ogg', 100, TRUE)
+	owner.visible_message(span_danger("The [src] lets loose a burst of otherworldly energy!"))
+
+	haunt_outburst(epicenter = get_turf(owner), range = 5, haunt_chance = 85, duration = 30 SECONDS)
+
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/ectoplasm/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.reagents?.add_reagent(/datum/reagent/inverse/helgrasp, 20)

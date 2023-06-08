@@ -73,7 +73,7 @@
 	},
 /area/ruin/powered/shuttle)
 "qd" = (
-/mob/living/simple_animal/hostile/tree,
+/mob/living/basic/tree,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "sF" = (
@@ -128,14 +128,11 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -8;
 	pixel_y = 13
 	},
-/obj/item/food/soup/stew{
-	name = "porridge";
-	pixel_y = 3
-	},
+/obj/item/reagent_containers/cup/bowl/soup/stew,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -188,10 +185,10 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/book/bible{
+/obj/item/book/bible{
 	pixel_y = 5
 	},
-/obj/item/candle{
+/obj/item/flashlight/flare/candle{
 	pixel_x = -10;
 	pixel_y = 5
 	},

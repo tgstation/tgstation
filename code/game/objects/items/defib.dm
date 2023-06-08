@@ -16,7 +16,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_defibrillator
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)
@@ -43,6 +43,10 @@
 	var/nocell_state = "defibunit-nocell"
 	/// The icon state for the emagged overlay, not applied if null
 	var/emagged_state = "defibunit-emagged"
+
+/datum/armor/item_defibrillator
+	fire = 50
+	acid = 50
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -186,17 +190,6 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	if(combat) // Elite agents do not subscribe to your notion of "Safety"
-		visible_message(span_notice("[src] beeps: Safety protocols nonexistent!"))
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
-	else if(safety)
-		safety = FALSE
-		visible_message(span_notice("[src] beeps: Safety protocols disabled!"))
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
-	else
-		safety = TRUE
-		visible_message(span_notice("[src] beeps: Safety protocols enabled!"))
-		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, FALSE)
 	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
@@ -217,7 +210,7 @@
 		remove_paddles(user)
 
 	update_power()
-	update_action_buttons()
+	update_item_action_buttons()
 
 
 /obj/item/defibrillator/equipped(mob/user, slot)
@@ -362,7 +355,7 @@
 
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS|ITEM_SLOT_BACK)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/shockpaddles/Destroy()
@@ -590,7 +583,7 @@
 	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
-		var/obj/item/organ/internal/heart = H.getorgan(/obj/item/organ/internal/heart)
+		var/obj/item/organ/internal/heart = H.get_organ_by_type(/obj/item/organ/internal/heart)
 		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
@@ -659,7 +652,7 @@
 					log_combat(user, H, "revived", defib)
 				do_success()
 				return
-			else if (!H.getorgan(/obj/item/organ/internal/heart))
+			else if (!H.get_organ_by_type(/obj/item/organ/internal/heart))
 				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 			else if(H.undergoing_cardiac_arrest())

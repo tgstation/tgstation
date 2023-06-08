@@ -71,7 +71,7 @@
 "r" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/decal/remains/human,
-/obj/item/disk/design_disk/adv/cleric_mace,
+/obj/item/disk/design_disk/cleric_mace,
 /obj/structure/trap/cult,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
@@ -180,7 +180,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "Q" = (
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)

@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/plant_analyzer/Initialize(mapload)
 	. = ..()
@@ -416,7 +416,7 @@
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -425,7 +425,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -441,9 +441,9 @@
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
-	flags_1 = NONE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
 	resistance_flags = FLAMMABLE
+	flags_1 = NONE
 
 /obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
@@ -467,7 +467,7 @@
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -479,7 +479,7 @@
 	throw_speed = 4
 	throw_range = 7
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
-	custom_materials = list(/datum/material/iron = 15000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -500,16 +500,18 @@
 /obj/item/hatchet/wooden
 	desc = "A crude axe blade upon a short wooden handle."
 	icon_state = "woodhatchet"
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
 /obj/item/scythe
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "scythe"
-	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	force = 13
 	throwforce = 5
 	throw_speed = 2
@@ -521,6 +523,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = SHARP_EDGED
 	var/swiping = FALSE
 
 /obj/item/scythe/Initialize(mapload)
@@ -529,6 +532,7 @@
 	speed = 9 SECONDS, \
 	effectiveness = 105, \
 	)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -540,24 +544,30 @@
 			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
-	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
+/obj/item/scythe/pre_attack(atom/target, mob/living/user, params)
+	if(!istype(target, /obj/structure/alien/resin/flower_bud) && !istype(target, /obj/structure/spacevine))
+		return ..()
+	if(swiping || get_turf(target) == get_turf(user))
 		return ..()
 	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(A))
+	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	swiping = TRUE
 	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
 	for(var/i in scythe_slash_angles)
-		var/turf/T = get_step(user_turf, turn(dir_to_target, i))
-		for(var/obj/structure/spacevine/V in T)
-			if(user.Adjacent(V))
-				melee_attack_chain(user, V)
+		var/turf/adjacent_turf = get_step(user_turf, turn(dir_to_target, i))
+		for(var/obj/structure/spacevine/vine in adjacent_turf)
+			if(user.Adjacent(vine))
+				melee_attack_chain(user, vine)
+		for(var/obj/structure/alien/resin/flower_bud/flower in adjacent_turf)
+			if(user.Adjacent(flower))
+				melee_attack_chain(user, flower)
 	swiping = FALSE
 	return TRUE
 
 /obj/item/secateurs
 	name = "secateurs"
-	desc = "It's a tool for cutting grafts off plants."
+	desc = "It's a tool for cutting grafts off plants or changing podperson looks."
+	desc_controls = "Right-click to stylize podperson hair or other plant features!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = null
@@ -569,41 +579,21 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*2)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/// Secateurs can be used to style podperson "hair"
-/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
-	if(ispodperson(trimmed))
-		var/mob/living/carbon/human/pod = trimmed
-		var/location = trimmer.zone_selected
-		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
-			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
-			return
-		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
-			if(!trimmer.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
-				return
-			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
-			if(isnull(new_style))
-				return
-			trimmer.visible_message(
-				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-			)
-			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
-				trimmer.visible_message(
-					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-				)
-
-				var/datum/species/pod/species = pod.dna?.species
-				species?.change_hairstyle(pod, new_style)
-		else
-			return ..()
-	else
+///Catch right clicks so we can stylize!
+/obj/item/secateurs/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
+	restyle(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+///Send a signal to whatever we clicked and ask them if they wanna be PLANT RESTYLED YEAAAAAAAH
+/obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
+	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
 
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
@@ -619,7 +609,7 @@
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'

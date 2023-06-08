@@ -23,22 +23,20 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
-	///Frequency for radio signaling
-	var/frequency = 0
-	///ID for radio signaling
-	var/id = null
-	///Connection to the radio processing
-	var/datum/radio_frequency/radio_connection
+	///flashing light overlay which appears on multitooled vol pumps
+	var/mutable_appearance/overclock_overlay
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_volume_pump,
 	))
+	register_context()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
 		set_on(!on)
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 	return ..()
@@ -51,12 +49,16 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
-
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
+	var/altlayeroverlay = FALSE
+	if(set_overlay_offset(piping_layer) == 2)
+		altlayeroverlay = TRUE
+	overclock_overlay = mutable_appearance('icons/obj/atmospherics/components/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
+	if(overclocked && on && is_operational)
+		add_overlay(overclock_overlay)
+	else
+		cut_overlay(overclock_overlay)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 	if(!on || !is_operational)
@@ -70,7 +72,7 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000))&&!overclocked)
+	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
 		return
 
 	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
@@ -96,35 +98,17 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
+	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-/**
- * Called in atmos_init(), used to change or remove the radio frequency from the component
- * Arguments:
- * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
-/**
- * Called in atmos_init(), send the component status to the radio device connected
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id,
-		"device" = "APV",
-		"power" = on,
-		"transfer_rate" = transfer_rate,
-		"sigtype" = "status"
-	))
-	radio_connection.post_signal(src, signal)
+/obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
+	if(held_item && held_item.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "[overclocked ? "En" : "Dis"]able pressure limits"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -138,11 +122,6 @@
 	data["rate"] = round(transfer_rate)
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
-
-/obj/machinery/atmospherics/components/binary/volume_pump/atmos_init()
-	. = ..()
-
-	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	. = ..()
@@ -166,32 +145,6 @@
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_on = on //for logging
-
-	if("power" in signal.data)
-		set_on(text2num(signal.data["power"]))
-
-	if("power_toggle" in signal.data)
-		set_on(!on)
-
-	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = airs[1]
-		transfer_rate = clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
-
-	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
-
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_appearance
-
-	broadcast_status()
-	update_appearance()
-
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
@@ -202,9 +155,11 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
+		update_icon()
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
+		update_icon()
 	return TRUE
 
 // mapping
@@ -213,13 +168,13 @@
 	piping_layer = 2
 	icon_state = "volpump_map-2"
 
-/obj/machinery/atmospherics/components/binary/volume_pump/layer2
-	piping_layer = 2
-	icon_state = "volpump_map-2"
+/obj/machinery/atmospherics/components/binary/volume_pump/layer4
+	piping_layer = 4
+	icon_state = "volpump_map-4"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = TRUE
-	icon_state = "volpump_on_map"
+	icon_state = "volpump_on_map-3"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer2
 	piping_layer = 2

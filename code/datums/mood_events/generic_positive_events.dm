@@ -211,6 +211,20 @@
 	mood_change = 2
 	timeout = 45 SECONDS
 
+/datum/mood_event/helped_up
+	description = "Helping them up felt good!"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(!other_person)
+		return
+
+	if(helper)
+		description = "Helping [other_person] up felt good!"
+	else
+		description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
+
 /datum/mood_event/high_ten
 	description = "AMAZING! A HIGH-TEN!"
 	mood_change = 3
@@ -296,10 +310,6 @@
 	mood_change = 2
 	timeout = 3 MINUTES
 
-/datum/mood_event/garland
-	description = "These flowers are rather soothing."
-	mood_change = 1
-
 /datum/mood_event/playing_cards/add_effects(param)
 	var/card_players = 1
 	for(var/mob/living/carbon/player in viewers(COMBAT_MESSAGE_RANGE, owner))
@@ -311,6 +321,10 @@
 
 	mood_change *= card_players
 	return ..()
+
+/datum/mood_event/garland
+	description = "These flowers are rather soothing."
+	mood_change = 1
 
 /datum/mood_event/russian_roulette_win
 	description = "I gambled my life and won! I'm lucky to be alive..."
@@ -340,7 +354,18 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/it_was_on_the_mouse
-	description = "Heh heh. \"It's on the mouse\". What a play on words."
-	mood_change = 1
-	timeout = 2 MINUTES
+/datum/mood_event/birthday
+	description = "It's my birthday!"
+	mood_change = 2
+	special_screen_obj = "birthday"
+	special_screen_replace = FALSE
+
+/datum/mood_event/basketball_score
+	description = "Swish! Nothing but net."
+	mood_change = 2
+	timeout = 5 MINUTES
+	
+/datum/mood_event/basketball_dunk
+	description = "Slam dunk! Boom, shakalaka!"
+	mood_change = 2
+	timeout = 5 MINUTES

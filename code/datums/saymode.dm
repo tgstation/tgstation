@@ -64,7 +64,7 @@
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/organ/internal/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/internal/vocal_cords/V = C.get_organ_slot(ORGAN_SLOT_VOICE)
 		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
@@ -108,5 +108,5 @@
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
 	if(!R || R.team != "mafia")
 		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"),"mafia")
+	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), "mafia")
 	return FALSE

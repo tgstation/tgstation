@@ -23,7 +23,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
-	faction = list("neutral", "silicon", "turret")
+	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
@@ -97,7 +97,6 @@
 	///The nearest beacon's location
 	var/turf/nearest_beacon_loc
 
-	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	var/datum/atom_hud/data/bot_path/path_hud
@@ -133,9 +132,7 @@
 	if(stat)
 		return FALSE
 	bot_mode_flags |= BOT_MODE_ON
-	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
+	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
 	balloon_alert(src, "turned on")
@@ -144,9 +141,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	bot_mode_flags &= ~BOT_MODE_ON
-	ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
 	balloon_alert(src, "turned off")
@@ -213,6 +208,8 @@
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
+	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
+		return FALSE
 
 	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
 
@@ -348,7 +345,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	unlock_with_id(user)
 
@@ -429,6 +426,11 @@
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai(0)
+
+	if(prob(70/severity))
+		var/datum/language_holder/bot_languages = get_language_holder()
+		bot_languages.selected_language = bot_languages.get_random_spoken_language()
+
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
@@ -751,7 +753,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(NB.location == next_destination) //Does the Beacon location text match the destination?
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
-			next_destination = NB.codes["next_patrol"] //Also get the name of the next beacon in line.
+			next_destination = NB.codes[NAVBEACON_PATROL_NEXT] //Also get the name of the next beacon in line.
 			return TRUE
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
@@ -762,7 +764,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
 				nearest_beacon = NB.location
 				nearest_beacon_loc = NB.loc
-				next_destination = NB.codes["next_patrol"]
+				next_destination = NB.codes[NAVBEACON_PATROL_NEXT]
 			else
 				continue
 		else if(dist > 1) //Begin the search, save this one for comparison on the next loop.
@@ -935,11 +937,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				ejectpai(usr)
 
 /mob/living/simple_animal/bot/update_icon_state()
-	icon_state = "[initial(icon_state)][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	return ..()
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	// 0 for access, 1 for denied.
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
@@ -1025,7 +1027,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		ejectpai(0)
 
 /mob/living/simple_animal/bot/sentience_act()
-	faction -= "silicon"
+	faction -= FACTION_SILICON
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()
@@ -1039,7 +1041,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
-	if(newpath)
+	if(length(newpath))
 		var/mutable_appearance/path_image = new /mutable_appearance()
 		path_image.icon = path_image_icon
 		path_image.icon_state = path_image_icon_state
@@ -1055,7 +1057,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				var/turf/prevT = path[i - 1]
 				var/image/prevI = path[prevT]
 				direction = get_dir(prevT, T)
-				if(i > 2)
+				if(i > 2 && prevI) // make sure we actually have an image to manipulate at index > 2
 					var/turf/prevprevT = path[i - 2]
 					var/prevDir = get_dir(prevprevT, prevT)
 					var/mixDir = direction|prevDir
@@ -1093,22 +1095,3 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
-
-/**
- * Randomizes our bot's language if:
- * - They are on the setation Z level
- * OR
- * - They are on the escape shuttle
- */
-/mob/living/simple_animal/bot/proc/randomize_language_if_on_station()
-	var/turf/bot_turf = get_turf(src)
-	var/area/bot_area = get_area(src)
-	if(!is_station_level(bot_turf.z) && !istype(bot_area, /area/shuttle/escape))
-		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with bots
-		// but docked at centcom, and I wanted those bots to also speak funny languages
-		return FALSE
-
-	/// The bot's language holder - so we can randomize and change their language
-	var/datum/language_holder/bot_languages = get_language_holder()
-	bot_languages.selected_language = bot_languages.get_random_spoken_uncommon_language()
-	return TRUE

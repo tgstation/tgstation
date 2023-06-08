@@ -176,7 +176,7 @@ Charged extracts:
 	if(isnull(racechoice))
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	human_user.set_species(choice_list[racechoice], icon_update=1)
 	human_user.visible_message(span_warning("[human_user] suddenly shifts form as [src] dissolves into [human_user.p_their()] skin!"))
@@ -266,7 +266,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message(span_notice("[src] produces a fully formed golem shell!"))
-	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(get_turf(src), /datum/species/golem, user)
 	..()
 
 /obj/item/slimecross/charged/rainbow

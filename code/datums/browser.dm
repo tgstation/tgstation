@@ -12,8 +12,6 @@
 	var/body_elements
 	var/head_content = ""
 	var/content = ""
-	var/static/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
-
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
 	user = nuser
@@ -61,6 +59,7 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
+	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	var/file
 	head_content += "<link rel='stylesheet' type='text/css' href='[common_asset.get_url_mappings()["common.css"]]'>"
 	for (file in stylesheets)
@@ -105,6 +104,7 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
 	if (stylesheets.len)
 		SSassets.transport.send_assets(user, stylesheets)
@@ -467,7 +467,7 @@
 	set hidden = TRUE // hide this verb from the user's panel
 	set name = ".windowclose" // no autocomplete on cmd line
 
-	if(atomref!="null") // if passed a real atomref
+	if(atomref != "null") // if passed a real atomref
 		var/hsrc = locate(atomref) // find the reffed atom
 		var/href = "close=1"
 		if(hsrc)

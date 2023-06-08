@@ -21,16 +21,27 @@
 			unset_ranged_ability(owner, disable_text)
 		else
 			set_ranged_ability(owner, enable_text)
+		build_all_button_icons(UPDATE_BUTTON_STATUS)
 		return TRUE
 
 	// We're not a click action (we're a toggle or otherwise)
 	else
-		if(active)
+		var/active_status = active
+		if(active_status)
 			Deactivate()
 		else
 			Activate()
 
+		if(active != active_status)
+			build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 	return TRUE
+
+/datum/action/innate/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	if(click_action)
+		return current_button.our_hud?.mymob?.click_intercept == src
+	else
+		return active
 
 /datum/action/innate/proc/Activate()
 	return

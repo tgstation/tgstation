@@ -5,7 +5,7 @@
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 20, ACID = 30) //Wheelchairs aren't super tough yo
+	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
@@ -16,6 +16,14 @@
 	var/foldabletype = /obj/item/wheelchair
 	///Bell attached to the wheelchair, if we have one.
 	var/obj/structure/desk_bell/bell_attached
+
+/datum/armor/ridden_wheelchair
+	melee = 10
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 20
+	acid = 30
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
 	. = ..()
@@ -37,7 +45,8 @@
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
+	if(!forced && !check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+		playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
@@ -79,8 +88,8 @@
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
-	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, FIRE = 30, ACID = 40)
-	custom_materials = list(/datum/material/gold = 10000)
+	armor_type = /datum/armor/wheelchair_gold
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
 	foldabletype = /obj/item/wheelchair/gold
 
 /obj/item/wheelchair
@@ -93,7 +102,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	custom_materials = list(/datum/material/iron = 10000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5)
 	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
@@ -107,14 +116,22 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
-	custom_materials = list(/datum/material/gold = 10000)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
+
+/datum/armor/wheelchair_gold
+	melee = 20
+	bullet = 20
+	laser = 20
+	bomb = 20
+	fire = 30
+	acid = 40
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.canUseTopic(src, be_close = TRUE))
+	if(!ishuman(usr) || !usr.can_perform_action(src))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE

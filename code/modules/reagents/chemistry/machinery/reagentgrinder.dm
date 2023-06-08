@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	anchored_tabletop_offset = 8
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
@@ -67,8 +68,8 @@
 /obj/machinery/reagentgrinder/RefreshParts()
 	. = ..()
 	speed = 1
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		speed = M.rating
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed = servo.tier
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
@@ -99,7 +100,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	if(operating)
 		return
@@ -173,14 +174,23 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
+		if(!I.contents.len)
+			to_chat(user, span_notice("[I] is empty!"))
+			return TRUE
+
 		var/list/inserted = list()
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
-			else
-				to_chat(user, span_notice("You fill [src] to the brim."))
+			inserted = list()
+		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+
+		if(!I.contents.len)
+			to_chat(user, span_notice("You empty [I] into [src]."))
+		else
+			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)
@@ -201,7 +211,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	var/list/options = list()
@@ -232,7 +242,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	switch(choice)
@@ -361,3 +371,5 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
+
+#undef MILK_TO_BUTTER_COEFF

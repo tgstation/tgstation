@@ -1,13 +1,14 @@
 /obj/item/airlock_painter
 	name = "airlock painter"
-	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob. Alt-Click to remove the ink cartridge."
+	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
+	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paint_sprayer"
 	inhand_icon_state = "paint_sprayer"
 	worn_icon_state = "painter"
 	w_class = WEIGHT_CLASS_SMALL
 
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
@@ -42,6 +43,12 @@
 	. = ..()
 	ink = new initial_ink_type(src)
 
+
+/obj/item/airlock_painter/Destroy(force)
+	QDEL_NULL(ink)
+	return ..()
+
+
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
 /obj/item/airlock_painter/proc/use_paint(mob/user)
@@ -66,7 +73,7 @@
 		return TRUE
 
 /obj/item/airlock_painter/suicide_act(mob/living/user)
-	var/obj/item/organ/internal/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -151,11 +158,12 @@
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
-	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to remove the ink cartridge."
+	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decal_sprayer"
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	initial_ink_type = /obj/item/toner/large
 	/// The current direction of the decal being printed
 	var/stored_dir = 2
@@ -374,7 +382,8 @@
 
 /obj/item/airlock_painter/decal/tile
 	name = "tile sprayer"
-	desc = "An airlock painter, reprogramed to use a different style of paint in order to spray colors on floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to change design."
+	desc = "An airlock painter, reprogramed to use a different style of paint in order to spray colors on floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon_state = "tile_sprayer"
 	stored_dir = 2
 	stored_color = "#D4D4D432"

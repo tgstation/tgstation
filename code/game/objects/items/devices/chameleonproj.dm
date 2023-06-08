@@ -40,6 +40,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!check_sprite(target))
 		return
 	if(active_dummy)//I now present you the blackli(f)st
@@ -144,6 +145,7 @@
 
 /obj/effect/dummy/chameleon/ex_act(S, T)
 	master.disrupt()
+	return TRUE
 
 /obj/effect/dummy/chameleon/bullet_act()
 	. = ..()

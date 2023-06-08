@@ -3,7 +3,10 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 	)
@@ -11,7 +14,7 @@
 		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
-	inherent_factions = list("plants", "vines")
+	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 
 	burnmod = 1.25
 	heatmod = 1.5
@@ -34,7 +37,19 @@
 
 	ass_image = 'icons/ass/asspodperson.png'
 
-/datum/species/pod/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/pod/on_species_gain(mob/living/carbon/new_podperson, datum/species/old_species, pref_load)
+	. = ..()
+	if(ishuman(new_podperson))
+		update_mail_goodies(new_podperson)
+
+/datum/species/pod/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/podperson
+		)
+	return ..()
+
+/datum/species/pod/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD)
 		return
 
@@ -42,30 +57,53 @@
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
-		H.adjust_nutrition(5 * light_amount * delta_time)
+		H.adjust_nutrition(5 * light_amount * seconds_per_tick)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
-			H.adjustToxLoss(-0.5 * delta_time)
-			H.adjustOxyLoss(-0.5 * delta_time)
+			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+			H.adjustToxLoss(-0.5 * seconds_per_tick)
+			H.adjustOxyLoss(-0.5 * seconds_per_tick)
 
 	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
 		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(1 * delta_time, 0)
+		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 	..()
 
-/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		H.adjustToxLoss(3 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
+	return ..()
 
+/datum/species/pod/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "lightbulb",
+		SPECIES_PERK_NAME = "Photosynthetic",
+		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
+		However, if you are LOW on nutrition, you will progressively take brute damage until you die or enter the light once more."
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "biohazard",
+		SPECIES_PERK_NAME = "Weedkiller Susceptability",
+		SPECIES_PERK_DESC = "Being a floral life form, you are susceptable to anti-florals and will take extra toxin damage from it!"
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "briefcase-medical",
+		SPECIES_PERK_NAME = "Semi-Complex Biology",
+		SPECIES_PERK_DESC = "Your biology is extremely complex, making ordinary health scanners unable to scan you. Make sure the doctor treating you either has a \
+		plant analyzer or a advanced health scanner!"
+	))
+
+	return to_add
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)
-
-/datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
-	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR)
-	organ.set_sprite(new_style)
-	human_mob.update_body_parts()

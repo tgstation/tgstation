@@ -6,7 +6,7 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
-	explosion_block = 1
+	explosive_resistance = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -16,8 +16,8 @@
 	flags_ricochet = RICOCHET_HARD
 
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
 	///bool on whether this wall can be chiselled into
@@ -42,9 +42,7 @@
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
-			underlay_appearance.icon = 'icons/turf/space.dmi'
-			underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
-			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
+			generate_space_underlay(underlay_appearance, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
@@ -103,21 +101,24 @@
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
 		dismantle_wall(1,1)
-		return
+		return TRUE
 
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			//SN src = null
 			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			dismantle_wall(prob(50), TRUE)
 		if(EXPLODE_LIGHT)
 			if (prob(hardness))
 				dismantle_wall(0,1)
+
 	if(!density)
-		..()
+		return ..()
+
+	return TRUE
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
@@ -190,15 +191,13 @@
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc //get user's location for delay checks
-
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
 		return
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
 		return FALSE
 
@@ -216,21 +215,21 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return TRUE
+			return TRUE
+		return FALSE
 	//Poster stuff
 	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
-		place_poster(W,user)
-		return TRUE
+		return place_poster(W,user)
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
@@ -266,7 +265,7 @@
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
-	if(explosion_block >= 2)
+	if(get_explosive_block() >= 2)
 		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
 	return ..()
 
@@ -277,12 +276,16 @@
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+		if(RCD_WALLFRAME)
+			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
+		if(RCD_WALLFRAME)
+			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE

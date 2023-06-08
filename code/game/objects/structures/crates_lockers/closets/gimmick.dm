@@ -14,7 +14,7 @@
 	name = "strange closet"
 	desc = "It looks alien!"
 	icon_state = "alien"
-
+	material_drop = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"

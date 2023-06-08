@@ -37,7 +37,7 @@
 			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
+			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader)
 			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			return FALSE
 		new_crusader = possible_crusader
@@ -128,7 +128,7 @@
 	var/obj/item/paper/autograph = writ_target
 	var/turf/tool_turf = get_turf(religious_tool)
 	writ_target = null
-	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
+	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the paper is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	autograph.visible_message(span_notice("Words magically form on [autograph]!"))

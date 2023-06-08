@@ -20,6 +20,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/greyscale_colors
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
+	///Starlight color of the material
+	///This is the color of light it'll emit if its turf is transparent and over space
+	var/starlight_color = COLOR_STARLIGHT
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
@@ -46,6 +49,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
+	///What type of debris the tile will leave behind when shattered.
+	var/obj/effect/decal/debris_type
 
 /** Handles initializing the material.
  *
@@ -92,8 +97,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
-	source.update_appearance()
-
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description
@@ -107,16 +110,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.modify_max_integrity(new_max_integrity)
 		o.force *= strength_modifier
 		o.throwforce *= strength_modifier
-
-		var/list/temp_armor_list = list() //Time to add armor modifiers!
-
-		if(!istype(o.armor))
-			return
-		var/list/current_armor = o.armor?.getList()
-
-		for(var/i in current_armor)
-			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
-		o.armor = getArmor(arglist(temp_armor_list))
+		o.set_armor(o.get_armor().generate_new_with_multipliers(armor_modifiers))
 
 	if(!isitem(o))
 		return
@@ -146,12 +140,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(turf_sound_override)
 			var/turf/open/O = T
 			O.footstep = turf_sound_override
-			O.barefootstep = turf_sound_override
-			O.clawfootstep = turf_sound_override
-			O.heavyfootstep = turf_sound_override
+			O.barefootstep = turf_sound_override + "barefoot"
+			O.clawfootstep = turf_sound_override + "claw"
+			O.heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
+		setup_glow(T)
 	return
+
+/datum/material/proc/setup_glow(turf/on)
+	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
+		return
+	// We assume no parallax means no space means no light
+	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
+		return
+	on.set_light(2, 0.75, starlight_color)
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)

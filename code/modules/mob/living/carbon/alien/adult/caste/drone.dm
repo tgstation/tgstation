@@ -11,9 +11,9 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/drone/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
+	organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	organs += new /obj/item/organ/internal/alien/resinspinner
+	organs += new /obj/item/organ/internal/alien/acid
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_praetorian
@@ -34,7 +34,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
-	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/internal/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/internal/alien/hivenode)
 	// Players are Murphy's Law. We may not expect
 	// there to ever be a living xeno with no hivenode,
 	// but they _WILL_ make it happen.

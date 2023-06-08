@@ -29,7 +29,7 @@
 		return
 	return FALSE
 
-/datum/computer_file/program/radar/kill_program(forced = FALSE)
+/datum/computer_file/program/radar/kill_program()
 	objects = list()
 	selected = null
 	STOP_PROCESSING(SSfastprocess, src)
@@ -45,7 +45,7 @@
 	)
 
 /datum/computer_file/program/radar/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["selected"] = selected
 	data["objects"] = list()
 	data["scanning"] = (world.time < next_scan)
@@ -62,11 +62,7 @@
 		data["target"] = trackinfo
 	return data
 
-/datum/computer_file/program/radar/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/datum/computer_file/program/radar/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("selecttarget")
 			selected = params["ref"]
@@ -197,7 +193,7 @@
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
-/datum/computer_file/program/radar/process_tick(delta_time)
+/datum/computer_file/program/radar/process_tick(seconds_per_tick)
 	if(computer.active_program == src)
 		START_PROCESSING(SSfastprocess, src)
 
@@ -317,7 +313,7 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
-/datum/computer_file/program/radar/fission360/kill_program(forced)
+/datum/computer_file/program/radar/fission360/kill_program()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	return ..()
 
