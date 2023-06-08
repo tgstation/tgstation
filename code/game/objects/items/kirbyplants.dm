@@ -3,7 +3,6 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
-	base_icon_state = "plant-01"
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -26,10 +25,6 @@
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 	AddElement(/datum/element/beauty, 500)
 
-/obj/item/kirbyplants/update_icon_state()
-	. = ..()
-	icon_state = dead ? "plant-25" : base_icon_state
-
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
@@ -42,6 +37,11 @@
 		if(do_after(user,3 SECONDS,target=src))
 			qdel(I)
 			dead = FALSE
+			var/obj/item/kirbyplants/ref_plant = new
+			name = initial(ref_plant.name)
+			desc = initial(ref_plant.desc)
+			icon_state = initial(ref_plant.icon_state)
+			trimmable = initial(ref_plant.trimmable)
 			update_appearance(UPDATE_ICON)
 
 /// Cycle basic plant visuals
