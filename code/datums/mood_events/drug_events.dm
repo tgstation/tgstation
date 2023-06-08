@@ -9,6 +9,7 @@
 /datum/mood_event/maintenance_high
 	mood_change = 6
 	description = "I'm on top of the world, baby! Tide worldwide!"
+	timeout = 2 MINUTES
 
 /datum/mood_event/maintenance_high/add_effects(param)
 	var/value = rand(-1, 6) // chance for it to suck

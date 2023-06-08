@@ -368,6 +368,11 @@
 	name = "Maintenance Drugs"
 	chemical_flags = NONE
 
+/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/pumper)
+	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		pumper.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		metabolization_rate *= 0.8
+
 /datum/reagent/drug/maint/powder
 	name = "Maintenance Powder"
 	description = "An unknown powder that you most likely gotten from an assistant, a bored chemist... or cooked yourself. It is a refined form of tar that enhances your mental ability, making you learn stuff a lot faster."
