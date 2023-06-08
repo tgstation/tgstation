@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "pixel offsets from grabbing other mobs now respect the body offset variables."
+  - refactor: "Changed some code so that resized mobs no longer look like they're poking over the below tile with their legs or not even reaching the bottom edge of the tile they're on."
