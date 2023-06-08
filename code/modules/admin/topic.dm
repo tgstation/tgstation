@@ -1122,6 +1122,15 @@
 			return
 		M.mind_initialize()
 
+	else if(href_list["player_ticket_history"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/target_ckey = href_list["player_ticket_history"]
+		GLOB.player_ticket_history.cache_history_for_ckey(target_ckey)
+		GLOB.player_ticket_history.user_selections[usr.ckey] = target_ckey
+		GLOB.player_ticket_history.ui_interact(usr)
+		return
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
