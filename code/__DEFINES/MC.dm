@@ -38,6 +38,19 @@
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
 
+//! Defines relating to fuckshit profile dumping, set bounds on when and how often to emergency profile
+
+/// Minimum time drift in deciseconds after which we will dump a profile
+/// Set high to ensure this only happens when we're near round crashing levels
+#define DRIFT_DUMP_THRESHOLD 4 SECONDS
+
+/// How long to wait between tickdrift sourced profile dumps (real time)
+#define DRIFT_PROFILE_DELAY 15 SECONDS
+
+/// How long to wait between sleep failure (IE: a sleeping proc eat all our cpu so we can't do anything)
+/// sourced profile dumps (real time)
+#define SLEEP_PROFILE_DELAY 30 SECONDS
+
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
 /// subsystem does not initialize.

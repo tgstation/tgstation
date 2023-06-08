@@ -21,13 +21,20 @@ SUBSYSTEM_DEF(profiler)
 		StopProfiling() //Stop the early start profiler
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/profiler/fire()
+/datum/controller/subsystem/profiler/OnConfigLoad()
 	if(CONFIG_GET(flag/auto_profile))
-		DumpFile()
+		StartProfiling()
+		can_fire = TRUE
+	else
+		StopProfiling()
+		can_fire = FALSE
+
+/datum/controller/subsystem/profiler/fire()
+	DumpFile()
 
 /datum/controller/subsystem/profiler/Shutdown()
 	if(CONFIG_GET(flag/auto_profile))
-		DumpFile()
+		DumpFile(allow_yield = FALSE)
 		world.Profile(PROFILE_CLEAR, type = "sendmaps")
 	return ..()
 
@@ -39,13 +46,13 @@ SUBSYSTEM_DEF(profiler)
 	world.Profile(PROFILE_STOP)
 	world.Profile(PROFILE_STOP, type = "sendmaps")
 
-
-/datum/controller/subsystem/profiler/proc/DumpFile()
+/datum/controller/subsystem/profiler/proc/DumpFile(allow_yield = TRUE)
 	var/timer = TICK_USAGE_REAL
 	var/current_profile_data = world.Profile(PROFILE_REFRESH, format = "json")
 	var/current_sendmaps_data = world.Profile(PROFILE_REFRESH, type = "sendmaps", format="json")
 	fetch_cost = MC_AVERAGE(fetch_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-	CHECK_TICK
+	if(allow_yield)
+		CHECK_TICK
 
 	if(!length(current_profile_data)) //Would be nice to have explicit proc to check this
 		stack_trace("Warning, profiling stopped manually before dump.")
