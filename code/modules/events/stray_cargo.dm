@@ -102,7 +102,7 @@
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
-	announce_to_ghosts(landing_marker)
+	announce_to_ghosts(landing_zone)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
