@@ -177,6 +177,6 @@
 		if(radio)
 			radio.screwdriver_act(user, tool)
 		else
-			to_chat(user, span_warning("Unable to locate a radio!"))
+			balloon_alert(user, "Unable to locate a radio!")
 			
 	return TOOL_ACT_TOOLTYPE_SUCCESS
