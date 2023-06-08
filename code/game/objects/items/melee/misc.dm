@@ -314,6 +314,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	worn_icon_state = "dadbeltworn"
+	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
+	
+/obj/item/melee/curator_whip/dadbelt/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
 	. = ..()
