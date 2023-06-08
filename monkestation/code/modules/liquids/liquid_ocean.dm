@@ -58,6 +58,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	planetary_atmos = TRUE
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 100)
 	var/ocean_temp = T20C - 150
@@ -205,6 +206,7 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon = 'goon/icons/turf/ocean.dmi'
 	icon_state = "sand"
 	var/scroll_state = "scroll"
+	var/moving = FALSE
 
 
 /turf/open/floor/plating/ocean/false_movement/Initialize()
@@ -219,11 +221,20 @@ GLOBAL_LIST_INIT(the_lever, list())
 	. = ..()
 	GLOB.scrollable_turfs -= src
 
+
+/turf/open/floor/plating/ocean/false_movement/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(moving)
+		if(!HAS_TRAIT(arrived, TRAIT_HYPERSPACED) && !HAS_TRAIT(arrived, TRAIT_FREE_HYPERSPACE_MOVEMENT))
+			arrived.AddComponent(/datum/component/shuttle_cling/water, dir, old_loc)
+
 /turf/open/floor/plating/ocean/false_movement/proc/set_scroll(is_scrolling)
 	if(is_scrolling)
 		icon_state = "sand_[scroll_state]"
+		moving = TRUE
 	else
 		icon_state = "sand"
+		moving = FALSE
 
 
 /obj/machinery/movement_lever
@@ -270,3 +281,6 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon_state = "lever[lever_on]"
 	if(lever_locked)
 		icon_state = "[icon_state]-locked"
+
+/datum/component/shuttle_cling/water
+	hyperspace_type = /turf/open/floor/plating/ocean/false_movement

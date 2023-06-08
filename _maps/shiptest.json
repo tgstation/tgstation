@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"map_name": "Shiptest Station",
+	"map_path": "map_files/debug",
+	"map_file": "shiptest.dmm",
+	"minetype": "none",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"planetary": 1,
+	"shuttles": {
+		"cargo": "cargo_delta"
+	},
+	"traits": [
+		{
+			"Linkage": null,
+			"Gravity": true,
+			"Baseturf": "/turf/open/floor/plating/ocean/false_movement",
+			"No Parallax": true
+		}
+	]
+}
