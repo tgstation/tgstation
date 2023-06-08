@@ -452,7 +452,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if(newdrift - olddrift >= DRIFT_DUMP_THRESHOLD)
 			AttemptProfileDump(DRIFT_PROFILE_DELAY)
 		olddrift = newdrift
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, new_drift))
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
 
 		if (init_stage != init_stage_completed)
