@@ -37,12 +37,11 @@
 		if(do_after(user,3 SECONDS,target=src))
 			qdel(I)
 			dead = FALSE
-			var/obj/item/kirbyplants/ref_plant = new
+			var/obj/item/kirbyplants/ref_plant = /obj/item/kirbyplants
 			name = initial(ref_plant.name)
 			desc = initial(ref_plant.desc)
 			icon_state = initial(ref_plant.icon_state)
 			trimmable = initial(ref_plant.trimmable)
-			qdel(ref_plant)
 			update_appearance(UPDATE_ICON)
 
 /// Cycle basic plant visuals
