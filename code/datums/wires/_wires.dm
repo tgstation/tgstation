@@ -64,7 +64,12 @@
 
 /datum/wires/Destroy()
 	holder = null
-	assemblies = list()
+	//properly clear refs to avoid harddels & other problems
+	for(var/color in assemblies)
+		var/obj/item/assembly/assembly = assemblies[color]
+		assembly.holder = null
+		assembly.connected = null
+	LAZYCLEARLIST(assemblies)
 	return ..()
 
 /datum/wires/proc/add_duds(duds)

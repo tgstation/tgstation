@@ -1112,6 +1112,15 @@
 		power -= power * 0.0005
 	return ..()
 
+/obj/machinery/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	/**
+	 * someone attached a signaler to the machines wires
+	 * move it to the machines component parts so it does't get moved out in dump_inventory_contents() which get's called a lot
+	 */
+	if(istype(arrived, /obj/item/assembly))
+		component_parts += arrived
+
 /obj/machinery/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == occupant)
