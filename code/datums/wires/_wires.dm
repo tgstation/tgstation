@@ -188,6 +188,14 @@
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
 		S.forceMove(holder)
+		/**
+		 * special snowflake check for machines
+		 * someone attached a signaler to the machines wires
+		 * move it to the machines component parts so it does't get moved out in dump_inventory_contents() which get's called a lot
+		 */
+		if(istype(holder, /obj/machinery))
+			var/obj/machinery/machine = holder
+			LAZYADD(machine.component_parts, S)
 		S.connected = src
 		S.on_attach() // Notify assembly that it is attached
 		return S
