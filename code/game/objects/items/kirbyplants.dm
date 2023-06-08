@@ -40,8 +40,10 @@
 			var/obj/item/kirbyplants/ref_plant = /obj/item/kirbyplants
 			name = initial(ref_plant.name)
 			desc = initial(ref_plant.desc)
-			icon_state = initial(ref_plant.icon_state)
 			trimmable = initial(ref_plant.trimmable)
+			if(!random_plant_states)
+				generate_states()
+			icon_state = pick(random_plant_states)
 			update_appearance(UPDATE_ICON)
 
 /// Cycle basic plant visuals
