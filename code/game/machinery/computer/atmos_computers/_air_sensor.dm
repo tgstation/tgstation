@@ -6,8 +6,7 @@
 	icon_state = "gsensor1"
 	resistance_flags = FIRE_PROOF
 	power_channel = AREA_USAGE_ENVIRON
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
-	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
 	var/on = TRUE
 
 	/// The unique string that represents which atmos chamber to associate with.
