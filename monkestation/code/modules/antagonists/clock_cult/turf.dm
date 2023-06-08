@@ -48,8 +48,8 @@
 /turf/open/indestructible/reebe_void/spawning/lattices/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		if(prob(95))
-			new /obj/structure/lattice(src)
+		if(prob(40))
+			new /obj/structure/lattice/clockwork(src)
 
 /turf/open/indestructible/reebe_flooring //used on reebe
 	name = "clockwork floor"
@@ -57,6 +57,10 @@
 	icon_state = "clockwork_floor"
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/indestructible/reebe_flooring
+	turf_flags = NOJAUNT
+
+/turf/open/indestructible/reebe_flooring/ratvar_act()
+	return FALSE
 
 /turf/open/indestructible/reebe_flooring/flat
 	icon_state = "reebe"
@@ -75,6 +79,7 @@
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
+	turf_flags = NOJAUNT
 	hardness = 3 //very hard for hulks to break
 	//for deconstruction
 	var/d_state = INTACT
@@ -90,7 +95,7 @@
 /turf/closed/wall/clockwork/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
-			return span_notice(IS_CLOCK(user) ? "You see a way to unwind the gears with a <i>wrench</i>." : "You have no idea how this works! \
+			return IS_CLOCK(user) ? span_notice("You see a way to unwind the gears with a <i>wrench</i>.") : span_notice("You have no idea how this works! \
 																											 You think you see a small cog that could be <i>cut</i> loose.")
 		if(COVER_COG_REMOVED)
 			return span_notice("The outer cog has been <i>cut</i> loose, and some inner transmission cogs secured by <b>screws</b> are visable.")
@@ -104,7 +109,6 @@
 			return span_notice("The gears have been unwound with a <i>wrench</i>. You could take the rest apart with a <i>crowbar</i>.")
 
 /turf/closed/wall/clockwork/try_decon(obj/item/item_tool, mob/user)
-	. = ..()
 	switch(d_state)
 		if(INTACT)
 			if(IS_CLOCK(user) && item_tool.tool_behaviour == TOOL_WRENCH)
@@ -185,5 +189,124 @@
 		to_chat(user, span_notice("[sent_message]"))
 		return TRUE
 
-/turf/closed/wall/clockwork/reebe //for mapping on reebe
+/turf/closed/wall/clockwork/ratvar_act()
+	return FALSE
+
+/turf/closed/wall/clockwork/reebe //for mapping on reebe, should make this instead just use the on_reebe() check at some point
 	baseturfs = /turf/open/indestructible/reebe_flooring
+
+/obj/structure/lattice/clockwork
+	name = "cog lattice"
+	desc = "A lightweight support lattice. These hold the Justicar's station together."
+	icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork.dmi'
+	icon_state = "lattice_clockwork-0"
+	base_icon_state = "lattice_clockwork"
+	smoothing_groups = SMOOTH_GROUP_LATTICE
+	canSmoothWith = SMOOTH_GROUP_LATTICE
+
+/obj/structure/lattice/clockwork/Initialize(mapload)
+	. = ..()
+	ratvar_act()
+	if(on_reebe(src))
+		resistance_flags |= INDESTRUCTIBLE
+
+/obj/structure/lattice/clockwork/ratvar_act()
+	if(ISODD(x+y)) //this check looks to be broken
+		icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+		return TRUE
+
+/obj/structure/lattice/catwalk/clockwork
+	name = "clockwork catwalk"
+	icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
+	icon_state = "catwalk_clockwork-0"
+	base_icon_state = "catwalk_clockwork"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_CATWALK + SMOOTH_GROUP_OPEN_FLOOR
+	canSmoothWith = SMOOTH_GROUP_CATWALK
+
+/obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
+	. = ..()
+	ratvar_act()
+	if(!mapload)
+		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
+	if(on_reebe(src))
+		resistance_flags |= INDESTRUCTIBLE
+
+/obj/structure/lattice/catwalk/clockwork/ratvar_act()
+	if(ISODD(x+y))
+		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE
+
+/obj/structure/window/reinforced/clockwork
+	name = "brass window"
+	desc = "A paper-thin pane of translucent yet reinforced brass."
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon_state = "clockwork_window_single"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	max_integrity = 80
+	explosion_block = 2
+	decon_speed = 40
+	glass_type = /obj/item/stack/sheet/bronze
+	glass_amount = 1
+
+/obj/structure/window/reinforced/clockwork/attackby_secondary(obj/item/tool, mob/user, params)
+	if(state == RWINDOW_SECURE)
+		if(tool.tool_behaviour == TOOL_WIRECUTTER)
+			user.visible_message(span_notice("[user] starts cutting the pane of \the [src] away..."),
+								 span_notice("You start cutting away the pane of \the [src]."))
+			if(tool.use_tool(src, user, 20, volume = 50))
+				state = RWINDOW_BARS_CUT
+				to_chat(user, span_notice("The window pane falls out of the way exposing the frame bolts."))
+	return ..()
+
+/obj/structure/window/reinforced/clockwork/examine(mob/user)
+	. = ..()
+	if(IS_CLOCK(user))
+		if(state == RWINDOW_SECURE)
+			. += span_brass("You see a way to <b>cut</b> the window pane away.")
+
+/obj/structure/window/reinforced/clockwork/narsie_act()
+	take_damage(rand(25, 75), BRUTE)
+	if(!QDELETED(src))
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
+
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	return FALSE
+
+/obj/structure/window/reinforced/clockwork/unanchored
+	anchored = FALSE
+
+/obj/structure/window/reinforced/clockwork/fulltile
+	icon_state = "clockwork_window-0"
+	base_icon_state = "clockwork_window"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE + SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
+	max_integrity = 110
+	glass_amount = 2
+
+/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+	new /obj/effect/temp_visual/ratvar/window(get_turf(src))
+	return ..()
+
+/obj/structure/window/reinforced/clockwork/fulltile/unanchored
+	anchored = FALSE

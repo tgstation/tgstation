@@ -193,16 +193,25 @@
 					construction_state = MECHA_LOCKED
 					to_chat(usr, span_notice("The securing bolts are now hidden."))
 			if("drop_cell")
+				if((mecha_flags & NOT_ABLE_TO_REMOVE_STOCK_PARTS)) //monkestation edit
+					to_chat(usr, span_warning("You cant figure out how to remove this!")) //monkestation edit
+					return //monkestation edit
 				if(construction_state != MECHA_OPEN_HATCH)
 					return
 				usr.put_in_hands(cell)
 				cell = null
 			if("drop_scanning")
+				if((mecha_flags & NOT_ABLE_TO_REMOVE_STOCK_PARTS)) //monkestation edit
+					to_chat(usr, span_warning("You cant figure out how to remove this!")) //monkestation edit
+					return //monkestation edit
 				if(construction_state != MECHA_OPEN_HATCH)
 					return
 				usr.put_in_hands(scanmod)
 				scanmod = null
 			if("drop_capacitor")
+				if((mecha_flags & NOT_ABLE_TO_REMOVE_STOCK_PARTS)) //monkestation edit
+					to_chat(usr, span_warning("You cant figure out how to remove this!")) //monkestation edit
+					return //monkestation edit
 				if(construction_state != MECHA_OPEN_HATCH)
 					return
 				usr.put_in_hands(capacitor)

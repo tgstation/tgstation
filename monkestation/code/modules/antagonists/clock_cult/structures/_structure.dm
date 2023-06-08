@@ -20,9 +20,8 @@
 	var/datum/mind/owner = null
 	///Shown to servants when they examine
 	var/clockwork_desc = ""
-	///icon for when this structure is unanchored, doubles as the var for if it can be unanchored
-	var/unanchored_icon
-
+	///can this structure be rotated with a crowbar
+	var/can_rotate = TRUE
 
 /obj/structure/destructible/clockwork/Initialize(mapload)
 	. = ..()
@@ -43,7 +42,7 @@
 
 
 /obj/structure/destructible/clockwork/crowbar_act(mob/living/user, obj/item/tool)
-	if(IS_CLOCK(user))
+	if(IS_CLOCK(user) && can_rotate)
 		setDir(turn(dir, 90))
 		balloon_alert(user, "rotated [dir2text(dir)]")
 

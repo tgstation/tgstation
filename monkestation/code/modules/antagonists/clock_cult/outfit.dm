@@ -22,7 +22,7 @@
 
 	suit = /obj/item/clothing/suit/clockwork
 	head = /obj/item/clothing/head/helmet/clockwork
-	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor/no_damage
+	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	l_hand = /obj/item/clockwork/weapon/brass_battlehammer
 
 /datum/outfit/clock/archer
@@ -30,7 +30,7 @@
 
 	suit = /obj/item/clothing/suit/clockwork/speed
 	head = /obj/item/clothing/head/helmet/clockwork
-	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor/no_damage
+	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	l_hand = /obj/item/gun/ballistic/bow/clockwork
 
 /datum/outfit/clock/support
@@ -38,7 +38,7 @@
 
 	suit = /obj/item/clothing/suit/clockwork
 	head = /obj/item/clothing/head/helmet/clockwork
-	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor/no_damage
+	glasses = /obj/item/clothing/glasses/clockwork/judicial_visor
 	belt = /obj/item/storage/belt/utility/clock
 	l_hand = /obj/item/clockwork/weapon/brass_sword
 	r_hand = /obj/item/clockwork/replica_fabricator

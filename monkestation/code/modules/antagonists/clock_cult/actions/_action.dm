@@ -58,3 +58,8 @@
 /datum/action/item_action/toggle/clock
 	button_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
+
+/datum/action/cooldown/eminence
+	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
+	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon_state = "bg_clock"

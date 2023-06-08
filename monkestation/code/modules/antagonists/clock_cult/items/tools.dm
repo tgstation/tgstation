@@ -57,4 +57,13 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/multitool(src)
 
+/obj/item/storage/belt/utility/clock/drone/PopulateContents()
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/clockwork/replica_fabricator(src)
+	new /obj/item/clockwork/clockwork_slab(src)
+
 #undef BRASS_TOOLSPEED_MOD

@@ -25,6 +25,8 @@
 /obj/machinery/door/airlock/bronze/clock/isElectrified()
 	return FALSE
 
+/obj/machinery/door/airlock/bronze/clock/ratvar_act()
+	return FALSE
 
 /obj/machinery/door/airlock/bronze/clock/hasPower()
 	return TRUE

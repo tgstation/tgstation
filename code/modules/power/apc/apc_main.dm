@@ -602,9 +602,9 @@
 			chargecount = 0
 
 		// MONKESTATION ADDITION START - CLOCK CULT
-		if(integration_cog)
-			var/power_delta = clamp(cell.charge - 50, 0, 50)
-			GLOB.clock_power = min(round(GLOB.clock_power + (power_delta / 2.5)) , GLOB.max_clock_power) // Will continue to siphon even if full just so the APCs aren't completely silent about having an issue (since power will regularly be full)
+		if(integration_cog && GLOB.clock_power < GLOB.max_clock_power)
+			var/power_delta = clamp(cell.charge - 10, 0, 10)
+			GLOB.clock_power = min(round(GLOB.clock_power + (power_delta)) , GLOB.max_clock_power)
 			cell.charge -= power_delta
 		// MONKESTATION ADDITION END
 

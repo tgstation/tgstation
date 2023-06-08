@@ -35,4 +35,5 @@
 /datum/element/clockwork_description/proc/add_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	examine_texts += span_brass(text_to_add)
+	if(IS_CLOCK(user) || isobserver(user))
+		examine_texts += span_brass(text_to_add)

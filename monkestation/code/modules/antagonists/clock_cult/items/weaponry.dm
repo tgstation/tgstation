@@ -159,7 +159,7 @@
 	/// Time between bolt recharges
 	var/recharge_time = 1.5 SECONDS
 	/// Typecache of valid turfs to have the weapon's special effect on
-	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze))
+	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
 /obj/item/gun/ballistic/bow/clockwork/Initialize(mapload)
 	. = ..()

@@ -44,11 +44,12 @@
 		GLOB.clock_installed_cogs++
 		GLOB.max_clock_power += MAX_POWER_PER_COG
 		cogger_apc.clock_cog_rewarded = TRUE
-		send_clock_message(null, span_brass(span_bold("[user] has installed an integration cog into [cogger_apc].")), msg_ghosts = FALSE)
-		notify_ghosts("[user] has installed an integration cog into [cogger_apc]", source = user, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Integration cog")
+		send_clock_message(null, span_brass(span_bold("[user] has installed an integration cog into [cogger_apc].")), msg_ghosts = TRUE)
 		//Update the cog counts
 		for(var/obj/item/clockwork/clockwork_slab/slab as anything in GLOB.clockwork_slabs)
 			slab.cogs++
+		if(GLOB.current_eminence)
+			GLOB.current_eminence.cogs++
 
 
 /obj/machinery/power/apc
@@ -67,7 +68,7 @@
 	. = ..()
 	if(isliving(user))
 		var/mob/living/living_user = user
-		if(integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE)))
+		if(panel_open && integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE)))
 			. += span_brass("A small cogwheel is inside of it.")
 
 

@@ -37,9 +37,11 @@
 	send_clock_message(user, message)
 
 /// Send `sent_message` to all other clock cultists and ghosts from the user
-/proc/send_clock_message(mob/living/user, sent_message, span = "<span class='brass'>", msg_ghosts = TRUE)
+/proc/send_clock_message(mob/living/user, sent_message, span = "<span class='brass'>", msg_ghosts = TRUE, sent_sound) //todo refactor to use span() procs
 	var/final_message = ""
-	if(user)
+	if(user && istype(user, /mob/living/eminence))
+		final_message = span + span_bigbrass("<i><b>Master Eminence<b> transmits, \"") + sent_message + span_bigbrass("\"</i></span>")
+	else if(user)
 		final_message = span + "<i><b>Clock[user.gender == FEMALE ? "sister" : "brother"] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]</b> transmits, \"" + sent_message + "\"</i></span>"
 	else
 		final_message = span + sent_message + "</span>"
@@ -48,6 +50,8 @@
 
 		if(IS_CLOCK(player_mob))
 			to_chat(player_mob, final_message)
+			if(sent_sound)
+				SEND_SOUND(player_mob, sent_sound)
 
 		else if(player_mob in GLOB.dead_mob_list)
 			if(!msg_ghosts)
