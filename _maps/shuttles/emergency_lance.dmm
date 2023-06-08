@@ -136,6 +136,17 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
+"dY" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/rack,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/ointment{
+	pixel_x = 5
+	},
+/obj/item/stack/medical/bone_gel,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
 "eD" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
@@ -438,10 +449,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"nj" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "nS" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -586,13 +593,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"sF" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "tk" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
@@ -677,13 +677,6 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/shuttle/escape)
-"vY" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "wp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -869,6 +862,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"Dd" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Dg" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -920,6 +917,13 @@
 	dir = 5
 	},
 /area/shuttle/escape)
+"FA" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "FX" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/surgery{
@@ -989,6 +993,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/checker,
+/area/shuttle/escape)
+"Hp" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Hq" = (
 /obj/machinery/door/airlock/grunge{
@@ -1382,27 +1393,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"Rl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/energy/e_gun/mini{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun/mini,
-/obj/item/gun/energy/e_gun/mini{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/machinery/door/window/survival_pod{
-	dir = 4;
-	name = "Emergency Weapons";
-	req_access = list("command")
-	},
-/obj/structure/rack,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape)
 "RO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
@@ -1522,17 +1512,6 @@
 	dir = 1
 	},
 /area/shuttle/escape)
-"Wg" = (
-/obj/effect/turf_decal/bot_white,
-/obj/structure/rack,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment{
-	pixel_x = 5
-	},
-/obj/item/stack/medical/bone_gel/four,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape)
 "WI" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron,
@@ -1618,6 +1597,27 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"YN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/e_gun/mini,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/door/window/survival_pod{
+	dir = 4;
+	name = "Emergency Weapons";
+	req_access = list("command")
+	},
+/obj/structure/rack,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape)
 "ZE" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Bridge Hall"
@@ -1730,7 +1730,7 @@ vf
 MZ
 Lj
 Gw
-Rl
+YN
 mx
 WQ
 nS
@@ -1777,7 +1777,7 @@ uX
 uX
 uX
 ne
-vY
+Hp
 fz
 pb
 If
@@ -1829,7 +1829,7 @@ uX
 uX
 uX
 ne
-vY
+Hp
 cC
 oe
 Yt
@@ -1881,7 +1881,7 @@ uX
 uX
 uX
 ne
-vY
+Hp
 QL
 kt
 LA
@@ -2064,7 +2064,7 @@ qH
 bV
 WQ
 WQ
-Wg
+dY
 kN
 So
 iy
@@ -2354,7 +2354,7 @@ WQ
 HV
 WQ
 iz
-nj
+Dd
 kz
 yB
 Ao
@@ -2401,12 +2401,12 @@ uX
 uX
 uX
 ne
-vY
+Hp
 vm
 rr
 WQ
 Oy
-sF
+FA
 Dx
 YM
 JS
@@ -2453,7 +2453,7 @@ uX
 uX
 uX
 ne
-vY
+Hp
 zh
 WO
 WQ
@@ -2505,7 +2505,7 @@ uX
 uX
 uX
 ne
-vY
+Hp
 Gr
 Qu
 sp
