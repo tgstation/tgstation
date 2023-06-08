@@ -8207,7 +8207,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/west,
+/obj/machinery/door/window/right/directional/west{
+	req_access = list("security");
+	name = "Security Delivery Chute"
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/security/office)
@@ -12506,7 +12509,8 @@
 	},
 /obj/machinery/door/window/elevator/left/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "tram_perma_lift"
+	elevator_linked_id = "tram_perma_lift";
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -25070,6 +25074,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"hNY" = (
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/openspace,
+/area/station/security/brig)
 "hOd" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -28161,7 +28169,8 @@
 	},
 /obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_perma_lift";
-	elevator_mode = 1
+	elevator_mode = 1;
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -61806,7 +61815,8 @@
 	},
 /obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_perma_lift";
-	elevator_mode = 1
+	elevator_mode = 1;
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -65719,7 +65729,8 @@
 	},
 /obj/machinery/door/window/elevator/left/directional/south{
 	elevator_mode = 1;
-	elevator_linked_id = "tram_perma_lift"
+	elevator_linked_id = "tram_perma_lift";
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -70411,9 +70422,9 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance Hatch"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
 "ygY" = (
@@ -156126,7 +156137,7 @@ rLf
 dUj
 mjF
 tfp
-nca
+hNY
 nca
 nca
 neC
