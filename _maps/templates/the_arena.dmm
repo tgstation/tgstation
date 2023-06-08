@@ -28,9 +28,9 @@
 /turf/open/water,
 /area/shuttle/shuttle_arena)
 "ct" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "dz" = (
@@ -50,7 +50,7 @@
 	icon_state = "gib5-old";
 	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "hl" = (
@@ -76,7 +76,7 @@
 /area/shuttle/shuttle_arena)
 "jC" = (
 /obj/effect/gibspawner/human,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "kQ" = (
@@ -124,7 +124,7 @@
 /area/shuttle/shuttle_arena)
 "uk" = (
 /obj/effect/landmark/shuttle_arena_entrance,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "xA" = (
@@ -135,13 +135,13 @@
 /turf/template_noop,
 /area/template_noop)
 "zc" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "zH" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/effect/landmark/shuttle_arena_entrance,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "DP" = (
@@ -186,8 +186,8 @@
 /area/shuttle/shuttle_arena)
 "Ir" = (
 /obj/effect/landmark/shuttle_arena_entrance,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "IJ" = (
@@ -197,8 +197,8 @@
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "IT" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Kb" = (
@@ -219,7 +219,7 @@
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "LY" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "Mm" = (
@@ -238,12 +238,12 @@
 /area/shuttle/shuttle_arena)
 "PR" = (
 /obj/structure/stone_tile/slab,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/shuttle_arena)
 "Qv" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/shuttle/shuttle_arena)
 "QZ" = (
