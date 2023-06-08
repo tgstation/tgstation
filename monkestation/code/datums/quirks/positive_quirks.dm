@@ -58,6 +58,10 @@
 	. = ..()
 	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
+/datum/quirk/fluffy_tongue/remove()
+	. = ..()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_SAY)
+
 /datum/quirk/fluffy_tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
