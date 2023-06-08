@@ -1306,7 +1306,8 @@
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("adv_biotech", "cyber_organs")
 	design_ids = list(
-		"cybernetic_ears_u",
+		// "cybernetic_ears_u",
+		"cybernetic_ears_translation",
 		"cybernetic_heart_tier3",
 		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
@@ -1369,6 +1370,7 @@
 		"ci-thermals",
 		"ci-thrusters",
 		"ci-xray",
+		"cybernetic_ears_bangproof",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

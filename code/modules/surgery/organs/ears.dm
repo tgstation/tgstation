@@ -106,11 +106,35 @@
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/internal/ears/cybernetic/upgraded
-	name = "upgraded cybernetic ears"
+// /obj/item/organ/internal/ears/cybernetic/upgraded
+// 	name = "upgraded cybernetic ears"
+// 	icon_state = "ears-c-u"
+// 	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
+// 	damage_multiplier = 0.5
+
+/obj/item/organ/internal/ears/cybernetic/translation
+	name = "cybernetic translation ears"
 	icon_state = "ears-c-u"
-	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
+	desc = "Allows the user to understand some commonly spoken languages. Grants no ability to speak these languages."
 	damage_multiplier = 0.5
+	var/list/language_list = list(/datum/language/moffic, /datum/language/draconic, /datum/language/calcic, /datum/language/voltaic, /datum/language/nekomimetic)
+
+/obj/item/organ/internal/ears/cybernetic/translation/on_insert(mob/living/carbon/ear_owner)
+	. = ..()
+	for(var/language in language_list)
+		ear_owner.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
+
+/obj/item/organ/internal/ears/cybernetic/translation/on_remove(mob/living/carbon/ear_owner)
+	. = ..()
+	for(var/language in language_list)
+		ear_owner.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
+
+/obj/item/organ/internal/ears/cybernetic/bangproof
+	name = "tactical cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "An advanced cybernetic ear designed for combat. Protects against loud noises such as flash bangs."
+	damage_multiplier = 0.5
+	bang_protect = 1
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()
