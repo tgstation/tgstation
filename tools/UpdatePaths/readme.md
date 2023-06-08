@@ -341,13 +341,13 @@ You would then get the following output:
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
 
 #### Methods: Any Value Fits All and Naming Conventions
-But what if you just want to rename the variable `maxHealth` to `good_boy_points` for all instances of `/mob/living/github_user`? Using the `@ANY` parameter after a variable name, you can capture any path that has it edited in a map. Meanwhile, to set the value of the newly named `good_boy_points` we'll use `@OLD:maxHealth` after declaring the new variable name to achieve that. The result'll be something like this:
+But what if you just want to rename the variable `maxHealth` to `good_boy_points` for all instances of `/mob/living/github_user`? Using the `@ANY` parameter after a variable name, you can capture any instance that has it edited in a map. While, to set the value of the newly named `good_boy_points` to that of the old `maxHealth`, we can use `@OLD:maxHealth`, put after the name of the new variable to achieve that. The result'll be something like this:
 
 ```txt
 /mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{good_boy_points=@OLD:maxHealth}
 ```
 
-Though, If you read the previous methods, you'd know that without the `@OLD` parameter (the one without colon), every other variable edit will also be discarded, so it's important to add that BEFORE any other parament, as well as `maxHealth=@SKIP` since we're renaming that variable. So, take two:
+Though, If you read about the previous methods, you'd know that without the `@OLD` parameter (the one without colon), every other variable edit will also be discarded, so it's important to add that BEFORE any other parament, as well as `maxHealth=@SKIP` following that since we're renaming that variable. So, take two:
 
 ```txt
 /mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{@OLD; maxHealth=@SKIP; good_boy_points=@OLD:maxHealth}
@@ -391,7 +391,7 @@ You would then get the following output:
 /area/github),
 ```
 
-As addendum, you don't have to use both `@ANY` and `@OLD:prop_name` together. I'm merely providing a single example for the both of them and their most practical usage.
+As an addendum, you don't have to use both `@ANY` and `@OLD:prop_name` together. I'm merely providing a single example for the both of them and their most practical usage.
 
 ### Blend it all together
 

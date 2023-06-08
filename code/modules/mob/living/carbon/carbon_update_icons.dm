@@ -81,7 +81,7 @@
 			final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 		final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 
-	if(resize)
+	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)
 		//Update final_pixel_y so our mob doesn't go out of the southern bounds of the tile when standing

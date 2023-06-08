@@ -13,7 +13,7 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
     /obj/effect/landmark/start/virologist : @DELETE
-    /mob/living{resize = @ANY} : /mob/living{@OLD; resize = @SKIP, current_size = @OLD:resize}
+    /mob/living{resize = @ANY} : /mob/living{@OLD; resize = @SKIP}
 Syntax for subtypes also exist, to update a path's type but maintain subtypes:
     /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
@@ -26,6 +26,7 @@ New paths properties:
 Old paths properties:
     Will be used as a filter.
     property = @UNSET - will apply the rule only if the property is not mapedited
+    property = @ANY - will apply the rule when the property is mapedited, regardless of its value.
 """
 
 default_map_directory = "../../_maps"

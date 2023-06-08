@@ -1793,7 +1793,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			set_body_position(var_value)
 			. = TRUE
 		if(NAMEOF(src, current_size))
-			if(var_value == 0) //prevents divisions by zero.
+			if(var_value == 0) //prevents divisions of and by zero.
 				return FALSE
 			update_transform(var_value/current_size)
 			. = TRUE
