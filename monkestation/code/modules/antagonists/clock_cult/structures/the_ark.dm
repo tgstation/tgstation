@@ -233,11 +233,11 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 
 /obj/structure/destructible/clockwork/the_ark/proc/explode_reebe()
 	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)
-	if(reebe_area_list)
+	if(reebe_area_list.len)
 		for(var/i in 1 to 30)
 			explosion(pick(reebe_area_list), 0, 2, 4, 4, FALSE)
 			sleep(5)
-	if(GLOB.abscond_markers)
+	if(GLOB.abscond_markers.len)
 		explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
 	SSticker.force_ending = TRUE
 
