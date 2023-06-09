@@ -300,7 +300,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "zr" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

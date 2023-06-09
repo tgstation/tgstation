@@ -86,7 +86,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/paper/fluff/ruins/elephant_graveyard/hypothesis,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "bS" = (
@@ -96,7 +96,7 @@
 /area/ruin/powered/graveyard_shuttle)
 "bU" = (
 /obj/item/light/bulb/broken,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "bV" = (
@@ -105,7 +105,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "bW" = (
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/shuttle{
 	name = "Archaeology Shuttle Airlock"
 	},
@@ -113,7 +113,7 @@
 /area/ruin/powered/graveyard_shuttle)
 "bX" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/fedora/curator,
 /obj/item/clothing/suit/jacket/curator,
 /turf/open/floor/mineral/titanium/white,
@@ -126,13 +126,13 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "cv" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "cx" = (
 /obj/item/light/bulb/broken,
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
 "cZ" = (
@@ -156,7 +156,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "eq" = (
 /obj/structure/stone_tile,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "eu" = (
@@ -164,7 +164,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "eG" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -238,7 +238,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "mO" = (
 /obj/item/stack/medical/gauze/improvised,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "nl" = (
@@ -253,7 +253,7 @@
 /obj/item/trash/pistachios,
 /obj/item/trash/chips,
 /obj/item/bedsheet/brown,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "nv" = (
@@ -300,10 +300,6 @@
 /obj/item/wrench,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"sc" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/misc/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "sg" = (
 /obj/structure/table,
 /obj/structure/cable,
@@ -329,7 +325,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "vc" = (
 /obj/structure/closet/crate/grave/filled,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -440,7 +436,7 @@
 "Ix" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Iy" = (
@@ -523,12 +519,12 @@
 /area/ruin/unpowered/elephant_graveyard)
 "OC" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "PM" = (
 /obj/structure/stone_tile/slab/cracked,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "PN" = (
@@ -570,7 +566,7 @@
 /obj/item/trash/candle,
 /obj/item/trash/can/food/beans,
 /obj/item/trash/can,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -811,7 +807,7 @@ bf
 bf
 bf
 gu
-sc
+dr
 bJ
 bf
 bf
@@ -950,7 +946,7 @@ Br
 Br
 tf
 gB
-sc
+dr
 gB
 gB
 gB
@@ -999,7 +995,7 @@ gB
 gB
 gB
 gB
-sc
+dr
 bf
 bf
 gB
@@ -1131,7 +1127,7 @@ gB
 bf
 gB
 Br
-sc
+dr
 gB
 iR
 gB
@@ -1147,7 +1143,7 @@ gB
 UE
 gB
 gB
-sc
+dr
 MI
 bf
 Xe
@@ -1209,7 +1205,7 @@ Br
 Br
 gB
 gB
-sc
+dr
 gB
 Cn
 gB
@@ -1241,7 +1237,7 @@ gB
 zY
 bf
 bf
-sc
+dr
 bf
 Br
 Mx
@@ -1257,7 +1253,7 @@ gB
 km
 gB
 gB
-sc
+dr
 Xe
 Br
 bf
@@ -1289,7 +1285,7 @@ gB
 wk
 gB
 gB
-sc
+dr
 gB
 gB
 gB
@@ -1391,7 +1387,7 @@ ac
 ac
 bf
 UK
-sc
+dr
 bf
 bf
 bf
@@ -1466,7 +1462,7 @@ ab
 bf
 Ix
 WZ
-sc
+dr
 nt
 bf
 bf

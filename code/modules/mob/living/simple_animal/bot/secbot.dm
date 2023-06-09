@@ -80,8 +80,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize(mapload)
 	. = ..()
-	resize = 0.8
-	update_transform()
+	update_transform(0.8)
 
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
