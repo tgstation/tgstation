@@ -32320,7 +32320,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
 "kxF" = (
-/obj/item/kirbyplants/dead/research_director,
+/obj/item/kirbyplants/random/dead/research_director,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4

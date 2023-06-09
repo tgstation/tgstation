@@ -399,7 +399,7 @@
 	id = "plastic_trees"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT*4)
-	build_path = /obj/item/kirbyplants/fullysynthetic
+	build_path = /obj/item/kirbyplants/random/fullysynthetic
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,

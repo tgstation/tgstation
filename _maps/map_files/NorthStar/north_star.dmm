@@ -45144,7 +45144,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/port/aft)
 "lMp" = (
-/obj/item/kirbyplants/dead/research_director,
+/obj/item/kirbyplants/random/dead/research_director,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
@@ -52427,7 +52427,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/item/kirbyplants/fullysynthetic,
+/obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/floor/mineral/silver,
 /area/station/service/chapel/funeral)
 "nya" = (
@@ -52519,7 +52519,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "nyZ" = (
@@ -59467,7 +59467,7 @@
 /area/station/maintenance/floor3/port)
 "pqe" = (
 /obj/effect/turf_decal/siding/white,
-/obj/item/kirbyplants/fullysynthetic,
+/obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/floor/mineral/silver,
 /area/station/service/chapel/funeral)
 "pqg" = (
