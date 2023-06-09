@@ -177,6 +177,6 @@
 		if(radio)
 			radio.screwdriver_act(user, tool)
 		else
-			balloon_alert(user, "Unable to locate a radio!")
+			balloon_alert(user, "no internal radio!")
 			
 	return TOOL_ACT_TOOLTYPE_SUCCESS
