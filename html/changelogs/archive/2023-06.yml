@@ -271,3 +271,25 @@
   - bugfix: xeno resin floor layer
   zeroisthebiggay:
   - image: energy katana on belt
+2023-06-09:
+  Ghommie:
+  - bugfix: pixel offsets from grabbing other mobs now respect the body offset variables.
+  - refactor: Changed some code so that resized mobs no longer look like they're poking
+      over the below tile with their legs or not even reaching the bottom edge of
+      the tile they're on.
+  MTandi, Borbop:
+  - bugfix: Dust now has dust icon, instead of dirt icon. Dust on all maps replaced
+      with dirt
+  - image: Flat dirt now picks from 4 new sprites
+  - refactor: Made broken tiling work more like tiling and have corresponding visuals.
+      Added directional mapping variants.
+  - bugfix: Cleanables now use FLOOR_CLEAN_LAYER to make sure that trash is visible
+      above catwalks
+  Sheits:
+  - image: Resprites the mulebot
+  Youtubeboy139:
+  - rscadd: Added new EMT belt (really just renamed the Paramedic belt path)
+  - image: Added new EMT belt sprite
+  - image: Added shiny new belts and detective/syndicate holsters (`onmob` sprites
+      included)
+  - image: Removed old, unused red military belt sprite

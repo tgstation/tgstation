@@ -12,7 +12,7 @@
 	var/step_amt = pick(25;1,50;2,100;3,200;4)
 
 	var/datum/move_loop/loop = SSmove_manager.move(src, pick(GLOB.alldirs), 1, timeout = step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(end_particle))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(end_particle))
 
 /obj/effect/particle_effect/expl_particles/proc/end_particle(datum/source)
 	SIGNAL_HANDLER

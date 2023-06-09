@@ -35960,7 +35960,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "lJA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "lJS" = (
@@ -62152,7 +62152,7 @@
 /area/station/hallway/secondary/command)
 "vaq" = (
 /obj/structure/ladder,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "vav" = (
