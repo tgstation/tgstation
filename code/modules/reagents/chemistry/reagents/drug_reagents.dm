@@ -369,6 +369,7 @@
 	chemical_flags = NONE
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/pumper)
+	var/obj/item/organ/internal/liver/liver = pumper.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
 		pumper.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
 		metabolization_rate *= 0.8
