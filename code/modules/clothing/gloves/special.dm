@@ -154,7 +154,7 @@
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
 	clothing_flags = THICKMATERIAL
 
-/obj/item/clothing/gloves/color/security
+/obj/item/clothing/gloves/security
 	name = "security gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "sec_gloves"
