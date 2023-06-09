@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/forceEvent,
+	/client/proc/generate_bulk_code,
+	/client/proc/generate_code,
 	/client/proc/mass_add_metacoins,
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,

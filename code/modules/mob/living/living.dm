@@ -1433,7 +1433,7 @@
 				/mob/living/basic/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/basic/mouse,
-				/mob/living/simple_animal/chicken,
+				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
 				/mob/living/simple_animal/pet/fox,

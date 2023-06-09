@@ -60,6 +60,9 @@
 	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
 	var/static/list/soft_shared_filter_reasons
 
+	///A list of all the pulled shared expressions
+	var/static/list/shared_regex_reason
+
 	/// A list of configuration errors that occurred during load
 	var/static/list/configuration_errors
 
@@ -415,6 +418,7 @@ Example config:
 	soft_ic_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic")
 	soft_ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic_outside_pda")
 	soft_shared_filter_reasons = try_extract_from_word_filter(word_filter, "soft_shared")
+	shared_regex_reason = try_extract_from_word_filter(word_filter, "shared_regex")
 
 	update_chat_filter_regexes()
 
@@ -430,6 +434,7 @@ Example config:
 	soft_ic_filter_reasons = list()
 	soft_ic_outside_pda_filter_reasons = list()
 	soft_shared_filter_reasons = list()
+	shared_regex_reason = list()
 
 	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
 		if (!line)
@@ -443,9 +448,9 @@ Example config:
 
 /// Will update the internal regexes of the chat filter based on the filter reasons
 /datum/controller/configuration/proc/update_chat_filter_regexes()
-	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
-	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
-	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
+	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons, shared_regex_reason)
+	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons, shared_regex_reason)
+	ooc_filter_regex = compile_filter_regex(shared_filter_reasons, shared_regex_reason)
 	soft_ic_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_ic_outside_pda_filter_reasons + soft_shared_filter_reasons)
 	soft_ic_outside_pda_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_shared_filter_reasons)
 	soft_ooc_filter_regex = compile_filter_regex(soft_shared_filter_reasons)
@@ -467,7 +472,7 @@ Example config:
 		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
 	return formatted_banned_words
 
-/datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
+/datum/controller/configuration/proc/compile_filter_regex(list/banned_words, list/regex_expressions)
 	if (isnull(banned_words) || banned_words.len == 0)
 		return null
 
@@ -483,6 +488,10 @@ Example config:
 			to_join_on_word_bounds += REGEX_QUOTE(banned_word)
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
+
+	for(var/word in regex_expressions)
+		to_join_on_whitespace_splits += word
+
 
 	// We don't want a whitespace_split part if there's no stuff that requires it
 	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""

@@ -7,12 +7,12 @@
 	plantname = "Tobacco Plant"
 	product = /obj/item/food/grown/tobacco
 	lifespan = 20
-	maturation = 5
+	maturation = 35
 	production = 5
 	yield = 10
 	growthstages = 3
 	icon_dead = "tobacco-dead"
-	mutatelist = list(/obj/item/seeds/tobacco/space)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/space_tobacco)
 	reagents_add = list(/datum/reagent/drug/nicotine = 0.03, /datum/reagent/consumable/nutriment = 0.03)
 
 /obj/item/food/grown/tobacco
@@ -30,7 +30,7 @@
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/food/grown/tobacco/space
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.05, /datum/reagent/drug/nicotine = 0.08, /datum/reagent/consumable/nutriment = 0.03)
 	rarity = 20
 

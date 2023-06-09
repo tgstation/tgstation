@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/raptor
+/mob/living/basic/chicken/raptor
 	icon_suffix = "raptor"
 
 	breed_name = "Raptor"
@@ -8,7 +8,8 @@
 	ai_controller = /datum/ai_controller/chicken/hostile
 	health = 100
 	maxHealth = 100
-	harm_intent_damage = 8
+	melee_damage_lower = 8
+	melee_damage_upper =8
 	obj_damage = 10
 
 	book_desc = "These creatures are bloodthirsty and will attack everything they are not friends with on site, this includes other chickens."
@@ -17,4 +18,4 @@
 	name = "Raptor Egg"
 	icon_state = "raptor"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/raptor
+	layer_hen_type = /mob/living/basic/chicken/raptor

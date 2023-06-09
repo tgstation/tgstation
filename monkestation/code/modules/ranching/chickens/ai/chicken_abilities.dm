@@ -4,15 +4,15 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/viable_conversions = list()
-	for(var/mob/living/simple_animal/chicken/found_chicken in view(4, living_pawn.loc))
-		if(!istype(found_chicken, /mob/living/simple_animal/chicken/rev_raptor) || !istype(found_chicken, /mob/living/simple_animal/chicken/raptor))
+	for(var/mob/living/basic/chicken/found_chicken in view(4, living_pawn.loc))
+		if(!istype(found_chicken, /mob/living/basic/chicken/rev_raptor) || !istype(found_chicken, /mob/living/basic/chicken/raptor))
 			viable_conversions |= found_chicken
-	var/mob/living/simple_animal/chicken/conversion_target = pick(viable_conversions)
+	var/mob/living/basic/chicken/conversion_target = pick(viable_conversions)
 
 	SSmove_manager.jps_move(living_pawn, conversion_target, 2, minimum_distance = 1)
 
 	if(living_pawn.CanReach(conversion_target))
-		new /mob/living/simple_animal/chicken/raptor(conversion_target.loc)
+		new /mob/living/basic/chicken/raptor(conversion_target.loc)
 		qdel(conversion_target)
 		living_pawn.say("VIVA, BAWK!")
 		controller.blackboard[BB_CHICKEN_ABILITY_COOLDOWN] = world.time + 10 SECONDS
@@ -46,7 +46,7 @@
 /datum/ai_behavior/chicken_honk
 
 /datum/ai_behavior/chicken_honk/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	controller.blackboard[BB_CHICKEN_ABILITY_COOLDOWN] = world.time + living_pawn.cooldown_time
 	var/mob/living/target = controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET]
 
@@ -82,7 +82,7 @@
 /datum/ai_behavior/sugar_rush
 
 /datum/ai_behavior/sugar_rush/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	living_pawn.apply_status_effect(HEN_RUSH)
 	controller.blackboard[BB_CHICKEN_ABILITY_COOLDOWN] = world.time + living_pawn.cooldown_time
 	finish_action(controller, TRUE)

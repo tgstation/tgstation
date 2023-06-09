@@ -22,12 +22,13 @@
 	var/max_endurance = 10 // IMPT: ALSO AFFECTS LIFESPAN
 	var/min_wchance = 67
 	var/min_wrate = 10
+	var/max_maturation = 10
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
 	.=..()
 	for(var/datum/stock_part/manipulator/M in component_parts)
 		if(M.tier > 3)
-			max_potency = 95
+			max_potency = INFINITY
 		else
 			max_potency = initial(max_potency) + (M.tier**3) // 53,59,77,95 	 Clamps at 100
 
@@ -35,9 +36,11 @@
 
 	for(var/datum/stock_part/scanning_module/SM in component_parts)
 		if(SM.tier > 3) //If you create t5 parts I'm a step ahead mwahahaha!
-			min_production = 1
+			min_production = INFINITY
+			max_maturation = INFINITY
 		else
-			min_production = 12 - (SM.tier * 3) //9,6,3,1. Requires if to avoid going below clamp [1]
+			min_production = initial(min_production) + (SM.tier**3) // 53,59,77,95 	 Clamps at 100
+			max_maturation = initial(max_maturation) + (SM.tier**3) // 53,59,77,95 	 Clamps at 100
 
 		max_endurance = initial(max_endurance) + (SM.tier * 25) // 35,60,85,100	Clamps at 10min 100max
 
@@ -141,7 +144,7 @@
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_yield]</span> yield. "
 							dat += "Target gene will be degraded to <span class='highlight'>[max_yield]</span> yield on extraction."
 					else if(istype(target, /datum/plant_gene/core/production))
-						if(gene.value < min_production)
+						if(gene.value > min_production)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. "
 							dat += "Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."
 					else if(istype(target, /datum/plant_gene/core/weed_rate))
@@ -152,6 +155,10 @@
 						if(gene.value < min_wchance)
 							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wchance]</span> weed chance. "
 							dat += "Target gene will be degraded to <span class='highlight'>[min_wchance]</span> weed chance on extraction."
+					else if(istype(target, /datum/plant_gene/core/maturation))
+						if(gene.value > max_maturation)
+							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_maturation]</span> potency. "
+							dat += "Target gene will be degraded to <span class='highlight'>[max_maturation]</span> potency on extraction."
 
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
@@ -437,3 +444,10 @@
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
 		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
 	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+
+/obj/item/storage/box/plant_gene
+	name = "disk storage box"
+
+/obj/item/storage/box/plant_gene/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/disk/plantgene(src)

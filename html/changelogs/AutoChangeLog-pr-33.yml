@@ -1,0 +1,5 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - balance: "All bag types (plants, mining, xenobio, etc) are now normal sized items and fit in pockets and bags"
+  - balance: "Mining scanners (automatic ones only) now fit into boots! Miners Rejoice!"

@@ -131,6 +131,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/item/storage/medkit/surgery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "dv" = (
@@ -192,6 +193,7 @@
 /obj/structure/table/wood,
 /obj/item/seeds/potato,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/seeds/cannabis,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "hk" = (
@@ -404,6 +406,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"wx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/bowl,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "wy" = (
 /obj/structure/marker_beacon/cerulean,
 /obj/structure/sign/nanotrasen{
@@ -594,10 +601,10 @@
 /area/ruin/space/has_grav/listeningstation)
 "Eb" = (
 /obj/structure/table,
-/obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "Ey" = (
@@ -754,8 +761,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "Ni" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/closet/secure_closet/freezer/empty/open,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table,
+/obj/structure/reagent_dispensers/servingdish,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "NO" = (
@@ -796,6 +804,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"PZ" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "QE" = (
 /obj/structure/barricade/wooden/crude,
 /obj/structure/cable,
@@ -810,6 +822,7 @@
 "QI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/red/directional/south,
+/obj/structure/closet/secure_closet/freezer/empty/open,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "RB" = (
@@ -831,6 +844,7 @@
 "RP" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Sx" = (
@@ -1187,7 +1201,7 @@ vI
 vI
 Yz
 rE
-Yz
+PZ
 vI
 JB
 GR
@@ -1464,7 +1478,7 @@ rG
 MY
 Vz
 Yf
-FV
+wx
 lu
 db
 RP
