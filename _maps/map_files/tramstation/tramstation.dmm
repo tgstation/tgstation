@@ -54375,7 +54375,7 @@
 	},
 /area/station/science/lab)
 "svb" = (
-/obj/machinery/modular_computer/console/preset/engineering{
+/obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,

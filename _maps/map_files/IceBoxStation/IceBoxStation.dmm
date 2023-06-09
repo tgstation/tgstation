@@ -15883,7 +15883,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "eVz" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /obj/structure/sign/poster/official/build/directional/north,
