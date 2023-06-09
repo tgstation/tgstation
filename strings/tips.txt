@@ -19,7 +19,8 @@ As a Changeling, your Regenerate Limbs power will quickly heal all of your wound
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, Water and Potassium mixed together will create an explosion, with power scaling by amount used. Don't do it.
-As a Chemist, you can make 100u bottles from plastic sheets. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
+As a Chemist, Holy Water and Potassium mixed together will create a HOLY explosion, with increased power scaling by amount used. If at least 75 units of both are used, the explosion will reveal, ignite, and paralyze any cultists, heretics, and revenants in sight. Do it!
+As a Chemist, you can quickly make 100u plastic bottles directly from plastic sheets, alongside being able to make 120u plastic beakers in the lathe. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
 As a Chemist, you can recharge your chemical dispenser with an inducer or by replacing its cell.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, Clonexadone and Mannitol for the cryo tubes, Diethylamine and Saltpetre for botany, as well as healing pills and patches for the front desk.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
