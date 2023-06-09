@@ -170,7 +170,7 @@
 			for (var/mob/listening_mob in get_hearers_in_view(range, user))
 				if (listening_mob.client)
 					players += listening_mob.client
-		for(var/m in GLOB.player_list)
+		for(var/m in players)
 			var/mob/M = m
 			var/client/C = M.client
 			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
