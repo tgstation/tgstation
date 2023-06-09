@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(radio && !shell)//removed ability to add key to AI shell, this is done through the AI core.
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else if(shell)
-			balloon_alert(user, "No radio slot!")
+			balloon_alert(user, "no radio key slot!")
 		else
 			to_chat(user, span_warning("Unable to locate a radio!"))
 		return
