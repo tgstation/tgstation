@@ -169,15 +169,15 @@
 			players = list()
 			for (var/mob/listening_mob in get_hearers_in_view(range, user))
 				if (listening_mob.client)
-					players += listening_mob.client
-		for(var/m in players)
-			var/mob/M = m
-			var/client/C = M.client
-			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
+					players += listening_mob
+		for(var/player as anything in players)
+			var/mob/player_mob = player
+			var/client/player_client = player_mob.client
+			if(player_client.prefs.read_preference(/datum/preference/toggle/sound_midi))
 				if(!stop_web_sounds)
-					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					player_client.tgui_panel?.play_music(web_sound_url, music_extra_data)
 				else
-					C.tgui_panel?.stop_music()
+					player_client.tgui_panel?.stop_music()
 
 	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
 
