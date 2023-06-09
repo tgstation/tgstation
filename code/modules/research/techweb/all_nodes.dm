@@ -1311,7 +1311,6 @@
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("adv_biotech", "cyber_organs")
 	design_ids = list(
-		// "cybernetic_ears_u",
 		"cybernetic_ears_translation",
 		"cybernetic_ears_whisper",
 		"cybernetic_heart_tier3",

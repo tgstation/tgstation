@@ -830,19 +830,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-// /datum/design/cybernetic_ears_u
-// 	name = "Cybernetic Ears"
-// 	desc = "A pair of cybernetic ears."
-// 	id = "cybernetic_ears_u"
-// 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-// 	construction_time = 40
-// 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
-// 	build_path = /obj/item/organ/internal/ears/cybernetic/upgraded
-// 	category = list(
-// 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_2
-// 	)
-// 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/cybernetic_ears_translation
 	name = "Cybernetic Translation Ears"
 	desc = "A pair of translating cybernetic ears."

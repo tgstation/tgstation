@@ -106,12 +106,6 @@
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
-// /obj/item/organ/internal/ears/cybernetic/upgraded
-// 	name = "upgraded cybernetic ears"
-// 	icon_state = "ears-c-u"
-// 	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
-// 	damage_multiplier = 0.5
-
 /obj/item/organ/internal/ears/cybernetic/translation
 	name = "cybernetic translation ears"
 	icon_state = "ears-c-u"
@@ -162,21 +156,12 @@
 // This seems like the least invasive solution
 /obj/item/organ/internal/ears/cybernetic/whisper/on_insert(mob/living/carbon/ear_owner)
 	. = ..()
-	//RegisterSignal(ear_owner, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
 	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/cybernetic/whisper/on_remove(mob/living/carbon/ear_owner)
 	. = ..()
-	//UnregisterSignal(ear_owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
 
-// /obj/item/organ/internal/ears/cybernetic/whisper/proc/on_hear(datum/source, list/hearing_args)
-// 	SIGNAL_HANDLER
-
-// 	message_admins("on_hear triggered with [json_encode(hearing_args)]")
-// 	if(hearing_args[HEARING_MESSAGE_MODE][WHISPER_MODE] == MODE_WHISPER)
-// 		// The available values seem to be "whisper" and "whispercrit". It's not clear what should be used to indicate that there isn't a whisper
-// 		hearing_args[HEARING_MESSAGE_MODE][WHISPER_MODE] = ""
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()
