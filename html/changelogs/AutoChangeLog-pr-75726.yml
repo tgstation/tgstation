@@ -1,7 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "The scrubber clog event is now the ventilation clog event. It uses vents instead of scrubbers now. It is now the ventilation clog event."
-  - rscadd: "Ventilation clogs now produce a lot of filth in addition to produced mobs, and make the surrounding area dirty."
-  - balance: "Ventilation clogs may produce more mobs at once, and have a higher limit on how many can occur per round."
-  - code_imp: "The ventilation clog event is now self-contained, and handles all logic/behavior in the event itself (rather than on the targeted vent)."

@@ -127,7 +127,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby(obj/item/attacking_item, mob/user, params)
-	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
 
@@ -142,7 +142,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby_secondary(obj/item/weapon, mob/user, params)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY_SECONDARY, weapon, user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY_SECONDARY, weapon, user, params)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

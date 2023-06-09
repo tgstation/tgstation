@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	if(length(GLOB.exoscanner_controller.tracked_dishes) <= 0 || (target && GLOB.exoscanner_controller.get_scan_power(target) <= 0))
 		return
 	current_scan = new(scan_type,target)
-	RegisterSignal(current_scan,COMSIG_PARENT_QDELETING, PROC_REF(cleanup_current_scan))
+	RegisterSignal(current_scan,COMSIG_QDELETING, PROC_REF(cleanup_current_scan))
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_STARTED,current_scan)
 	return current_scan
 
