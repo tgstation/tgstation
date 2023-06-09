@@ -49,9 +49,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 		try_servant_warp(src, get_turf(pick(GLOB.abscond_markers)))
 	. = ..()
 
-/mob/living/simple_animal/drone/cogscarab/Destroy()
-	GLOB.cogscarabs -= src
-	return ..()
+/mob/living/simple_animal/drone/cogscarab
 
 //====Shell====
 

@@ -37,7 +37,7 @@
 	},
 	"[scss]": {
 		"editor.rulers": [80],
-		"editor.defaultFormatter": "vscode.css-language-features",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
 	},
 	"workbench.editorAssociations": {
