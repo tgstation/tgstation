@@ -14,7 +14,7 @@
 	if(isdatum(ret))
 		SSlua.gc_guard = ret
 		var/datum/ret_datum = ret
-		ret_datum.RegisterSignal(ret_datum, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum, lua_reference_cleanup), override = TRUE)
+		ret_datum.RegisterSignal(ret_datum, COMSIG_QDELETING, TYPE_PROC_REF(/datum, lua_reference_cleanup), override = TRUE)
 	return ret
 
 /proc/wrap_lua_global_proc_call(proc_name, list/arguments)
@@ -29,7 +29,7 @@
 	if(isdatum(ret))
 		SSlua.gc_guard = ret
 		var/datum/ret_datum = ret
-		ret_datum.RegisterSignal(ret_datum, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum, lua_reference_cleanup), override = TRUE)
+		ret_datum.RegisterSignal(ret_datum, COMSIG_QDELETING, TYPE_PROC_REF(/datum, lua_reference_cleanup), override = TRUE)
 	return ret
 
 /proc/wrap_lua_print(state_id, list/arguments)

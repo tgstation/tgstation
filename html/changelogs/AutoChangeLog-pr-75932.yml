@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed a small issue with mob resizing not promptly updating a body offset variable."

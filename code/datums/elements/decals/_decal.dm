@@ -20,23 +20,17 @@
 
 	if(old_dir == new_dir)
 		return
-	var/list/resulting_decals_params = list() // param lists
-	var/list/old_decals = list() //instances
 
-	if(!source.comp_lookup || !source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
-		//should probably also unregister itself
+	var/list/datum/element/decal/old_decals = list() //instances
+	SEND_SIGNAL(source, COMSIG_ATOM_DECALS_ROTATING, old_decals)
+
+	if(!length(old_decals))
+		UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
 		return
 
-	if(length(source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]))
-		for(var/datum/element/decal/decal in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
-			old_decals += decal
-			resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
-	else
-		var/datum/element/decal/decal = source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]
-		if(!istype(decal))
-			return
-		old_decals += decal
-		resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
+	var/list/resulting_decals_params = list() // param lists
+	for(var/datum/element/decal/rotating as anything in old_decals)
+		resulting_decals_params += list(rotating.get_rotated_parameters(old_dir,new_dir))
 
 	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
 	for(var/datum/element/decal/decal in old_decals)
@@ -80,7 +74,7 @@
 	base_icon_state = _icon_state
 	smoothing = _smoothing
 
-	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay), TRUE)
+	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay), TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_appearance(UPDATE_OVERLAYS) //could use some queuing here now maybe.
 	else
@@ -88,13 +82,14 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/obj/item/, update_slot_icon), TRUE)
 	if(_dir)
-		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/datum/controller/subsystem/processing/dcs, rotate_decals), TRUE)
+		RegisterSignal(target, COMSIG_ATOM_DECALS_ROTATING, PROC_REF(shuttle_rotate), TRUE)
+		SSdcs.RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/datum/controller/subsystem/processing/dcs, rotate_decals), override=TRUE)
 	if(!isnull(_smoothing))
 		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smooth_react), TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react), TRUE)
 	if(_description)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(examine),TRUE)
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examine),TRUE)
 
 	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, PROC_REF(shuttle_move_react),TRUE)
 
@@ -118,7 +113,7 @@
 	return TRUE
 
 /datum/element/decal/Detach(atom/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE, COMSIG_ATOM_SMOOTHED_ICON))
+	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE, COMSIG_ATOM_SMOOTHED_ICON))
 	SSdcs.UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
 	source.update_appearance(UPDATE_OVERLAYS)
 	if(isitem(source))
@@ -159,6 +154,10 @@
 		return
 	Detach(source)
 	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
+
+/datum/element/decal/proc/shuttle_rotate(datum/source, list/datum/element/decal/rotating)
+	SIGNAL_HANDLER
+	rotating += src
 
 /**
  * Reacts to the source atom smoothing.
