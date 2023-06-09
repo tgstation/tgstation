@@ -94,9 +94,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	. = ..()
 	if(!.)
 		return
-	send_clock_message(null, span_bigbrass("The ark is taking damage!"), sent_sound = 'sound/machines/clockcult/ark_damage.ogg')
+	send_clock_message(null, span_bigbrass("The ark is taking damage!"), sent_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg')
 	flick("clockwork_gateway_damaged", src)
-	playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+	playsound(src, 'monkestation/sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/process(seconds_per_tick)
 	if(current_state >= ARK_STATE_FINAL)

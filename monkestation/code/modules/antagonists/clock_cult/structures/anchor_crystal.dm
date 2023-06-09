@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "obelisk"
 	break_message = span_warning("As the Anchoring Crystal shatters you swear you hear a faint scream.")
-	break_sound = 'sound/machines/clockcult/ark_damage.ogg'
+	break_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg'
 	immune_to_servant_attacks = TRUE
 	clockwork_desc = "This will help anchor reebe to this realm, allowing for greater power."
 	can_rotate = FALSE

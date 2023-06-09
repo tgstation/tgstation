@@ -287,7 +287,7 @@
 			log_combat(user, src, "tackled")
 			visible_message(span_danger("[user] tackles [src] down!"), \
 							span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
-			to_chat(user, span_danger("You tackle [src] down!"))*/
+			to_chat(user, span_danger("You tackle [src] down!"))
 		playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1) //monkestation edit start
 		Knockdown(2 SECONDS)
 		log_combat(user, src, "tackled")
