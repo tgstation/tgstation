@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - spellcheck: "The Medical vending refill crate's description now properly displays the Coroner's vendor as being part of its contents."
