@@ -50152,6 +50152,7 @@
 	name = "Core Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qHV" = (
@@ -56281,6 +56282,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sHk" = (

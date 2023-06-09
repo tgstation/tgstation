@@ -52729,6 +52729,7 @@
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = 15
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "nOH" = (
@@ -62927,6 +62928,8 @@
 /obj/effect/spawner/random/aimodule/harmless{
 	pixel_x = -15
 	},
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "qCa" = (

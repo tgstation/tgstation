@@ -41734,6 +41734,8 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/item/ai_module/core/full/crewsimovpp,
+/obj/item/ai_module/core/full/crewsimov,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "keC" = (
@@ -88499,6 +88501,7 @@
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_y = -16
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "vFx" = (

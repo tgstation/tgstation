@@ -1793,6 +1793,7 @@
 	pixel_x = 13;
 	pixel_y = -13
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aEU" = (
@@ -40566,6 +40567,8 @@
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 4
 	},
+/obj/item/ai_module/core/full/crewsimovpp,
+/obj/item/ai_module/core/full/crewsimov,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "ngC" = (
