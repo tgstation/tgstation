@@ -42,8 +42,21 @@
 	materials = null
 	return ..()
 
+/obj/machinery/mineral/ore_redemption/RefreshParts()
+	. = ..()
+	var/point_upgrade_temp = 1
+	var/ore_multiplier_temp = 1
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
+		point_upgrade_temp = 0.65 + (0.35 * L.rating)
+	point_upgrade = point_upgrade_temp
+	ore_multiplier = round(ore_multiplier_temp, 0.01)
+
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.")
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
