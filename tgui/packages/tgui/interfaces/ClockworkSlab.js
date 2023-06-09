@@ -122,7 +122,7 @@ const ClockworkHelp = (props, context) => {
             <font color={brassColor}>Traps:&nbsp;</font>
           </b>
           Traps are useful contraptions, able to be created at a{' '}
-          <font color={tinkerCache}>Tinkerer's Cache</font>. Use your Slab to
+          <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. Use your Slab to
           link traps and triggers together.
           <br />
           <b>
@@ -147,13 +147,13 @@ const ClockworkHelp = (props, context) => {
           <b>
             <font color={brassColor}>Power:&nbsp;</font>
           </b>
-          Watch your power upkeep! You're dependent on your cogged APCs to stay
+          Watch your power upkeep! You&#39;re dependent on your cogged APCs to stay
           powered, and a lot of structures can drain it quickly.
           <br />
           <b>
             <font color={brassColor}>Your Base:&nbsp;</font>
           </b>
-          Make sure to have a defensible base of operations! You're
+          Make sure to have a defensible base of operations! You&#39;re
           significantly stronger while on brass tiles, so make your home
           indefensible.
           <br />
@@ -161,15 +161,15 @@ const ClockworkHelp = (props, context) => {
             <font color={replicaFab}>Replica Fabricator:&nbsp;</font>
           </b>
           The Replica Fabricator is one of the strongest tools available to you,
-          via the <font color={tinkerCache}>Tinkerer's Cache</font>. It allows
+          via the <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. It allows
           the conversion of all materials into power, which can be used to
           create floors, walls, and airlocks. The airlocks will shock all
           non-cultists.
           <br />
           <b>
-            <font color={brassColor}>Nar'sie:&nbsp;</font>
+            <font color={brassColor}>Nar&#39;sie:&nbsp;</font>
           </b>
-          Nar'sian cultists are your greatest foe! Some of your spells are less
+          Nar&#39;sian cultists are your greatest foe! Some of your spells are less
           effective on them, and vice-versa. What remains of Ratvar may reward a
           vitality sacrifice of such heresy.
           <br />

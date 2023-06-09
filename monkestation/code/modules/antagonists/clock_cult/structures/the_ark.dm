@@ -160,7 +160,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		var/mob/living/servant_mob = servant_mind.current
 		if(!servant_mob || QDELETED(servant_mob))
 			continue
-		try_servant_warp(servant_mob, get_turf(pick(GLOB.abscond_markers)))
+		if(GLOB.abscond_markers)
+			try_servant_warp(servant_mob, get_turf(pick(GLOB.abscond_markers)))
 		if(ishuman(servant_mob))
 			var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
 			if(servant_antag)
@@ -231,10 +232,13 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	new /obj/ratvar(SSmapping.get_station_center())
 
 /obj/structure/destructible/clockwork/the_ark/proc/explode_reebe()
-	for(var/i in 1 to 30)
-		explosion(pick(get_area_turfs(/area/ruin/powered/reebe/city)), 0, 2, 4, 4, FALSE)
-		sleep(5)
-	explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
+	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)
+	if(reebe_area_list)
+		for(var/i in 1 to 30)
+			explosion(pick(reebe_area_list), 0, 2, 4, 4, FALSE)
+			sleep(5)
+	if(GLOB.abscond_markers)
+		explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
 	SSticker.force_ending = TRUE
 
 #undef ARK_STATE_BASE
