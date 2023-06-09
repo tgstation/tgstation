@@ -3,7 +3,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING), INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -723,9 +723,8 @@
 		hud_used.update_robot_modules_display()
 
 	if (hasExpanded)
-		resize = 0.5
 		hasExpanded = FALSE
-		update_transform()
+		update_transform(0.5)
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 	model.transform_to(/obj/item/robot_model)

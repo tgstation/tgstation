@@ -21,13 +21,13 @@
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_THEATRE
-	contains = list(/mob/living/simple_animal/butterfly)
+	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
 /datum/supply_pack/critter/butterfly/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+		new /mob/living/basic/butterfly(.)
 
 /datum/supply_pack/critter/cat
 	name = "Cat Crate"
@@ -52,7 +52,7 @@
 	desc = "The chicken goes bwaak!"
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_KITCHEN
-	contains = list( /mob/living/simple_animal/chick)
+	contains = list(/mob/living/basic/chick)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/critter/corgi
@@ -213,7 +213,7 @@
 	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_JANITOR
-	contains = list(/mob/living/simple_animal/hostile/lizard)
+	contains = list(/mob/living/basic/lizard)
 	crate_name = "lizard crate"
 
 /datum/supply_pack/critter/garden_gnome

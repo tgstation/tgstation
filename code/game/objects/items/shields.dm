@@ -15,6 +15,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
+	block_sound = 'sound/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -34,7 +35,7 @@
 	fire = 80
 	acid = 70
 
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -43,7 +44,7 @@
 		final_block_chance = 100
 	. = ..()
 	if(.)
-		on_shield_block(owner, hitby, attack_text, damage, attack_type)
+		on_shield_block(owner, hitby, attack_text, damage, attack_type, damage_type)
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -60,8 +61,8 @@
 	playsound(owner, shield_break_sound, 50)
 	new shield_break_leftover(get_turf(src))
 
-/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
-	if(!breakable_by_damage)
+/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
 		return TRUE
 	if (atom_integrity <= damage)
 		var/turf/owner_turf = get_turf(owner)
@@ -242,6 +243,7 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
+	block_sound = 'sound/weapons/block_blade.ogg'
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.
@@ -263,7 +265,7 @@
 		clumsy_check = !can_clumsy_use)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	return FALSE
 
 /obj/item/shield/energy/IsReflect()
@@ -309,7 +311,7 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(extended)
 		return ..()
 	return FALSE

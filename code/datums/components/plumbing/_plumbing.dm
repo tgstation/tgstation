@@ -63,6 +63,7 @@
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
 	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
+	REMOVE_TRAIT(parent, TRAIT_UNDERFLOOR, REF(src))
 
 /datum/component/plumbing/Destroy()
 	ducts = null
@@ -315,6 +316,11 @@
 	var/atom/movable/parent_movable = parent
 
 	var/should_hide = !underfloor_accessibility
+
+	if(should_hide)
+		ADD_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
+	else
+		REMOVE_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
 
 	if(parent_movable.anchored || !should_hide)
 		tile_covered = should_hide

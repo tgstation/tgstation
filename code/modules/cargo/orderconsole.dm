@@ -62,13 +62,6 @@
 	else
 		return ..()
 
-/obj/machinery/computer/cargo/proc/get_export_categories()
-	. = EXPORT_CARGO
-	if(contraband)
-		. |= EXPORT_CONTRABAND
-	if(obj_flags & EMAGGED)
-		. |= EXPORT_EMAG
-
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
@@ -302,36 +295,35 @@
 				say(blockade_warning)
 				return
 
-			//create the paper from the SSshuttle.shopping_list
-			if(length(SSshuttle.shopping_list))
-				var/obj/item/paper/requisition_paper = new(get_turf(src))
-				requisition_paper.name = "requisition form"
-				var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
-				requisition_text += "<hr/>"
-				requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
-				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
-					requisition_text += "<b>[order.pack.name]</b></br>"
-					requisition_text += "- Order ID: [order.id]</br>"
-					var/restrictions = SSid_access.get_access_desc(order.pack.access)
-					if(restrictions)
-						requisition_text += "- Access Restrictions: [restrictions]</br>"
-					requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
-					var/paying_account = order.paying_account
-					if(paying_account)
-						requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
-					var/reason = order.reason
-					if(reason)
-						requisition_text += "- Reason Given: [reason]</br>"
-					requisition_text += "</br></br>"
-				requisition_paper.add_raw_text(requisition_text)
-				requisition_paper.update_appearance()
-
 			if(SSshuttle.supply.getDockedId() == docking_home)
-				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
 				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
+				//create the paper from the SSshuttle.shopping_list
+				if(length(SSshuttle.shopping_list))
+					var/obj/item/paper/requisition_paper = new(get_turf(src))
+					requisition_paper.name = "requisition form"
+					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
+					requisition_text += "<hr/>"
+					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
+					for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
+						requisition_text += "<b>[order.pack.name]</b></br>"
+						requisition_text += "- Order ID: [order.id]</br>"
+						var/restrictions = SSid_access.get_access_desc(order.pack.access)
+						if(restrictions)
+							requisition_text += "- Access Restrictions: [restrictions]</br>"
+						requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
+						var/paying_account = order.paying_account
+						if(paying_account)
+							requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
+						var/reason = order.reason
+						if(reason)
+							requisition_text += "- Reason Given: [reason]</br>"
+						requisition_text += "</br></br>"
+					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.update_appearance()
+
 				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)

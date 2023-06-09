@@ -21,6 +21,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 3 //30
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon
@@ -50,7 +51,7 @@
 	force = old_force
 	throwforce = old_throwforce
 
-/obj/item/ceremonial_blade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/ceremonial_blade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type != MELEE_ATTACK || !ishuman(hitby.loc))
 		return ..()
 	if(HAS_TRAIT(hitby.loc, TRAIT_SPARRING))

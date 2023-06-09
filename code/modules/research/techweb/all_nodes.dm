@@ -666,6 +666,11 @@
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",
+		"modular_shield_generator",
+		"modular_shield_node",
+		"modular_shield_relay",
+		"modular_shield_charger",
+		"modular_shield_well",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)

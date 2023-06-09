@@ -121,15 +121,22 @@
 		return FALSE
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	var/tool_tip_set = FALSE
 	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/smartfridge/drying_rack))
 		if(welded_down)
 			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+			tool_tip_set = TRUE
 		else if (!welded_down && anchored)
 			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+			tool_tip_set = TRUE
 		if(machine_stat & BROKEN)
 			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+			tool_tip_set = TRUE
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
@@ -493,7 +500,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	atmos_spawn_air("[TURF_TEMPERATURE(1000)]")
 
 
 // ----------------------------
@@ -614,6 +621,7 @@
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/bottle,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
@@ -655,6 +663,7 @@
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
+		/obj/item/storage/pill_bottle/sansufentanyl = 2,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
 		/obj/item/reagent_containers/cup/bottle/cold = 1,
 		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,

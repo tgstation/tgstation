@@ -52,8 +52,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
 	ignore += typesof(/obj/projectile/hallucination)
 	ignore += typesof(/obj/item/hallucinated)
-	//Can't pass in a thing to glow
-	ignore += typesof(/obj/effect/abstract/eye_lighting)
 	//We don't have a pod
 	ignore += typesof(/obj/effect/pod_landingzone_effect)
 	ignore += typesof(/obj/effect/pod_landingzone)
@@ -147,26 +145,36 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Clear it, just in case
 	cached_contents.Cut()
 
+	var/list/queues_we_care_about = list()
+	// All up to harddel
+	for(var/i in 1 to GC_QUEUE_HARDDELETE - 1)
+		queues_we_care_about += i
+
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
 	// + 2 seconds to ensure that everything gets in the queue.
-	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK] + 2 SECONDS
+	var/time_needed = 2 SECONDS
+	for(var/index in queues_we_care_about)
+		time_needed += SSgarbage.collection_timeout[index]
 
 	var/start_time = world.time
 	var/garbage_queue_processed = FALSE
 
 	sleep(time_needed)
 	while(!garbage_queue_processed)
-		var/list/queue_to_check = SSgarbage.queues[GC_QUEUE_CHECK]
-		//How the hell did you manage to empty this? Good job!
-		if(!length(queue_to_check))
-			garbage_queue_processed = TRUE
-			break
+		var/oldest_packet_creation = INFINITY
+		for(var/index in queues_we_care_about)
+			var/list/queue_to_check = SSgarbage.queues[index]
+			if(!length(queue_to_check))
+				continue
 
-		var/list/oldest_packet = queue_to_check[1]
-		//Pull out the time we deld at
-		var/qdeld_at = oldest_packet[1]
+			var/list/oldest_packet = queue_to_check[1]
+			//Pull out the time we inserted at
+			var/qdeld_at = oldest_packet[GC_QUEUE_ITEM_GCD_DESTROYED]
+
+			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
+
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
-		if(qdeld_at > start_time)
+		if(oldest_packet_creation > start_time)
 			garbage_queue_processed = TRUE
 			break
 

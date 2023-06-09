@@ -135,7 +135,7 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = TRUE
 	density = FALSE
-	layer = TURF_LAYER
+	layer = MID_TURF_LAYER
 	plane = FLOOR_PLANE
 	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
@@ -355,6 +355,11 @@
 		atom_integrity = integrity_failure * max_integrity
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/alien/egg/Destroy()
+	QDEL_NULL(child)
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
