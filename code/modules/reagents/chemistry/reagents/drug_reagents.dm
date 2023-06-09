@@ -325,12 +325,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 6) //2.6 per 2 seconds
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/pumper)
+/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/L)
 	..()
-	ADD_TRAIT(pumper, TRAIT_BATON_RESISTANCE, type)
-	var/obj/item/organ/internal/liver/liver = pumper.get_organ_slot(ORGAN_SLOT_LIVER)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
+	var/obj/item/organ/internal/liver/liver = L.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
-		pumper.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		L.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
 		metabolization_rate *= 0.8
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
@@ -368,10 +368,10 @@
 	name = "Maintenance Drugs"
 	chemical_flags = NONE
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/pumper)
-	var/obj/item/organ/internal/liver/liver = pumper.get_organ_slot(ORGAN_SLOT_LIVER)
+/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/L)
+	var/obj/item/organ/internal/liver/liver = L.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
-		pumper.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		L.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
 		metabolization_rate *= 0.8
 
 /datum/reagent/drug/maint/powder

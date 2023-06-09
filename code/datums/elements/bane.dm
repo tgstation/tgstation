@@ -41,13 +41,17 @@
 		return
 	return TRUE
 
+/**
+ * Checks typepaths and the mob's biotype, returning TRUE if correct and FALSE if wrong.
+ * Additionally checks if combat mode is required, and if so whether it's enabled or not.
+ */
 /datum/element/bane/proc/check_biotype_path(mob/living/bane_applier, atom/target)
 	if(!isliving(target))
-		return
+		return FALSE
 	var/mob/living/living_target = target
 	if(bane_applier)
 		if(requires_combat_mode && !bane_applier.combat_mode)
-			return
+			return FALSE
 	var/is_correct_biotype = living_target.mob_biotypes & mob_biotypes
 	if(mob_biotypes && !(is_correct_biotype))
 		return FALSE

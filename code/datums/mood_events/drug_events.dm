@@ -17,7 +17,7 @@
 	if(value < 0)
 		description = "No! Don't! My gloves! Auuuuurgh!"
 	else
-		description = "I'm on top of the world, baby! Tide worldwide!"
+		description = initial(description)
 
 
 /datum/mood_event/smoked

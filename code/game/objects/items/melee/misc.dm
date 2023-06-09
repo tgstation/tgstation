@@ -103,7 +103,7 @@
 /obj/item/melee/sabre/proc/attempt_bane(element_owner, mob/living/carbon/criminal)
 	SIGNAL_HANDLER
 	var/obj/item/organ/internal/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(!liver || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+	if(isnull(liver) || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
 		return COMPONENT_CANCEL_BANING
 
 /**
@@ -111,8 +111,10 @@
  */
 /obj/item/melee/sabre/proc/bane_effects(element_owner, mob/living/carbon/human/baned_target)
 	SIGNAL_HANDLER
-	baned_target.visible_message(span_warning("[src] tears through [baned_target] with unnatural ease!"), \
-		span_userdanger("As [src] tears into your body you feel the weight of authority collapse into your wounds!"))
+	baned_target.visible_message(
+		span_warning("[src] tears through [baned_target] with unnatural ease!"),
+		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!",
+	))
 	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
