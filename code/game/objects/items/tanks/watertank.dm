@@ -181,6 +181,7 @@
 	inhand_icon_state = "pepperbackpacksec"
 	custom_price = PAYCHECK_CREW * 2
 	volume = 1000
+	slowdown = 0
 
 /obj/item/watertank/pepperspray/Initialize(mapload)
 	. = ..()
