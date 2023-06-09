@@ -68,7 +68,7 @@
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
-			if(L.check_block(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+			if(L.check_block(src, 100, "[src]'s leap", attack_type = LEAP_ATTACK)) // 100 damage used as a sort of "this will incapacitate you" for blocking reasons
 				Paralyze(40, ignore_canstun = TRUE)
 			else
 				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))

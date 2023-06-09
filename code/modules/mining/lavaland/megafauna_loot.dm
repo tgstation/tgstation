@@ -630,7 +630,7 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/effects/ghost2.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -695,18 +695,26 @@
 	spirits = current_spirits
 	return ghost_counter
 
-/obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
-	force = 0
+/obj/item/melee/ghost_sword/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
 	var/ghost_counter = ghost_check()
-	force = clamp((ghost_counter * 4), 0, 75)
-	user.visible_message(span_danger("[user] strikes with the force of [ghost_counter] vengeful spirits!"))
-	..()
+	force = clamp(ghost_check() * 4, 0, 75)
 
-/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	var/ghost_counter = ghost_check()
-	final_block_chance += clamp((ghost_counter * 5), 0, 75)
-	owner.visible_message(span_danger("[owner] is protected by a ring of [ghost_counter] ghosts!"))
+/obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
+	var/num_ghosts = ghost_check()
+	if(num_ghosts > 0)
+		user.visible_message(span_danger("[user] strikes with the force of [num_ghosts] vengeful spirits!"))
 	return ..()
+
+/obj/item/melee/ghost_sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	return max(DEFAULT_ITEM_DEFENSE_MULTIPLIER - (ghost_check() * 0.2), 0.2)
+
+/obj/item/melee/ghost_sword/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+	. = ..()
+	var/num_ghosts = ghost_check()
+	if(num_ghosts > 0)
+		blocker.visible_message(span_danger("[blocker] is protected by a ring of [num_ghosts] spooky ghosts!"))
+		return TRUE
 
 /obj/item/dragons_blood
 	name = "bottle of dragons blood"

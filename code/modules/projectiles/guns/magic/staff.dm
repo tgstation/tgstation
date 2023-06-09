@@ -210,7 +210,6 @@
 	block_sound = 'sound/weapons/parry.ogg'
 	force = 20
 	armour_penetration = 75
-	block_chance = 50
 	blocking_ability = 1.5
 	sharpness = SHARP_EDGED
 	max_charges = 4
@@ -224,11 +223,6 @@
 		bonus_modifier = 0, \
 		butcher_sound = hitsound, \
 	)
-
-/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0
-	return ..()
 
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"

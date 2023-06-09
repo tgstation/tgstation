@@ -239,6 +239,7 @@
 		if(!QDELETED(src)) // some grenades don't detonate but we want them destroyed
 			qdel(src)
 		return TRUE //It hit the grenade, not them
+	return FALSE
 
 /obj/item/grenade/afterattack(atom/target, mob/user)
 	. = ..()

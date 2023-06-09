@@ -20,8 +20,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	block_chance = 3 //30
-	blocking_ability = 1.5
+	blocking_ability = 1
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
@@ -52,13 +51,14 @@
 	force = old_force
 	throwforce = old_throwforce
 
-/obj/item/ceremonial_blade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type != MELEE_ATTACK || !ishuman(hitby.loc))
-		return ..()
-	if(HAS_TRAIT(hitby.loc, TRAIT_SPARRING))
-		//becomes 30 block
-		final_block_chance *= 10
-	. = ..()
+/obj/item/ceremonial_blade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(attack_type != MELEE_ATTACK)
+		return blocking_ability
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+	if(!HAS_TRAIT(attacker, TRAIT_SPARRING))
+		return blocking_ability * 2
+
+	return blocking_ability
 
 /obj/item/ceremonial_blade/proc/block_sharpening(datum/source, increment, max)
 	SIGNAL_HANDLER

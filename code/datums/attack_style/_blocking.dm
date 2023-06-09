@@ -114,32 +114,35 @@
 
 	qdel(src)
 
-/datum/status_effect/blocking/proc/on_attacked(mob/living/source, atom/movable/hitby, damage, attack_text, attack_type, armour_penetration)
+/datum/status_effect/blocking/proc/on_attacked(mob/living/source, atom/movable/hitby, damage, attack_text, attack_type, armour_penetration, damage_type)
 	SIGNAL_HANDLER
 
-	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
-		return NONE
-
-	if(isobj(hitby))
-		var/obj/obj_hit = hitby
-		if(obj_hit.damtype == STAMINA)
-			// Stamina damage will go though blocking for now
-			// Originally I intended for stam attacks to be blocked but not apply item defense multiplier
-			// But I realized that it'd be identical anyways, so pointless to continue
-			// Subject to change
+	if(blocking_with)
+		if(!(blocking_with.can_block_flags & attack_type))
 			return NONE
 
-	if(damage <= 0)
+	else if(!(BLOCK_ALL_MELEE & attack_type))
 		return NONE
 
 	// Depending on the item (or lack thereof) you are blocking with, the damage taken is converted to more (or maybe less!) stamina damage
-	var/defense_multiplier = blocking_with ? blocking_with.blocking_ability : BARE_HAND_DEFENSE_MULTIPLIER
+	var/defense_multiplier = blocking_with ? blocking_with.get_blocking_ability(source, hitby, damage, attack_type, damage_type) : BARE_HAND_DEFENSE_MULTIPLIER
+	if(defense_multiplier < 0)
+		return NONE
 	var/final_damage = defense_multiplier * damage
-	if(final_damage <= 0)
+	if(final_damage > 0)
+		source.apply_damage(final_damage, STAMINA, spread_damage = TRUE)
+
+	// Stamcrit = failed
+	if(source.incapacitated())
 		return NONE
 
-	source.apply_damage(final_damage, STAMINA, spread_damage = TRUE)
 	// Stops all following effects of the attack.
+	if(blocking_with && !blocking_with.on_successful_block(source, hitby, damage, attack_text, attack_type, damage_type))
+		source.visible_message(
+			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
+			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
+		)
+
 	return SUCCESSFUL_BLOCK
 
 /datum/status_effect/blocking/proc/on_health_update(mob/living/source)

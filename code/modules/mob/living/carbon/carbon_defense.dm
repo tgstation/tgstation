@@ -179,9 +179,17 @@
 		return TRUE
 
 /mob/living/carbon/is_shove_knockdown_blocked()
+	// In the future these should be combined into one item flag / trait / whatever
+
+	// Clothing prevents you from being knocked over
 	for (var/obj/item/clothing/clothing in get_equipped_items(include_pockets = FALSE))
 		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 			return TRUE
+	// Shields or items that block leap attacks similarly block you from falling over
+	for (var/obj/item/thing in held_items)
+		if(thing.can_block_flags & LEAP_ATTACK)
+			return TRUE
+
 	return ..()
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)

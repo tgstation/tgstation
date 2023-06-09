@@ -595,11 +595,11 @@
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
 
-/obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return 0
+/obj/item/dualsaber/toy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	return DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
-/obj/item/dualsaber/toy/IsReflect() //Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+/obj/item/dualsaber/toy/IsReflect()
+	return FALSE
 
 /obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))

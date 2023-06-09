@@ -122,15 +122,12 @@
 	if(.)
 		return TRUE
 
-	var/block_chance_modifier = round(damage / -3)
-
 	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
-		if(worn_thing.slot_flags && (worn_thing in held_items))
+		if((worn_thing.slot_flags & CLOTHING_ITEM_SLOTS) && (worn_thing in held_items))
 			// Covers clothes that block things which are being held and not worn
 			continue
 
-		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration ) / 2, 0, 100)) + block_chance_modifier
-		if(worn_thing.hit_reaction(src, hitby, attack_text, final_block_chance, damage, attack_type, damage_type))
+		if(worn_thing.hit_reaction(src, hitby, attack_text, damage, attack_type, damage_type))
 			return TRUE
 
 	return FALSE

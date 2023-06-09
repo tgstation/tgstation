@@ -172,7 +172,7 @@
 	var/toolspeed = 1
 
 	///Chance of blocking incoming attack
-	var/block_chance = 0
+	// var/block_chance = 0
 	///Effect of blocking
 	var/block_effect = /obj/effect/temp_visual/block
 
@@ -239,6 +239,9 @@
 	 * while 25+ force weapons can only be blocked 3 times.
 	 */
 	var/blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
+	/// Flags that determine what kinds of attacks we can block
+	/// By default items can only block melee and unarmed
+	var/can_block_flags = BLOCK_ALL_MELEE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -633,18 +636,79 @@
 /obj/item/proc/GetDeconstructableContents()
 	return get_all_contents() - src
 
+
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+/**
+ * Getter when this item is being used for active blocking
+ *
+ * Allows for complex items to modify the blocking ability of it before the block is finalized,
+ * for example allowing an item to only have its full block ability applied if the incoming attack is a MELEE_ATTACK
+ *
+ * Returning -1 will cause the block to fail
+ * Returning 0 will cause the block to succeed 100% of the time with no consequence to the user
+ * Returning any other positive value will cause the block to succeed at a stamina cost, where the returned value = the damage-to-stamina multiplier
+ */
+/obj/item/proc/get_blocking_ability(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
+	return blocking_ability
+
+/**
+ * Called when an item is used for a successful block
+ *
+ * Return TRUE if you handle feedback for the block
+ * Return FALSE or null to allow default feedback
+ */
+/obj/item/proc/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(block_effect)
+		new block_effect(get_turf(blocker), COLOR_YELLOW)
+	if(block_sound)
+		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
+
+/**
+ * Hit reaction is called via check_block.
+ *
+ * This is how the item reacts to its wearer / holder being hit by an attack.
+ *
+ * * owner - the wearer / holder of the item
+ * * hitby - the movable hitting the wearer / holder, IE the weapon (or if it'san unarmed attack, the mob)
+ * * attack_text - the text to display in the attack message
+ * * final_block_chance - the final chance to block the attack, after all modifiers
+ * * damage - the damage the attack would do if it wasn't blocked
+ * * attack_type - the type of attack, such as MELEE_ATTACK, UNARMED_ATTACK, etc
+ * * damage_type - the type of damage, such as BRUTE, BURN, etc
+ *
+ * Returning TRUE will block the attack from hitting the wearer / holder.
+ * Returning FALSE or null will do nothing to the attack.
+ */
+/obj/item/proc/hit_reaction(
+	mob/living/carbon/human/owner,
+	atom/movable/hitby,
+	attack_text = "the attack",
+	final_block_chance = 0,
+	damage = 0,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
 		return TRUE
 
-	if(prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
-		var/owner_turf = get_turf(owner)
-		new block_effect(owner_turf, COLOR_YELLOW)
-		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
-		return TRUE
+	return FALSE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
 	return ITALICS | REDUCE_RANGE

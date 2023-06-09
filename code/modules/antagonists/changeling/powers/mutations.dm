@@ -458,10 +458,11 @@
 	icon_state = "ling_shield"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	block_chance = 50
 	blocking_ability = 1.5
 
-	var/remaining_uses //Set by the changeling ability.
+	/// How many blocks we can do before deleting. Set by the changeling ability.
+	/// This should use integrity in the future.
+	var/remaining_uses = INFINITY
 
 /obj/item/shield/changeling/Initialize(mapload)
 	. = ..()
@@ -469,17 +470,18 @@
 	if(ismob(loc))
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
-/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(remaining_uses < 1)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.visible_message(span_warning("With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!"), span_notice("We assimilate our shield into our body"), "<span class='italics>You hear organic matter ripping and tearing!</span>")
+/obj/item/shield/changeling/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+	. = ..()
+	if(QDELETED(src))
+		return
+	remaining_uses -= 1
+	if(remaining_uses <= 0)
+		blocker.visible_message(
+			span_warning("With a sickening crunch, [blocker] reforms [blocker.p_their()] shield into an arm!"),
+			span_notice("Our shield runs out of strength. We assimilate it back into our body."),
+			span_hear("You hear organic matter ripping and tearing!"),
+		)
 		qdel(src)
-		return 0
-	else
-		remaining_uses--
-		return ..()
-
 
 /***************************************\
 |*********SPACE SUIT + HELMET***********|

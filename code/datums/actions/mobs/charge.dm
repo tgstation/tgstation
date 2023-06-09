@@ -197,7 +197,7 @@
 		return
 
 	var/mob/living/living_target = target
-	if(living_target.check_block(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
+	if(living_target.check_block(source, 100, "[source]'s charge", attack_type = LEAP_ATTACK) && living_source) // 100 damage used as a sort of "this will incapacitate you" for blocking reasons
 		living_source.Stun(6, ignore_canstun = TRUE)
 		return
 

@@ -419,7 +419,7 @@
  * Checks if this mob cannot be knocked down from a shove
  */
 /mob/living/proc/is_shove_knockdown_blocked()
-	return !(status_flags & CANKNOCKDOWN)
+	return !(status_flags & CANPUSH|CANKNOCKDOWN)
 
 /mob/living/attack_hand(mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)

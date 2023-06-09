@@ -257,8 +257,8 @@
 		owner.log_message("held a flamethrower tank detonated by a projectile ([hitby])", LOG_GAME)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
-		return 1 //It hit the flamethrower, not them
-
+		return TRUE //It hit the flamethrower, not them
+	return FALSE
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(heat,2)

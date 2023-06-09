@@ -23,6 +23,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
+	blocking_ability = 2
 	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : this shouldn't hit the right, just forward and left
 	weapon_sprite_angle = 90
 
@@ -89,6 +90,7 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
+	blocking_ability = 1.5 // 2 blocks is all you get
 
 /obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)

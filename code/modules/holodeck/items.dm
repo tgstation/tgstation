@@ -12,7 +12,6 @@
 	desc = "May the force be with you. Sorta."
 	damtype = STAMINA
 	throw_speed = 2
-	block_chance = 0
 	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
 	throwforce = 0
 	embedding = null
@@ -21,6 +20,15 @@
 	active_throwforce = 0
 	active_sharpness = NONE
 	active_heat = 0
+
+/obj/item/melee/energy/sword/holographic/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	// only good at blocking other holo eswords
+	if(istype(hitby, type))
+		var/obj/item/melee/energy/sword/holographic/holosword = hitby
+		if(holosword.blade_active && blade_active)
+			return 0.5
+
+	return blocking_ability
 
 /obj/item/melee/energy/sword/holographic/Initialize(mapload)
 	. = ..()

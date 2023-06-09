@@ -77,7 +77,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	block_chance = 50
 	blocking_ability = 1.5
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -119,7 +118,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
 	slot_flags = null
-	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	blocking_ability = 2.4 // YOU ONLY GET ONE SHOT, ONE OPPORTUNITY (TWO BLOCKS FROM A RIVAL CLAYMORE WILL STAMCRIT YOU)
 	light_range = 3
 	attack_verb_continuous = list("brutalizes", "eviscerates", "disembowels", "hacks", "carves", "cleaves") //ONLY THE MOST VISCERAL ATTACK VERBS
@@ -280,7 +278,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	block_chance = 50
 	blocking_ability = 1.5
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -946,7 +943,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	block_chance = 20
 	blocking_ability = 2
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -973,8 +969,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	embedding = list("embed_chance" = 100)
-	block_chance = 25
 	blocking_ability = 2
+	can_block_flags = ALL
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY

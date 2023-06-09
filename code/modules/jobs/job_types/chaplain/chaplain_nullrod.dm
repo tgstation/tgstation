@@ -94,8 +94,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
-	block_chance = 50
 	blocking_ability = 1.5
+	can_block_flags = BLOCK_ALL_BUT_TACKLE
 	block_sound = 'sound/weapons/genhit.ogg'
 	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
@@ -124,18 +124,13 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	block_chance = 30
+	blocking_ability = 2
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
-
-/obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
-	return ..()
 
 /obj/item/nullrod/claymore/darkblade
 	name = "dark blade"
@@ -511,11 +506,11 @@
 	. = ..()
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
-/obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
+/obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking // WHY
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 15
-	block_chance = 40
+	blocking_ability = 2
 	block_sound = 'sound/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY

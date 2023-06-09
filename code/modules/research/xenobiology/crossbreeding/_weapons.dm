@@ -63,7 +63,6 @@ Slimecrossing Weapons
 	w_class = WEIGHT_CLASS_HUGE
 	armor_type = /datum/armor/shield_adamantineshield
 	slot_flags = ITEM_SLOT_BACK
-	block_chance = 75
 	blocking_ability = 0.5
 	force = 0
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?

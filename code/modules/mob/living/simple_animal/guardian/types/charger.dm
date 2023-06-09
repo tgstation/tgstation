@@ -61,7 +61,7 @@
 	if(!isliving(hit_atom) || hit_atom == summoner || hasmatchingsummoner(hit_atom))
 		return
 	var/mob/living/hit_mob = hit_atom
-	if(hit_mob.check_block(src, charge_damage, name, attack_type = THROWN_PROJECTILE_ATTACK))
+	if(hit_mob.check_block(src, charge_damage, name, attack_type = LEAP_ATTACK))
 		return
 	hit_mob.drop_all_held_items()
 	hit_mob.visible_message(span_danger("[src] slams into [hit_mob]!"), span_userdanger("[src] slams into you!"))

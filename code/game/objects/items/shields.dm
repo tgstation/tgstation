@@ -5,7 +5,6 @@
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10
 	throwforce = 5
@@ -16,6 +15,7 @@
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
 	blocking_ability = 1
+	can_block_flags = ALL
 	block_sound = 'sound/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
@@ -36,16 +36,49 @@
 	fire = 80
 	acid = 70
 
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+/obj/item/shield/get_blocking_ability(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
+
 	if(transparent && (hitby.pass_flags & PASSGLASS))
-		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
+		return -1 // Cannot block that
+
+	var/modified_ability = blocking_ability
+	switch(attack_type)
+		if(PROJECTILE_ATTACK)
+			modified_ability *= 1.33 // marginally worse, but it works
+		if(THROWN_PROJECTILE_ATTACK)
+			modified_ability *= 0.66 // marginally better
+		if(LEAP_ATTACK)
+			modified_ability *= 0 // perfect parry
+
+	return modified_ability
+
+/obj/item/shield/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
 	. = ..()
-	if(.)
-		on_shield_block(owner, hitby, attack_text, damage, attack_type, damage_type)
+	if(!breakable_by_damage)
+		return
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+
+	if (atom_integrity > damage)
+		take_damage(damage)
+		return
+
+	blocker.visible_message(span_warning("[attack_text] destroys [src]!"), span_warning("[attack_text] destroys your [name]!"))
+	shatter(blocker)
+	qdel(src)
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -62,18 +95,6 @@
 	playsound(owner, shield_break_sound, 50)
 	new shield_break_leftover(get_turf(src))
 
-/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
-		return TRUE
-	if (atom_integrity <= damage)
-		var/turf/owner_turf = get_turf(owner)
-		owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))
-		shatter(owner)
-		qdel(src)
-		return FALSE
-	take_damage(damage)
-	return TRUE
-
 /obj/item/shield/buckler
 	name = "wooden buckler"
 	desc = "A medieval wooden buckler."
@@ -81,7 +102,6 @@
 	inhand_icon_state = "buckler"
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
-	block_chance = 30
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 	blocking_ability = 1.5
@@ -98,7 +118,6 @@
 
 /obj/item/shield/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
-	block_chance = 0
 	armor_type = /datum/armor/none
 	max_integrity = 30
 	blocking_ability = 2.4
@@ -178,10 +197,11 @@
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
 	flash_away(user)
 
-/obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/riot/flash/on_successful_block(mob/living/blocker)
 	. = ..()
-	if(.)
-		flash_away(owner)
+	if(QDELETED(src))
+		return
+	flash_away(blocker)
 
 ///Handles calls for the actual flash object + plays the flashing animations.
 /obj/item/shield/riot/flash/proc/flash_away(mob/living/owner, mob/living/target, animation_only)
@@ -270,11 +290,14 @@
 		clumsy_check = !can_clumsy_use)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return FALSE
-
 /obj/item/shield/energy/IsReflect()
 	return enabled
+
+/obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(enabled && (damage_type == ENERGY || damage_type == LASER))
+		return 0
+
+	return -1
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -283,7 +306,6 @@
 	SIGNAL_HANDLER
 
 	enabled = active
-	blocking_ability = active ? (DEFAULT_ITEM_DEFENSE_MULTIPLIER / 2) : DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 	balloon_alert(user, "[active ? "activated":"deactivated"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
@@ -317,10 +339,10 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+/obj/item/shield/riot/tele/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(extended)
-		return ..()
-	return FALSE
+		return blocking_ability
+	return DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

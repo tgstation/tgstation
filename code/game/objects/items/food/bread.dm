@@ -407,18 +407,18 @@
 	sharpness = SHARP_EDGED
 	/// Force when wielded as a sword by a mime
 	var/active_force = 20
-	/// Block chance when wielded as a sword by a mime
-	var/active_block = 50
+	/// Block mod when wielded as a sword by a mime
+	var/active_block = 1.5
 
 /obj/item/food/baguette/combat/begin_swordplay(mob/user)
 	. = ..()
 	force = active_force
-	block_chance = active_block
+	blocking_ability = active_block
 
 /obj/item/food/baguette/combat/end_swordplay(mob/user)
 	. = ..()
 	force = initial(force)
-	block_chance = initial(block_chance)
+	blocking_ability = initial(blocking_ability)
 
 /obj/item/food/garlicbread
 	name = "garlic bread"

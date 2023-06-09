@@ -65,7 +65,6 @@
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
 	blocking_ability = 1.2
 	armour_penetration = 75
 	sharpness = SHARP_EDGED
@@ -85,11 +84,6 @@
 	bonus_modifier = 5, \
 	)
 	//fast and effective, but as a sword, it might damage the results.
-
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
-	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
 	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
@@ -158,7 +152,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
-	block_chance = 20
 	blocking_ability = 2
 	armour_penetration = 65
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
@@ -452,7 +445,6 @@
 	force = 14
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
-	block_chance = 10
 	blocking_ability = 2.5
 	block_sound = 'sound/weapons/genhit.ogg'
 	armour_penetration = 50

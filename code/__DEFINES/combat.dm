@@ -114,11 +114,16 @@
 #define CRAWLING_ADD_SLOWDOWN 4
 
 //Attack types for checking shields/hit reactions
-#define MELEE_ATTACK 1
-#define UNARMED_ATTACK 2
-#define PROJECTILE_ATTACK 3
-#define THROWN_PROJECTILE_ATTACK 4
-#define LEAP_ATTACK 5
+#define MELEE_ATTACK (1<<0)
+#define UNARMED_ATTACK (1<<1)
+#define PROJECTILE_ATTACK (1<<2)
+#define THROWN_PROJECTILE_ATTACK (1<<3)
+#define LEAP_ATTACK (1<<4)
+
+/// Combination flag for items that can block all melee attacks.
+#define BLOCK_ALL_MELEE (MELEE_ATTACK|UNARMED_ATTACK|THROWN_PROJECTILE_ATTACK)
+
+#define BLOCK_ALL_BUT_TACKLE (MELEE_ATTACK|UNARMED_ATTACK|PROJECTILE_ATTACK|THROWN_PROJECTILE_ATTACK)
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH "punch"

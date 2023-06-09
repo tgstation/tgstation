@@ -21,7 +21,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	block_chance = 25
 	blocking_ability = 2
 	wound_bonus = -10
 	bare_wound_bonus = 20
@@ -44,18 +43,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
-/obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	var/block_message = "[owner] parries [attack_text] with [src]"
-	if(owner.get_active_held_item() != src)
-		block_message = "[owner] parries [attack_text] with [src] in their offhand"
-
-	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
-		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		owner.visible_message(span_danger("[block_message]"))
-		return TRUE
-	else
-		return FALSE
-
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
@@ -72,11 +59,11 @@ Striking a noncultist, however, will tear their flesh."}
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
-	block_chance = 50 // now it's officially a cult esword
-	blocking_ability = 1.5
+	blocking_ability = 1.5 // now it's officially a cult esword
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	block_effect = /obj/effect/temp_visual/cult/sparks
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
@@ -90,13 +77,25 @@ Striking a noncultist, however, will tear their flesh."}
 	effectiveness = 100, \
 	)
 
-/obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner) && prob(final_block_chance))
-		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-		return TRUE
+/obj/item/melee/cultblade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(!IS_CULTIST(blocker))
+		return DEFAULT_ITEM_DEFENSE_MULTIPLIER * 3 // makes it worse for you!
+
+	return blocking_ability
+
+/obj/item/melee/cultblade/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+	. = ..()
+	if(IS_CULTIST(blocker))
+		blocker.visible_message(
+			span_danger("[blocker] parries [attack_text] with [src]!"),
+			span_danger("You parry [attack_text] with [src]!"),
+		)
 	else
-		return FALSE
+		blocker.visible_message(
+			span_danger("[blocker] crumples over as [blocker.p_they()] attempt to block [attack_text]!"),
+			span_cultlarge("\"Did you really think that would work?\""),
+		)
+	return TRUE
 
 /obj/item/melee/cultblade/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
@@ -108,7 +107,7 @@ Striking a noncultist, however, will tear their flesh."}
 	user.Paralyze(10 SECONDS)
 	user.dropItemToGround(src, TRUE)
 	user.visible_message(
-		span_warning("A powerful force shoves [user] away from [target]!"),
+		span_warning("A powerful force shoves [user] away from [A]!"),
 		span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""),
 	)
 	user.apply_damage(rand(force / 2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
@@ -119,8 +118,7 @@ Striking a noncultist, however, will tear their flesh."}
 	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
-	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
-	blocking_ability = 2
+	blocking_ability = 2 //these dweebs don't get full block ability, because they're free cultists
 	attack_style = /datum/attack_style/melee_weapon/swing
 	block_sound = 'sound/weapons/parry.ogg'
 
@@ -684,7 +682,6 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 40
 	throw_speed = 2
 	armour_penetration = 30
-	block_chance = 30
 	blocking_ability = 2
 	slot_flags = null
 	attack_verb_continuous = list("attacks", "slices", "shreds", "sunders", "lacerates", "cleaves")
@@ -716,6 +713,11 @@ Striking a noncultist, however, will tear their flesh."}
 		QDEL_NULL(halberd_act)
 	return ..()
 
+/obj/item/melee/cultblade/halberd/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		. *= 0.75
+
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
@@ -744,16 +746,6 @@ Striking a noncultist, however, will tear their flesh."}
 			new /obj/effect/decal/cleanable/blood/splatter(T)
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
-
-/obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		final_block_chance *= 2
-	if(IS_CULTIST(owner) && prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		return TRUE
-	else
-		return FALSE
 
 /datum/action/innate/cult/halberd
 	name = "Bloody Bond"
@@ -978,6 +970,7 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/effects/ric5.ogg'
 	var/illusions = 2
 
+// melbert todo
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(IS_CULTIST(owner))
 		if(attack_type == PROJECTILE_ATTACK)

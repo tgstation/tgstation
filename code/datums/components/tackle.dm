@@ -164,6 +164,10 @@
 	tackling = FALSE
 	tackle.gentle = TRUE
 
+	if(target.check_block(user, 100, "[user]'s [tackle_word]", attack_type = LEAP_ATTACK)) // 100 damage used as a sort of "this will incapacitate you" for blocking reasons
+		user.Paralyze(1.5 SECONDS, ignore_canstun = TRUE)
+		return
+
 	switch(roll)
 		if(-INFINITY to -5)
 			user.visible_message(span_danger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!"), span_userdanger("You botch your [tackle_word] and slam your head into [target], knocking yourself silly!"), ignored_mobs = target)

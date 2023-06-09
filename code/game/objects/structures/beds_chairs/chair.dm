@@ -325,6 +325,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	demolition_mod = 1.25
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
+	blocking_ability = 1.5 // really good, but only is applied for unarmed attacks.
+	can_block_flags = BLOCK_ALL_MELEE|LEAP_ATTACK
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	attack_style = /datum/attack_style/melee_weapon/swing
@@ -377,12 +379,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
+/obj/item/chair/get_blocking_ability(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
+	return (attack_type == UNARMED_ATTACK) ? blocking_ability : DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
-
-
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
+/obj/item/chair/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text,
+	attack_type = MELEE_ATTACK,
+	damage_type = BRUTE,
+)
+	. = ..()
+	if(attack_type == UNARMED_ATTACK)
+		blocker.visible_message(
+			span_danger("[blocker] fends off [attack_text] with [src]!"),
+			span_danger("You fend off [attack_text] with [src]!"),
+		)
 		return TRUE
 	return FALSE
 

@@ -182,7 +182,6 @@
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	block_chance = 50
 	blocking_ability = 1.5
 
 /obj/item/staff/bostaff/Initialize(mapload)

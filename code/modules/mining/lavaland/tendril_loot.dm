@@ -946,7 +946,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
 	armour_penetration = 30
-	block_chance = 30
 	blocking_ability = 2
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -991,11 +990,6 @@
 		drew_blood = TRUE
 		if(ismining(target))
 			user.changeNext_move(CLICK_CD_RAPID)
-	return ..()
-
-/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
 /obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)

@@ -95,3 +95,4 @@
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/refill.ogg', 50, TRUE)
+	return FALSE

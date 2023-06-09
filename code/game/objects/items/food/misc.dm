@@ -202,7 +202,6 @@
 	)
 	force = 30
 	throwforce = 15
-	block_chance = 50
 	blocking_ability = 1.5
 	armour_penetration = 80
 	block_sound = 'sound/weapons/parry.ogg'

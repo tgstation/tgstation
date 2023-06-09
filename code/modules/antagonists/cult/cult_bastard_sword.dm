@@ -4,8 +4,6 @@
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
-	block_chance = 50
-	block_sound = 'sound/weapons/parry.ogg'
 	throwforce = 20
 	force = 35
 	armour_penetration = 45
@@ -27,6 +25,9 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : maybe a unique style for spin2win
 	weapon_sprite_angle = 45
+	blocking_ability = 1.2
+	block_effect = /obj/effect/temp_visual/cult/sparks
+	block_sound = 'sound/weapons/parry.ogg'
 
 	///if we are using our attack_self ability
 	var/spinning = FALSE
@@ -53,12 +54,14 @@
 	user.spin(duration, 1)
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
-	block_chance = 100
+	blocking_ability = 0
+	user.begin_blocking()
 	slowdown += 1.5
 	spinning = TRUE
 
 /obj/item/cult_bastard/proc/on_unspin(mob/living/user)
-	block_chance = 50
+	blocking_ability = initial(blocking_ability)
+	user.remove_status_effect(/datum/status_effect/blocking)
 	slowdown -= 1.5
 	spinning = FALSE
 
@@ -91,4 +94,24 @@
 	if(!prob(final_block_chance))
 		return FALSE
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+	return TRUE
+
+/obj/item/cult_bastard/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(!IS_CULTIST(blocker))
+		return 100
+
+	return blocking_ability
+
+/obj/item/cult_bastard/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+	. = ..()
+	if(IS_CULTIST(blocker))
+		blocker.visible_message(
+			span_danger("[owner] parries [attack_text] with [src]!"),
+			span_danger("You parry [attack_text] with [src]!"),
+		)
+	else
+		blocker.visible_message(
+			span_danger("[blocker] crumples over as [blocker.p_they()] attempt to block [attack_text]!"),
+			span_cultlarge("\"Did you really think that would work?\""),
+		)
 	return TRUE

@@ -27,7 +27,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 30
 	throwforce = 30
-	block_chance = 50
 	blocking_ability = 1.5
 	armour_penetration = 50
 	w_class = WEIGHT_CLASS_NORMAL

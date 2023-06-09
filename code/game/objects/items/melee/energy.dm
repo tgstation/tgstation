@@ -16,6 +16,8 @@
 	item_flags = NO_BLOOD_ON_ITEM
 	attack_style = /datum/attack_style/melee_weapon/swing/esword
 	weapon_sprite_angle = 45
+	blocking_ability = 1.5
+	can_block_flags = BLOCK_ALL_BUT_TACKLE
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -67,6 +69,14 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/obj/item/melee/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(!blade_active)
+		return -1
+	if(damage_type == LASER || damage_type == ENERGY)
+		return 0 // perfectly able to block energy shots.
+
+	return blocking_ability
+
 /obj/item/melee/energy/suicide_act(mob/living/user)
 	if(!blade_active)
 		attack_self(user)
@@ -115,13 +125,11 @@
 			updateEmbedding()
 		heat = active_heat
 		START_PROCESSING(SSobj, src)
-		blocking_ability = 1.5
 	else
 		if(embedding)
 			disableEmbedding()
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
-		blocking_ability = initial(blocking_ability)
 
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
@@ -184,14 +192,8 @@
 	throw_speed = 3
 	throw_range = 5
 	armour_penetration = 35
-	block_chance = 50
 	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
-
-/obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(blade_active)
-		return ..()
-	return FALSE
 
 /obj/item/melee/energy/sword/cyborg
 	name = "cyborg energy sword"
@@ -231,9 +233,6 @@
 
 	active_force = 30
 	sword_color_icon = null // Stops icon from breaking when turned on.
-
-/obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return FALSE
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber

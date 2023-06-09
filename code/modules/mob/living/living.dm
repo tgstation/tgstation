@@ -182,9 +182,6 @@
 				return TRUE
 
 	//okay, so we didn't switch. but should we push?
-	//not if he's not CANPUSH of course
-	if(!(M.status_flags & CANPUSH))
-		return TRUE
 	if(isliving(M))
 		var/mob/living/L = M
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
@@ -199,11 +196,8 @@
 		var/mob/living/silicon/robot/borg = M
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
-	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+
+	return M.is_shove_knockdown_blocked()
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()

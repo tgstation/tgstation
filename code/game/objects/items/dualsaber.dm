@@ -23,7 +23,6 @@
 	light_on = FALSE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	block_chance = 75
 	block_sound = 'sound/weapons/block_blade.ogg'
 	max_integrity = 200
 	armor_type = /datum/armor/item_dualsaber
@@ -34,6 +33,8 @@
 	item_flags = NO_BLOOD_ON_ITEM
 	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/desword
 	weapon_sprite_angle = 45
+	blocking_ability = 1
+	can_block_flags = BLOCK_ALL_BUT_TACKLE
 
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
@@ -56,6 +57,14 @@
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 
+/obj/item/dualsaber/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return -1
+	if(damage_type == LASER || damage_type == ENERGY)
+		return 0 // perfectly able to block energy shots.
+
+	return blocking_ability
+
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
@@ -67,7 +76,6 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
-	blocking_ability = 1
 
 /// Triggered on unwield of two handed item
 /// switch hitsounds
@@ -76,7 +84,6 @@
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
-	blocking_ability = initial(blocking_ability)
 
 /obj/item/dualsaber/get_sharpness()
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
@@ -151,11 +158,6 @@
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
-
-/obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	return 0
 
 /obj/item/dualsaber/process()
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
