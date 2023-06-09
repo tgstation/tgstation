@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger) // a list of all active and visible messengers
 
-///Registers an NTMessenger instance to the list of TabletMessengers. If it exists, updates it.
+///Registers an NTMessenger instance to the list of TabletMessengers.
 /proc/add_messenger(datum/computer_file/program/messenger/msgr)
 	var/obj/item/modular_computer/messenger_device = msgr.computer
 	// a bunch of empty PDAs are normally allocated, we don't want that clutter
@@ -36,9 +36,9 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	return sortTim(GLOB.TabletMessengers.Copy(), sortmode, associative = TRUE)
 
+// Why do we have this?
 /proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
 	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
-
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
@@ -61,14 +61,16 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/ringer_status = TRUE
 	/// Whether or not we're sending and receiving messages.
 	var/sending_and_receiving = TRUE
-	/// The messages currently saved in the app.
-	var/list/messages = list()
 	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
 	var/last_text
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	var/last_text_everyone
 	/// Scanned photo for sending purposes.
 	var/datum/picture/saved_image
+	/// The messages currently saved in the app.
+	var/list/messages = list()
+	/// Associative list of unread messages - Format: msgr_ref -> number of unreads
+	var/list/unread_messages = list()
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
@@ -105,8 +107,6 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	if(!QDELETED(computer))
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
 	remove_messenger(src)
-	UnregisterSignal(computer, COMSIG_MODPC_IMPRINT_UPDATED)
-	UnregisterSignal(computer, COMSIG_MODPC_IMPRINT_RESET)
 	return ..()
 
 /datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)

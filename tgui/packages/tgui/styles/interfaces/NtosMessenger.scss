@@ -3,7 +3,7 @@
 @use '../functions';
 
 $chatmessage-color-incoming: hsl(213, 50%, 35%);
-$chatmessage-color-outgoing: hsl(213, 0%, 35%);
+$chatmessage-color-outgoing: hsl(213, 0%, 20%);
 
 $chatmessage-padding: 0.7rem;
 
@@ -20,7 +20,7 @@ $chatmessage-padding: 0.7rem;
     background-color: lighten($chatmessage-color-incoming, 10%);
     &__outgoing {
       border-color: lighten($chatmessage-color-outgoing, 20%);
-      background-color: lighten($chatmessage-color-outgoing, 20%);
+      background-color: lighten($chatmessage-color-outgoing, 30%);
     }
   }
 
