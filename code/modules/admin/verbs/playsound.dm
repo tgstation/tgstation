@@ -167,17 +167,15 @@
 		var/list/players = GLOB.player_list
 		if (range)
 			players = list()
-			for (var/mob/listening_mob in get_hearers_in_view(range, user))
+			for (var/mob/listening_mob as anything in get_hearers_in_view(range, user))
 				if (listening_mob.client)
 					players += listening_mob
-		for(var/player as anything in players)
-			var/mob/player_mob = player
-			var/client/player_client = player_mob.client
-			if(player_client.prefs.read_preference(/datum/preference/toggle/sound_midi))
+		for(var/mob/player_mob as anything in players)
+			if(player_mob.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
 				if(!stop_web_sounds)
-					player_client.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					player_mob.client.tgui_panel?.play_music(web_sound_url, music_extra_data)
 				else
-					player_client.tgui_panel?.stop_music()
+					player_mob.client.tgui_panel?.stop_music()
 
 	S_TIMER_COOLDOWN_START(SStimer, COOLDOWN_INTERNET_SOUND, duration)
 
