@@ -1,8 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed mecha plasma generator not accepting fuel"
-  - bugfix: "fixed mecha ui incorrectly displaying fuel remaining when using an energy module"
-  - bugfix: "fixed mecha ui missing fluff text for short circuit repair control (5th option)"
-  - qol: "fixing mecha control module internal damage will print out a chat message like fixing other damage does"
-  - rscdel: "did you know that for 4 years now mecha plasma generators did not, in fact, pollute the environment when in use? removed that bit from its description"

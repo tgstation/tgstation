@@ -2137,6 +2137,7 @@
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\billboard.dm"
 #include "code\game\objects\structures\bonfire.dm"
+#include "code\game\objects\structures\broken_flooring.dm"
 #include "code\game\objects\structures\chess.dm"
 #include "code\game\objects\structures\containers.dm"
 #include "code\game\objects\structures\deployable_turret.dm"

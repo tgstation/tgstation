@@ -566,17 +566,15 @@
 			robot.SetLockdown(FALSE)
 		robot.set_anchored(FALSE)
 		robot.notransform = FALSE
-		robot.resize = 2
 		robot.hasExpanded = TRUE
-		robot.update_transform()
+		robot.update_transform(2)
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		if (R.hasExpanded)
 			R.hasExpanded = FALSE
-			R.resize = 0.5
-			R.update_transform()
+			R.update_transform(0.5)
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
