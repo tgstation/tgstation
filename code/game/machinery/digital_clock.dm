@@ -61,7 +61,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	do_sparks(3, cardinal_only = FALSE, src)
+	do_sparks(3, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
 
 /obj/machinery/digital_clock/emp_act(severity)
