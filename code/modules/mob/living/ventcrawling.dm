@@ -56,7 +56,7 @@
 
 	//Handle the exit here
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		balloon_alert(src, "exiting ventilation!")
+		to_chat(src, span_notice("You begin climbing out from the ventilation system..."))
 		if(has_client && isnull(client))
 			return
 		if(!do_after(src, 1 SECONDS, target = ventcrawl_target))
