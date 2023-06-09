@@ -357,7 +357,7 @@
 	anchorable = 0;
 	anchored = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
@@ -911,7 +911,7 @@
 	anchored = 1
 	},
 /obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},

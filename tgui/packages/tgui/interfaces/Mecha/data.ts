@@ -14,6 +14,7 @@ export const InternalDamageToNormalDesc = {
   'MECHA_INT_TEMP_CONTROL': 'Temperature control active',
   'MECHA_INT_TANK_BREACH': 'Air tank intact',
   'MECHA_INT_CONTROL_LOST': 'Control module active',
+  'MECHA_INT_SHORT_CIRCUIT': 'Internal capacitor operational',
 };
 
 export type AccessData = {
@@ -87,7 +88,7 @@ export type OperatorData = {
   weapons_safety: boolean;
   mech_equipment: string[];
   mech_view: string;
-  mineral_material_amount: number;
+  sheet_material_amount: number;
 };
 
 export type MechaUtility = {
