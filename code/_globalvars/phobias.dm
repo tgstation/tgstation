@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/highfrequencyblade,
 		/obj/item/katana,
 		/obj/item/nullrod/claymore/katana,
-		/obj/item/nullrod/scythe/vibro,
+		/obj/item/nullrod/vibro,
 		/obj/item/reagent_containers/cup/glass/bottle/sake,
 		/obj/item/throwing_star,
 		/obj/item/toy/katana,

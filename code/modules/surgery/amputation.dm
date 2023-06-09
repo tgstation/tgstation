@@ -57,6 +57,11 @@
 		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
 	)
 	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
+
+	if(HAS_TRAIT(user, TRAIT_MORBID) && ishuman(user))
+		var/mob/living/carbon/human/morbid_weirdo = user
+		morbid_weirdo.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
+
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()

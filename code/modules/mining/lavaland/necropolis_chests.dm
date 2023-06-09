@@ -26,7 +26,7 @@
 		if(2)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(3)
-			new /obj/item/organ/internal/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/shard/katana(src)
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
