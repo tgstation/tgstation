@@ -18,6 +18,7 @@
 	var/delay_time = 1 SECONDS
 
 
+
 /obj/structure/destructible/clockwork/trap/delay/multitool_act(mob/living/user, obj/item/tool)
 	delay_time = tgui_input_number(user, "Input delay time", "Clockwork Timer", 1 SECONDS, 120 SECONDS, 1 SECONDS)
 	return TRUE

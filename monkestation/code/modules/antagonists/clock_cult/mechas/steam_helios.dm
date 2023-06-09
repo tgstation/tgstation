@@ -32,7 +32,7 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/clock)
 	)
-//HAFHYUgBHDsA
+
 /datum/armor/mecha_steam_helios
 	melee = 45
 	bullet = 40
