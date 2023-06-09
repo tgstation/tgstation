@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - admin: "Shooting a welding fuel tank (big or small) with a projectile will now accurately post to list_bombers with the name of the person who shot the projectile from the gun. If you don't know how to list-bombers, it will also be present in game.log for your viewing pleasure."

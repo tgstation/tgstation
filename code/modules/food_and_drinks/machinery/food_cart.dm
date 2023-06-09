@@ -23,10 +23,10 @@
 	cart_table = new(src)
 	cart_tent = new(src)
 	packed_things = list(cart_table, cart_smartfridge, cart_tent, cart_griddle) //middle, left, left, right
-	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
-	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
-	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
-	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_griddle, COMSIG_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_smartfridge, COMSIG_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_table, COMSIG_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_tent, COMSIG_QDELETING, PROC_REF(lost_part))
 
 /obj/machinery/food_cart/Destroy()
 	if(cart_griddle)
@@ -113,10 +113,10 @@
 	SIGNAL_HANDLER
 
 	//okay, so it's deleting the fridge or griddle which are more important. We're gonna break the machine then
-	UnregisterSignal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_griddle, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_smartfridge, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_table, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_tent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	atom_break()
 
 /obj/machinery/food_cart/atom_break(damage_flag)
