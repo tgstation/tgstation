@@ -17,6 +17,7 @@
 /atom/movable/screen/alert/clockwork/clocksense/process()
 	var/datum/antagonist/clock_cultist/servant = owner.mind.has_antag_datum(/datum/antagonist/clock_cultist)
 	if(!(servant?.clock_team))
+		message_admins("NOTALERTTEAM")
 		return
 	if(GLOB.ratvar_risen)
 		desc = "<b>RAT'VAR HAS RISEN.<b>"

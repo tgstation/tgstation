@@ -66,8 +66,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		to_chat(current_mob, span_reallybig(span_hypnophrase("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent.")))
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
-	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(explode_reebe))
+	return ..()
 
 /obj/structure/destructible/clockwork/the_ark/deconstruct(disassembled = TRUE)
 	if(current_state >= ARK_STATE_FINAL)
