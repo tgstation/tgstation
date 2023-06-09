@@ -349,7 +349,7 @@
 /**
  * Internal proc to handle most all of the signaling procedure
  *
- * Will runtime if used on datums with an empty component list
+ * Will runtime if used on datums with an empty comp_lookup list
  *
  * Use the [SEND_SIGNAL] define instead
  */
