@@ -5325,6 +5325,7 @@
 #include "monkestation\code\modules\ballpit\ballpit.dm"
 #include "monkestation\code\modules\cargo\crates\costumes_toys.dm"
 #include "monkestation\code\modules\cargo\crates\emergency.dm"
+#include "monkestation\code\modules\cargo\crates\engineering.dm"
 #include "monkestation\code\modules\cargo\crates\imports.dm"
 #include "monkestation\code\modules\cargo\crates\large.dm"
 #include "monkestation\code\modules\cargo\crates\materials.dm"
