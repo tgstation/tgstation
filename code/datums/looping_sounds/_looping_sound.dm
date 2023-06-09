@@ -233,10 +233,10 @@
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
 	if(parent)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = new_parent
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
+		RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(handle_parent_del))
 
 /// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()
