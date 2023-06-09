@@ -270,7 +270,7 @@
 	if(hitting_projectile.damage > 0 && ((hitting_projectile.damage_type == BURN) || (hitting_projectile.damage_type == BRUTE)))
 		log_bomber(hitting_projectile.firer, "detonated a", src, "via projectile")
 		boom()
-		return BULLET_ACT_HIT
+		return hitting_projectile.on_hit(src, 0)
 
 	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
