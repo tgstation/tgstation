@@ -115,26 +115,68 @@
 /obj/item/organ/internal/ears/cybernetic/translation
 	name = "cybernetic translation ears"
 	icon_state = "ears-c-u"
-	desc = "Allows the user to understand some commonly spoken languages. Grants no ability to speak these languages."
+	desc = "Allows the user to understand one of several commonly spoken languages. Grants no ability to speak these languages."
 	damage_multiplier = 0.5
-	var/list/language_list = list(/datum/language/moffic, /datum/language/draconic, /datum/language/calcic, /datum/language/voltaic, /datum/language/nekomimetic)
+	var/list/language_list = list(/datum/language/common, /datum/language/uncommon, /datum/language/moffic, /datum/language/draconic, /datum/language/calcic, /datum/language/voltaic, /datum/language/nekomimetic)
+	// It needs to cycle through all of the languages in the list. This seems like the most elegant solution.
+	var/language_selector = 1
+	// Byond doesn't like it when I set it equal to language_list[language_selector], so this will have to do
+	var/datum/language/chosen_language = /datum/language/common
+
+/obj/item/organ/internal/ears/cybernetic/translation/examine(mob/user)
+	. = ..()
+	. += span_info("[src] are currently translating [initial(chosen_language.name)] speech. You can use a screwdriver to change the language.")
+
+/obj/item/organ/internal/ears/cybernetic/translation/screwdriver_act(mob/living/user, obj/item/screwtool)
+	. = ..()
+	if(.)
+		return TRUE
+
+	// language_selector += 1
+	// if (language_selector > language_list.len)
+	// 	language_selector = 1
+
+	// Should be the same output as above, but a little more compact
+	language_selector = (language_selector % language_list.len) + 1
+	chosen_language = language_list[language_selector]
+
+	to_chat(user, span_notice("You modify [src] to translate [initial(chosen_language.name)] speech."))
 
 /obj/item/organ/internal/ears/cybernetic/translation/on_insert(mob/living/carbon/ear_owner)
 	. = ..()
-	for(var/language in language_list)
-		ear_owner.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
+	ear_owner.grant_language(chosen_language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
 
+// Its a good thing you can't screwdriver organs after they've been 'installed' or there would be issues
 /obj/item/organ/internal/ears/cybernetic/translation/on_remove(mob/living/carbon/ear_owner)
 	. = ..()
-	for(var/language in language_list)
-		ear_owner.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
+	ear_owner.remove_language(chosen_language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
 
-/obj/item/organ/internal/ears/cybernetic/bangproof
-	name = "tactical cybernetic ears"
+/obj/item/organ/internal/ears/cybernetic/whisper
+	name = "cybernetic listening ears"
 	icon_state = "ears-c-u"
-	desc = "An advanced cybernetic ear designed for combat. Protects against loud noises such as flash bangs."
-	damage_multiplier = 0.5
-	bang_protect = 1
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
+	// Same sensitivity as felinid ears
+	damage_multiplier = 2
+
+// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
+// This seems like the least invasive solution
+/obj/item/organ/internal/ears/cybernetic/whisper/on_insert(mob/living/carbon/ear_owner)
+	. = ..()
+	//RegisterSignal(ear_owner, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
+	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+/obj/item/organ/internal/ears/cybernetic/whisper/on_remove(mob/living/carbon/ear_owner)
+	. = ..()
+	//UnregisterSignal(ear_owner, COMSIG_MOVABLE_HEAR)
+	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+// /obj/item/organ/internal/ears/cybernetic/whisper/proc/on_hear(datum/source, list/hearing_args)
+// 	SIGNAL_HANDLER
+
+// 	message_admins("on_hear triggered with [json_encode(hearing_args)]")
+// 	if(hearing_args[HEARING_MESSAGE_MODE][WHISPER_MODE] == MODE_WHISPER)
+// 		// The available values seem to be "whisper" and "whispercrit". It's not clear what should be used to indicate that there isn't a whisper
+// 		hearing_args[HEARING_MESSAGE_MODE][WHISPER_MODE] = ""
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()

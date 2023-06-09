@@ -299,6 +299,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define IGNORING_GRAVITY_NEGATION "ignoring_gravity_negation"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
+// Makes whispers clearly heard from two tiles away
+#define TRAIT_GOOD_HEARING "good_hearing"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
