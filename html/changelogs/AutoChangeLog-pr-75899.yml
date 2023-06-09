@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Taking items from your inventory while flying over lava or a chasm will NOT set them on fire or drop them into chasms ANYMORE"
