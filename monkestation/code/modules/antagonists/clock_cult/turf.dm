@@ -76,6 +76,7 @@
 	base_icon_state = "clockwork_wall"
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
+	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
@@ -240,15 +241,7 @@
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	if(ISODD(x+y))
-		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork_large.dmi'
-		pixel_x = -9
-		pixel_y = -9
-	else
-		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
-		pixel_x = 0
-		pixel_y = 0
-	return TRUE
+	return FALSE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
