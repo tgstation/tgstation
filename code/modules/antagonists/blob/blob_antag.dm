@@ -137,7 +137,7 @@
 		source = blob_cam.blob_core,
 		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/ambience/antag/blobalert.ogg',
-		header = "Beware of the Blob...",
+		header = "Blob Awakening!",
 		notify_volume = 75
 	)
 
