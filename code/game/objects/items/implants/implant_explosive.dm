@@ -85,6 +85,17 @@
 
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
+
+	notify_ghosts(
+		"[imp_in] is about to detonate their explosive implant!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		flashwindow = FALSE,
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		header = "Tick Tick Tick...",
+		notify_volume = 75
+	)
+
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
