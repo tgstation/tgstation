@@ -9,11 +9,12 @@
 	lifespan = 55
 	endurance = 35
 	yield = 5
+	harvest_age = 200
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "apple-grow"
 	icon_dead = "apple-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/one_bite)
-	mutatelist = list(/obj/item/seeds/apple/gold)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/gold_apple)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/apple
@@ -34,10 +35,11 @@
 	species = "goldapple"
 	plantname = "Golden Apple Tree"
 	product = /obj/item/food/grown/apple/gold
-	maturation = 10
-	production = 10
+	maturation = 30
+	production = 30
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
+	harvest_age = 400
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/gold = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 40 // Alchemy!
 

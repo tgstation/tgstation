@@ -242,7 +242,7 @@
 		/mob/living/basic/stickman/dog,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/chick,
-		/mob/living/simple_animal/chicken,
+		/mob/living/basic/chicken,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/goliath/beast,

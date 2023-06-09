@@ -140,7 +140,7 @@
 		if(FEMALE)
 			return pick(GLOB.hairstyles_female_list)
 		else
-			return pick(GLOB.hairstyles_list)
+			return pick(GLOB.roundstart_hairstyles_list)
 
 /proc/random_facial_hairstyle(gender)
 	switch(gender)

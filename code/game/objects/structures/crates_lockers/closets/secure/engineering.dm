@@ -24,6 +24,7 @@
 
 	// Traitor steal objective
 	new /obj/item/areaeditor/blueprints(src)
+	new /obj/item/gun/ballistic/SRN_rocketlauncher(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

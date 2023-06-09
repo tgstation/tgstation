@@ -1,9 +1,9 @@
-/mob/living/simple_animal/chicken/clown_sad
+/mob/living/basic/chicken/clown_sad
 	icon_suffix = "sad_clown"
 
 	breed_name_male = "huOnkHoNkHoeNK"
 	breed_name_female = "huOnkHoNkHoeNK"
-	minbodytemp = 0
+	minimum_survivable_temperature = 0
 
 	ai_controller = /datum/ai_controller/chicken/clown/sad
 
@@ -19,7 +19,7 @@
 	name = "Clown? Egg"
 	icon_state = "clown"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/clown_sad
+	layer_hen_type = /mob/living/basic/chicken/clown_sad
 
 /datum/status_effect/ranching/angry_honk
 	id = "pissed_sad_clown"

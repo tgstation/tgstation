@@ -82,6 +82,9 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	var/obj/item/organ/internal/bladder/contained_bladder = target_mob.get_organ_slot(ORGAN_SLOT_BLADDER)
+	if(contained_bladder)
+		contained_bladder.consume_act(reagents, gulp_size * 0.2)
 	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
@@ -416,6 +419,17 @@
 		return
 
 	return ..()
+
+/obj/item/reagent_containers/cup/bucket/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(istype(weapon, /obj/item/mop))
+		if(reagents.total_volume == volume)
+			to_chat(user, "The [src.name] can't hold anymore liquids")
+			return
+		var/obj/item/mop/attacked_mop = weapon
+		to_chat(user, "You wring out the [attacked_mop.name] into the [src.name].")
+		attacked_mop.reagents.trans_to(src, attacked_mop.max_reagent_volume * 0.25)
+		attacked_mop.reagents.remove_all(attacked_mop.max_reagent_volume)
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()

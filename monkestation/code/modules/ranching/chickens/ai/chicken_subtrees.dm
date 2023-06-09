@@ -1,5 +1,5 @@
-/datum/ai_planning_subtree/chicken_tree/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+/datum/ai_planning_subtree/chicken_tree/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 
 	var/list/enemies = controller.blackboard[BB_CHICKEN_SHITLIST]
 

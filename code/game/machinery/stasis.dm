@@ -17,12 +17,28 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+	var/mob/living/carbon/patient = null
+	var/obj/machinery/computer/operating/op_computer
+
+/obj/machinery/stasis/Initialize(mapload)
+	. = ..()
+	for(var/direction in GLOB.alldirs)
+		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
+		if(op_computer)
+			op_computer.sbed = src
+			break
 
 /obj/machinery/stasis/Destroy()
 	. = ..()
+	if(op_computer && op_computer.sbed == src)
+		op_computer.sbed = null
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
+	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
+	. += span_notice("The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.")
+	. += span_notice("patient = [patient]")
+	. += span_notice("op_computer = [op_computer]")
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
 
 /obj/machinery/stasis/proc/play_power_sound()
@@ -112,10 +128,12 @@
 	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
+	patient = occupant
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+	patient = null
 	if(target == occupant)
 		update_use_power(IDLE_POWER_USE)
 

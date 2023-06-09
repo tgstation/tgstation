@@ -52,8 +52,8 @@
 	desc = "The chicken goes bwaak!"
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_KITCHEN
-	contains = list(/mob/living/simple_animal/chicken,
-					/mob/living/simple_animal/chicken)
+	contains = list(/mob/living/basic/chicken,
+					/mob/living/basic/chicken)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/critter/corgi

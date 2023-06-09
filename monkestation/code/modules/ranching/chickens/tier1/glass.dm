@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/glass
+/mob/living/basic/chicken/glass
 	icon_suffix = "glass"
 
 	breed_name = "Glass"
@@ -12,4 +12,4 @@
 	max_volume = 5
 	icon_state = "glass"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/glass
+	layer_hen_type = /mob/living/basic/chicken/glass

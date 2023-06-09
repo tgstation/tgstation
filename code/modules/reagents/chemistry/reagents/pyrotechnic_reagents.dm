@@ -6,6 +6,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	color = "#550000"
 	taste_description = "sweet tasting metal"
+	turf_exposure = TRUE
 
 /datum/reagent/thermite/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -32,12 +33,6 @@
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-
-/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.mutmod = 0
-
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -47,6 +42,8 @@
 	taste_description = "burning"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	evaporation_rate = 100
+	turf_exposure = TRUE
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
@@ -197,17 +194,12 @@
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src.type, 1))
+	if(chems.has_reagent(type, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 6))
-			mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 7))
-		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
+			mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
-	if(!(myseed.resistance_flags & FIRE_PROOF))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
-		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
-
-	mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_fire_stacks(1 * REM * seconds_per_tick)
@@ -234,6 +226,7 @@
 	inverse_chem = /datum/reagent/inverse/cryostylane
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
+	turf_exposure = TRUE
 
 /datum/reagent/cryostylane/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))
@@ -359,6 +352,7 @@
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	turf_exposure = TRUE
 
 /datum/reagent/firefighting_foam/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()

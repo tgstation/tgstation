@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/silkie_black
+/mob/living/basic/chicken/silkie_black
 	icon_suffix = "silkie_black"
 
 	breed_name = "Black Selkie"
@@ -7,14 +7,14 @@
 
 	book_desc = "Besides being incredibly cute, these chickens act the same as White Chickens do."
 
-/mob/living/simple_animal/chicken/silkie_black/death(gibbed)
+/mob/living/basic/chicken/silkie_black/death(gibbed)
 	. = ..()
 	if(age >= max_age)
-		new /mob/living/simple_animal/chicken/dream(get_turf(src))
+		new /mob/living/basic/chicken/dream(get_turf(src))
 
 
 /obj/item/food/egg/silkie_black
 	name = "Black Selkie Egg"
 	icon_state = "silkie_black"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/silkie_black
+	layer_hen_type = /mob/living/basic/chicken/silkie_black
