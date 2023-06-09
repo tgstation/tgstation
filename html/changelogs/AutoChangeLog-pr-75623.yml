@@ -1,7 +1,0 @@
-author: "MTandi, Borbop"
-delete-after: True
-changes:
-  - bugfix: "Dust now has dust icon, instead of dirt icon. Dust on all maps replaced with dirt"
-  - image: "Flat dirt now picks from 4 new sprites"
-  - refactor: "Made broken tiling work more like tiling and have corresponding visuals. Added directional mapping variants."
-  - bugfix: "Cleanables now use FLOOR_CLEAN_LAYER to make sure that trash is visible above catwalks"
