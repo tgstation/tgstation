@@ -70,12 +70,20 @@
 	SEND_SOUND(M, S)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
-/proc/web_sound(mob/user, input)
-	if(!check_rights(R_SOUND))
-		return
+/proc/get_youtube_dl_data(input)
+	if(!istext(input))
+		return null;
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
+		return null;
+	var/shell_scrubbed_input = shell_url_scrub(input)
+	return world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
+
+///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
+/proc/web_sound(mob/user, input, range = null)
+	if(!check_rights(R_SOUND))
+		return
+	if(!CONFIG_GET(string/invoke_youtubedl))
 		to_chat(user, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 	var/web_sound_url = ""
@@ -83,8 +91,11 @@
 	var/list/music_extra_data = list()
 	var/duration = 0
 	if(istext(input))
-		var/shell_scrubbed_input = shell_url_scrub(input)
-		var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
+		var/list/output = get_youtube_dl_data(input)
+		// This should never happen, but it's good to check
+		if (output == null)
+			to_chat(user, span_boldwarning("Youtube-dl returned nothing"), confidential = TRUE)
+			return
 		var/errorlevel = output[SHELLEO_ERRORLEVEL]
 		var/stdout = output[SHELLEO_STDOUT]
 		var/stderr = output[SHELLEO_STDERR]
@@ -151,9 +162,14 @@
 	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
 		tgui_alert(user, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
 		to_chat(user, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
-
 		return
 	if(web_sound_url || stop_web_sounds)
+		var/list/players = GLOB.player_list
+		if (range)
+			players = list()
+			for (var/mob/listening_mob in get_hearers_in_view(range, user))
+				if (listening_mob.client)
+					players += listening_mob.client
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			var/client/C = M.client
@@ -192,9 +208,10 @@
 			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
 			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
-		web_sound(usr, web_sound_input)
+		var/number_input = tgui_input_number(usr, "What range would you like to play it in? (leave empty for everyone)", "Play Internet Sound", null)
+		web_sound(usr, web_sound_input, number_input)
 	else
-		web_sound(usr, null)
+		web_sound(usr, null, null)
 
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Admin.Fun"
