@@ -8,11 +8,11 @@
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(
 		/obj/item/clothing/head/wizard = 1,
-		/obj/item/clothing/suit/wizrobe = 1,
+		/obj/item/clothing/suit/hooded/wizrobe = 1,
 		/obj/item/clothing/head/wizard/red = 1,
-		/obj/item/clothing/suit/wizrobe/red = 1,
+		/obj/item/clothing/suit/hooded/wizrobe/red = 1,
 		/obj/item/clothing/head/wizard/yellow = 1,
-		/obj/item/clothing/suit/wizrobe/yellow = 1,
+		/obj/item/clothing/suit/hooded/wizrobe/yellow = 1,
 		/obj/item/clothing/shoes/sandal/magic = 1,
 		/obj/item/staff = 2,
 	)

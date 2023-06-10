@@ -224,7 +224,7 @@
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
 	uniform = /obj/item/clothing/under/color/lightpurple
-	suit = /obj/item/clothing/suit/wizrobe
+	suit = /obj/item/clothing/suit/hooded/wizrobe
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/wizard
 
@@ -233,7 +233,7 @@
 	outfit = /datum/outfit/wizardcorpse/dark
 
 /datum/outfit/wizardcorpse/dark
-	head = /obj/item/clothing/head/wizard/hood
+	head = /obj/item/clothing/head/hooded/wizard
 
 /obj/effect/mob_spawn/corpse/human/wizard/paper
 	name = "Paper Wizard Corpse"
@@ -242,7 +242,7 @@
 /datum/outfit/paper_wizard
 	name = "Paper Wizard"
 	uniform = /obj/item/clothing/under/color/white
-	suit = /obj/item/clothing/suit/wizrobe/paper
+	suit = /obj/item/clothing/suit/hooded/wizrobe/paper
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/collectable/paper
 

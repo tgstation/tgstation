@@ -184,7 +184,7 @@
 		its employees that actually joining the Wizard Federation is subject to termination of job and life."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/staff,
-					/obj/item/clothing/suit/wizrobe/fake,
+					/obj/item/clothing/suit/hooded/wizrobe/fake,
 					/obj/item/clothing/shoes/sandal,
 					/obj/item/clothing/head/wizard/fake,
 				)

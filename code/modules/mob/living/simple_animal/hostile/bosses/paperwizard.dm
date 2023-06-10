@@ -205,6 +205,6 @@
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
 	new /obj/effect/temp_visual/paper_scatter(T)
-	new /obj/item/clothing/suit/wizrobe/paper(T)
+	new /obj/item/clothing/suit/hooded/wizrobe/paper(T)
 	new /obj/item/clothing/head/collectable/paper(T)
 	return ..()

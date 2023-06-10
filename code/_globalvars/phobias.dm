@@ -422,7 +422,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/suit/hooded/cultrobes,
-		/obj/item/clothing/suit/wizrobe,
+		/obj/item/clothing/suit/hooded/wizrobe,
 		/obj/item/clothing/under/rank/civilian/chaplain,
 		/obj/item/codex_cicatrix,
 		/obj/item/cult_bastard,

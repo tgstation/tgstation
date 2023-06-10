@@ -60,10 +60,10 @@ STI KALY - blind
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), ITEM_SLOT_HEAD)
 			return
 		if(prob(chance))
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/hooded/wizrobe))
 				if(!H.dropItemToGround(H.wear_suit))
 					qdel(H.wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), ITEM_SLOT_OCLOTHING)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/wizrobe(H), ITEM_SLOT_OCLOTHING)
 			return
 		if(prob(chance))
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))

@@ -18,7 +18,7 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout[ITEM_SLOT_OCLOTHING] = /obj/item/clothing/suit/wizrobe
+			loadout[ITEM_SLOT_OCLOTHING] = /obj/item/clothing/suit/hooded/wizrobe
 			loadout[ITEM_SLOT_FEET] = /obj/item/clothing/shoes/sandal/magic
 			loadout[ITEM_SLOT_HEAD] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1

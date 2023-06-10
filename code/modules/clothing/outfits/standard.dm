@@ -284,7 +284,7 @@
 	name = "Blue Wizard"
 
 	uniform = /obj/item/clothing/under/color/lightpurple
-	suit = /obj/item/clothing/suit/wizrobe
+	suit = /obj/item/clothing/suit/hooded/wizrobe
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
 		/obj/item/spellbook = 1,
@@ -322,13 +322,13 @@
 /datum/outfit/wizard/red
 	name = "Red Wizard"
 
-	suit = /obj/item/clothing/suit/wizrobe/red
+	suit = /obj/item/clothing/suit/hooded/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
 
 /datum/outfit/wizard/weeb
 	name = "Marisa Wizard"
 
-	suit = /obj/item/clothing/suit/wizrobe/marisa
+	suit = /obj/item/clothing/suit/hooded/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
@@ -336,7 +336,7 @@
 	name = "Academy Wizard"
 	r_pocket = null
 	r_hand = null
-	suit = /obj/item/clothing/suit/wizrobe/red
+	suit = /obj/item/clothing/suit/hooded/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
 	backpack_contents = list()
 

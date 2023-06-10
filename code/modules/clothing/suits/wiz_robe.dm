@@ -84,11 +84,29 @@
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
 
-/obj/item/clothing/head/wizard/hood
+/obj/item/clothing/head/hooded/wizard
 	name = "wizard hood"
 	icon_state = "wizhood"
 
-/obj/item/clothing/suit/wizrobe
+	armor_type = /datum/armor/head_wizard
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+	icon = 'icons/obj/clothing/head/wizard.dmi'
+	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
+
+/obj/item/clothing/head/hooded/wizard/red
+	name = "wizard hood"
+	icon_state = "wizhood-red"
+
+/obj/item/clothing/head/hooded/wizard/yellow
+	name = "wizard hood"
+	icon_state = "wizhood-yellow"
+
+/obj/item/clothing/head/hooded/wizard/black
+	name = "wizard hood"
+	icon_state = "wizhood-black"
+
+/obj/item/clothing/suit/hooded/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
 	icon = 'icons/obj/clothing/suits/wizard.dmi'
@@ -104,6 +122,8 @@
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	hoodtype = /obj/item/clothing/head/hooded/wizard
+
 /datum/armor/suit_wizrobe
 	melee = 30
 	bullet = 20
@@ -115,55 +135,63 @@
 	acid = 100
 	wound = 20
 
-/obj/item/clothing/suit/wizrobe/red
+/obj/item/clothing/suit/hooded/wizrobe/red
 	name = "red wizard robe"
 	desc = "A magnificent red gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
 	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/wizard/red
 
-/obj/item/clothing/suit/wizrobe/yellow
+/obj/item/clothing/suit/hooded/wizrobe/yellow
 	name = "yellow wizard robe"
 	desc = "A magnificent yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
 	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/wizard/yellow
 
-/obj/item/clothing/suit/wizrobe/black
+/obj/item/clothing/suit/hooded/wizrobe/black
 	name = "black wizard robe"
 	desc = "An unnerving black gem-lined robe that reeks of death and decay."
 	icon_state = "blackwizard"
 	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/wizard/black
 
-/obj/item/clothing/suit/wizrobe/marisa
+/obj/item/clothing/suit/hooded/wizrobe/marisa
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	inhand_icon_state = null
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/tape
+/obj/item/clothing/suit/hooded/wizrobe/tape
 	name = "tape robe"
 	desc = "A fine robe made from magically attuned duct tape."
 	icon_state = "taperobe"
 	inhand_icon_state = "taperobe"
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/magusblue
+/obj/item/clothing/suit/hooded/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	inhand_icon_state = null
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/magusred
+/obj/item/clothing/suit/hooded/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	inhand_icon_state = null
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/santa
+/obj/item/clothing/suit/hooded/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
 	inhand_icon_state = "santa"
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/fake
+/obj/item/clothing/suit/hooded/wizrobe/fake
 	name = "wizard robe"
 	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
@@ -182,7 +210,7 @@
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
-/obj/item/clothing/suit/wizrobe/marisa/fake
+/obj/item/clothing/suit/hooded/wizrobe/marisa/fake
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
@@ -190,13 +218,13 @@
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
-/obj/item/clothing/suit/wizrobe/tape/fake
+/obj/item/clothing/suit/hooded/wizrobe/tape/fake
 	name = "tape robe"
 	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
-/obj/item/clothing/suit/wizrobe/paper
+/obj/item/clothing/suit/hooded/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
@@ -204,12 +232,13 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
+	hoodtype = null
 
-/obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
+/obj/item/clothing/suit/hooded/wizrobe/paper/ui_action_click(mob/user, action)
 	stickmen()
 
 
-/obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
+/obj/item/clothing/suit/hooded/wizrobe/paper/verb/stickmen()
 	set category = "Object"
 	set name = "Summon Stick Minions"
 	if(!isliving(usr))

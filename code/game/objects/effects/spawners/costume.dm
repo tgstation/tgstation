@@ -164,14 +164,14 @@
 	items = list(
 		/obj/item/clothing/shoes/sneakers/marisa,
 		/obj/item/clothing/head/wizard/marisa/fake,
-		/obj/item/clothing/suit/wizrobe/marisa/fake,
+		/obj/item/clothing/suit/hooded/wizrobe/marisa/fake,
 	)
 
 /obj/effect/spawner/costume/tape_wizard
 	name = "tape wizard costume spawner"
 	items = list(
 		/obj/item/clothing/head/wizard/tape/fake,
-		/obj/item/clothing/suit/wizrobe/tape/fake,
+		/obj/item/clothing/suit/hooded/wizrobe/tape/fake,
 		/obj/item/staff/tape,
 	)
 
@@ -187,7 +187,7 @@
 	name = "wizard costume spawner"
 	items = list(
 		/obj/item/clothing/shoes/sandal,
-		/obj/item/clothing/suit/wizrobe/fake,
+		/obj/item/clothing/suit/hooded/wizrobe/fake,
 		/obj/item/clothing/head/wizard/fake,
 		/obj/item/staff,
 	)

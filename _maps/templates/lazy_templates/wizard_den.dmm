@@ -152,7 +152,7 @@
 "pa" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/wizard/tape,
-/obj/item/clothing/suit/wizrobe/tape,
+/obj/item/clothing/suit/hooded/wizrobe/tape,
 /obj/item/staff/tape,
 /obj/item/stack/sticky_tape/super,
 /turf/open/floor/engine/cult,
@@ -237,7 +237,7 @@
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "xn" = (
-/obj/item/clothing/suit/wizrobe/black,
+/obj/item/clothing/suit/hooded/wizrobe/black,
 /obj/item/clothing/head/wizard/black,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -267,7 +267,7 @@
 /area/centcom/wizard_station)
 "Dc" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/wizrobe/magusblue,
+/obj/item/clothing/suit/hooded/wizrobe/magusblue,
 /obj/item/clothing/head/wizard/magus,
 /obj/item/staff,
 /obj/structure/mirror/magic{
@@ -286,7 +286,7 @@
 /area/centcom/wizard_station)
 "DX" = (
 /obj/item/clothing/shoes/sneakers/marisa,
-/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/suit/hooded/wizrobe/marisa,
 /obj/item/clothing/head/wizard/marisa,
 /obj/item/staff/broom,
 /turf/open/floor/engine/cult,
@@ -386,7 +386,7 @@
 /area/centcom/wizard_station)
 "PF" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/wizrobe/magusred,
+/obj/item/clothing/suit/hooded/wizrobe/magusred,
 /obj/item/clothing/head/wizard/magus,
 /obj/item/staff,
 /turf/open/floor/engine/cult,
@@ -456,7 +456,7 @@
 /area/centcom/wizard_station)
 "Uu" = (
 /obj/structure/closet/crate/preopen,
-/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/suit/hooded/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
 /obj/item/staff,
 /obj/item/clothing/shoes/sandal/magic,

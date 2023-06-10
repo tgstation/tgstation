@@ -33,7 +33,7 @@
 
 /obj/item/storage/box/tape_wizard/PopulateContents()
 	new /obj/item/clothing/head/wizard/tape/fake(src)
-	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
+	new /obj/item/clothing/suit/hooded/wizrobe/tape/fake(src)
 	new /obj/item/staff/tape(src)
 	new /obj/item/stack/sticky_tape(src)
 
