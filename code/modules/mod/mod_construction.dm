@@ -64,9 +64,9 @@
 	. = ..()
 	. += span_notice("You could probably attach some <b>wires</b> to it...")
 
-/obj/item/mod/construction/lavalandcore/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/stack/cable_coil))
-		if(!P.tool_start_check(user, amount=2))
+/obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/stack/cable_coil))
+		if(!weapon.tool_start_check(user, amount=2))
 			return
 
 		to_chat(user, span_notice("You start pushing the wires into the core..."))
