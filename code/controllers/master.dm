@@ -449,11 +449,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	//the actual loop.
 	while (1)
 		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
+		var/starting_tick_usage = TICK_USAGE
+
 		if(newdrift - olddrift >= DRIFT_DUMP_THRESHOLD)
 			AttemptProfileDump(DRIFT_PROFILE_DELAY)
 		olddrift = newdrift
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
-		var/starting_tick_usage = TICK_USAGE
 
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
@@ -818,7 +819,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 /// Attempts to dump our current profile info into a file, triggered if the MC thinks shit is going down
 /// Accepts a delay in deciseconds of how long ago our last dump can be, this saves causing performance problems ourselves
 /datum/controller/master/proc/AttemptProfileDump(delay)
-	if(REALTIMEOFDAY - delay <= last_profiled)
+	if(REALTIMEOFDAY - last_profiled <= delay)
 		return FALSE
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
