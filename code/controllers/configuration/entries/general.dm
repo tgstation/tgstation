@@ -623,6 +623,15 @@
 
 /datum/config_entry/flag/auto_profile
 
+/datum/config_entry/number/drift_dump_threshold
+	default = 4 SECONDS
+
+/datum/config_entry/number/drift_profile_delay
+	default = 15 SECONDS
+
+/datum/config_entry/number/sleep_profile_delay
+	default = 30 SECONDS
+
 /datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
 
 /datum/config_entry/string/centcom_source_whitelist

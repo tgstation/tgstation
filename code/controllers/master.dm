@@ -452,8 +452,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
 
-		if(newdrift - olddrift >= DRIFT_DUMP_THRESHOLD)
-			AttemptProfileDump(DRIFT_PROFILE_DELAY)
+		if(newdrift - olddrift >= CONFIG_GET(number/drift_dump_threshold))
+			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
 		olddrift = newdrift
 
 		if (init_stage != init_stage_completed)
@@ -470,7 +470,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
 				sleep_delta *= 2
 				current_ticklimit = TICK_LIMIT_RUNNING * 0.5
-				AttemptProfileDump(SLEEP_PROFILE_DELAY)
+				AttemptProfileDump(CONFIG_GET(number/sleep_profile_delay))
 				sleep(world.tick_lag * (processing * sleep_delta))
 				continue
 
