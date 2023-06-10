@@ -177,7 +177,7 @@
 
 ///Handles the initial steps of clogging a vent, either at event start or when the vent moves.
 /datum/round_event/vent_clog/proc/clog_vent()
-	RegisterSignal(vent, COMSIG_PARENT_QDELETING, PROC_REF(vent_move))
+	RegisterSignal(vent, COMSIG_QDELETING, PROC_REF(vent_move))
 	RegisterSignal(vent, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
 
 	for(var/turf/nearby_turf in view(2, get_turf(vent)))
@@ -188,7 +188,7 @@
 
 ///Clears the signals related to the event, before we wrap things up.
 /datum/round_event/vent_clog/proc/clear_signals()
-	UnregisterSignal(vent, list(COMSIG_PARENT_QDELETING, COMSIG_PLUNGER_ACT))
+	UnregisterSignal(vent, list(COMSIG_QDELETING, COMSIG_PLUNGER_ACT))
 
 /datum/round_event_control/vent_clog/major
 	name = "Ventilation Clog: Major"

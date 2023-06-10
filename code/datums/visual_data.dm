@@ -85,10 +85,10 @@
 /datum/visual_data/proc/set_eye(atom/new_eye)
 	var/atom/old_eye = client_eye?.resolve()
 	if(old_eye)
-		UnregisterSignal(old_eye, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(old_eye, COMSIG_QDELETING)
 	if(new_eye)
 		// Need to update any party's client.eyes
-		RegisterSignal(new_eye, COMSIG_PARENT_QDELETING, PROC_REF(eye_deleted))
+		RegisterSignal(new_eye, COMSIG_QDELETING, PROC_REF(eye_deleted))
 	client_eye = WEAKREF(new_eye)
 	on_update()
 

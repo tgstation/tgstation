@@ -94,7 +94,7 @@
 	new_link.Grant(to_link)
 
 	linked_mobs[to_link] = new_link
-	RegisterSignals(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(sig_unlink_mob))
+	RegisterSignals(to_link, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(sig_unlink_mob))
 
 	return TRUE
 
@@ -115,7 +115,7 @@
 
 	post_unlink_callback?.Invoke(to_unlink)
 
-	UnregisterSignal(to_unlink, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(to_unlink, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
 	var/datum/action/innate/linked_speech/old_link = linked_mobs[to_unlink]
 	linked_mobs -= to_unlink

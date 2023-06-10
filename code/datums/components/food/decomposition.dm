@@ -42,7 +42,7 @@
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
 		PROC_REF(dropped))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 	if(custom_time) // We have a custom decomposition time, set it to that
 		original_time = custom_time
@@ -63,7 +63,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ATOM_EXITED,
-		COMSIG_PARENT_EXAMINE))
+		COMSIG_ATOM_EXAMINE))
 
 /datum/component/decomposition/proc/handle_movement()
 	SIGNAL_HANDLER
