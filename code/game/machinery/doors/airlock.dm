@@ -318,7 +318,7 @@
 	return ((aiControlDisabled == AI_WIRE_DISABLED) && (!hackProof) && (!isAllPowerCut()));
 
 /obj/machinery/door/airlock/hasPower()
-	return ((!main_power_outage_time() || !backup_power_outage_time()) && !(machine_stat & NOPOWER))
+	return ((!remaining_main_outage() || !remaining_backup_outage()) && !(machine_stat & NOPOWER))
 
 /obj/machinery/door/airlock/requiresID()
 	return !(wires.is_cut(WIRE_IDSCAN) || aiDisabledIdScanner)
@@ -330,7 +330,7 @@
 /// Returns the amount of time we have to wait before main power comes back
 /// Assuming it was actively regenerating
 /// Returns 0 if it is active
-/obj/machinery/door/airlock/proc/main_power_outage_time()
+/obj/machinery/door/airlock/proc/remaining_main_outage()
 	if(main_power_timer)
 		return timeleft(main_power_timer)
 	return main_power_time
@@ -338,12 +338,12 @@
 /// Returns the amount of time we have to wait before backup power comes back
 /// Assuming it was actively regenerating
 /// Returns 0 if it is active
-/obj/machinery/door/airlock/proc/backup_power_outage_time()
+/obj/machinery/door/airlock/proc/remaining_backup_outage()
 	if(backup_power_timer)
 		return timeleft(backup_power_timer)
 	return backup_power_time
 
-/obj/machinery/door/airlock/proc/set_main_power_outage(delay)
+/obj/machinery/door/airlock/proc/set_main_outage(delay)
 	// Clear out the timer so we don't accidentially take from it later
 	if(main_power_timer)
 		deltimer(main_power_timer)
@@ -354,7 +354,7 @@
 	if(!!old_time != !!delay)
 		update_appearance()
 
-/obj/machinery/door/airlock/proc/set_backup_power_outage(delay)
+/obj/machinery/door/airlock/proc/set_backup_outage(delay)
 	// Clear out the timer so we don't accidentially take from it later
 	if(backup_power_timer)
 		deltimer(backup_power_timer)
@@ -376,7 +376,7 @@
 	// If we can, we'll start a timer that hits when we're done
 	if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 		if(!main_power_timer || timeleft(main_power_timer) != main_power_time)
-			main_power_timer = addtimer(CALLBACK(src, PROC_REF(regainMainPower)), main_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+			main_power_timer = addtimer(CALLBACK(src, PROC_REF(regainMainPower)), main_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	// Otherwise, we'll ensure the timer matches main_power_time
 	else if(main_power_timer)
 		main_power_time = timeleft(main_power_timer)
@@ -394,15 +394,12 @@
 	// If we can, we'll start a timer that hits when we're done
 	if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
 		if(!backup_power_timer || timeleft(backup_power_timer) != backup_power_time)
-			main_power_timer = addtimer(CALLBACK(src, PROC_REF(regainBackupPower)), backup_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+			main_power_timer = addtimer(CALLBACK(src, PROC_REF(regainBackupPower)), backup_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	// Otherwise, we'll ensure the timer matches backup_power_time
 	else if(backup_power_timer)
 		backup_power_time = timeleft(backup_power_timer)
 		deltimer(backup_power_timer)
 		backup_power_timer = null
-
-/obj/machinery/door/airlock/proc/regainMainPower()
-	set_main_power_outage(0)
 
 // Alright, we're gonna do a meme here
 /obj/machinery/door/airlock/set_wires(datum/wires/new_wires)
@@ -435,19 +432,22 @@
 	SIGNAL_HANDLER
 	handle_main_power()
 	handle_backup_power()
+	
+/obj/machinery/door/airlock/proc/regainMainPower()
+	set_main_outage(0)
 
 /obj/machinery/door/airlock/proc/loseMainPower()
-	if(!main_power_outage_time())
-		set_main_power_outage(60 SECONDS)
-		if(backup_power_outage_time() < 10 SECONDS)
-			set_backup_power_outage(10 SECONDS)
+	if(!remaining_main_outage())
+		set_main_outage(60 SECONDS)
+		if(remaining_backup_outage() < 10 SECONDS)
+			set_backup_outage(10 SECONDS)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
-	if(backup_power_outage_time() < 60 SECONDS)
-		set_backup_power_outage(60 SECONDS)
+	if(remaining_backup_outage() < 60 SECONDS)
+		set_backup_outage(60 SECONDS)
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
-	set_backup_power_outage(0)
+	set_backup_outage(0)
 
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
@@ -1553,10 +1553,10 @@
 	var/list/data = list()
 
 	var/list/power = list()
-	power["main"] = main_power_outage_time() ? 0 : 2 // boolean
-	power["main_timeleft"] = main_power_outage_time()
-	power["backup"] = backup_power_outage_time() ? 0 : 2 // boolean
-	power["backup_timeleft"] = backup_power_outage_time()
+	power["main"] = remaining_main_outage() ? 0 : 2 // boolean
+	power["main_timeleft"] = remaining_main_outage()
+	power["backup"] = remaining_backup_outage() ? 0 : 2 // boolean
+	power["backup_timeleft"] = remaining_backup_outage()
 	data["power"] = power
 
 	data["shock"] = secondsElectrified == MACHINE_NOT_ELECTRIFIED ? 2 : 0
@@ -1594,14 +1594,14 @@
 		return
 	switch(action)
 		if("disrupt-main")
-			if(main_power_outage_time())
+			if(remaining_main_outage())
 				loseMainPower()
 				update_appearance()
 			else
 				to_chat(usr, span_warning("Main power is already offline."))
 			. = TRUE
 		if("disrupt-backup")
-			if(backup_power_outage_time())
+			if(remaining_backup_outage())
 				loseBackupPower()
 				update_appearance()
 			else
