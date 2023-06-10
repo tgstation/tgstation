@@ -1,0 +1,7 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "The RD's plant will no longer say that it's not very healthy after being restored with seeds."
+  - bugfix: "Potted plants no longer randomly swap icons after being thrown."
+  - bugfix: "Plants that started the round dead are no longer all the same kind once revived."
+  - bugfix: "Admins can now varedit plants to be alive / dead!"

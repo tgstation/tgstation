@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ai" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/template_noop,
-/area/template_noop)
 "ar" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/green,
@@ -27,6 +20,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/security,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
+"aQ" = (
+/obj/structure/broken_flooring/pile/directional/north,
+/turf/template_noop,
+/area/template_noop)
 "be" = (
 /obj/structure/toilet{
 	dir = 8
@@ -538,15 +535,6 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"jN" = (
-/obj/effect/turf_decal/bot_red,
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/wt550{
-	pin = /obj/item/firing_pin/explorer
-	},
-/obj/item/ammo_box/magazine/wt550m9,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/securestorage)
 "jV" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -989,6 +977,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"pE" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
 "pF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -1027,6 +1019,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/ruin/space/has_grav/waystation/cargooffice)
+"qy" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "qC" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
@@ -1168,13 +1164,6 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"sm" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
-/turf/template_noop,
-/area/template_noop)
 "su" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1199,13 +1188,6 @@
 "tb" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
-"tf" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "pile"
-	},
-/turf/template_noop,
-/area/template_noop)
 "tg" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -1555,13 +1537,6 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"zV" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/closed/mineral/random/low_chance,
-/area/ruin/space)
 "zZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2188,6 +2163,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
+"Ms" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/ballistic/automatic/wt550{
+	pin = /obj/item/firing_pin/explorer
+	},
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/securestorage)
 "Mu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2342,6 +2326,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/qm)
+"Or" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "OM" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -4574,7 +4562,7 @@ Sj
 Sj
 no
 Sj
-sm
+qy
 Ya
 Ya
 Ya
@@ -4629,7 +4617,7 @@ TT
 Ya
 Ya
 Ya
-ai
+Or
 vi
 no
 Sj
@@ -4783,7 +4771,7 @@ iJ
 iJ
 pK
 pK
-zV
+pE
 yg
 Mu
 Mu
@@ -4881,7 +4869,7 @@ Wd
 XF
 no
 Sj
-tf
+aQ
 no
 Ya
 Ya
@@ -5468,7 +5456,7 @@ pK
 pK
 yi
 Ok
-jN
+Ms
 er
 nD
 Ar
