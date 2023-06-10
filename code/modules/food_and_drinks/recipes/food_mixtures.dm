@@ -255,3 +255,10 @@
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/grounding_neutralise
+	results = list(/datum/reagent/consumable/salt = 2)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
+	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
+	mix_sound = 'sound/weapons/taser.ogg'
+	reaction_flags = REACTION_INSTANT

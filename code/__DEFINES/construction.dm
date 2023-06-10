@@ -96,6 +96,7 @@
 #define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_SEAFOOD "Seafood"
+#define CAT_MARTIAN "Martian Food"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"
 #define CAT_MOTH "Mothic Food"

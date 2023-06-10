@@ -1676,3 +1676,31 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 	return ..()
+
+/datum/reagent/consumable/hakka_mate
+	name = "Hakka-Mate"
+	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."
+	color = "#c4b000"
+	taste_description = "bubbly yerba mate"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/hakka_mate
+	required_drink_type = /datum/reagent/consumable/hakka_mate
+	name = "glass of Hakka-Mate"
+	desc = "The perfect drink for hacking. Just don't pour it on your computer, that'll only slow you down."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "hakka_mate"
+
+/datum/reagent/consumable/coconut_milk
+	name = "Coconut Milk"
+	description = "A versatile milk substitute that's perfect for everything from cooking to making cocktails."
+	color = "#DFDFDF"
+	taste_description = "milky coconut"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/coconut_milk
+	required_drink_type = /datum/reagent/consumable/coconut_milk
+	name = "glass of coconut milk"
+	desc = "The essence of the tropics, contained safely within a glass."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "glass_white"

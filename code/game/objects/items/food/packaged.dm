@@ -145,6 +145,35 @@
 	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	qdel(src)
 
+/obj/item/food/canned/squid_ink
+	name = "canned squid ink"
+	desc = "An odd ingredient in typical cooking, squid ink lends a taste of the sea to any dish- while also dyeing it jet black in the process."
+	icon_state = "squidinkcan"
+	trash_type = /obj/item/trash/can/food/squid_ink
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
+	tastes = list("seafood" = 7, "tin" = 1)
+	foodtypes = SEAFOOD
+
+/obj/item/food/canned/chap
+	name = "can of chap"
+	desc = "CHAP: Chopped Ham And Pork. The classic American canned meat product that won a world war, then sent millions of servicemen home with heart congestion."
+	icon_state = "chapcan"
+	trash_type = /obj/item/trash/can/food/chap
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
+	tastes = list("meat" = 7, "tin" = 1)
+	foodtypes = MEAT
+
+/obj/item/food/chapslice
+	name = "slice of chap"
+	desc = "A thin slice of chap. Useful for frying, or making sandwiches."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "chapslice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 3
+	)
+	tastes = list("meat" = 1)
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_SMALL
 
 // DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
 /obj/item/food/ready_donk
@@ -218,6 +247,35 @@
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
+/obj/item/food/ready_donk/nachos_grandes //which translates to... big nachos
+	name = "\improper Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
+	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Batter up!"
+	tastes = list("nachos" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/nachos_grandes
+
+/obj/item/food/ready_donk/warm/nachos_grandes
+	name = "warm Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
+	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Served hotter than Sakamoto's fastball!"
+	icon_state = "ready_donk_warm_nachos"
+	tastes = list("nachos" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/donkrange_chicken
+	name = "\improper Ready-Donk: Donk-range Chicken"
+	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice."
+	tastes = list("orange chicken" = 2, "laziness" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/donkrange_chicken
+
+/obj/item/food/ready_donk/warm/donkrange_chicken
+	name = "warm Ready-Donk: Ready-Donk: Donk-range Chicken"
+	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice and served hotter than a dragon's breath."
+	icon_state = "ready_donk_warm_orange"
+	tastes = list("orange chicken" = 2, "laziness" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
 
 // Rations
 /obj/item/food/rationpack

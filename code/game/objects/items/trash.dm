@@ -180,3 +180,10 @@
 	desc = "It's been Donk-decimated."
 	icon_state = "ready_donk"
 
+/obj/item/trash/can/food/squid_ink
+	name = "canned squid ink"
+	icon_state = "pinenutscan_empty"
+
+/obj/item/trash/can/food/chap
+	name = "can of chap"
+	icon_state = "pinenutscan_empty"
