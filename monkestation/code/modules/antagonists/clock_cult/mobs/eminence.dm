@@ -20,7 +20,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	sight = SEE_SELF
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	initial_language_holder = /datum/language_holder/universal //lesser god, they CAN understand you
-	hud_possible = null
+	hud_possible = list(ANTAG_HUD)
 
 	//slight orange
 	lighting_cutoff_red = 35
