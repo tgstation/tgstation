@@ -50,3 +50,4 @@
 
 /datum/armor/curator_nasa
 	bio = 95
+	wound = 5

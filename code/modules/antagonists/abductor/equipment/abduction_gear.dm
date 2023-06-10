@@ -904,6 +904,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /datum/armor/under_abductor
 	bomb = 10
 	bio = 10
+	wound = 5
 
 #undef BATON_CUFF
 #undef BATON_MODES

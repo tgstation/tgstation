@@ -14,6 +14,7 @@
 	bomb = 10
 	bio = 10
 	acid = 35
+	wound = 5
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."
@@ -75,6 +76,7 @@
 
 /datum/armor/rnd_scientist
 	bio = 50
+	wound = 5
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -112,6 +114,7 @@
 
 /datum/armor/rnd_geneticist
 	bio = 50
+	wound = 5
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"

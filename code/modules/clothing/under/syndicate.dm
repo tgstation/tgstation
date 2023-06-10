@@ -14,6 +14,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
@@ -32,6 +33,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -50,6 +52,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/bloodred/sleepytime
 	name = "blood-red pajamas"
@@ -76,6 +79,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 5
 
 /obj/item/clothing/under/syndicate/tacticool/examine(mob/user)
 	. = ..()
@@ -109,6 +113,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 5
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"
@@ -135,6 +140,7 @@
 /datum/armor/syndicate_soviet
 	melee = 10
 	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/syndicate/combat
 	name = "combat uniform"
@@ -153,6 +159,7 @@
 /datum/armor/syndicate_rus_army
 	melee = 5
 	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/syndicate/scrubs
 	name = "tactical scrubs"
@@ -168,3 +175,4 @@
 	bio = 50
 	fire = 50
 	acid = 40
+	wound = 5

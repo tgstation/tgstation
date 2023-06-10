@@ -258,6 +258,7 @@
 	bio = 10
 	fire = 30
 	acid = 30
+	wound = 5
 
 /obj/item/clothing/under/costume/buttondown
 	gender = PLURAL

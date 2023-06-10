@@ -5,6 +5,7 @@
 
 /datum/armor/rank_medical
 	bio = 50
+	wound = 5
 
 /obj/item/clothing/under/rank/medical/doctor
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
@@ -126,6 +127,7 @@
 	bio = 10
 	fire = 50
 	acid = 65
+	wound = 5
 
 /obj/item/clothing/under/rank/medical/chemist/skirt
 	name = "chemist's jumpskirt"

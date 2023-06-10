@@ -30,7 +30,7 @@
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
+		sensor_mode = pick(SENSOR_VITALS = 3, SENSOR_LIVING = 2, SENSOR_COORDS = 2, SENSOR_OFF = 1)
 	register_context()
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

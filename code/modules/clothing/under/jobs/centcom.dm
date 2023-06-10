@@ -67,6 +67,7 @@
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/rank/centcom/military/eng
 	name = "tactical engineering uniform"
