@@ -72,10 +72,10 @@
 
 /proc/get_youtube_dl_data(input)
 	if(!istext(input))
-		return null;
-	var/ytdl = CONFIG_GET(string/invoke_youtubedl);
+		return null
+	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
-		return null;
+		return null
 	var/shell_scrubbed_input = shell_url_scrub(input)
 	return world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 
