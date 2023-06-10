@@ -60,7 +60,7 @@
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
-	wires = new /datum/wires/emitter(src)
+	set_wires(new /datum/wires/emitter(src))
 	if(welded)
 		if(!anchored)
 			set_anchored(TRUE)

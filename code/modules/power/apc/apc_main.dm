@@ -175,7 +175,7 @@
 		name = "\improper [get_area_name(area, TRUE)] APC"
 
 	//Initialize its electronics
-	wires = new /datum/wires/apc(src)
+	set_wires(new /datum/wires/apc(src))
 	alarm_manager = new(src)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	// for apcs created during map load make them fully functional

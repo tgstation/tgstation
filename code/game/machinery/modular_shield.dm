@@ -99,7 +99,7 @@
 
 /obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/modular_shield_generator(src)
+	set_wires(new /datum/wires/modular_shield_generator(src))
 	if(mapload && active && anchored)
 		activate_shields()
 

@@ -51,7 +51,7 @@
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
 
-	wires = new /datum/wires/microwave(src)
+	set_wires(new /datum/wires/microwave(src))
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON)

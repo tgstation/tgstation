@@ -36,7 +36,7 @@
 
 /obj/machinery/power/energy_accumulator/tesla_coil/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src)
+	set_wires(new /datum/wires/tesla_coil(src))
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()
