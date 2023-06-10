@@ -545,7 +545,7 @@
 	set_frequency(FREQ_SYNDICATE)
 
 /obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
-	if(keyslot && keyslot.canRemove)
+	if(keyslot?.canRemove)
 		for(var/ch_name in channels)
 			SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 			secure_radio_connections[ch_name] = null
