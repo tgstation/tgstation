@@ -39,6 +39,10 @@
 /mob/living/basic/butterfly/lavaland,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
+"k" = (
+/obj/item/food/grown/mushroom/amanita,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
 "l" = (
 /obj/item/food/grown/mushroom/angel,
 /turf/open/misc/grass/lavaland,
@@ -52,18 +56,11 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "o" = (
-<<<<<<< HEAD
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/bronze/filled/lavaland,
-=======
-/obj/structure/flora/bush/sunny/style_random,
-/obj/structure/flora/bush/flowers_pp/style_3,
-/turf/open/misc/grass/lavaland,
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 /area/ruin/unpowered/gaia)
 "p" = (
-/mob/living/simple_animal/hostile/lightgeist{
-	AIStatus = 1;
+/mob/living/basic/lightgeist{
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
@@ -86,11 +83,6 @@
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
-"u" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
 "v" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/misc/grass/lavaland,
@@ -99,16 +91,9 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/gaia)
 "x" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"y" = (
-/obj/item/mod/construction/lavalandcore,
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"z" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/gaia)
 "A" = (
 /obj/structure/flora/bush/stalky/style_random,
@@ -116,8 +101,7 @@
 /area/ruin/unpowered/gaia)
 "B" = (
 /obj/structure/flora/grass/jungle/a/style_random,
-/mob/living/simple_animal/hostile/lightgeist{
-	AIStatus = 1;
+/mob/living/basic/lightgeist{
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
@@ -130,71 +114,41 @@
 /obj/item/food/grown/mushroom/chanterelle,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
-<<<<<<< HEAD
-"F" = (
-/obj/item/food/grown/mushroom/amanita,
+"E" = (
 /turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"G" = (
-/obj/structure/flora/bush/stalky/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"H" = (
-/turf/closed/wall/mineral/bronze,
 /area/ruin/unpowered/gaia)
 "I" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/gaia)
-"K" = (
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"N" = (
-/obj/structure/flora/bush/sunny/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-=======
 "J" = (
 /turf/closed/wall/mineral/bronze,
 /area/ruin/unpowered/gaia)
-"N" = (
-/obj/structure/flora/bush/sunny/style_random,
-/obj/structure/flora/bush/flowers_pp/style_2,
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"O" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-<<<<<<< HEAD
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"P" = (
-/obj/item/mod/construction/lavalandcore,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"R" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-=======
-/obj/structure/flora/bush/flowers_pp/style_random,
-/turf/open/misc/grass/lavaland,
-/area/ruin/unpowered/gaia)
-"P" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/floor/bronze/filled/lavaland,
-/area/ruin/unpowered/gaia)
-"R" = (
+"K" = (
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/gaia)
-"S" = (
-/mob/living/basic/butterfly/lavaland,
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
-/turf/closed/wall/mineral/bronze,
+"N" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
+"P" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/misc/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"T" = (
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/gaia)
 "V" = (
-/turf/open/floor/bronze/filled/lavaland,
+/obj/item/mod/construction/lavalandcore,
+/turf/open/misc/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"Z" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/closed/wall/mineral/bronze,
 /area/ruin/unpowered/gaia)
 
 (1,1,1) = {"
@@ -223,9 +177,9 @@ a
 w
 w
 c
-O
+N
 c
-z
+b
 c
 w
 w
@@ -260,11 +214,7 @@ c
 d
 c
 i
-<<<<<<< HEAD
-K
-=======
-P
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
+T
 C
 n
 c
@@ -299,9 +249,9 @@ g
 d
 c
 c
-V
+E
 v
-K
+T
 c
 c
 h
@@ -317,9 +267,9 @@ c
 m
 r
 c
-P
+c
 A
-V
+n
 C
 b
 g
@@ -335,7 +285,7 @@ d
 c
 n
 c
-O
+N
 B
 n
 d
@@ -355,11 +305,7 @@ d
 c
 d
 h
-<<<<<<< HEAD
 o
-=======
-P
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 f
 j
 c
@@ -370,36 +316,19 @@ w
 (10,1,1) = {"
 w
 c
-<<<<<<< HEAD
 I
 h
-=======
-c
-V
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 I
 c
-<<<<<<< HEAD
-H
-N
-R
+J
+x
+Z
+T
+c
 K
-c
-G
 b
 I
-=======
-V
-J
-N
-J
-P
-c
-R
-b
-P
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 w
 "}
 (11,1,1) = {"
@@ -407,25 +336,14 @@ w
 d
 e
 i
-<<<<<<< HEAD
 o
 d
 c
-N
-P
-I
-n
-I
-=======
-n
 x
-c
-o
-y
 V
+I
 n
-V
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
+I
 c
 q
 c
@@ -433,36 +351,20 @@ w
 "}
 (12,1,1) = {"
 w
-<<<<<<< HEAD
 I
-=======
-P
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 c
 p
 g
-<<<<<<< HEAD
-F
-H
-u
-H
-h
-K
-n
-c
-O
-=======
-s
+k
 J
-O
-S
-h
 P
+J
+h
+T
 n
 c
-z
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
+N
 w
 "}
 (13,1,1) = {"
@@ -473,7 +375,7 @@ d
 q
 d
 b
-V
+c
 c
 o
 c
@@ -492,11 +394,7 @@ n
 c
 c
 b
-<<<<<<< HEAD
 I
-=======
-P
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 j
 h
@@ -531,15 +429,9 @@ c
 b
 c
 c
-<<<<<<< HEAD
 g
 c
 I
-=======
-P
-c
-V
->>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 c
 n
 c
@@ -592,7 +484,7 @@ w
 c
 h
 c
-V
+n
 c
 c
 w
