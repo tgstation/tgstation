@@ -1,0 +1,5 @@
+author: "Roryl-c"
+delete-after: True
+changes:
+  - bugfix: "fixed TTS tripping over stuttered text when other speech modifiers are in effect"
+  - bugfix: "fixed tedious TTS \"ess-ess-speech\" for lizards and other species with repeated consonants"
