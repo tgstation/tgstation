@@ -28420,8 +28420,8 @@
 	req_access = list("medical")
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_y = -10;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -10
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
@@ -35470,8 +35470,8 @@
 "jlq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/lizard_plushie/green{
-	name = "Bites-The-Wires";
-	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future."
+	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future.";
+	name = "Bites-The-Wires"
 	},
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
@@ -47268,8 +47268,8 @@
 	dir = 8
 	},
 /obj/item/toy/plush/beeplushie{
-	name = "Bee Haave";
-	desc = "A cute bee toy to calm down hysteric patients."
+	desc = "A cute bee toy to calm down hysteric patients.";
+	name = "Bee Haave"
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
@@ -59894,8 +59894,8 @@
 "pvT" = (
 /obj/structure/rack,
 /obj/item/toy/plush/plasmamanplushie{
-	name = "Nitrous II";
-	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself."
+	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself.";
+	name = "Nitrous II"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
@@ -60002,9 +60002,6 @@
 "pxz" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 5
 	},
@@ -71995,9 +71992,6 @@
 "sIf" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 6
 	},
@@ -75807,8 +75801,8 @@
 	req_access = list("medical")
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_y = -10;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -10
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
