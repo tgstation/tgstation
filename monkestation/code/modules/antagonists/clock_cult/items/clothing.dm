@@ -62,7 +62,7 @@
 	/// Previous alpha value of the user when removing/disabling the jacket
 	var/previous_alpha = 255
 	/// Weakref to who is wearing this
-	var/datum/weakref/wearer
+	var/mob/living/wearer
 
 /datum/armor/clockwork_cloak
 	melee = 10
@@ -110,7 +110,6 @@
 
 /// Apply the effects to the wearer, making them pretty hard to see
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
-
 	shroud_active = TRUE
 	previous_alpha = wearer.alpha
 	animate(wearer, alpha = 90, time = 3 SECONDS)
