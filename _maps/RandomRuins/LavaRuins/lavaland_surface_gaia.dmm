@@ -52,11 +52,18 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "o" = (
+<<<<<<< HEAD
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/bronze/filled/lavaland,
+=======
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/bush/flowers_pp/style_3,
+/turf/open/misc/grass/lavaland,
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 /area/ruin/unpowered/gaia)
 "p" = (
-/mob/living/basic/lightgeist{
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
@@ -91,13 +98,26 @@
 "w" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/gaia)
+"x" = (
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
+"y" = (
+/obj/item/mod/construction/lavalandcore,
+/turf/open/misc/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"z" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
 "A" = (
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "B" = (
 /obj/structure/flora/grass/jungle/a/style_random,
-/mob/living/basic/lightgeist{
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
 	light_color = "#42ECFF"
 	},
 /turf/open/misc/grass/lavaland,
@@ -110,6 +130,7 @@
 /obj/item/food/grown/mushroom/chanterelle,
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
+<<<<<<< HEAD
 "F" = (
 /obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/bronze/filled/lavaland,
@@ -133,10 +154,19 @@
 "N" = (
 /obj/structure/flora/bush/sunny/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+=======
+"J" = (
+/turf/closed/wall/mineral/bronze,
+/area/ruin/unpowered/gaia)
+"N" = (
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/bush/flowers_pp/style_2,
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "O" = (
 /obj/structure/flora/grass/jungle/b/style_random,
+<<<<<<< HEAD
 /turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/gaia)
 "P" = (
@@ -145,6 +175,22 @@
 /area/ruin/unpowered/gaia)
 "R" = (
 /obj/structure/flora/grass/jungle/b/style_random,
+=======
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/misc/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"P" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
+"R" = (
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/gaia)
+"S" = (
+/mob/living/basic/butterfly/lavaland,
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 /turf/closed/wall/mineral/bronze,
 /area/ruin/unpowered/gaia)
 "V" = (
@@ -179,7 +225,7 @@ w
 c
 O
 c
-b
+z
 c
 w
 w
@@ -214,7 +260,11 @@ c
 d
 c
 i
+<<<<<<< HEAD
 K
+=======
+P
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 C
 n
 c
@@ -267,9 +317,9 @@ c
 m
 r
 c
-c
+P
 A
-n
+V
 C
 b
 g
@@ -305,7 +355,11 @@ d
 c
 d
 h
+<<<<<<< HEAD
 o
+=======
+P
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 f
 j
 c
@@ -316,11 +370,17 @@ w
 (10,1,1) = {"
 w
 c
+<<<<<<< HEAD
 I
 h
+=======
+c
+V
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 I
 c
+<<<<<<< HEAD
 H
 N
 R
@@ -329,6 +389,17 @@ c
 G
 b
 I
+=======
+V
+J
+N
+J
+P
+c
+R
+b
+P
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 w
 "}
 (11,1,1) = {"
@@ -336,6 +407,7 @@ w
 d
 e
 i
+<<<<<<< HEAD
 o
 d
 c
@@ -344,6 +416,16 @@ P
 I
 n
 I
+=======
+n
+x
+c
+o
+y
+V
+n
+V
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 c
 q
 c
@@ -351,11 +433,16 @@ w
 "}
 (12,1,1) = {"
 w
+<<<<<<< HEAD
 I
+=======
+P
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 c
 p
 g
+<<<<<<< HEAD
 F
 H
 u
@@ -365,6 +452,17 @@ K
 n
 c
 O
+=======
+s
+J
+O
+S
+h
+P
+n
+c
+z
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 w
 "}
 (13,1,1) = {"
@@ -375,7 +473,7 @@ d
 q
 d
 b
-c
+V
 c
 o
 c
@@ -394,7 +492,11 @@ n
 c
 c
 b
+<<<<<<< HEAD
 I
+=======
+P
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 b
 j
 h
@@ -429,9 +531,15 @@ c
 b
 c
 c
+<<<<<<< HEAD
 g
 c
 I
+=======
+P
+c
+V
+>>>>>>> b39b2008bb44e995888f71ca122557ac033bdcce
 c
 n
 c
@@ -484,7 +592,7 @@ w
 c
 h
 c
-n
+V
 c
 c
 w
