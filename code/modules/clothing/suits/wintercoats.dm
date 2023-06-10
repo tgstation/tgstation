@@ -13,6 +13,8 @@
 	armor_type = /datum/armor/hooded_wintercoat
 	/// The mutable_appearance of the associated hood, when it's down. Can be null when the hood is up.
 	var/mutable_appearance/hood_overlay
+	/// How snug are we?
+	var/zipped = FALSE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -33,6 +35,14 @@
 
 	generate_hood_overlay()
 
+/obj/item/clothing/suit/hooded/wintercoat/on_hood_up(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	zipped = TRUE
+
+/// Called when the hood is hidden
+/obj/item/clothing/suit/hooded/wintercoat/on_hood_down(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	zipped = FALSE
 
 /obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
 	. = ..()
