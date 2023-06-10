@@ -174,9 +174,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
 		update_appearance(UPDATE_ICON)
 		return
-	else if(default_deconstruction_crowbar(item))
+	if(default_deconstruction_crowbar(item))
 		return
-	else if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		. = TRUE // No afterattack
 		var/obj/item/reagent_containers/beaker = item
 		replace_beaker(user, beaker)
@@ -201,9 +201,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 /// Insert new beaker and/or eject the inserted one
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(!user.transferItemToLoc(new_beaker, src))
+	if(!user?.transferItemToLoc(new_beaker, src))
 		return FALSE
 	if(beaker)
 		try_put_in_hand(beaker, user)
@@ -389,7 +387,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		item_name_default,
 		MAX_NAME_LEN)
 
-	if(!item_name || !reagents.total_volume || !src || QDELETED(src) || !usr.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(!item_name || !reagents.total_volume || QDELETED(src) || !usr.can_perform_action(src, ALLOW_SILICON_REACH))
 		return FALSE
 
 	// Print and fill containers
