@@ -50,6 +50,8 @@
 	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(
+		/obj/item/clothing/glasses/hud/health = 4,
+		/obj/item/clothing/gloves/latex/nitrile = 4,
 		/obj/item/clothing/accessory/pocketprotector = 4,
 		/obj/item/storage/backpack/duffelbag/med = 4,
 		/obj/item/storage/backpack/medic = 4,
@@ -77,6 +79,7 @@
 		/obj/item/clothing/shoes/sneakers/blue = 4,
 		/obj/item/clothing/suit/apron/surgical = 4,
 		/obj/item/clothing/mask/surgical = 4,
+		/obj/item/radio/headset/headset_med = 4,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
@@ -105,6 +108,7 @@
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
 		/obj/item/clothing/head/utility/hardhat = 3,
 		/obj/item/clothing/head/utility/hardhat/welding = 3,
+		/obj/item/radio/headset/headset_eng = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -128,6 +132,7 @@
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
+		/obj/item/radio/headset/headset_eng = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -144,6 +149,9 @@
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(
 		/obj/item/storage/bag/mail = 3,
+		/obj/item/storage/backpack = 3,
+		/obj/item/storage/backpack/satchel = 3,
+		/obj/item/storage/backpack/duffelbag = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
@@ -155,6 +163,7 @@
 		/obj/item/radio/headset/headset_cargo = 3,
 	)
 	premium = list(
+		/obj/item/storage/backpack/satchel/leather = 3,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
@@ -181,6 +190,7 @@
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/mask/bandana/skull/black = 2,
+		/obj/item/radio/headset/headset_sci = 2,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/hooded/techpriest = 2,
@@ -201,6 +211,8 @@
 	product_ads = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(
+		/obj/item/clothing/glasses/science = 3,
+		/obj/item/clothing/gloves/latex = 3,
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/storage/backpack/science = 3,
 		/obj/item/storage/backpack/satchel/science = 3,
@@ -371,6 +383,7 @@
 		/obj/item/clothing/head/utility/chefhat = 1,
 		/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 		/obj/item/clothing/shoes/cookflops = 2,
+		/obj/item/clothing/shoes/sneakers/black = 2,
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/clothing/suit/hooded/wintercoat = 2,
 	)
@@ -506,6 +519,8 @@
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(
+		/obj/item/clothing/glasses/science = 2,
+		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/under/rank/medical/chemist = 2,
 		/obj/item/clothing/under/rank/medical/chemist/skirt = 2,
 		/obj/item/clothing/head/beret/medical = 2,
@@ -516,7 +531,8 @@
 		/obj/item/storage/backpack/satchel/chem = 2,
 		/obj/item/storage/backpack/duffelbag/chemistry = 2,
 		/obj/item/storage/bag/chemistry = 2,
-		/obj/item/ph_booklet = 3,
+		/obj/item/ph_booklet = 2,
+		/obj/item/radio/headset/headset_med = 2,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/spray/syndicate = 2,
@@ -534,6 +550,7 @@
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(
+		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/under/rank/rnd/geneticist = 2,
 		/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
 		/obj/item/clothing/shoes/sneakers/white = 2,
@@ -542,6 +559,7 @@
 		/obj/item/storage/backpack/genetics = 2,
 		/obj/item/storage/backpack/satchel/gen = 2,
 		/obj/item/storage/backpack/duffelbag/genetics = 2,
+		/obj/item/radio/headset/headset_sci = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -556,6 +574,9 @@
 	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(
+		/obj/item/clothing/glasses/hud/health = 2,
+		/obj/item/clothing/glasses/science = 2,
+		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/under/rank/medical/virologist = 2,
 		/obj/item/clothing/under/rank/medical/virologist/skirt = 2,
 		/obj/item/clothing/head/beret/medical = 2,
@@ -566,6 +587,7 @@
 		/obj/item/storage/backpack/virology = 2,
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
+		/obj/item/radio/headset/headset_med = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED

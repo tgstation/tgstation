@@ -1,7 +1,7 @@
 /obj/machinery/vending/magivend
 	name = "\improper MagiVend"
 	desc = "A magic vending machine."
-	icon_state = "MagiVend"
+	icon_state = ""
 	panel_type = "panel10"
 	product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"
 	vend_reply = "Have an enchanted evening!"
