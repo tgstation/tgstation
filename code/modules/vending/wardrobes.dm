@@ -151,6 +151,7 @@
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/storage/backpack = 3,
 		/obj/item/storage/backpack/satchel = 3,
+		/obj/item/storage/backpack/satchel/leather = 3,
 		/obj/item/storage/backpack/duffelbag = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
@@ -163,7 +164,6 @@
 		/obj/item/radio/headset/headset_cargo = 3,
 	)
 	premium = list(
-		/obj/item/storage/backpack/satchel/leather = 3,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
