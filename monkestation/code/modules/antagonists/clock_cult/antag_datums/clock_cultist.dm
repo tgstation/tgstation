@@ -58,8 +58,8 @@
 	current.faction |= FACTION_CLOCK
 	current.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
 	current.throw_alert("clockinfo", /atom/movable/screen/alert/clocksense)
-	add_team_hud(current)
 	if(!istype(current, /mob/living/eminence))
+		add_team_hud(current)
 		communicate.Grant(current)
 		recall.Grant(current)
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
@@ -168,6 +168,7 @@
 	show_to_ghosts = TRUE
 	communicate = null
 	recall = null
+	//all our innate actions
 	var/datum/action/innate/clockcult/space_fold/trigger_events = new
 	var/datum/action/cooldown/eminence/purge_reagents/remove_water = new
 	var/datum/action/cooldown/eminence/linked_abscond/recall_servant = new
@@ -192,6 +193,7 @@
 /datum/antagonist/clock_cultist/eminence/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
+	add_team_hud(current, /datum/antagonist/clock_cultist)
 	trigger_events.Grant(current)
 	remove_water.Grant(current)
 	recall_servant.Grant(current)
