@@ -55,7 +55,7 @@
 	name = "plasma flower"
 	icon_state = "mode-plasma-flower"
 	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a bright purple glow.  \
-	Its shape is remarkably similar to that of a MOD core."
+		Its shape is remarkably similar to that of a MOD core."
 	light_system = MOVABLE_LIGHT
 	light_color = "#cc00cc"
 	light_range = 2
