@@ -556,10 +556,8 @@
 
 		recalculateChannels()
 		to_chat(user, span_notice("You pop out the encryption key in the radio."))
-		return
 	else
-		to_chat(user, span_warning("This headset doesn't have any[keyslot ? " removable" : ""] encryption keys!))
-		return
+		to_chat(user, span_warning("This headset doesn't have any[keyslot || keyslot2 ? " removable" : ""] encryption keys!)
 
 
 /obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
