@@ -265,9 +265,10 @@
 
 /obj/item/nullrod/vibro/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 7 SECONDS, \
-	effectiveness = 110, \
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 7 SECONDS, \
+		effectiveness = 110, \
 	)
 
 /obj/item/nullrod/vibro/spellblade
