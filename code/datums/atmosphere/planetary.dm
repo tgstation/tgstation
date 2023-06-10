@@ -50,3 +50,25 @@
 	minimum_temp = 180
 	maximum_temp = 180
 
+/datum/atmosphere/oshan
+	id = OSHAN_DEFAULT_ATMOS
+
+
+	base_gases = list(
+		/datum/gas/water_vapor=10,
+		/datum/gas/carbon_dioxide=10,
+	)
+	normal_gases = list(
+		/datum/gas/water_vapor=10,
+		/datum/gas/carbon_dioxide=10,
+	)
+	restricted_gases = list(
+		/datum/gas/water_vapor=10,
+		/datum/gas/carbon_dioxide=10,
+	)
+
+	minimum_pressure = HAZARD_LOW_PRESSURE + 10
+	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
+
+	minimum_temp = T20C
+	maximum_temp = T20C

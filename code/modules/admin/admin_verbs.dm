@@ -105,6 +105,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/adjust_players_antag_tokens,
 	/client/proc/adjust_players_metacoins,
 	/client/proc/admin_change_sec_level,
+	/client/proc/change_ocean,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_gib_self,

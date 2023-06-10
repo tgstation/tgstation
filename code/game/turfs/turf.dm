@@ -427,7 +427,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 	if(!can_pass_self) //Even if mover is unstoppable they need to bump us.
 		first_bump = src
-	if(mover.cant_grab) //This will cause someone nightmares one day, but that someone isn't me.
+	if(mover.cant_grab) //This will cause someone nightmares one day, but that someone isn't me
 		return TRUE
 	if(first_bump)
 		mover.Bump(first_bump)

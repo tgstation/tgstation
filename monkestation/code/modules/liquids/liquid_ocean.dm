@@ -7,7 +7,7 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_STARLIGHT
+	base_lighting_color = COLOR_CARP_LIGHT_BLUE
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -32,6 +32,9 @@
 /area/ruin/ocean/mining_site
 	area_flags = UNIQUE_AREA
 
+/area/ocean/near_station_powered
+	requires_power = FALSE
+
 /turf/open/openspace/ocean
 	name = "ocean"
 	planetary_atmos = TRUE
@@ -45,8 +48,10 @@
 /turf/open/openspace/ocean/Initialize()
 	. = ..()
 
-
 /turf/open/floor/plating/ocean
+	plane = FLOOR_PLANE
+	layer = TURF_LAYER
+	force_no_gravity = FALSE
 	gender = PLURAL
 	name = "ocean sand"
 	baseturfs = /turf/open/floor/plating/ocean
@@ -59,9 +64,10 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	light_power = 0.75
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 100)
-	var/ocean_temp = T20C - 150
+	var/ocean_temp = T20C
 	var/list/ocean_turfs = list()
 	var/list/open_turfs = list()
 
@@ -71,10 +77,10 @@
 	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 	if(!static_overlay)
 		static_overlay = new(null, ocean_reagents)
+	light_color = static_overlay.color
 	vis_contents += static_overlay
 	SSliquids.unvalidated_oceans |= src
 	SSliquids.ocean_turfs |= src
-
 
 /turf/open/floor/plating/ocean/Destroy()
 	. = ..()
@@ -83,6 +89,26 @@
 	SSliquids.ocean_turfs -= src
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
+
+
+/// Updates starlight. Called when we're unsure of a turf's starlight state
+/// Returns TRUE if we succeed, FALSE otherwise
+/turf/open/floor/plating/ocean/proc/update_starlight()
+	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		// I've got a lot of cordons near spaceturfs, be good kids
+		if(istype(t, /turf/open/floor/plating/ocean) || istype(t, /turf/cordon))
+			//let's NOT update this that much pls
+			continue
+		enable_starlight()
+		return TRUE
+	set_light(0)
+	return FALSE
+
+/// Turns on the stars, if they aren't already
+/turf/open/floor/plating/ocean/proc/enable_starlight()
+	if(!light_range)
+		set_light(2)
+
 
 /turf/open/floor/plating/ocean/proc/assume_self()
 	if(!atmos_adjacent_turfs)
@@ -94,8 +120,10 @@
 		else
 			if(isclosedturf(directional_turf))
 				RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction))
+				continue
 			else if(!(directional_turf in atmos_adjacent_turfs))
 				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed))
+				continue
 			else
 				open_turfs.Add(direction)
 
@@ -151,7 +179,22 @@
 
 /obj/effect/abstract/ocean_overlay/Initialize(mapload, list/ocean_contents)
 	. = ..()
-	//color = mix_color_from_reagent_list(ocean_contents)
+	var/datum/reagents/fake_reagents = new
+	fake_reagents.add_reagent_list(ocean_contents)
+	color = mix_color_from_reagents(fake_reagents.reagent_list)
+	qdel(fake_reagents)
+	if(istype(loc, /area/ocean))
+		var/area/area_loc = loc
+		area_loc.base_lighting_color = color
+
+/obj/effect/abstract/ocean_overlay/proc/mix_colors(list/ocean_contents)
+	var/datum/reagents/fake_reagents = new
+	fake_reagents.add_reagent_list(ocean_contents)
+	color = mix_color_from_reagents(fake_reagents.reagent_list)
+	qdel(fake_reagents)
+	if(istype(loc, /area/ocean))
+		var/area/area_loc = loc
+		area_loc.base_lighting_color = color
 
 /turf/open/floor/plating/ocean/proc/mob_fall(datum/source, mob/M)
 	SIGNAL_HANDLER

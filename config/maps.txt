@@ -53,3 +53,6 @@ endmap
 
 map shiptest
 endmap
+
+map oshan
+endmap
