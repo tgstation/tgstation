@@ -65,17 +65,19 @@
 	. += span_notice("You could probably attach some <b>wires</b> to it...")
 
 /obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stack/cable_coil))
-		if(!weapon.tool_start_check(user, amount=2))
-			return
+	if(!istype(weapon, /obj/item/stack/cable_coil))
+		return
 
-		to_chat(user, span_notice("You start pushing the wires into the core..."))
-		if(!P.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
-			return
+	if(!weapon.tool_start_check(user, amount=2))
+		return
 
-		to_chat(user, span_notice("You add the wires to the core."))
-		new /obj/item/mod/core/plasma/lavaland(drop_location())
-		qdel(src)
+	to_chat(user, span_notice("You start pushing the wires into the core..."))
+	if(!P.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
+		return
+
+	to_chat(user, span_notice("You add the wires to the core."))
+	new /obj/item/mod/core/plasma/lavaland(drop_location())
+	qdel(src)
 
 
 /obj/item/mod/construction/plating
