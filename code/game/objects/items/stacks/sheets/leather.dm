@@ -287,9 +287,9 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 50, target = src))
-			to_chat(user, span_notice("You cut the hair from this [src.singular_name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
-			use(1)
+			to_chat(user, span_notice("You cut the hair from [src.name]."))
+			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
+			use(amount)
 	else
 		return ..()
 
