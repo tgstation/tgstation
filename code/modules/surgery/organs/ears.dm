@@ -112,9 +112,7 @@
 	desc = "Allows the user to understand one of several commonly spoken languages. Grants no ability to speak these languages."
 	damage_multiplier = 0.5
 	var/list/language_list = list(/datum/language/common, /datum/language/uncommon, /datum/language/moffic, /datum/language/draconic, /datum/language/calcic, /datum/language/voltaic, /datum/language/nekomimetic)
-	// It needs to cycle through all of the languages in the list. This seems like the most elegant solution.
-	var/language_selector = 1
-	// Byond doesn't like it when I set it equal to language_list[language_selector], so this will have to do
+	var/list/language_list_pretty = list()
 	var/datum/language/chosen_language = /datum/language/common
 
 /obj/item/organ/internal/ears/cybernetic/translation/examine(mob/user)
@@ -126,15 +124,16 @@
 	if(.)
 		return TRUE
 
-	// language_selector += 1
-	// if (language_selector > language_list.len)
-	// 	language_selector = 1
+	var/i
+	for(i = 1, i <= language_list.len, i++)
+		var/datum/language/m = language_list[i]
+		language_list_pretty[initial(m.name)] = m
 
-	// Should be the same output as above, but a little more compact
-	language_selector = (language_selector % language_list.len) + 1
-	chosen_language = language_list[language_selector]
+	var/lang_name = tgui_input_list(user, "Select a language", "Language", language_list_pretty)
 
-	to_chat(user, span_notice("You modify [src] to translate [initial(chosen_language.name)] speech."))
+	if(!isnull(lang_name))
+		chosen_language = language_list_pretty[lang_name]
+		to_chat(user, span_notice("You modify [src] to translate [initial(lang_name)] speech."))
 
 /obj/item/organ/internal/ears/cybernetic/translation/on_insert(mob/living/carbon/ear_owner)
 	. = ..()
@@ -161,7 +160,6 @@
 /obj/item/organ/internal/ears/cybernetic/whisper/on_remove(mob/living/carbon/ear_owner)
 	. = ..()
 	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
-
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()
