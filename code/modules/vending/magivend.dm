@@ -1,7 +1,7 @@
 /obj/machinery/vending/magivend
 	name = "\improper MagiVend"
 	desc = "A magic vending machine."
-	icon_state = ""
+	icon_state = "MagiVend"
 	panel_type = "panel10"
 	product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"
 	vend_reply = "Have an enchanted evening!"
@@ -13,6 +13,8 @@
 		/obj/item/clothing/suit/wizrobe/red = 1,
 		/obj/item/clothing/head/wizard/yellow = 1,
 		/obj/item/clothing/suit/wizrobe/yellow = 1,
+		/obj/item/clothing/head/wizard/black = 1,
+		/obj/item/clothing/suit/wizrobe/black = 1,
 		/obj/item/clothing/shoes/sandal/magic = 1,
 		/obj/item/staff = 2,
 	)
