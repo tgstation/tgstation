@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		if(keyslot?.canRemove)
 			user.put_in_hands(keyslot)
 			keyslot = null
-		if( keyslot2 && keyslot2.canRemove)
+		if(keyslot2?.canRemove)
 			user.put_in_hands(keyslot2)
 			keyslot2 = null
 
