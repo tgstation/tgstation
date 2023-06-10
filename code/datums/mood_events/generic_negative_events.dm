@@ -413,13 +413,3 @@
 /datum/mood_event/unsatisfied_nomad
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
-
-/datum/mood_event/morbid_tend_wounds
-	description = "Why must I waste my talents on this trivial nonsense? Tending breathers is a waste of effort."
-	mood_change = -2
-	timeout = 2 MINUTES
-
-/datum/mood_event/morbid_saved_life
-	description = "I could have done so much more with their corpse than I could have saving their useless life. Dreadful."
-	mood_change = -6
-	timeout = 2 MINUTES

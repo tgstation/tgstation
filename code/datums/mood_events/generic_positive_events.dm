@@ -369,23 +369,3 @@
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2
 	timeout = 5 MINUTES
-
-/datum/mood_event/morbid_dismemberment
-	description = "Nothing quite as satisfying as a clean dismemberment!"
-	mood_change = 2
-	timeout = 2 MINUTES
-
-/datum/mood_event/morbid_dissection_success
-	description = "I take pride in my work. Nobody can dissect a body quite like I can."
-	mood_change = 2
-	timeout = 2 MINUTES
-
-/datum/mood_event/morbid_revival_success
-	description = "IT LIVES! AH HA HA HA HA!!"
-	mood_change = 6
-	timeout = 8 MINUTES
-
-/datum/mood_event/morbid_graverobbing
-	description = "The dead have no need for possessions. I, on the other hand, am very much alive and very much in need."
-	mood_change = 2
-	timeout = 2 MINUTES
