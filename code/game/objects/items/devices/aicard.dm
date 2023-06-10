@@ -16,8 +16,8 @@
 /obj/item/aicard/Destroy(force)
 	if(AI)
 		AI.death()
-		AI.ghostize
-		AI = null
+		AI.ghostize(can_reenter_corpse = FALSE)
+		QDEL_NULL(AI)
 
 	return ..()
 
