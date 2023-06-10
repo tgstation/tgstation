@@ -666,11 +666,11 @@
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	wound_bonus = 10
 	bare_wound_bonus = 15
-	//Determines if we've beheaded with our special death knell if they had a mind. If so, we get a damage bonus and we reap faster.
+	///Determines if we've beheaded with our special death knell if they had a mind. If so, we get a damage bonus and we reap faster.
 	var/death_knelled = FALSE
-	//Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
+	///Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
 	var/bonus_force_multiplier = 2
-	//Our initial force before we daeth knelled. For tracking on the item, and in case the item somehow gains more force for some reason before we death knelled.
+	///Our initial force before we daeth knelled. For tracking on the item, and in case the item somehow gains more force for some reason before we death knelled.
 	var/original_force
 
 /obj/item/vorpalscythe/Initialize(mapload)
