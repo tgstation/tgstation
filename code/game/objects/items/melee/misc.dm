@@ -113,8 +113,8 @@
 	SIGNAL_HANDLER
 	baned_target.visible_message(
 		span_warning("[src] tears through [baned_target] with unnatural ease!"),
-		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!",
-	))
+		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!"),
+	)
 	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
