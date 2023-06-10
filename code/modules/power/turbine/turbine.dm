@@ -133,12 +133,14 @@
  */
 /obj/machinery/power/turbine/proc/enable_parts(mob/user)
 	can_connect = TRUE
+	connect_to_network()
 
 /**
  * Allow easy disabling of each machine from the main controller
  */
 /obj/machinery/power/turbine/proc/disable_parts(mob/user)
 	can_connect = FALSE
+	disconnect_from_network()
 
 /obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
