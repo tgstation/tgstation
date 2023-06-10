@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - rscadd: "Added optional respawn delay (disabled by default), which prevents returning to lobby while dead."

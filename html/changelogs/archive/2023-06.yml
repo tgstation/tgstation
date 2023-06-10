@@ -293,3 +293,41 @@
   - image: Added shiny new belts and detective/syndicate holsters (`onmob` sprites
       included)
   - image: Removed old, unused red military belt sprite
+2023-06-10:
+  Ghommie:
+  - bugfix: waddling, squeaky shoes and swivel chair sound effects no longer run when
+      moved by conveyor belt.
+  - bugfix: Fixed a small issue with mob resizing not promptly updating a body offset
+      variable.
+  - bugfix: Taking items from your inventory while flying over lava or a chasm will
+      NOT set them on fire or drop them into chasms ANYMORE
+  Guillaume Prata:
+  - bugfix: Laptops now give a slowdown when dragged, patching the easy trick of dragging
+      a laptop to bypass the slowdown for carrying it on hand.
+  JohnFulpWillard:
+  - spellcheck: The Medical vending refill crate's description now properly displays
+      the Coroner's vendor as being part of its contents.
+  LemonInTheDark:
+  - refactor: Pulled apart the last vestiges of names/docs directly linking signals
+      to components
+  Rex9001:
+  - bugfix: fixes the areas of the_faceoff
+  Rhials:
+  - qol: Fugitives, Bounty Hunters, and Paradox Clones will now appear in the orbit
+      menu.
+  YehnBeep:
+  - bugfix: Lavaland's cafeteria fridge is no longer access-locked.
+  - bugfix: The mining vendor's bar pod's machinery no longer has access restrictions
+      miners can't use.
+  - bugfix: The bar pod's vending machines no longer believe they are on station.
+  - qol: The bar pod's bathroom also has less unused space.
+  larentoun:
+  - rscadd: Added optional respawn delay (disabled by default), which prevents returning
+      to lobby while dead.
+  rageguy505:
+  - bugfix: O2 crates have blue stripes when opened
+  san7890:
+  - admin: Shooting a welding fuel tank (big or small) with a projectile will now
+      accurately post to list_bombers with the name of the person who shot the projectile
+      from the gun. If you don't know how to list-bombers, it will also be present
+      in game.log for your viewing pleasure.
