@@ -358,7 +358,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
 	user.set_machine(src)
-	if(keyslot && keyslot.canRemove || keyslot2 && keyslot2.canRemove)
+	if(keyslot?.canRemove || keyslot2?.canRemove)
 		for(var/ch_name in channels)
 			SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 			secure_radio_connections[ch_name] = null
