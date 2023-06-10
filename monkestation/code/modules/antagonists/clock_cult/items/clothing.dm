@@ -94,7 +94,7 @@
 	if(slot != ITEM_SLOT_OCLOTHING || !IS_CLOCK(user))
 		return
 
-	wearer = WEAKREF(user)
+	wearer = user
 
 	if(shroud_active)
 		enable()
@@ -110,22 +110,22 @@
 
 /// Apply the effects to the wearer, making them pretty hard to see
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
-	var/mob/living/resolved_wearer = wearer?.resolve()
+
 	shroud_active = TRUE
-	previous_alpha = resolved_wearer.alpha
-	animate(resolved_wearer, alpha = 90, time = 3 SECONDS)
-	apply_wibbly_filters(resolved_wearer)
-	ADD_TRAIT(resolved_wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
+	previous_alpha = wearer.alpha
+	animate(wearer, alpha = 90, time = 3 SECONDS)
+	apply_wibbly_filters(wearer)
+	ADD_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
 
 /// Un-apply the effects of the cloak, returning the wearer to normal
 /obj/item/clothing/suit/clockwork/cloak/proc/disable()
-	var/mob/living/resolved_wearer = wearer?.resolve()
+
 	shroud_active = FALSE
-	do_sparks(3, FALSE, resolved_wearer)
-	remove_wibbly_filters(resolved_wearer)
-	animate(resolved_wearer, alpha = previous_alpha, time = 3 SECONDS)
-	REMOVE_TRAIT(resolved_wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
+	do_sparks(3, FALSE, wearer)
+	remove_wibbly_filters(wearer)
+	animate(wearer, alpha = previous_alpha, time = 3 SECONDS)
+	REMOVE_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
 
 /obj/item/clothing/glasses/clockwork
@@ -158,7 +158,7 @@
 	actions_types = list(/datum/action/item_action/toggle/clock)
 	clock_desc = "Applies passive eye damage that regenerates after unequipping, grants thermal vision, and lets you see all forms of invisibility."
 	/// Who is currently wearing the goggles
-	var/datum/weakref/wearer
+	var/mob/living/wearer
 	/// Are the glasses enabled (flipped down)
 	var/enabled = TRUE
 
@@ -202,8 +202,7 @@
 		on_toggle_eyes()
 
 	update_icon_state()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	resolved_wearer.update_sight()
+	wearer.update_sight()
 
 
 /// "disable" the spectacles, flipping them up and removing all applied effects
@@ -216,22 +215,19 @@
 		de_toggle_eyes()
 
 	update_icon_state()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	resolved_wearer.update_sight()
+	wearer.update_sight()
 
 
 /// The start of application of the actual effects, including eye damage
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/on_toggle_eyes()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	resolved_wearer.update_sight()
-	to_chat(resolved_wearer, span_clockgray("You suddenly see so much more."))
+	wearer.update_sight()
+	to_chat(wearer, span_clockgray("You suddenly see so much more."))
 
 
 /// The stopping of effect application, will remove the wearer's eye damage a minute after
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/de_toggle_eyes()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	resolved_wearer.update_sight()
-	to_chat(resolved_wearer, span_clockgray("You feel your eyes slowly readjusting."))
+	wearer.update_sight()
+	to_chat(wearer, span_clockgray("You feel your eyes slowly readjusting."))
 
 
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/equipped(mob/living/user, slot)
@@ -240,7 +236,7 @@
 		return
 
 	if((slot == ITEM_SLOT_EYES) && enabled)
-		wearer = WEAKREF(user)
+		wearer = user
 		on_toggle_eyes()
 
 
@@ -265,8 +261,8 @@
 	clock_desc = "Grants large sight and informational benefits to servants while active."
 	/// Is this enabled
 	var/enabled = TRUE
-	/// Weakref to the wearer of the visor
-	var/datum/weakref/wearer
+	/// Ref to the wearer of the visor
+	var/mob/living/wearer
 
 
 /obj/item/clothing/glasses/clockwork/judicial_visor/Initialize(mapload)
@@ -314,42 +310,40 @@
 
 	update_icon_state()
 
-
+//THIS IS MOST LIKELY BREAKING
 /// Applies the actual effects to the wearer, giving them flash protection and a variety of sight/info bonuses
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/apply_to_wearer()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	ADD_TRAIT(resolved_wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
 
-	ADD_TRAIT(resolved_wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.show_to(wearer)
 
-	ADD_TRAIT(resolved_wearer, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	sec_hud.show_to(resolved_wearer)
+	sec_hud.show_to(wearer)
 
-	ADD_TRAIT(resolved_wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
-	ADD_TRAIT(resolved_wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
 	color_cutoffs = list(50, 10, 30)
-	resolved_wearer.update_sight()
+	wearer.update_sight()
 
 /// Removes the effects to the wearer, removing the flash protection and similar
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/unapply_to_wearer()
-	var/mob/living/resolved_wearer = wearer?.resolve()
-	REMOVE_TRAIT(resolved_wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
 
-	REMOVE_TRAIT(resolved_wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	med_hud.hide_from(resolved_wearer)
+	med_hud.hide_from(wearer)
 
-	REMOVE_TRAIT(resolved_wearer, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	sec_hud.hide_from(resolved_wearer)
+	sec_hud.hide_from(wearer)
 
-	REMOVE_TRAIT(resolved_wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
-	REMOVE_TRAIT(resolved_wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
 	color_cutoffs = null
-	resolved_wearer.update_sight()
+	wearer.update_sight()
 
 
 /obj/item/clothing/glasses/clockwork/judicial_visor/equipped(mob/living/user, slot)
@@ -358,7 +352,7 @@
 		return
 
 	if(slot == ITEM_SLOT_EYES)
-		wearer = WEAKREF(user)
+		wearer = user
 		if(enabled)
 			apply_to_wearer()
 
