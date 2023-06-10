@@ -200,3 +200,42 @@
       surgical clothing and anesthesic tank.
   kinneb:
   - image: modified gift and package crate sprites to match the resprited crate
+2023-06-07:
+  Chadley:
+  - rscadd: Adds some new quirks!!
+  - rscadd: Adds the bilingual quirk, which gives a new random language.
+  - rscadd: Adds the big hand quirk which stops the usage of most guns.
+  - rscadd: Adds the soft spoken quirk which forces you to whisper.
+  - rscadd: Adds the clumsy quirk enabling the clumsy trait.
+  Helg2:
+  - balance: Bone gel standart amount has been increased to 5.
+  LT3:
+  - bugfix: Tram platform tiles now have proper stack types
+  - refactor: Pride week tile coloring refactored into a generic holiday decal system
+  - spellcheck: Tile decals are no longer all named 'corner'
+  OrionTheFox:
+  - rscadd: The Hawaiian Overshirt is now GAGS, and available to crew in the ClothesMate.
+      Mahalo a aloha!
+  Pickle-Coding:
+  - rscadd: Crafting recipe for atmospherics gas mask.
+  Sealed101:
+  - bugfix: fixed cult veil shifter not teleporting the thing/the loser you're pulling
+      with you
+  SyncIt21:
+  - rscadd: Igniter's can be crafted
+  - rscadd: Spraker's can be printed in the autolathe
+  - rscadd: ignition controller can be printed in the autolathe
+  - bugfix: light replacer displaying error message  after it finished replacing the
+      light
+  - refactor: merged the `can_use()` proc with the `Use()` proc to perform both actions
+      at once
+  - refactor: '`/obj/item/lightreplacer/attackby()` returns TRUE to prevent calling
+      it''s `after_attack()` code and calls it''s parent proc'
+  ZephyrTFA:
+  - admin: Player Ticket History - view a player's ticket history without the need
+      to use external tooling.
+  san7890:
+  - refactor: Headslugs (the really small slug-like changeling form) are now basic
+      mobs. They only wander around aimlessly now instead of attacking corpses all
+      the time, and examining will let you know what type. Should probably still smash
+      them before they suddenly gain sapience...
