@@ -23,12 +23,10 @@
 	update_appearance()
 
 /obj/item/papercutter/Destroy(force)
-	if(stored_paper)
-		stored_paper.forceMove(get_turf(src))
-		stored_paper = null
-	if(stored_blade)
-		stored_blade.forceMove(get_turf(src))
-		stored_blade = null
+	if(!isnull(stored_paper))
+		QDEL_NULL(stored_paper)
+	if(!isnull(stored_blade))
+		QDEL_NULL(stored_blade)
 	return ..()
 
 /obj/item/papercutter/examine(mob/user)
