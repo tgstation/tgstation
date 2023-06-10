@@ -179,11 +179,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		else
 			log_talk(message, LOG_SAY, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
-	#ifdef UNIT_TESTS
+#ifdef UNIT_TESTS
 	// Saves a ref() to our arglist specifically.
 	// We do this because we need to check that COMSIG_MOB_SAY is getting EXACTLY this list.
 	last_say_args_ref = REF(args)
-	#endif
+#endif
 
 	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
 		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
@@ -472,7 +472,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/replacement = tts_message[length_regex.index]+tts_message[length_regex.index]+tts_message[length_regex.index]
 		tts_message = replacetext(tts_message, length_regex.match, replacement, length_regex.index)
 
-	///removes repeated consonants at the start of a word: ex: sss
+	// removes repeated consonants at the start of a word: ex: sss
 	var/static/regex/word_start_regex = regex(@"\b([^aeiou\L])\1", "gi")
 	while(word_start_regex.Find(tts_message))
 		var/replacement = tts_message[word_start_regex.index]
