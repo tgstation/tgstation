@@ -72,7 +72,7 @@
 		return
 
 	to_chat(user, span_notice("You start pushing the wires into the core..."))
-	if(!P.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
+	if(!weapon.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
 		return
 
 	to_chat(user, span_notice("You add the wires to the core."))
