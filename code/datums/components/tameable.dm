@@ -28,7 +28,7 @@
 		src.after_tame = after_tame
 	src.unique = unique
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_tame))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(try_tame))
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 

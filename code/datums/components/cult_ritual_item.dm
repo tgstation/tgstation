@@ -51,7 +51,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))
 
 	if(examine_message)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/cult_ritual_item/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -59,11 +59,11 @@
 		COMSIG_ITEM_ATTACK,
 		COMSIG_ITEM_ATTACK_OBJ,
 		COMSIG_ITEM_ATTACK_EFFECT,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		))
 
 /*
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  * Gives the examiner, if they're a cultist, our set examine message.
  * Usually, this will include various instructions on how to use the thing.
  */

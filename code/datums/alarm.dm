@@ -146,7 +146,7 @@
 	var/list/cameras = source_area.cameras
 	if(optional_camera)
 		cameras = list(optional_camera) // This will cause harddels, so we need to clear manually
-		RegisterSignal(optional_camera, COMSIG_PARENT_QDELETING, PROC_REF(clear_camera_ref), override = TRUE) //It's just fine to override, cause we clear all refs in the proc
+		RegisterSignal(optional_camera, COMSIG_QDELETING, PROC_REF(clear_camera_ref), override = TRUE) //It's just fine to override, cause we clear all refs in the proc
 
 	//This does mean that only the first alarm of that camera type in the area will send a ping, but jesus what else can ya do
 	alarms_of_our_type[source_area.name] = list(source_area, cameras, list(handler))

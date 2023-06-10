@@ -782,6 +782,9 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
+	if(!check_respawn_delay())
+		return
+
 	usr.log_message("used the respawn button.", LOG_GAME)
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
@@ -803,6 +806,24 @@
 
 	M.key = key
 
+/mob/proc/check_respawn_delay(override_delay = 0)
+	if(!override_delay && !CONFIG_GET(number/respawn_delay))
+		return TRUE
+
+	var/death_time = world.time - client.player_details.time_of_death
+
+	var/required_delay = override_delay
+	if(!required_delay)
+		required_delay = CONFIG_GET(number/respawn_delay)
+
+	if(death_time < required_delay)
+		if(!check_rights_for(usr.client, R_ADMIN))
+			to_chat(usr, "You have been dead for [DisplayTimeText(death_time, 1)].")
+			to_chat(usr, span_warning("You must wait [DisplayTimeText(required_delay, 1)] to respawn!"))
+			return FALSE
+		if(tgui_alert(usr, "You have been dead for [DisplayTimeText(death_time, 1)] out of required [DisplayTimeText(required_delay, 1)]. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			return FALSE
+	return TRUE
 
 /**
  * Sometimes helps if the user is stuck in another perspective or camera

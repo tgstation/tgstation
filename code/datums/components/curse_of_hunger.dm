@@ -31,13 +31,13 @@
 /datum/component/curse_of_hunger/RegisterWithParent()
 	. = ..()
 	var/obj/item/cursed_item = parent
-	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(cursed_item, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 
 /datum/component/curse_of_hunger/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_DROPPED,
 	))

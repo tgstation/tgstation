@@ -37,7 +37,7 @@
 	attacked_atom.add_overlay(meter_appearance)
 	RegisterSignal(attacked_atom, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
 	RegisterSignal(attacked_atom, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(attacked_atom, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attacked_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(attacked_atom, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
 	RegisterSignal(attacked_atom, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
 	balloon_alert(user, "style meter attached")
@@ -113,7 +113,7 @@
 	old_location.cut_overlay(meter_appearance)
 	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
 	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
-	UnregisterSignal(old_location, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(old_location, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(old_location, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	if(!style_meter)
 		return
