@@ -7,14 +7,13 @@
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor_type = /datum/armor/rnd_research_director
+	armor_type = /datum/armor/clothing_under/rnd_research_director
 	can_adjust = FALSE
 
-/datum/armor/rnd_research_director
+/datum/armor/clothing_under/rnd_research_director
 	bomb = 10
 	bio = 10
 	acid = 35
-	wound = 5
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."
@@ -72,11 +71,10 @@
 	name = "scientist's jumpsuit"
 	icon_state = "science"
 	inhand_icon_state = "w_suit"
-	armor_type = /datum/armor/rnd_scientist
+	armor_type = /datum/armor/clothing_under/rnd_scientist
 
-/datum/armor/rnd_scientist
+/datum/armor/clothing_under/rnd_scientist
 	bio = 50
-	wound = 5
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -110,11 +108,10 @@
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
-	armor_type = /datum/armor/rnd_geneticist
+	armor_type = /datum/armor/clothing_under/rnd_geneticist
 
-/datum/armor/rnd_geneticist
+/datum/armor/clothing_under/rnd_geneticist
 	bio = 50
-	wound = 5
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"
