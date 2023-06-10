@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		else if(shell)
 			balloon_alert(user, "no radio key slot!")
 		else
-			to_chat(user, span_warning("Unable to locate a radio!"))
+			ballon_alert(user, "no radio here!")
 		return
 
 	if (W.GetID()) // trying to unlock the interface with an ID card
