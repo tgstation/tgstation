@@ -29725,10 +29725,6 @@
 "hJy" = (
 /turf/closed/wall,
 /area/station/maintenance/floor1/port/fore)
-"hJB" = (
-/obj/machinery/light/small/directional/south,
-/turf/closed/wall,
-/area/station/medical/paramedic)
 "hJC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -196797,7 +196793,7 @@ kMN
 tEe
 fYt
 rYI
-hJB
+sRR
 qPu
 sEl
 vOo
