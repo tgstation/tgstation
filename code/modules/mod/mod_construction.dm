@@ -73,7 +73,7 @@
 		if(!P.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
 			return
 
-		to_chat(user, span_notice("You add the wires to the core"))
+		to_chat(user, span_notice("You add the wires to the core."))
 		new /obj/item/mod/core/plasma/lavaland(drop_location())
 		qdel(src)
 
