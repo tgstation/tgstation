@@ -217,6 +217,7 @@
 		/obj/item/storage/backpack/science = 3,
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
+		/obj/item/storage/bag/xeno = 3,
 		/obj/item/clothing/head/beret/science = 3,
 		/obj/item/clothing/mask/bandana/striped/science = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 3,
@@ -587,6 +588,7 @@
 		/obj/item/storage/backpack/virology = 2,
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
+		/obj/item/storage/bag/bio = 2,
 		/obj/item/radio/headset/headset_med = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
