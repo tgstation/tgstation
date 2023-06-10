@@ -358,23 +358,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
 	user.set_machine(src)
-	if(keyslot || keyslot2 && !istype(keyslot2, /obj/item/encryptionkey/ai)) //Check to make sure you cant remove the AI key from core 
+	if(keyslot && keyslot.canRemove || keyslot2 && keyslot2.canRemove)
 		for(var/ch_name in channels)
 			SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 			secure_radio_connections[ch_name] = null
 
-		if(keyslot)
+		if(keyslot && keyslot.canRemove)
 			user.put_in_hands(keyslot)
 			keyslot = null
-		if(keyslot2 && !istype(keyslot2, /obj/item/encryptionkey/ai))
+		if( keyslot2 && keyslot2.canRemove)
 			user.put_in_hands(keyslot2)
 			keyslot2 = null
 
 		recalculateChannels()
 		to_chat(user, span_notice("You pop out the encryption keys in the headset."))
-
 	else
-		to_chat(user, span_warning("This headset doesn't have any unique encryption keys! How useless..."))
+		to_chat(user, span_warning("This headset doesn't have any encryption keys!"))
+	
 	tool.play_tool_sound(src, 10)
 	return TRUE
 

@@ -10,6 +10,8 @@
 	var/syndie = FALSE
 	/// If true, the radio can say/hear on the special CentCom channel.
 	var/independent = FALSE
+	/// Determines if the key can be removed from a radio/headset
+	var/canRemove = TRUE
 	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()
 	var/datum/language/translated_language
@@ -189,6 +191,7 @@
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
 	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 1, RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_AI_PRIVATE = 1)
+	canRemove = FALSE
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)

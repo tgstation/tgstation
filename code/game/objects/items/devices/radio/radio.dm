@@ -545,23 +545,22 @@
 	set_frequency(FREQ_SYNDICATE)
 
 /obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!keyslot)
+	if(keyslot && keyslot.canRemove)
+		for(var/ch_name in channels)
+			SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+			secure_radio_connections[ch_name] = null
+
+		if(keyslot && keyslot.canRemove)
+			user.put_in_hands(keyslot)
+			keyslot = null
+
+		recalculateChannels()
+		to_chat(user, span_notice("You pop out the encryption key in the radio."))
+		return
+	else
 		to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
 		return
 
-	for(var/ch_name in channels)
-		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
-		secure_radio_connections[ch_name] = null
-
-	if(keyslot)
-		var/turf/user_turf = get_turf(user)
-		if(user_turf)
-			keyslot.forceMove(user_turf)
-			keyslot = null
-
-	recalculateChannels()
-	to_chat(user, span_notice("You pop out the encryption key in the radio."))
-	return ..()
 
 /obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
 
@@ -574,8 +573,7 @@
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			keyslot = attacking_item
-
-		recalculateChannels()
+			recalculateChannels()
 
 
 /obj/item/radio/off // Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
