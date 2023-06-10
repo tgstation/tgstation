@@ -394,7 +394,7 @@
 	// If we can, we'll start a timer that hits when we're done
 	if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
 		if(!backup_power_timer || timeleft(backup_power_timer) != backup_power_time)
-			main_power_timer = addtimer(CALLBACK(src, PROC_REF(regainBackupPower)), backup_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+			backup_power_timer = addtimer(CALLBACK(src, PROC_REF(regainBackupPower)), backup_power_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	// Otherwise, we'll ensure the timer matches backup_power_time
 	else if(backup_power_timer)
 		backup_power_time = timeleft(backup_power_timer)
@@ -432,7 +432,7 @@
 	SIGNAL_HANDLER
 	handle_main_power()
 	handle_backup_power()
-	
+
 /obj/machinery/door/airlock/proc/regainMainPower()
 	set_main_outage(0)
 
