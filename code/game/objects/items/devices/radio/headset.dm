@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		recalculateChannels()
 		to_chat(user, span_notice("You pop out the encryption keys in the headset."))
 	else
-		to_chat(user, span_warning("This headset doesn't have any encryption keys!"))
+		to_chat(user, span_warning("This headset doesn't have any[keyslot || keyslot2 ? " removable" : ""] encryption keys!"))
 	
 	tool.play_tool_sound(src, 10)
 	return TRUE
