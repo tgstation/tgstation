@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Ventcrawling mobs have a 1 second delay/warning before exiting the ventilation."

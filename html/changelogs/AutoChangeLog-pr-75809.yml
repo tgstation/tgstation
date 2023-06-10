@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - bugfix: "Laptops now give a slowdown when dragged, patching the easy trick of dragging a laptop to bypass the slowdown for carrying it on hand."
