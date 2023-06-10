@@ -30,18 +30,18 @@
 	icon_state = chambered ? "[base_icon_state]_[drawn ? "drawn" : "nocked"]" : "[base_icon_state]"
 
 /obj/item/gun/ballistic/bow/AltClick(mob/user)
-	if(chambered)
-		chambered.forceMove(drop_location())
-		magazine.get_round(keep = FALSE)
+	if(isnull(chambered))
+		return ..()
 
-		var/obj/item/ammo_casing/caseless/arrow/our_arrow = chambered
-		user.put_in_hands(our_arrow)
+	chambered.forceMove(drop_location())
+	magazine.get_round(keep = FALSE)
 
-		drawn = FALSE
-		chambered = null
-		update_appearance()
-		return
-	return ..()
+	var/obj/item/ammo_casing/caseless/arrow/our_arrow = chambered
+	user.put_in_hands(our_arrow)
+
+	drawn = FALSE
+	chambered = null
+	update_appearance()
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
 	drawn = FALSE
