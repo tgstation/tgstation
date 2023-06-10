@@ -600,7 +600,7 @@
 ///A module that recharges the suit by an itsy tiny bit whenever the user takes a step.
 /obj/item/mod/module/magneto
 	name = "MOD magneto charger module"
-	desc = "A compact, weak AC generator that charges a suit's power cell through deambulation."
+	desc = "A compact, weak AC generator that charges the suit's power cell through deambulation."
 	icon_state = "magneto"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/magneto)
@@ -623,13 +623,13 @@
 
 /obj/item/mod/module/magneto/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
 	SIGNAL_HANDLER
-	if(old_state & (FLOATING|FLYING) && !(mod.wearer & (FLOATING|FLYING)))
+	if(old_state & (FLOATING|FLYING) && !(mod.wearer.movement_type & (FLOATING|FLYING)))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/mod/module/magneto/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 	//Shouldn't work if the wearer isn't really walking/running around.
-	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || wearer.check_move_loop_flags(MOVEMENT_LOOP_DRAGGING))
+	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 	mod.core.add_charge(power_per_step)
 
