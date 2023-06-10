@@ -118,7 +118,10 @@
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
 
-				M.flash_act(visual = TRUE, length = 1 SECONDS)//breifly apply flash affect to target
+				if(user.combat_mode)
+					M.flash_act(visual = TRUE)//Channel your anger into shining the light in their eyes for the defualt duration (~2.5s)
+				else
+					M.flash_act(visual = TRUE, length = 1 SECONDS)//breifly apply flash affect to target(~1s)
 
 				if(M == user) //they're using it on themselves
 					user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
