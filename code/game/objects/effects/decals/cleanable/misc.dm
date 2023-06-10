@@ -436,7 +436,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, PROC_REF(burn_process))
+	RegisterSignal(hotspot, COMSIG_QDELETING, PROC_REF(burn_process))
 
 /**
  * Ignites other oil pools around itself.

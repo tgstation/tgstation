@@ -23,17 +23,17 @@
 	if(new_host == host)
 		return
 	if(host) //No need to delete the connect range and containers comps. They'll be updated with the new tracked host.
-		UnregisterSignal(host, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(host, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	if(hasprox_receiver)
-		UnregisterSignal(hasprox_receiver, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(hasprox_receiver, COMSIG_QDELETING)
 	if(new_receiver)
 		hasprox_receiver = new_receiver
 		if(new_receiver != new_host)
-			RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
+			RegisterSignal(new_receiver, COMSIG_QDELETING, PROC_REF(on_host_or_receiver_del))
 	else if(hasprox_receiver == host) //Default case
 		hasprox_receiver = new_host
 	host = new_host
-	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
+	RegisterSignal(new_host, COMSIG_QDELETING, PROC_REF(on_host_or_receiver_del))
 	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(on_moved), COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change))
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))

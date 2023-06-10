@@ -57,7 +57,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	src.parent = parent
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleting))
 
 
 /obj/projectile/hallucination/Destroy()
@@ -65,11 +65,11 @@
 		parent.hallucinator.client?.images -= fake_bullet
 	fake_bullet = null
 
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = null
 	return ..()
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we need to clean up
+/// Signal proc for [COMSIG_QDELETING], if our associated hallucination deletes, we need to clean up
 /obj/projectile/hallucination/proc/parent_deleting(datum/source)
 	SIGNAL_HANDLER
 

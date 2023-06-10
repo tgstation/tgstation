@@ -26,7 +26,7 @@
 		return ELEMENT_INCOMPATIBLE
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if(element_flags & ELEMENT_DETACH_ON_HOST_DESTROY)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
 
 /datum/element/proc/OnTargetDelete(datum/source, force)
 	SIGNAL_HANDLER
@@ -38,7 +38,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(source, COMSIG_ELEMENT_DETACH, src)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 
 /datum/element/Destroy(force)
 	if(!force)
