@@ -682,9 +682,10 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
 	)
-	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 125, \
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 3 SECONDS, \
+		effectiveness = 125, \
 	)
 	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
 
