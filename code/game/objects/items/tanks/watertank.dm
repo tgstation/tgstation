@@ -316,7 +316,7 @@
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
-		RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(resin_landed))
+		RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(resin_landed))
 		return
 
 	if(nozzle_mode == RESIN_FOAM)

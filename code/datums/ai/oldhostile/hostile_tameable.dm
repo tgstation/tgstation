@@ -26,7 +26,7 @@
 	if(!ishostile(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 
-	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(new_pawn, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, PROC_REF(check_altclicked))
 	RegisterSignal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(on_ridden_driver_move))
 	RegisterSignal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_prebuckle))
@@ -35,10 +35,10 @@
 /datum/ai_controller/hostile_friend/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_CLICK_ALT,
 		COMSIG_LIVING_DEATH,
-		COMSIG_PARENT_QDELETING
+		COMSIG_QDELETING
 	))
 	unfriend()
 	return ..() //Run parent at end

@@ -16,11 +16,11 @@
 		return ELEMENT_INCOMPATIBLE
 	src.amount_allowed = amount_allowed
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/envenomable_casing/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXAMINE))
 
 ///signal called on the parent attacking an item
 /datum/element/envenomable_casing/proc/on_afterattack(obj/item/ammo_casing/casing, atom/target, mob/user, proximity_flag, click_parameters)

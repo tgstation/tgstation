@@ -14,7 +14,7 @@
 	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	var/obj/effect/temp_visual/spike_chaser/chaser = new(get_turf(owner), target)
 	LAZYADD(active_chasers, WEAKREF(chaser))
-	RegisterSignal(chaser, COMSIG_PARENT_QDELETING, PROC_REF(on_chaser_destroyed))
+	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/chasing_spikes/proc/on_chaser_destroyed(atom/chaser)
@@ -51,7 +51,7 @@
 	src.target = WEAKREF(target)
 	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = TRUE, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_invalid))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_invalid))
 	if (isliving(target))
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
 

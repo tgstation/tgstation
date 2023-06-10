@@ -14,7 +14,8 @@
 	status_flags = 0
 	combat_mode = TRUE
 	var/throw_message = "bounces off of"
-	var/fromtendril = FALSE
+	/// Is this mob subtype from a spawner (e.g. necropolis tendril, demonic portal)? Can be used to affect what it drops (e.g. legions force-dropping ashen skeletons).
+	var/from_spawner = FALSE
 	// Pale purple, should be red enough to see stuff on lavaland
 	lighting_cutoff_red = 25
 	lighting_cutoff_green = 15

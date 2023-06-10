@@ -48,8 +48,21 @@
 /datum/mafia_role/Destroy(force, ...)
 	QDEL_NULL(mafia_alert)
 	QDEL_NULL(body)
-	QDEL_NULL(role_unique_actions)
+	QDEL_LIST(role_unique_actions)
 	return ..()
+
+/**
+ * Puts the player in their body and keeps track of their previous one to put them back in later.
+ * Adds the playing_mafia trait so people examining them will know why they're currently lacking a soul.
+ */
+/datum/mafia_role/proc/put_player_in_body(client/player)
+	if(player.mob.mind && player.mob.mind.current)
+		body.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = player.mob.mind, \
+			old_body = player.mob.mind.current, \
+		)
+	body.key = player.key
 
 /**
  * Tests kill immunities, if nothing prevents the kill, kills this role.
@@ -66,8 +79,6 @@
 		body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
-	if(!(player_key in game.mafia_spectators)) //people who played will want to see the end of the game more often than not
-		game.mafia_spectators += player_key
 	game.living_roles -= src
 	return TRUE
 

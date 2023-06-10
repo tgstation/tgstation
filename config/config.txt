@@ -129,6 +129,9 @@ VOTE_PERIOD 600
 ## disable abandon mob
 NORESPAWN
 
+## Respawn delay (deciseconds), which doesn't allow to return to lobby (default 10 minutes)
+#RESPAWN_DELAY 6000
+
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
 

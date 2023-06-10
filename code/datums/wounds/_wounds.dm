@@ -184,11 +184,11 @@
 
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
-		UnregisterSignal(victim, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(victim, COMSIG_QDELETING)
 	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
-		RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(null_victim))
+		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -243,9 +243,9 @@
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
 	if(limb)
-		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(limb, COMSIG_QDELETING)
 	limb = new_value
-	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
+	RegisterSignal(new_value, COMSIG_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
 		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
