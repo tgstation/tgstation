@@ -24,6 +24,17 @@
 	implant = null
 	return ..()
 
+/obj/item/mod/module/pathfinder/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(isnull(implant))
+		return // how did this happen?
+
+	if(!implant.implant(outfit_wearer, outfit_wearer))
+		to_chat(outfit_wearer, span_warning("Failed to automatically implant you with [implant]!"))
+		return
+	implant = null
+	icon_state = "pathfinder_empty"
+
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
 	if(implant)
