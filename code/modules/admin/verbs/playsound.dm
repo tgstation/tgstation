@@ -73,7 +73,7 @@
 /proc/get_youtube_dl_data(input)
 	if(!istext(input))
 		return null;
-	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
+	var/ytdl = CONFIG_GET(string/invoke_youtubedl);
 	if(!ytdl)
 		return null;
 	var/shell_scrubbed_input = shell_url_scrub(input)
