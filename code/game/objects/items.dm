@@ -1244,9 +1244,9 @@
 		source_item?.reagents?.add_reagent(/datum/reagent/blood, 2)
 
 	else if(custom_materials?.len) //if we've got materials, lets see whats in it
-		/// How many mats have we found? You can only be affected by two material datums by default
+		// How many mats have we found? You can only be affected by two material datums by default
 		var/found_mats = 0
-		/// How much of each material is in it? Used to determine if the glass should break
+		// How much of each material is in it? Used to determine if the glass should break
 		var/total_material_amount = 0
 
 		for(var/mats in custom_materials)
@@ -1261,7 +1261,7 @@
 		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
 		if(custom_materials[GET_MATERIAL_REF(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
-				/// The glass shard that is spawned into the source item
+				// The glass shard that is spawned into the source item
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
@@ -1278,7 +1278,7 @@
 						span_warning("Eugh! Did I just bite into something?"))
 
 	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
-		/// victim's chest (for cavity implanting the item)
+		// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)
 			victim.vomit(5, FALSE, FALSE, distance = 0)

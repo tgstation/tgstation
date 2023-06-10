@@ -18,7 +18,13 @@
 	/// Current state of our deployable equipment
 	var/currently_deployed = FALSE
 	/// What should be added to the end of the parent icon state when equipment is deployed? Set to "" for no change
-	var/parent_icon_state_modifier = ""
+	var/parent_icon_state_suffix = ""
+	/// Icon state for overlay to display over the parent item while deployable item is not deployed
+	var/down_overlay_state_suffix = ""
+	/// Overlay to display over the parent item while deployable item is not deployed
+	var/mutable_appearance/undeployed_overlay
+	/// Optional callback triggered before deploying, return TRUE to continue or FALSE to cancel
+	var/datum/callback/pre_creation_check
 	/// Optional callback triggered when we create our deployable equipment
 	var/datum/callback/on_created
 	/// Optional callback triggered when we have deployed our equipment
@@ -31,7 +37,9 @@
 	equipped_slot,
 	action_name = "Toggle",
 	destroy_on_removal = FALSE,
-	parent_icon_state_modifier = "",
+	parent_icon_state_suffix = "",
+	down_overlay_state_suffix = "",
+	datum/callback/pre_creation_check,
 	datum/callback/on_created,
 	datum/callback/on_deployed,
 	datum/callback/on_removed,
@@ -44,7 +52,9 @@
 	src.deployable_type = deployable_type
 	src.equipped_slot = equipped_slot
 	src.destroy_on_removal = destroy_on_removal
-	src.parent_icon_state_modifier = parent_icon_state_modifier
+	src.parent_icon_state_suffix = parent_icon_state_suffix
+	src.down_overlay_state_suffix = down_overlay_state_suffix
+	src.pre_creation_check = pre_creation_check
 	src.on_created = on_created
 	src.on_deployed = on_deployed
 	src.on_removed = on_removed
@@ -58,6 +68,11 @@
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_SLOT_CHECKED, PROC_REF(on_action_slot_checked))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_item_equipped_outfit))
+	if (down_overlay_state_suffix)
+		var/overlay_state = "[initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
+		undeployed_overlay = mutable_appearance(initial(clothing_parent.worn_icon), overlay_state, -SUIT_LAYER)
+		RegisterSignal(parent, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_checked_overlays))
+		clothing_parent.update_slot_icon()
 
 	if (!destroy_on_removal)
 		create_deployable()
@@ -86,6 +101,13 @@
 	if (!(source.slot_flags & slot))
 		return COMPONENT_ITEM_ACTION_SLOT_INVALID
 
+/// Apply an overlay while the item is not deployed
+/datum/component/toggled_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+	SIGNAL_HANDLER
+	if (isinhands || currently_deployed)
+		return
+	overlays += undeployed_overlay
+
 /// Deploys gear if it is hidden, hides it if it is deployed
 /datum/component/toggled_clothing/proc/toggle_deployable()
 	if (currently_deployed)
@@ -93,28 +115,28 @@
 		return
 
 	var/obj/item/clothing/parent_gear = parent
-	if(!ishuman(parent_gear.loc))
+	if (!ishuman(parent_gear.loc))
 		return
 	var/mob/living/carbon/human/wearer = parent_gear.loc
-	if(wearer.is_holding(parent_gear))
+	if (wearer.is_holding(parent_gear))
 		parent_gear.balloon_alert(wearer, "wear it first!")
 		return
-	if(wearer.get_item_by_slot(equipped_slot))
+	if (wearer.get_item_by_slot(equipped_slot))
 		parent_gear.balloon_alert(wearer, "slot occupied!")
 		return
-	if(destroy_on_removal)
-		create_deployable()
-	if(!wearer.equip_to_slot_if_possible(deployable, slot = equipped_slot))
+	if (!deployable && !create_deployable())
+		return
+	if (!wearer.equip_to_slot_if_possible(deployable, slot = equipped_slot))
 		if(destroy_on_removal)
 			remove_deployable()
 		return
-	currently_deployed = TRUE
-	if (parent_icon_state_modifier)
-		parent_gear.icon_state = "[initial(parent_gear.icon_state)][parent_icon_state_modifier]"
-		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
-	wearer.update_mob_action_buttons()
+	currently_deployed = TRUE
 	on_deployed?.Invoke(deployable)
+	if (parent_icon_state_suffix)
+		parent_gear.icon_state = "[initial(parent_gear.icon_state)][parent_icon_state_suffix]"
+		parent_gear.worn_icon_state = parent_gear.icon_state
+	wearer.update_mob_action_buttons()
 
 /// Undeploy gear if it moves slots somehow
 /datum/component/toggled_clothing/proc/on_item_equipped(obj/item/clothing/source, mob/equipper, slot)
@@ -130,10 +152,12 @@
 		create_deployable()
 	toggle_deployable()
 
-/// Create our gear
+/// Create our gear, returns true if we actually made anything
 /datum/component/toggled_clothing/proc/create_deployable()
 	if (deployable)
-		return
+		return FALSE
+	if (pre_creation_check && !pre_creation_check.Invoke())
+		return FALSE
 	deployable = new deployable_type(parent)
 	if (!istype(deployable))
 		stack_trace("Tried to create non-clothing item from toggled clothing.")
@@ -141,6 +165,7 @@
 	RegisterSignal(deployable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
 	RegisterSignal(deployable, COMSIG_QDELETING, PROC_REF(on_deployed_destroyed))
 	on_created?.Invoke(deployable)
+	return TRUE
 
 /// Undeploy gear if you drop it
 /datum/component/toggled_clothing/proc/on_deployed_dropped()
@@ -150,27 +175,27 @@
 /// Undeploy gear if it is deleted
 /datum/component/toggled_clothing/proc/on_deployed_destroyed()
 	SIGNAL_HANDLER
-	deployable = null
 	remove_deployable()
+	deployable = null
 
 /// Removes our deployed equipment from the wearer
 /datum/component/toggled_clothing/proc/remove_deployable()
+	if (!currently_deployed)
+		return
 	currently_deployed = FALSE
 	on_removed?.Invoke(deployable)
 
 	var/obj/item/clothing/parent_gear = parent
-	if (parent_icon_state_modifier)
+	if (parent_icon_state_suffix)
 		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
-
 	if (deployable)
 		if (destroy_on_removal)
 			QDEL_NULL(deployable)
-		else if (ishuman(parent_gear.loc))
+		else if (!ishuman(parent_gear.loc))
+			deployable.forceMove(parent_gear)
+		else
 			var/mob/living/carbon/human/wearer = parent_gear.loc
 			wearer.transferItemToLoc(deployable, parent_gear, TRUE)
-			wearer.update_worn_oversuit()
-		else
-			deployable.forceMove(parent_gear)
-
+	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()

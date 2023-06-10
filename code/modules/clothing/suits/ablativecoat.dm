@@ -55,8 +55,6 @@
 	balloon_alert(user, "hud enabled")
 
 /obj/item/clothing/suit/hooded/ablative/on_hood_down(obj/item/clothing/head/hooded/hood)
-	if (!hood_up)
-		return ..()
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)

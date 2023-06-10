@@ -11,8 +11,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
-	/// The mutable_appearance of the associated hood, when it's down. Can be null when the hood is up.
-	var/mutable_appearance/hood_overlay
+	hood_down_overlay_suffix = "_hood"
 	/// How snug are we?
 	var/zipped = FALSE
 
@@ -32,8 +31,6 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
 	)
-
-	generate_hood_overlay()
 
 /obj/item/clothing/suit/hooded/wintercoat/on_hood_up(obj/item/clothing/head/hooded/hood)
 	. = ..()
@@ -63,19 +60,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		wearer.update_worn_oversuit()
-
-
-/// Helper proc to generate the `hood_overlay` associated to the wintercoat.
-/obj/item/clothing/suit/hooded/wintercoat/proc/generate_hood_overlay()
-	hood_overlay = mutable_appearance(initial(worn_icon), "[initial(icon_state)]_hood", -SUIT_LAYER)
-
-
-/obj/item/clothing/suit/hooded/wintercoat/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-
-	if(!isinhands && !hood_up)
-		. += hood_overlay
-
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
@@ -663,13 +647,15 @@
 //In case colors are changed after initialization
 /obj/item/clothing/suit/hooded/wintercoat/custom/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
 	. = ..()
-	if(hood)
-		var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
-		var/list/new_coat_colors = coat_colors.Copy(1,4)
-		hood.set_greyscale(new_coat_colors) //Adopt the suit's grayscale coloring for visual clarity.
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_coat_colors = coat_colors.Copy(1,4)
+	hood.set_greyscale(new_coat_colors) //Adopt the suit's grayscale coloring for visual clarity.
+	hood.update_slot_icon()
 
 //But also keep old method in case the hood is (re-)created later
-/obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
+/obj/item/clothing/suit/hooded/wintercoat/custom/on_hood_created(obj/item/clothing/head/hooded/hood)
 	. = ..()
 	var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))
 	var/list/new_coat_colors = coat_colors.Copy(1,4)
