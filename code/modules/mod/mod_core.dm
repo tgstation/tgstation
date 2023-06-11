@@ -369,11 +369,18 @@
 	var/max_spawns = 3
 	var/spawned = 0
 	var/can_spawn = TRUE
+	var/children = list()
 
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
 	maxcharge = 15000
 	charge = 15000
+
+/obj/item/mod/core/plasma/lavaland/Destroy()
+	for(var/mob/child in children)
+		qdel(child)
+	mod.wearer.particles = null
+	. = ..()
 
 /obj/item/mod/core/plasma/lavaland/process()
 	if(can_spawn)
@@ -391,7 +398,7 @@
 		return
 	if(spawned >= max_spawns)
 		return
-	new mob(get_turf(src), src)
+	children += new mob(get_turf(src), src)
 	spawned++
 
 	if(spawned < max_spawns)

@@ -62,6 +62,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	if(source)
 		source.child_despawned()
+		source.children -= src
 	. = ..()
 
 /mob/living/basic/butterfly/lavaland/temporary/process()
