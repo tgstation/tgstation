@@ -984,10 +984,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 // Ethereal-suitable cross-culture food
-/* Ethereals are, as part of the uplifting process, considered as citizens of the Terran Federation.
-   For this reason, a lot of ethereals have chosen to move throughout human space, settling on various planets to a mixed reception.
-   Mars is no exception to this rule, where the ethereal population has been more welcomed than most, due to Mars' more cosmopolitan past.
-   Here, the ethereals have developed a distinct culture, neither that of their homeland nor that of Mars, and with that a distinct cuisine.
+/*	Ethereals are, as part of the uplifting process, considered as citizens of the Terran Federation.
+	For this reason, a lot of ethereals have chosen to move throughout human space, settling on various planets to a mixed reception.
+	Mars is no exception to this rule, where the ethereal population has been more welcomed than most, due to Mars' more cosmopolitan past.
+	Here, the ethereals have developed a distinct culture, neither that of their homeland nor that of Mars, and with that a distinct cuisine.
 */
 
 // Pickled Voltvine
