@@ -2369,6 +2369,7 @@
 #include "code\modules\admin\verbs\atmosdebug.dm"
 #include "code\modules\admin\verbs\beakerpanel.dm"
 #include "code\modules\admin\verbs\borgpanel.dm"
+#include "code\modules\admin\verbs\change_shuttle_events.dm"
 #include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\color_blind_test.dm"
 #include "code\modules\admin\verbs\commandreport.dm"

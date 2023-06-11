@@ -578,9 +578,13 @@
 
 ///Generate a list of events to run during the departure
 /obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
+	var/list/names = list()
 	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event))
 		if(prob(initial(event.probability)))
 			event_list.Add(new event(src))
+			names += initial(event.name)
+	if(LAZYLEN(names))
+		log_game("[capitalize(name)] has selected the following shuttle events: [english_list(names)].")
 
 /obj/docking_port/mobile/monastery
 	name = "monastery pod"

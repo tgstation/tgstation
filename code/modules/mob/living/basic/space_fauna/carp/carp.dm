@@ -261,7 +261,7 @@
 ///Wild carp that just vibe ya know
 /mob/living/basic/carp/passive
 	name = "passive carp"
-	desc = "A ferocious, sucker-bearing creature that resembles a fish. "
+	desc = "A timid, sucker-bearing creature that resembles a fish. "
 
 	icon_state = "base_friend"
 	icon_living = "base_friend"

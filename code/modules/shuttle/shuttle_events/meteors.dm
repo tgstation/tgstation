@@ -32,7 +32,7 @@
 ///Okay this spawns a lot of really bad meteors, but they never hit the shuttle so it's perfectly safe (unless you go outside lol)
 /datum/shuttle_event/simple_spawner/meteor/safe
 	name = "Various Meteors! (Safe)"
-	probability = 5
+	probability = 100 //5
 	activation_fraction = 0.1
 
 	spawn_probability_per_process = 100

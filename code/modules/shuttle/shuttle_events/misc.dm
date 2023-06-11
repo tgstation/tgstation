@@ -1,6 +1,7 @@
+///thats amoreeeeee
 /datum/shuttle_event/simple_spawner/italian
 	name = "Italian Storm! (Mama Mia!)"
-	probability = 0.05
+	probability = 100//0.05
 
 	spawns_per_spawn = 5
 	spawning_flags = SHUTTLE_EVENT_MISS_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
@@ -14,7 +15,7 @@
 	probability = 0.2
 	activation_fraction = 0.2
 
-	spawning_list = list(/mob/living/basic/carp = 20, /mob/living/basic/carp/mega = 3)
+	spawning_list = list(/mob/living/basic/carp = 12, /mob/living/basic/carp/mega = 3)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE | SHUTTLE_EVENT_MISS_SHUTTLE
 	spawn_probability_per_process = 20
 
@@ -28,7 +29,7 @@
 ///CARPTIDE! CARPTIDE! CARPTIDE! A few magical carp will attack the shuttle!
 /datum/shuttle_event/simple_spawner/carp
 	name = "Magical Carp Nest! (Very Dangerous!)"
-	probability = 0.1
+	probability = 0.01
 	activation_fraction = 0.5
 
 	spawning_list = list(/mob/living/basic/carp/magic = 5, /mob/living/basic/carp/mega = 1)
@@ -40,7 +41,7 @@
 ///Spawn a bunch of friendly carp to view from inside the shuttle! May occassionally pass through and nibble some windows, but are otherwise pretty harmless
 /datum/shuttle_event/simple_spawner/carp/friendly
 	name = "Passive Carp Nest! (Mostly Harmless!)"
-	probability = 3
+	probability = 100//3
 	activation_fraction = 0.1
 
 	spawning_list = list(/mob/living/basic/carp/passive = 1)
@@ -59,7 +60,7 @@
 ///Same as /friendly, but we only go through the shuttle, MUHAHAHAHAHAHA!! They dont actually harm anyone, but itll be a clusterfuck of confusion
 /datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space
 	name = "Comfortable Carp Nest going through the shuttle! (Extremely annoying and confusing!)"
-	probability = 0.01
+	probability = 0.001
 	activation_fraction = 0.5
 
 	spawning_list = list(/mob/living/basic/carp/passive = 1)
