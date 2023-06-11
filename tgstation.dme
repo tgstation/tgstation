@@ -2778,6 +2778,7 @@
 #include "code\modules\asset_cache\assets\bibles.dm"
 #include "code\modules\asset_cache\assets\body_zones.dm"
 #include "code\modules\asset_cache\assets\chat.dm"
+#include "code\modules\asset_cache\assets\chemmaster.dm"
 #include "code\modules\asset_cache\assets\circuits.dm"
 #include "code\modules\asset_cache\assets\common.dm"
 #include "code\modules\asset_cache\assets\condiments.dm"
