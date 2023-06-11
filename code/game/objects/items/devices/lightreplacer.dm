@@ -100,7 +100,7 @@
 			return TRUE
 
 		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
-		var/display_msg =TRUE
+		var/display_msg = TRUE
 		if(light_to_insert.status == LIGHT_OK)
 			add_uses(1)
 		else if(add_shard(user))
@@ -145,7 +145,7 @@
 				replaced_something = TRUE
 
 		if(!replaced_something)
-			if(src.uses == max_uses)
+			if(uses == max_uses)
 				to_chat(user, span_warning("\The [src] is full!"))
 			else
 				to_chat(user, span_warning("\The [storage_to_empty] contains no lights, glass sheets or shards."))
