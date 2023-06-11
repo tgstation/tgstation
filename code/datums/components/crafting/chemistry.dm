@@ -51,7 +51,7 @@
 	result = /obj/item/burner
 	time = 5 SECONDS
 	reqs = list(
-		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/reagent_containers/cup = 1,
 		/datum/reagent/consumable/ethanol = 15,
 		/obj/item/paper = 1,
 	)
@@ -62,7 +62,7 @@
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
 	reqs = list(
-		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/reagent_containers/cup = 1,
 		/datum/reagent/fuel/oil = 15,
 		/obj/item/paper = 1,
 	)
@@ -73,7 +73,7 @@
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
 	reqs = list(
-		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/reagent_containers/cup = 1,
 		/datum/reagent/fuel = 15,
 		/obj/item/paper = 1,
 	)
