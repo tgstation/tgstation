@@ -2136,7 +2136,8 @@
 		/obj/item/food/spaghetti/rawnoodles = 1,
 		/obj/item/food/sausage/american = 1,
 		/obj/item/food/chapslice = 2,
-		/obj/item/food/kimchi
+		/obj/item/food/kimchi = 1,
+		/obj/item/food/cheese/wedge = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/budae_jjigae = 30,
