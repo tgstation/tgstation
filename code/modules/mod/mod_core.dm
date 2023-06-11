@@ -379,7 +379,9 @@
 /obj/item/mod/core/plasma/lavaland/Destroy()
 	for(var/mob/child in children)
 		qdel(child)
-	mod.wearer.particles = null
+	if(mod)
+		if(mod.wearer)
+			mod.wearer.particles = null
 	. = ..()
 
 /obj/item/mod/core/plasma/lavaland/process()
