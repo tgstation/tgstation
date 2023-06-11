@@ -389,6 +389,8 @@
 	SIGNAL_HANDLER
 	if(!mod.active)
 		return
+	if(spawned >= max_spawns)
+		return
 	new mob(get_turf(src), src)
 	spawned++
 
