@@ -60,7 +60,8 @@
 
 /mob/living/basic/butterfly/lavaland/temporary/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	source.child_despawned()
+	if(source)
+		source.child_despawned()
 	. = ..()
 
 /mob/living/basic/butterfly/lavaland/temporary/process()
