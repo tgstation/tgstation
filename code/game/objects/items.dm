@@ -698,7 +698,7 @@
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
 	// Some items only give their actions buttons when in a specific slot.
-	if(!item_action_slot_check(slot, to_who, action) || !SEND_SIGNAL(src, COMSIG_ITEM_UI_ACTION_SLOT_CHECKED, user, action, slot) & COMPONENT_ITEM_ACTION_SLOT_INVALID)
+	if(!item_action_slot_check(slot, to_who, action) || !(SEND_SIGNAL(src, COMSIG_ITEM_UI_ACTION_SLOT_CHECKED, to_who, action, slot) & COMPONENT_ITEM_ACTION_SLOT_INVALID))
 		// There is a chance we still have our item action currently,
 		// and are moving it from a "valid slot" to an "invalid slot".
 		// So call Remove() here regardless, even if excessive.
