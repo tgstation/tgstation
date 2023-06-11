@@ -49,6 +49,25 @@
 	result = /obj/item/food/sambal
 	category = CAT_MARTIAN
 
+/datum/crafting_recipe/food/katsu_fillet
+	name = "Katsu fillet"
+	reqs = list(
+		/obj/item/food/meat/rawcutlet = 1,
+		/obj/item/food/breadslice/reispan = 1,
+	)
+	result = /obj/item/food/katsu_fillet
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/rice_dough
+	name = "Rice dough"
+	reqs = list(
+		/datum/reagent/consumable/flour = 10,
+		/datum/reagent/consumable/rice = 10,
+		/datum/reagent/water = 10,
+	)
+	result = /obj/item/food/rice_dough
+	category = CAT_MARTIAN
+
 /datum/crafting_recipe/food/hurricane_rice
 	name = "Hurricane fried rice"
 	reqs = list(
@@ -98,6 +117,7 @@
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/peas = 1,
 		/datum/reagent/consumable/ketchup = 5,
+		/datum/reagent/consumable/worcestershire = 2,
 	)
 	result = /obj/item/food/salad/ketchup_fried_rice
 	category = CAT_MARTIAN
@@ -281,6 +301,18 @@
 	result = /obj/item/food/croque_martienne
 	category = CAT_MARTIAN
 
+/datum/crafting_recipe/food/prospect_sunrise
+	name = "Prospect Sunrise sandwich"
+	reqs = list(
+		/obj/item/food/breadslice/reispan = 2,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/omelette = 1,
+		/obj/item/food/pickle = 1,
+	)
+	result = /obj/item/food/croque_martienne
+	category = CAT_MARTIAN
+
 /datum/crafting_recipe/food/takoyaki
 	name = "Takoyaki"
 	reqs = list(
@@ -330,7 +362,7 @@
 /datum/crafting_recipe/food/brat_kimchi
 	name = "Brat-kimchi"
 	reqs = list(
-		/obj/item/food/sausage = 2,
+		/obj/item/food/sausage = 1,
 		/obj/item/food/kimchi = 1,
 		/datum/reagent/consumable/sugar = 3,
 	)
@@ -412,7 +444,7 @@
 		/obj/item/food/baguette = 1,
 		/obj/item/food/izakaya_fries = 1,
 		/obj/item/food/katsu_fillet = 1,
-		/datum/reagent/consumable/curry_powder = 3,
+		/datum/reagent/consumable/nutriment/soup/curry_sauce = 5,
 	)
 	result = /obj/item/food/kurry_ok_subsando
 	category = CAT_MARTIAN
@@ -490,6 +522,7 @@
 		/obj/item/food/egg = 1,
 		/obj/item/food/grown/bell_pepper = 1,
 		/obj/item/food/grown/potato = 1,
+		/obj/item/food/onion_slice = 1,
 	)
 	result = /obj/item/food/chap_hash
 	category = CAT_MARTIAN
@@ -627,7 +660,6 @@
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/grown/citrus/orange = 1,
 		/datum/reagent/consumable/ethanol/cognac = 2,
-		/datum/reagent/consumable/quality_oil = 2,
 	)
 	result = /obj/item/food/peking_duck_crepes
 	category = CAT_MARTIAN
@@ -804,6 +836,7 @@
 	reqs = list(
 		/obj/item/food/raw_meatball/chicken = 1,
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 2,
+		/obj/item/stack/rods = 1,
 	)
 	result = /obj/item/food/kebab/raw_ballpark_tsukune
 	category = CAT_MARTIAN
@@ -814,7 +847,7 @@
 		/obj/item/food/pickled_voltvine = 1,
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/boiledrice = 1,
-		/datum/reagent/consumable/nutriment/soup/dashi = 2,
+		/datum/reagent/consumable/nutriment/soup/dashi = 5,
 	)
 	result = /obj/item/food/salad/sprout_bowl
 	category = CAT_MARTIAN
