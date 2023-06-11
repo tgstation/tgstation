@@ -41,9 +41,9 @@ Notes:
 		return FALSE
 
 	if (!isnull(last_target))
-		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(last_target, COMSIG_QDELETING)
 
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(on_target_qdel))
 
 	last_target = thing
 

@@ -788,7 +788,7 @@
 /area/ruin/space/ancientstation/beta/hall)
 "dn" = (
 /obj/machinery/light/small/directional/west,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
@@ -3530,7 +3530,7 @@
 /area/ruin/space/ancientstation/beta/hall)
 "pb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
@@ -3720,7 +3720,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "qS" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/broken/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -4535,7 +4535,7 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "wQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -4577,7 +4577,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "xg" = (
 /obj/machinery/light/small/directional/east,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -4833,7 +4833,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "zF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -7923,7 +7923,7 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/solars/ancientstation/charlie/solars)
 "Ug" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -8519,7 +8519,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Za" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
