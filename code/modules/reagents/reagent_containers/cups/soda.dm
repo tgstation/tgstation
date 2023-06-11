@@ -267,6 +267,13 @@
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/volt_energy
+	name = "24-Volt Energy"
+	desc = "Unleash the ape!"
+	icon_state = "volt_energy"
+	list_reagents = list(/datum/reagent/consumable/volt_energy = 30)
+	drink_type = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/cup/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
