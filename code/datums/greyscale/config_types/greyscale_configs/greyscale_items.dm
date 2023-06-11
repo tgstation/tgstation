@@ -289,20 +289,17 @@
 	icon_file = 'icons/obj/janitor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
-/datum/greyscale_config/buckets_worn
+/datum/greyscale_config/buckets/worn
 	name = "Buckets Worn"
 	icon_file = 'icons/mob/clothing/head/utility.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
-/datum/greyscale_config/buckets_inhands_left
+/datum/greyscale_config/buckets/inhands_left
 	name = "Buckets Inhands Left"
 	icon_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
-/datum/greyscale_config/buckets_inhands_right
+/datum/greyscale_config/buckets/inhands_right
 	name = "Buckets Inhands Right"
 	icon_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"

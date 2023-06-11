@@ -349,9 +349,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
 	greyscale_config = /datum/greyscale_config/buckets
-	greyscale_config_worn = /datum/greyscale_config/buckets_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
+	greyscale_config_worn = /datum/greyscale_config/buckets/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/buckets/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/buckets/inhands_right
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
