@@ -146,7 +146,7 @@
 		/obj/item/food/grown/apple = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/onion_slice = 1,
-		/datum/reagent/consumable/teriyaki = 4,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 4,
 	)
 	result = /obj/item/food/salad/bibimbap
 	category = CAT_MARTIAN
@@ -467,7 +467,7 @@
 	reqs = list(
 		/obj/item/food/meat/steak = 1,
 		/obj/item/food/mashed_potatoes = 1,
-		/datum/reagent/consumable/breadcrumbs = 3,
+		/obj/item/food/breadslice/reispan = 1,
 	)
 	result = /obj/item/food/steak_croquette
 	category = CAT_MARTIAN

@@ -646,14 +646,14 @@
 	results = list(/datum/reagent/consumable/ethanol/maui_sunrise = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 2, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/triple_citrus = 1, /datum/reagent/consumable/lemon_lime = 4)
 
-/datum/reagent/consumable/drink/imperial_mai_tai
+/datum/chemical_reaction/drink/imperial_mai_tai
 	results = list(/datum/reagent/consumable/ethanol/imperial_mai_tai = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 1, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/ethanol/triple_sec = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/korta_nectar = 1)
 
-/datum/reagent/consumable/drink/konococo_rumtini
+/datum/chemical_reaction/drink/konococo_rumtini
 	results = list(/datum/reagent/consumable/ethanol/konococo_rumtini = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/ethanol/kahlua = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/sugar = 2)
 
-/datum/reagent/consumable/drink/blue_hawaiian
+/datum/chemical_reaction/drink/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
