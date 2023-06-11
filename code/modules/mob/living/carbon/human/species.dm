@@ -133,6 +133,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
+	//Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
+	var/reagent_tag = PROCESS_ORGANIC
 
 	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
@@ -198,6 +200,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 	///Replaces default butt with a different organ
 	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt
+
+	///Replaces default bladder with a different organ
+	var/obj/item/organ/internal/bladder/mutantbladder = /obj/item/organ/internal/bladder
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -355,6 +360,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantstomach
 		if(ORGAN_SLOT_BUTT)
 			return mutantbutt
+		if(ORGAN_SLOT_BLADDER)
+			return mutantbladder
 		else
 			CRASH("Invalid organ slot [slot]")
 
@@ -384,6 +391,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_BUTT,
+		ORGAN_SLOT_BLADDER,
 	)
 
 	for(var/slot in organ_slots)
@@ -1109,6 +1117,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
 		return TRUE
+
+	//This handles dumping unprocessable reagents.
+	var/dump_reagent = TRUE
+	if((chem.process_flags & SYNTHETIC) && (H.dna.species.reagent_tag & PROCESS_SYNTHETIC))		//SYNTHETIC-oriented reagents require PROCESS_SYNTHETIC
+		dump_reagent = FALSE
+	if((chem.process_flags & ORGANIC) && (H.dna.species.reagent_tag & PROCESS_ORGANIC))		//ORGANIC-oriented reagents require PROCESS_ORGANIC
+		dump_reagent = FALSE
+	if(dump_reagent)
+		chem.holder.remove_reagent(chem.type, chem.metabolization_rate)
+		return TRUE
+
 	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
 		chem.overdosed = TRUE
 		chem.overdose_start(H)
@@ -1911,6 +1930,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantstomach
 	to_store += mutantappendix
 	to_store += mutantbutt
+	to_store += mutantbladder
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
 

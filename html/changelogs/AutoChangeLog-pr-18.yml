@@ -1,0 +1,4 @@
+author: "MilkForever"
+delete-after: True
+changes:
+  - rscadd: "Engineering now gets three hardsuits at the start of the round in Meta, IceBox and Tram. Aditionally, atmos also gets two hardsuits in Meta, Icebox, Tram and Delta."

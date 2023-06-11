@@ -37,6 +37,7 @@
 	name = "mining shuttle";
 	port_direction = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "i" = (

@@ -121,13 +121,13 @@
 
 // If the UnarmedAttack chain is blocked
 #define LIVING_UNARMED_ATTACK_BLOCKED(target_atom) (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
-	|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, target_atom, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, target_atom, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 
-/mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/UnarmedAttack(atom/attack_target, proximity_flag)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return FALSE
-	if(!right_click_attack_chain(attack_target, modifiers))
-		resolve_unarmed_attack(attack_target, modifiers)
+	if(!right_click_attack_chain(attack_target))
+		resolve_unarmed_attack(attack_target)
 	return TRUE
 
 /**
@@ -263,7 +263,7 @@
 	Brain
 */
 
-/mob/living/brain/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
+/mob/living/brain/UnarmedAttack(atom/attack_target, proximity_flag)//Stops runtimes due to attack_animal being the default
 	return
 
 

@@ -96,6 +96,15 @@
 #define BB_CHICKEN_READY_LAY "BB_chicken_ready_lay"
 #define BB_CHICKEN_ATTEMPT_TRACKING "BB_chicken_attempt_tracking"
 
+///gary defines
+#define BB_GARY_HIDEOUT "BB_gary_hideout"
+#define BB_GARY_HIDEOUT_SETTING_UP "BB_gary_hideout_setting_up"
+#define BB_GARY_TARGET_AREA "BB_gary_target"
+#define BB_GARY_BARTERING "BB_gary_bartering"
+#define BB_GARY_BARTER_FRIEND "BB_gary_barter_friend"
+#define BB_GARY_COME_HOME "BB_gary_come_home"
+#define BB_GARY_HAS_SHINY "BB_gary_has_shiny"
+
 ///Haunted item controller defines
 
 ///Chance for haunted item to haunt someone

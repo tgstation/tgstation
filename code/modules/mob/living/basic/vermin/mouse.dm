@@ -122,7 +122,7 @@
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-/mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag)
 	. = ..()
 	if(!.)
 		return

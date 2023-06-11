@@ -680,3 +680,12 @@
 
 /datum/config_entry/flag/config_errors_runtime
 	default = FALSE
+
+/datum/config_entry/flag/minimum_account_age
+	default = FALSE
+
+/datum/config_entry/number/minimum_age
+	default = 7
+
+/datum/config_entry/flag/vpn_kick
+	default = FALSE

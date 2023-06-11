@@ -19,7 +19,7 @@
 	var/list/chicken_list = list()
 	for(var/datum/mutation/ranching/chicken/chicken as anything in subtypesof(/datum/mutation/ranching/chicken))
 		var/datum/mutation/ranching/chicken/created_mutation = new chicken
-		var/mob/living/simple_animal/chicken/F = new created_mutation.chicken_type(src)
+		var/mob/living/basic/chicken/F = new created_mutation.chicken_type(src)
 		var/male_name
 		var/female_name
 		if(F.breed_name_male)
@@ -51,7 +51,7 @@
 
 		var/rooster_string
 		if(created_mutation.required_rooster)
-			var/mob/living/simple_animal/chicken/temp_chicken = new created_mutation.required_rooster
+			var/mob/living/basic/chicken/temp_chicken = new created_mutation.required_rooster
 			rooster_string = "[temp_chicken.breed_name_male ? temp_chicken.breed_name_male : temp_chicken.breed_name]"
 			QDEL_NULL(temp_chicken)
 

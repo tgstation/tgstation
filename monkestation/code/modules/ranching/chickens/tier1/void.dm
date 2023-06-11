@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/void
+/mob/living/basic/chicken/void
 	icon_suffix = "void"
 
 	breed_name = "Void"
@@ -11,7 +11,7 @@
 	name = "Void Egg"
 	icon_state = "void"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/void
+	layer_hen_type = /mob/living/basic/chicken/void
 
 /obj/item/food/egg/void/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	eater.apply_status_effect(/datum/status_effect/ranching/void_egg)

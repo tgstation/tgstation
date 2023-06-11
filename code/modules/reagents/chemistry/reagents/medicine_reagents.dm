@@ -49,15 +49,14 @@
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustPests(-rand(1,5))
-		mytray.adjustWeeds(-rand(1,5))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_pestlevel(-rand(1,5))
+		mytray.adjust_weedlevel(-rand(1,5))
 	if(chems.has_reagent(src.type, 3))
 		switch(rand(0, 100))
 			if(66  to 100)
-				mytray.mutatespecie()
+				mytray.mutatespecie_new()
 			if(33 to 65)
 				mytray.mutateweed()
 			if(1   to 32)
@@ -152,8 +151,8 @@
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 3))
-		mytray.adjustToxic(-round(chems.get_reagent_amount(src.type) * 3))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
+		mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -1221,6 +1220,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 14)
 
+/datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		if(!mytray.self_sustaining)
+			mytray.increase_sustaining(round(chems.get_reagent_amount(type)))
+		else
+			mytray.lastcycle += 2.5 SECONDS /// makes trays roughly 25% faster
+
 /// Returns a hippie-esque string for the person affected by the reagent to say.
 /datum/reagent/medicine/earthsblood/proc/return_hippie_line()
 	var/static/list/earthsblood_lines = list(
@@ -1277,15 +1284,6 @@
 		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = TRUE
-
-/datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.self_sufficiency_progress += chems.get_reagent_amount(src.type)
-		if(mytray.self_sufficiency_progress >= mytray.self_sufficiency_req)
-			mytray.become_self_sufficient()
-		else if(!mytray.self_sustaining)
-			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"

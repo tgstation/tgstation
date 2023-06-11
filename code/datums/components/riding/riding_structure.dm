@@ -8,6 +8,8 @@
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, PROC_REF(driver_move))
 
 /datum/component/riding/structure/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
+		return COMPONENT_DRIVER_BLOCK_MOVE
 	handle_ride(user, direction)
 	return ..()
 

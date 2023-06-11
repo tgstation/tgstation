@@ -3,7 +3,7 @@ EXAMPLE MUTATION
 
 Everything in the mutation needs to be true in order for it to have a chance at being born, so be careful when overloading these things.
 /datum/mutation/ranching/chicken/debug_chicken
-	chicken_type = /mob/living/simple_animal/chicken/debug
+	chicken_type = /mob/living/basic/chicken/debug
 
 	happiness = 25
 	needed_temperature = 4

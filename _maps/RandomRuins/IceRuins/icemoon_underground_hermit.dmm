@@ -53,12 +53,25 @@
 /obj/structure/table/wood,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
+"js" = (
+/obj/item/reagent_containers/cup/bottle,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stack/sheet/iron/five,
+/obj/item/screwdriver/red,
+/turf/open/floor/plating,
+/area/ruin/powered/hermit)
 "jG" = (
 /turf/closed/wall/mineral/wood,
 /area/icemoon/underground/explored)
 "mN" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
+/area/ruin/powered/hermit)
+"oh" = (
+/obj/item/hatchet,
+/turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "oJ" = (
 /obj/structure/glowshroom/single,
@@ -99,6 +112,10 @@
 /area/icemoon/underground/explored)
 "GU" = (
 /obj/item/paper/guides/jobs/hydroponics,
+/turf/open/floor/plating,
+/area/ruin/powered/hermit)
+"HD" = (
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "JI" = (
@@ -249,8 +266,8 @@ YN
 YN
 YN
 YN
-Xl
-Xl
+HD
+js
 TL
 TL
 TL
@@ -287,7 +304,7 @@ uw
 bp
 GU
 cI
-Xl
+oh
 hN
 JI
 JI
