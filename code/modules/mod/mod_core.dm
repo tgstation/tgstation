@@ -366,7 +366,7 @@
 	light_range = 2
 
 	var/mob/living/mob = /mob/living/basic/butterfly/lavaland/temporary
-	var/max_spawns = 5
+	var/max_spawns = 3
 	var/spawned = 0
 	var/can_spawn = TRUE
 
