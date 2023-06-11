@@ -138,6 +138,7 @@
 	inhand_icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	var/unlocked = FALSE //for unlocking super hairstyles
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -220,7 +221,11 @@
 					return
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
-				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+				var/new_style
+				if(src.unlocked)
+					new_style = tgui_input_list(user, "Select a hair style", "Grooming", GLOB.hairstyles_list)
+				else
+					new_style = tgui_input_list(user, "Select a hair style", "Grooming", GLOB.roundstart_hairstyles_list)
 				if(isnull(new_style))
 					return
 				if(!get_location_accessible(H, location))
@@ -267,3 +272,18 @@
 			..()
 	else
 		..()
+
+/obj/item/razor/attackby(obj/item/item, mob/user, params)
+	.=..()
+	if(istype(item, /obj/item/stack/sheet/mineral/bananium))
+		if(unlocked)
+			to_chat(user, "<span class='userdanger'>[src] is already powered by bananium!</span>")
+			return
+		item.use_tool(src, user, amount=1)
+		unlocked = TRUE
+		to_chat(user, "<span class='userdanger'>You insert the bananium into the battery pack.</span>")
+
+/obj/item/razor/gigarazor
+	name = "shmick 9000"
+	desc = "It gets the job done."
+	unlocked = TRUE

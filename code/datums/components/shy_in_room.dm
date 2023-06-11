@@ -62,7 +62,7 @@
 	SIGNAL_HANDLER
 	return is_shy(target) && COMSIG_LIVING_CANCEL_PULL
 
-/datum/component/shy_in_room/proc/on_unarmed_attack(datum/source, atom/target, proximity, modifiers)
+/datum/component/shy_in_room/proc/on_unarmed_attack(datum/source, atom/target, proximity)
 	SIGNAL_HANDLER
 	return is_shy(target) && COMPONENT_CANCEL_ATTACK_CHAIN
 

@@ -55,15 +55,6 @@ export const SecurityRecordTabs = (props, context) => {
               Create
             </Button>
           </Stack.Item>
-          <Stack.Item>
-            <Button.Confirm
-              content="Purge"
-              disabled={!higher_access || !station_z}
-              icon="trash"
-              onClick={() => act('purge_records')}
-              tooltip="Wipe criminal record data."
-            />
-          </Stack.Item>
         </Stack>
       </Stack.Item>
     </Stack>

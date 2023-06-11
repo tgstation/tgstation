@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/spicy
+/mob/living/basic/chicken/spicy
 	icon_suffix = "spicy"
 
 	breed_name = "Spicy"
@@ -10,4 +10,4 @@
 	name = "Spicy Egg"
 	icon_state = "spicy"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/spicy
+	layer_hen_type = /mob/living/basic/chicken/spicy

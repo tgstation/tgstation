@@ -333,6 +333,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		butt.Insert(src)
 		butt.set_organ_damage(0)
 
+	var/obj/item/organ/internal/bladder/bladder = get_organ_slot(ORGAN_SLOT_BLADDER)
+	if(!bladder)
+		bladder = new()
+		bladder.Insert(src)
+		bladder.set_organ_damage(0)
+
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)
 	return
 

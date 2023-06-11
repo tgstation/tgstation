@@ -88,7 +88,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 30
+	stamina = 45
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0

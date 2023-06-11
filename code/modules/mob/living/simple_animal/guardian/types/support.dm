@@ -35,7 +35,7 @@
 	if(!COOLDOWN_FINISHED(src, beacon_cooldown))
 		. += "Beacon Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, beacon_cooldown))]"
 
-/mob/living/simple_animal/hostile/guardian/support/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/guardian/support/UnarmedAttack(atom/attack_target, proximity_flag)
 	if((istate & ISTATE_SECONDARY) && proximity_flag && isliving(attack_target))
 		heal_target(attack_target)
 		return

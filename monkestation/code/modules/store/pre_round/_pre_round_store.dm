@@ -85,13 +85,17 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 		var/obj/item/effect_granter/granting_time = created_item
 		if(granting_time.human_only && iscarbon(new_player_mob_living))
 			spawn(4 SECONDS)
-				granting_time.grant_effect(new_player_mob_living)
+				if(!granting_time.grant_effect(new_player_mob_living))
+					return
 		else
 			ui_close()
 			qdel(new_player_mob.client.readied_store)
 			return
 	else if(!new_player_mob.put_in_hands(created_item, FALSE))
 		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
+		if(!backpack)
+			to_chat(new_player_mob, "There was an error spawning in your items, you will not be charged")
+			return
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
 	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost), donator_multipler = FALSE)

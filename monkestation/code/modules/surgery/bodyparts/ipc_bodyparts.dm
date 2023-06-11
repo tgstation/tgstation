@@ -8,7 +8,7 @@
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
-	body_damage_coeff = 0.2	//IPC's Head can dismember	//Monkestation Edit
+	body_damage_coeff = 1.1	//IPC's Head can dismember	//Monkestation Edit
 	max_damage = 40	//Keep in mind that this value is used in the //Monkestation Edit
 
 	light_brute_msg = "scratched"
@@ -52,7 +52,7 @@
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
-	body_damage_coeff = 0.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
+	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
 	max_damage = 30	//Monkestation Edit
 
 	light_brute_msg = "scratched"
@@ -74,7 +74,7 @@
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
-	body_damage_coeff = 0.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
+	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
 	max_damage = 30	//Monkestation Edit
 
 	light_brute_msg = "scratched"
@@ -96,7 +96,7 @@
 	should_draw_greyscale = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
-	body_damage_coeff = 0.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
+	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
 	max_damage = 30	//Monkestation Edit
 
 	light_brute_msg = "scratched"

@@ -13,7 +13,7 @@
 		return S.duration - world.time
 	return 0
 
-/mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Stun(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -26,7 +26,8 @@
 		S.duration = max(world.time + amount, S.duration)
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.05, 0.1)),1)
 	return S
 
 /mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -47,7 +48,7 @@
 			S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
 	return S
 
-/mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -60,7 +61,8 @@
 		S.duration += amount
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.05, 0.1)),1)
 	return S
 
 /* KNOCKDOWN */
@@ -73,7 +75,7 @@
 		return K.duration - world.time
 	return 0
 
-/mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Knockdown(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -86,7 +88,8 @@
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.05, 0.1)),1)
 	return K
 
 /mob/living/proc/SetKnockdown(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -107,7 +110,7 @@
 			K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
 	return K
 
-/mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -120,7 +123,8 @@
 		K.duration += amount
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.05, 0.1)),1)
 	return K
 
 /* IMMOBILIZED */
@@ -189,7 +193,7 @@
 		return P.duration - world.time
 	return 0
 
-/mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Paralyze(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -202,7 +206,8 @@
 		P.duration = max(world.time + amount, P.duration)
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.05, 0.1)),1)
 	return P
 
 /mob/living/proc/SetParalyzed(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -223,7 +228,7 @@
 			P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
 	return P
 
-/mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -236,7 +241,8 @@
 		P.duration += amount
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
+	if(!ignores_diminish)
+		paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.05, 0.1)),1)
 	return P
 
 /* INCAPACITATED */

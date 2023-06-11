@@ -4544,8 +4544,8 @@
 /area/station/engineering/main)
 "bdt" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bdx" = (
@@ -5735,7 +5735,6 @@
 "bqf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark/smooth_large,
@@ -18766,6 +18765,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"ezw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/service/hydroponics)
 "ezS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -21302,6 +21307,7 @@
 	supplies_requestable = 1
 	},
 /obj/structure/table/glass,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "feV" = (
@@ -27934,6 +27940,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"gKE" = (
+/obj/structure/cable,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "gKI" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -34591,6 +34603,7 @@
 /obj/item/clothing/accessory/armband/hydro,
 /obj/item/toy/figure/botanist,
 /obj/structure/table/glass,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "iuU" = (
@@ -41234,6 +41247,7 @@
 /obj/effect/turf_decal/box/red/corners{
 	dir = 8
 	},
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage)
 "jYC" = (
@@ -43208,6 +43222,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/autolathe,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "kyi" = (
@@ -48955,6 +48970,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
+"lRY" = (
+/obj/structure/cable,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "lSh" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -52792,6 +52813,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
+"mQm" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "mQt" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -59984,6 +60013,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
+/obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
@@ -68667,11 +68697,10 @@
 /area/station/maintenance/port)
 "qNQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/composters,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "qNU" = (
@@ -70373,6 +70402,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/table/glass,
 /obj/item/food/grown/poppy/geranium,
+/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rlQ" = (
@@ -74406,8 +74436,8 @@
 /area/station/hallway/primary/fore)
 "slY" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "slZ" = (
@@ -78669,6 +78699,11 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "tpE" = (
@@ -87810,6 +87845,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
+"vyM" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "vyO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -97362,6 +97401,15 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/security/prison)
+"xPE" = (
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xPH" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -118175,7 +118223,7 @@ vVc
 gAw
 gAw
 cCY
-qmJ
+mQm
 cCY
 gAw
 gAw
@@ -119979,7 +120027,7 @@ sHT
 msB
 kXR
 owf
-bdt
+gKE
 kMt
 chY
 vUV
@@ -120236,7 +120284,7 @@ mWq
 msB
 vcO
 owf
-slY
+lRY
 fNc
 jcL
 vUV
@@ -120493,7 +120541,7 @@ sHT
 msB
 kXR
 owf
-bdt
+gKE
 jjw
 tGr
 hCE
@@ -130198,7 +130246,7 @@ ueJ
 nFc
 vZo
 kDY
-uGf
+ezw
 fdY
 bbQ
 sao
@@ -147465,7 +147513,7 @@ vra
 qZs
 gft
 clO
-jvs
+xPE
 eJv
 mON
 xTW
@@ -152561,7 +152609,7 @@ cVV
 itW
 nJg
 jHw
-vxr
+vyM
 jMs
 iOc
 fwL
