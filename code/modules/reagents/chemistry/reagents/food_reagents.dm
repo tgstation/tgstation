@@ -1155,10 +1155,3 @@
 	color = "#efeff0"
 	taste_description = "metallic salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/breadcrumbs
-	name = "Breadcrumbs"
-	description = "Blitzed-up stale bread. Makes a good coating for... well, really anything."
-	color = "#D49D26"
-	taste_description = "bread"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
