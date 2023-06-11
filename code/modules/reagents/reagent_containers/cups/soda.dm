@@ -269,9 +269,16 @@
 
 /obj/item/reagent_containers/cup/soda_cans/volt_energy
 	name = "24-Volt Energy"
-	desc = "Unleash the ape!"
+	desc = "Recharge, with 24-Volt Energy!"
 	icon_state = "volt_energy"
 	list_reagents = list(/datum/reagent/consumable/volt_energy = 30)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/melon_soda
+	name = "Kansumi Melon Soda"
+	desc = "Japan's favourite melon soda, now available in can form!"
+	icon_state = "melon_soda"
+	list_reagents = list(/datum/reagent/consumable/melon_soda = 30)
 	drink_type = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/cup/soda_cans/air
