@@ -163,6 +163,11 @@
 
 	ai_controller.set_blackboard_key(BB_CARP_MIGRATION_PATH, actual_points)
 
+/mob/living/basic/carp/death(gibbed)
+	. = ..()
+
+	REMOVE_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
+
 /**
  * Holographic carp from the holodeck
  */

@@ -465,6 +465,7 @@
 				send2adminchat("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 				ShuttleDBStuff()
+				addtimer(CALLBACK(src, PROC_REF(announce_shuttle_events)), 20 SECONDS)
 
 
 		if(SHUTTLE_DOCKED)
@@ -580,7 +581,7 @@
 /obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
 	var/list/names = list()
 	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event))
-		if(prob(initial(event.probability)))
+		if(prob(initial(event.event_probability)))
 			event_list.Add(new event(src))
 			names += initial(event.name)
 	if(LAZYLEN(names))

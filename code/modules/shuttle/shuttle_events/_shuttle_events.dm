@@ -2,15 +2,15 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
-///we should process with the shuttle subsystem
+///self destruct if this is returned in process
 #define SHUTTLE_EVENT_CLEAR 2
 
-///An event that can run during shuttle flight
+///An event that can run during shuttle flight, and will run for the duration of it (configurable)
 /datum/shuttle_event
 	///How we're announced to ghosts and stuff
 	var/name = "The concept of a shuttle event"
 	///probability of this event to run from 0 to 100
-	var/probability
+	var/event_probability
 	///Track if we're allowed to run, gets turned to TRUE when the activation timer hits
 	var/active = FALSE
 	///fraction of the escape timer at which we activate, 0 means we start running immediately
@@ -52,7 +52,7 @@
 	var/list/turf/spawning_turfs_hit
 	///List of valid spawning turfs, generated from generate_spawning_turfs(), that will MISS the shuttle
 	var/list/turf/spawning_turfs_miss
-	///Change, from 0 to 100, for something to spawn
+	///Chance, from 0 to 100, for something to spawn
 	var/spawn_probability_per_process = 0
 	///Increment if you want more stuff to spawn at once
 	var/spawns_per_spawn = 1
@@ -70,8 +70,8 @@
 
 ///Bounding coords are list(x0, y0, x1, y1) where x0 and y0 are top-left
 /datum/shuttle_event/simple_spawner/proc/generate_spawning_turfs(list/bounding_coords, spawning_behaviour, direction)
-	spawning_turfs_hit = list()
-	spawning_turfs_miss = list()
+	spawning_turfs_hit = list() //turfs that will drift its contents to miss the shuttle
+	spawning_turfs_miss = list() //turfs that will drift its contents to hit the shuttle
 	var/list/step_dir
 	var/list/target_corner
 	var/list/spawn_offset
@@ -113,10 +113,8 @@
 	if(!.)
 		return FALSE
 
-	if(!LAZYLEN(spawning_list))
-		if(self_destruct_when_empty)
-			return 2 //god it would be so embarassing
-		return
+	if(!LAZYLEN(spawning_list) && self_destruct_when_empty)
+		return SHUTTLE_EVENT_CLEAR
 
 	if(prob(spawn_probability_per_process))
 		for(var/i in 1 to spawns_per_spawn)

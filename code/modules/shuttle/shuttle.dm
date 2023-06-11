@@ -1145,6 +1145,10 @@
 		launch_status = ENDGAME_LAUNCHED
 		enterTransit()
 
+/obj/docking_port/mobile/proc/announce_shuttle_events()
+	for(var/datum/shuttle_event/event in event_list)
+		notify_ghosts("The [name] has selected: [event.name]")
+
 /obj/docking_port/mobile/emergency/on_emergency_launch()
 	return
 
@@ -1163,10 +1167,11 @@
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 
+///Process all the shuttle events for every shuttle tick we getr
 /obj/docking_port/mobile/proc/process_events()
 	var/list/removees
 	for(var/datum/shuttle_event/event as anything in event_list)
-		if(event.event_process() == 2) //god it would be so embarassing if I forget to replace this with the define
+		if(event.event_process() == SHUTTLE_EVENT_CLEAR) //if we return SHUTTLE_EVENT_CLEAR, we clean them up
 			LAZYADD(removees, event)
 	for(var/item in removees)
 		event_list.Remove(item)
