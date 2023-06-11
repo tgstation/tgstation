@@ -150,60 +150,46 @@
 // ENCRYPTION KEYS
 //
 
-/datum/greyscale_config/encryptionkey_basic
+/datum/greyscale_config/encryptionkey
 	name = "Basic Encryptionkey"
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_basic.json'
 
-/datum/greyscale_config/encryptionkey_cube
+/datum/greyscale_config/encryptionkey/cube
 	name = "Block Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cube.json'
 
-/datum/greyscale_config/encryptionkey_research
+/datum/greyscale_config/encryptionkey/research
 	name = "Research Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_research.json'
 
-/datum/greyscale_config/encryptionkey_syndicate
-	name = "Syndicate Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
-	json_config = 'code/datums/greyscale/json_configs/encryptionkey_syndicate.json'
-
-/datum/greyscale_config/encryptionkey_medical
+/datum/greyscale_config/encryptionkey/medical
 	name = "Medical Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_medical.json'
 
-/datum/greyscale_config/encryptionkey_service
+/datum/greyscale_config/encryptionkey/service
 	name = "Service Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_service.json'
 
-/datum/greyscale_config/encryptionkey_engineering
+/datum/greyscale_config/encryptionkey/engineering
 	name = "Engineering Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_engineering.json'
 
-/datum/greyscale_config/encryptionkey_centcom
-	name = "Centcom Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
-	json_config = 'code/datums/greyscale/json_configs/encryptionkey_centcom.json'
-
-/datum/greyscale_config/encryptionkey_cargo
+/datum/greyscale_config/encryptionkey/cargo
 	name = "Cargo Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_cargo.json'
 
-/datum/greyscale_config/encryptionkey_security
+/datum/greyscale_config/encryptionkey/security
 	name = "Security Encryptionkey"
-	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
 
-/datum/greyscale_config/quantum_keycard
-	name = "Quantum Keycard"
-	icon_file = 'icons/obj/device.dmi'
-	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
+/datum/greyscale_config/encryptionkey/centcom
+	name = "Centcom Encryptionkey"
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_centcom.json'
+
+/datum/greyscale_config/encryptionkey/syndicate
+	name = "Syndicate Encryptionkey"
+	json_config = 'code/datums/greyscale/json_configs/encryptionkey_syndicate.json'
 
 //
 // PLUSHIES
@@ -349,3 +335,8 @@
 	name = "Flower Worn"
 	icon_file = 'icons/mob/clothing/head/hydroponics.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower_worn.json'
+
+/datum/greyscale_config/quantum_keycard
+	name = "Quantum Keycard"
+	icon_file = 'icons/obj/device.dmi'
+	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
