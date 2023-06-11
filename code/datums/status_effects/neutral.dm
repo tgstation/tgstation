@@ -446,13 +446,12 @@
 					continue
 				items.Add(item)
 
-			if(!LAZYLEN(items))
-				return ..()
-			var/obj/item/item = pick(items)
-			owner.dropItemToGround(item, TRUE)
-			do_sparks(5,FALSE,item)
-			do_teleport(item, get_turf(item), 3, no_effects=TRUE);
-			do_sparks(5,FALSE,item)
+			if(LAZYLEN(items))
+				var/obj/item/item = pick(items)
+				owner.dropItemToGround(item, TRUE)
+				do_sparks(5,FALSE,item)
+				do_teleport(item, get_turf(item), 3, no_effects=TRUE);
+				do_sparks(5,FALSE,item)
 
 		//phase 3 - little break to get your items
 		if(EIGENSTASIUM_PHASE_3_START to EIGENSTASIUM_PHASE_3_END)
