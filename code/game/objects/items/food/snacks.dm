@@ -653,3 +653,19 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	icon_state = "shok_roks_lanternfruit"
 	trash_type = /obj/item/trash/shok_roks/lanternfruit
 	tastes = list("sour pear" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/random
+	name = "\improper Shok-Roks - Hidden Hurricane flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, any of which could be in this bag!"
+
+/obj/item/food/shok_roks/random/Initialize(mapload)
+	var/random_flavour = pick(subtypesof(/obj/item/food/sticko) - /obj/item/food/sticko/random)
+	var/obj/item/food/sample = new random_flavour(loc)
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	tastes = sample.tastes
+
+	qdel(sample)
+
+	. = ..()
