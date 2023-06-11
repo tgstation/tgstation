@@ -365,7 +365,8 @@
 	light_color = "#cc00cc"
 	light_range = 2
 
-	var/mob/living/mob = /mob/living/basic/butterfly/lavaland/temporary
+	// The mob to be spawned by the core
+	var/mob/living/spawned_mob = /mob/living/basic/butterfly/lavaland/temporary
 	var/max_spawns = 3
 	var/spawned = 0
 	var/can_spawn = TRUE
@@ -379,9 +380,8 @@
 /obj/item/mod/core/plasma/lavaland/Destroy()
 	for(var/mob/child in children)
 		qdel(child)
-	if(mod)
-		if(mod.wearer)
-			mod.wearer.particles = null
+	if(mod?.wearer)
+		mod.wearer.particles = null
 	. = ..()
 
 /obj/item/mod/core/plasma/lavaland/process()
@@ -395,12 +395,11 @@
 		can_spawn = TRUE
 
 /obj/item/mod/core/plasma/lavaland/proc/spawn_mob()
-	SIGNAL_HANDLER
 	if(!mod.active)
 		return
 	if(spawned >= max_spawns)
 		return
-	children += new mob(get_turf(src), src)
+	children += new spawned_mob(get_turf(src), src)
 	spawned++
 
 	if(spawned < max_spawns)
