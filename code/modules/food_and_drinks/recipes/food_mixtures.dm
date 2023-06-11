@@ -264,7 +264,7 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/martian_batter
-	results = list(/datum/reagent/consumable/martian_batter = 20)
-	required_reagents = list(/datum/reagent/consumable/flour = 10, /datum/reagent/consumable/nutriment/soup/dashi = 10)
+	results = list(/datum/reagent/consumable/martian_batter = 2)
+	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
 	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT
