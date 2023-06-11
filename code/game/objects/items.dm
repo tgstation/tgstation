@@ -228,19 +228,23 @@
 	var/weapon_sprite_angle = 0
 
 	/**
-	 * How well can we block with this thing?
+	 * How well can we block with this thing? (See: [/obj/item/proc/get_blocking_ability])
 	 * This is a multiplier to stamina damage recieved from active blocking with this item
 	 * Lower numbers means we take less stamina damage when blocking attacks (and are better).
 	 *
-	 * By default things aren't very good at blocking and will allow maybe 1 block
+	 * By default things aren't very good at blocking and will allow ~1 block.
 	 *
 	 * Try to scale your multipliers around 20-30 force attacks (esword / other antag weapon tier).
 	 * A multiplier of 3 would mean 20-24 force weapons can be blocked 4 times (= 96 stamina damage)
 	 * while 25+ force weapons can only be blocked 3 times.
+	 *
+	 * Setting to -1 means the block will always fail,
+	 * and setting to 0 means they can perfect block with no stamina downside.
 	 */
 	var/blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
-	/// Flags that determine what kinds of attacks we can block
-	/// By default items can only block melee and unarmed
+	/// Flags that determine what kinds of attacks we can block.
+	/// By default items can only block melee and unarmed.
+	/// If set to NONE, cannot be used for blocking.
 	var/can_block_flags = BLOCK_ALL_MELEE
 
 /obj/item/Initialize(mapload)

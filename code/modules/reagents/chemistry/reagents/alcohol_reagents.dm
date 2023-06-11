@@ -2450,7 +2450,7 @@
 		var/mob/living/carbon/human/the_human = drinker
 		for(var/obj/item/shield/the_shield in the_human.contents)
 			mighty_shield = the_shield
-			mighty_shield.block_chance += 10
+			// mighty_shield.block_chance += 10 // melbert todo
 			to_chat(the_human, span_notice("[the_shield] appears polished, although you don't recall polishing it."))
 			return TRUE
 
@@ -2461,7 +2461,7 @@
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
 	if(mighty_shield)
-		mighty_shield.block_chance -= 10
+		//mighty_shield.block_chance -= 10 // melbert todo
 		to_chat(drinker,span_notice("You notice [mighty_shield] looks worn again. Weird."))
 	..()
 

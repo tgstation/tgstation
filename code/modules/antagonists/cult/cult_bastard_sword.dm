@@ -55,13 +55,13 @@
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
 	blocking_ability = 0
-	user.begin_blocking()
+	user.begin_blocking(src)
 	slowdown += 1.5
 	spinning = TRUE
 
 /obj/item/cult_bastard/proc/on_unspin(mob/living/user)
 	blocking_ability = initial(blocking_ability)
-	user.remove_status_effect(/datum/status_effect/blocking)
+	user.stop_blocking()
 	slowdown -= 1.5
 	spinning = FALSE
 
@@ -106,7 +106,7 @@
 	. = ..()
 	if(IS_CULTIST(blocker))
 		blocker.visible_message(
-			span_danger("[owner] parries [attack_text] with [src]!"),
+			span_danger("[blocker] parries [attack_text] with [src]!"),
 			span_danger("You parry [attack_text] with [src]!"),
 		)
 	else

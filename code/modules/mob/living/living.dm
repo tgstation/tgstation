@@ -184,8 +184,7 @@
 	//okay, so we didn't switch. but should we push?
 	if(isliving(M))
 		var/mob/living/L = M
-		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
-			return TRUE
+		. = L.is_shove_knockdown_blocked()
 	//If they're a human, and they're not in help intent, block pushing
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
@@ -196,8 +195,6 @@
 		var/mob/living/silicon/robot/borg = M
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
-
-	return M.is_shove_knockdown_blocked()
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()

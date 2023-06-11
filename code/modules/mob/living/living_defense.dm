@@ -419,7 +419,13 @@
  * Checks if this mob cannot be knocked down from a shove
  */
 /mob/living/proc/is_shove_knockdown_blocked()
-	return !(status_flags & CANPUSH|CANKNOCKDOWN)
+	if(HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
+		return TRUE
+	if(!(status_flags & CANKNOCKDOWN))
+		return TRUE
+	if(!(status_flags & CANPUSH))
+		return TRUE
+	return FALSE
 
 /mob/living/attack_hand(mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -463,14 +469,31 @@
 	ricocheting_projectile.set_angle(new_angle_s)
 	return TRUE
 
-/mob/living/proc/begin_blocking()
+/mob/living/proc/begin_blocking(obj/item/blocker)
 	if(incapacitated(IGNORE_GRAB))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 		return FALSE
+	if(usable_hands <= 0)
+		return FALSE
 
-	var/obj/item/blocker = get_inactive_held_item() || get_active_held_item()
+	if(isnull(blocker))
+		// Inactive is prioritized over active, for stuff like shields
+		var/list/obj/item/possible_items = list(get_inactive_held_item(), get_active_held_item())
+		for(var/obj/item/possible_item in possible_items)
+			// Not capable of blocking anything
+			if(possible_item.item_flags & ABSTRACT)
+				continue
+			if(possible_item.can_block_flags == NONE)
+				continue
+			//Things which innately have a better blocking ability are prioritized
+			if(isnull(blocker) || blocker.blocking_ability > possible_item.blocking_ability)
+				blocker = possible_item
+
 	if(apply_status_effect(/datum/status_effect/blocking, blocker))
 		return TRUE
 
 	return FALSE
+
+/mob/living/proc/stop_blocking()
+	remove_status_effect(/datum/status_effect/blocking)

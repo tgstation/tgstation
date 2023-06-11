@@ -26,7 +26,7 @@
 /datum/keybinding/living/resist/up(client/user)
 	. = ..()
 	var/mob/living/L = user.mob
-	L.remove_status_effect(/datum/status_effect/blocking)
+	L.stop_blocking()
 	return TRUE
 
 /datum/keybinding/living/look_up

@@ -107,8 +107,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/total_total_hit = 0
 	// The index of the turf we're currently hitting
 	var/affecting_index = 1
-	// The midpoint of the affected turf list
-	var/midpoint = ROUND_UP(length(affecting) / 2)
 	// This tracks if this attack was initiated with a weapon,
 	// so we can check if it's still being held for swings that have travel time
 	var/started_holding = !isnull(weapon) && attacker.is_holding(weapon)

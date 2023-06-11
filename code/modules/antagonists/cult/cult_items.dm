@@ -86,9 +86,10 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
 	. = ..()
 	if(IS_CULTIST(blocker))
+		var/offhanding = (src == blocker.get_inactive_held_item())
 		blocker.visible_message(
-			span_danger("[blocker] parries [attack_text] with [src]!"),
-			span_danger("You parry [attack_text] with [src]!"),
+			span_danger("[blocker] parries [attack_text] with [src][offhanding ? " in [blocker.p_their()] offhand" : ""]!"),
+			span_danger("You parry [attack_text] with [src][offhanding ? " in [blocker.p_their()] offhand" : ""]!"),
 		)
 	else
 		blocker.visible_message(
@@ -1019,7 +1020,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
 
 /obj/item/shield/mirror/IsReflect()
-	if(prob(block_chance))
+	if(prob(50)) // melbert todo
 		return TRUE
 	return FALSE
 

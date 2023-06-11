@@ -697,7 +697,6 @@
 
 /obj/item/melee/ghost_sword/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	var/ghost_counter = ghost_check()
 	force = clamp(ghost_check() * 4, 0, 75)
 
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)

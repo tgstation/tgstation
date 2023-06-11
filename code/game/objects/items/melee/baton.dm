@@ -560,6 +560,9 @@
 			span_warning("[user] prods you with [src]. Luckily it was off."))
 		return BATON_ATTACK_DONE
 
+/obj/item/melee/baton/security/proc/check_parried()
+	return FALSE // melbert todo
+
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/robot = loc

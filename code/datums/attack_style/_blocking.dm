@@ -10,10 +10,8 @@
 	tick_interval = 1 SECONDS
 	duration = -1
 
-	VAR_FINAL/obj/item/blocking_with
-	VAR_FINAL/mutable_appearance/shield_overlay
-
-	var/blocking_icon = 'icons/effects/blocking.dmi'
+	var/obj/item/blocking_with
+	var/obj/effect/blocking_effect/shield_overlay
 
 /datum/status_effect/blocking/nextmove_modifier()
 	// Next move CD is 2x as long while blocking.
@@ -29,16 +27,9 @@
 		set_blocking_item(new_blocker)
 
 	var/static/shield_offset_const = (0.8 * world.icon_size)
-	shield_overlay = mutable_appearance(
-		icon = blocking_icon,
-		icon_state = "shield100",
-		alpha = min(new_owner.alpha, 125),
-		layer = new_owner.layer + 0.1,
-	)
-	SET_PLANE_EXPLICIT(shield_overlay, new_owner.plane, new_owner)
-	shield_overlay.pixel_y = new_owner.pixel_y + shield_offset_const
-	shield_overlay.color = LIGHT_COLOR_BABY_BLUE
-	owner.add_overlay(shield_overlay)
+	shield_overlay = new(new_owner)
+	shield_overlay.pixel_y += shield_offset_const
+	owner.vis_contents += shield_overlay
 	update_shield()
 
 /datum/status_effect/blocking/on_apply()
@@ -54,11 +45,11 @@
 		set_blocking_item(new_blocker)
 
 /datum/status_effect/blocking/on_remove()
-	owner.cut_overlay(shield_overlay)
+	owner.vis_contents -= shield_overlay
+	QDEL_NULL(shield_overlay)
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_CHECK_BLOCK,
 		COMSIG_LIVING_HEALTH_UPDATE,
-		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
 
@@ -73,7 +64,7 @@
 		// this is so blocking prevents all stamina regen while active
 		// (though we use a max to prevent memes like 1-tick blocking to reset stamina regen period)
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.stam_regen_start_time = max(carbon_owner.stam_regen_start_time , tick_interval)
+		carbon_owner.stam_regen_start_time = max(carbon_owner.stam_regen_start_time, tick_interval)
 
 	update_shield()
 
@@ -88,10 +79,7 @@
 		qdel(src)
 
 	else if(shield_overlay.icon_state != new_icon_state)
-		owner.cut_overlay(shield_overlay)
 		shield_overlay.icon_state = "shield[percent]"
-		owner.add_overlay(shield_overlay)
-
 
 /datum/status_effect/blocking/proc/set_blocking_item(obj/item/new_blocker)
 	blocking_with = new_blocker
@@ -143,6 +131,11 @@
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 		)
 
+	if(!QDELETED(src))
+		animate(shield_overlay, time = 0.15 SECONDS, pixel_x = 2, easing = BACK_EASING|EASE_OUT)
+		animate(time = 0.20 SECONDS, pixel_x = -2, easing = BACK_EASING|EASE_OUT)
+		animate(time = 0.15 SECONDS, pixel_x = 0, easing = BACK_EASING|EASE_OUT)
+
 	return SUCCESSFUL_BLOCK
 
 /datum/status_effect/blocking/proc/on_health_update(mob/living/source)
@@ -169,3 +162,15 @@
 	else
 		desc += "You are blocking with your bare hands, \
 			which has an effectiveness of [BARE_HAND_DEFENSE_MULTIPLIER]."
+
+/obj/effect/blocking_effect
+	icon = 'icons/effects/blocking.dmi'
+	icon_state = "shield100"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/blocking_effect/Initialize(mapload)
+	. = ..()
+	color = loc.chat_color || LIGHT_COLOR_BLUE
+	alpha = min(loc.alpha, 125)
+	layer = loc.layer + 0.1
