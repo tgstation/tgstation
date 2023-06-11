@@ -472,6 +472,39 @@
 	result = /obj/item/food/steak_croquette
 	category = CAT_MARTIAN
 
+/datum/crafting_recipe/food/chapsilog
+	name = "Chapsilog"
+	reqs = list(
+		/obj/item/food/grilled_chapslice = 2,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/grown/garlic = 1,
+	)
+	result = /obj/item/food/chapsilog
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/chap_hash
+	name = "Chap hash"
+	reqs = list(
+		/obj/item/food/chapslice = 2,
+		/obj/item/food/egg = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/grown/potato = 1,
+	)
+	result = /obj/item/food/chap_hash
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/agedashi_tofu
+	name = "Agedashi tofu"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/obj/item/food/onion_slice = 1,
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
+		/obj/item/reagent_containers/cup/bowl = 1,
+	)
+	result = /obj/item/food/agedashi_tofu
+	category = CAT_MARTIAN
+
 /datum/crafting_recipe/food/po_kok_gai
 	name = "Po kok gai"
 	reqs = list(
