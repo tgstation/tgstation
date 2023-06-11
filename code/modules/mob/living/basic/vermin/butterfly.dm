@@ -68,7 +68,7 @@
 /mob/living/basic/butterfly/lavaland/temporary/process()
 	if(should_despawn())
 		will_be_destroyed = TRUE
-		despawn_timer = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, despawn)), 5 SECONDS, TIMER_STOPPABLE)
+		despawn_timer = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, fadeout)), 5 SECONDS, TIMER_STOPPABLE)
 	else
 		if(will_be_destroyed)
 			// Cancels the butterfly being destroyed
@@ -81,6 +81,10 @@
 	if(get_dist(source, src) > max_distance)
 		return TRUE
 	return FALSE
+
+/mob/living/basic/butterfly/lavaland/temporary/proc/fadeout()
+	animate(src, alpha = 0, 1 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, despawn)), 1 SECONDS)
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
 	qdel(src)
