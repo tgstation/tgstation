@@ -66,8 +66,8 @@
 
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_toggle_pressed))
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_SLOT_CHECKED, PROC_REF(on_action_slot_checked))
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_item_equipped_outfit))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_parent_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_parent_equipped_outfit))
 	if (down_overlay_state_suffix)
 		var/overlay_state = "[initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
 		undeployed_overlay = mutable_appearance(initial(clothing_parent.worn_icon), overlay_state, -SUIT_LAYER)
@@ -139,14 +139,14 @@
 	wearer.update_mob_action_buttons()
 
 /// Undeploy gear if it moves slots somehow
-/datum/component/toggled_clothing/proc/on_item_equipped(obj/item/clothing/source, mob/equipper, slot)
+/datum/component/toggled_clothing/proc/on_parent_equipped(obj/item/clothing/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	if (slot & equipped_slot)
 		return
 	remove_deployable()
 
 /// Display deployed if worn in an outfit
-/datum/component/toggled_clothing/proc/on_item_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
+/datum/component/toggled_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
 	if(visuals_only)
 		create_deployable()
@@ -162,7 +162,7 @@
 	if (!istype(deployable))
 		stack_trace("Tried to create non-clothing item from toggled clothing.")
 	RegisterSignal(deployable, COMSIG_ITEM_DROPPED, PROC_REF(on_deployed_dropped))
-	RegisterSignal(deployable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
+	RegisterSignal(deployable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_deployed_equipped))
 	RegisterSignal(deployable, COMSIG_QDELETING, PROC_REF(on_deployed_destroyed))
 	on_created?.Invoke(deployable)
 	return TRUE
@@ -170,6 +170,13 @@
 /// Undeploy gear if you drop it
 /datum/component/toggled_clothing/proc/on_deployed_dropped()
 	SIGNAL_HANDLER
+	remove_deployable()
+
+/// Undeploy gear if it moves slots somehow
+/datum/component/toggled_clothing/proc/on_deployed_equipped(obj/item/clothing/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	if (source.slot_flags & slot)
+		return
 	remove_deployable()
 
 /// Undeploy gear if it is deleted
@@ -180,22 +187,17 @@
 
 /// Removes our deployed equipment from the wearer
 /datum/component/toggled_clothing/proc/remove_deployable()
+	deployable?.forceMove(parent)
 	if (!currently_deployed)
 		return
 	currently_deployed = FALSE
 	on_removed?.Invoke(deployable)
 
 	var/obj/item/clothing/parent_gear = parent
-	if (parent_icon_state_suffix)
+	if (destroy_on_removal)
+		QDEL_NULL(deployable)
+	else if (parent_icon_state_suffix)
 		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
-	if (deployable)
-		if (destroy_on_removal)
-			QDEL_NULL(deployable)
-		else if (!ishuman(parent_gear.loc))
-			deployable.forceMove(parent_gear)
-		else
-			var/mob/living/carbon/human/wearer = parent_gear.loc
-			wearer.transferItemToLoc(deployable, parent_gear, TRUE)
 	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()
