@@ -535,7 +535,7 @@
 		/datum/reagent/consumable/nutriment/soup/dashi = 20,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
-	result = /obj/item/food/agedashi_tofu
+	result = /obj/item/food/salad/agedashi_tofu
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/po_kok_gai
