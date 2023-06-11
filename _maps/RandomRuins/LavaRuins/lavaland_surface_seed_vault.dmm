@@ -169,6 +169,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aA" = (
@@ -257,6 +258,10 @@
 /area/ruin/powered/seedvault)
 "aM" = (
 /obj/structure/table/wood,
+/obj/item/storage/box/plant_gene,
+/obj/item/storage/box/plant_gene,
+/obj/item/storage/box/plant_gene,
+/obj/item/storage/box/plant_gene,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aN" = (
@@ -301,6 +306,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/item/storage/bag/plants/portaseeder,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aT" = (
@@ -324,6 +330,8 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/splicer,
+/obj/item/book/manual/hydroponics_pod_people,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "aW" = (
@@ -367,6 +375,8 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/splicer,
+/obj/item/food/grown/poppy/lily,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bb" = (
@@ -442,6 +452,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
+/obj/item/botanical_lexicon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bj" = (
@@ -616,6 +627,10 @@
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"nh" = (
+/obj/machinery/composters,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/seedvault)
 "oR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
@@ -625,6 +640,20 @@
 "sv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/vault,
+/area/ruin/powered/seedvault)
+"vK" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "Bb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -656,6 +685,10 @@
 	},
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
+"Iu" = (
+/obj/machinery/splicer,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "KF" = (
 /obj/machinery/door/airlock/titanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -691,7 +724,7 @@ aa
 aa
 aa
 aa
-aa
+Iu
 aa
 aa
 aa
@@ -884,7 +917,7 @@ al
 al
 PH
 ah
-al
+nh
 aC
 ac
 aZ
@@ -947,7 +980,7 @@ ac
 ac
 ac
 aw
-al
+vK
 PH
 ah
 aF
