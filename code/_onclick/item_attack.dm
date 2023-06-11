@@ -163,9 +163,10 @@
 	user.changeNext_move(attacking_item.attack_style?.cd || CLICK_CD_MELEE)
 	attacking_item.add_fingerprint(user)
 
-	if(user != src && check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+	// Block check is skipped if the user is attacking themselves.
+	if(user == src || !check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 		var/attack_result = attacking_item.attack_wrapper(src, user, params)
-		if(!isnull(attack_result))
+		if(!isnull(attack_result)) // True or false means don't play the hitsound or do the attack animation. Null means go ahead. Todo, make these defines instead.
 			return attack_result
 
 		attacked_by(attacking_item, user)

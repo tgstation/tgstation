@@ -185,14 +185,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				span_warning("[attacker]'s attack collides with [blocking_us]!"),
 				span_warning("[blocking_us] blocks your attack partway!"),
 			)
-			if(blocking_us.uses_integrity)
-				log_combat(attacker, blocking_us, "hit mid-swing", weapon)
-				blocking_us.take_damage(weapon.force, weapon.damtype, MELEE, TRUE,
-					get_dir(attacker, blocking_us), weapon.armour_penetration)
+			if(weapon)
+				// melbert todo: double animation
+				// melbert todo: attacking stuff with your arm literally not punching
+				blocking_us.attackby(weapon, attacker)
 			else
-				blocking_us.play_attack_sound(weapon.force, weapon.damtype, MELEE)
+				attacker.resolve_unarmed_attack(blocking_us)
 
 			attack_flag |= ATTACK_SWING_BLOCKED
+			total_total_hit++ // It counts
 
 		if(attack_flag & ATTACK_SWING_BLOCKED)
 			break
