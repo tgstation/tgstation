@@ -15,11 +15,12 @@
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
 
+	drag_slowdown = 0
 	screen_on = FALSE // Starts closed
 	var/start_open = TRUE // unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
-	var/slowdown_open = TRUE
+	var/slowdown_open = 1
 
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
@@ -104,10 +105,16 @@
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
 		w_class = initial(w_class)
+		drag_slowdown = initial(drag_slowdown)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
 		w_class = w_class_open
+		drag_slowdown = slowdown_open
+	if(isliving(loc))
+		var/mob/living/localmob = loc
+		localmob.update_equipment_speed_mods()
+		localmob.update_pull_movespeed()
 
 	screen_on = !screen_on
 	update_appearance()
