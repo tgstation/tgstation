@@ -44,3 +44,47 @@
 
 /mob/living/basic/butterfly/lavaland
 	unsuitable_atmos_damage = 0
+
+/mob/living/basic/butterfly/lavaland/temporary
+	name = "strange butterfly"
+	var/obj/item/mod/core/plasma/lavaland/source = NONE
+	// Max distance in tiles before despawning
+	var/max_distance = 5
+	var/will_be_destroyed = FALSE
+	var/despawn_timer = 0
+
+/mob/living/basic/butterfly/lavaland/temporary/Initialize(mapload, creator)
+	. = ..()
+	source = creator
+	START_PROCESSING(SSprocessing, src)
+
+/mob/living/basic/butterfly/lavaland/temporary/process()
+	if(should_despawn())
+		will_be_destroyed = TRUE
+		despawn_timer = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, despawn)), 5 SECONDS, TIMER_STOPPABLE)
+	else
+		if(will_be_destroyed)
+			// Cancels the butterfly being destroyed
+			balloon_alert_to_viewers("CANCELLED")
+			will_be_destroyed = FALSE
+			deltimer(despawn_timer)
+
+/mob/living/basic/butterfly/lavaland/temporary/proc/should_despawn()
+	if(!source.mod.active)
+		return TRUE
+	if(get_dist(source, src) > max_distance)
+		return TRUE
+	return FALSE
+
+/mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
+	STOP_PROCESSING(SSprocessing, src)
+	source.spawned--
+	qdel(src)
+
+/mob/living/basic/butterfly/lavaland/temporary/death(gibbed)
+	. = ..()
+	qdel(src)
+
+/mob/living/basic/butterfly/lavaland/temporary/examine(mob/user)
+	. = ..()
+	. += span_notice("Something about it seems unreal...")
