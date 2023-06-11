@@ -399,8 +399,10 @@
 	SIGNAL_HANDLER
 	if(mod.active)
 		START_PROCESSING(SSprocessing, src)
+		mod.wearer.particles = new /particles/pollen()
 	else
 		STOP_PROCESSING(SSprocessing, src)
+		mod.wearer.particles = null
 
 /obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
 	. = ..()
