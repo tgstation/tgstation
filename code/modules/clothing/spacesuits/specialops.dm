@@ -1,8 +1,8 @@
 /obj/item/clothing/head/helmet/space/beret
 	name = "CentCom officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	icon_state = "beret_badge"
 	inhand_icon_state = null
 	greyscale_colors = "#397F3F#FFCE5B"

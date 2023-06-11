@@ -75,8 +75,8 @@
 	name = "captain's beret"
 	desc = "For the Captains known for their sense of fashion."
 	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
 
 //Head of Personnel
@@ -206,8 +206,8 @@
 	name = "head of security's beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
@@ -332,8 +332,8 @@
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#a52f29#F2F2F2"
 	armor_type = /datum/armor/beret_sec
 	strip_delay = 60
@@ -370,8 +370,8 @@
 /obj/item/clothing/head/beret/science/rd
 	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
 	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#7e1980#c9cbcb"
 
 //Medical
@@ -442,8 +442,8 @@
 	icon_state = "beret_badge"
 	icon_preview = 'icons/obj/previews.dmi'
 	icon_state_preview = "beret_durathread"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
 	armor_type = /datum/armor/beret_durathread
 
@@ -470,8 +470,8 @@
 	name = "\improper CentCom Formal Beret"
 	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Nanotrasen's most recent nano-fabric durability enhancements, this time, it's not the case."
 	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_config = /datum/greyscale_config/beret/badge
+	greyscale_config_worn = /datum/greyscale_config/beret/badge/worn
 	greyscale_colors = "#46b946#f2c42e"
 	armor_type = /datum/armor/beret_centcom_formal
 	strip_delay = 10 SECONDS
