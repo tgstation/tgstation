@@ -130,12 +130,12 @@
 		if(destroy_on_removal)
 			remove_deployable()
 		return
-	parent_gear.update_slot_icon()
 	currently_deployed = TRUE
 	on_deployed?.Invoke(deployable)
 	if (parent_icon_state_suffix)
 		parent_gear.icon_state = "[initial(parent_gear.icon_state)][parent_icon_state_suffix]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
+	parent_gear.update_slot_icon()
 	wearer.update_mob_action_buttons()
 
 /// Undeploy gear if it moves slots somehow
