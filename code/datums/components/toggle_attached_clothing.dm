@@ -148,8 +148,7 @@
 /// Display deployed if worn in an outfit
 /datum/component/toggle_attached_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
-	if(visuals_only)
-		create_deployable()
+	create_deployable()
 	toggle_deployable()
 
 /// Create our gear, returns true if we actually made anything
