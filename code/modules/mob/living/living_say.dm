@@ -280,13 +280,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			understood = FALSE
 
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
-	var/is_speaker_whispering = message_mods[WHISPER_MODE]
 	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to EAVESDROP_EXTRA_RANGE means
 	// partial hearing. More than EAVESDROP_EXTRA_RANGE means no hearing. Exception for GOOD_HEARING trait
 	var/dist = get_dist(speaker, src) - message_range
 	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
-	if (dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
+	if (dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
 		return FALSE // Too far away and don't have good hearing, you can't hear anything
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
