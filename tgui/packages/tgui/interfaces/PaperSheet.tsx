@@ -917,7 +917,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     let input = document.createElement('input');
     input.setAttribute('type', 'text');
 
-    input.style.fontSize = field.is_signature ? '30px' : `${fontSize}px`;
+    input.style.fontSize = field.is_signature ? '15px' : `${fontSize}px`;
     input.style.fontFamily = fieldData.font || font;
     input.style.fontStyle = field.is_signature ? 'italic' : 'normal';
     input.style.fontWeight = 'bold';
