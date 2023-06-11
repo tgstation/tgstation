@@ -6,6 +6,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/robotics
 	light_color = LIGHT_COLOR_PINK
+	var/mob/living/silicon/robot/locked_down_borg = null
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	. = FALSE
@@ -88,19 +89,28 @@
 			if(allowed(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
-					if(isAI(usr) && (R.ai_lockdown && R.lockcharge || !R.lockcharge) || !isAI(usr))
-						R.ai_lockdown = FALSE
-						if(isAI(usr) && !R.lockcharge)
+					if(isAI(usr))
+						if(R.ai_lockdown && R.lockcharge)
+							src.lock_unlock_borg(R)
+							R.ai_lockdown = FALSE
+						else if(!R.ai_lockdown && R.lockcharge)
+							to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
+						else if(!R.lockcharge)
+							src.lock_unlock_borg(R)
 							R.ai_lockdown = TRUE
-						message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
-						log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
-						log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
-						R.SetLockdown(!R.lockcharge)
-						to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
-						if(R.connected_ai)
-							to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 					else
-						to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
+						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
+							src.lock_unlock_borg(R)
+							R.ai_lockdown = FALSE //Just in case I'm stupid
+							locked_down_borg = R
+						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
+							src.lock_unlock_borg(R)
+							locked_down_borg = null
+						else if(R.lockcharge&&R.ai_lockdown)
+							src.lock_unlock_borg(R)
+							R.ai_lockdown = FALSE
+						else
+							to_chat(usr, span_danger("You can lock down only one cyborg at a time."))
 			else
 				to_chat(usr, span_danger("Access Denied."))
 
@@ -142,3 +152,14 @@
 					drone.visible_message(span_danger("\the [drone] self-destructs!"))
 					drone.investigate_log("has been gibbed by a robotics console.", INVESTIGATE_DEATHS)
 					drone.gib()
+
+
+// I feel like this should be changed, but I have no idea in what way exactly, so I just extracted it to make the code less of a mess
+/obj/machinery/computer/robotics/proc/lock_unlock_borg(mob/living/silicon/robot/R)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
+	log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
+	log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
+	R.SetLockdown(!R.lockcharge)
+	to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
+	if(R.connected_ai)
+		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")

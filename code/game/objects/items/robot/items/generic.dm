@@ -17,7 +17,7 @@
 	icon_state = "elecarm"
 	var/stamina_damage = 60 //Same as normal batong
 	/// Cost to use the stun arm
-	var/charge_cost = 100
+	var/charge_cost = 200
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
 	if(ishuman(attacked_mob))
