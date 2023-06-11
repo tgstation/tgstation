@@ -356,7 +356,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
-#define EIGENSTASIUM_MAX_BUFFER -250
+#define EIGENSTASIUM_MAX_BUFFER -251
 #define EIGENSTASIUM_STABILISATION_RATE 5
 #define EIGENSTASIUM_PHASE_1_END 50
 #define EIGENSTASIUM_PHASE_2_END 80
@@ -417,6 +417,10 @@
 		return
 	stable_message = FALSE
 
+	
+	//Increment cycle
+	current_cycle++ //needs to be done here because phase 2 can early return
+
 	//These run on specific cycles
 	switch(current_cycle)
 		if(0)
@@ -446,12 +450,13 @@
 					continue
 				items.Add(item)
 
-			if(LAZYLEN(items))
-				var/obj/item/item = pick(items)
-				owner.dropItemToGround(item, TRUE)
-				do_sparks(5,FALSE,item)
-				do_teleport(item, get_turf(item), 3, no_effects=TRUE);
-				do_sparks(5,FALSE,item)
+			if(!LAZYLEN(items))
+				return ..()
+			var/obj/item/item = pick(items)
+			owner.dropItemToGround(item, TRUE)
+			do_sparks(5,FALSE,item)
+			do_teleport(item, get_turf(item), 3, no_effects=TRUE);
+			do_sparks(5,FALSE,item)
 
 		//phase 3 - little break to get your items
 		if(EIGENSTASIUM_PHASE_3_START to EIGENSTASIUM_PHASE_3_END)
@@ -508,9 +513,6 @@
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)
-
-	//Finally increment cycle
-	current_cycle++
 
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
 	SIGNAL_HANDLER
