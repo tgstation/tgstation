@@ -2,9 +2,9 @@
  * Component which allows clothing to deploy a different kind of clothing onto you.
  * The simplest example is hooded suits deploying hoods onto your head.
  */
-/datum/component/toggled_clothing
+/datum/component/toggle_attached_clothing
 	/// Instance of the item we're creating
-	var/obj/item/clothing/deployable
+	var/obj/item/deployable
 	/// Action used to toggle deployment
 	var/datum/action/item_action/toggle_action
 	/// Typepath of what we're creating
@@ -32,7 +32,7 @@
 	/// Optional callback triggered before we hide our equipment, before as we may delete it afterwards
 	var/datum/callback/on_removed
 
-/datum/component/toggled_clothing/Initialize(
+/datum/component/toggle_attached_clothing/Initialize(
 	deployable_type,
 	equipped_slot,
 	action_name = "Toggle",
@@ -45,7 +45,7 @@
 	datum/callback/on_removed,
 )
 	. = ..()
-	if (!isclothing(parent))
+	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!deployable_type || !equipped_slot)
 		return COMPONENT_INCOMPATIBLE // Not strictly true but INITIALIZE_HINT_QDEL doesn't work from components
@@ -59,7 +59,7 @@
 	src.on_deployed = on_deployed
 	src.on_removed = on_removed
 
-	var/obj/item/clothing/clothing_parent = parent
+	var/obj/item/clothing_parent = parent
 	toggle_action = new(parent)
 	toggle_action.name = action_name
 	clothing_parent.add_item_action(toggle_action)
@@ -77,7 +77,7 @@
 	if (!destroy_on_removal)
 		create_deployable()
 
-/datum/component/toggled_clothing/Destroy(force, silent)
+/datum/component/toggle_attached_clothing/Destroy(force, silent)
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
 	QDEL_NULL(on_created)
@@ -86,7 +86,7 @@
 	. = ..()
 
 /// Toggle deployable when the UI button is clicked
-/datum/component/toggled_clothing/proc/on_toggle_pressed(obj/item/source, mob/user, datum/action)
+/datum/component/toggle_attached_clothing/proc/on_toggle_pressed(obj/item/source, mob/user, datum/action)
 	SIGNAL_HANDLER
 	if (action != toggle_action)
 		return
@@ -94,7 +94,7 @@
 	return COMPONENT_ACTION_HANDLED
 
 /// Called when action attempts to check what slot the item is worn in
-/datum/component/toggled_clothing/proc/on_action_slot_checked(obj/item/clothing/source, mob/user, datum/action, slot)
+/datum/component/toggle_attached_clothing/proc/on_action_slot_checked(obj/item/clothing/source, mob/user, datum/action, slot)
 	SIGNAL_HANDLER
 	if (action != toggle_action)
 		return
@@ -102,19 +102,19 @@
 		return COMPONENT_ITEM_ACTION_SLOT_INVALID
 
 /// Apply an overlay while the item is not deployed
-/datum/component/toggled_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/datum/component/toggle_attached_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
 	SIGNAL_HANDLER
 	if (isinhands || currently_deployed)
 		return
 	overlays += undeployed_overlay
 
 /// Deploys gear if it is hidden, hides it if it is deployed
-/datum/component/toggled_clothing/proc/toggle_deployable()
+/datum/component/toggle_attached_clothing/proc/toggle_deployable()
 	if (currently_deployed)
 		remove_deployable()
 		return
 
-	var/obj/item/clothing/parent_gear = parent
+	var/obj/item/parent_gear = parent
 	if (!ishuman(parent_gear.loc))
 		return
 	var/mob/living/carbon/human/wearer = parent_gear.loc
@@ -139,21 +139,21 @@
 	wearer.update_mob_action_buttons()
 
 /// Undeploy gear if it moves slots somehow
-/datum/component/toggled_clothing/proc/on_parent_equipped(obj/item/clothing/source, mob/equipper, slot)
+/datum/component/toggle_attached_clothing/proc/on_parent_equipped(obj/item/clothing/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	if (slot & equipped_slot)
 		return
 	remove_deployable()
 
 /// Display deployed if worn in an outfit
-/datum/component/toggled_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
+/datum/component/toggle_attached_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
 	if(visuals_only)
 		create_deployable()
 	toggle_deployable()
 
 /// Create our gear, returns true if we actually made anything
-/datum/component/toggled_clothing/proc/create_deployable()
+/datum/component/toggle_attached_clothing/proc/create_deployable()
 	if (deployable)
 		return FALSE
 	if (pre_creation_check && !pre_creation_check.Invoke())
@@ -168,32 +168,32 @@
 	return TRUE
 
 /// Undeploy gear if you drop it
-/datum/component/toggled_clothing/proc/on_deployed_dropped()
+/datum/component/toggle_attached_clothing/proc/on_deployed_dropped()
 	SIGNAL_HANDLER
 	remove_deployable()
 
 /// Undeploy gear if it moves slots somehow
-/datum/component/toggled_clothing/proc/on_deployed_equipped(obj/item/clothing/source, mob/equipper, slot)
+/datum/component/toggle_attached_clothing/proc/on_deployed_equipped(obj/item/clothing/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	if (source.slot_flags & slot)
 		return
 	remove_deployable()
 
 /// Undeploy gear if it is deleted
-/datum/component/toggled_clothing/proc/on_deployed_destroyed()
+/datum/component/toggle_attached_clothing/proc/on_deployed_destroyed()
 	SIGNAL_HANDLER
 	remove_deployable()
 	deployable = null
 
 /// Removes our deployed equipment from the wearer
-/datum/component/toggled_clothing/proc/remove_deployable()
+/datum/component/toggle_attached_clothing/proc/remove_deployable()
 	deployable?.forceMove(parent)
 	if (!currently_deployed)
 		return
 	currently_deployed = FALSE
 	on_removed?.Invoke(deployable)
 
-	var/obj/item/clothing/parent_gear = parent
+	var/obj/item/parent_gear = parent
 	if (destroy_on_removal)
 		QDEL_NULL(deployable)
 	else if (parent_icon_state_suffix)

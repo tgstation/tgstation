@@ -16,7 +16,7 @@
 	if (!hoodtype)
 		return
 	AddComponent(\
-		/datum/component/toggled_clothing,\
+		/datum/component/toggle_attached_clothing,\
 		deployable_type = hoodtype,\
 		equipped_slot = ITEM_SLOT_HEAD,\
 		action_name = "Toggle Hood",\
