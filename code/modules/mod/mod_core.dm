@@ -365,7 +365,47 @@
 	light_color = "#cc00cc"
 	light_range = 2
 
+	var/mob/living/mob = /mob/living/basic/butterfly/lavaland/temporary
+	var/max_spawns = 5
+	var/spawned = 0
+	var/can_spawn = TRUE
+
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
 	maxcharge = 15000
 	charge = 15000
+
+/obj/item/mod/core/plasma/lavaland/process()
+	if(can_spawn)
+		can_spawn = FALSE
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/core/plasma/lavaland, spawn_mob)), 5 SECONDS)
+
+/obj/item/mod/core/plasma/lavaland/proc/child_despawned()
+	spawned--
+	if(spawned < max_spawns)
+		can_spawn = TRUE
+
+/obj/item/mod/core/plasma/lavaland/proc/spawn_mob()
+	SIGNAL_HANDLER
+	if(!mod.active)
+		return
+	new mob(get_turf(src), src)
+	spawned++
+
+	if(spawned < max_spawns)
+		can_spawn = TRUE
+
+/obj/item/mod/core/plasma/lavaland/proc/on_toggle()
+	SIGNAL_HANDLER
+	if(mod.active)
+		START_PROCESSING(SSprocessing, src)
+	else
+		STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
+	. = ..()
+	RegisterSignal(mod_unit, COMSIG_MOD_TOGGLED, PROC_REF(on_toggle))
+
+/obj/item/mod/core/plasma/lavaland/uninstall(obj/item/mod/control/mod_unit)
+	. = ..()
+	UnregisterSignal(mod_unit, COMSIG_MOD_TOGGLED)

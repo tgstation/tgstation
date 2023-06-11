@@ -65,7 +65,6 @@
 	else
 		if(will_be_destroyed)
 			// Cancels the butterfly being destroyed
-			balloon_alert_to_viewers("CANCELLED")
 			will_be_destroyed = FALSE
 			deltimer(despawn_timer)
 
@@ -78,7 +77,7 @@
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
 	STOP_PROCESSING(SSprocessing, src)
-	source.spawned--
+	source.child_despawned()
 	qdel(src)
 
 /mob/living/basic/butterfly/lavaland/temporary/death(gibbed)
