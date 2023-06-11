@@ -7,20 +7,17 @@
 	icon_file = 'icons/obj/tools.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
 
-/datum/greyscale_config/wirecutters_belt_overlay
-	name = "Belt Worn Icon"
+/datum/greyscale_config/wirecutters/belt_overlay
+	name = "Belt Worn Wirecutters"
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
 
-/datum/greyscale_config/wirecutter_inhand_left
+/datum/greyscale_config/wirecutter/inhand_left
 	name = "Held Wirecutter, Left"
 	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
 
-/datum/greyscale_config/wirecutter_inhand_right
+/datum/greyscale_config/wirecutter/inhand_right
 	name = "Held Wirecutter, Right"
 	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
 
 /datum/greyscale_config/screwdriver
 	name = "Screwdriver"
@@ -35,7 +32,7 @@
 	name = "Held Screwdriver, Left"
 	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 
-/datum/greyscale_config/screwdriver_inhand_right
+/datum/greyscale_config/screwdriver/inhand_right
 	name = "Held Screwdriver, Right"
 	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 

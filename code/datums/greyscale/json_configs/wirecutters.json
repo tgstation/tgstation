@@ -1,14 +1,14 @@
 {
-	"cutters_map": [
+	"cutters": [
 		{
 			"type": "icon_state",
-			"icon_state": "cutters",
+			"icon_state": "cutters_grip",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "cutters_cutty_thingy",
+			"icon_state": "cutters_blade",
 			"blend_mode": "overlay"
 		}
 	]
