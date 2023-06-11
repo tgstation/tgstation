@@ -58,6 +58,11 @@
 	source = creator
 	START_PROCESSING(SSprocessing, src)
 
+/mob/living/basic/butterfly/lavaland/temporary/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	source.child_despawned()
+	. = ..()
+
 /mob/living/basic/butterfly/lavaland/temporary/process()
 	if(should_despawn())
 		will_be_destroyed = TRUE
@@ -76,8 +81,6 @@
 	return FALSE
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
-	STOP_PROCESSING(SSprocessing, src)
-	source.child_despawned()
 	qdel(src)
 
 /mob/living/basic/butterfly/lavaland/temporary/death(gibbed)
