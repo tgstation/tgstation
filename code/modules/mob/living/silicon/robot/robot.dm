@@ -441,7 +441,7 @@
 		state = TRUE
 	else
 		if(!ai_lockdown)
-			addtimer(CALLBACK(src,PROC_REF(lockdown_override), FALSE), 300 SECONDS)
+			addtimer(CALLBACK(src,PROC_REF(lockdown_override), FALSE), 10 MINUTES)
 			to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown engaged. Trying to hack the lockdown subsystem...")]<br>")
 	if(state)
 		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/locked)

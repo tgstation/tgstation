@@ -7,6 +7,8 @@
 	circuit = /obj/item/circuitboard/computer/robotics
 	light_color = LIGHT_COLOR_PINK
 	var/mob/living/silicon/robot/locked_down_borg = null
+	active_power_usage = 10000 //no idea how much is it
+
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	. = FALSE
@@ -100,7 +102,7 @@
 							R.ai_lockdown = TRUE
 					else
 						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
-							src.lock_unlock_borg(R)
+							src.lock_unlock_borg(R, src.loc)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
 						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
@@ -113,6 +115,10 @@
 							to_chat(usr, span_danger("You can lock down only one cyborg at a time."))
 			else
 				to_chat(usr, span_danger("Access Denied."))
+			if(!isnull(locked_down_borg))
+				use_power = ACTIVE_POWER_USE
+			else
+				use_power = IDLE_POWER_USE
 
 		if("killbot") //Malf AIs, and AIs with a combat upgrade, can detonate their cyborgs remotely.
 			if(!isAI(usr))
@@ -155,11 +161,13 @@
 
 
 // I feel like this should be changed, but I have no idea in what way exactly, so I just extracted it to make the code less of a mess
-/obj/machinery/computer/robotics/proc/lock_unlock_borg(mob/living/silicon/robot/R)
+/obj/machinery/computer/robotics/proc/lock_unlock_borg(mob/living/silicon/robot/R, console_location = null)
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 	log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
 	log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
 	R.SetLockdown(!R.lockcharge)
-	to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
+	to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!")	)
+	if(!isnull(console_location))
+		to_chat(R, span_alert("The approximate location of the console that is keeping you locked down is [console_location]"))
 	if(R.connected_ai)
 		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
