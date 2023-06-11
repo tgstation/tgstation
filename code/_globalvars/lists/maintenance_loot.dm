@@ -364,7 +364,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/shadowcloak = 1,
 		/obj/item/spear/grey_tide = 1,
-		/obj/item/storage/box/donkpockets/donkpocketgondola = 1,
 		list(//music
 			/obj/item/instrument/saxophone/spectral = 1,
 			/obj/item/instrument/trombone/spectral = 1,
