@@ -5265,6 +5265,7 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "monkestation\code\__HELPERS\mobs.dm"
+#include "monkestation\code\__HELPERS\reagents.dm"
 #include "monkestation\code\datums\antag_tokens.dm"
 #include "monkestation\code\datums\patreon_data.dm"
 #include "monkestation\code\datums\stamina_container.dm"
