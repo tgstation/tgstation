@@ -331,3 +331,33 @@
       accurately post to list_bombers with the name of the person who shot the projectile
       from the gun. If you don't know how to list-bombers, it will also be present
       in game.log for your viewing pleasure.
+2023-06-11:
+  Ghommie:
+  - qol: Basketball (the mini-game) player mobs have a chance to be taller than the
+      usual spaceman.
+  Licks-The-Crystal:
+  - qol: Makes transparent kudzu transparent (and won't block sight)
+  Licks-the-Crystal:
+  - bugfix: Removes the infinite hypernoblium from the holodeck's Winter Wonderland
+      setting.
+  MTandi:
+  - qol: 'RPD UI: Devices split in two categories, options are aligned to the left'
+  MrStonedOne:
+  - server: fix logging infoleak from the lack of continuation markets on new lines.
+  Rhials:
+  - code_imp: Spaceman simple mobs have been converted to basic mobs.
+  - qol: Ventcrawling mobs have a 1 second delay/warning before exiting the ventilation.
+  Roryl-c:
+  - bugfix: fixed TTS tripping over stuttered text when other speech modifiers are
+      in effect
+  - bugfix: fixed tedious TTS "ess-ess-speech" for lizards and other species with
+      repeated consonants
+  ShizCalev:
+  - bugfix: The RD's plant will no longer say that it's not very healthy after being
+      restored with seeds.
+  - bugfix: Potted plants no longer randomly swap icons after being thrown.
+  - bugfix: Plants that started the round dead are no longer all the same kind once
+      revived.
+  - bugfix: Admins can now varedit plants to be alive / dead!
+  Singul0:
+  - spellcheck: the H.E.C.K helmet is now typo-free
