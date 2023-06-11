@@ -13,11 +13,6 @@
 /obj/item/grown/bananapeel,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"eu" = (
-/obj/machinery/computer/old,
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "gu" = (
 /obj/structure/door_assembly/door_assembly_grunge,
 /turf/open/floor/iron/checker/airless,
@@ -28,31 +23,33 @@
 "gZ" = (
 /turf/closed/mineral,
 /area/ruin)
+"hG" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
+/obj/item/food/burger/mime,
+/obj/item/food/burger/mime,
+/obj/item/food/pie/mimetart,
+/obj/item/food/pie/mimetart,
+/turf/open/floor/plating/airless,
+/area/ruin)
 "hT" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"iP" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
-"kW" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/mapping_helpers/damaged_window,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/template_noop,
-/area/ruin)
 "lS" = (
 /obj/structure/door_assembly,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"mB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/airless,
+"of" = (
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/iron/checker/airless,
 /area/ruin)
-"nx" = (
+"ot" = (
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"ox" = (
 /obj/machinery/light/small/broken/directional/east,
 /obj/structure/closet/preopen,
 /obj/item/clothing/mask/gas/mime,
@@ -64,27 +61,23 @@
 /obj/item/storage/backpack/mime,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"of" = (
-/obj/item/storage/toolbox/syndicate,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
-"ot" = (
-/obj/machinery/door/airlock/grunge,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
-"qr" = (
-/obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/preopen,
-/obj/item/food/burger/mime,
-/obj/item/food/burger/mime,
-/obj/item/food/pie/mimetart,
-/obj/item/food/pie/mimetart,
-/turf/open/floor/plating/airless,
-/area/ruin)
 "rn" = (
 /obj/machinery/computer/old{
 	dir = 8
 	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"tz" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
+/obj/item/ammo_casing/energy/c3dbullet{
+	pixel_y = 10;
+	pixel_x = 115;
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "uc" = (
@@ -136,6 +129,15 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"zk" = (
+/obj/machinery/computer/old,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Al" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "Ar" = (
 /obj/item/ammo_casing/energy/c3dbullet{
 	dir = 5;
@@ -154,6 +156,13 @@
 "BU" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"CH" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "CZ" = (
@@ -189,12 +198,13 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"GS" = (
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/checker/airless,
+"GR" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
 /area/ruin)
 "Ij" = (
 /obj/machinery/door/airlock/glass,
@@ -232,12 +242,8 @@
 /obj/structure/sign/poster/contraband/microwave,
 /turf/closed/wall,
 /area/ruin)
-"KV" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/corpse/human/clown,
-/obj/item/ammo_casing/energy/c3dbullet,
-/obj/effect/decal/cleanable/blood/footprints,
-/obj/effect/decal/cleanable/dirt/dust,
+"Ln" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Mx" = (
@@ -260,20 +266,14 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"St" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4
-	},
-/obj/item/ammo_casing/energy/c3dbullet{
-	pixel_y = 10;
-	pixel_x = 115;
-	dir = 9
-	},
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/machinery/light/small/broken/directional/south,
-/turf/open/floor/iron/checker/airless,
+"Vj" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/template_noop,
 /area/ruin)
-"XH" = (
+"XA" = (
 /obj/machinery/computer/old{
 	dir = 4
 	},
@@ -396,9 +396,9 @@ GF
 Jz
 Jz
 vs
-XH
+XA
 Jz
-eu
+zk
 gV
 gZ
 Fx
@@ -413,14 +413,14 @@ gZ
 gZ
 Kh
 ED
-iP
+Al
 lS
 ve
-St
+tz
 KI
-qr
-iP
-kW
+hG
+Al
+Vj
 Fx
 Fx
 Fx
@@ -439,7 +439,7 @@ JK
 Ar
 Ij
 AK
-iP
+Al
 gZ
 Fx
 Fx
@@ -495,11 +495,11 @@ gZ
 gZ
 Jz
 hT
-iP
+Al
 dI
 Jz
 YF
-nx
+ox
 gZ
 Fx
 Fx
@@ -515,7 +515,7 @@ gZ
 gZ
 Qb
 Pq
-mB
+Ln
 gV
 vj
 gZ
@@ -535,7 +535,7 @@ gZ
 gZ
 Jz
 dq
-mB
+Ln
 CZ
 of
 gZ
@@ -557,7 +557,7 @@ Jz
 gZ
 gZ
 EY
-KV
+GR
 gZ
 Fx
 Fx
@@ -577,7 +577,7 @@ gZ
 Fx
 gZ
 gV
-GS
+CH
 gZ
 Fx
 Fx

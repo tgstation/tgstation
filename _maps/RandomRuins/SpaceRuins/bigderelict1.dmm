@@ -153,6 +153,11 @@
 "aM" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"aN" = (
+/obj/structure/closet/crate/preopen,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aO" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/titanium/yellow,
@@ -575,35 +580,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
-"cC" = (
-/obj/structure/alien/weeds/creature,
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	resize = 0.85
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost)
-"cD" = (
-/obj/structure/alien/weeds/creature,
-/obj/effect/decal/cleanable/blood/old{
-	dir = 10;
-	icon_state = "trails_1";
-	name = "dried blood trail"
-	},
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	resize = 0.85
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost)
 "cG" = (
 /obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"cH" = (
+/obj/structure/closet/crate/preopen,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cI" = (
@@ -899,6 +882,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"dY" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dZ" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -935,6 +924,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"ek" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/cardboard/fifty,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -953,6 +948,11 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"eq" = (
+/obj/structure/closet/crate/preopen,
+/obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "es" = (
@@ -1076,21 +1076,6 @@
 /obj/structure/alien/weeds/creature,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
-"hl" = (
-/obj/item/ammo_casing/c45{
-	caliber = null;
-	desc = "A .45 bullet casing. This one is spent.";
-	name = "spent bullet casing"
-	},
-/obj/structure/alien/weeds/creature,
-/obj/effect/decal/cleanable/blood/old{
-	dir = 5;
-	icon_state = "trails_1";
-	name = "dried blood trail"
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "hF" = (
 /obj/structure/alien/weeds/creature,
 /obj/structure/alien/gelpod,
@@ -1100,28 +1085,12 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
-"jm" = (
-/obj/structure/closet/crate/preopen,
-/obj/effect/spawner/random/exotic/tool,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"jR" = (
-/obj/structure/closet/crate/preopen,
-/obj/item/stack/sheet/plasteel/twenty,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ks" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
-"lh" = (
-/obj/structure/table,
-/obj/item/reagent_containers/cup/bucket,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "lk" = (
 /obj/item/crowbar{
 	pixel_x = -16;
@@ -1142,25 +1111,43 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
-"oa" = (
+"mp" = (
+/obj/structure/closet/crate,
+/obj/item/target/syndicate,
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/alien,
+/obj/item/target,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"mS" = (
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
+	outfit_override = list("head"=null)
+	},
+/obj/item/paper/crumpled/ruins/bigderelict1/coward,
 /obj/effect/decal/cleanable/blood/old{
-	dir = 4;
+	name = "dried blood splatter";
+	pixel_x = -29
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"om" = (
+/obj/structure/alien/weeds/creature,
+/obj/effect/decal/cleanable/blood/old{
+	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
-"ox" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
+/mob/living/basic/creature{
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+/area/ruin/space/has_grav/derelictoutpost)
 "oU" = (
 /obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
@@ -1191,12 +1178,12 @@
 /obj/item/storage/medkit/o2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
-"sJ" = (
-/obj/structure/filingcabinet,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
+"sO" = (
+/obj/structure/closet/crate/preopen,
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/exotic/technology,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "tu" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
@@ -1265,6 +1252,21 @@
 /obj/structure/alien/weeds/creature,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
+"yJ" = (
+/obj/item/ammo_casing/c45{
+	caliber = null;
+	desc = "A .45 bullet casing. This one is spent.";
+	name = "spent bullet casing"
+	},
+/obj/structure/alien/weeds/creature,
+/obj/effect/decal/cleanable/blood/old{
+	dir = 5;
+	icon_state = "trails_1";
+	name = "dried blood trail"
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "yQ" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/regular{
@@ -1284,7 +1286,7 @@
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
-"zo" = (
+"zj" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/fingerless,
 /obj/machinery/light/directional/east,
@@ -1317,23 +1319,12 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
-"DO" = (
-/obj/structure/closet/crate/preopen,
-/obj/item/stack/sheet/cardboard/fifty,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Ef" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"EX" = (
-/obj/structure/closet/crate/preopen,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "Fe" = (
 /obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
@@ -1343,6 +1334,21 @@
 	name = "dried blood trail"
 	},
 /turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictoutpost)
+"Fn" = (
+/obj/effect/decal/cleanable/blood/old{
+	dir = 4;
+	icon_state = "trails_1";
+	name = "dried blood trail"
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"Gj" = (
+/obj/structure/filingcabinet,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 "Gk" = (
 /obj/structure/alien/resin/membrane/creature,
@@ -1398,17 +1404,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
-"Nf" = (
-/obj/structure/closet/crate/preopen,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
-"NT" = (
-/obj/structure/closet/crate/preopen,
-/obj/effect/turf_decal/delivery,
-/obj/effect/spawner/random/exotic/technology,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Pr" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 6;
@@ -1430,23 +1425,34 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
-"RH" = (
-/obj/structure/alien/weeds/creature,
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	resize = 0.85
-	},
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/derelictoutpost)
 "RS" = (
 /obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+	},
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/derelictoutpost)
+"RX" = (
+/obj/structure/alien/weeds/creature,
+/mob/living/basic/creature{
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost)
+"Tk" = (
+/obj/structure/alien/weeds/creature,
+/mob/living/basic/creature{
+	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	health = 25;
+	maxHealth = 25;
+	name = "hatchling";
+	current_size = 0.85
 	},
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1464,27 +1470,21 @@
 /obj/item/storage/medkit/brute,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
-"Wi" = (
-/obj/structure/closet/crate,
-/obj/item/target/syndicate,
-/obj/item/target/clown,
-/obj/item/target/clown,
-/obj/item/target/alien,
-/obj/item/target,
+"VV" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"Ys" = (
-/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
-	outfit_override = list("head"=null)
-	},
-/obj/item/paper/crumpled/ruins/bigderelict1/coward,
-/obj/effect/decal/cleanable/blood/old{
-	name = "dried blood splatter";
-	pixel_x = -29
-	},
+"Yu" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "YX" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/regular,
@@ -1593,7 +1593,7 @@ aB
 aM
 uV
 ba
-Ys
+mS
 bH
 bJ
 cn
@@ -1711,7 +1711,7 @@ bx
 dq
 bx
 bx
-hl
+yJ
 dS
 eh
 eh
@@ -1767,10 +1767,10 @@ ab
 af
 ai
 al
-lh
+Yu
 aw
 bK
-EX
+aN
 aT
 aJ
 az
@@ -1813,7 +1813,7 @@ ak
 ak
 ak
 an
-Nf
+cH
 cV
 bx
 ab
@@ -1824,7 +1824,7 @@ dU
 dW
 dW
 ex
-NT
+sO
 dL
 aR
 aZ
@@ -1995,14 +1995,14 @@ cc
 ae
 ce
 cW
-EX
+aN
 ab
 ds
 yl
 dL
-jR
+dY
 dW
-jm
+eq
 ex
 eG
 dL
@@ -2073,7 +2073,7 @@ pB
 ds
 dL
 ea
-DO
+ek
 Ef
 ex
 dX
@@ -2139,12 +2139,12 @@ ae
 cv
 ce
 bx
-oa
+Fn
 ab
 lm
 au
 dL
-Wi
+mp
 dW
 es
 ex
@@ -2180,7 +2180,7 @@ ab
 lm
 vr
 dL
-ox
+VV
 dW
 BI
 ey
@@ -2201,8 +2201,8 @@ ak
 ao
 aw
 az
-zo
-EX
+zj
+aN
 aX
 aw
 bx
@@ -2314,7 +2314,7 @@ aa
 aY
 aK
 iK
-sJ
+Gj
 bC
 cj
 cO
@@ -2540,7 +2540,7 @@ dm
 dC
 dC
 dQ
-RH
+Tk
 vr
 vr
 vr
@@ -2616,7 +2616,7 @@ vr
 lM
 bl
 vr
-RH
+Tk
 vr
 Vy
 aa
@@ -2645,9 +2645,9 @@ bF
 bF
 bF
 bF
-cC
+RX
 bl
-cC
+RX
 lM
 au
 au
@@ -2716,7 +2716,7 @@ bF
 bl
 bl
 dk
-cC
+RX
 bl
 bF
 bl
@@ -2748,7 +2748,7 @@ bo
 bF
 bl
 bF
-cC
+RX
 bl
 bF
 bF
@@ -2794,7 +2794,7 @@ bF
 bl
 au
 au
-RH
+Tk
 Vy
 aa
 aa
@@ -2820,7 +2820,7 @@ bp
 bG
 bX
 cl
-cD
+om
 vr
 au
 dm

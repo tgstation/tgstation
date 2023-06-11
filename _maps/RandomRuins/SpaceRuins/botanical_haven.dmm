@@ -14,11 +14,6 @@
 /obj/structure/water_source/puddle,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
-"f" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/machinery/hydroponics/soil,
-/turf/open/misc/grass,
-/area/ruin/space/has_grav/powered/botanical_haven)
 "g" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/grass,
@@ -57,11 +52,6 @@
 "m" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/powered/botanical_haven)
-"n" = (
-/obj/machinery/hydroponics/soil,
-/obj/machinery/light/warm/directional/east,
-/turf/open/misc/grass,
-/area/ruin/space/has_grav/powered/botanical_haven)
 "o" = (
 /turf/closed/mineral/asteroid,
 /area/ruin/space/has_grav/powered/botanical_haven)
@@ -71,6 +61,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"r" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "s" = (
 /obj/effect/decal/cleanable/generic,
@@ -125,6 +120,11 @@
 /area/ruin/space/has_grav/powered/botanical_haven)
 "D" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"E" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light/warm/directional/east,
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "G" = (
@@ -191,20 +191,15 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "S" = (
-/obj/structure/flora/bush/snow/style_random,
-/obj/machinery/light/warm/directional/west,
-/turf/open/misc/grass,
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/red/dim/directional/south,
+/obj/item/kirbyplants/fern,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "T" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/grass,
-/area/ruin/space/has_grav/powered/botanical_haven)
-"U" = (
-/obj/effect/turf_decal/stripes/asteroid/corner,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/red/dim/directional/south,
-/obj/item/kirbyplants/fern,
-/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "V" = (
 /obj/structure/flora/bush/snow/style_random,
@@ -220,6 +215,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"X" = (
+/obj/structure/flora/bush/snow/style_random,
+/obj/machinery/light/warm/directional/west,
+/turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "Y" = (
 /obj/structure/flora/grass/brown/style_random,
@@ -349,7 +349,7 @@ o
 o
 o
 D
-S
+X
 c
 D
 o
@@ -401,7 +401,7 @@ C
 v
 G
 Q
-U
+S
 G
 o
 R
@@ -509,8 +509,8 @@ o
 o
 o
 o
-n
-f
+E
+r
 g
 o
 o

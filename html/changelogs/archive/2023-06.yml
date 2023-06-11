@@ -1,0 +1,333 @@
+2023-06-01:
+  FlufflesTheDog:
+  - bugfix: Radios tuned to things other than common respond properly to turning on
+      the speaker
+  - bugfix: Abstract items can no longer be placed in others' hands.
+  Ghommie:
+  - bugfix: Being moved around by conveyor belt or tram no longer play footsteps and
+      wheelchair sounds.
+  - bugfix: The peanut butter banana sandwich is no longer presented as grilled when
+      it doesn't require a griddle to make.
+  - balance: You can now sweep garbage into open trash bins (the crate subtype).
+  Helg2:
+  - spellcheck: Plate Gauntlets and Plate Boots now have proper looking names.
+  - bugfix: Syndicate Holster now works as intended (You can finally put both revolver
+      and speedloaders in it at the same time).
+  IndieanaJones, Melbert:
+  - balance: Space Dragon can no longer choose its rift locations freely, and instead
+      is given 5 pre-determined locations to pick from instead
+  - balance: Space Dragon itself has been buffed in order to support a more confrontational
+      playstyle, however its wing gust now requires a line of sight to targets in
+      order to affect them.
+  - balance: Player Space Carp from rifts now have buffed health, but reduced object
+      damage values. They also gain a temporary speed boost when hit by Space Dragon's
+      fire breath instead of taking damage.
+  - balance: Carp rift spawn times have been reduced, the healing AOE is now a 3x3
+      instead of a 1x1, and apply normal gravity in a large radius around them
+  - balance: Space Dragon and rift carps now communicate on a private mind link channel
+      via action button similar to Raw Prophets and Slimepeople.
+  - bugfix: Fixed Gravity Generator forced gravity not applying.
+  - bugfix: Intern Announcer will no longer replace Space Dragon announcements.
+  - qol: The roundend report for space dragons now collates all players who played
+      a carp into one entry, rather than one per carp spawned.
+  - qol: Space Dragon sounds are much less ear piercingly loud.
+  LemonInTheDark:
+  - rscadd: You can now filter by book id in library consoles
+  - bugfix: The visitor console now actually has categories to select. Shows how many
+      people actually use it
+  - admin: Added a library moderation tool, so you guys can do that again now that
+      statbus has passed into the byond
+  - server: Bumped DB version, the library_action table has a few columns that were
+      improperly typed, this fixes that
+  MTandi:
+  - qol: 'Oldstation: Windows are easier to fix as they''re now fulltile and use the
+      new helpers to appear cracked.'
+  - qol: 'Oldstation: You don''t need a special card to access APCs, other minor access
+      tweaks.'
+  - qol: 'Oldstation: Some walls have been moved and adjusted for better navigation
+      and look.'
+  - bugfix: 'Oldstation: Fixed paper text, overlapping objects, xenos being blocked
+      by flying crates, and some other minor issues.'
+  Singul0:
+  - balance: The mothership which abductors came from has worked very hard to train
+      their field agents how to use batons from their specimen's habitat
+  SyncIt21:
+  - bugfix: bluespace poly crystals can be used to complete machine frames either
+      by hand or by RPED
+  TheVekter:
+  - bugfix: Added a name and description for the basic version of the bow.
+  timothymtorres:
+  - qol: Add more glasses to the nearsighted pref menu with icons
+2023-06-02:
+  Charley:
+  - bugfix: fixes birdshot access in various spots.
+  Ghommie:
+  - bugfix: Stops shields getting broken by pillows and disablers.
+  Hatterhat:
+  - qol: Fulton extraction packs (when used on yourself) now automatically shove themselves
+      into any back-mounted storage, like MODsuit storage modules.
+  - balance: 'The source of the demonic portals that endlessly deposits snow legions
+      onto the Icemoon no longer preserves the bodies nor gear of the damned (read:
+      demon portal snow legions now only drop skeletons).'
+  JohnFulpWillard:
+  - bugfix: Metastation departures now has an APC and Air alarm again.
+  - bugfix: Metastation and Birdshot's Coroner offices are now called Coroner office.
+  Jolly:
+  - code_imp: The code for posters has been split among three files. If you see something
+      weird, please report it.
+  - bugfix: Fixed the single tank poster using the wrong typepath for its mapping
+      dir.
+  - bugfix: '[MetaStation] - Secured some walls in science that weren''t secured properly
+      (reinforced).'
+  MTandi:
+  - bugfix: fixed dead plant having wrong icon roundstart
+  Rhials:
+  - qol: Fugitive hunters now get a deadchat poll and notify deadchat properly.
+  Singul0:
+  - bugfix: Nanotrasen engineers has installed delamination counters for all Northstar
+      class expeditionary vessels to increase the pressure for engineers not to fuck
+      up
+  carlarctg:
+  - spellcheck: Fixes grammar error on syndie sm shard desc
+  coldud13:
+  - bugfix: Disposals pipes for the Detective's office & Mining cafeteria now work
+      on tram.
+  - bugfix: Replaced an open space with a floor at the courtroom holding area.
+  larentoun:
+  - bugfix: Gun overlays (energy ammo counter, flashlights, bayonette, etc) are now
+      one with gun's icon, which makes said overlays to transform correctly with gun's
+      transform (ie, throwing)
+  moocowswag:
+  - bugfix: Tramstation departures is no longer missing a window
+  - bugfix: Spatial instability now gets properly energized by energetic chromosomes
+  - bugfix: external shields no longer generate over walls
+2023-06-03:
+  Ghommie:
+  - bugfix: Fixes thrown things being unblockable by shields or something.
+  Profakos:
+  - image: Made the oxygen medkits different coloured from the general medkit colours,
+      and tweaked the burn medkits to look a bit less orange
+  axietheaxolotl / viro:
+  - image: brand new crate sprites, wowie zowie!!
+2023-06-04:
+  Rhials:
+  - rscadd: The scrubber clog event is now the ventilation clog event. It uses vents
+      instead of scrubbers now. It is now the ventilation clog event.
+  - rscadd: Ventilation clogs now produce a lot of filth in addition to produced mobs,
+      and make the surrounding area dirty.
+  - balance: Ventilation clogs may produce more mobs at once, and have a higher limit
+      on how many can occur per round.
+  - code_imp: The ventilation clog event is now self-contained, and handles all logic/behavior
+      in the event itself (rather than on the targeted vent).
+  TheVekter:
+  - image: Added a cross to the top of the new medical crate for readability's sake.
+  san7890:
+  - refactor: Giant ants are now more capable of distinguishing friend and foe.
+  - refactor: Chicks are now a bit smarter, be careful not to squish them!
+2023-06-05:
+  Crushtoe:
+  - bugfix: Fixed tram morgue mapping issues and underpass shutter buttons.
+  DaydreamIQ:
+  - qol: Icebox Perma's fridges are no longer locked to access they'll never have
+  MTandi:
+  - image: new trash bin sprite
+  - bugfix: trash bin shows correct indicator when spawns non-empty
+  Potato-Masher:
+  - bugfix: Removes the misplaced extra chem dispenser from NorthStar pharmacy.
+  - bugfix: NorthStar medbay now has lightswitches in some rooms as opposed to none.
+  TheVekter:
+  - balance: Replaced one of the mini energy guns on the Caravan Ambush space ruin
+      with a survival knife.
+  - balance: Replaced the red-and-black softsuit on the Old Infiltrator space ruin
+      with a suit that can't be obtained otherwise. Look in the suit storage units.
+  - balance: Removed a magazine from the WT-550 rifle spawn on the Waystation space
+      ruin.
+  - balance: Replaced red-and-black softsuits on the Faceoff space ruin with Syndicate
+      variants of the explorer.
+  - rscadd: Added a Syndicate variant of the explorer suit. The armor is identical
+      to the Goliath cloak with slightly more bomb and ballistic resistance.
+  YehnBeep:
+  - bugfix: After a thorough dressing down and threats of fines from the Fire Marshal,
+      Nanotrasen has reluctantly installed several missing fire alarms and other safety
+      equipment in the North Star's Cargo Bay and a few other lower deck areas.
+  - bugfix: Fixed minor area definition errors in North Star's cargo area.
+2023-06-06:
+  DATA-xPUNGED:
+  - qol: Nanotrasen has issued a new wallet model, which lets you put biscuit papers
+      in them!
+  Fikou:
+  - balance: the cake hat wounds more
+  - bugfix: the cake hat no longer balds you
+  Guillaume Prata:
+  - bugfix: Fixes an edge case of an air alarm warning not reseting properly and being
+      repeated when another atmos issue without a warning message, like Plasma in
+      the air, triggered the alarm.
+  JohnFulpWillard, tatax:
+  - qol: '[Mafia] Players are now sent back to their in-game character''s bodies when
+      they finish a game.'
+  - image: '[Mafia] Mafia now has a new sprite for the main action button in-game.'
+  - bugfix: '[Mafia] Chaplains can now use their ability.'
+  - bugfix: '[Mafia] The game no longer ends in a Draw if Town or Changelings win.'
+  - bugfix: '[Mafia] The role list now properly shows roles once.'
+  JoshAdamPowell:
+  - admin: allow admins to allow non-clowns to drive clown cars
+  LT3:
+  - bugfix: IVs again work with non-living containers
+  Melbert:
+  - bugfix: Admin forced latejoins reset correctly after next latejoin
+  Pickle-Coding:
+  - bugfix: Fix movable explosive blockers leaving remnants of explosive protection
+      on turfs after they get destroyed.
+  Rex9001:
+  - bugfix: fixes moffic grilled hard cheese burning on the grill instantly
+  Sealed101:
+  - bugfix: gibbing colossus possessor crystal possessed animals will no longer stick
+      the user's body and their stuff into the shadow realm. the animals will properly
+      drop your corpse when killed or gibbed
+  Tattle:
+  - admin: mob tags are now part of the mob tag log again
+  Wallem:
+  - qol: Adds a button that lets you recolor air canisters to enable easier organization.
+  YehnBeep:
+  - bugfix: The reviver implant will no longer leave its user looping between soft
+      and hard critical states.
+  carlarctg:
+  - rscadd: Changes syndicate surgery duffelbags to contain advanced tools, sterilizine,
+      surgical tape, and a roller bed.
+  - rscadd: Changed the Syndicate Infiltrators' surgery areas to contain a full syndicate
+      surgery duffelbag.
+  - rscadd: The normal infiltrator now has a operating computer and a closet of misc.
+      surgical clothing and anesthesic tank.
+  kinneb:
+  - image: modified gift and package crate sprites to match the resprited crate
+2023-06-07:
+  Chadley:
+  - rscadd: Adds some new quirks!!
+  - rscadd: Adds the bilingual quirk, which gives a new random language.
+  - rscadd: Adds the big hand quirk which stops the usage of most guns.
+  - rscadd: Adds the soft spoken quirk which forces you to whisper.
+  - rscadd: Adds the clumsy quirk enabling the clumsy trait.
+  Helg2:
+  - balance: Bone gel standart amount has been increased to 5.
+  LT3:
+  - bugfix: Tram platform tiles now have proper stack types
+  - refactor: Pride week tile coloring refactored into a generic holiday decal system
+  - spellcheck: Tile decals are no longer all named 'corner'
+  OrionTheFox:
+  - rscadd: The Hawaiian Overshirt is now GAGS, and available to crew in the ClothesMate.
+      Mahalo a aloha!
+  Pickle-Coding:
+  - rscadd: Crafting recipe for atmospherics gas mask.
+  Sealed101:
+  - bugfix: fixed cult veil shifter not teleporting the thing/the loser you're pulling
+      with you
+  SyncIt21:
+  - rscadd: Igniter's can be crafted
+  - rscadd: Spraker's can be printed in the autolathe
+  - rscadd: ignition controller can be printed in the autolathe
+  - bugfix: light replacer displaying error message  after it finished replacing the
+      light
+  - refactor: merged the `can_use()` proc with the `Use()` proc to perform both actions
+      at once
+  - refactor: '`/obj/item/lightreplacer/attackby()` returns TRUE to prevent calling
+      it''s `after_attack()` code and calls it''s parent proc'
+  ZephyrTFA:
+  - admin: Player Ticket History - view a player's ticket history without the need
+      to use external tooling.
+  san7890:
+  - refactor: Headslugs (the really small slug-like changeling form) are now basic
+      mobs. They only wander around aimlessly now instead of attacking corpses all
+      the time, and examining will let you know what type. Should probably still smash
+      them before they suddenly gain sapience...
+2023-06-08:
+  Archimus12:
+  - bugfix: fixed admin custom job slot cancel button
+  - spellcheck: fixed a typo that spelled "jobs" as "jebs"
+  Diegoflores31:
+  - image: modified crate sprites
+  Helg2:
+  - bugfix: '[Metastation] [Birdshot] Test Site Materials Crates now contain targets
+      instead of existing near them purposelessly and empty.'
+  Rhials:
+  - bugfix: Alexander now properly purges itself when you drop your shield.
+  Sealed101:
+  - bugfix: fixed mecha plasma generator not accepting fuel
+  - bugfix: fixed mecha ui incorrectly displaying fuel remaining when using an energy
+      module
+  - bugfix: fixed mecha ui missing fluff text for short circuit repair control (5th
+      option)
+  - qol: fixing mecha control module internal damage will print out a chat message
+      like fixing other damage does
+  - rscdel: did you know that for 4 years now mecha plasma generators did not, in
+      fact, pollute the environment when in use? removed that bit from its description
+  - bugfix: fixed Lavaland Labour Camp Shuttle prisoner-side airlocks having unrestricted
+      access from the side of a wall
+  Seven:
+  - bugfix: Crafting recipes will not eat your implanted toolset if the recipe calls
+      for a tool
+  Time-Green:
+  - bugfix: Fixes AIize not working
+  mc-oofert:
+  - bugfix: xeno resin floor layer
+  zeroisthebiggay:
+  - image: energy katana on belt
+2023-06-09:
+  Ghommie:
+  - bugfix: pixel offsets from grabbing other mobs now respect the body offset variables.
+  - refactor: Changed some code so that resized mobs no longer look like they're poking
+      over the below tile with their legs or not even reaching the bottom edge of
+      the tile they're on.
+  MTandi, Borbop:
+  - bugfix: Dust now has dust icon, instead of dirt icon. Dust on all maps replaced
+      with dirt
+  - image: Flat dirt now picks from 4 new sprites
+  - refactor: Made broken tiling work more like tiling and have corresponding visuals.
+      Added directional mapping variants.
+  - bugfix: Cleanables now use FLOOR_CLEAN_LAYER to make sure that trash is visible
+      above catwalks
+  Sheits:
+  - image: Resprites the mulebot
+  Youtubeboy139:
+  - rscadd: Added new EMT belt (really just renamed the Paramedic belt path)
+  - image: Added new EMT belt sprite
+  - image: Added shiny new belts and detective/syndicate holsters (`onmob` sprites
+      included)
+  - image: Removed old, unused red military belt sprite
+2023-06-10:
+  Ghommie:
+  - bugfix: waddling, squeaky shoes and swivel chair sound effects no longer run when
+      moved by conveyor belt.
+  - bugfix: Fixed a small issue with mob resizing not promptly updating a body offset
+      variable.
+  - bugfix: Taking items from your inventory while flying over lava or a chasm will
+      NOT set them on fire or drop them into chasms ANYMORE
+  Guillaume Prata:
+  - bugfix: Laptops now give a slowdown when dragged, patching the easy trick of dragging
+      a laptop to bypass the slowdown for carrying it on hand.
+  JohnFulpWillard:
+  - spellcheck: The Medical vending refill crate's description now properly displays
+      the Coroner's vendor as being part of its contents.
+  LemonInTheDark:
+  - refactor: Pulled apart the last vestiges of names/docs directly linking signals
+      to components
+  Rex9001:
+  - bugfix: fixes the areas of the_faceoff
+  Rhials:
+  - qol: Fugitives, Bounty Hunters, and Paradox Clones will now appear in the orbit
+      menu.
+  YehnBeep:
+  - bugfix: Lavaland's cafeteria fridge is no longer access-locked.
+  - bugfix: The mining vendor's bar pod's machinery no longer has access restrictions
+      miners can't use.
+  - bugfix: The bar pod's vending machines no longer believe they are on station.
+  - qol: The bar pod's bathroom also has less unused space.
+  larentoun:
+  - rscadd: Added optional respawn delay (disabled by default), which prevents returning
+      to lobby while dead.
+  rageguy505:
+  - bugfix: O2 crates have blue stripes when opened
+  san7890:
+  - admin: Shooting a welding fuel tank (big or small) with a projectile will now
+      accurately post to list_bombers with the name of the person who shot the projectile
+      from the gun. If you don't know how to list-bombers, it will also be present
+      in game.log for your viewing pleasure.

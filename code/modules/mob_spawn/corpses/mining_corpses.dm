@@ -54,7 +54,7 @@
 		if("Golem")
 			outfit = /datum/outfit/consumed_golem
 		if("Operative")
-			outfit = /datum/outfit/syndicatecommandocorpse
+			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 		if("Shadow")
 			outfit = /datum/outfit/consumed_shadowperson
 	. = ..()

@@ -1,19 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/structure/table,
-/obj/item/stack/ducts/fifty{
-	amount = 23
-	},
-/mob/living/basic/butterfly,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"ad" = (
-/mob/living/basic/butterfly,
-/obj/structure/chair/pew/left{
-	dir = 8
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "as" = (
 /obj/machinery/door/airlock/public,
 /turf/open/misc/snow,
@@ -24,6 +9,12 @@
 	dir = 4
 	},
 /turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"aL" = (
+/mob/living/basic/ant{
+	environment_smash = 0
+	},
+/turf/open/floor/grass,
 /area/ruin/bughabitat)
 "aR" = (
 /obj/item/reagent_containers/syringe/syriniver,
@@ -36,25 +27,12 @@
 /mob/living/basic/cockroach,
 /turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
-"bG" = (
-/mob/living/basic/butterfly,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "bQ" = (
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 8
 	},
 /turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"cK" = (
-/mob/living/simple_animal/hostile/ant{
-	environment_smash = 0
-	},
-/turf/open/floor/grass,
 /area/ruin/bughabitat)
 "eM" = (
 /obj/structure/chair/pew/right{
@@ -81,15 +59,6 @@
 /obj/item/clipboard,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"fJ" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/obj/machinery/light_switch/directional/south,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "fO" = (
 /turf/open/misc/snow,
 /area/ruin/bughabitat)
@@ -101,6 +70,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/ruin/bughabitat)
+"gw" = (
+/obj/machinery/door/window/right/directional/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 9
+	},
+/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "hk" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -171,6 +148,25 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
+"pc" = (
+/obj/structure/table/rolling,
+/obj/item/petri_dish/random,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"pL" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"qS" = (
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "qV" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/wallframe/camera,
@@ -199,12 +195,15 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
-"sK" = (
-/obj/structure/tank_holder/oxygen,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "tI" = (
 /obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"uB" = (
+/mob/living/basic/butterfly,
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "va" = (
@@ -216,6 +215,13 @@
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 10
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"xq" = (
+/mob/living/basic/butterfly,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
 	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
@@ -231,15 +237,7 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"zJ" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 1
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"AH" = (
+"zz" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -248,17 +246,19 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"zJ" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "AL" = (
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
 "Bs" = (
 /turf/closed/wall/ice,
-/area/ruin/bughabitat)
-"BK" = (
-/obj/structure/table/rolling,
-/obj/item/petri_dish/random,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Cb" = (
 /turf/open/floor/plastic,
@@ -325,6 +325,14 @@
 /obj/item/construction/plumbing/research,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"Ly" = (
+/obj/structure/table,
+/obj/item/stack/ducts/fifty{
+	amount = 23
+	},
+/mob/living/basic/butterfly,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "Nv" = (
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron,
@@ -388,14 +396,6 @@
 "VQ" = (
 /obj/item/coin/silver,
 /obj/item/reagent_containers/syringe,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"Xb" = (
-/obj/machinery/door/window/right/directional/north,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 9
-	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Xn" = (
@@ -472,7 +472,7 @@ Xn
 HA
 bu
 ot
-Xb
+gw
 of
 bQ
 wL
@@ -493,7 +493,7 @@ Xt
 zJ
 AL
 AL
-AH
+zz
 HA
 ZT
 QV
@@ -506,12 +506,12 @@ Xn
 Xn
 Qd
 Bs
-cK
+aL
 Ft
 Ea
 aR
 hM
-fJ
+pL
 HA
 RR
 RR
@@ -529,7 +529,7 @@ ri
 zJ
 Qp
 fP
-bG
+xq
 Du
 HU
 Kq
@@ -567,7 +567,7 @@ Tp
 yC
 lj
 hy
-sK
+qS
 IX
 VM
 Bs
@@ -579,7 +579,7 @@ Xn
 Qd
 Bs
 va
-aa
+Ly
 Ku
 sr
 AL
@@ -635,8 +635,8 @@ Qd
 Qd
 Qd
 Bs
-BK
-ad
+pc
+uB
 eM
 ax
 Cv

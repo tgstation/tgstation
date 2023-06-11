@@ -68,7 +68,7 @@
 /atom/movable/screen/light_button/Initialize(mapload)
 	. = ..()
 	layer = loc.layer
-	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(delete_self))
+	RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(delete_self))
 
 /atom/movable/screen/light_button/proc/delete_self(datum/source)
 	SIGNAL_HANDLER

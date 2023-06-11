@@ -62,46 +62,53 @@
 	. = ..()
 	. += status_string()
 
+/obj/item/lightreplacer/pre_attack(atom/target, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+	return do_action(target, user) //if we are attacking a valid target[light, floodlight or turf] stop here
+
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
+	. = ..()
 
 	if(istype(insert, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_to_insert = insert
 		if(uses >= max_uses)
 			to_chat(user, span_warning("[src.name] is full."))
-			return
+			return TRUE
 		else if(glass_to_insert.use(LIGHTBULB_COST))
 			add_uses(GLASS_SHEET_USES)
 			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
-			return
+			return TRUE
 		else
 			to_chat(user, span_warning("You need one sheet of glass to replace lights!"))
 
 	if(istype(insert, /obj/item/shard))
 		if(uses >= max_uses)
 			to_chat(user, span_warning("\The [src] is full."))
-			return
+			return TRUE
 		if(!user.temporarilyRemoveItemFromInventory(insert))
-			return
+			return TRUE
 		add_uses(round(GLASS_SHEET_USES*0.75))
 		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
 		qdel(insert)
-		return
+		return TRUE
 
 	if(istype(insert, /obj/item/light))
 		var/obj/item/light/light_to_insert = insert
 		if(light_to_insert.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				if(!user.temporarilyRemoveItemFromInventory(insert))
-					return
+					return TRUE
 				add_uses(1)
 				qdel(light_to_insert)
 		else
 			if(!user.temporarilyRemoveItemFromInventory(insert))
-				return
+				return TRUE
 			to_chat(user, span_notice("You insert [light_to_insert] into \the [src]."))
 			add_shards(1, user)
 			qdel(light_to_insert)
-		return
+		return TRUE
 
 	if(istype(insert, /obj/item/storage))
 		var/obj/item/storage/storage_to_empty = insert
@@ -127,13 +134,15 @@
 
 		if(!found_lightbulbs)
 			to_chat(user, span_warning("\The [storage_to_empty] contains no bulbs."))
-			return
+			return TRUE
 
 		if(!replaced_something && src.uses == max_uses)
 			to_chat(user, span_warning("\The [src] is full!"))
-			return
+			return TRUE
 
 		to_chat(user, span_notice("You fill \the [src] with lights from \the [storage_to_empty]. " + status_string() + ""))
+		return TRUE
+
 
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
@@ -161,49 +170,76 @@
 		replace_light(target, user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/proc/range_check(atom/destination, mob/user)
-	if(destination.z != user.z)
-		return
-	if(!(destination in view(7, get_turf(user))))
-		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
-		return FALSE
-	else
-		return TRUE
 
-/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!can_use(user))
-		balloon_alert(user, "no more lights!")
-		return
-
-	/**
-	 * return if it has no bluespace capabilities and target is not in proximity OR
-	 * return if it has bluespace capabilities but the target is not in its Line of sight
-	 */
-	if((!proximity && !bluespace_toggle) || (bluespace_toggle && !range_check(target, user)))
-		return
-
+/**
+ * attempts to fix lights, flood lights & lights on a turf
+ * Arguments
+ * * target - the target we are trying to fix
+ * * user - the mob performing this action
+ * returns TRUE if the target was valid[light, floodlight or turf] regardless if any light's were fixed or not
+ */
+/obj/item/lightreplacer/proc/do_action(atom/target, mob/user)
 	// if we are attacking an light fixture then replace it directly
 	if(istype(target, /obj/machinery/light))
 		if(replace_light(target, user) && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
 			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+		return TRUE
+
+	// if we are attacking a floodlight frame finish it
+	if(istype(target, /obj/structure/floodlight_frame))
+		var/obj/structure/floodlight_frame/frame = target
+		if(frame.state == FLOODLIGHT_NEEDS_LIGHTS && Use(user))
+			new /obj/machinery/power/floodlight(frame.loc)
+			if(bluespace_toggle)
+				user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
+			qdel(frame)
+		return TRUE
+
+	//attempt to replace all light sources on the turf
+	if(isturf(target))
+		var/light_replaced = FALSE
+		for(var/atom/target_atom in target)
+			if(replace_light(target_atom, user))
+				light_replaced = TRUE
+		if(light_replaced && bluespace_toggle)
+			user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
+			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+		return TRUE
+
+	return FALSE
+
+/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+
+	// has no bluespace capabilities
+	if(!bluespace_toggle)
+		return
+	// target not in range
+	if(target.z != user.z)
+		return
+	// target not in view
+	if(!(target in view(7, get_turf(user))))
+		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return
 
-	var/light_replaced = FALSE
-	for(var/atom/target_atom in target)
-		if(replace_light(target_atom, user))
-			light_replaced = TRUE
-	if(light_replaced && bluespace_toggle)
-		user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
-		playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+	//replace lights & stuff
+	do_action(target, user)
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
 /obj/item/lightreplacer/proc/Use(mob/user)
+	if(uses <= 0)
+		return FALSE
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	src.add_fingerprint(user)
 	add_uses(-1)
+
+	return TRUE
 
 // Negative numbers will subtract
 /obj/item/lightreplacer/proc/add_uses(amount = 1)
@@ -235,7 +271,7 @@
 		to_chat(user, span_warning("There is a working [target.fitting] already inserted!"))
 		return FALSE
 	//Were all out
-	if(!can_use(user))
+	if(!Use(user))
 		to_chat(user, span_warning("\The [src]'s refill light blinks red."))
 		return FALSE
 
@@ -244,6 +280,7 @@
 		add_shards(1, user)
 		target.status = LIGHT_EMPTY
 		target.update()
+	//create a copy of the light type & copy it's params onto the target
 	var/obj/item/light/old_light = new target.light_type()
 	target.status = old_light.status
 	target.switchcount = old_light.switchcount
@@ -253,15 +290,11 @@
 		target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)
 	target.on = target.has_power()
 	target.update()
+	//clean up
 	qdel(old_light)
-
-	Use(user)
 	to_chat(user, span_notice("You replace \the [target.fitting] with \the [src]."))
-	return TRUE
 
-/obj/item/lightreplacer/proc/can_use(mob/living/user)
-	src.add_fingerprint(user)
-	return uses > 0
+	return TRUE
 
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()

@@ -40,6 +40,11 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
+"an" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
 "ao" = (
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 30
@@ -48,6 +53,11 @@
 /area/shuttle/transport)
 "ap" = (
 /turf/closed/wall,
+/area/shuttle/transport)
+"aq" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/clothing,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
 /obj/structure/chair/comfy/shuttle,
@@ -76,6 +86,11 @@
 /obj/structure/grille/broken,
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"aC" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/wood,
 /area/shuttle/transport)
 "aD" = (
 /turf/open/floor/carpet,
@@ -182,11 +197,10 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"bd" = (
-/obj/item/kirbyplants/dead{
-	desc = "It doesn't look very healthy...";
-	name = "potted plant"
-	},
+"bc" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "be" = (
@@ -223,32 +237,12 @@
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"ff" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/vending_refill/snack,
-/turf/open/floor/wood,
-/area/shuttle/transport)
-"fl" = (
-/obj/machinery/light/warm/directional/west,
-/turf/open/floor/wood,
-/area/shuttle/transport)
-"fs" = (
+"hL" = (
 /obj/machinery/vending/liberationstation,
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ot" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/vending/clothing,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"wm" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"yr" = (
+"jd" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "garbage"
@@ -256,9 +250,15 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/transport)
-"Qd" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/east,
+"op" = (
+/obj/item/kirbyplants/random/dead{
+	desc = "It doesn't look very healthy...";
+	name = "potted plant"
+	},
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"ZS" = (
+/obj/machinery/light/warm/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 
@@ -321,8 +321,8 @@ ac
 af
 bh
 bh
-wm
-ot
+an
+aq
 as
 aB
 as
@@ -337,7 +337,7 @@ bj
 (5,1,1) = {"
 ad
 aM
-fs
+hL
 ak
 ao
 ak
@@ -346,7 +346,7 @@ ak
 ak
 aP
 aX
-yr
+jd
 be
 bh
 bi
@@ -379,7 +379,7 @@ aM
 ar
 au
 au
-fl
+ZS
 au
 au
 aL
@@ -414,11 +414,11 @@ aa
 ap
 ap
 av
-Qd
-Qd
+aC
+aC
 aS
-Qd
-ff
+aC
+bc
 aM
 ad
 aa
@@ -436,7 +436,7 @@ aD
 aD
 aD
 aD
-bd
+op
 ad
 aa
 aa

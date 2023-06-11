@@ -10,6 +10,10 @@
 	/// The master category that contains this category
 	var/datum/log_category/master_category
 
+	/// Flags to apply to our /datum/log_entry's
+	/// See code/__DEFINES/logging/dm
+	var/entry_flags = NONE
+
 	/// If set this config flag is checked to enable this log category
 	var/config_flag
 
@@ -17,7 +21,13 @@
 	var/secret = FALSE
 
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
-	var/internal_formatting = TRUE
+	var/internal_formatting = FALSE
+
+	/// List of log entries for this category
+	var/list/entries = list()
+
+	/// Total number of entries this round so far
+	var/entry_count = 0
 
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
@@ -32,11 +42,15 @@ GENERAL_PROTECT_DATUM(/datum/log_category)
 		timestamp = logger.human_readable_timestamp(),
 		category = category,
 		message = message,
+		flags = entry_flags,
 		data = data,
 		semver_store = semver_store,
 	)
 
 	write_entry(entry)
+	entry_count += 1
+	if(entry_count <= CONFIG_MAX_CACHED_LOG_ENTRIES)
+		entries += entry
 
 /// Allows for category specific file splitting. Needs to accept a null entry for the default file.
 /// If master_category it will always return the output of master_category.get_output_file(entry)

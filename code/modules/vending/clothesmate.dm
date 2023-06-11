@@ -98,6 +98,7 @@
 				/obj/item/clothing/suit/jacket/puffer = 2,
 				/obj/item/clothing/suit/jacket/letterman = 2,
 				/obj/item/clothing/suit/jacket/letterman_red = 2,
+				/obj/item/clothing/suit/costume/hawaiian = 4,
 				/obj/item/clothing/suit/costume/poncho = 1,
 				/obj/item/clothing/under/dress/skirt = 2,
 				/obj/item/clothing/under/suit/white/skirt = 2,

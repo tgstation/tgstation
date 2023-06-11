@@ -1,10 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ac" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron,
+"ad" = (
+/obj/machinery/airalarm/directional/west,
+/obj/structure/closet/crate/secure/freezer/commsagent,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ae" = (
 /obj/item/wallframe/button{
@@ -18,11 +17,29 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
+"aO" = (
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/cable,
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "aP" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
+"aQ" = (
+/obj/structure/table,
+/obj/item/paper/fluff/ruins/listeningstation/reports/september,
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2
+	},
+/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "aR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -48,11 +65,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"bB" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/cable,
-/obj/machinery/light/small/red/directional/east,
-/turf/open/floor/plating,
+"bC" = (
+/obj/structure/table/wood,
+/obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/obj/item/crowbar/red,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
@@ -127,14 +146,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"eS" = (
-/obj/structure/table/wood,
-/obj/item/paper/fluff/ruins/listeningstation/reports/november,
-/obj/item/crowbar/red,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/listeningstation)
 "eW" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
@@ -161,19 +172,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
-"gr" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/listeningstation)
-"gw" = (
-/obj/machinery/airalarm/directional/north,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/listeningstation)
 "gJ" = (
 /obj/structure/table/wood,
 /obj/item/seeds/potato,
@@ -191,37 +189,10 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"ht" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/template_noop,
-/area/ruin/space)
 "hK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/listeningstation)
-"iH" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/listeningstation)
-"iU" = (
-/obj/structure/toilet{
-	pixel_y = 18
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/soap/syndie,
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_x = -32
-	},
-/obj/machinery/light/very_dim/directional/east,
-/turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "jr" = (
 /obj/machinery/power/port_gen/pacman{
@@ -270,6 +241,16 @@
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/listeningstation)
+"lO" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "nG" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/table,
@@ -323,16 +304,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"rq" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "rr" = (
 /obj/machinery/door/airlock{
 	name = "Emergency Backup"
@@ -364,6 +335,30 @@
 "tl" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
+/area/ruin/space)
+"tm" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
+/obj/item/paper/monitorkey,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/listeningstation)
+"uI" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
+"vt" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
 /area/ruin/space)
 "vC" = (
 /obj/structure/cable,
@@ -415,6 +410,12 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"xP" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "xY" = (
 /obj/structure/sink/directional/west,
 /obj/machinery/shower/directional/north,
@@ -464,14 +465,6 @@
 "zp" = (
 /turf/closed/wall,
 /area/ruin/space)
-"zr" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/template_noop,
-/area/ruin/space)
 "zv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -494,22 +487,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/listeningstation)
-"Aa" = (
-/obj/machinery/airalarm/directional/west,
-/obj/structure/closet/crate/secure/freezer/commsagent,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"Af" = (
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/computer/message_monitor{
-	dir = 8
-	},
-/obj/item/paper/monitorkey,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "AP" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -626,12 +603,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
-"FN" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/small,
+"FC" = (
+/obj/structure/toilet{
+	pixel_y = 18
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/soap/syndie,
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/west,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
+"FU" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "FV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -736,6 +727,13 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"MA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "MS" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
@@ -792,6 +790,13 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
+"Or" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "OS" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -809,18 +814,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"Rw" = (
-/obj/structure/table,
-/obj/item/paper/fluff/ruins/listeningstation/reports/september,
-/obj/item/storage/box/donkpockets{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2
-	},
-/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "RK" = (
 /obj/structure/cable,
@@ -890,6 +883,11 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"Vq" = (
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
 "Vz" = (
 /obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/plating,
@@ -933,6 +931,14 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"WG" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
+/area/ruin/space)
 "WW" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/r_wall,
@@ -953,16 +959,6 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Yz" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space)
-"YN" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "YV" = (
@@ -1046,9 +1042,9 @@ vI
 vI
 vI
 zp
-rq
+lO
 rE
-YN
+FU
 zp
 vI
 AV
@@ -1153,7 +1149,7 @@ zp
 vI
 JB
 gJ
-eS
+bC
 Oo
 JB
 vI
@@ -1267,12 +1263,12 @@ vI
 vI
 vI
 JB
-ac
+Vq
 yB
 zZ
 UI
 qD
-bB
+aO
 aR
 JB
 vI
@@ -1292,7 +1288,7 @@ vI
 vI
 vI
 JB
-gw
+uI
 Eb
 xn
 kG
@@ -1325,7 +1321,7 @@ JB
 lE
 MS
 It
-Aa
+ad
 by
 cj
 db
@@ -1337,7 +1333,7 @@ AV
 "}
 (15,1,1) = {"
 AV
-ht
+WG
 zp
 NY
 hm
@@ -1373,7 +1369,7 @@ ta
 Dv
 WD
 rG
-iH
+Or
 SB
 FV
 ca
@@ -1420,10 +1416,10 @@ JB
 xp
 SK
 lk
-Af
+tm
 TK
 rG
-gr
+MA
 wm
 Sz
 VH
@@ -1454,7 +1450,7 @@ Yf
 FV
 lu
 db
-FN
+xP
 JB
 vI
 vI
@@ -1479,7 +1475,7 @@ BJ
 Lq
 wm
 yH
-Rw
+aQ
 JB
 vI
 AV
@@ -1525,7 +1521,7 @@ kK
 YV
 IG
 rG
-iU
+FC
 KG
 xY
 JB
@@ -1597,7 +1593,7 @@ AV
 AV
 AV
 AV
-zr
+vt
 AV
 AV
 AV

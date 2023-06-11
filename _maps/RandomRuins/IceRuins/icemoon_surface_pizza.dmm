@@ -18,18 +18,6 @@
 	dir = 5
 	},
 /area/ruin/pizzeria)
-"bf" = (
-/obj/structure/table,
-/obj/item/plate/small,
-/obj/structure/sign/poster/official/moth_meth{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/ruin/pizzeria/kitchen)
 "bV" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 4
@@ -160,6 +148,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
+"fV" = (
+/obj/structure/sign/poster/contraband/syndiemoth/directional/east,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "gm" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -169,6 +161,13 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/pizzeria)
+"gs" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "gS" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
@@ -177,6 +176,22 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/ruin/pizzeria)
+"gV" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 8
+	},
+/obj/item/trash/can,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -208,17 +223,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on,
 /turf/open/floor/plating,
 /area/ruin/pizzeria/kitchen)
-"ip" = (
-/obj/structure/cable,
-/obj/structure/sign/departments/restroom/directional/north,
+"ia" = (
+/obj/effect/turf_decal/siding/blue,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/dark/side{
-	dir = 5
-	},
-/area/ruin/pizzeria)
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/pizzeria/kitchen)
 "ir" = (
 /obj/structure/chair{
 	dir = 1
@@ -239,6 +251,14 @@
 "iK" = (
 /turf/closed/wall,
 /area/ruin/pizzeria/kitchen)
+"iL" = (
+/obj/item/wrench,
+/obj/item/screwdriver,
+/obj/item/crowbar/red,
+/obj/structure/rack,
+/obj/structure/sign/poster/official/moth_delam/directional/north,
+/turf/open/floor/plating,
+/area/ruin/pizzeria)
 "iV" = (
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
@@ -269,6 +289,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
+"jY" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/ruin/pizzeria)
 "kr" = (
 /obj/structure/table,
 /obj/item/trash/waffles,
@@ -322,29 +355,6 @@
 	dir = 10
 	},
 /area/ruin/pizzeria)
-"mL" = (
-/obj/structure/chair/sofa/right/brown{
-	dir = 8
-	},
-/obj/item/trash/can,
-/obj/effect/turf_decal/siding/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark/side{
-	dir = 10
-	},
-/area/ruin/pizzeria)
-"mN" = (
-/obj/structure/flora/bush/pointy/style_random,
-/obj/structure/sign/poster/official/moth_piping{
-	pixel_y = 32
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "nr" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -353,19 +363,6 @@
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"pI" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/decal/cleanable/ash,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/dark/side{
-	dir = 5
-	},
-/area/ruin/pizzeria)
 "qw" = (
 /obj/effect/decal/cleanable/food/salt,
 /obj/item/chair/stool/bar,
@@ -395,17 +392,6 @@
 "qR" = (
 /turf/template_noop,
 /area/template_noop)
-"rh" = (
-/obj/structure/chair,
-/obj/machinery/newscaster/directional/east,
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/light/small/red/directional/east,
-/turf/open/floor/iron/dark/side{
-	dir = 10
-	},
-/area/ruin/pizzeria)
 "rT" = (
 /obj/machinery/door/airlock{
 	name = "Restrooms"
@@ -431,6 +417,11 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
+"rZ" = (
+/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/sign/poster/official/moth_piping/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "se" = (
 /obj/structure/toilet{
 	dir = 8
@@ -439,16 +430,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
-"sl" = (
-/obj/item/wrench,
-/obj/item/screwdriver,
-/obj/item/crowbar/red,
-/obj/structure/rack,
-/obj/structure/sign/poster/official/moth_delam{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/ruin/pizzeria)
 "sY" = (
 /obj/effect/turf_decal/trimline/white/filled/shrink_cw{
 	dir = 8
@@ -456,6 +437,17 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/ruin/pizzeria)
+"te" = (
+/obj/structure/chair,
+/obj/machinery/newscaster/directional/east,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -482,20 +474,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
-"uZ" = (
-/obj/effect/turf_decal/siding/blue,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/light/warm/directional/west,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/pizzeria/kitchen)
-"vf" = (
-/obj/structure/sign/poster/contraband/syndiemoth{
-	pixel_x = 32
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "vO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -566,6 +544,15 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
+"yS" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/pizzeria/kitchen)
 "zO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
@@ -601,16 +588,6 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/ruin/pizzeria)
-"Aq" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/glass/colocup{
-	pixel_y = 11
-	},
-/obj/effect/turf_decal/tile/yellow/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/checker,
 /area/ruin/pizzeria)
 "Ay" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
@@ -730,16 +707,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/pizzeria)
-"EQ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/light/warm/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 10
-	},
 /area/ruin/pizzeria)
 "EU" = (
 /obj/structure/table/reinforced,
@@ -876,13 +843,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
-"JP" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "KL" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -1095,6 +1055,16 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"RV" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/colocup{
+	pixel_y = 11
+	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
+/area/ruin/pizzeria)
 "RW" = (
 /obj/item/trash/boritos,
 /obj/effect/turf_decal/tile/red/opposingcorners{
@@ -1108,10 +1078,41 @@
 /obj/structure/fence,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"Sb" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/ruin/pizzeria)
+"Sc" = (
+/obj/structure/cable,
+/obj/structure/sign/departments/restroom/directional/north,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/ruin/pizzeria)
 "Sm" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"So" = (
+/obj/structure/table,
+/obj/item/plate/small,
+/obj/structure/sign/poster/official/moth_meth/directional/north,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/pizzeria/kitchen)
 "Sw" = (
 /obj/structure/chair/sofa/middle/brown,
 /obj/machinery/light/small/red/directional/north,
@@ -1328,15 +1329,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
-"ZA" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/ruin/pizzeria/kitchen)
 "ZS" = (
 /obj/vehicle/ridden/scooter/skateboard,
 /obj/effect/turf_decal/delivery,
@@ -1446,7 +1438,7 @@ TK
 TK
 Jv
 iK
-bf
+So
 kG
 kG
 kG
@@ -1454,7 +1446,7 @@ fa
 kG
 kG
 kG
-uZ
+ia
 EU
 Eu
 RF
@@ -1502,12 +1494,12 @@ iK
 tl
 wT
 XS
-Aq
+RV
 NL
 NL
 wS
 NL
-JP
+gs
 TK
 qR
 "}
@@ -1519,7 +1511,7 @@ Jv
 iK
 iK
 iK
-ZA
+yS
 jX
 CZ
 iK
@@ -1539,7 +1531,7 @@ Jv
 qR
 qR
 qR
-vf
+fV
 Qw
 hS
 IL
@@ -1571,7 +1563,7 @@ Ny
 yP
 jb
 iK
-EQ
+Sb
 Ay
 JG
 aP
@@ -1579,7 +1571,7 @@ Dw
 NL
 wS
 NL
-mN
+rZ
 TK
 qR
 "}
@@ -1588,14 +1580,14 @@ qR
 qR
 qR
 NL
-sl
+iL
 AP
 iK
 iK
 iK
 rU
 iK
-ip
+Sc
 gS
 kr
 ir
@@ -1643,12 +1635,12 @@ cl
 ji
 uU
 NL
-pI
+jY
 qF
 Qm
 az
 KU
-mL
+gV
 wd
 wS
 TK
@@ -1742,7 +1734,7 @@ cH
 VK
 RW
 iV
-rh
+te
 yn
 wS
 TK
