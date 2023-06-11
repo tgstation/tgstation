@@ -262,3 +262,9 @@
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
 	mix_sound = 'sound/weapons/taser.ogg'
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/martian_batter
+	results = list(/datum/reagent/consumable/martian_batter = 20)
+	required_reagents = list(/datum/reagent/consumable/flour = 10, /datum/reagent/consumable/nutriment/soup/dashi = 10)
+	mix_message = "A smooth batter forms."
+	reaction_flags = REACTION_INSTANT

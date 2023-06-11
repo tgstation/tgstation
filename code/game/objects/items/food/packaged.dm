@@ -163,11 +163,29 @@
 	tastes = list("meat" = 7, "tin" = 1)
 	foodtypes = MEAT
 
+/obj/item/food/canned/chap/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/chapslice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+
 /obj/item/food/chapslice
 	name = "slice of chap"
 	desc = "A thin slice of chap. Useful for frying, or making sandwiches."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "chapslice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 3
+	)
+	tastes = list("meat" = 1)
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/chapslice/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_chapslice, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
+
+/obj/item/food/grilled_chapslice
+	name = "grilled slice of chap"
+	desc = "A greasy hot slice of chap. Forms a good part of a balanced meal."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "chapslice_grilled"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)

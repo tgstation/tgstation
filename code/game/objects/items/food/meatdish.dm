@@ -90,7 +90,7 @@
 /obj/item/food/fishmeat/octopus
 	name = "octopus tentacle"
 	desc = "A large tentacle from an octopus."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "octopus_fillet"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 

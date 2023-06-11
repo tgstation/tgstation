@@ -73,6 +73,22 @@
 	name = "[design] kamaboko"
 	icon_state = "kamaboko_[design]"
 
+/obj/item/food/kamaboko/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/kamaboko_slice, 4, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+
+/obj/item/food/kamaboko_slice
+	name = "kamaboko slice"
+	desc = "A slice of fishcake. Goes good in ramen."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "kamaboko_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("fish" = 1)
+	foodtypes = SEAFOOD
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/food/sambal
 	name = "sambal"
 	desc = "A spice paste from Indonesia, used widely in cooking throughout South East Asia."
@@ -307,6 +323,10 @@
 	tastes = list("noodles" = 1, "soy sauce" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/salad/simple_fried_noodles/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 // Curry
 /obj/item/food/salad/setagaya_curry //let me explain...
@@ -630,97 +650,6 @@
 	foodtypes = MEAT | VEGETABLES | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
-// Soups
-/obj/item/food/soup/shoyu_ramen
-	name = "shōyu ramen"
-	desc = "A soy-sauce based ramen, with noodles, fishcake, barbecued meat and a boiled egg."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "shoyu_ramen"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 6)
-	tastes = list("egg" = 1, "fish" = 1, "noodles" = 1, "meat" = 1, "broth" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES | SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/gyuramen
-	name = "gyuramen miy käzu"
-	desc = "A rich beef and onion ramen with cheese- blending several cultural influences seemlessly into one tasty dish."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "gyuramen"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 6)
-	tastes = list("beef broth" = 1, "onion" = 1, "cheese" = 1)
-	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/new_osaka_sunrise
-	name = "\improper New Osaka Sunrise miso soup"
-	desc = "A bright, flavourful miso soup with tofu that commonly forms part of a traditional Martian breakfast, at least in the capital."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "new_osaka_sunrise"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("miso" = 1, "tofu" = 1, "onion" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES | BREAKFAST
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/satsuma_black
-	name = "\improper Satsuma Black ramen"
-	desc = "A rich, heavy seafood and noodle soup from Mars, employing squid ink to give a strong taste of the sea."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "satsuma_black"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("seafood" = 1, "tofu" = 1, "noodles" = 1)
-	foodtypes = SEAFOOD | GRAIN | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/dragon_ramen
-	name = "\improper Dragon Style ramen"
-	desc = "For the ramen fan who hates their tastebuds and digestive tract. Traditionally made with seven different chilis, although after two or so the point sorta gets lost."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "dragon_ramen"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("meat" = 1, "liquid hot magma" = 1, "noodles" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/hong_kong_borscht
-	name = "\improper Hong Kong borscht"
-	desc = "Also known as luo song tang or Russian soup, this dish bears little to no resemblance to Eastern European borscht- indeed, it's a tomato-based soup with no beets in sight."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "hong_kong_borscht"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("tomato" = 1, "meat" = 1, "cabbage" = 1)
-	foodtypes = MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/huotui_tong_fen
-	name = "huǒtuǐ tōng fěn"
-	desc = "A favourite from Hong Kong's Cha Chaan Tengs, this macaroni soup came to Mars with Cantonese settlers under Cybersun Industries, and has become as much of a breakfast staple there as it is in its homeland."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "huotui_tong_fen"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("cream" = 1, "chicken" = 1, "pasta" = 1, "ham" = 1)
-	foodtypes = MEAT | GRAIN | DAIRY | BREAKFAST
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/foxs_prize_soup
-	name = "fox's prize soup"
-	desc = "Originally based on the Chinese classic of egg-drop soup, fox's prize soup iterated on the concept via the addition of aburaage and dashi, making a dish that would truly appeal to any hungry fox."
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "foxs_prize_soup"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("egg" = 1, "chicken" = 1, "fried tofu" = 1, "umami broth" = 1)
-	foodtypes = MEAT | VEGETABLES | SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/soup/secret_noodle_soup
-	name = "secret noodle soup"
-	desc = "Made to a secret family recipe (that's in several cookbooks). What is the secret ingredient, you ask? Well, let's just say it could be anything..." //what does the future hold for duff? let's just say we've got a few ideas up our sleeves...
-	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "secret_noodle_soup"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
-	tastes = list("noodles" = 1, "chicken" = 1, "aromatic broth" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/food/salad/agedashi_tofu
 	name = "agedashi tofu"
 	desc = "Crispy fried tofu, served in a tasty umami broth. Frequently served at izakayas."
@@ -819,7 +748,7 @@
 	icon_state = "eigamudo_curry"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
 	tastes = list("grit" = 1, "slime" = 1, "gristle" = 1, "rice" = 1, "Mystery Food X" = 1)
-	foodtypes = GROSS | GRAIN
+	foodtypes = GROSS | GRAIN | TOXIC
 	w_class = WEIGHT_CLASS_SMALL
 
 // Entrees
@@ -1015,6 +944,12 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/raw_ballpark_pretzel/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/ballpark_pretzel, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/obj/item/food/raw_ballpark_pretzel/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/ballpark_pretzel, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/ballpark_pretzel
 	name = "ballpark pretzel"
 	desc = "A classic German bread, transformed by the hand of American imperialism into a game-day snack, and then carried to the Red Planet on the backs of Japanese settlers. How multicultural."
@@ -1034,6 +969,9 @@
 	tastes = list("raw chicken" = 7, "salmonella" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/kebab/raw_ballpark_tsukune/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/kebab/ballpark_tsukune, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/kebab/ballpark_tsukune
 	name = "ballpark tsukune"
@@ -1056,13 +994,31 @@
 /obj/item/food/pickled_voltvine
 	name = "pickled voltvine"
 	desc = "A traditional dish from Sprout (where it is known as hinu'sashuruhk), pickled voltvine has taken on a new identity amongst the pickle masters of Mars, earning a seat at the holy pickle pantheon alongside pickled ginger and kimchi (once appropriately discharged, at least)."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "pickled_voltvine"
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("sour radish" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 // 24-Volt Energy
 /obj/item/food/volt_fish
 	name = "24-volt fish"
 	desc = "Some may question the 24-volt fish. After all, fish poached in electric-blue super-sour energy drink looks awful. And, indeed, tastes awful. So why do the Martian ethereals like it, then?" //beats the hell out of me
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "volt_fish"
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("fish" = 1, "sour pear" = 1)
+	foodtypes = SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
 
 // Sprout Bowl
 /obj/item/food/salad/sprout_bowl
 	name = "\improper Sprout bowl"
 	desc = "Named for the Ethereal homeworld, this rice-based bowl draws on the donburi tradition, but rejects typical donburi toppings, instead using sashimi grade fish and pickled voltvine."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "sprout_bowl"
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("fish" = 1, "sour radish" = 1, "rice" = 1)
+	foodtypes = SEAFOOD | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_SMALL

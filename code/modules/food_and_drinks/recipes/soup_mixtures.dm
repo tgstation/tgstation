@@ -1758,7 +1758,7 @@
 // Martian Food
 // Boiled Noodles
 /datum/chemical_reaction/food/soup/boilednoodles
-	required_other = list(
+	required_ingredients = list(
 		/obj/item/food/spaghetti/rawnoodles = 1
 	)
 	required_catalysts = list(
@@ -1806,8 +1806,7 @@
 	required_reagents = list(
 		/datum/reagent/consumable/soysauce = 10,
 		/datum/reagent/consumable/ethanol/sake = 10,
-		/datum/reagent/consumable/mirin = 10,
-		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/honey = 5,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 20,
@@ -1857,7 +1856,7 @@
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 15,
 	)
 	required_ingredients = list(
-		/obj/item/food/boilednoodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/kamaboko_slice = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/boiledegg = 1,
@@ -1884,11 +1883,11 @@
 
 /datum/chemical_reaction/food/soup/gyuramen
 	required_reagents = list(
-		/datum/reagent/consumable/nutriment/soup/dashi = 15,
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
 		/datum/reagent/consumable/soysauce = 5,
 	)
 	required_ingredients = list(
-		/obj/item/food/boilednoodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/onion_slice = 2,
 		/obj/item/food/meat/cutlet = 1,
@@ -1946,12 +1945,12 @@
 /datum/chemical_reaction/food/soup/satsuma_black
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/soup/dashi = 20,
-		/datum/reagent/consumable/squid_ink = 15,
 	)
 	required_ingredients = list(
-		/obj/item/food/boilednoodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/seaweedsheet = 1,
 		/obj/item/food/tofu = 1,
+		/obj/item/food/canned/squid_ink = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/satsuma_black = 30,
@@ -1976,11 +1975,11 @@
 /datum/chemical_reaction/food/soup/dragon_ramen
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/soup/dashi = 20,
-		/datum/reagent/consumable/nutriment/soup/teriyaki = 15,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 10,
 		/datum/reagent/consumable/red_bay = 5,
 	)
 	required_ingredients = list(
-		/obj/item/food/boilednoodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/grown/ghost_chili = 2,
 		/obj/item/food/kamaboko_slice = 1,
 		/obj/item/food/boiledegg = 1,
@@ -2132,9 +2131,24 @@
 	required_ingredients = list(
 		/obj/item/food/canned/beans = 1,
 		/obj/item/food/spaghetti/rawnoodles = 1,
+		/obj/item/food/sausage/american = 1,
+		/obj/item/food/chapslice = 2,
+		/obj/item/food/kimchi
 	)
 	results = list(
-		/datum/reagent/consumable/nutriment/soup/secret_noodle_soup = 30,
+		/datum/reagent/consumable/nutriment/soup/budae_jjigae = 30,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	percentage_of_nutriment_converted = 0.2
+
+// 24-Volt Fish
+// Simply poach the fish in boiling energy drink, easy as
+/datum/chemical_reaction/food/soup/volt_fish
+	required_reagents = list(
+		/datum/reagent/consumable/volt_energy = 15,
+	)
+	required_ingredients = list(
+		/obj/item/food/fishmeat/carp = 1
+	)
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/volt_fish

@@ -352,6 +352,23 @@
 	list_reagents = list(/datum/reagent/consumable/dashi_concentrate = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/coconut_milk
+	name = "coconut milk"
+	desc = "It's coconut milk. Toasty!"
+	icon_state = "coconut_milk"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/coconut_milk = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/grounding_solution
+	name = "grounding solution"
+	desc = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	icon_state = "grounding_solution"
+	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer

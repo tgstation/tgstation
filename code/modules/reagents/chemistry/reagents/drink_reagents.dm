@@ -1704,3 +1704,41 @@
 	desc = "The essence of the tropics, contained safely within a glass."
 	icon = 'icons/obj/drinks/drinks.dmi'
 	icon_state = "glass_white"
+
+/datum/reagent/consumable/melon_soda
+	name = "Melon Soda"
+	description = "A neon green hit of nostalgia."
+	color = "#6FEB48"
+	taste_description = "fizzy melon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/melon_soda
+	required_drink_type = /datum/reagent/consumable/melon_soda
+	name = "glass of melon soda"
+	desc = "As enjoyed by Japanese children and 30-something Japan enthusiasts."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "melon_soda"
+
+/datum/reagent/consumable/volt_energy
+	name = "24-Volt Energy"
+	description = "An artificially coloured and flavoured electric energy drink, in lanternfruit flavour. Made for ethereals, by ethereals."
+	color = "#99E550"
+	taste_description = "sour pear"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/volt_energy
+	required_drink_type = /datum/reagent/consumable/volt_energy
+	name = "glass of 24-Volt Energy"
+	desc = "It's sharp, it's sour, it's electrifying!"
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "volt_energy"
+
+/datum/reagent/consumable/volt_energy/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 3)

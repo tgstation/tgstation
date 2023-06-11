@@ -141,13 +141,12 @@
 /datum/crafting_recipe/food/bulgogi_noodles
 	name = "Bulgogi noodles"
 	reqs = list(
-		/obj/item/food/noodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/grown/apple = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/onion_slice = 1,
-		/datum/reagent/consumable/soysauce = 3,
-		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/teriyaki = 4,
 	)
 	result = /obj/item/food/salad/bibimbap
 	category = CAT_MARTIAN
@@ -155,7 +154,7 @@
 /datum/crafting_recipe/food/yakisoba_katsu
 	name = "Yakisoba katsu"
 	reqs = list(
-		/obj/item/food/noodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/onion_slice = 1,
@@ -168,7 +167,7 @@
 /datum/crafting_recipe/food/martian_fried_noodles
 	name = "Martian fried noodles"
 	reqs = list(
-		/obj/item/food/noodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/obj/item/food/peanuts/salted = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/onion_slice = 1,
@@ -182,7 +181,7 @@
 /datum/crafting_recipe/food/simple_fried_noodles
 	name = "Simple fried noodles"
 	reqs = list(
-		/obj/item/food/noodles = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
 		/datum/reagent/consumable/soysauce = 3,
 	)
 	result = /obj/item/food/salad/martian_fried_noodles
@@ -216,8 +215,7 @@
 		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/meat/bacon = 1,
 		/obj/item/food/pineappleslice = 1,
-		/datum/reagent/consumable/soysauce = 2,
-		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 4,
 	)
 	result = /obj/item/food/burger/big_blue
 	category = CAT_MARTIAN
@@ -298,7 +296,7 @@
 	name = "Russian takoyaki"
 	reqs = list(
 		/obj/item/food/fishmeat/octopus = 1,
-		/obj/item/food/ghost_chili = 1,
+		/obj/item/food/grown/ghost_chili = 1,
 		/datum/reagent/consumable/martian_batter = 6,
 		/datum/reagent/consumable/capsaicin = 3,
 	)
@@ -442,12 +440,12 @@
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/little_hawaii_hotdog
-	name = "Ti hoeh koe"
+	name = "Little Hawaii hotdog"
 	reqs = list(
 		/obj/item/food/hotdog = 1,
 		/obj/item/food/pineappleslice = 1,
 		/obj/item/food/onion_slice = 1,
-		/datum/reagent/consumable/teriyaki = 3,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 3,
 	)
 	result = /obj/item/food/little_hawaii_hotdog
 	category = CAT_MARTIAN
@@ -483,4 +481,307 @@
 		/datum/reagent/consumable/curry_powder = 3,
 	)
 	result = /obj/item/food/salad/po_kok_gai
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/huoxing_tofu
+	name = "Huoxing tofu"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/obj/item/food/raw_meatball = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+	)
+	result = /obj/item/food/salad/huoxing_tofu
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/feizhou_ji
+	name = "Fēizhōu jī"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/datum/reagent/consumable/vinegar = 5,
+	)
+	result = /obj/item/food/feizhou_ji
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/galinha_de_cabidela
+	name = "Galinha de cabidela"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/uncooked_rice = 1,
+		/datum/reagent/blood = 5,
+	)
+	result = /obj/item/food/salad/galinha_de_cabidela
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/katsu_curry
+	name = "Katsu curry"
+	reqs = list(
+		/obj/item/food/katsu_fillet = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/nutriment/soup/curry_sauce = 5,
+	)
+	result = /obj/item/food/salad/katsu_curry
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/beef_bowl
+	name = "Beef bowl"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/onion_slice = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/nutriment/soup/dashi = 5,
+	)
+	result = /obj/item/food/salad/beef_bowl
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/salt_chilli_bowl
+	name = "Salt n' chilli octopus bowl"
+	reqs = list(
+		/obj/item/food/grilled_octopus = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/nutriment/soup/curry_sauce = 5,
+	)
+	result = /obj/item/food/salad/salt_chilli_bowl
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/kansai_bowl
+	name = "Kansai bowl"
+	reqs = list(
+		/obj/item/food/kamaboko_slice = 2,
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/nutriment/soup/dashi = 5,
+	)
+	result = /obj/item/food/salad/kansai_bowl
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/eigamudo_curry
+	name = "Eigamudo curry"
+	reqs = list(
+		/obj/item/food/grown/olive = 1,
+		/obj/item/food/kimchi = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/cafe_latte = 5,
+	)
+	result = /obj/item/food/salad/eigamudo_curry
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/cilbir
+	name = "Çilbir"
+	reqs = list(
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/grown/chili = 1,
+		/datum/reagent/consumable/yoghurt = 5,
+		/datum/reagent/consumable/quality_oil = 2,
+	)
+	result = /obj/item/food/cilbir
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/peking_duck_crepes
+	name = "Peking duck crepes a l'orange"
+	reqs = list(
+		/obj/item/food/pancakes = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/grown/citrus/orange = 1,
+		/datum/reagent/consumable/ethanol/cognac = 2,
+		/datum/reagent/consumable/quality_oil = 2,
+	)
+	result = /obj/item/food/peking_duck_crepes
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/vulgaris_spekkoek
+	name = "Vulgaris spekkoek"
+	reqs = list(
+		/obj/item/food/cake = 1,
+		/obj/item/food/grown/ambrosia/vulgaris = 1,
+		/obj/item/food/butter = 1,
+	)
+	result = /obj/item/food/cake/spekkoek
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/pineapple_foster
+	name = "Pineapple foster"
+	reqs = list(
+		/obj/item/food/pineappleslice = 1,
+		/datum/reagent/consumable/caramel = 2,
+		/obj/item/food/icecream = 1,
+		/datum/reagent/consumable/ethanol/rum = 2,
+	)
+	result = /obj/item/food/salad/pineapple_foster
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/pastel_de_nata
+	name = "Pastel de nata"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/grown/vanillapod = 1,
+		/obj/item/food/egg = 1,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/food/pastel_de_nata
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/boh_loh_yah
+	name = "Boh loh yah"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/butter = 1,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/boh_loh_yah
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/banana_fritter
+	name = "Banana fritter"
+	reqs = list(
+		/obj/item/food/grown/banana = 1,
+		/datum/reagent/consumable/martian_batter = 2
+	)
+	result = /obj/item/food/banana_fritter
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/pineapple_fritter
+	name = "Pineapple fritter"
+	reqs = list(
+		/obj/item/food/pineappleslice = 1,
+		/datum/reagent/consumable/martian_batter = 2
+	)
+	result = /obj/item/food/pineapple_fritter
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/kasei_dango
+	name = "Kasei dango"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/rice = 5,
+		/datum/reagent/consumable/orangejuice = 2,
+		/datum/reagent/consumable/grenadine = 2,
+	)
+	result = /obj/item/food/kebab/kasei_dango
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/pb_ice_cream_mochi
+	name = "Peanut-butter ice cream mochi"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/rice = 5,
+		/datum/reagent/consumable/peanut_butter = 2,
+		/obj/item/food/icecream = 1,
+	)
+	result = /obj/item/food/pb_ice_cream_mochi
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/frozen_pineapple_pop
+	name = "Frozen pineapple pop"
+	reqs = list(
+		/obj/item/food/pineappleslice = 1,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/popsicle_stick = 1,
+	)
+	result = /obj/item/food/popsicle/pineapple_pop
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/sea_salt_pop
+	name = "Sea-salt ice cream bar"
+	reqs = list(
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/salt = 3,
+		/obj/item/popsicle_stick = 1,
+	)
+	result = /obj/item/food/popsicle/sea_salt
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/berry_topsicle
+	name = "Berry topsicle"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/datum/reagent/consumable/berryjuice = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/popsicle_stick = 1,
+	)
+	result = /obj/item/food/popsicle/topsicle
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/banana_topsicle
+	name = "Banana topsicle"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/datum/reagent/consumable/banana = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/popsicle_stick = 1,
+	)
+	result = /obj/item/food/popsicle/topsicle/banana
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/berry_topsicle
+	name = "Pineapple topsicle"
+	reqs = list(
+		/obj/item/food/tofu = 1,
+		/datum/reagent/consumable/pineapplejuice = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/popsicle_stick = 1,
+	)
+	result = /obj/item/food/popsicle/topsicle/pineapple
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/plasma_dog_supreme
+	name = "Plasma Dog Supreme"
+	reqs = list(
+		/obj/item/food/hotdog = 1,
+		/obj/item/food/pineappleslice = 1,
+		/obj/item/food/sambal = 1,
+		/obj/item/food/onion_slice = 1,
+	)
+	result = /obj/item/food/plasma_dog_supreme
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/frickles
+	name = "Frickles"
+	reqs = list(
+		/obj/item/food/pickle = 1,
+		/datum/reagent/consumable/martian_batter = 2,
+		/datum/reagent/consumable/red_bay = 1,
+	)
+	result = /obj/item/food/frickles
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/raw_ballpark_pretzel
+	name = "Raw ballpark pretzel"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/datum/reagent/consumable/salt = 2,
+	)
+	result = /obj/item/food/raw_ballpark_pretzel
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/raw_ballpark_tsukune
+	name = "Raw ballpark tsukune"
+	reqs = list(
+		/obj/item/food/raw_meatball/chicken = 1,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 2,
+	)
+	result = /obj/item/food/kebab/raw_ballpark_tsukune
+	category = CAT_MARTIAN
+
+/datum/crafting_recipe/food/sprout_bowl
+	name = "Sprout bowl"
+	reqs = list(
+		/obj/item/food/pickled_voltvine = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/boiledrice = 1,
+		/datum/reagent/consumable/nutriment/soup/dashi = 2,
+	)
+	result = /obj/item/food/salad/sprout_bowl
 	category = CAT_MARTIAN

@@ -619,6 +619,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	name = "\improper Shok-Roks - Stormcloud Candy flavour"
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Stormcloud Candy- like cotton candy, but electric!"
 	icon_state = "shok_roks_candy"
+	trash_type = /obj/item/trash/shok_roks
 	food_reagents = list(
 		/datum/reagent/consumable/liquidelectricity/enriched = 2,
 		/datum/reagent/consumable/sugar = 3
@@ -629,22 +630,26 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	name = "\improper Shok-Roks - Cirrus Citrus flavour"
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Cirrus Citrus- all the citrus flavour, none of the real citrus extract."
 	icon_state = "shok_roks_citrus"
+	trash_type = /obj/item/trash/shok_roks/citrus
 	tastes = list("citrus" = 1, "lightning" = 1)
 
 /obj/item/food/shok_roks/berry
 	name = "\improper Shok-Roks - Berry Storm flavour"
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with non-descript sour berry flavour!"
 	icon_state = "shok_roks_berry"
+	trash_type = /obj/item/trash/shok_roks/berry
 	tastes = list("sour berry" = 1, "lightning" = 1)
 
 /obj/item/food/shok_roks/tropical
 	name = "\improper Shok-Roks - Tropical Thunder flavour"
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Tropical Thunder- all the tropical fruits! ALL OF THEM!"
 	icon_state = "shok_roks_tropical"
+	trash_type = /obj/item/trash/shok_roks/tropical
 	tastes = list("tropical fruits" = 1, "lightning" = 1)
 
 /obj/item/food/shok_roks/lanternfruit
 	name = "\improper Shok-Roks - Lightning Lanternfruit flavour"
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Lightning Lanternfruit- the only Sprout-native fruit in any Shok-Rok flavour."
 	icon_state = "shok_roks_lanternfruit"
+	trash_type = /obj/item/trash/shok_roks/lanternfruit
 	tastes = list("sour pear" = 1, "lightning" = 1)
