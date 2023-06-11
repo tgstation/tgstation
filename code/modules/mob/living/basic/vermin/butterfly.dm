@@ -47,8 +47,10 @@
 
 /mob/living/basic/butterfly/lavaland/temporary
 	name = "strange butterfly"
-	var/obj/item/mod/core/plasma/lavaland/source = NONE
-	// Max distance in tiles before despawning
+	basic_mob_flags = DEL_ON_DEATH
+	/// The atom that's spawning the butterflies
+	var/obj/item/mod/core/plasma/lavaland/source
+	/// Max distance in tiles before the butterfly despawns
 	var/max_distance = 5
 	var/will_be_destroyed = FALSE
 	var/despawn_timer = 0
@@ -87,10 +89,6 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, despawn)), 1 SECONDS)
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
-	qdel(src)
-
-/mob/living/basic/butterfly/lavaland/temporary/death(gibbed)
-	. = ..()
 	qdel(src)
 
 /mob/living/basic/butterfly/lavaland/temporary/examine(mob/user)
