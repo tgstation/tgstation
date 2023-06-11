@@ -90,7 +90,35 @@ And that's all you need to make it usable by other code:
 	greyscale_colors = "#ee4242"
 ```
 
-More configurations can be found in [code/datums/greyscale/greyscale_configs.dm](./greyscale_configs.dm)
+More configurations can be found in the greyscale_configs folder [code/datums/greyscale/config_types/greyscale_configs/greyscale_unsorted.dm] (./config_types/greyscale_configs/greyscale_unsorted.dm)
+
+While creating a greyscale config, be sure to take subtypes into account! Rather than create several unique configs that all link to the same icon file, you can make the variants all a subtype of one base config:
+
+```c
+/datum/greyscale_config/tablet
+	name = "PDA"
+	icon_file = 'icons/obj/modular_pda.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pda.json'
+
+/datum/greyscale_config/tablet/chaplain
+	name = "Chaplain PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
+```
+
+Building on this, instead of making separate .json configs for obj and worn states, link to two separate .dmi's while still using the same .json config! For example:
+
+```c
+ //The component icon states are named the same in both DMIs
+/datum/greyscale_config/trek
+	name = "Trek Uniform"
+	icon_file = 'icons/obj/clothing/under/trek.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trek.json'
+
+/datum/greyscale_config/trek/worn
+	name = "Worn Trek Uniform"
+	icon_file = 'icons/mob/clothing/under/trek.dmi'
+	//The worn json is exactly the same, so it's easier to just inherit it
+```
 
 If you want your item to be colorable in a vending machine (or other places if there's ever any support added for that), you should do it like this:
 
