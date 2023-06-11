@@ -411,20 +411,20 @@
 			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 		if (DOOM_EVENTS) //monkestation edit start: triggers a MASSIVE amount of events pretty quickly
 			summon_events() //wont effect the events created directly from this, but it will effect any events that happen after
-			ASYNC //this sleeps
-				var/list/possible_events = list()
-				for(var/datum/round_event_control/possible_event as anything in SSevents.control)
-					if(possible_event.max_wizard_trigger_potency < 6) //only run the decently big ones
-						continue
-					possible_events += possible_event
-				for(var/i in 1 to 50) //high chance this number needs tweaking, but we do want this to be a round ending amount of events
-					sleep(100) //wait for 10 seconds inbetween each event
-					var/datum/round_event_control/event = pick(possible_events)
-					event.runEvent()
+			var/list/possible_events = list()
+			for(var/datum/round_event_control/possible_event as anything in SSevents.control)
+				if(possible_event.max_wizard_trigger_potency < 6) //only run the decently big ones
+					continue
+				possible_events += possible_event
+			var/timer_counter = 1
+			for(var/i in 1 to 50) //high chance this number needs tweaking, but we do want this to be a round ending amount of events
+				var/datum/round_event_control/event = pick(possible_events)
+				addtimer(CALLBACK(event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), (10 * timer_counter) SECONDS)
+				timer_counter++
 		if (DOOM_ANTAGS) //so I heard you like antags
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			dynamic.create_threat(100, dynamic.threat_log, "Final grand ritual")
-			ASYNC //also sleeps
+			ASYNC //sleeps
 				for(var/i in 1 to 4) //spawn 4 midrounds
 					sleep(50) //sleep 5 seconds between each one
 					var/list/possible_rulesets = dynamic.init_rulesets(/datum/dynamic_ruleset/midround/from_ghosts)
