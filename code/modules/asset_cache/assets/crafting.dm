@@ -51,7 +51,7 @@
 		TOOL_CROWBAR = icon('icons/obj/tools.dmi', "crowbar"),
 		TOOL_MULTITOOL = icon('icons/obj/device.dmi', "multitool"),
 		TOOL_SCREWDRIVER = icon('icons/obj/tools.dmi', "screwdriver"),
-		TOOL_WIRECUTTER = icon('icons/obj/tools.dmi', "cutters_map"),
+		TOOL_WIRECUTTER = icon('icons/obj/tools.dmi', "cutters"),
 		TOOL_WRENCH = icon('icons/obj/tools.dmi', "wrench"),
 		TOOL_WELDER = icon('icons/obj/tools.dmi', "welder"),
 		TOOL_ANALYZER = icon('icons/obj/device.dmi', "analyzer"),

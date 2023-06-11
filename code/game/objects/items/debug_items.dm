@@ -54,7 +54,7 @@
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
 		"Multitool" = image(icon = 'icons/obj/device.dmi', icon_state = "multitool"),
 		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver"),
-		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
+		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
