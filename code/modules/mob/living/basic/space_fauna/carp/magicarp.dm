@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	maxHealth = 50
 	health = 50
 	gold_core_spawnable = NO_SPAWN
-	greyscale_config = /datum/greyscale_config/carp_magic
+	greyscale_config = /datum/greyscale_config/carp/magic
 	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
 	tamed_commands = list(
 		/datum/pet_command/idle,

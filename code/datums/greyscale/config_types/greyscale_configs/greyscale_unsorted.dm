@@ -7,9 +7,8 @@
 	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
-/datum/greyscale_config/carp_magic
+/datum/greyscale_config/carp/magic
 	name = "Magicarp"
-	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp_magic.json'
 
 /datum/greyscale_config/carp_mega
