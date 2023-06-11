@@ -1,14 +1,14 @@
 {
-	"screwdriver_map": [
+	"screwdriver": [
 		{
 			"type": "icon_state",
-			"icon_state": "screwdriver",
+			"icon_state": "screwdriver_grip",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "screwdriver_screwybits",
+			"icon_state": "screwdriver_head",
 			"blend_mode": "overlay"
 		}
 	]
