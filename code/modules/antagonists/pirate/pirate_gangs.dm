@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	threat_content = "Hey it's %SHIPNAME. Give us money. \
 		%PAYOFF might be enough."
 	arrival_announcement = "Nice stuff you got there, it's ours now."
-	possible_answers = list("Please don't hurt me.","YOU WILL ANSWER TO THE LAW!!!.")
+	possible_answers = list("Please don't hurt me.","YOU WILL ANSWER TO THE LAW!!")
 
 	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
