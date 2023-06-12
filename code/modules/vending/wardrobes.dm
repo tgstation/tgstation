@@ -30,7 +30,6 @@
 		/obj/item/storage/backpack/security = 3,
 		/obj/item/storage/backpack/satchel/sec = 3,
 		/obj/item/storage/backpack/duffelbag/sec = 3,
-		/obj/item/radio/headset/headset_sec = 3,
 	)
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,
@@ -629,7 +628,6 @@
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,
-		/obj/item/radio/headset/headset_sec = 2,
 	)
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
