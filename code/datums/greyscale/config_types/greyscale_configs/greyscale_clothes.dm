@@ -447,40 +447,16 @@
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers.json'
 
-/datum/greyscale_config/sneakers_worn
+/datum/greyscale_config/sneakers/worn
 	name = "Worn Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_worn.json'
 
-/datum/greyscale_config/sneakers_inhand_left
+/datum/greyscale_config/sneakers/inhand_left
 	name = "Held Sneakers, Left"
 	icon_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_inhand.json'
-
-/datum/greyscale_config/sneakers_inhand_right
+/datum/greyscale_config/sneakers/inhand_right
 	name = "Held Sneakers, Right"
 	icon_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_inhand.json'
-
-/datum/greyscale_config/sneakers_orange
-	name = "Orange Sneakers"
-	icon_file = 'icons/obj/clothing/shoes.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_orange.json'
-
-/datum/greyscale_config/sneakers_orange_worn
-	name = "Worn Orange Sneakers"
-	icon_file = 'icons/mob/clothing/feet.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_worn.json'
-
-/datum/greyscale_config/sneakers_orange_inhand_left
-	name = "Held Orange Sneakers, Left"
-	icon_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_inhand.json'
-
-/datum/greyscale_config/sneakers_orange_inhand_right
-	name = "Held Orange Sneakers, Right"
-	icon_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_inhand.json'
 
 /datum/greyscale_config/sneakers_wheelys
 	name = "Wheeled Sneakers"

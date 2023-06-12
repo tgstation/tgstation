@@ -668,12 +668,13 @@
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
+	desc = "A pair of black shoes."
 	icon_state = "sneakers"
-	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	desc = "A pair of black shoes."
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_chameleon
 

@@ -5,9 +5,8 @@
 	greyscale_colors = "#545454#ffffff"
 	icon_state = "sneakers"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	inhand_icon_state = "sneakers_back"
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
