@@ -1369,7 +1369,7 @@
  */
 /mob/living/carbon/proc/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
 	// So people can take their own clothes off
-	if((acided_atom == user) || (acided_atom.loc == user))
+	if((acided_atom == src) || (acided_atom.loc == src))
 		return TRUE
 	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
 		return TRUE
