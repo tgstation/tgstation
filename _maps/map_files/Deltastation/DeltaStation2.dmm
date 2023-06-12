@@ -422,6 +422,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "aeQ" = (
@@ -2105,11 +2106,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/crew_quarters/bar)
 "awT" = (
-/obj/structure/table/wood,
-/obj/item/stack/tile/wood,
-/obj/item/pen/blue,
-/obj/item/pen/red{
-	pixel_x = -6
+/obj/structure/chair/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/security/prison)
@@ -3341,7 +3339,6 @@
 /area/station/command/heads_quarters/hos)
 "aNz" = (
 /obj/machinery/light/directional/west,
-/obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/station/security/prison)
 "aND" = (
@@ -10482,6 +10479,7 @@
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plating,
 /area/station/security/prison/garden)
 "czi" = (
@@ -17434,7 +17432,6 @@
 /obj/machinery/door/airlock{
 	name = "Cleaning Cupboard"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/prison/work)
 "eqg" = (
@@ -19574,6 +19571,7 @@
 /obj/item/seeds/olive,
 /obj/item/seeds/watermelon,
 /obj/item/seeds/tobacco,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "eQB" = (
@@ -33500,6 +33498,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ipr" = (
@@ -39499,6 +39498,11 @@
 /obj/item/canvas/nineteen_nineteen,
 /obj/item/storage/crayons,
 /obj/item/paper_bin/construction,
+/obj/item/stack/tile/wood,
+/obj/item/pen/blue,
+/obj/item/pen/red{
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "jMz" = (
@@ -43786,13 +43790,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
-"kRM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/wood{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/station/security/prison)
 "kRN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -84539,6 +84536,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/spawner/directional/south,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "vfS" = (
@@ -92925,13 +92923,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	dir = 1;
-	pixel_y = 4
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Permabrig - Library";
 	network = list("ss13","prison")
+	},
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 4;
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /turf/open/floor/wood,
 /area/station/security/prison)
@@ -151781,7 +151780,7 @@ dDt
 uhn
 bnU
 vSK
-kRM
+vSK
 lAj
 xmm
 lAj
