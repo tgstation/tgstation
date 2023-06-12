@@ -21,7 +21,7 @@ export type Material = {
   ref: string;
 
   /**
-   * The amount of material; 2,000 units is one sheet.
+   * The amount of material; 100 units is one sheet.
    */
   amount: number;
 

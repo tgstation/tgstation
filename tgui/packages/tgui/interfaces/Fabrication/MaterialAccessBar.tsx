@@ -79,7 +79,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
     false
   );
 
-  const canEject = material.amount > 2_000;
+  const canEject = material.amount > 100;
 
   return (
     <div
@@ -157,7 +157,7 @@ const EjectButton = (props: EjectButtonProps, context) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
+        amount * 100 > available && 'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}>
       &times;{amount}
