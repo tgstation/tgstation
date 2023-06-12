@@ -2,7 +2,7 @@
 /**
  * Checks if we have stun immunity. Godmode always passes this check.
  *
- * * check_flags - bitflag of status flags that must be set in order for the stun to succeed
+ * * check_flags - bitflag of status flags that must be set in order for the stun to succeed. Passing NONE will always return false.
  * * force_stun - whether we ignore stun immunity with the exception of godmode
  *
  * returns TRUE if stun immune, FALSE otherwise
@@ -13,7 +13,7 @@
 	if(status_flags & GODMODE)
 		return TRUE
 
-	if(force_stun)
+	if(force_stun) // Does not take priority over god mode? I guess
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GENERIC_STUN_CHECK, check_flags, force_stun) & COMPONENT_NO_STUN)
@@ -23,13 +23,11 @@
 		return TRUE
 
 	// Do we have the correct flag set to allow this status?
-	// For example, if we're checking if this mob can be knocked unconscious (check_flags = CANUNCONSCIOUS),
-	// we need to have the CANUNCONSCIOUS flipped in our status flags - otherwise we're immune to it
-	if(check_flags && !(status_flags & check_flags))
-		return TRUE
+	// This checks that ALL flags are set, not just one of them.
+	if((status_flags & check_flags) == check_flags)
+		return FALSE
 
-	return FALSE
-
+	return TRUE
 
 /* STUN */
 /mob/living/proc/IsStun() //If we're stunned
@@ -194,7 +192,7 @@
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun))
+	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun)) // this requires both can stun and can knockdown
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
 	if(P)
@@ -250,7 +248,7 @@
 /mob/living/proc/incapacitate(amount, ignore_canstun = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun))
+	if(check_stun_immunity(CANSTUN, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
 	if(incapacitated_status_effect)
@@ -268,7 +266,7 @@
 /mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun))
+	if(check_stun_immunity(CANSTUN, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
 	if(amount <= 0)
@@ -290,7 +288,7 @@
 /mob/living/proc/adjust_incapacitated(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun))
+	if(check_stun_immunity(CANSTUN, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(/datum/status_effect/incapacitating/incapacitated)
 	if(incapacitated_status_effect)
@@ -725,5 +723,3 @@
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
 	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
-
-#undef IS_STUN_IMMUNE

@@ -176,12 +176,12 @@
  *
  * Arguments
  * * source - the source of the stun absorption.
- * * duration - how long does the stun absorption last before it ends?
- * * priority - what is this effect's priority to other stun absorptions?
+ * * duration - how long does the stun absorption last before it ends? -1 or null = infinite duration
+ * * priority - what is this effect's priority to other stun absorptions? higher = more priority
  * * message - optional, "other message" arg of visible message, shown on trigger. Use %EFFECT_OWNER if you want the owner's name to be inserted.
  * * self_message - optional, "self message" arg of visible message, shown on trigger
  * * examine_message - optional, what is shown on examine of the mob.
- * * max_seconds_of_stuns_blocked - optional, how many seconds of stuns can it block before deleting?
+ * * max_seconds_of_stuns_blocked - optional, how many seconds of stuns can it block before deleting? the stun that breaks over this number is still blocked, even if it is much higher.
  *
  * Returns an instance of a stun absorption effect, or NULL if failure
  */
@@ -205,7 +205,7 @@
 			// don't bother re-applying the effect, and return
 			return
 
-		// otherwise, delete existing and replcae with new
+		// otherwise, delete existing and replace with new
 		qdel(existing_effect)
 
 	return apply_status_effect(
