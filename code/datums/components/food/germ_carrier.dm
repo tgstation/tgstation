@@ -5,7 +5,7 @@
 /// Max number of symptoms on the random disease
 #define MAX_DISEASE_SYMPTOMS 2
 /// Max strength of the random disease
-#define MAX_DISEASE_STRENTH 3
+#define MAX_DISEASE_STRENGTH 3
 
 /datum/component/germ_carrier
 	/// Timer for counting delay before becoming infective
@@ -91,10 +91,10 @@
 
 /datum/component/germ_carrier/proc/infect_parent()
 	infective = TRUE
-	var/datum/disease/advance/random/random_disease = new(max_symptoms = rand(MAX_DISEASE_SYMPTOMS), max_level = rand(MAX_DISEASE_STRENTH))
+	var/datum/disease/advance/random/random_disease = new(max_symptoms = rand(MAX_DISEASE_SYMPTOMS), max_level = rand(MAX_DISEASE_STRENGTH))
 	random_disease.name = "Unknown"
 	parent.AddComponent(/datum/component/infective, list(random_disease), weak = TRUE)
 
 #undef FIVE_SECOND_RULE
 #undef MAX_DISEASE_SYMPTOMS
-#undef MAX_DISEASE_STRENTH
+#undef MAX_DISEASE_STRENGTH
