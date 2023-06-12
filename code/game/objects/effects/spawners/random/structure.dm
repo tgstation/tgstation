@@ -235,3 +235,11 @@
 		/obj/structure/musician/piano,
 		/obj/structure/musician/piano/minimoog,
 	)
+
+/obj/effect/spawner/random/structure/falsewall	//should be placed upon placing to make players think it's player-made and not a map bug.
+	name = "false wall or wall spawner"
+	icon_state = "falsewall"
+	loot = list(
+		/turf/closed/wall = 50,
+		/obj/structure/falsewall = 50,
+	)
