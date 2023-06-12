@@ -1386,7 +1386,7 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
 		return TRUE
-	if(gloves && (gloves.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE))
+	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
 		return TRUE
 	return FALSE
 
