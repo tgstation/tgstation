@@ -57,7 +57,7 @@
 	desc = "A screwdriver built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
-	inhand_icon_state = "screwdriver"
+	inhand_icon_state = "screwdriver_cyborg"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
@@ -91,7 +91,7 @@
 	desc = "Wirecutters built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wirecutters_cyborg"
-	inhand_icon_state = "cutters"
+	inhand_icon_state = "cutters_cyborg"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
