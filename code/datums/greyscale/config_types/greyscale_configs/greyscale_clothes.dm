@@ -508,7 +508,6 @@
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
 	icon_file = 'icons/mob/clothing/suits/utility.dmi'
-	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/waistcoat
 	name = "Waistcoat"
@@ -518,7 +517,6 @@
 /datum/greyscale_config/waistcoat_worn
 	name = "Worn Waistcoat"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
-	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
 
 //
 // SUIT + HEAD
@@ -543,7 +541,6 @@
 /datum/greyscale_config/winter_hoods/worn
 	name = "Winter Coat Hood Worn"
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
 /datum/greyscale_config/heck_suit
 	name = "H.E.C.K. Suit"
@@ -553,7 +550,6 @@
 /datum/greyscale_config/heck_suit/worn
 	name = "H.E.C.K. Suit Worn"
 	icon_file = 'icons/mob/clothing/suits/armor.dmi'
-	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
 
 /datum/greyscale_config/heck_helmet
 	name = "H.E.C.K. Helmet"
@@ -563,7 +559,6 @@
 /datum/greyscale_config/heck_helmet/worn
 	name = "H.E.C.K. Helmet Worn"
 	icon_file = 'icons/mob/clothing/head/helmet.dmi'
-	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'
 
 //
 // COSTUMES
