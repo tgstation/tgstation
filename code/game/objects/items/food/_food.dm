@@ -117,4 +117,6 @@
 
 ///This proc makes things infective when they stay on the floor for too long.
 /obj/item/food/proc/make_infective(mapload)
+	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+		return // You don't eat the package
 	AddComponent(/datum/component/germ_carrier, mapload)
