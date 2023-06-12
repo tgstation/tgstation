@@ -298,7 +298,7 @@
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()
-	AddComponent(, \
+	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 8, \
 		throwforce_on = 5, \
