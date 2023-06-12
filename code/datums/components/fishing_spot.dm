@@ -17,7 +17,7 @@
 			stack_trace("Invalid fishing spot configuration \"[configuration]\" passed down to fishing spot component.")
 			return COMPONENT_INCOMPATIBLE
 		fish_source = preset_configuration
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 
 

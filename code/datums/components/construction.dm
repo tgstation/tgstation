@@ -8,8 +8,8 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(action))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(action))
 	update_parent(index)
 
 /datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)

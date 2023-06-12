@@ -325,12 +325,15 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+#define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
+#define ANTAG_GROUP_HUNTERS "Bounty Hunters"
+#define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 
 
 // If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
 #define FLAG_ANTAG_CAN_BE_INDUCTED (1 << 0)
 
-#define HUNTER_PACK_COPS "cop_hunters"
-#define HUNTER_PACK_RUSSIAN "russian_hunters"
-#define HUNTER_PACK_BOUNTY "bounty_hunters"
-#define HUNTER_PACK_PSYKER "psyker_hunters"
+#define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
+#define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
+#define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
+#define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"

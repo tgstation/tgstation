@@ -135,7 +135,7 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = TRUE
 	density = FALSE
-	layer = TURF_LAYER
+	layer = MID_TURF_LAYER
 	plane = FLOOR_PLANE
 	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
@@ -170,7 +170,7 @@
 
 /obj/structure/alien/weeds/Destroy()
 	if(parent_node)
-		UnregisterSignal(parent_node, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(parent_node, COMSIG_QDELETING)
 		parent_node = null
 	return ..()
 
@@ -214,7 +214,7 @@
 		check_weed = new(check_turf)
 		//set the new one's parent node to our parent node
 		check_weed.parent_node = parent_node
-		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
+		check_weed.RegisterSignal(parent_node, COMSIG_QDELETING, PROC_REF(after_parent_destroyed))
 
 /**
  * Called when the parent node is destroyed
@@ -236,7 +236,7 @@
 		if(new_parent == previous_node)
 			continue
 		parent_node = new_parent
-		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
+		RegisterSignal(parent_node, COMSIG_QDELETING, PROC_REF(after_parent_destroyed))
 		return parent_node
 	return FALSE
 
@@ -355,6 +355,11 @@
 		atom_integrity = integrity_failure * max_integrity
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/alien/egg/Destroy()
+	QDEL_NULL(child)
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)

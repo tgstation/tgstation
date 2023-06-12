@@ -137,7 +137,9 @@
 			server_port = new_port
 			return TopicResponse()
 
-		if(DMAPI5_TOPIC_COMMAND_HEARTBEAT)
+		if(DMAPI5_TOPIC_COMMAND_HEALTHCHECK)
+			if(event_handler?.receive_health_checks)
+				event_handler.HandleEvent(TGS_EVENT_HEALTH_CHECK)
 			return TopicResponse()
 
 		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
