@@ -64,6 +64,7 @@
 	make_decompose(mapload)
 	make_bakeable()
 	make_microwaveable()
+	make_infective()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
@@ -113,3 +114,7 @@
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+///This proc makes things infective when they stay on the floor for too long.
+/obj/item/food/proc/make_infective(mapload)
+	AddComponent(/datum/component/bacteria_carrier, mapload)

@@ -23,6 +23,10 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/structure/table,
 	/obj/machinery/smartfridge,
 	/obj/machinery/smartfridge/drying_rack, // Redundant, given above, but this is for the sake of explicitness.
+	/obj/structure/bonfire,
+	/obj/machinery/grill,
+	/obj/machinery/griddle,
+	/obj/machinery/chem_master,
 )))
 
 /// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to attack
