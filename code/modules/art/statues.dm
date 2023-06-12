@@ -38,7 +38,7 @@
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=1))
 				return FALSE
 			user.balloon_alert(user, "slicing apart...")
 			if(W.use_tool(src, user, 40, volume=50))

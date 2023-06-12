@@ -787,7 +787,7 @@
 	else if(opened)
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
-				if(!weapon.tool_start_check(user, amount=0))
+				if(!weapon.tool_start_check(user, amount=1))
 					return
 
 				to_chat(user, span_notice("You begin cutting \the [src] apart..."))
@@ -810,7 +810,7 @@
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
-		if(!weapon.tool_start_check(user, amount=0))
+		if(!weapon.tool_start_check(user, amount=1))
 			return
 
 		if(weapon.use_tool(src, user, 40, volume=50))

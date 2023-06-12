@@ -105,7 +105,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount=0))
+	if(!tool.tool_start_check(user, amount=1))
 		return
 	if(atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to repair [src]."),

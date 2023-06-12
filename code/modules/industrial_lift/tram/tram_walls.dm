@@ -35,7 +35,7 @@
 
 /obj/structure/tramwall/attackby(obj/item/welder, mob/user, params)
 	if(welder.tool_behaviour == TOOL_WELDER)
-		if(!welder.tool_start_check(user, amount=0))
+		if(!welder.tool_start_check(user, amount=round(slicing_duration / 50)))
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))

@@ -163,7 +163,7 @@
 				balloon_alert(user, "core must be empty to deconstruct it!")
 				return
 
-			if(!P.tool_start_check(user, amount=0))
+			if(!P.tool_start_check(user, amount=1))
 				return
 
 			balloon_alert(user, "deconstructing frame...")

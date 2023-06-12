@@ -229,7 +229,7 @@
 			span_notice("[user] begins patching up [src] with [I]."),
 			span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50, amount=1))
+		if(!I.use_tool(src, user, 40, volume=50))
 			return
 
 		user.visible_message(

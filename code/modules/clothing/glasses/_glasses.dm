@@ -305,7 +305,7 @@
 		return
 	if(!I.tool_start_check(user, amount=1))
 		return
-	if(I.use_tool(src, user, 10, volume=30, amount=1))
+	if(I.use_tool(src, user, 10, volume=30))
 		user.visible_message(span_notice("[user] welds [src] back together."),\
 					span_notice("You weld [src] back together."))
 		repair()

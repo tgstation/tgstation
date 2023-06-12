@@ -138,11 +138,11 @@
 			to_chat(user, span_alert("Access denied."))
 	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!tool.tool_start_check(user, amount=5))
+			if(!tool.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(tool.use_tool(src, user, 40, amount=5, volume=50))
+			if(tool.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))

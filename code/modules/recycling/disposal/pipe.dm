@@ -150,7 +150,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start slicing [src]..."))
