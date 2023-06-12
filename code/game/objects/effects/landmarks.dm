@@ -550,7 +550,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
 	make_hungover(joining_mob)
-	for(var/obj/structure/closet/closet in contents)
+	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
 		joining_mob.forceMove(closet)
