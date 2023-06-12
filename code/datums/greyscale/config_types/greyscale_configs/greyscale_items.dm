@@ -45,40 +45,34 @@
 	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'
 
-/datum/greyscale_config/cleric_mace_lefthand
+/datum/greyscale_config/cleric_mace/worn
+	name = "Base Worn Cleric Mace"
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
+
+/datum/greyscale_config/cleric_mace/inhand_right
 	name = "Base Held Cleric Mace, Left"
-	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand.json'
 
-/datum/greyscale_config/cleric_mace_righthand
+/datum/greyscale_config/cleric_mace/inhand_right
 	name = "Base Held Cleric Mace, Right"
-	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand.json'
-
-/datum/greyscale_config/cleric_mace_worn
-	name = "Base Worn Cleric Mace"
-	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
-	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
 
 /datum/greyscale_config/cleric_mace/gold
 	name = "Gold Cleric Mace"
 	material_skin = /datum/material/gold
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_gold.json'
 
-/datum/greyscale_config/cleric_mace_lefthand/gold
+/datum/greyscale_config/cleric_mace/gold/worn
+	name = "Gold Worn Cleric Mace"
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
+
+/datum/greyscale_config/cleric_mace/gold/inhand_left
 	name = "Gold Held Cleric Mace, Left"
-	material_skin = /datum/material/gold
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand_gold.json'
 
-/datum/greyscale_config/cleric_mace_righthand/gold
+/datum/greyscale_config/cleric_mace/gold/inhand_right
 	name = "Gold Held Cleric Mace, Right"
-	material_skin = /datum/material/gold
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand_gold.json'
-
-/datum/greyscale_config/cleric_mace_worn/gold
-	name = "Gold Worn Cleric Mace"
-	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
-	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
 /datum/greyscale_config/ceremonial_blade
 	name = "Base Ceremonial Blade"
