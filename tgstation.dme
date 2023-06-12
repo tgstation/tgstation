@@ -331,6 +331,7 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_main.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_silicon.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_simple.dm"
+#include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_spawner.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
