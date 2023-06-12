@@ -240,15 +240,15 @@
 
 	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
 
-/// Returns a color for the glow effect
-/datum/mutation/human/glow/proc/get_glow_color()
-	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
-
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	QDEL_NULL(glowth)
+	QDEL_NULL(glow)
+
+/// Returns a color for the glow effect
+/datum/mutation/human/glow/proc/get_glow_color()
+	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
 /datum/mutation/human/glow/anti
 	name = "Anti-Glow"
