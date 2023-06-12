@@ -117,4 +117,4 @@
 
 ///This proc makes things infective when they stay on the floor for too long.
 /obj/item/food/proc/make_infective(mapload)
-	AddComponent(/datum/component/bacteria_carrier, mapload)
+	AddComponent(/datum/component/germ_carrier, mapload)

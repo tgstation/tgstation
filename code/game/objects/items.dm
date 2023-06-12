@@ -1311,6 +1311,12 @@
 /obj/item/wash(clean_types)
 	. = ..()
 
+	// Wash germs off dirty things
+	var/datum/component/germ_carrier/germs = GetComponent(/datum/component/germ_carrier)
+	if(germs?.infective)
+		germs.infective = FALSE
+		qdel(GetComponent(/datum/component/infective))
+
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.regenerate_icons()

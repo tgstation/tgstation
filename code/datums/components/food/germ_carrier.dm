@@ -7,13 +7,13 @@
 /// Max strength of the random disease
 #define MAX_DISEASE_STRENTH 3
 
-/datum/component/bacteria_carrier
+/datum/component/germ_carrier
 	/// Timer for counting delay before becoming infective
 	var/timer_id
 	/// Whether it is already infective
 	var/infective = FALSE
 
-/datum/component/bacteria_carrier/Initialize(mapload)
+/datum/component/germ_carrier/Initialize(mapload)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -29,7 +29,7 @@
 		PROC_REF(picked_up))
 	handle_movement()
 
-/datum/component/bacteria_carrier/UnregisterFromParent()
+/datum/component/germ_carrier/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_MOVED,
@@ -39,17 +39,17 @@
 		COMSIG_ATOM_ENTERED,
 	))
 
-/datum/component/bacteria_carrier/Destroy()
+/datum/component/germ_carrier/Destroy()
 	remove_timer()
 	return ..()
 
-/datum/component/bacteria_carrier/proc/remove_timer()
+/datum/component/germ_carrier/proc/remove_timer()
 	if(!timer_id)
 		return
 	deltimer(timer_id)
 	timer_id = null
 
-/datum/component/bacteria_carrier/proc/handle_movement()
+/datum/component/germ_carrier/proc/handle_movement()
 	SIGNAL_HANDLER
 
 	if(infective)
@@ -72,24 +72,24 @@
 	// Exposed to bacteria, start countdown until becoming infected
 	timer_id = addtimer(CALLBACK(src, PROC_REF(infect_parent)), FIVE_SECOND_RULE, TIMER_STOPPABLE | TIMER_UNIQUE)
 
-/datum/component/bacteria_carrier/proc/picked_up()
+/datum/component/germ_carrier/proc/picked_up()
 	SIGNAL_HANDLER
 	if(infective)
 		return
 	remove_timer()
 
-/datum/component/bacteria_carrier/proc/dropped()
+/datum/component/germ_carrier/proc/dropped()
 	SIGNAL_HANDLER
 	if(infective)
 		return
 	handle_movement()
 
-/datum/component/bacteria_carrier/proc/examine(datum/source, mob/user, list/examine_list)
+/datum/component/germ_carrier/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(infective)
 		examine_list += span_notice("[parent] looks dirty and not safe to consume.")
 
-/datum/component/bacteria_carrier/proc/infect_parent()
+/datum/component/germ_carrier/proc/infect_parent()
 	infective = TRUE
 	var/datum/disease/advance/random/random_disease = new(max_symptoms = rand(MAX_DISEASE_SYMPTOMS), max_level = rand(MAX_DISEASE_STRENTH))
 	random_disease.name = "Unknown"
