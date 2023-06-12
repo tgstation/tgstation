@@ -563,7 +563,7 @@
 			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 			continue
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
