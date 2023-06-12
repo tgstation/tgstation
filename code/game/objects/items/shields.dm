@@ -255,7 +255,7 @@
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
-	AddComponent(, \
+	AddComponent( \
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
