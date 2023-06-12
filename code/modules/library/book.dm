@@ -137,7 +137,7 @@
 		var/obj/item/barcodescanner/scanner = attacking_item
 		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
 		if(!computer)
-			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
+			user.balloon_alert(user, "not connected to computer!")
 			return
 
 		switch(scanner.scan_mode)
