@@ -507,7 +507,7 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "map_plushie_lizard"
-	greyscale_config = /datum/greyscale_config/plush/lizard
+	greyscale_config = /datum/greyscale_config/plush
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
@@ -535,7 +535,7 @@
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
 	icon_state = "map_plushie_spacelizard"
-	greyscale_config = /datum/greyscale_config/plush/lizard/space
+	greyscale_config = /datum/greyscale_config/plush/spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")

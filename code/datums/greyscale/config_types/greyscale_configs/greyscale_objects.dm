@@ -34,6 +34,7 @@
 //
 
 /datum/greyscale_config/giftbox
+	name = "Giftwrapped Package"
 	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftboxes.json'
 

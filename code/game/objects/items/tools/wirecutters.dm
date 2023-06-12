@@ -8,8 +8,8 @@
 
 	greyscale_config = /datum/greyscale_config/wirecutters
 	greyscale_config_belt = /datum/greyscale_config/wirecutters/belt_overlay
-	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter/inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter/inhand_right
+	greyscale_config_inhand_left = /datum/greyscale_config/wirecutters/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/wirecutters/inhand_right
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT

@@ -11,11 +11,11 @@
 	name = "Belt Worn Wirecutters"
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 
-/datum/greyscale_config/wirecutter/inhand_left
+/datum/greyscale_config/wirecutters/inhand_left
 	name = "Held Wirecutter, Left"
 	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 
-/datum/greyscale_config/wirecutter/inhand_right
+/datum/greyscale_config/wirecutters/inhand_right
 	name = "Held Wirecutter, Right"
 	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
@@ -177,8 +177,15 @@
 // PLUSHIES
 //
 
+//As the first plushie to be GAGSed, Lizard is the base type
 /datum/greyscale_config/plush
+	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush/spacelizard
+	name = "Plushie Space Lizard"
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/plush/carp
 	name = "Plushie Carp"
@@ -191,14 +198,6 @@
 /datum/greyscale_config/plush/snake
 	name = "Plushie Snake"
 	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
-
-/datum/greyscale_config/plush/lizard
-	name = "Plushie Lizard"
-	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
-
-/datum/greyscale_config/plush/lizard/space
-	name = "Plushie Space Lizard"
-	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 //
 // VAPES
