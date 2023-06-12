@@ -80,6 +80,8 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
+/datum/status_effect/fire_handler/on_apply()
+	. = ..()
 	update_particles()
 
 /datum/status_effect/fire_handler/on_remove()
@@ -279,6 +281,7 @@
 		extinguish()
 	set_stacks(0)
 	update_overlay()
+	update_particles()
 	return ..()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
