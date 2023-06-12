@@ -684,20 +684,23 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = REM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
-	///The old heart we're swapping for
-	var/obj/item/organ/internal/heart/original_heart
-	///The new heart that's temp added
-	var/obj/item/organ/internal/heart/cursed/manual_heart
+	///Weakref to the old heart we're swapping for
+	var/datum/weakref/original_heart_ref
+	///Weakref to the new heart that's temp added
+	var/datum/weakref/manual_heart_ref
 
 ///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
 /datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/affected_mob)
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon_mob = affected_mob
-	original_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/original_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!original_heart)
 		return
-	manual_heart = new(null, src)
+	original_heart_ref = WEAKREF(original_heart)
+
+	var/obj/item/organ/internal/heart/cursed/manual_heart = new(null, src)
+	manual_heart_ref = WEAKREF(manual_heart)
 	original_heart.Remove(carbon_mob, special = TRUE) //So we don't suddenly die
 	original_heart.forceMove(manual_heart)
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
@@ -713,23 +716,35 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/heart))
 		return
+	// DO NOT REACT TO YOUR OWN HEART ADDITION I SWEAR TO CHRIST
+	var/obj/item/organ/internal/heart/cursed/manual_heart = manual_heart_ref?.resolve()
+	if(organ == manual_heart)
+		return
+
 	var/mob/living/carbon/affected_carbon = affected_mob
-	original_heart = organ
+	var/obj/item/organ/internal/heart/original_heart = organ
+	original_heart_ref = WEAKREF(original_heart)
 	original_heart.Remove(affected_carbon, special = TRUE)
-	original_heart.forceMove(manual_heart)
-	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	if(!manual_heart)
 		manual_heart = new(null, src)
+		manual_heart_ref = WEAKREF(manual_heart)
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(affected_carbon, special = TRUE)
 
 ///If we're ejecting out the organ - replace it with the original
 /datum/reagent/inverse/corazargh/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!organ == manual_heart)
+	var/obj/item/organ/internal/heart/cursed/manual_heart = manual_heart_ref?.resolve()
+	if(organ != manual_heart)
 		return
-	original_heart.forceMove(organ.loc)
+	var/obj/item/organ/internal/heart/original_heart = original_heart_ref?.resolve()
+	if(!original_heart)
+		return
+
+	original_heart.forceMove(manual_heart.loc)
 	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
-	qdel(organ)
+	QDEL_NULL(manual_heart_ref)
 
 ///We're done - remove the curse and restore the old one
 /datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/affected_mob)
@@ -739,10 +754,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
+	var/obj/item/organ/internal/heart/original_heart = original_heart_ref?.resolve()
 	if(original_heart) //Mostly a just in case
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
 		original_heart.Insert(affected_carbon, special = TRUE)
-	qdel(manual_heart)
+	QDEL_NULL(manual_heart_ref)
 	to_chat(affected_mob, span_userdanger("You feel your heart start beating normally again!"))
 	..()
 
