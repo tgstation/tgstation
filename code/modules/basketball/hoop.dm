@@ -167,6 +167,10 @@
 	if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
 		score_chance *= 0.5
 
+	// aim bonus for having the throwing arm trait
+	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM))
+		score_chance = clamp(score_chance*1.5, 0, 95) // there's always a chance for failure
+
 	if(prob(score_chance))
 		AM.forceMove(get_turf(src))
 		// is it a 3 pointer shot
