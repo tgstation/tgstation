@@ -1,7 +1,7 @@
 ///CARPTIDE! CARPTIDE! CARPTIDE! A swarm of carp will pass by and through the shuttle, including consequences of carp going through the shuttle
 /datum/shuttle_event/simple_spawner/carp
 	name = "Carp Nest! (Very Dangerous!)"
-	event_probability = 0.2
+	event_probability = 0.4
 	activation_fraction = 0.2
 
 	spawning_list = list(/mob/living/basic/carp = 12, /mob/living/basic/carp/mega = 3)

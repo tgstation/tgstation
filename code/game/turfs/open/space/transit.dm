@@ -42,8 +42,8 @@
 /turf/open/space/transit/proc/initialize_drifting_but_from_initialize(atom/movable/location, atom/movable/enterer, mapload)
 	SIGNAL_HANDLER
 
-	if(!mapload)
-		INVOKE_ASYNC(src, PROC_REF(initialize_drifting), enterer)
+	if(!mapload && !istype(enterer, /obj/docking_port))
+		INVOKE_ASYNC(src, PROC_REF(initialize_drifting), src, enterer)
 
 /turf/open/space/transit/Exited(atom/movable/gone, direction)
 	. = ..()
