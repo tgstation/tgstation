@@ -36,7 +36,7 @@
 /datum/unit_test/paralyze/Run()
 	var/mob/living/carbon/human/gets_paralyzed = allocate(/mob/living/carbon/human/consistent)
 
-	gets_stunned.Paralyze(1 SECONDS)
+	gets_paralyzed.Paralyze(1 SECONDS)
 	TEST_ASSERT(gets_paralyzed.IsParalyzed(), "Paralyze() failed to apply paralyze")
 
 	gets_paralyzed.SetParalyzed(0 SECONDS)
@@ -66,7 +66,7 @@
 /datum/unit_test/stun_absorb
 
 /datum/unit_test/stun_absorb/Run()
-	var/mob/living/carbon/human/gets_stunned = allocate(/mob/living/carbon/human/consistent)
-	gets_stunned.add_stun_absorption(id = TRAIT_SOURCE_UNIT_TESTS)
-	gets_stunned.Stun(1 SECONDS)
-	TEST_ASSERT(!gets_stunned.IsStun(), "Stun() stunned despite having stun absorption")
+	var/mob/living/carbon/human/doesnt_get_stunned = allocate(/mob/living/carbon/human/consistent)
+	doesnt_get_stunned.add_stun_absorption(id = TRAIT_SOURCE_UNIT_TESTS)
+	doesnt_get_stunned.Stun(1 SECONDS)
+	TEST_ASSERT(!doesnt_get_stunned.IsStun(), "Stun() stunned despite having stun absorption")
