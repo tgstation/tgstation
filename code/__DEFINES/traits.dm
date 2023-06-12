@@ -5,13 +5,13 @@
 #define ADD_TRAIT(target, trait, source) \
 	do { \
 		var/list/_L; \
-		if (!target.status_traits) { \
-			target.status_traits = list(); \
-			_L = target.status_traits; \
+		if (!target._status_traits) { \
+			target._status_traits = list(); \
+			_L = target._status_traits; \
 			_L[trait] = list(source); \
 			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 		} else { \
-			_L = target.status_traits; \
+			_L = target._status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
@@ -22,7 +22,7 @@
 	} while (0)
 #define REMOVE_TRAIT(target, trait, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S; \
 		if (sources && !islist(sources)) { \
 			_S = list(sources); \
@@ -40,13 +40,13 @@
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_L)) { \
-				target.status_traits = null \
+				target._status_traits = null \
 			}; \
 		} \
 	} while (0)
 #define REMOVE_TRAIT_NOT_FROM(target, trait, sources) \
 	do { \
-		var/list/_traits_list = target.status_traits; \
+		var/list/_traits_list = target._status_traits; \
 		var/list/_sources_list; \
 		if (sources && !islist(sources)) { \
 			_sources_list = list(sources); \
@@ -64,13 +64,13 @@
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_traits_list)) { \
-				target.status_traits = null \
+				target._status_traits = null \
 			}; \
 		} \
 	} while (0)
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S = sources; \
 		if (_L) { \
 			for (var/_T in _L) { \
@@ -81,14 +81,14 @@
 					}; \
 				};\
 			if (!length(_L)) { \
-				target.status_traits = null\
+				target._status_traits = null\
 			};\
 		}\
 	} while (0)
 
 #define REMOVE_TRAITS_IN(target, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S = sources; \
 		if (sources && !islist(sources)) { \
 			_S = list(sources); \
@@ -104,15 +104,18 @@
 					}; \
 				};\
 			if (!length(_L)) { \
-				target.status_traits = null\
+				target._status_traits = null\
 			};\
 		}\
 	} while (0)
 
-#define HAS_TRAIT(target, trait) (target.status_traits?[trait] ? TRUE : FALSE)
-#define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]))
-#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
-#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target.status_traits[trait] - source) > 0))
+#define HAS_TRAIT(target, trait) (target._status_traits?[trait] ? TRUE : FALSE)
+#define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target._status_traits[trait]))
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target._status_traits[trait]) && (length(target._status_traits[trait]) == 1))
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target._status_traits[trait] - source) > 0))
+/// Returns a list of trait sources for this trait. Only useful for wacko cases and internal futzing
+/// You should not be using this
+#define GET_TRAIT_SOURCES(target, trait) target._status_traits?[trait] || list()
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -146,6 +149,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ILLITERATE "illiterate"
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Softspoken. Always whisper.
+#define TRAIT_SOFTSPOKEN "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
@@ -159,6 +164,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
+#define TRAIT_CHUNKYFINGERS_IGNORE_BATON "chunkyfingers_ignore_baton"
+/// Allows you to mine with your bare hands
+#define TRAIT_FIST_MINING "fist_mining"
 #define TRAIT_DUMB "dumb"
 /// Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
@@ -218,6 +226,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOHUNGER "no_hunger"
 ///This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+///This carbon doesn't show an overlay when they have no brain
+#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOMETABOLISM "no_metabolism"
 // Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
@@ -302,6 +312,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
+/// Can navigate the web without getting stuck
+#define TRAIT_WEB_SURFER "web_surfer"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
@@ -428,6 +440,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 
+/// Trait which prevents you from becoming overweight
+#define TRAIT_NOFAT "cant_get_fat"
+
+/// Trait which allows you to eat rocks
+#define TRAIT_ROCK_EATER "rock_eater"
+/// Trait which allows you to gain bonuses from consuming rocks
+#define TRAIT_ROCK_METAMORPHIC "rock_metamorphic"
+
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
 /// This atom is a secluded location, which is counted as out of bounds.
@@ -450,9 +470,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
 /// Trait applied to mob/living to mark that spiders should not gain further enriched eggs from eating their corpse.
 #define TRAIT_SPIDER_CONSUMED "spider_consumed"
-/// Whether we're sneaking, from the alien sneak ability.
-/// Maybe worth generalizing into a general "is sneaky" / "is stealth" trait in the future.
-#define TRAIT_ALIEN_SNEAK "sneaking_alien"
+/// Whether we're sneaking, from the creature sneak ability.
+#define TRAIT_SNEAK "sneaking_creatures"
 
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
@@ -483,6 +502,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
+#define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 
 //LUNG TRAITS
 /// Lungs always breathe normally when in vacuum/space.
@@ -735,6 +755,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
 
+///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
+#define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"
@@ -825,6 +848,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
+/// Objects with this trait are deleted if they fall into chasms, rather than entering abstract storage
+#define TRAIT_CHASM_DESTROYED "chasm_destroyed"
+/// Trait from being under the floor in some manner
+#define TRAIT_UNDERFLOOR "underfloor"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
@@ -928,6 +955,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

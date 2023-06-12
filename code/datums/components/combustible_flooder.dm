@@ -11,7 +11,7 @@
 	src.gas_amount = initialize_gas_amount
 	src.temp_amount = initialize_temp_amount
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
@@ -19,7 +19,7 @@
 		RegisterSignal(parent, COMSIG_TURF_EXPOSE, PROC_REF(hotspots_react))
 
 /datum/component/combustible_flooder/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
@@ -37,7 +37,7 @@
 		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 		delete_parent = FALSE
 
-	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount || trigger_temperature]")
+	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];[TURF_TEMPERATURE((temp_amount || trigger_temperature))]")
 
 	// Logging-related
 	var/admin_message = "[flooded_turf] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
@@ -46,9 +46,8 @@
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
 		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
-		log_message = "[key_name(user)] " + log_message
+		log_message = "[key_name(user)] " + log_message + " by fire"
 		admin_message += " by fire"
-		log_message += " by fire"
 		log_attack(log_message)
 	message_admins(admin_message)
 

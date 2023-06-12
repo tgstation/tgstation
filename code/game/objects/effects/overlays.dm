@@ -8,9 +8,9 @@
 	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
-	name="beam"
-	icon='icons/effects/beam.dmi'
-	icon_state="b_beam"
+	name = "beam"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "b_beam"
 	var/atom/BeamSource
 
 /obj/effect/overlay/beam/Initialize(mapload)

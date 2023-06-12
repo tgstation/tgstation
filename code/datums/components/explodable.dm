@@ -23,7 +23,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(explodable_attack))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(explodable_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(detonate))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))

@@ -79,6 +79,8 @@
 	var/drop_sound
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
+	///Sound which is produced when blocking an attack
+	var/block_sound
 
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
@@ -173,7 +175,10 @@
 	///How fast does the tool work
 	var/toolspeed = 1
 
+	///Chance of blocking incoming attack
 	var/block_chance = 0
+	///Effect of blocking
+	var/block_effect = /obj/effect/temp_visual/block
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -288,7 +293,7 @@
 		CRASH("item add_item_action got a type or instance of something that wasn't an action.")
 
 	LAZYADD(actions, action)
-	RegisterSignal(action, COMSIG_PARENT_QDELETING, PROC_REF(on_action_deleted))
+	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
 	if(ismob(loc))
 		// We're being held or are equipped by someone while adding an action?
 		// Then they should also probably be granted the action, given it's in a correct slot
@@ -302,7 +307,7 @@
 	if(!action)
 		return
 
-	UnregisterSignal(action, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(action, COMSIG_QDELETING)
 	LAZYREMOVE(actions, action)
 	qdel(action)
 
@@ -509,13 +514,11 @@
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !user || anchored)
 		return
-	if(!user)
-		return
-	if(anchored)
-		return
+	return attempt_pickup(user)
 
+/obj/item/proc/attempt_pickup(mob/user)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
@@ -531,21 +534,30 @@
 
 
 	//If the item is in a storage item, take it out
-	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
+	var/outside_storage = !loc.atom_storage
+	var/turf/storage_turf
+	if(loc.atom_storage)
+		//We want the pickup animation to play even if we're moving the item between movables. Unless the mob is not located on a turf.
+		if(isturf(user.loc))
+			storage_turf = get_turf(loc)
+		if(!loc.atom_storage.remove_single(user, src, user, silent = TRUE))
+			return
+	if(QDELETED(src)) //moving it out of the storage destroyed it.
 		return
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
-		return
+
+	if(storage_turf)
+		do_pickup_animation(user, storage_turf)
 
 	if(throwing)
 		throwing.finalize(FALSE)
-	if(loc == user)
+	if(loc == user && outside_storage)
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	. = FALSE
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
+	if(!user.put_in_active_hand(src, ignore_animation = !outside_storage))
 		user.dropItemToGround(src)
 		return TRUE
 
@@ -554,36 +566,9 @@
 
 /obj/item/attack_paw(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !user || anchored)
 		return
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	. = TRUE
-
-	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
-		return
-
-	//If the item is in a storage item, take it out
-	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
-		return
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
-		return
-
-	if(throwing)
-		throwing.finalize(FALSE)
-	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
-			return
-
-	. = FALSE
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
-		user.dropItemToGround(src)
-		return TRUE
+	return attempt_pickup(user)
 
 /obj/item/attack_alien(mob/user, list/modifiers)
 	var/mob/living/carbon/alien/ayy = user
@@ -610,12 +595,15 @@
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, final_block_chance, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
 		return TRUE
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		var/owner_turf = get_turf(owner)
+		new block_effect(owner_turf, COLOR_YELLOW)
+		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
@@ -1345,16 +1333,17 @@
 /obj/item/proc/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return TRUE
 
-/obj/item/proc/do_pickup_animation(atom/target)
-	if(!istype(loc, /turf))
-		return
-	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
-	SET_PLANE(pickup_animation, GAME_PLANE, loc)
+/obj/item/proc/do_pickup_animation(atom/target, turf/source)
+	if(!source)
+		if(!istype(loc, /turf))
+			return
+		source = loc
+	var/image/pickup_animation = image(icon = src, loc = source, layer = layer + 0.1)
+	SET_PLANE(pickup_animation, GAME_PLANE, source)
 	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
-	var/turf/current_turf = get_turf(src)
-	var/direction = get_dir(current_turf, target)
+	var/direction = get_dir(source, target)
 	var/to_x = target.base_pixel_x
 	var/to_y = target.base_pixel_y
 

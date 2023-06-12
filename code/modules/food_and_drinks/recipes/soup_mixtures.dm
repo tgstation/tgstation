@@ -32,6 +32,7 @@
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
+	required_container_accepts_subtypes = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
@@ -550,7 +551,10 @@
 	drink_type = VEGETABLES | FRUIT // ??
 
 /datum/chemical_reaction/food/soup/tomatosoup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/cream = 5
+	)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 	)

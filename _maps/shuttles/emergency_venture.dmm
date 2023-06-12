@@ -357,7 +357,7 @@
 	anchorable = 0;
 	anchored = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
@@ -693,9 +693,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/structure/sign/poster/official/moth_epi{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/moth_epi/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
@@ -913,7 +911,7 @@
 	anchored = 1
 	},
 /obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},

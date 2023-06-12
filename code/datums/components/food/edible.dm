@@ -30,7 +30,7 @@ Behavior that's still missing from this component that original food items had t
 	var/list/eatverbs
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
-	///Callback to be ran for when you take a bite of something
+	///Callback to be ran for when you finish eating something
 	var/datum/callback/on_consume
 	///Callback to be ran for when the code check if the food is liked, allowing for unique overrides for special foods like donuts with cops.
 	var/datum/callback/check_liked
@@ -73,7 +73,7 @@ Behavior that's still missing from this component that original food items had t
 	setup_initial_reagents(initial_reagents)
 
 /datum/component/edible/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignals(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
@@ -108,7 +108,7 @@ Behavior that's still missing from this component that original food items had t
 		COMSIG_ITEM_ATTACK,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
 		COMSIG_OOZE_EAT_ATOM,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 	))
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
@@ -524,6 +524,8 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
 	on_consume?.Invoke(eater, feeder)
+	if (QDELETED(parent)) // might be destroyed by the callback
+		return
 
 	to_chat(feeder, span_warning("There is nothing left of [parent], oh no!"))
 	if(isturf(parent))

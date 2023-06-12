@@ -356,7 +356,7 @@
 	conversion_color = "#0000ff"
 
 /obj/item/clothing/gloves/plate
-	name = "Plate Gauntlets"
+	name = "plate gauntlets"
 	icon_state = "crusader"
 	desc = "They're like gloves, but made of metal."
 	siemens_coefficient = 0
@@ -372,7 +372,7 @@
 	icon_state = "crusader-blue"
 
 /obj/item/clothing/shoes/plate
-	name = "Plate Boots"
+	name = "plate boots"
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL

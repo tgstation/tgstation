@@ -123,14 +123,14 @@
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, PROC_REF(unblock_suit_activation))
+	RegisterSignal(timestop, COMSIG_QDELETING, PROC_REF(unblock_suit_activation))
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
 

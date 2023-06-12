@@ -92,7 +92,7 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
 	), PROC_REF(consume_attack))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(consume_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(consume_attackby))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
@@ -130,7 +130,7 @@
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 	))
 
 /datum/component/singularity/process(seconds_per_tick)

@@ -13,6 +13,8 @@
 		ITEM_SLOT_MASK, ITEM_SLOT_EYES, ITEM_SLOT_ID,
 		ITEM_SLOT_HEAD, ITEM_SLOT_BACK, ITEM_SLOT_NECK,
 	)
+	//Chance for the wearer to have their height increased. This is repeated three times for maximum height.
+	var/taller_chance = 50
 
 /datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -39,6 +41,16 @@
 
 	human_to_equip.dna.species.stunmod = 0
 
+	var/list/taller_list = list(HUMAN_HEIGHT_TALL, HUMAN_HEIGHT_TALLER, HUMAN_HEIGHT_TALLEST)
+	var/tall_index = 0
+	for(var/i in 1 to 3)
+		if(!prob(taller_chance))
+			break
+		tall_index++
+
+	if(tall_index)
+		human_to_equip.set_mob_height(taller_list[tall_index])
+
 /datum/outfit/basketball/referee
 	name = "Basketball Referee"
 	uniform = /obj/item/clothing/under/costume/referee
@@ -46,6 +58,7 @@
 	mask = /obj/item/clothing/mask/whistle/minigame
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/soft/black
+	taller_chance = 15
 
 /datum/outfit/basketball/nanotrasen
 	name = "Basketball NT Team"
@@ -106,3 +119,19 @@
 	shoes = /obj/item/clothing/shoes/winterboots
 	head = /obj/item/clothing/head/costume/ushanka
 	gloves = /obj/item/clothing/gloves/color/brown
+
+/datum/outfit/basketball/ash_gladiators
+	name = "Basketball Ash Gladiators"
+	head = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
+	back = /obj/item/spear
+	shoes = null
+
+/datum/outfit/basketball/beach_bums
+	name = "Basketball Beach Bums"
+	undershirt = /datum/sprite_accessory/undershirt/nude
+	underwear = /datum/sprite_accessory/underwear/nude
+	socks = /datum/sprite_accessory/socks/nude
+	uniform = /obj/item/clothing/under/shorts/red
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/sandal

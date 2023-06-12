@@ -1543,12 +1543,13 @@
 	power_light = FALSE
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
+	area_flags = UNIQUE_AREA
 
 // Telecommunications Satellite
 
 /area/station/tcommsat
 	icon_state = "tcomsatcham"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 

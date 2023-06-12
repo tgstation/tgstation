@@ -88,9 +88,9 @@
 	. = ..()
 	if(cell)
 		install_cell(cell)
-	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(mod, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
@@ -98,7 +98,7 @@
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	UnregisterSignal(mod, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACKBY, COMSIG_MOD_WEARER_SET))
 	if(mod.wearer)
 		on_wearer_unset(mod, mod.wearer)
 	return ..()
@@ -293,10 +293,10 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 	return ..()
 
 /obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)

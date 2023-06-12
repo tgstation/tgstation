@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ao" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "aS" = (
@@ -36,7 +36,7 @@
 /area/space/nearstation)
 "gi" = (
 /mob/living/basic/mouse/gray,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "gj" = (
@@ -50,7 +50,7 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "jc" = (
 /obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -69,13 +69,13 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "jZ" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "kU" = (
 /obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/light/tube,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -148,7 +148,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "sd" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/large,
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/spawner/random/maintenance/two,
@@ -192,7 +192,7 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "vs" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/frame,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -210,7 +210,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "zC" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/office/light,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -320,12 +320,12 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/derelictconstruction)
 "Jj" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "JA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/contraband/narcotics,
@@ -386,12 +386,12 @@
 /area/ruin/space/has_grav/derelictconstruction)
 "SY" = (
 /obj/structure/closet/firecloset,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "Vh" = (
 /obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -412,7 +412,7 @@
 "Yh" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "Za" = (

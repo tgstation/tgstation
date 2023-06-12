@@ -17,22 +17,24 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Bridge Pipe", /obj/machinery/atmospherics/pipe/bridge_pipe, TRUE),
 		new /datum/pipe_info/pipe("Multi-Deck Adapter", /obj/machinery/atmospherics/pipe/multiz, FALSE),
 	),
-	"Devices" = list(
-		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
+	"Binary" = list(
+		new /datum/pipe_info/pipe("Manual Valve", /obj/machinery/atmospherics/components/binary/valve, TRUE),
+		new /datum/pipe_info/pipe("Digital Valve", /obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
 		new /datum/pipe_info/pipe("Gas Pump", /obj/machinery/atmospherics/components/binary/pump, TRUE),
 		new /datum/pipe_info/pipe("Volume Pump", /obj/machinery/atmospherics/components/binary/volume_pump, TRUE),
+		new /datum/pipe_info/pipe("Passive Gate", /obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
+		new /datum/pipe_info/pipe("Pressure Valve", /obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
+		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
+		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
+	),
+	"Devices" = list(
 		new /datum/pipe_info/pipe("Gas Filter", /obj/machinery/atmospherics/components/trinary/filter, TRUE),
 		new /datum/pipe_info/pipe("Gas Mixer", /obj/machinery/atmospherics/components/trinary/mixer, TRUE),
-		new /datum/pipe_info/pipe("Passive Gate", /obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
+		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
 		new /datum/pipe_info/pipe("Injector", /obj/machinery/atmospherics/components/unary/outlet_injector, TRUE),
 		new /datum/pipe_info/pipe("Scrubber", /obj/machinery/atmospherics/components/unary/vent_scrubber, TRUE),
 		new /datum/pipe_info/pipe("Unary Vent", /obj/machinery/atmospherics/components/unary/vent_pump, TRUE),
 		new /datum/pipe_info/pipe("Passive Vent", /obj/machinery/atmospherics/components/unary/passive_vent, TRUE),
-		new /datum/pipe_info/pipe("Manual Valve", /obj/machinery/atmospherics/components/binary/valve, TRUE),
-		new /datum/pipe_info/pipe("Digital Valve", /obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
-		new /datum/pipe_info/pipe("Pressure Valve", /obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
-		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
-		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
 		new /datum/pipe_info/meter("Meter"),
 	),
 	"Heat Exchange" = list(
@@ -68,6 +70,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/incinerator_tank),
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_burn_chamber),
 		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/ordnance_freezer_chamber),
+		new /datum/pipe_info/sensor(/obj/machinery/air_sensor/engine_chamber),
 	)
 ))
 
@@ -112,7 +115,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /datum/pipe_info/proc/Params()
 	return ""
 
-/datum/pipe_info/proc/get_preview(selected_dir)
+/datum/pipe_info/proc/get_preview(selected_dir, selected = FALSE)
 	var/list/dirs
 	switch(dirtype)
 		if(PIPE_STRAIGHT, PIPE_BENDABLE)
@@ -137,22 +140,17 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						"[NORTHEAST]" = "North Flipped", "[SOUTHEAST]" = "East Flipped", "[SOUTHWEST]" = "South Flipped", "[NORTHWEST]" = "West Flipped")
 
 	var/list/rows = list()
-	var/list/row = list("previews" = list())
-	var/i = 0
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
-		row["previews"] += list(list(
-			"selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
+		var/is_variant_selected = selected && (!selected_dir ? FALSE : (dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir)))
+		rows += list(list(
+			"selected" = is_variant_selected,
 			"dir" = dir2text(numdir),
 			"dir_name" = dirs[dir],
 			"icon_state" = icon_state,
 			"flipped" = flipped,
 		))
-		if(i++ || dirtype == PIPE_ONEDIR)
-			rows += list(row)
-			row = list("previews" = list())
-			i = 0
 
 	return rows
 
@@ -359,7 +357,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"category" = category,
 		"piping_layer" = piping_layer,
 		"ducting_layer" = ducting_layer,
-		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
 		"selected_color" = paint_color,
@@ -387,7 +384,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
 					continue
 
-			r += list(list("pipe_name" = info.name, "pipe_index" = i))
+			r += list(list(
+				"pipe_name" = info.name,
+				"pipe_index" = i,
+				"previews" = info.get_preview(p_dir, info == recipe)
+			))
 			if(info == recipe)
 				data["selected_category"] = c
 		if(r.len == 0) //when all air sensors are installed this list will become empty
