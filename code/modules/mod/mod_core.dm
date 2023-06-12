@@ -365,12 +365,13 @@
 	light_color = "#cc00cc"
 	light_range = 2
 
-	// The mob to be spawned by the core
+	/// The mob to be spawned by the core
 	var/mob/living/spawned_mob = /mob/living/basic/butterfly/lavaland/temporary
+	/// Max number of mobs it can spawn
 	var/max_spawns = 3
-	var/spawned = 0
 	var/can_spawn = TRUE
-	var/children = list()
+	/// Mob spawner for the core
+	var/datum/component/spawner/mob_spawner
 
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
@@ -378,41 +379,30 @@
 	charge = 15000
 
 /obj/item/mod/core/plasma/lavaland/Destroy()
-	for(var/mob/child in children)
-		qdel(child)
 	if(mod?.wearer)
 		mod.wearer.particles = null
 	. = ..()
 
-/obj/item/mod/core/plasma/lavaland/process()
-	if(can_spawn)
-		can_spawn = FALSE
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/core/plasma/lavaland, spawn_mob)), 5 SECONDS)
-
-/obj/item/mod/core/plasma/lavaland/proc/child_despawned()
-	spawned--
-	if(spawned < max_spawns)
-		can_spawn = TRUE
-
-/obj/item/mod/core/plasma/lavaland/proc/spawn_mob()
-	if(!mod.active)
-		return
-	if(spawned >= max_spawns)
-		return
-	children += new spawned_mob(get_turf(src), src)
-	spawned++
-
-	if(spawned < max_spawns)
-		can_spawn = TRUE
+/obj/item/mod/core/plasma/lavaland/proc/new_mob(spawner, mob/living/basic/butterfly/lavaland/temporary/spawned)
+	SIGNAL_HANDLER
+	if(spawned)
+		spawned.source = src
 
 /obj/item/mod/core/plasma/lavaland/proc/on_toggle()
 	SIGNAL_HANDLER
 	if(mod.active)
 		START_PROCESSING(SSprocessing, src)
 		mod.wearer.particles = new /particles/pollen()
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob), spawn_time=5 SECONDS, max_spawned=3)
+		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
+
 	else
 		STOP_PROCESSING(SSprocessing, src)
 		mod.wearer.particles = null
+		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
+		for(var/mob/living/basic/butterfly/lavaland/temporary/mob in mob_spawner.spawned_things)
+			mob.fadeout()
+		qdel(mob_spawner)
 
 /obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
 	. = ..()

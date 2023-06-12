@@ -49,26 +49,24 @@
 	name = "strange butterfly"
 	basic_mob_flags = DEL_ON_DEATH
 	/// The atom that's spawning the butterflies
-	var/obj/item/mod/core/plasma/lavaland/source
+	var/atom/source = null
 	/// Max distance in tiles before the butterfly despawns
 	var/max_distance = 5
 	var/will_be_destroyed = FALSE
 	var/despawn_timer = 0
 
-/mob/living/basic/butterfly/lavaland/temporary/Initialize(mapload, creator)
+/mob/living/basic/butterfly/lavaland/temporary/Initialize(mapload)
 	. = ..()
-	source = creator
 	START_PROCESSING(SSprocessing, src)
 
 /mob/living/basic/butterfly/lavaland/temporary/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	if(source)
-		source.child_despawned()
-		source.children -= src
 	. = ..()
 
 /mob/living/basic/butterfly/lavaland/temporary/process()
 	if(should_despawn())
+		if(will_be_destroyed)
+			return
 		will_be_destroyed = TRUE
 		despawn_timer = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, fadeout)), 5 SECONDS, TIMER_STOPPABLE)
 	else
@@ -78,18 +76,14 @@
 			deltimer(despawn_timer)
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/should_despawn()
-	if(!source.mod.active)
-		return TRUE
-	if(get_dist(source, src) > max_distance)
+	var/dist = get_dist(source, src)
+	if(dist > max_distance)
 		return TRUE
 	return FALSE
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/fadeout()
 	animate(src, alpha = 0, 1 SECONDS)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/butterfly/lavaland/temporary, despawn)), 1 SECONDS)
-
-/mob/living/basic/butterfly/lavaland/temporary/proc/despawn()
-	qdel(src)
+	QDEL_IN(src, 1 SECONDS)
 
 /mob/living/basic/butterfly/lavaland/temporary/examine(mob/user)
 	. = ..()
