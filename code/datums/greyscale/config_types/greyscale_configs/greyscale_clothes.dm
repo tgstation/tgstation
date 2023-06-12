@@ -490,7 +490,7 @@
 	icon_file = 'icons/obj/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat.json'
 
-/datum/greyscale_config/waistcoat_worn
+/datum/greyscale_config/waistcoat/worn
 	name = "Worn Waistcoat"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 
@@ -573,7 +573,7 @@
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_hat.json'
 
-/datum/greyscale_config/fancy_hat_worn
+/datum/greyscale_config/fancy_hat/worn
 	name = "Worn Fancy Hat"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
