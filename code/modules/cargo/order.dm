@@ -132,11 +132,15 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	var/container_contents = list()
+	var/container_contents = list() // Associative list with the format (item_name = nº of occurences, ...)
 	for(var/atom/movable/AM in container.contents - manifest_paper)
-		if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && prob(50))
-			continue
 		container_contents[AM.name]++
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+		for(var/i = 1 to rand(1, round(container.contents.len * 0.5, 1))) // Remove anywhere from one to half of the items
+			var/missing_item = pick(container_contents)
+			container_contents[missing_item]--
+			if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+				container_contents -= missing_item
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
