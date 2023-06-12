@@ -52,10 +52,14 @@
 /datum/component/New(list/raw_args)
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
-		stack_trace("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
-		qdel(src, TRUE, TRUE)
-		return
+	switch(Initialize(arglist(arguments)))
+		if(COMPONENT_INCOMPATIBLE)
+			stack_trace("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
+			qdel(src, TRUE, TRUE)
+			return
+		if(COMPONENT_DELETE)
+			qdel(src, TRUE, TRUE)
+			return
 
 	_JoinParent(parent)
 
@@ -452,6 +456,8 @@
 			var/c_type = target.type
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+		if(COMPONENT_DELETE)
+			qdel(target)
 
 	if(target == AddComponent(target))
 		target._JoinParent()

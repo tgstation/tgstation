@@ -2,8 +2,10 @@
 /// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
+/// Like COMPONENT_INCOMPATIBLE, but it deletes the component without creating a log
+#define COMPONENT_DELETE 2
 /// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
-#define COMPONENT_NOTRANSFER 2
+#define COMPONENT_NOTRANSFER 3
 
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1

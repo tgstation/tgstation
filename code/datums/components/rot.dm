@@ -30,7 +30,7 @@
 		var/mob/living/living_parent = parent
 		//I think this can break in cases where someone becomes a robot post death, but I uh, I don't know how to account for that
 		if(!(living_parent.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
-			return COMPONENT_INCOMPATIBLE
+			return COMPONENT_DELETE
 
 	start_delay = delay
 	scaling_delay = scaling

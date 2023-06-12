@@ -29,13 +29,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	//not incompatible, but pointless
 	var/atom/atom_parent = parent
 	if((acid_power) <= 0 || (acid_volume <= 0))
 		stack_trace("Acid component added to an atom ([atom_parent.type]) with insufficient acid power ([acid_power]) or acid volume ([acid_volume]).")
-		qdel(src)
-		return
-
+		return COMPONENT_DELETE
+	if(atom_parent.resistance_flags & UNACIDABLE)
+		stack_trace("Acid component added to an atom ([atom_parent.type]) with UNACIDABLE resistance_flag.")
+		return COMPONENT_DELETE
 
 	if(isliving(parent))
 		max_volume = MOB_ACID_VOLUME_MAX
@@ -45,11 +47,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		process_effect = CALLBACK(src, PROC_REF(process_turf), parent)
 	//if we failed all other checks, we must be an /atom/movable that uses integrity
 	else if(atom_parent.uses_integrity)
-		// The parent object cannot have acid. Not incompatible, but should not really happen.
-		if(atom_parent.resistance_flags & UNACIDABLE)
-			qdel(src)
-			return
-
 		max_volume = MOVABLE_ACID_VOLUME_MAX
 		process_effect = CALLBACK(src, PROC_REF(process_movable), parent)
 	//or not...

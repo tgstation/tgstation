@@ -36,10 +36,10 @@
 /datum/component/thermite/Initialize(amount = 50, thermite_overlay = default_thermite_overlay)
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	//not actually incompatible, but not valid
 	if(blacklist[parent.type])
-		qdel(src)
-		return
+		return COMPONENT_DELETE
 
 	if(immunelist[parent.type])
 		src.amount = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall

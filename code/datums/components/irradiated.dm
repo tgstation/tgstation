@@ -28,8 +28,7 @@
 
 	// This isn't incompatible, it's just wrong
 	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
-		qdel(src)
-		return
+		return COMPONENT_DELETE
 
 	ADD_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 

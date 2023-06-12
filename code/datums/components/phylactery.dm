@@ -35,7 +35,7 @@
 
 	if(isnull(lich_mind))
 		stack_trace("A [type] was created with no target lich mind!")
-		return COMPONENT_INCOMPATIBLE
+		return COMPONENT_DELETE
 
 	src.lich_mind = lich_mind
 	src.base_respawn_time = base_respawn_time

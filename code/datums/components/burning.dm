@@ -18,10 +18,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!atom_parent.uses_integrity)
 		stack_trace("Tried to add /datum/component/burning to an atom ([atom_parent.type]) that does not use atom_integrity!")
 		return COMPONENT_INCOMPATIBLE
+
 	// only flammable atoms should have this component, but it's not really an error if we try to apply this to a non flammable one
 	if(!(atom_parent.resistance_flags & FLAMMABLE) || (atom_parent.resistance_flags & FIRE_PROOF))
-		qdel(src)
-		return
+		return COMPONENT_DELETE
+
 	src.fire_overlay = fire_overlay
 	if(fire_particles)
 		// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
