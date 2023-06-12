@@ -91,7 +91,9 @@
 
 /**
  * Updates the particles for the status effects
+ * Should be handled by subtypes!
  */
+
 /datum/status_effect/fire_handler/proc/update_particles()
 	SHOULD_CALL_PARENT(FALSE)
 
@@ -180,7 +182,7 @@
 	update_particles()
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
-	if(on_fire)
+	if(on_fire && (stacks > 0))
 		if(!particle_effect)
 			particle_effect = new(owner, /particles/embers)
 		if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
