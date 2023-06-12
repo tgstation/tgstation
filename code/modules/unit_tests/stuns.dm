@@ -67,6 +67,6 @@
 
 /datum/unit_test/stun_absorb/Run()
 	var/mob/living/carbon/human/doesnt_get_stunned = allocate(/mob/living/carbon/human/consistent)
-	doesnt_get_stunned.add_stun_absorption(id = TRAIT_SOURCE_UNIT_TESTS)
+	doesnt_get_stunned.add_stun_absorption(source = TRAIT_SOURCE_UNIT_TESTS)
 	doesnt_get_stunned.Stun(1 SECONDS)
 	TEST_ASSERT(!doesnt_get_stunned.IsStun(), "Stun() stunned despite having stun absorption")
