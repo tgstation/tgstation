@@ -313,7 +313,7 @@
 	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by atmos' blue. Has improved thermal shielding."
 	icon_state = "atmos_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_atmospherics
+	armor_type = /datum/armor/space_plasmaman/engineering_atmos
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
