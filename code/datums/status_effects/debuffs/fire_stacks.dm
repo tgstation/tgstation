@@ -16,7 +16,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
-	/// A particle effect, for things like embers
+
+	/// A particle effect, for things like embers - Should be set on update_particles()
 	var/obj/effect/abstract/particle_holder/particle_effect
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
