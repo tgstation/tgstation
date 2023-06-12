@@ -248,7 +248,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 
 	var/acid_used = min(acid_volume * 0.05, 20)
-	if(crosser.acid_act(acid_power, acid_used, FEET))
-		playsound(crosser, SFX_SEAR, 50, TRUE)
-		to_chat(crosser, span_userdanger("The acid on the [parent] burns you!"))
-		set_volume(max(acid_volume - acid_used, 10))
+	if(!crosser.acid_act(acid_power, acid_used, FEET))
+		return
+	playsound(crosser, SFX_SEAR, 50, TRUE)
+	to_chat(crosser, span_userdanger("The acid on the [parent] burns you!"))
+	set_volume(max(acid_volume - acid_used, 10))
