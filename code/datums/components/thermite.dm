@@ -179,10 +179,12 @@
 	if(!iscarbon(user) || user.can_touch_burning(source))
 		return NONE
 
-	var/obj/item/bodypart/affecting = user.get_bodypart(!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
-	if(!affecting?.receive_damage(burn = 5))
+	var/obj/item/bodypart/affecting = user.get_active_hand()
+	//Should not happen!
+	if(!affecting)
 		return NONE
 
+	affecting.receive_damage(burn = 5)
 	to_chat(user, span_userdanger("The ignited thermite on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
