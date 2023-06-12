@@ -86,12 +86,36 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
 	speed = 3 SECONDS, \
 	effectiveness = 95, \
 	bonus_modifier = 5, \
 	)
-	//fast and effective, but as a sword, it might damage the results.
+	// The weight of authority comes down on the tider's crimes.
+	AddElement(/datum/element/bane, target_type = /mob/living/carbon/human, damage_multiplier = 0.35)
+	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
+	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
+
+/**
+ * If the target reeks of maintenance, the blade can tear through their body with a total of 20 damage.
+ */
+/obj/item/melee/sabre/proc/attempt_bane(element_owner, mob/living/carbon/criminal)
+	SIGNAL_HANDLER
+	var/obj/item/organ/internal/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(isnull(liver) || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		return COMPONENT_CANCEL_BANING
+
+/**
+ * Assistants should fear this weapon.
+ */
+/obj/item/melee/sabre/proc/bane_effects(element_owner, mob/living/carbon/human/baned_target)
+	SIGNAL_HANDLER
+	baned_target.visible_message(
+		span_warning("[src] tears through [baned_target] with unnatural ease!"),
+		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!"),
+	)
+	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
