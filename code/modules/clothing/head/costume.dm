@@ -145,7 +145,7 @@
 	icon_state = "football_helmet"
 	greyscale_colors = "#D74722"
 	greyscale_config = /datum/greyscale_config/football_helmet
-	greyscale_config_worn = /datum/greyscale_config/football_helmet_worn
+	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/tv_head

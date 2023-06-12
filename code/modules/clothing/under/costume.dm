@@ -304,7 +304,7 @@
 	icon_state = "football_suit"
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
-	greyscale_config_worn = /datum/greyscale_config/football_suit_worn
+	greyscale_config_worn = /datum/greyscale_config/football_suit/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

@@ -30,7 +30,8 @@
 
 //
 // GIFTWRAP
-// (Yes, some of these are items and not large objects, but it's better they stay grouped together)
+// (Yes, the paper is an item not a large object, but it's better they stay grouped together)
+// All the variants share one .json, as they have the same number of component states
 //
 
 /datum/greyscale_config/giftbox

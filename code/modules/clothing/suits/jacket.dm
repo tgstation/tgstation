@@ -36,7 +36,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/fancy_coat
-	greyscale_config_worn = /datum/greyscale_config/fancy_coat_worn
+	greyscale_config_worn = /datum/greyscale_config/fancy_coat/worn
 	greyscale_colors = "#EDE3DC#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
