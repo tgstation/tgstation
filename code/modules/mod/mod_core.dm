@@ -400,8 +400,8 @@
 		STOP_PROCESSING(SSprocessing, src)
 		mod.wearer.particles = null
 		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
-		for(var/mob/living/basic/butterfly/lavaland/temporary/mob in mob_spawner.spawned_things)
-			mob.fadeout()
+		for(var/datum/mob in mob_spawner.spawned_things)
+			qdel(mob)
 		qdel(mob_spawner)
 
 /obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
