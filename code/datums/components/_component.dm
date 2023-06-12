@@ -458,6 +458,7 @@
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 		if(COMPONENT_DELETE)
 			qdel(target)
+			return
 
 	if(target == AddComponent(target))
 		target._JoinParent()
