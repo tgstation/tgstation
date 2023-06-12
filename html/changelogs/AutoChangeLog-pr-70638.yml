@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "When a human went through an emagged recycler, they would have literally everything on them chewed up in the recycler. However, they still appeared to have all of their stuff on them due to some faulty code. When you now punt that tider into the chewer-of-death, they should now appropriately reflect that all of their clothes have been deleted."

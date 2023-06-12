@@ -6,7 +6,7 @@
 // Original "background" tone.
 /obj/item/paper/fluff/ruins/listeningstation/reports/march
 	name = "march report"
-	default_raw_text = {"Accepted new assignment from liasion at MI13. Mission: Report on all Nanotrasen activities in this sector.
+	default_raw_text = {"Accepted new assignment from liaison at MI13. Mission: Report on all Nanotrasen activities in this sector.
 	<br> Secondary Mission is to ensure survival of the person in the sleeper. This should not be hard, I have had personal experience with
 	<br> this model of sleeper, and I know it to be of good quality.
 	"}

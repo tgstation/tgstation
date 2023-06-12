@@ -23,7 +23,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
 	var/tracking_range = 20
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
@@ -110,8 +110,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10000)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
+	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
@@ -124,6 +124,11 @@
 	 * - A weakref to a /obj/machinery/computer/teleporter, meaning the last place it teleported to was a pre-setup location.
 	*/
 	var/last_portal_location
+
+/datum/armor/item_hand_tele
+	bomb = 30
+	fire = 100
+	acid = 100
 
 /obj/item/hand_tele/Initialize(mapload)
 	. = ..()
@@ -200,7 +205,7 @@
 			if (about_to_replace_location)
 				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
 
 		last_portal_location = WEAKREF(teleport_location)
 
@@ -251,8 +256,8 @@
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
-	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
-	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2
@@ -295,7 +300,7 @@
 			return DESTINATION_PORTAL
 	return FALSE
 
-/obj/item/hand_tele/suicide_act(mob/user)
+/obj/item/hand_tele/suicide_act(mob/living/user)
 	if(iscarbon(user))
 		user.visible_message(span_suicide("[user] is creating a weak portal and sticking [user.p_their()] head through! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/mob/living/carbon/itemUser = user
@@ -307,11 +312,11 @@
 			itemUser.visible_message(span_suicide("The portal snaps closed taking [user]'s head with it!"))
 		else
 			itemUser.visible_message(span_suicide("[user] looks even further depressed as they realize they do not have a head...and suddenly dies of shame!"))
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
-	desc = "A reverse-engineered version of the Nanotrasen portable handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
+	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
@@ -352,8 +357,8 @@
 	attempt_teleport(user = user, triggered_by_emp = FALSE)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && charges < max_charges)
+/obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
+	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
@@ -419,6 +424,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
+		make_bloods(current_location, destination, user)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -454,6 +460,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
+		make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -475,6 +482,7 @@
 		to_chat(victim, span_userdanger("You teleport into [destination]."))
 	destination.ex_act(EXPLODE_HEAVY)
 	victim.unequip_everything()
+	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 	victim.gib()
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
@@ -483,6 +491,13 @@
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+
+///Bleed and make blood splatters at tele start and end points
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+	var/mob/living/carbon/carbon_user = user
+	carbon_user.add_splatter_floor(old_location)
+	carbon_user.add_splatter_floor(new_location)
+	carbon_user.bleed(10)
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
@@ -496,6 +511,8 @@
 		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
+		<br>
+		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
@@ -510,3 +527,6 @@
 
 #undef PORTAL_LOCATION_DANGEROUS
 #undef PORTAL_DANGEROUS_EDGE_LIMIT
+
+#undef SOURCE_PORTAL
+#undef DESTINATION_PORTAL

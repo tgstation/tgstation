@@ -15,12 +15,12 @@
 	var/datum/callback/butcher_callback
 
 /datum/component/butchering/Initialize(
-	speed,
-	effectiveness,
-	bonus_modifier,
-	butcher_sound,
-	disabled,
-	can_be_blunt,
+	speed = 8 SECONDS,
+	effectiveness = 100,
+	bonus_modifier = 0,
+	butcher_sound = 'sound/effects/butcher.ogg',
+	disabled = FALSE,
+	can_be_blunt = FALSE,
 	butcher_callback,
 )
 	src.speed = speed
@@ -32,7 +32,7 @@
 	src.can_be_blunt = can_be_blunt
 	src.butcher_callback = butcher_callback
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(onItemAttack))
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -41,23 +41,26 @@
 		return
 	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
-			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
+			INVOKE_ASYNC(src, PROC_REF(startButcher), source, M, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
 		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
-			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
-								span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("You don't want to harm other living beings!"))
 				return COMPONENT_CANCEL_ATTACK_CHAIN
-			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
+
+			if(H.has_status_effect(/datum/status_effect/neck_slice))
+				return
+
+			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [M]..."))
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, M, speed) && M.Adjacent(source))
+	if(do_after(user, speed, M) && M.Adjacent(source))
 		on_butchering(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
@@ -73,7 +76,7 @@
 	log_combat(user, H, "attempted throat slitting", source)
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, H, clamp(500 / source.force, 30, 100)) && H.Adjacent(source))
+	if(do_after(user, clamp(500 / source.force, 30, 100), H) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
 			user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
 							span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
@@ -86,7 +89,7 @@
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
 			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
-			screaming_through_a_slit_throat.apply_wound(slit_throat)
+			screaming_through_a_slit_throat.apply_wound(slit_throat, wound_source = "throat slit")
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /**
@@ -136,6 +139,7 @@
 								span_notice("You butcher [meat]."))
 	butcher_callback?.Invoke(butcher, meat)
 	meat.harvest(butcher)
+	meat.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
 	meat.gib(FALSE, FALSE, TRUE)
 
 ///Enables the butchering mechanic for the mob who has equipped us.
@@ -168,7 +172,7 @@
 		return
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
@@ -188,9 +192,9 @@
 
 /datum/component/butchering/mecha/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_ATTACHED, .proc/enable_butchering)
-	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_DETACHED, .proc/disable_butchering)
-	RegisterSignal(parent, COMSIG_MECHA_DRILL_MOB, .proc/on_drill)
+	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_ATTACHED, PROC_REF(enable_butchering))
+	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_DETACHED, PROC_REF(disable_butchering))
+	RegisterSignal(parent, COMSIG_MECHA_DRILL_MOB, PROC_REF(on_drill))
 
 /datum/component/butchering/mecha/UnregisterFromParent()
 	. = ..()
@@ -203,14 +207,14 @@
 ///When we are ready to drill through a mob
 /datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/meat)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/on_butchering, chassis, meat)
+	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, meat)
 
 /datum/component/butchering/wearable
 
 /datum/component/butchering/wearable/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/worn_enable_butchering)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/worn_disable_butchering)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(worn_enable_butchering))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(worn_disable_butchering))
 
 /datum/component/butchering/wearable/UnregisterFromParent()
 	. = ..()
@@ -226,7 +230,7 @@
 	if(!(slot & source.slot_flags))
 		return
 	butchering_enabled = TRUE
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
+	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(butcher_target))
 
 ///Same as disable_butchering but for worn items
 /datum/component/butchering/wearable/proc/worn_disable_butchering(obj/item/source, mob/user)

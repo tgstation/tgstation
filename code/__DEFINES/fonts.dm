@@ -12,13 +12,5 @@
 /// Font used when signing on paper.
 #define SIGNATURE_FONT "Segoe Script"
 
-//pda fonts
-#define MONO "Monospaced"
-#define VT "VT323"
-#define ORBITRON "Orbitron"
-#define SHARE "Share Tech Mono"
-
-GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
-
 /// Emoji icon set
 #define EMOJI_SET 'icons/ui_icons/emoji/emoji.dmi'

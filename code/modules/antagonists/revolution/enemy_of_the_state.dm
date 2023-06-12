@@ -10,7 +10,7 @@
 	hijack_speed = 2 //not like they have much to do
 	suicide_cry = "FOR THE ETERNAL REVOLUTION!!"
 
-/datum/antagonist/enemy_of_the_state/proc/forge_objectives()
+/datum/antagonist/enemy_of_the_state/forge_objectives()
 
 	var/datum/objective/exile/exile_choice = new
 	exile_choice.owner = owner
@@ -23,6 +23,7 @@
 	objectives += hijack_choice
 
 /datum/antagonist/enemy_of_the_state/on_gain()
+	owner.add_memory(/datum/memory/revolution_rev_defeat)
 	owner.special_role = "exiled headrev"
 	forge_objectives()
 	. = ..()

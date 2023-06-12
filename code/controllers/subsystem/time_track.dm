@@ -101,7 +101,13 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_tickcount = current_tickcount
 
 	var/sendmaps_json = world.Profile(PROFILE_REFRESH, type = "sendmaps", format="json")
-	var/list/send_maps_data = json_decode(sendmaps_json)
+	var/list/send_maps_data = null
+	try
+		send_maps_data = json_decode(sendmaps_json)
+	catch
+		text2file(sendmaps_json,"bad_sendmaps.json")
+		can_fire = FALSE
+		return
 	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarentees us a properly sorted list
 
 	for(var/list/packet in send_maps_data)

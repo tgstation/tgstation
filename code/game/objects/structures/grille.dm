@@ -11,13 +11,20 @@
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
-	var/rods_broken = TRUE
+
+/datum/armor/structure_grille
+	melee = 50
+	bullet = 70
+	laser = 70
+	energy = 100
+	bomb = 10
 
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
@@ -55,12 +62,22 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			var/cost = 8
-			var/delay = 2 SECONDS
-
-			if(the_rcd.window_glass == RCD_WINDOW_REINFORCED)
-				delay = 4 SECONDS
+			var/cost = 0
+			var/delay = 0
+			if(the_rcd.window_type  == /obj/structure/window)
+				cost = 6
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 9
+				delay = 2.5 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/fulltile)
 				cost = 12
+				delay = 3 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
+				cost = 15
+				delay = 4 SECONDS
+			if(!cost)
+				return FALSE
 
 			return rcd_result_with_memory(
 				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
@@ -80,17 +97,17 @@
 			var/turf/T = loc
 
 			if(repair_grille())
-				to_chat(user, span_notice("You rebuild the broken grille."))
+				balloon_alert(user, "grille rebuilt")
 
 			if(!clear_tile(user))
 				return FALSE
 
-			if(!ispath(the_rcd.window_type, /obj/structure/window))
-				CRASH("Invalid window path type in RCD: [the_rcd.window_type]")
 			var/obj/structure/window/window_path = the_rcd.window_type
-			if(!valid_window_location(T, user.dir, is_fulltile = initial(window_path.fulltile)))
+			if(!ispath(window_path))
+				CRASH("Invalid window path type in RCD: [window_path]")
+			if(!valid_build_direction(T, user.dir, is_fulltile = initial(window_path.fulltile)))
+				balloon_alert(user, "window already here!")
 				return FALSE
-			to_chat(user, span_notice("You construct the window."))
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
@@ -194,8 +211,7 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/rods) && broken)
+	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
 			return
 		var/obj/item/stack/rods/R = W
@@ -252,8 +268,10 @@
 			return
 //window placing end
 
-	else if(istype(W, /obj/item/shard) || !shock(user, 70))
-		return ..()
+	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+		return
+
+	return ..()
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -283,9 +301,8 @@
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
-		rods_broken = FALSE
-		var/obj/R = new rods_type(drop_location(), rods_broken)
-		transfer_fingerprints_to(R)
+		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+		transfer_fingerprints_to(dropped_rods)
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
@@ -294,7 +311,6 @@
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
-		rods_broken = TRUE
 		return TRUE
 	return FALSE
 
@@ -309,6 +325,8 @@
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return FALSE
 	var/turf/T = get_turf(src)
+	if(T.overfloor_placed)//cant be a floor in the way!
+		return FALSE
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
 		if(electrocute_mob(user, C, src, 1, TRUE))
@@ -332,6 +350,8 @@
 			var/obj/O = AM
 			if(O.throwforce != 0)//don't want to let people spam tesla bolts, this way it will break after time
 				var/turf/T = get_turf(src)
+				if(T.overfloor_placed)
+					return FALSE
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
@@ -347,8 +367,9 @@
 	density = FALSE
 	broken = TRUE
 	rods_amount = 1
-	rods_broken = FALSE
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
 	take_damage(max_integrity * 0.6)
+
+#undef CLEAR_TILE_MOVE_LIMIT

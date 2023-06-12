@@ -4,7 +4,7 @@
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
+	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 
 /datum/element/projectile_shield/Detach(datum/target)
 	. = ..()

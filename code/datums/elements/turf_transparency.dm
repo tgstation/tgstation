@@ -96,12 +96,9 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 /// Displays a turf from the z level below us on our level
 /datum/z_pillar/proc/display_turf(turf/to_display, turf/source)
 	var/list/sources = turf_sources[to_display]
-	if(!sources)
-		sources = list()
-		turf_sources[to_display] = sources
-	sources |= source
 
-	if(length(sources) != 1) // If we aren't the first to request this turf, return
+	if(sources) // If we aren't the first to request this turf, return
+		sources |= source
 		var/obj/effect/abstract/z_holder/holding = drawing_object[to_display]
 		if(!holding)
 			return
@@ -117,6 +114,11 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		drawing_object -= to_display
 		visual_target.vis_contents += to_display
 		return
+
+	// Otherwise, we need to create a new set of sources. let's do that yeah?
+	sources = list()
+	turf_sources[to_display] = sources
+	sources |= source
 
 	var/turf/visual_target = to_display.above()
 	if(istransparentturf(visual_target) || isopenspaceturf(visual_target))
@@ -151,7 +153,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 /// We do not need to do this for non transparent holders, because they will have their abstract object cleared
 /// When a transparent holder comes back.
 /datum/z_pillar/proc/parent_cleared(turf/visual, turf/current_holder)
-	addtimer(CALLBACK(src, .proc/refresh_orphan, visual, current_holder))
+	addtimer(CALLBACK(src, PROC_REF(refresh_orphan), visual, current_holder))
 
 /// Runs the actual refresh of some formerly orphaned via vis_loc deletiong turf
 /// We'll only reup if we either have no souece, or if the source is a transparent turf
@@ -171,7 +173,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		hold_this.display(orphan, src)
 
 /datum/element/turf_z_transparency
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
 /datum/element/turf_z_transparency/Attach(datum/target, mapload)
@@ -181,10 +183,8 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 
 	var/turf/our_turf = target
 
-	our_turf.layer = OPENSPACE_LAYER
-
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
+	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, PROC_REF(on_multiz_turf_del))
+	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_turf_new))
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
@@ -274,3 +274,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, offset_spokesman = our_turf, plane = PLANE_SPACE)
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	return underlay_appearance
+
+#undef Z_PILLAR_RADIUS
+#undef Z_PILLAR_TRANSFORM
+#undef Z_KEY_TO_POSITION

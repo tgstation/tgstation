@@ -160,7 +160,7 @@
 
 // Freon:
 /// The minimum temperature freon can form from plasma, CO2, and BZ at.
-#define FREON_FORMATION_MIN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
+#define FREON_FORMATION_MIN_TEMPERATURE (FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100)
 /// The amount of energy 2.5 moles of freon forming from plasma, CO2, and BZ consumes.
 #define FREON_FORMATION_ENERGY 100
 

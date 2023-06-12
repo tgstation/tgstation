@@ -67,8 +67,8 @@
 	if(owner.mind || owner.client)
 		owner.log_message("gained stun absorption (from: [source || "Unknown"])", LOG_ATTACK)
 
-	RegisterSignal(owner, incapacitation_effect_signals, .proc/try_absorb_incapacitating_effect)
-	RegisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK, .proc/try_absorb_generic_effect)
+	RegisterSignal(owner, incapacitation_effect_signals, PROC_REF(try_absorb_incapacitating_effect))
+	RegisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK, PROC_REF(try_absorb_generic_effect))
 	return TRUE
 
 /datum/status_effect/stun_absorption/on_remove()

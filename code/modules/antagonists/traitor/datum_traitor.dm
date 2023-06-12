@@ -1,3 +1,8 @@
+///all the employers that are syndicate
+#define FLAVOR_FACTION_SYNDICATE "syndicate"
+///all the employers that are nanotrasen
+#define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
+
 /datum/antagonist/traitor
 	name = "\improper Traitor"
 	roundend_category = "traitors"
@@ -13,6 +18,10 @@
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
+	/// Code that allows traitor to get a replacement uplink
+	var/replacement_uplink_code = ""
+	/// Radio frequency that traitor must speak on to get a replacement uplink
+	var/replacement_uplink_frequency = ""
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
@@ -30,6 +39,9 @@
 
 	var/uplink_sale_count = 3
 
+	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
+	var/datum/objective/ending_objective
+
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
 	src.give_objectives = give_objectives
@@ -39,6 +51,7 @@
 
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
+	generate_replacement_codes()
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	uplink_ref = WEAKREF(uplink)
@@ -47,6 +60,7 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
+		uplink_handler.primary_objectives = objectives
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
@@ -65,12 +79,15 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, 1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
+		forge_ending_objective()
 
 	pick_employer()
+
+	owner.teach_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -89,7 +106,7 @@
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
-	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
 		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
 		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
@@ -129,89 +146,103 @@
 	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
 
+/// proc that generates the traitors replacement uplink code and radio frequency
+/datum/antagonist/traitor/proc/generate_replacement_codes()
+	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
+	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
+
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
+	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
 	var/list/possible_employers = list()
 
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
+	if(istype(ending_objective, /datum/objective/hijack))
+		possible_employers -= GLOB.normal_employers
+	else //escape or martyrdom
+		possible_employers -= GLOB.hijack_employers
+
 	switch(faction)
-		if(FACTION_SYNDICATE)
+		if(FLAVOR_FACTION_SYNDICATE)
 			possible_employers -= GLOB.nanotrasen_employers
-		if(FACTION_NANOTRASEN)
+		if(FLAVOR_FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
-/datum/objective/traitor_progression
-	name = "traitor progression"
-	explanation_text = "Become a living legend by getting a total of %REPUTATION% reputation points"
-
-	var/possible_range = list(40 MINUTES, 90 MINUTES)
-	var/required_total_progression_points
-
-/datum/objective/traitor_progression/New(text)
-	. = ..()
-	required_total_progression_points = round(rand(possible_range[1], possible_range[2]))
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_total_progression_points))
-
-/datum/objective/traitor_progression/check_completion()
-	if(!owner)
-		return FALSE
-	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor)
-		return FALSE
-	if(!traitor.uplink_handler)
-		return FALSE
-	if(traitor.uplink_handler.progression_points < required_total_progression_points)
-		return FALSE
-	return TRUE
-
-/datum/objective/traitor_objectives
-	name = "traitor objective"
-	explanation_text = "Complete objectives colletively worth more than %REPUTATION% reputation points"
-
-	var/possible_range = list(20 MINUTES, 30 MINUTES)
-	var/required_progression_in_objectives
-
-/datum/objective/traitor_objectives/New(text)
-	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]))
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_progression_in_objectives))
-
-/datum/objective/traitor_objectives/check_completion()
-	if(!owner)
-		return FALSE
-	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor)
-		return FALSE
-	if(!traitor.uplink_handler)
-		return FALSE
-	var/total_points = 0
-	for(var/datum/traitor_objective/objective as anything in traitor.uplink_handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
-			continue
-		total_points += objective.progression_reward
-	if(total_points < required_progression_in_objectives)
-		return FALSE
-	return TRUE
-
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
+	var/objective_count = 0
 
-	var/datum/objective/traitor_progression/final_objective = new /datum/objective/traitor_progression()
-	final_objective.owner = owner
-	objectives += final_objective
+	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
+		is_hijacker = TRUE
+		objective_count++
 
-	var/datum/objective/traitor_objectives/objective_completion = new /datum/objective/traitor_objectives()
-	objective_completion.owner = owner
-	objectives += objective_completion
+	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
 
+	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
+	// This does not give them 1 fewer objectives than intended.
+	for(var/i in objective_count to objective_limit - 1)
+		objectives += forge_single_generic_objective()
+
+/**
+ * ## forge_ending_objective
+ *
+ * Forges the endgame objective and adds it to this datum's objective list.
+ */
+/datum/antagonist/traitor/proc/forge_ending_objective()
+	if(is_hijacker)
+		ending_objective = new /datum/objective/hijack
+		ending_objective.owner = owner
+		return
+
+	var/martyr_compatibility = TRUE
+
+	for(var/datum/objective/traitor_objective in objectives)
+		if(!traitor_objective.martyr_compatible)
+			martyr_compatibility = FALSE
+			break
+
+	if(martyr_compatibility && prob(MARTYR_PROB))
+		ending_objective = new /datum/objective/martyr
+		ending_objective.owner = owner
+		objectives += ending_objective
+		return
+
+	ending_objective = new /datum/objective/escape
+	ending_objective.owner = owner
+	objectives += ending_objective
+
+/datum/antagonist/traitor/proc/forge_single_generic_objective()
+	if(prob(KILL_PROB))
+		var/list/active_ais = active_ais()
+		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
+			var/datum/objective/destroy/destroy_objective = new()
+			destroy_objective.owner = owner
+			destroy_objective.find_target()
+			return destroy_objective
+
+		if(prob(MAROON_PROB))
+			var/datum/objective/maroon/maroon_objective = new()
+			maroon_objective.owner = owner
+			maroon_objective.find_target()
+			return maroon_objective
+
+		var/datum/objective/assassinate/kill_objective = new()
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		return kill_objective
+
+	var/datum/objective/steal/steal_objective = new()
+	steal_objective.owner = owner
+	steal_objective.find_target()
+	return steal_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -240,6 +271,8 @@
 	data["theme"] = traitor_flavor["ui_theme"]
 	data["code"] = uplink?.unlock_code
 	data["failsafe_code"] = uplink?.failsafe_code
+	data["replacement_code"] = replacement_uplink_code
+	data["replacement_frequency"] = format_frequency(replacement_uplink_frequency)
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
@@ -279,6 +312,9 @@
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
+		if(uplink_handler.final_objective)
+			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
+			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
@@ -292,11 +328,7 @@
 	result += objectives_text
 
 	if(uplink_handler)
-		var/completed_objectives_text = "Completed Uplink Objectives: "
-		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
-			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
-		result += completed_objectives_text
+		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
 
@@ -338,3 +370,5 @@
 
 		H.update_held_items()
 
+#undef FLAVOR_FACTION_SYNDICATE
+#undef FLAVOR_FACTION_NANOTRASEN

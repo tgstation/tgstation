@@ -47,7 +47,7 @@
 	name = "incendiary ammo box"
 	desc = "A box of incendiary ammunition for use with exosuit weapons."
 	icon_state = "incendiary"
-	custom_materials = list(/datum/material/iron=6000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*3)
 	rounds = 24
 	ammo_type = MECHA_AMMO_INCENDIARY
 
@@ -55,7 +55,7 @@
 	name = "scattershot ammo box"
 	desc = "A box of scaled-up buckshot, for use in exosuit shotguns."
 	icon_state = "scattershot"
-	custom_materials = list(/datum/material/iron=6000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*3)
 	rounds = 40
 	ammo_type = MECHA_AMMO_BUCKSHOT
 
@@ -63,35 +63,37 @@
 	name = "machine gun ammo box"
 	desc = "A box of linked ammunition, designed for the Ultra AC 2 exosuit weapon."
 	icon_state = "lmg"
-	custom_materials = list(/datum/material/iron = 4000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	rounds = 300
 	ammo_type = MECHA_AMMO_LMG
 
-/obj/item/mecha_ammo/missiles_br
-	name = "breaching missiles"
-	desc = "A box of large missiles, ready for loading into a BRM-6 exosuit missile rack."
-	icon_state = "missile_br"
-	custom_materials = list(/datum/material/iron=8000,/datum/material/gold=500)
-	rounds = 6
-	direct_load = TRUE
-	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
-	ammo_type = MECHA_AMMO_MISSILE_HE
-
-/obj/item/mecha_ammo/missiles_he
-	name = "anti-armor missiles"
+/// Missile Ammo
+/// SRM-8 Missile type - Used by Nuclear Operatives
+/obj/item/mecha_ammo/missiles_srm
+	name = "short range missiles"
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
 	icon_state = "missile_he"
 	rounds = 8
 	direct_load = TRUE
 	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
-	ammo_type = MECHA_AMMO_MISSILE_AP
+	ammo_type = MECHA_AMMO_MISSILE_SRM
 
+/// PEP-6 Missile type - Used by Robotics
+/obj/item/mecha_ammo/missiles_pep
+	name = "precision explosive missiles"
+	desc = "A box of large missiles, ready for loading into a PEP-6 exosuit missile rack."
+	icon_state = "missile_br"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
+	rounds = 6
+	direct_load = TRUE
+	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
+	ammo_type = MECHA_AMMO_MISSILE_PEP
 
 /obj/item/mecha_ammo/flashbang
 	name = "launchable flashbangs"
 	desc = "A box of smooth flashbangs, for use with a large exosuit launcher. Cannot be primed by hand."
 	icon_state = "flashbang"
-	custom_materials = list(/datum/material/iron=4000,/datum/material/gold=500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
 	ammo_type = MECHA_AMMO_FLASHBANG
 
@@ -99,7 +101,7 @@
 	name = "launchable flashbang clusters"
 	desc = "A box of clustered flashbangs, for use with a specialized exosuit cluster launcher. Cannot be primed by hand."
 	icon_state = "clusterbang"
-	custom_materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT * 1.5,/datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	rounds = 3
 	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG

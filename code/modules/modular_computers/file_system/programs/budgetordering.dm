@@ -33,9 +33,6 @@
 	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 
-/datum/computer_file/program/budgetorders/proc/get_export_categories()
-	. = EXPORT_CARGO
-
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
@@ -50,11 +47,7 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D
-		var/obj/item/computer_hardware/card_slot/card_slot
-		if(computer)
-			card_slot = computer.all_components[MC_CARD]
-			D = card_slot?.GetID()
+		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
 		if(!D)
 			return FALSE
 		access = D.GetAccess()
@@ -65,13 +58,11 @@
 	return FALSE
 
 /datum/computer_file/program/budgetorders/ui_data()
-	. = ..()
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot?.GetID()
+	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 	if(id_card?.registered_account)
 		if((ACCESS_COMMAND in id_card.access))
 			requestonly = FALSE
@@ -127,15 +118,31 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	data["cart"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-		data["cart"] += list(list(
-			"object" = SO.pack.name,
-			"cost" = SO.pack.get_cost(),
-			"id" = SO.id,
-			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+	var/cart_list = list()
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		if(cart_list[order.pack.name])
+			cart_list[order.pack.name][1]["amount"]++
+			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
+			if(order.department_destination)
+				cart_list[order.pack.name][1]["dep_order"]++
+			if(!isnull(order.paying_account))
+				cart_list[order.pack.name][1]["paid"]++
+			continue
+
+		cart_list[order.pack.name] = list(list(
+			"cost_type" = order.cost_type,
+			"object" = order.pack.name,
+			"cost" = order.get_final_cost(),
+			"id" = order.id,
+			"amount" = 1,
+			"orderer" = order.orderer,
+			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
+			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"can_be_cancelled" = order.can_be_cancelled,
 		))
+	data["cart"] = list()
+	for(var/item_id in cart_list)
+		data["cart"] += cart_list[item_id]
 
 	data["requests"] = list()
 	for(var/datum/supply_order/SO in SSshuttle.request_list)
@@ -150,9 +157,6 @@
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
-	if(..())
-		return
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -162,12 +166,11 @@
 				computer.say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == docking_home)
-				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
-				computer.investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
+				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				computer.investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
+				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -186,7 +189,7 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
-				computer.investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
@@ -224,7 +227,7 @@
 					return
 
 			var/reason = ""
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
@@ -235,13 +238,13 @@
 				return
 
 			if(!requestonly && !self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = card_slot?.GetID()
+				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if((requestonly && !self_paid) || !(card_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
 				SSshuttle.request_list += SO
 			else
 				SSshuttle.shopping_list += SO
@@ -256,13 +259,16 @@
 					. = TRUE
 					break
 		if("clear")
-			SSshuttle.shopping_list.Cut()
+			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
+				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)
+					continue //don't cancel other department's orders or orders that can't be cancelled
+				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					var/obj/item/card/id/id_card = card_slot?.GetID()
+					var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.request_list -= SO

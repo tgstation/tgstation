@@ -82,7 +82,7 @@
 	)
 
 /datum/computer_file/program/arcade/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["Hitpoints"] = boss_hp
 	data["PlayerHitpoints"] = player_hp
 	data["PlayerMP"] = player_mp
@@ -94,12 +94,7 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
-
 	usr.played_game()
-
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
 	if(usr?.mind)
@@ -150,7 +145,7 @@
 			return TRUE
 		if("Dispense_Tickets")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
+				to_chat(usr, span_notice("Printer is out of paper."))
 				return
 			else
 				computer.visible_message(span_notice("\The [computer] prints out paper."))

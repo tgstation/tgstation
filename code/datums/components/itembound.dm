@@ -11,7 +11,7 @@
 	if(QDELETED(passed_container))
 		return
 	containerref = WEAKREF(passed_container)
-	move_tracker = new(parent, CALLBACK(src, .proc/verify_containment))
+	move_tracker = new(parent, CALLBACK(src, PROC_REF(verify_containment)))
 
 	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
 

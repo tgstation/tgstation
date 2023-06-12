@@ -1,0 +1,25 @@
+# This file is used by TGS (https://github.com/tgstation/tgstation-server) clients to quickly initialize a server instance for the codebase
+# The format isn't documented anywhere but hopefully we never have to change it. If there are questions, contact the TGS maintainer Cyberboss/@Dominion#0444
+version: 1
+# The BYOND version to use (kept in sync with dependencies.sh by the "TGS Test Suite" CI job)
+# Must be interpreted as a string, keep quoted
+byond: "514.1588"
+# Folders to create in "<instance_path>/Configuration/GameStaticFiles/"
+static_files:
+  # Config directory should be static
+  - name: config
+    # This implies the folder should be pre-populated with contents from the repo
+    populate: true
+  # Data directory must be static
+  - name: data
+# String dictionary. The value is the location of the file in the repo to upload to TGS. The key is the name of the file to upload to "<instance_path>/Configuration/EventScripts/"
+# This one is for Linux hosted servers
+linux_scripts:
+  PreCompile.sh: tools/tgs_scripts/PreCompile.sh
+  WatchdogLaunch.sh: tools/tgs_scripts/WatchdogLaunch.sh
+  InstallDeps.sh: tools/tgs_scripts/InstallDeps.sh
+# Same as above for Windows hosted servers
+windows_scripts:
+  PreCompile.bat: tools/tgs_scripts/PreCompile.bat
+# The security level the game should be run at
+security: Trusted

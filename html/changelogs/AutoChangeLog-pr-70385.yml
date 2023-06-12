@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "Fixed AIs piloting a mecha gaining unobstructed vision with no cameras present when moving past a certain point"

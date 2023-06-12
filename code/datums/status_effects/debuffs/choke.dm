@@ -3,6 +3,7 @@
 	id = "choke"
 	tick_interval = 0.2 SECONDS
 	alert_type = null
+	remove_on_fullheal = TRUE
 	/// Weakref to the thing we're choking on
 	var/datum/weakref/choking_on_ref
 	/// If the thing we're choking on is on fire
@@ -39,18 +40,17 @@
 			choking_on.forceMove(owner) // backup
 	else
 		choking_on.forceMove(owner)
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), .proc/no_breathing)
-	RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/on_logout)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_choke)
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(no_breathing))
+	RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	// Of note, this means plasma lovers lose some methods of vomiting up
-	RegisterSignal(owner, COMSIG_CARBON_VOMITED, .proc/on_vomit)
-	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, .proc/attempt_eat)
-	RegisterSignal(owner, COMSIG_CARBON_PRE_HELP, .proc/helped)
-	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, .proc/shook)
+	RegisterSignal(owner, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
+	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(attempt_eat))
+	RegisterSignal(owner, COMSIG_CARBON_PRE_HELP, PROC_REF(helped))
+	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(shook))
 
-	RegisterSignal(choking_on, COMSIG_PARENT_QDELETING, .proc/remove_choke)
-	RegisterSignal(choking_on, COMSIG_MOVABLE_MOVED, .proc/hazard_moved)
+	RegisterSignal(choking_on, COMSIG_PARENT_QDELETING, PROC_REF(remove_choke))
+	RegisterSignal(choking_on, COMSIG_MOVABLE_MOVED, PROC_REF(hazard_moved))
 	ADD_TRAIT(owner, TRAIT_MUTE, CHOKING_TRAIT)
 
 	owner.add_mood_event(id, /datum/mood_event/choke)
@@ -59,16 +59,16 @@
 	check_audio_state()
 
 	owner.visible_message(span_bolddanger("[owner] tries to speak, but can't! They're choking!"), \
-		span_userdanger("You try to breath, but there's a block! You're choking!"), \
-		)
+		span_userdanger("You try to breathe, but there's a block! You're choking!"), \
+	)
 
 	//barticles
 	if(flaming)
-		ash = new(owner, /particles/smoke/ash)
+		ash = new(owner, /particles/smoke/ash, PARTICLE_ATTACH_MOB)
 		var/clear_in = rand(15 SECONDS, 25 SECONDS)
 		if(duration != -1)
 			clear_in = min(duration, clear_in)
-		addtimer(CALLBACK(src, .proc/clear_flame), clear_in)
+		addtimer(CALLBACK(src, PROC_REF(clear_flame)), clear_in)
 	return TRUE
 
 /datum/status_effect/choke/proc/should_do_effects()
@@ -138,7 +138,7 @@
 
 /datum/status_effect/choke/proc/no_breathing(mob/living/source)
 	SIGNAL_HANDLER
-	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_NOBREATH), .proc/on_breathable)
+	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_NOBREATH), PROC_REF(on_breathable))
 	check_audio_state()
 
 /datum/status_effect/choke/proc/on_breathable(mob/living/source)
@@ -152,7 +152,7 @@
 
 /datum/status_effect/choke/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
-	RegisterSignal(source, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(source, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 	check_audio_state()
 
 /datum/status_effect/choke/proc/on_revive(mob/living/source)
@@ -167,12 +167,12 @@
 
 /datum/status_effect/choke/proc/helped(mob/source, mob/helping)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/heimlich, source, helping)
+	INVOKE_ASYNC(src, PROC_REF(heimlich), source, helping)
 	return COMPONENT_BLOCK_HELP_ACT
 
 /datum/status_effect/choke/proc/shook(mob/source, mob/helping)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/heimlich, source, helping)
+	INVOKE_ASYNC(src, PROC_REF(heimlich), source, helping)
 	return COMPONENT_BLOCK_MISC_HELP
 
 /datum/status_effect/choke/proc/heimlich(mob/victim, mob/aggressor)
@@ -182,7 +182,7 @@
 		victim.balloon_alert(aggressor, "already helping!")
 		return
 	if(DOING_INTERACTION(aggressor, "heimlich"))
-		victim.balloon_alert(aggressor, "already helping someone!") 
+		victim.balloon_alert(aggressor, "already helping someone!")
 		return
 
 	if(!thrusting_continues(victim, aggressor, before_work = TRUE))
@@ -204,7 +204,7 @@
 		owner.visible_message(span_warning("[aggressor] places [aggressor.p_their()] [hand_name]s on [victim]'s back, and begins forcefully striking it!"), \
 			span_boldwarning("You feel [aggressor]\s [hand_name]s on your back, and then repeated striking!"))
 
-	if(!do_after_mob(aggressor, victim, 7 SECONDS, extra_checks = CALLBACK(src, .proc/thrusting_continues, victim, aggressor), interaction_key = "heimlich"))
+	if(!do_after(aggressor, 7 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(thrusting_continues), victim, aggressor), interaction_key = "heimlich"))
 		aggressor.stop_pulling()
 		return
 	aggressor.stop_pulling()
@@ -216,7 +216,7 @@
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		if(chest)
-			chest.force_wound_upwards(/datum/wound/blunt/severe)
+			chest.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "human force to the chest")
 	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
@@ -267,22 +267,23 @@
 		victim.adjustBruteLoss(0.2)
 	return TRUE
 
-/datum/status_effect/choke/tick(delta_time)
+/datum/status_effect/choke/tick(seconds_per_tick)
 	if(!should_do_effects())
 		return
 
-	deal_damage(delta_time)
+	deal_damage(seconds_per_tick)
 
 	var/client/client_owner = owner.client
 	if(client_owner)
 		do_vfx(client_owner)
 
-/datum/status_effect/choke/proc/deal_damage(delta_time)
-	owner.losebreath += 1 * delta_time // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
+/datum/status_effect/choke/proc/deal_damage(seconds_per_tick)
+	owner.losebreath += 1 * seconds_per_tick // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * delta_time, 2 * delta_time)
+			head.receive_damage(0, 2 * seconds_per_tick, damage_source = "choking")
+		owner.adjustStaminaLoss(2 * seconds_per_tick)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

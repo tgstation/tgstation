@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	base_icon_state = "coil"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = 75)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75)
 
 	/// The currently connected circuit
 	var/obj/item/integrated_circuit/attached_circuit
@@ -21,7 +21,7 @@
 
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/examine(mob/user)
 	. = ..()
@@ -32,7 +32,7 @@
 // Look, I'm not happy about this either, but moving an object doesn't call Moved if it's inside something else.
 // There's good reason for this, but there's no element or similar yet to track it as far as I know.
 // SSobj runs infrequently, this is only ran while there's an attached circuit, its performance cost is negligible.
-/obj/item/usb_cable/process(delta_time)
+/obj/item/usb_cable/process(seconds_per_tick)
 	if (!check_in_range())
 		return PROCESS_KILL
 
@@ -82,14 +82,14 @@
 
 	return FALSE
 
-/obj/item/usb_cable/suicide_act(mob/user)
+/obj/item/usb_cable/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is wrapping [src] around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/usb_cable/proc/register_circuit_signals()
-	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_qdeling)
-	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_qdeling))
+	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
 	UnregisterSignal(attached_circuit, list(

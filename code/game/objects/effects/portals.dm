@@ -4,7 +4,7 @@
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
 	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null)
 	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
-	if(!istype(P1)||!istype(P2))
+	if(!istype(P1) || !istype(P2))
 		return
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE
@@ -28,6 +28,8 @@
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
+	//does this portal create spark effect when teleporting?
+	var/sparkless = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -115,7 +117,7 @@
 	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
-	if(last_effect == world.time)
+	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time
@@ -183,4 +185,5 @@
 
 /obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
 	. = ..()
-	qdel(src)
+	if (. && !isdead(M))
+		qdel(src)

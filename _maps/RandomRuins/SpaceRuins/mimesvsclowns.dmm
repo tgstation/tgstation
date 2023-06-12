@@ -1,0 +1,632 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"dq" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"dI" = (
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"ef" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"gu" = (
+/obj/structure/door_assembly/door_assembly_grunge,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"gV" = (
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"gZ" = (
+/turf/closed/mineral,
+/area/ruin)
+"hG" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
+/obj/item/food/burger/mime,
+/obj/item/food/burger/mime,
+/obj/item/food/pie/mimetart,
+/obj/item/food/pie/mimetart,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"hT" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"iP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"lS" = (
+/obj/structure/door_assembly,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"mB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"of" = (
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"ot" = (
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"ox" = (
+/obj/machinery/light/small/broken/directional/east,
+/obj/structure/closet/preopen,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/under/rank/civilian/mime,
+/obj/item/clothing/head/frenchberet,
+/obj/item/clothing/head/frenchberet,
+/obj/item/storage/backpack/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"rn" = (
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"uc" = (
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"ve" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"vj" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"vs" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"wo" = (
+/obj/item/paper{
+	name = "A MESSAGE TO THE CLOWNS"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"xg" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"yY" = (
+/obj/structure/table,
+/obj/item/seeds/banana/mime{
+	pixel_x = 46;
+	pixel_y = -27
+	},
+/obj/item/seeds/banana/mime{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Ar" = (
+/obj/item/ammo_casing/energy/c3dbullet{
+	dir = 5;
+	pixel_x = 59;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/gas/clown_hat{
+	pixel_y = 39
+	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"AK" = (
+/turf/open/floor/plating/airless,
+/area/ruin)
+"BU" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"CZ" = (
+/obj/item/clothing/suit/space/eva{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"ED" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"EY" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Fs" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"Fx" = (
+/turf/template_noop,
+/area/template_noop)
+"Gv" = (
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"GF" = (
+/obj/structure/table,
+/obj/item/stamp/mime,
+/obj/item/toy/figure/mime{
+	pixel_y = 10;
+	pixel_x = 6
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"GS" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Ij" = (
+/obj/machinery/door/airlock/glass,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"Jz" = (
+/turf/closed/wall,
+/area/ruin)
+"JK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"JW" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"Kh" = (
+/obj/machinery/light/broken/directional/north,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Kr" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Kx" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"KI" = (
+/obj/structure/sign/poster/contraband/microwave,
+/turf/closed/wall,
+/area/ruin)
+"KV" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin)
+"Mx" = (
+/obj/structure/sign/poster/contraband/missing_gloves,
+/turf/closed/wall,
+/area/ruin)
+"Pq" = (
+/obj/machinery/light/broken/directional/north,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Qb" = (
+/obj/structure/sign/poster/contraband/masked_men,
+/turf/closed/wall,
+/area/ruin)
+"Qh" = (
+/obj/machinery/computer/old,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Sc" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Vj" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/template_noop,
+/area/ruin)
+"WY" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
+/obj/item/ammo_casing/energy/c3dbullet{
+	pixel_y = 10;
+	pixel_x = 115;
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"YF" = (
+/obj/structure/bed,
+/obj/item/bedsheet/mime,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+
+(1,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(2,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(3,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(4,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(5,1,1) = {"
+Fx
+Fx
+Fx
+gZ
+Jz
+Jz
+gZ
+gZ
+Mx
+Jz
+Jz
+BU
+gV
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(6,1,1) = {"
+Fx
+Fx
+gZ
+gZ
+yY
+GF
+Jz
+Jz
+vs
+Kx
+Jz
+Qh
+gV
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(7,1,1) = {"
+Fx
+Fx
+gZ
+gZ
+Kh
+ED
+iP
+lS
+ve
+WY
+KI
+hG
+iP
+Vj
+Fx
+Fx
+Fx
+Fx
+"}
+(8,1,1) = {"
+Fx
+Fx
+gZ
+gZ
+gV
+wo
+ef
+JW
+JK
+Ar
+Ij
+AK
+iP
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(9,1,1) = {"
+Fx
+Fx
+gZ
+gZ
+Kr
+rn
+Jz
+Jz
+Gv
+Sc
+Jz
+Jz
+ot
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(10,1,1) = {"
+Fx
+Fx
+Fx
+gZ
+Jz
+Jz
+Jz
+Jz
+gu
+uc
+Jz
+xg
+gV
+gZ
+gZ
+Fx
+Fx
+Fx
+"}
+(11,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Jz
+hT
+iP
+dI
+Jz
+YF
+ox
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(12,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Qb
+Pq
+mB
+gV
+vj
+gZ
+gZ
+gZ
+Fx
+Fx
+Fx
+Fx
+"}
+(13,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Jz
+dq
+mB
+CZ
+of
+gZ
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(14,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Jz
+gZ
+gZ
+EY
+KV
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(15,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+Fx
+gZ
+gZ
+Fx
+gZ
+gV
+GS
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(16,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+gZ
+Fs
+EY
+gZ
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}
+(17,1,1) = {"
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+Fx
+"}

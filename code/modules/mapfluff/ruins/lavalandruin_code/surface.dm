@@ -21,3 +21,7 @@
 	bound_height = 64
 	pixel_y = -10
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/dead_ratvar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_RATVAR_WRECK)

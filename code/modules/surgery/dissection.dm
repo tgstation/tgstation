@@ -4,8 +4,8 @@
 		/mob/living/carbon/human,
 		/mob/living/carbon/alien,
 	)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_real_bodypart = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -30,14 +30,10 @@
 	return TRUE
 
 /datum/surgery_step/dissection
-	name = "dissect"
+	name = "dissect (autopsy scanner)"
 	time = 16 SECONDS
 	implements = list(
-		TOOL_SCALPEL = 100,
-		/obj/item/melee/energy/sword = 75,
-		/obj/item/knife = 65,
-		/obj/item/shard = 45,
-		/obj/item = 30,
+		/obj/item/autopsy_scanner = 100,
 	)
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -68,7 +64,7 @@
 		target,
 		span_notice("You mess up, damaging some of the internal organs!"),
 		span_notice("[user] messes up, damaging some of the internal organs!"),
-		span_notice("[user] messes up, damaging some of your internal organs!")
+		span_notice("[user] messes up, damaging some of your internal organs!"),
 	)
 
 	target.adjustOrganLoss(pick(

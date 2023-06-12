@@ -96,7 +96,6 @@
 /obj/item/changeling
 	name = "flesh"
 	slot_flags = ALL
-	allowed = list(/obj/item/changeling)
 	item_flags = DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -160,7 +159,7 @@
 		disguise_image.overlays = snap.overlays
 		disguises[current_profile.name] = disguise_image
 
-	var/chosen_name = show_radial_menu(user, user, disguises, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE, tooltips = TRUE)
+	var/chosen_name = show_radial_menu(user, user, disguises, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_name)
 		return
 

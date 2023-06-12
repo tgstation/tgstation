@@ -58,7 +58,7 @@
 		/obj/item/flashlight/emp/debug=1,
 		/obj/item/geiger_counter=1,
 		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/modular_computer/tablet/pda/heads/captain=1,
+		/obj/item/modular_computer/pda/heads/captain=1,
 		/obj/item/pipe_dispenser=1,
 		/obj/item/stack/spacecash/c1000=50,
 		/obj/item/storage/box/beakers/bluespace=1,
@@ -73,9 +73,9 @@
 	name = "plastic box"
 	desc = "It's a solid, plastic shell box."
 	icon_state = "plasticbox"
-	foldable = null
+	foldable_result = null
 	illustration = "writing"
-	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT) //You lose most if recycled.
 
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"

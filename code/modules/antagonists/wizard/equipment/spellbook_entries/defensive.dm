@@ -54,6 +54,13 @@
 		it will become easier for others to find your item of power."
 	spell_type =  /datum/action/cooldown/spell/lichdom
 	category = "Defensive"
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting)
+
+/datum/spellbook_entry/chuunibyou
+	name = "Chuuni Invocations"
+	desc = "Makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
+	spell_type =  /datum/action/cooldown/spell/chuuni_invocations
+	category = "Defensive"
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"

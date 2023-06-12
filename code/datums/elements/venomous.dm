@@ -4,8 +4,8 @@
  * Used for spiders, frogs, and bees!
  */
 /datum/element/venomous
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/poison_type
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
@@ -13,43 +13,15 @@
 
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added)
 	. = ..()
-
-	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
-	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
-	else if(ishostile(target) || isbasicmob(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
-	else
-		return ELEMENT_INCOMPATIBLE
-
 	src.poison_type = poison_type
 	src.amount_added = amount_added
+	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_venom)))
 
 /datum/element/venomous/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
+	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/venomous/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
-	SIGNAL_HANDLER
-
-	add_reagent(target)
-
-/datum/element/venomous/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-	add_reagent(target)
-
-/datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
-	SIGNAL_HANDLER
-
-	if(!success)
-		return
-	add_reagent(target)
-
-/datum/element/venomous/proc/add_reagent(mob/living/target)
+/datum/element/venomous/proc/do_venom(datum/element_owner, atom/venom_source, mob/living/target, hit_zone)
 	if(!istype(target))
 		return
 	if(target.stat == DEAD)

@@ -9,6 +9,7 @@
 /datum/symptom/disfiguration
 	name = "Disfiguration"
 	desc = "The virus liquefies facial muscles, disfiguring the host."
+	illness = "Broken Face"
 	stealth = 2
 	resistance = 0
 	stage_speed = 3

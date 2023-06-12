@@ -17,3 +17,12 @@ SUBSYSTEM_DEF(asset_loading)
 		if(MC_TICK_CHECK)
 			return
 		generate_queue.len--
+
+/datum/controller/subsystem/asset_loading/proc/queue_asset(datum/asset/queue)
+#ifdef DO_NOT_DEFER_ASSETS
+	stack_trace("We queued an instance of [queue.type] for lateloading despite not allowing it")
+#endif
+	generate_queue += queue
+
+/datum/controller/subsystem/asset_loading/proc/dequeue_asset(datum/asset/queue)
+	generate_queue -= queue

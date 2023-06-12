@@ -5,7 +5,7 @@
 	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10 //how long does the step take?
-	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
+	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or else the surgeon will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
@@ -15,7 +15,7 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
-	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+	if(surgery.organ_to_manipulate && !target.get_organ_slot(surgery.organ_to_manipulate))
 		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 		return FALSE
 
@@ -46,7 +46,7 @@
 
 	if(success)
 		if(target_zone == surgery.location)
-			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
+			if(get_location_accessible(target, target_zone) || (surgery.surgery_flags & SURGERY_IGNORE_CLOTHES))
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
 				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
@@ -64,6 +64,8 @@
 	return FALSE
 
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+///Modifier given to surgery speed for dissected bodies.
+#define SURGERY_DISSECTION_MODIFIER 1.2
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -82,6 +84,9 @@
 
 	if(tool)
 		speed_mod = tool.toolspeed
+
+	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+		speed_mod /= SURGERY_DISSECTION_MODIFIER
 
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
@@ -125,9 +130,13 @@
 	return advance
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin to perform surgery on [target]..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin to perform surgery on [target]..."),
 		span_notice("[user] begins to perform surgery on [target]."),
-		span_notice("[user] begins to perform surgery on [target]."))
+		span_notice("[user] begins to perform surgery on [target]."),
+	)
 
 /datum/surgery_step/proc/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(!preop_sound)
@@ -145,9 +154,13 @@
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
 	SEND_SIGNAL(user, COMSIG_MOB_SURGERY_STEP_SUCCESS, src, target, target_zone, tool, surgery, default_display_results)
 	if(default_display_results)
-		display_results(user, target, span_notice("You succeed."),
-				span_notice("[user] succeeds!"),
-				span_notice("[user] finishes."))
+		display_results(
+			user,
+			target,
+			span_notice("You succeed."),
+			span_notice("[user] succeeds!"),
+			span_notice("[user] finishes."),
+		)
 	return TRUE
 
 /datum/surgery_step/proc/play_success_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -165,7 +178,10 @@
 		if(75 to 99)
 			screwedmessage = " This is practically impossible in these conditions..."
 
-	display_results(user, target, span_warning("You screw up![screwedmessage]"),
+	display_results(
+		user,
+		target,
+		span_warning("You screw up![screwedmessage]"),
 		span_warning("[user] screws up!"),
 		span_notice("[user] finishes."), TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE
@@ -230,3 +246,6 @@
 		to_chat(target, span_userdanger(pain_message))
 		if(prob(30) && !mechanical_surgery)
 			target.emote("scream")
+
+#undef SURGERY_DISSECTION_MODIFIER
+#undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

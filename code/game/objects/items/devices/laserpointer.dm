@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 10
@@ -19,13 +19,15 @@
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
-
 /obj/item/laser_pointer/red
 	pointer_icon_state = "red_laser"
+
 /obj/item/laser_pointer/green
 	pointer_icon_state = "green_laser"
+
 /obj/item/laser_pointer/blue
 	pointer_icon_state = "blue_laser"
+
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
@@ -69,6 +71,7 @@
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	laser_act(target, user, params)
 
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
@@ -117,8 +120,7 @@
 		var/mob/living/silicon/S = target
 		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
-		if(prob(effectchance * diode.rating))
-			S.flash_act(affect_silicon = 1)
+		if(prob(effectchance * diode.rating) && S.flash_act(affect_silicon = TRUE))
 			S.Paralyze(rand(100,200))
 			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
@@ -188,14 +190,14 @@
 			to_chat(user, span_warning("[src]'s battery is overused, it needs time to recharge!"))
 			recharge_locked = TRUE
 
-	flick_overlay_view(I, targloc, 10)
+	targloc.flick_overlay_view(I, 10)
 	icon_state = "pointer"
 
-/obj/item/laser_pointer/process(delta_time)
+/obj/item/laser_pointer/process(seconds_per_tick)
 	if(!diode)
 		recharging = FALSE
 		return PROCESS_KILL
-	if(DT_PROB(10 + diode.rating*10 - recharge_locked*1, delta_time)) //t1 is 20, 2 40
+	if(SPT_PROB(10 + diode.rating*10 - recharge_locked*1, seconds_per_tick)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

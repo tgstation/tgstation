@@ -11,7 +11,7 @@
 		/obj/item/food/grown/apple = 1
 	)
 	result = /obj/item/food/salad/herbsalad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/aesirsalad
 	name = "Aesir salad"
@@ -21,7 +21,7 @@
 		/obj/item/food/grown/apple/gold = 1
 	)
 	result = /obj/item/food/salad/aesirsalad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/validsalad
 	name = "Valid salad"
@@ -32,20 +32,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/salad/validsalad
-	subcategory = CAT_SALAD
-
-/datum/crafting_recipe/food/monkeysdelight
-	name = "Monkeys delight"
-	reqs = list(
-		/datum/reagent/consumable/flour = 5,
-		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/monkeycube = 1,
-		/obj/item/food/grown/banana = 1
-	)
-	result = /obj/item/food/soup/monkeysdelight
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
@@ -58,7 +45,7 @@
 		/obj/item/food/grown/ambrosia = 1
 	)
 	result = /obj/item/food/melonfruitbowl
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/fruitsalad
 	name = "Fruit salad"
@@ -71,7 +58,7 @@
 
 	)
 	result = /obj/item/food/salad/fruit
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/junglesalad
 	name = "Jungle salad"
@@ -83,7 +70,7 @@
 
 	)
 	result = /obj/item/food/salad/jungle
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/citrusdelight
 	name = "Citrus delight"
@@ -95,7 +82,7 @@
 
 	)
 	result = /obj/item/food/salad/citrusdelight
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/edensalad
 	name = "Salad of Eden"
@@ -107,7 +94,7 @@
 		/obj/item/food/grown/peace = 1
 	)
 	result = /obj/item/food/salad/edensalad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/kale_salad
 	name = "Kale salad"
@@ -119,7 +106,7 @@
 		/datum/reagent/consumable/quality_oil = 2,
 	)
 	result = /obj/item/food/salad/kale_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/greek_salad
 	name = "Greek salad"
@@ -133,7 +120,7 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/salad/greek_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/caesar_salad
 	name = "Caesar salad"
@@ -146,7 +133,7 @@
 		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/salad/caesar_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/spring_salad
 	name = "Spring salad"
@@ -158,7 +145,7 @@
 		/datum/reagent/consumable/quality_oil = 5,
 	)
 	result = /obj/item/food/salad/spring_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/potato_salad
 	name = "Potato salad"
@@ -170,7 +157,7 @@
 		/datum/reagent/consumable/mayonnaise = 5,
 	)
 	result = /obj/item/food/salad/potato_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/spinach_fruit_salad
 	name = "Spinach fruit salad"
@@ -182,7 +169,7 @@
 		/datum/reagent/consumable/quality_oil = 2,
 	)
 	result = /obj/item/food/salad/spinach_fruit_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/antipasto_salad
 	name = "Antipasto salad"
@@ -195,4 +182,4 @@
 		/obj/item/food/cheese/mozzarella = 1,
 	)
 	result = /obj/item/food/salad/antipasto_salad
-	subcategory = CAT_SALAD
+	category = CAT_SALAD

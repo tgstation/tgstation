@@ -26,7 +26,7 @@
 	attached_to = A
 	var/turf/loc_turf = get_turf(A)
 	if(!loc_turf)
-		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, .proc/retry_attach, TRUE)
+		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, PROC_REF(retry_attach), TRUE)
 	else
 		forceMove(loc_turf)
 
@@ -109,7 +109,7 @@
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent(), 1)]%</div>"
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent())]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"

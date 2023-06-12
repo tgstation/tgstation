@@ -2,7 +2,7 @@
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
 	var/range_modifier = 1
 	/// Fullscreen object we use for tracking the shots.
-	var/atom/movable/screen/fullscreen/scope/tracker
+	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
 
 /datum/component/scope/Initialize(range_modifier)
 	if(!isgun(parent))
@@ -11,14 +11,14 @@
 
 /datum/component/scope/Destroy(force, silent)
 	if(tracker)
-		stop_zooming(tracker.marksman)
+		stop_zooming(tracker.owner)
 	return ..()
 
 /datum/component/scope/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_afterattack)
-	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, .proc/on_gun_fire)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -28,20 +28,23 @@
 		COMSIG_PARENT_EXAMINE,
 	))
 
-/datum/component/scope/process(delta_time)
-	if(!tracker.marksman.client)
-		stop_zooming(tracker.marksman)
+/datum/component/scope/process(seconds_per_tick)
+	var/mob/user_mob = tracker.owner
+	var/client/user_client = user_mob.client
+	if(!user_client)
+		stop_zooming(user_mob)
 		return
-	if(!length(tracker.marksman.client.keys_held & tracker.marksman.client.movement_keys))
-		tracker.marksman.face_atom(tracker.given_turf)
-	animate(tracker.marksman.client, 0.2 SECONDS, easing = SINE_EASING, flags = EASE_OUT, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+	tracker.calculate_params()
+	if(!length(user_client.keys_held & user_client.movement_keys))
+		user_mob.face_atom(tracker.given_turf)
+	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
 
 	if(!tracker)
 		return
-	stop_zooming(tracker.marksman)
+	stop_zooming(tracker.owner)
 
 /datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
@@ -57,7 +60,7 @@
 
 	if(!tracker?.given_turf || target == get_target(tracker.given_turf))
 		return NONE
-	INVOKE_ASYNC(source, /obj/item/gun.proc/fire_gun, get_target(tracker.given_turf), user)
+	INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item/gun, fire_gun), get_target(tracker.given_turf), user)
 	return COMPONENT_CANCEL_GUN_FIRE
 
 /datum/component/scope/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -77,13 +80,15 @@
 	for(var/atom/movable/possible_target in target_turf)
 		if(possible_target.layer <= PROJECTILE_HIT_THRESHHOLD_LAYER)
 			continue
-		if(possible_target.invisibility > tracker.marksman.see_invisible)
+		if(possible_target.invisibility > tracker.owner.see_invisible)
 			continue
 		if(!possible_target.mouse_opacity)
 			continue
 		if(iseffect(possible_target))
 			continue
 		if(ismob(possible_target))
+			if(possible_target == tracker.owner)
+				continue
 			return possible_target
 		if(!possible_target.density)
 			non_dense_targets += possible_target
@@ -107,12 +112,10 @@
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
-	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/scope, 0)
-	tracker.range_modifier = range_modifier
-	tracker.marksman = user
-	tracker.RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/scope.proc/on_move)
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/stop_zooming)
-	START_PROCESSING(SSfastprocess, src)
+	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
+	tracker.assign_to_mob(user, range_modifier)
+	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
+	START_PROCESSING(SSprojectiles, src)
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -123,7 +126,7 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSprojectiles, src)
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
@@ -133,46 +136,24 @@
 	tracker = null
 	user.clear_fullscreen("scope")
 
-/atom/movable/screen/fullscreen/scope
+/atom/movable/screen/fullscreen/cursor_catcher/scope
 	icon_state = "scope"
-	plane = HUD_PLANE
-	mouse_opacity = MOUSE_OPACITY_ICON
 	/// Multiplier for given_X an given_y.
 	var/range_modifier = 1
-	/// The mob the scope is on.
-	var/mob/marksman
-	/// Pixel x we send to the scope component.
-	var/given_x = 0
-	/// Pixel y we send to the scope component.
-	var/given_y = 0
-	/// The turf we send to the scope component.
-	var/turf/given_turf
-	/// The coordinate on our mouseentered, for performance reasons.
-	COOLDOWN_DECLARE(coordinate_cooldown)
 
-/atom/movable/screen/fullscreen/scope/proc/on_move(atom/source, atom/oldloc, dir, forced)
-	SIGNAL_HANDLER
+/atom/movable/screen/fullscreen/cursor_catcher/scope/assign_to_mob(mob/new_owner, range_modifier)
+	src.range_modifier = range_modifier
+	return ..()
 
-	if(!given_turf)
-		return
-	var/x_offset = source.loc.x - oldloc.x
-	var/y_offset = source.loc.y - oldloc.y
-	given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
+/atom/movable/screen/fullscreen/cursor_catcher/scope/Click(location, control, params)
+	if(usr == owner)
+		calculate_params()
+	return ..()
 
-/atom/movable/screen/fullscreen/scope/MouseEntered(location, control, params)
-	. = ..()
-	MouseMove(location, control, params)
-
-/atom/movable/screen/fullscreen/scope/MouseMove(location, control, params)
-	if(!marksman?.client || usr != marksman)
-		return
-	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))
-		return
-	COOLDOWN_START(src, coordinate_cooldown, 0.2 SECONDS)
-	var/list/modifiers = params2list(params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
-	var/list/view = getviewsize(marksman.client.view)
-	given_x = round(range_modifier * (icon_x - view[1]*world.icon_size/2))
-	given_y = round(range_modifier * (icon_y - view[2]*world.icon_size/2))
-	given_turf = locate(marksman.x+round(given_x/world.icon_size, 1),marksman.y+round(given_y/world.icon_size, 1),marksman.z)
+/atom/movable/screen/fullscreen/cursor_catcher/scope/calculate_params()
+	var/list/modifiers = params2list(mouse_params)
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
+	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
+	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)

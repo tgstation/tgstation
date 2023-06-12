@@ -1,5 +1,5 @@
 /datum/element/earhealing
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	var/list/user_by_item = list()
 
 /datum/element/earhealing/Attach(datum/target)
@@ -7,7 +7,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), .proc/on_equip)
+	RegisterSignals(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(on_equip))
 
 /datum/element/earhealing/Detach(datum/target)
 	. = ..()
@@ -23,12 +23,12 @@
 	else
 		user_by_item -= source
 
-/datum/element/earhealing/process(delta_time)
+/datum/element/earhealing/process(seconds_per_tick)
 	for(var/i in user_by_item)
 		var/mob/living/carbon/user = user_by_item[i]
-		var/obj/item/organ/internal/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = user.get_organ_slot(ORGAN_SLOT_EARS)
 		if(!ears || !ears.damage || ears.organ_flags & ORGAN_FAILING)
 			continue
-		ears.deaf = max(ears.deaf - 0.25 * delta_time, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
-		ears.applyOrganDamage(-0.025 * delta_time)
+		ears.deaf = max(ears.deaf - 0.25 * seconds_per_tick, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
+		ears.apply_organ_damage(-0.025 * seconds_per_tick)
 		CHECK_TICK

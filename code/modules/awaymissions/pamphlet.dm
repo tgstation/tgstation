@@ -46,3 +46,36 @@
 			As a participant in the Nanotrasen Gateway Project, you will be on the frontiers of space. \
 			Though complete safety is assured, participants are advised to prepare for inhospitable \
 			environs."
+
+/obj/item/paper/pamphlet/cybernetics
+	name = "pamphlet - 'Synthman's Cybernetic Starter Gear!'"
+	default_raw_text = "Join the Body Modder Revolution today! We are offering FREE SAMPLES of the latest and greatest \
+		cybernetic augments by Synthman Co. to you in this rare exclusive offer! With this letter, you are being gifted a \
+		special limited edition choice NTSDA-certified grade-A cybernetic implant, FREE OF CHARGE! Build up your body to \
+		GREATNESS with Synthman's new exclusive line of cybernetic products! Become greater, stronger, and BETTER today!"
+	var/obj/item/organ/internal/heart/cybernetic/sample
+
+/obj/item/paper/pamphlet/cybernetics/Initialize(mapload)
+	. = ..()
+	sample = new(src)
+	update_desc()
+
+/obj/item/paper/pamphlet/cybernetics/update_desc(updates)
+	. = ..()
+	desc = "A pamphlet encouraging the reader to implant themselves.[sample ? " Has an attached \"sample\"..." : ""]"
+
+/obj/item/paper/pamphlet/cybernetics/Destroy()
+	QDEL_NULL(sample)
+	return ..()
+
+/obj/item/paper/pamphlet/cybernetics/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == sample)
+		sample = null
+		update_desc()
+
+/obj/item/paper/pamphlet/cybernetics/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user, span_notice("As you read the pamphlet, a free sample falls out!"))
+	sample.forceMove(drop_location())
+	playsound(sample, 'sound/misc/splort.ogg', 50, vary = TRUE)

@@ -17,15 +17,19 @@
 	/// Whether or not the boxcutter has been readied
 	var/on = FALSE
 	var/on_sound = 'sound/items/boxcutter_activate.ogg'
+	/// Used on Initialize, how much time to cut cable restraints and zipties.
+	var/snap_time_weak_handcuffs = 0 SECONDS
+	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	var/snap_time_strong_handcuffs = null
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, \
 		speed = 7 SECONDS, \
 		effectiveness = 100, \
 	)
-	tool_behaviour = TOOL_KNIFE
+
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 10, \
@@ -38,12 +42,16 @@
 		attack_verb_simple_on = list("cut", "stab", "slash"), \
 	)
 
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/boxcutter/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
 	on = active
 	playsound(src, on_sound, 50)
+	tool_behaviour = (active ? TOOL_KNIFE : NONE)
+	if(active)
+		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
+	else
+		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
-

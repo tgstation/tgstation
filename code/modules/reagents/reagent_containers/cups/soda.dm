@@ -8,7 +8,8 @@
 
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/drinks/soda.dmi'
+	icon_state_preview = "cola"
 	reagent_flags = NONE
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9
@@ -72,7 +73,9 @@
 
 /obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if(QDELETED(src))
+		return
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 		crushed_can.icon_state = icon_state
 		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
@@ -171,6 +174,7 @@
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/tonic = 50)
 	drink_type = ALCOHOL
 
@@ -178,6 +182,7 @@
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
 /obj/item/reagent_containers/cup/soda_cans/lemon_lime
@@ -258,6 +263,7 @@
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
 	inhand_icon_state = "monkey_energy"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 

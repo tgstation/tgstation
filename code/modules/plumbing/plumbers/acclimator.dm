@@ -12,6 +12,8 @@
 	base_icon_state = "acclimator"
 	buffer = 200
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
+	category="Storage"
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300
@@ -32,7 +34,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/acclimator, bolt, layer)
 
-/obj/machinery/plumbing/acclimator/process(delta_time)
+/obj/machinery/plumbing/acclimator/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)
 		if(acclimate_state != NEUTRAL)
 			acclimate_state = NEUTRAL
@@ -54,9 +56,9 @@
 			emptying = TRUE
 
 	if(!emptying) //suspend heating/cooling during emptying phase
-		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
-		use_power(active_power_usage * delta_time)
+		use_power(active_power_usage * seconds_per_tick)
 	else if(acclimate_state != NEUTRAL)
 		acclimate_state = NEUTRAL
 		update_appearance()

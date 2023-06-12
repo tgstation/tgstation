@@ -3,6 +3,8 @@
 
 /// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI. No arguments passed
 #define COMSIG_UPLINK_HANDLER_ON_UPDATE "uplink_handler_on_update"
+/// Sent from the uplink handler when the traitor uses the syndicate uplink beacon to order a replacement uplink.
+#define COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED "uplink_handler_replacement_ordered"
 
 /// Called before the traitor objective is generated
 #define COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE "traitor_objective_pre_generate"
@@ -20,6 +22,9 @@
 #define COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT "traitor_bug_planted_pre_object"
 	#define COMPONENT_FORCE_PLACEMENT (1<<0)
 	#define COMPONENT_FORCE_FAIL_PLACEMENT (1<<1)
+
+/// Called when a machine a traitor has booby trapped triggers its payload
+#define COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED "traitor_machine_trap_triggered"
 
 /// Called when a device a traitor has planted effects someone's mood. Pass the mind of the viewer.
 #define COMSIG_DEMORALISING_EVENT "traitor_demoralise_event"

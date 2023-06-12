@@ -1,5 +1,5 @@
 /obj/item/organ/internal/alien
-	icon_state = "xgibmid2"
+	icon_state = "acid"
 	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 
@@ -50,34 +50,40 @@
 	max_plasma = 100
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
-/obj/item/organ/internal/alien/plasmavessel/on_life(delta_time, times_fired)
+/obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate * delta_time)
+			owner.adjustPlasma(plasma_rate * seconds_per_tick)
 		else
 			var/heal_amt = heal_rate
 			if(!isalien(owner))
 				heal_amt *= 0.2
-			owner.adjustPlasma(0.5 * plasma_rate * delta_time)
-			owner.adjustBruteLoss(-heal_amt * delta_time)
-			owner.adjustFireLoss(-heal_amt * delta_time)
-			owner.adjustOxyLoss(-heal_amt * delta_time)
-			owner.adjustCloneLoss(-heal_amt * delta_time)
+			owner.adjustPlasma(0.5 * plasma_rate * seconds_per_tick)
+			owner.adjustBruteLoss(-heal_amt * seconds_per_tick)
+			owner.adjustFireLoss(-heal_amt * seconds_per_tick)
+			owner.adjustOxyLoss(-heal_amt * seconds_per_tick)
+			owner.adjustCloneLoss(-heal_amt * seconds_per_tick)
 	else
-		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
+		owner.adjustPlasma(0.1 * plasma_rate * seconds_per_tick)
 
-/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
-	..()
+/obj/item/organ/internal/alien/plasmavessel/on_insert(mob/living/carbon/organ_owner)
+	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
+	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/organ_owner, special = FALSE)
-	..()
+/obj/item/organ/internal/alien/plasmavessel/on_remove(mob/living/carbon/organ_owner)
+	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
 		organ_owner_alien.updatePlasmaDisplay()
+	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+
+/obj/item/organ/internal/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+	SIGNAL_HANDLER
+	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
@@ -91,19 +97,19 @@
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
-	..()
+/obj/item/organ/internal/alien/hivenode/on_insert(mob/living/carbon/organ_owner)
+	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
-	..()
+	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/internal/alien/hivenode/proc/queen_death()
-	if(!owner|| owner.stat == DEAD)
+	if(!owner || owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
 		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
@@ -122,7 +128,7 @@
 
 	recent_queen_death = TRUE
 	owner.throw_alert(ALERT_XENO_NOQUEEN, /atom/movable/screen/alert/alien_vulnerable)
-	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(clear_queen_death)), QUEEN_DEATH_DEBUFF_DURATION)
 
 
 /obj/item/organ/internal/alien/hivenode/proc/clear_queen_death()
@@ -180,7 +186,7 @@
 	QDEL_LIST(stomach_contents)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/alien/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!owner || SSmobs.times_fired % 3 != 0)
 		return
@@ -198,11 +204,11 @@
 			qdel(thing)
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/content_moved)
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/content_deleted)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
 		var/mob/living/lad = thing
-		RegisterSignal(thing, COMSIG_LIVING_DEATH, .proc/content_died)
+		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
 		if(lad.stat == DEAD)
 			qdel(lad)
 			return
@@ -225,7 +231,7 @@
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 
 /obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
-	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, .proc/something_moved)
+	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
 /obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE)
@@ -275,7 +281,7 @@
 	if(!impact)
 		return
 
-	applyOrganDamage(impact)
+	apply_organ_damage(impact)
 
 	var/damage_ratio = damage / max(maxHealth, 1)
 	if(owner)
@@ -314,7 +320,7 @@
 			shake_camera(owner, 0.3 SECONDS, 1.5)
 		return
 	// Failure condition
-	if(isalienhumanoid(user))
+	if(isalienadult(user))
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
 			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
 	else // Just to be safe ya know?
@@ -326,12 +332,13 @@
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)
 		shake_camera(owner, 2, 5)
+		owner.investigate_log("has been gibbed by something inside [owner.p_their()] stomach.", INVESTIGATE_DEATHS)
 		owner.gib()
 	qdel(src)
 
 /obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
 	var/atom/spit_as = owner || src
-	/// Throw out the stuff in our stomach
+	// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)
 		thing.forceMove(spit_as.drop_location())
 		if(length(targets))

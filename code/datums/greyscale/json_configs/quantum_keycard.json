@@ -1,0 +1,15 @@
+{
+	"quantum_keycard_gags" : [
+		{
+			"type": "icon_state",
+			"icon_state": "quantum_keycard",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "quantum_wrapper",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

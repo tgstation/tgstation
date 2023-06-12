@@ -98,7 +98,7 @@
 	return ..()
 
 /datum/hallucination/body/staticguy/queue_cleanup()
-	RegisterSignal(hallucinator, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(hallucinator, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	del_timerid = QDEL_IN(src, rand(2 MINUTES, 3 MINUTES))
 	return TRUE
 
@@ -151,11 +151,11 @@
 	body_floats = TRUE
 
 /datum/hallucination/body/weird/faceless
-	body_image_file = 'icons/mob/simple/simple_human.dmi'
+	body_image_file = 'icons/mob/simple/traders.dmi'
 	body_image_state = "faceless"
 
 /datum/hallucination/body/weird/bones
-	body_image_file = 'icons/mob/simple/simple_human.dmi'
+	body_image_file = 'icons/mob/simple/traders.dmi'
 	body_image_state = "mrbones"
 
 /datum/hallucination/body/weird/freezer
@@ -175,8 +175,8 @@
 
 /datum/hallucination/body/weird/freezer/queue_cleanup()
 	QDEL_IN(src, 12 SECONDS) //The freezer stays on screen while you're frozen
-	addtimer(CALLBACK(src, .proc/freeze_player), 1 SECONDS) // You barely have a moment to react before you're frozen
-	addtimer(CALLBACK(src, .proc/freeze_intimidate), 11.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(freeze_player)), 1 SECONDS) // You barely have a moment to react before you're frozen
+	addtimer(CALLBACK(src, PROC_REF(freeze_intimidate)), 11.8 SECONDS)
 	hallucinator.cause_hallucination(/datum/hallucination/fake_sound/weird/radio_static, "freezer hallucination")
 	return TRUE
 

@@ -30,11 +30,11 @@
 	examine_text += span_info("Alt-click to eject the intelliCard.")
 	return examine_text
 
-/datum/computer_file/program/ai_restorer/kill_program(forced)
+/datum/computer_file/program/ai_restorer/kill_program()
 	try_eject(forced = TRUE)
 	return ..()
 
-/datum/computer_file/program/ai_restorer/process_tick(delta_time)
+/datum/computer_file/program/ai_restorer/process_tick(seconds_per_tick)
 	. = ..()
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
@@ -50,15 +50,16 @@
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		A.revive()
 		stored_card.update_appearance()
+
 	// Finished restoring
 	if(A.health >= 100)
 		restoring = FALSE
 
 	return TRUE
 
-/datum/computer_file/program/ai_restorer/try_insert(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!computer)
 		return FALSE
 	if(!istype(attacking_item, /obj/item/aicard))
@@ -97,11 +98,7 @@
 	return TRUE
 
 
-/datum/computer_file/program/ai_restorer/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/datum/computer_file/program/ai_restorer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(!stored_card || !stored_card.AI)
@@ -117,7 +114,7 @@
 				return TRUE
 
 /datum/computer_file/program/ai_restorer/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["ejectable"] = TRUE
 	data["AI_present"] = !!stored_card?.AI

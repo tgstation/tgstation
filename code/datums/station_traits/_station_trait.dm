@@ -26,7 +26,7 @@
 /datum/station_trait/New()
 	. = ..()
 
-	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)

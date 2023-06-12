@@ -12,7 +12,7 @@
 #define BROKEN_SPARKS_MAX (9 MINUTES)
 
 ///Amount of time that takes an ethereal to take energy from the lights
-#define LIGHT_DRAIN_TIME 2.5 SECONDS
+#define LIGHT_DRAIN_TIME (2.5 SECONDS)
 ///Amount of charge the ethereal gain after the drain
 #define LIGHT_POWER_GAIN 35
 

@@ -96,7 +96,7 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, span_warning("Successfully irradiated [M]."))
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), M, intensity), (wavelength+(intensity*4))*5)
 		return
 
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
@@ -257,7 +257,7 @@ effective or pretty fucking useless.
 	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
-/obj/item/shadowcloak/process(delta_time)
+/obj/item/shadowcloak/process(seconds_per_tick)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
@@ -267,10 +267,10 @@ effective or pretty fucking useless.
 		var/lumcount = T.get_lumcount()
 
 		if(lumcount > 0.3)
-			charge = max(0, charge - 12.5 * delta_time)//Quick decrease in light
+			charge = max(0, charge - 12.5 * seconds_per_tick)//Quick decrease in light
 
 		else
-			charge = min(max_charge, charge + 25 * delta_time) //Charge in the dark
+			charge = min(max_charge, charge + 25 * seconds_per_tick) //Charge in the dark
 
 		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 

@@ -11,7 +11,6 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("moos","moos hauntingly")
 	speed = 1.1
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -40,13 +39,13 @@
 		tip_time = 0.5 SECONDS, \
 		untip_time = 0.5 SECONDS, \
 		self_right_time = rand(25 SECONDS, 50 SECONDS), \
-		post_tipped_callback = CALLBACK(src, .proc/after_cow_tipped))
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_cow_tipped)))
 	AddElement(/datum/element/pet_bonus, "moos happily!")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	udder_component()
 	setup_eating()
 	. = ..()
-	ai_controller.blackboard[BB_BASIC_FOODS] = food_types
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_types)
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
@@ -62,8 +61,8 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
-	AddElement(/datum/element/basic_eating, 10, food_types)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddElement(/datum/element/basic_eating, 10, 0, null, food_types)
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0
@@ -77,7 +76,7 @@
  * tipper - the mob who tipped us
  */
 /mob/living/basic/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	addtimer(CALLBACK(src, .proc/set_tip_react_blackboard, tipper), rand(10 SECONDS, 20 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(set_tip_react_blackboard), tipper), rand(10 SECONDS, 20 SECONDS))
 
 /*
  * We've been waiting long enough, we're going to tell our AI to begin pleading.
@@ -87,5 +86,5 @@
 /mob/living/basic/cow/proc/set_tip_react_blackboard(mob/living/carbon/tipper)
 	if(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, TIPPED_OVER) || !ai_controller)
 		return
-	ai_controller.blackboard[BB_BASIC_MOB_TIP_REACTING] = TRUE
-	ai_controller.blackboard[BB_BASIC_MOB_TIPPER] = tipper
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_TIP_REACTING, TRUE)
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_TIPPER, tipper)

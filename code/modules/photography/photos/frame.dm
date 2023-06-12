@@ -4,7 +4,8 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = 0
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
@@ -65,7 +66,8 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-overlay"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/del_id_on_destroy = FALSE
@@ -88,7 +90,7 @@
 /obj/structure/sign/picture_frame/Destroy()
 	LAZYREMOVE(SSpersistence.photo_frames, src)
 	if(persistence_id && del_id_on_destroy)
-		SSpersistence.RemovePhotoFrame(persistence_id)
+		SSpersistence.remove_photo_frames(persistence_id)
 	return ..()
 
 /obj/structure/sign/picture_frame/proc/get_photo_id()
@@ -97,7 +99,7 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/structure/sign/picture_frame/proc/persistence_load()
-	var/list/data = SSpersistence.GetPhotoFrames()
+	var/list/data = SSpersistence.get_photo_frames()
 	if(data[persistence_id])
 		load_from_id(data[persistence_id])
 

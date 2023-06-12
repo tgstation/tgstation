@@ -1,6 +1,21 @@
+/**
+ * Begins the dreaming process on a sleeping carbon.
+ *
+ * Checks a 10% chance and whether or not the carbon this is called on is already dreaming. If
+ * the prob() passes and there are no dream images left to display, a new dream is constructed.
+ */
+
 /mob/living/carbon/proc/handle_dreams()
 	if(prob(10) && !dreaming)
 		dream()
+
+/**
+ * Generates a dream sequence to be displayed to the sleeper.
+ *
+ * Generates the "dream" to display to the sleeper. A dream consists of a subject, a verb, and (most of the time) an object, displayed in sequence to the sleeper.
+ * Dreams are generated as a list of strings stored inside dream_fragments, which is passed to and displayed in dream_sequence().
+ * Bedsheets on the sleeper will provide a custom subject for the dream, pulled from the dream_messages on each bedsheet.
+ */
 
 /mob/living/carbon/proc/dream()
 	set waitfor = FALSE
@@ -19,7 +34,7 @@
 	else
 		fragment += pick(GLOB.dream_strings)
 
-	if(prob(50))
+	if(prob(50)) //Replace the adjective space with an adjective, or just get rid of it
 		fragment = replacetext(fragment, "%ADJECTIVE%", pick(GLOB.adjectives))
 	else
 		fragment = replacetext(fragment, "%ADJECTIVE% ", "")
@@ -56,6 +71,16 @@
 	dreaming = TRUE
 	dream_sequence(dream_fragments)
 
+/**
+ * Displays the passed list of dream fragments to a sleeping carbon.
+ *
+ * Displays the first string of the passed dream fragments, then either ends the dream sequence
+ * or performs a callback on itself depending on if there are any remaining dream fragments to display.
+ *
+ * Arguments:
+ * * dream_fragments - A list of strings, in the order they will be displayed.
+ */
+
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments)
 	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
 		dreaming = FALSE
@@ -64,6 +89,6 @@
 	dream_fragments.Cut(1,2)
 	to_chat(src, span_notice("<i>... [next_message] ...</i>"))
 	if(LAZYLEN(dream_fragments))
-		addtimer(CALLBACK(src, .proc/dream_sequence, dream_fragments), rand(10,30))
+		addtimer(CALLBACK(src, PROC_REF(dream_sequence), dream_fragments), rand(10,30))
 	else
 		dreaming = FALSE

@@ -1,8 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - rscadd: "Orbit UI buttons now reflect health and show job icons"
-  - rscadd: "ID trims now have an orbit icon variable for its display on the observer menu"
-  - code_imp: "Orbit UI heatmap is now toggleable with health (top button)"
-  - bugfix: "Sorting for disguised names should work better."
-  - refactor: "Refactored Orbit into a folder."

@@ -17,9 +17,9 @@
 	src.signals = signals
 
 /datum/component/traitor_objective_mind_tracker/RegisterWithParent()
-	RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/handle_mind_transferred)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/delete_self)
-	RegisterSignal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
+	RegisterSignal(target, COMSIG_MIND_TRANSFERRED, PROC_REF(handle_mind_transferred))
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(delete_self))
+	RegisterSignals(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), PROC_REF(delete_self))
 	handle_mind_transferred(target)
 
 /datum/component/traitor_objective_mind_tracker/UnregisterFromParent()

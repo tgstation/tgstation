@@ -83,6 +83,11 @@ export type Design = {
    * The amount of time, in seconds, that this design takes to print.
    */
   constructionTime: number;
+
+  /**
+   * The maximum number of items than can be printed
+   */
+  maxmult: number;
 };
 
 /**

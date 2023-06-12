@@ -78,9 +78,9 @@ export const NtosRecords = (props, context) => {
                       ' ' +
                       record.bloodtype +
                       ' ' +
-                      record.m_stat +
+                      record.mental_status +
                       ' ' +
-                      record.p_stat
+                      record.physical_status
                   )
                 )
               }>

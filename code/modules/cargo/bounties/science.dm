@@ -18,8 +18,8 @@
 	description = "It turns out the diskettes the BEPIS prints experimental nodes on are extremely space-efficient. Send us one of your spares when you're done with it."
 	reward = CARGO_CRATE_VALUE * 8
 	wanted_types = list(
-		/obj/item/disk/tech_disk/major = TRUE,
-		/obj/item/disk/tech_disk/spaceloot = TRUE,
+		/obj/item/disk/design_disk/bepis/remove_tech = TRUE,
+		/obj/item/disk/design_disk/bepis = TRUE,
 	)
 
 /datum/bounty/item/science/genetics
@@ -55,10 +55,10 @@
 //******Modular Computer Bounties******
 /datum/bounty/item/science/ntnet
 	name = "Modular Tablets"
-	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Fully construct some tablets and send them powered on."
+	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Send some fully functional PDAs to help get us up to speed on the latest technology."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 4
-	wanted_types = list(/obj/item/modular_computer/tablet = TRUE)
+	wanted_types = list(/obj/item/modular_computer/pda = TRUE)
 	var/require_powered = TRUE
 
 /datum/bounty/item/science/ntnet/applies_to(obj/O)

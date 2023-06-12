@@ -69,12 +69,9 @@
 	},
 /obj/docking_port/mobile{
 	dir = 4;
-	dwidth = 3;
-	height = 5;
 	shuttle_id = "mining";
 	name = "mining shuttle";
-	port_direction = 8;
-	width = 7
+	port_direction = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/mining)
@@ -212,15 +209,9 @@
 /area/shuttle/mining)
 "r" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
@@ -233,8 +224,7 @@
 /area/shuttle/mining)
 "t" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/line,

@@ -16,7 +16,7 @@
 	if(!uplink_flag)
 		uplink_flag = src.uplink_flag
 	src.uplink_handler = uplink_handler
-	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
+	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, PROC_REF(_component_removal))
 
 /obj/item/implant/uplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()

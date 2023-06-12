@@ -57,11 +57,11 @@ Slimecrossing Weapons
 /obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/weapons/shields.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/shield_adamantineshield
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
@@ -70,6 +70,15 @@ Slimecrossing Weapons
 	attack_verb_continuous = list("bashes", "pounds", "slams")
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
+	breakable_by_damage = FALSE
+
+/datum/armor/shield_adamantineshield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
 
 /obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()
@@ -97,8 +106,8 @@ Slimecrossing Weapons
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/gun/magic/bloodchill/process(delta_time)
-	charge_timer += delta_time
+/obj/item/gun/magic/bloodchill/process(seconds_per_tick)
+	charge_timer += seconds_per_tick
 	if(charge_timer < recharge_rate || charges >= max_charges)
 		return FALSE
 	charge_timer = 0
@@ -116,9 +125,6 @@ Slimecrossing Weapons
 /obj/projectile/magic/bloodchill
 	name = "blood ball"
 	icon_state = "pulse0_bl"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
 
 /obj/projectile/magic/bloodchill/on_hit(mob/living/target)

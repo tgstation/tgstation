@@ -5,6 +5,8 @@
 	min_players = 2
 	category = EVENT_CATEGORY_AI
 	description = "Gives the AI a new, randomized law."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ion_storm
 	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights

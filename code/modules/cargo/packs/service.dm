@@ -9,7 +9,7 @@
 	cost = CARGO_CRATE_VALUE * 1.75
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
-					/obj/item/export_scanner,
+					/obj/item/universal_scanner,
 					/obj/item/dest_tagger,
 					/obj/item/hand_labeler,
 					/obj/item/stack/package_wrap,
@@ -47,7 +47,7 @@
 	desc = "The keystone to any successful janitor. As long as you have feet, this pair \
 		of galoshes will keep them firmly planted on the ground. Also contains a janitorial cart."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mop_bucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes,
 				)
 	crate_name = "janitorial cart crate"
@@ -56,7 +56,7 @@
 /datum/supply_pack/service/janitor/janitank
 	name = "Janitor Backpack Crate"
 	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor \
-		backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
+		backpack. Contains 500 units of station-cleansing cleaner."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/watertank/janitor)
@@ -154,7 +154,7 @@
 	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? \
 		Either way, this kit is the best way to turn a regular crewman into an ore-producing, \
 		monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, \
-		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
+		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_QM
 	access_view = ACCESS_MINING_STATION
@@ -178,7 +178,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/clothing/under/dress/wedding_dress,
 					/obj/item/clothing/under/suit/tuxedo,
-					/obj/item/storage/belt/cummerbund,
+					/obj/item/storage/belt/fannypack/cummerbund,
 					/obj/item/clothing/head/costume/weddingveil,
 					/obj/item/bouquet,
 					/obj/item/bouquet/sunflower,
@@ -245,3 +245,28 @@
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
+
+/datum/supply_pack/service/coffeekit
+	name = "Coffee Equipment Crate"
+	desc = "A complete kit to setup your own cozy coffee shop, the coffeemaker is for some reason not included."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/storage/box/coffeepack/robusta,
+		/obj/item/storage/box/coffeepack,
+		/obj/item/reagent_containers/cup/coffeepot,
+		/obj/item/storage/fancy/coffee_condi_display,
+		/obj/item/reagent_containers/cup/glass/bottle/juice/cream,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/reagent_containers/condiment/soymilk,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
+	)
+	crate_name = "coffee equipment crate"
+
+/datum/supply_pack/service/coffeemaker
+	name = "Impressa Coffeemaker Crate"
+	desc = "An assembled Impressa model coffeemaker."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/machinery/coffeemaker/impressa)
+	crate_name = "coffeemaker crate"
+	crate_type = /obj/structure/closet/crate/large

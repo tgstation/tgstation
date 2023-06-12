@@ -84,6 +84,8 @@ const displayTypeMap = {
   'request_centcom': 'CENTCOM',
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',
+  'request_fax': 'FAX',
+  'request_internet_sound': 'INTERNET SOUND',
 };
 
 const RequestType = (props) => {
@@ -116,6 +118,12 @@ const RequestControls = (props, context) => {
         <Button onClick={() => act('setcode', { id: request.id })}>
           SETCODE
         </Button>
+      )}
+      {request.req_type === 'request_fax' && (
+        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+      )}
+      {request.req_type === 'request_internet_sound' && (
+        <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
       )}
     </div>
   );

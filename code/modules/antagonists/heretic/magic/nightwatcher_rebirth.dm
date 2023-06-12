@@ -3,8 +3,9 @@
 	desc = "A spell that extinguishes you drains nearby heathens engulfed in flames of their life force, \
 		healing you for each victim drained. Those in critical condition \
 		will have the last of their vitality drained, killing them."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "smoke"
 
 	school = SCHOOL_FORBIDDEN
@@ -35,10 +36,12 @@
 	return things
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
-	new /obj/effect/temp_visual/eldritch_smoke(victim.drop_location())
+	new /obj/effect/temp_visual/eldritch_smoke(get_turf(victim))
+	victim.Beam(caster, icon_state = "r_beam", time = 2 SECONDS)
 
 	//This is essentially a death mark, use this to finish your opponent quicker.
-	if(HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(victim, TRAIT_NODEATH))
+	if(CAN_SUCCUMB(victim))
+		victim.investigate_log("has been executed by fiery rebirth.", INVESTIGATE_DEATHS)
 		victim.death()
 	victim.apply_damage(20, BURN)
 

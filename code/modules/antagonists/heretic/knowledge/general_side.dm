@@ -34,7 +34,7 @@
 	if(!target_finder)
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
-	if(!target_finder.obtain_targets(user))
+	if(!target_finder.obtain_targets(user, heretic_datum = heretic_datum))
 		loc.balloon_alert(user, "ritual failed, no targets found!")
 		return FALSE
 
@@ -48,7 +48,7 @@
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
-		/obj/item/storage/book/bible = 1,
+		/obj/item/book/bible = 1,
 		/obj/item/pen/fountain = 1,
 		/obj/item/stack/sheet/animalhide = 1,
 	)

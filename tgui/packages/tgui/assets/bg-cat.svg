@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="50" height="50"/>
+  </defs>
+  <path style="stroke-width: 3px; fill: none; stroke: rgb(0, 0, 0); visibility: hidden;" d="M 300 200 C 350 50 300 100 250 150 M 250 150 C 225 140 175 140 150 150 C 100 100 50 50 100 200 L 100 200 C 0 400 400 400 300 200" bx:origin="0.5 0.527342"/>
+  <path style="paint-order: fill; fill: none; stroke: rgb(0, 0, 0); stroke-width: 9px; stroke-linecap: round;" d="M 150 273.803 C 150 308.732 200 308.732 200 273.803 C 200 308.732 250 308.732 250 273.803"/>
+  <ellipse style="fill: rgb(255, 132, 132);" cx="200" cy="260" rx="23.683" ry="15.071"/>
+  <circle style="stroke: rgb(0, 0, 0);" cx="150" cy="215" r="15.842"/>
+  <circle style="stroke: rgb(0, 0, 0);" cx="250" cy="215" r="15.842"/>
+  <g>
+    <title>Whiskers</title>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 289.443 237.208 C 300 230.842 328.768 218.572 350 221.856"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 290.469 265.901 C 301.026 259.535 329.794 247.265 351.027 250.549" transform="matrix(0.965947, 0.258739, -0.258739, 0.965947, 77.664281, -74.2061)"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 290.469 292.436 C 301.026 286.07 329.794 273.8 351.027 277.084" transform="matrix(0.866067, 0.499928, -0.499928, 0.866067, 185.181275, -122.248912)"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 52.052 221.307 C 62.609 227.673 91.377 239.943 112.609 236.659" transform="matrix(-1, 0, 0, -1, 164.660999, 458.514526)"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 51.026 250.001 C 61.583 256.367 90.351 268.637 111.584 265.353" transform="matrix(-0.965947, 0.258739, -0.258739, -0.965947, 226.583405, 486.081802)"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 51.025 276.535 C 61.582 282.901 90.35 295.172 111.583 291.888" transform="matrix(-0.866067, 0.499928, -0.499928, -0.866067, 293.941085, 490.223292)"/>
+  </g>
+  <path style="fill: none; stroke-width: 3px; stroke: rgb(0, 0, 0); visibility: hidden;" d="M 100 200 C 0 400 400 400 300 200 C 350 50 300 100 250 150 C 225 140 175 140 150 150 C 100 100 50 50 100 200 Z" bx:origin="0.5 0.527342"/>
+  <path style="fill: none; stroke-width: 3px; stroke: rgb(0, 0, 0); visibility: hidden;" d="M 150 150 C 100 100 50 50 100 200 M 300 200 C 350 50 300 100 250 150" bx:origin="0.5 0.527342">
+    <title>just ears</title>
+  </path>
+</svg>

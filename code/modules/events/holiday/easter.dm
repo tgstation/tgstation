@@ -30,9 +30,9 @@
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
-					new /mob/living/simple_animal/rabbit/easter/space(R.loc)
+					new /mob/living/basic/rabbit/easter/space(R.loc)
 				else
-					new /mob/living/simple_animal/rabbit/easter(R.loc)
+					new /mob/living/basic/rabbit/easter(R.loc)
 
 //Easter Baskets
 /obj/item/storage/basket/easter
@@ -128,7 +128,7 @@
 /obj/item/surprise_egg/attack_self(mob/user)
 	..()
 	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
-	dispensePrize(get_turf(user))
+	dispensePrize(get_turf(src))
 	qdel(src)
 
 //Easter Recipes + food
@@ -149,7 +149,7 @@
 	)
 	result = /obj/item/food/hotcrossbun
 
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
@@ -158,7 +158,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/food/cake/brioche
-	subcategory = CAT_MISCFOOD
+	category = CAT_MISCFOOD
 
 /obj/item/food/scotchegg
 	name = "scotch egg"
@@ -177,7 +177,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/scotchegg
-	subcategory = CAT_EGG
+	category = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
@@ -186,8 +186,8 @@
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)
-	result = /obj/item/food/soup/mammi
-	subcategory = CAT_MISCFOOD
+	result = /obj/item/food/bowled/mammi
+	category = CAT_MISCFOOD
 
 /obj/item/food/chocolatebunny
 	name = "chocolate bunny"
@@ -202,4 +202,4 @@
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolatebunny
-	subcategory = CAT_MISCFOOD
+	category = CAT_MISCFOOD

@@ -3,10 +3,10 @@
 	filedesc = "Direct Messenger"
 	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "command"
-	program_state = PROGRAM_STATE_BACKGROUND
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
+	header_program = TRUE
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"
@@ -30,8 +30,6 @@
 	var/datum/picture/saved_image
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
-	/// Whether or not we allow emojis to be sent by the user.
-	var/allow_emojis = FALSE
 	/// Whether or not we're currently looking at the message list.
 	var/viewing_messages = FALSE
 	// Whether or not this device is currently hidden from the message monitor.
@@ -44,19 +42,18 @@
 	/// The path for the current loaded image in rsc
 	var/photo_path
 
-	/// Whether or not this app is loaded on a silicon's tablet.
-	var/is_silicon = FALSE
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
-/datum/computer_file/program/messenger/try_insert(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
 	var/obj/item/photo/pic = attacking_item
 	saved_image = pic.picture
 	ProcessPhoto()
+	user.balloon_alert(user, "photo uploaded")
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
@@ -79,15 +76,12 @@
 
 	var/sortmode
 	if(sort_by_job)
-		sortmode = /proc/cmp_pdajob_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
 	else
-		sortmode = /proc/cmp_pdaname_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
 
 	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
-		var/obj/item/computer_hardware/hard_drive/drive = P.all_components[MC_HDD]
-		if(!drive)
-			continue
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+		for(var/datum/computer_file/program/messenger/app in P.stored_files)
 			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
@@ -110,10 +104,6 @@
 	return GLOB.default_state
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
@@ -125,27 +115,27 @@
 				return
 
 			ringtone = new_ringtone
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_ringer_status")
 			ringer_status = !ringer_status
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sAndR")
 			sending_and_receiving = !sending_and_receiving
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_viewMessages")
 			viewing_messages = !viewing_messages
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_clearMessages")
 			messages = list()
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_changeSortStyle")
 			sort_by_job = !sort_by_job
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
@@ -164,7 +154,7 @@
 			if(targets.len > 0)
 				send_message(usr, targets, TRUE)
 
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
@@ -179,51 +169,64 @@
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return
 
-			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
-
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in computer.stored_files)
 				if(!app.sending_and_receiving && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
+					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(target, usr)
-						return UI_UPDATE
+						disk.send_virus(computer, target, usr)
+						update_static_data(usr, ui)
+						return TRUE
 
 				send_message(usr, list(target))
-				return UI_UPDATE
+				return TRUE
 
 		if("PDA_clearPhoto")
 			saved_image = null
 			photo_path = null
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_toggleVirus")
 			sending_virus = !sending_virus
-			return UI_UPDATE
+			return TRUE
 
+		if("PDA_selectPhoto")
+			if(!issilicon(usr))
+				return
+			var/mob/living/silicon/user = usr
+			if(!user.aicamera)
+				return
+			var/datum/picture/selected_photo = user.aicamera.selectpicture(user)
+			if(!selected_photo)
+				return
+			saved_image = selected_photo
+			ProcessPhoto()
+			return TRUE
+
+/datum/computer_file/program/messenger/ui_static_data(mob/user)
+	var/list/data = list()
+	data["owner"] = computer.saved_identification
+	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
-	var/list/data = get_header_data()
-
-	data["owner"] = computer.saved_identification
+	var/list/data = list()
 	data["messages"] = messages
+	data["sortByJob"] = sort_by_job
+	data["isSilicon"] = issilicon(user)
+	data["messengers"] = ScrubMessengerList()
 	data["ringer_status"] = ringer_status
 	data["sending_and_receiving"] = sending_and_receiving
-	data["messengers"] = ScrubMessengerList()
 	data["viewing_messages"] = viewing_messages
-	data["sortByJob"] = sort_by_job
-	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
-	if(disk)
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
+	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+	if(disk && istype(disk))
+		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
-
 	return data
 
 //////////////////////
@@ -240,7 +243,7 @@
 
 	if (!input_message || !sending_and_receiving)
 		return
-	if(!user.canUseTopic(computer, be_close = TRUE))
+	if(!user.can_perform_action(computer))
 		return
 	return sanitize(input_message)
 
@@ -284,8 +287,11 @@
 
 	if (!string_targets.len)
 		return FALSE
-
-	if (prob(1))
+	var/sent_prob = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/old_person = user
+		sent_prob = old_person.age >= 30 ? 25 : sent_prob
+	if (prob(sent_prob))
 		message += " Sent from my PDA"
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
@@ -294,9 +300,9 @@
 		"message" = html_decode(message),
 		"ref" = REF(computer),
 		"targets" = targets,
-		"emojis" = allow_emojis,
 		"rigged" = rigged,
-		"photo" = photo_path,
+		"photo" = saved_image,
+		"photo_path" = photo_path,
 		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
@@ -313,9 +319,8 @@
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
-	if(allow_emojis)
-		message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
-		signal.data["message"] = emoji_parse(signal.data["message"])
+	message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
+	signal.data["message"] = emoji_parse(signal.data["message"])
 
 	// Log it in our logs
 	var/list/message_data = list()
@@ -324,7 +329,9 @@
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
+	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
+	message_data["target_details"] = signal.format_target()
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
@@ -352,6 +359,8 @@
 		last_text_everyone = world.time
 
 	messages += list(message_data)
+	saved_image = null
+	photo_path = null
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
@@ -362,15 +371,16 @@
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
+	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(holder.holder.loc && isliving(holder.holder.loc))
-		L = holder.holder.loc
+	if(computer.loc && isliving(computer.loc))
+		L = computer.loc
 	//Maybe they are a pAI!
 	else
-		L = get(holder.holder, /mob/living/silicon)
+		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
@@ -384,12 +394,11 @@
 			reply = "\[Automated Message\]"
 
 		var/inbound_message = signal.format_message()
-		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
-			inbound_message = emoji_parse(inbound_message)
+		inbound_message = emoji_parse(inbound_message)
 
 		if(L.is_literate())
-			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
-
+			var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
+			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message][photo_message] [reply]"))
 
 	if (ringer_status)
 		computer.ring(ringtone)
@@ -404,14 +413,14 @@
 		if(!computer.turn_on(usr, open_ui = FALSE))
 			return
 	if(computer.active_program != src)
-		if(!computer.open_program(usr, src))
+		if(!computer.open_program(usr, src, open_ui = FALSE))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/tablet/comp = computer
+					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
 					return

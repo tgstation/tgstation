@@ -5,13 +5,13 @@ import { Window } from '../layouts';
 export const MechpadControl = (props, context) => {
   const { topLevel } = props;
   const { act, data } = useBackend(context);
-  const { pad_name, connected_mechpad } = data;
+  const { pad_name, connected_mechpad, pad_active, mechonly } = data;
   return (
     <Section
       title={
         <Input
           value={pad_name}
-          width="170px"
+          width="200px"
           onChange={(e, value) =>
             act('rename', {
               name: value,
@@ -30,13 +30,15 @@ export const MechpadControl = (props, context) => {
       }>
       {(!connected_mechpad && (
         <Box color="bad" textAlign="center">
-          No Pad Connected.
+          No Launch Pad Connected.
         </Box>
       )) || (
         <Button
           fluid
           icon="upload"
-          content="Launch"
+          disabled={!pad_active}
+          content={mechonly ? 'Launch (Mech Only)' : 'Launch'}
+          color={mechonly ? 'default' : 'good'}
           textAlign="center"
           onClick={() => act('launch')}
         />

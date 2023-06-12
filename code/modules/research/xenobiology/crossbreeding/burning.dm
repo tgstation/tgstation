@@ -111,8 +111,8 @@ Burning extracts:
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
 	user.visible_message(span_danger("[src] sublimates into a cloud of plasma!"))
 	var/turf/T = get_turf(user)
-	T.atmos_spawn_air("plasma=60")
-	..()
+	T.atmos_spawn_air("[GAS_PLASMA]=60")
+	return ..()
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
@@ -141,7 +141,7 @@ Burning extracts:
 		var/path = get_random_food()
 		var/obj/item/food/food = new path(pick(turfs))
 		food.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
-		food.mark_silver_slime_reaction()
+		ADD_TRAIT(food, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(50))
 			food.desc += " It smells strange..."
 	user.visible_message(span_danger("[src] produces a few pieces of food!"))
@@ -260,7 +260,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
 	user.visible_message(span_warning("[user] activates [src]. It's going to explode!"), span_danger("You activate [src]. It crackles in anticipation"))
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
 
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
@@ -282,7 +282,7 @@ Burning extracts:
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	transform.cast(user)
+	transform.Activate(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

@@ -1,3 +1,5 @@
+#define ORE_BAG_BALOON_COOLDOWN (2 SECONDS)
+
 /*
  * These absorb the functionality of the plant bag, ore satchel, etc.
  * They use the use_to_pickup, quick_gather, and quick_empty functions
@@ -37,7 +39,7 @@
 	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	slot_flags = null
+	storage_type = /datum/storage/trash
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -47,11 +49,28 @@
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
+	atom_storage.supports_smart_equip = FALSE
+	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
-/obj/item/storage/bag/trash/suicide_act(mob/user)
+/// If you dump a trash bag into something, anything that doesn't get inserted will spill out onto your feet
+/obj/item/storage/bag/trash/proc/post_insertion(datum/storage/source, atom/dest_object, mob/user)
+	SIGNAL_HANDLER
+	// If there's no item in there, don't do anything
+	if(!(locate(/obj/item) in src))
+		return
+
+	// Otherwise, we're gonna dump into the dest object
+	var/turf/dump_onto = get_turf(dest_object)
+	user.visible_message(
+		span_notice("[user] dumps the contents of [src] all out on \the [dump_onto]"),
+		span_notice("The remaining trash in \the [src] falls out onto \the [dump_onto]"),
+	)
+	source.remove_all(dump_onto)
+
+/obj/item/storage/bag/trash/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/storage/bag/trash/update_icon_state()
 	switch(contents.len)
@@ -104,8 +123,11 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
-	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	var/spam_protection = FALSE
 	var/mob/listeningTo
+	///Cooldown on balloon alerts when picking ore
+	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
 /obj/item/storage/bag/ore/Initialize(mapload)
 	. = ..()
@@ -115,6 +137,7 @@
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
+	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -122,7 +145,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/pickup_ores)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
@@ -160,13 +183,22 @@
 					continue
 	if(show_message)
 		playsound(user, SFX_RUSTLE, 50, TRUE)
+		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
+			return
 
+		COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
 		if (box)
-			user.visible_message(span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."), \
-				span_notice("You offload the ores beneath you into your [box]."))
+			balloon_alert(user, "scoops ore into box")
+			user.visible_message(
+				span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
+				ignored_mobs = user
+			)
 		else
-			user.visible_message(span_notice("[user] scoops up the ores beneath [user.p_them()]."), \
-				span_notice("You scoop up the ores beneath you with your [name]."))
+			balloon_alert(user, "scoops ore into bag")
+			user.visible_message(
+				span_notice("[user] scoops up the ores beneath [user.p_them()]."),
+				ignored_mobs = user
+			)
 
 	spam_protection = FALSE
 
@@ -204,7 +236,7 @@
 		/obj/item/food/grown,
 		/obj/item/graft,
 		/obj/item/grown,
-		/obj/item/reagent_containers/honeycomb,
+		/obj/item/food/honeycomb,
 		/obj/item/seeds,
 		))
 ////////
@@ -293,11 +325,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
 	atom_storage.max_slots = 7
-	atom_storage.set_holdable(list(
-		/obj/item/book,
-		/obj/item/spellbook,
-		/obj/item/storage/book,
-		))
+	atom_storage.set_holdable(list(/obj/item/book, /obj/item/spellbook))
 
 /*
  * Trays - Agouri
@@ -314,7 +342,7 @@
 	throw_range = 5
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/storage/bag/tray/Initialize(mapload)
@@ -361,7 +389,7 @@
 	var/delay = rand(2,4)
 	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
 	//This does mean scattering is tied to the tray. Not sure how better to handle it
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(change_speed))
 
 /obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -414,6 +442,7 @@
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -444,6 +473,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
 		))
@@ -473,6 +503,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
@@ -510,6 +541,7 @@
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
+	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
@@ -526,3 +558,5 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
+
+#undef ORE_BAG_BALOON_COOLDOWN

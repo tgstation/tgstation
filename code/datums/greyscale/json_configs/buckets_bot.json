@@ -1,0 +1,54 @@
+{
+	"cleanbot0": [
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot_bucket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot0",
+			"blend_mode": "overlay"
+		}
+	],
+	"cleanbot1": [
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot_bucket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot1",
+			"blend_mode": "overlay"
+		}
+	],
+	"cleanbot-c": [
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot_bucket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot-c",
+			"blend_mode": "overlay"
+		}
+	],
+	"bucket_proxy": [
+		{
+			"type": "icon_state",
+			"icon_state": "cleanbot_bucket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bucket_proxy",
+			"blend_mode": "overlay"
+		}
+	]
+}

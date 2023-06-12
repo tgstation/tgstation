@@ -38,9 +38,24 @@
 	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
+/datum/greyscale_config/carp_magic
+	name = "Magicarp"
+	icon_file = 'icons/mob/simple/carp.dmi'
+	json_config = 'code/datums/greyscale/json_configs/carp_magic.json'
+
+/datum/greyscale_config/carp_mega
+	name = "Megacarp"
+	icon_file = 'icons/mob/simple/broadMobs.dmi'
+	json_config = 'code/datums/greyscale/json_configs/carp_mega.json'
+
 /datum/greyscale_config/carp/disk_mouth
 	name = "Space Carp, Disk in Mouth"
 	json_config = 'code/datums/greyscale/json_configs/carp_disk_mouth.json'
+
+/datum/greyscale_config/garden_gnome
+	name = "Garden Gnome"
+	icon_file = 'icons/mob/simple/garden_gnome.dmi'
+	json_config = 'code/datums/greyscale/json_configs/garden_gnome.json'
 
 /datum/greyscale_config/wirecutters
 	name = "Wirecutters"
@@ -157,6 +172,10 @@
 	name = "Mime PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
+/datum/greyscale_config/tablet/stripe_double
+	name = "Double Stripe PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_double.json'
+
 /datum/greyscale_config/tablet/stripe_split
 	name = "Split Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
@@ -219,6 +238,10 @@
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
 
+/datum/greyscale_config/sneakers_marisa/worn
+	name = "Worn Marisa Sneakers"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 /datum/greyscale_config/circuit
 	name = "Circuit Board"
 	icon_file = 'icons/obj/module.dmi'
@@ -277,10 +300,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
@@ -377,42 +420,42 @@
 
 /datum/greyscale_config/giftdeliverybox
 	name = "Gift Box"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
 
 /datum/greyscale_config/giftdeliverycloset
 	name = "Gift Closet"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
 
 /datum/greyscale_config/giftdeliverycrate
 	name = "Gift Crate"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverycrate.json'
 
 /datum/greyscale_config/giftdeliverypackage5
 	name = "Gift Package 5 (Biggest)"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage5.json'
 
 /datum/greyscale_config/giftdeliverypackage4
 	name = "Gift Package 4"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage4.json'
 
 /datum/greyscale_config/giftdeliverypackage3
 	name = "Gift Package 3"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
 
 /datum/greyscale_config/giftdeliverypackage2
 	name = "Gift Package 2"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
 
 /datum/greyscale_config/giftdeliverypackage1
 	name = "Gift Package 1 (Smallest)"
-	icon_file = 'icons/obj/storage/storage.dmi'
+	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
 
 /datum/greyscale_config/wrap_paper
@@ -452,6 +495,11 @@
 	name = "Bench Right"
 	icon_file = 'icons/obj/sofa.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
+
+/datum/greyscale_config/bench_solo
+	name = "Bench Solo"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
@@ -775,6 +823,31 @@
 	icon_file = 'icons/obj/tapes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
 
+/datum/greyscale_config/buckets
+	name = "Buckets"
+	icon_file = 'icons/obj/janitor.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buckets.json'
+
+/datum/greyscale_config/buckets_worn
+	name = "Buckets Worn"
+	icon_file = 'icons/mob/clothing/head/utility.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buckets.json'
+
+/datum/greyscale_config/buckets_inhands_left
+	name = "Buckets Inhands Left"
+	icon_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buckets.json'
+
+/datum/greyscale_config/buckets_inhands_right
+	name = "Buckets Inhands Right"
+	icon_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buckets.json'
+
+/datum/greyscale_config/buckets_cleanbot
+	name = "Buckets - Cleanbot"
+	icon_file = 'icons/mob/silicon/aibots.dmi'
+	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
+
 /datum/greyscale_config/buttondown_slacks
 	name = "Buttondown with Slacks"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
@@ -865,6 +938,16 @@
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
 
+/datum/greyscale_config/witch_hat
+	name = "Fancy Hat"
+	icon_file = 'icons/obj/clothing/head/wizard.dmi'
+	json_config = 'code/datums/greyscale/json_configs/witch_hat.json'
+
+/datum/greyscale_config/witch_hat_worn
+	name = "Worn Fancy Hat"
+	icon_file = 'icons/mob/clothing/head/wizard.dmi'
+	json_config = 'code/datums/greyscale/json_configs/witch_hat_worn.json'
+
 /datum/greyscale_config/fancy_hat
 	name = "Fancy Hat"
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
@@ -946,3 +1029,32 @@
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
 
+/datum/greyscale_config/quantum_keycard
+	name = "Quantum Keycard"
+	icon_file = 'icons/obj/device.dmi'
+	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
+
+/datum/greyscale_config/heretic_rune
+	name = "Transmutation Rune"
+	icon_file = 'icons/effects/96x96.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heretic_rune.json'
+
+/datum/greyscale_config/festive_hat
+	name = "Festive Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
+
+/datum/greyscale_config/festive_hat_worn
+	name = "Festive Hat Worn"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
+
+/datum/greyscale_config/party_hat
+	name = "Party Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
+
+/datum/greyscale_config/party_hat_worn
+	name = "Party Hat Worn"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/party_hat.json'

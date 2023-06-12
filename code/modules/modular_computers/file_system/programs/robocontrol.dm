@@ -14,7 +14,7 @@
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
 	///List of all ping types you can annoy drones with.
-	var/list/drone_ping_types = list(
+	var/static/list/drone_ping_types = list(
 		"Low",
 		"Medium",
 		"High",
@@ -22,16 +22,13 @@
 	)
 
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
-	var/list/data = get_header_data()
-	var/turf/current_turf = get_turf(ui_host())
+	var/list/data = list()
+	var/turf/current_turf = get_turf(computer.ui_host())
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
-	var/obj/item/computer_hardware/card_slot/card_slot = computer ? computer.all_components[MC_CARD] : null
-	data["have_id_slot"] = !!card_slot
 	if(computer)
-		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
-		data["id_owner"] = id_card
+		data["id_owner"] = computer.computer_id_slot || ""
 
 	botcount = 0
 
@@ -87,23 +84,15 @@
 	return data
 
 /datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	var/mob/current_user = ui.user
-	var/obj/item/computer_hardware/card_slot/card_slot
-	var/obj/item/card/id/id_card
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-		if(card_slot)
-			id_card = card_slot.stored_card
+	var/obj/item/card/id/id_card = computer?.computer_id_slot
 
-	var/list/standard_actions = list(
+	var/static/list/standard_actions = list(
 		"patroloff",
 		"patrolon",
 		"ejectpai",
 	)
-	var/list/MULE_actions = list(
+	var/static/list/MULE_actions = list(
 		"stop",
 		"go",
 		"home",
@@ -118,23 +107,23 @@
 	)
 	var/mob/living/simple_animal/bot/simple_bot = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
-		simple_bot.bot_control(action, current_user, current_access)
+		simple_bot.bot_control(action, current_user, id_card?.GetAccess())
 	if (action in MULE_actions)
-		simple_bot.bot_control(action, current_user, current_access, TRUE)
+		simple_bot.bot_control(action, current_user, id_card?.GetAccess(), TRUE)
 
 	switch(action)
 		if("summon")
-			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
+			simple_bot.bot_control(action, current_user, id_card ? id_card.access : id_card?.GetAccess())
 		if("ejectcard")
-			if(!computer || !card_slot)
+			if(!computer || !computer.computer_id_slot)
 				return
 			if(id_card)
-				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
-				card_slot.try_eject(current_user)
+				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
+				computer.RemoveID(usr)
 			else
-				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
+				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
 		if("changedroneaccess")
-			if(!computer || !card_slot || !id_card)
+			if(!computer || !computer.computer_id_slot || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
 				return
 			if(isdrone(current_user))

@@ -16,7 +16,7 @@
 	force = 6
 	base_pixel_x = -4
 	pixel_x = -4
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
@@ -154,7 +154,7 @@
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A
 		if(D.used)
-			balloon_alert("[D.name] is used up!")
+			balloon_alert(user, "[D.name] is used up!")
 			return
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
@@ -190,8 +190,8 @@
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	visible_message(span_danger("[user] starts aiming with a blowgun!"))
-	if(do_after(user, 25, target = src))
-		user.adjustStaminaLoss(20)
-		user.adjustOxyLoss(20)
-		return ..()
+	visible_message(span_danger("[user] shoots the blowgun!"))
+
+	user.adjustStaminaLoss(20)
+	user.adjustOxyLoss(20)
+	return ..()

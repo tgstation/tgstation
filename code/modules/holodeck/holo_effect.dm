@@ -53,7 +53,7 @@
 	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
-	var/mobtype = /mob/living/simple_animal/hostile/carp/holocarp
+	var/mobtype = /mob/living/basic/carp/holographic
 	var/mob/our_mob = null
 
 /obj/effect/holodeck_effect/mobspawner/activate(obj/machinery/computer/holodeck/HC)
@@ -65,7 +65,7 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
 		our_mob.vars[v] = null
-	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_delete)
+	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
@@ -82,15 +82,15 @@
 /obj/effect/holodeck_effect/mobspawner/pet/Initialize(mapload)
 	. = ..()
 	mobtype = list(
-		/mob/living/simple_animal/butterfly,
-		/mob/living/simple_animal/chick/holo,
+		/mob/living/basic/butterfly,
+		/mob/living/basic/chick/permanent,
+		/mob/living/basic/rabbit,
 		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/rabbit,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/pet/dog/corgi/puppy,
-		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/basic/pet/dog/corgi,
+		/mob/living/basic/pet/dog/corgi/puppy,
+		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
 		/mob/living/simple_animal/pet/cat,

@@ -131,24 +131,25 @@
 
 	var/list/visible_turfs = list()
 
-	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/newturf = get_turf(cam_location)
-	if(last_camera_turf == newturf)
+	if(last_camera_turf == new_cam_turf)
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = get_turf(cam_location)
+	last_camera_turf = new_cam_turf
 
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	var/list/visible_things = active_camera.isXRay(ignore_malf_upgrades = TRUE) ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
 
+	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -168,6 +169,7 @@
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
+		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		use_power(0)
 
@@ -179,21 +181,23 @@
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
+		//Get the camera's turf in case it's inside something like a borg
+		var/turf/camera_turf = get_turf(cam)
+		if((is_away_level(z) || is_away_level(camera_turf.z)) && (camera_turf.z != z))//if on away mission, can only receive feed from same z_level cameras
 			continue
-		L.Add(C)
+		L.Add(cam)
 	var/list/D = list()
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
+	for(var/obj/machinery/camera/cam in L)
+		if(!cam.network)
 			stack_trace("Camera in a cameranet has no camera network")
 			continue
-		if(!(islist(C.network)))
+		if(!(islist(cam.network)))
 			stack_trace("Camera in a cameranet has a non-list camera network")
 			continue
-		var/list/tempnetwork = C.network & network
+		var/list/tempnetwork = cam.network & network
 		if(tempnetwork.len)
-			D["[C.c_tag]"] = C
+			D["[cam.c_tag]"] = cam
 	return D
 
 // SECURITY MONITORS
@@ -237,185 +241,5 @@
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
-
-// TELESCREENS
-
-/obj/machinery/computer/security/telescreen
-	name = "\improper Telescreen"
-	desc = "Used for watching an empty arena."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "telescreen"
-	icon_keyboard = null
-	layer = SIGN_LAYER
-	network = list("thunder")
-	density = FALSE
-	circuit = null
-	light_power = 0
-
-/obj/machinery/computer/security/telescreen/update_icon_state()
-	icon_state = initial(icon_state)
-	if(machine_stat & BROKEN)
-		icon_state += "b"
-	return ..()
-
-/obj/machinery/computer/security/telescreen/entertainment
-	name = "entertainment monitor"
-	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/status_display.dmi'
-	icon_state = "entertainment_blank"
-	network = list()
-	density = FALSE
-	circuit = null
-	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
-	var/icon_state_off = "entertainment_blank"
-	var/icon_state_on = "entertainment"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
-
-/obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
-
-// Bypass clickchain to allow humans to use the telescreen from a distance
-/obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
-	SIGNAL_HANDLER
-
-	if(!network.len)
-		balloon_alert(usr, "there's nothing on TV!")
-		return
-
-	INVOKE_ASYNC(src, /atom.proc/interact, usr)
-
-///Sets the monitor's icon to the selected state, and says an announcement
-/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
-	if(on && icon_state == icon_state_off)
-		icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
-	if(announcement)
-		say(announcement)
-
-/// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
-/obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
-	if(!network)
-		return
-
-	if(is_show_active)
-		network |= tv_show_id
-	else
-		network -= tv_show_id
-
-	notify(network.len, announcement)
-
-/// A button that adds a camera network to the entertainment monitors
-/obj/machinery/button/showtime
-	name = "thunderdome showtime button"
-	desc = "Use this button to allow entertainment monitors to broadcast the big game."
-	device_type = /obj/item/assembly/control/showtime
-	req_access = list()
-	id = "showtime_1"
-
-/obj/machinery/button/showtime/Initialize(mapload)
-	. = ..()
-	if(device)
-		var/obj/item/assembly/control/showtime/ours = device
-		ours.id = id
-
-/obj/item/assembly/control/showtime
-	name = "showtime controller"
-	desc = "A remote controller for entertainment monitors."
-	/// Stores if the show associated with this controller is active or not
-	var/is_show_active = FALSE
-	/// The camera network id this controller toggles
-	var/tv_network_id = "thunder"
-	/// The display TV show name
-	var/tv_show_name = "Thunderdome"
-	/// List of phrases the entertainment console may say when the show begins
-	var/list/tv_starters = list("Feats of bravery live now at the thunderdome!",
-		"Two enter, one leaves! Tune in now!",
-		"Violence like you've never seen it before!",
-		"Spears! Camera! Action! LIVE NOW!")
-	/// List of phrases the entertainment console may say when the show ends
-	var/list/tv_enders = list("Thank you for tuning in to the slaughter!",
-		"What a show! And we guarantee next one will be bigger!",
-		"Celebrate the results with Thundermerch!",
-		"This show was brought to you by Nanotrasen.")
-
-/obj/item/assembly/control/showtime/activate()
-	is_show_active = !is_show_active
-	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
-	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
-		tv.update_shows(is_show_active, tv_network_id, announcement)
-
-/obj/machinery/computer/security/telescreen/rd
-	name = "\improper Research Director's telescreen"
-	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
-
-/obj/machinery/computer/security/telescreen/research
-	name = "research telescreen"
-	desc = "A telescreen with access to the research division's camera network."
-	network = list("rd")
-
-/obj/machinery/computer/security/telescreen/ce
-	name = "\improper Chief Engineer's telescreen"
-	desc = "Used for watching the engine, telecommunications and the minisat."
-	network = list("engine", "singularity", "tcomms", "minisat")
-
-/obj/machinery/computer/security/telescreen/cmo
-	name = "\improper Chief Medical Officer's telescreen"
-	desc = "A telescreen with access to the medbay's camera network."
-	network = list("medbay")
-
-/obj/machinery/computer/security/telescreen/vault
-	name = "vault monitor"
-	desc = "A telescreen that connects to the vault's camera network."
-	network = list("vault")
-
-/obj/machinery/computer/security/telescreen/ordnance
-	name = "bomb test site monitor"
-	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("ordnance")
-
-/obj/machinery/computer/security/telescreen/engine
-	name = "engine monitor"
-	desc = "A telescreen that connects to the engine's camera network."
-	network = list("engine")
-
-/obj/machinery/computer/security/telescreen/turbine
-	name = "turbine monitor"
-	desc = "A telescreen that connects to the turbine's camera."
-	network = list("turbine")
-
-/obj/machinery/computer/security/telescreen/interrogation
-	name = "interrogation room monitor"
-	desc = "A telescreen that connects to the interrogation room's camera."
-	network = list("interrogation")
-
-/obj/machinery/computer/security/telescreen/prison
-	name = "prison monitor"
-	desc = "A telescreen that connects to the permabrig's camera network."
-	network = list("prison")
-
-/obj/machinery/computer/security/telescreen/auxbase
-	name = "auxiliary base monitor"
-	desc = "A telescreen that connects to the auxiliary base's camera."
-	network = list("auxbase")
-
-/obj/machinery/computer/security/telescreen/minisat
-	name = "minisat monitor"
-	desc = "A telescreen that connects to the minisat's camera network."
-	network = list("minisat")
-
-/obj/machinery/computer/security/telescreen/aiupload
-	name = "\improper AI upload monitor"
-	desc = "A telescreen that connects to the AI upload's camera network."
-	network = list("aiupload")
-
-/obj/machinery/computer/security/telescreen/bar
-	name = "bar monitor"
-	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
-	network = list("bar")
 
 #undef DEFAULT_MAP_SIZE

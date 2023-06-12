@@ -289,9 +289,7 @@
 	name = "Transport Ship Zeta"
 	},
 /obj/docking_port/mobile/emergency{
-	height = 21;
-	name = "Zeta emergency shuttle";
-	width = 21
+	name = "Zeta emergency shuttle"
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)

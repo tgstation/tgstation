@@ -43,7 +43,7 @@
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
 	hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)
 	times_to_lower_stamina = rand(5, 10)
-	addtimer(CALLBACK(src, .proc/start_expanding), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_expanding)), 2 SECONDS)
 	return TRUE
 
 /datum/hallucination/fire/Destroy()
@@ -63,17 +63,17 @@
 
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/hallucination/fire/process(delta_time)
+/datum/hallucination/fire/process(seconds_per_tick)
 	if(QDELETED(src))
 		return
 
 	if(hallucinator.fire_stacks <= 0)
 		clear_fire()
 
-	time_spent += delta_time
+	time_spent += seconds_per_tick
 
 	if(fire_clearing)
-		next_action -= delta_time
+		next_action -= seconds_per_tick
 		if(next_action < 0)
 			stage -= 1
 			update_temp()
@@ -89,7 +89,7 @@
 				increasing_stages = FALSE
 
 	else if(times_to_lower_stamina)
-		next_action -= delta_time
+		next_action -= seconds_per_tick
 		if(next_action < 0)
 			hallucinator.adjustStaminaLoss(15)
 			next_action += 2

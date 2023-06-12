@@ -54,8 +54,6 @@
 	/// Martial art on this mind
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
-	/// Mime's vow of silence
-	var/miming = FALSE
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -64,8 +62,9 @@
 	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
-	///If this mind's master is another mob (i.e. adamantine golems)
-	var/mob/living/enslaved_to
+	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
+	var/datum/weakref/enslaved_to
+
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
@@ -73,7 +72,8 @@
 	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
-	/// Set by Into The Sunset command of the shuttle manipulator
+	/// Set by Into The Sunset command of the shuttle manipulator.
+	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
 	var/list/learned_recipes //List of learned recipe TYPES.
@@ -122,6 +122,25 @@
 	set_current(null)
 	return ..()
 
+/datum/mind/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["key"] = key
+	.["name"] = name
+	.["ghostname"] = ghostname
+	.["memories"] = memories
+	.["martial_art"] = martial_art
+	.["antag_datums"] = antag_datums
+	.["holy_role"] = holy_role
+	.["special_role"] = special_role
+	.["assigned_role"] = assigned_role.title
+	.["current"] = current
+
+	var/mob/enslaved_to = src.enslaved_to?.resolve()
+	.["enslaved_to"] = enslaved_to
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -141,7 +160,7 @@
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
@@ -161,7 +180,7 @@
 
 	if(key)
 		if(new_character.key != key) //if we're transferring into a body with a key associated which is not ours
-			new_character.ghostize(1) //we'll need to ghostize so that key isn't mobless.
+			new_character.ghostize(TRUE) //we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
 
@@ -182,7 +201,7 @@
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
 	transfer_martial_arts(new_character)
-	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
+	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)
@@ -427,11 +446,10 @@
 				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
 				if(!objective_typepath)
 					return
-				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
+				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath, force = TRUE)
 				if(objective)
 					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
 					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
-					objective.forced = TRUE
 				else
 					to_chat(usr, span_warning("Failed to generate the objective!"))
 					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
@@ -501,6 +519,19 @@
 	. = assigned_role
 	assigned_role = new_role
 
+/// Sets us to the passed job datum, then greets them to their new job.
+/// Use this one for when you're assigning this mind to a new job for the first time,
+/// or for when someone's recieving a job they'd really want to be greeted to.
+/datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
+	. = set_assigned_role(new_role)
+	if(assigned_role != new_role)
+		return
+
+	to_chat(incoming_client || src, span_infoplain("<b>You are the [new_role.title].</b>"))
+
+	var/related_policy = get_policy(new_role.title)
+	if(related_policy)
+		to_chat(incoming_client || src, related_policy)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)

@@ -5,7 +5,7 @@
 /datum/component/plane_hide_highest_offset/Initialize()
 	if(!istype(parent, /atom/movable/screen/plane_master))
 		return
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	offset_increase(SSmapping.max_plane_offset)
 
 /datum/component/plane_hide_highest_offset/proc/on_offset_increase(datum/source, old_offset, new_offset)

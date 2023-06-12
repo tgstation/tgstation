@@ -1,8 +1,0 @@
-static_files:
-  - name: config
-    populate: true
-  - name: data
-linux_scripts:
-  PreCompile.sh: tools/tgs4_scripts/PreCompile.sh
-windows_scripts:
-  PreCompile.bat: tools/tgs4_scripts/PreCompile.bat

@@ -13,31 +13,43 @@
 	var/display_combos = FALSE //shows combo meter if true
 	var/combo_timer = 6 SECONDS // period of time after which the combo streak is reset.
 	var/timerid
+	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
+	var/pacifist_style = FALSE
 
-/datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
+/datum/martial_art/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["name"] = name
+	.["id"] = id
+	.["pacifist_style"] = pacifist_style
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
+
+/datum/martial_art/proc/help_act(mob/living/attacker, mob/living/defender)
 	return MARTIAL_ATTACK_INVALID
 
-/datum/martial_art/proc/disarm_act(mob/living/A, mob/living/D)
+/datum/martial_art/proc/disarm_act(mob/living/attacker, mob/living/defender)
 	return MARTIAL_ATTACK_INVALID
 
-/datum/martial_art/proc/harm_act(mob/living/A, mob/living/D)
+/datum/martial_art/proc/harm_act(mob/living/attacker, mob/living/defender)
 	return MARTIAL_ATTACK_INVALID
 
-/datum/martial_art/proc/grab_act(mob/living/A, mob/living/D)
+/datum/martial_art/proc/grab_act(mob/living/attacker, mob/living/defender)
 	return MARTIAL_ATTACK_INVALID
 
 /datum/martial_art/proc/can_use(mob/living/L)
 	return TRUE
 
-/datum/martial_art/proc/add_to_streak(element, mob/living/D)
-	if(D != current_target)
-		reset_streak(D)
+/datum/martial_art/proc/add_to_streak(element, mob/living/defender)
+	if(defender != current_target)
+		reset_streak(defender)
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
 		var/mob/living/holder_living = holder.resolve()
-		timerid = addtimer(CALLBACK(src, .proc/reset_streak, null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
 		holder_living?.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target, update_icon = TRUE)
@@ -91,5 +103,5 @@
 	return
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.
-/datum/martial_art/proc/on_projectile_hit(mob/living/A, obj/projectile/P, def_zone)
+/datum/martial_art/proc/on_projectile_hit(mob/living/attacker, obj/projectile/P, def_zone)
 	return BULLET_ACT_HIT

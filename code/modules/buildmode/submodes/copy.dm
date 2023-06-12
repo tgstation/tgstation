@@ -18,7 +18,7 @@
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		var/turf/T = get_turf(object)
 		if(stored)
-			DuplicateObject(stored, perfectcopy=1, sameloc=0,newloc=T)
+			duplicate_object(stored, spawning_location = T)
 			log_admin("Build Mode: [key_name(c)] copied [stored] to [AREACOORD(object)]")
 	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(ismovable(object)) // No copying turfs for now.

@@ -30,9 +30,9 @@
 	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
-/obj/item/instrument/suicide_act(mob/user)
+/obj/item/instrument/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/instrument/attack_self(mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
@@ -209,7 +209,7 @@
 
 /obj/item/instrument/harmonica/equipped(mob/M, slot)
 	. = ..()
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /obj/item/instrument/harmonica/dropped(mob/M)
 	. = ..()
@@ -251,23 +251,23 @@
 	var/static/list/instruments
 	if(!instruments)
 		instruments = list()
-		var/list/templist = list(/obj/item/instrument/violin,
-							/obj/item/instrument/piano_synth,
-							/obj/item/instrument/banjo,
-							/obj/item/instrument/guitar,
-							/obj/item/instrument/eguitar,
-							/obj/item/instrument/glockenspiel,
-							/obj/item/instrument/accordion,
-							/obj/item/instrument/trumpet,
-							/obj/item/instrument/saxophone,
-							/obj/item/instrument/trombone,
-							/obj/item/instrument/recorder,
-							/obj/item/instrument/harmonica,
-							/obj/item/instrument/piano_synth/headphones
-							)
-		for(var/V in templist)
-			var/atom/A = V
-			instruments[initial(A.name)] = A
+		var/list/possible_instruments = list(
+			/obj/item/instrument/violin,
+			/obj/item/instrument/piano_synth,
+			/obj/item/instrument/banjo,
+			/obj/item/instrument/guitar,
+			/obj/item/instrument/eguitar,
+			/obj/item/instrument/glockenspiel,
+			/obj/item/instrument/accordion,
+			/obj/item/instrument/trumpet,
+			/obj/item/instrument/saxophone,
+			/obj/item/instrument/trombone,
+			/obj/item/instrument/recorder,
+			/obj/item/instrument/harmonica,
+			/obj/item/instrument/piano_synth/headphones,
+		)
+		for(var/obj/item/instrument/instrument as anything in possible_instruments)
+			instruments[initial(instrument.name)] = instrument
 	return instruments
 
 /obj/item/instrument/musicalmoth

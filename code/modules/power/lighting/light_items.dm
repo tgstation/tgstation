@@ -7,7 +7,7 @@
 	force = 2
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	///How much light it gives off
 	var/brightness = 2
@@ -18,26 +18,43 @@
 	///Number of times switched on and off
 	var/switchcount = 0
 
+/obj/item/light/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/golem_food, golem_food_key = /obj/item/light, extra_validation = CALLBACK(src, PROC_REF(is_intact)))
+
+/// Returns true if bulb is intact
+/obj/item/light/proc/is_intact()
+	return status == LIGHT_OK
+
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		return BRUTELOSS
 	else
 		user.visible_message(span_suicide("[user] begins to eat \the [src]! It looks like [user.p_theyre()] not very bright!"))
 		shatter()
-		return BRUTELOSS
+	return BRUTELOSS
 
 /obj/item/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
-	inhand_icon_state = "c_tube"
+	inhand_icon_state = "ltube"
 	brightness = 8
 	custom_price = PAYCHECK_CREW * 0.5
 
+/obj/item/light/tube/update_icon_state()
+	. = ..()
+	switch(status)
+		if(LIGHT_BURNED)
+			inhand_icon_state = "[base_state]-burned"
+		if(LIGHT_BROKEN)
+			inhand_icon_state = "[base_state]-broken"
+
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
+	sharpness = SHARP_POINTY
 
 /obj/item/light/bulb
 	name = "light bulb"
@@ -52,6 +69,7 @@
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
+	sharpness = SHARP_POINTY
 
 /obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
@@ -59,25 +77,33 @@
 
 // update the icon state and description of the light
 
-/obj/item/light/proc/update()
+/obj/item/light/update_icon_state()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
 			icon_state = base_state
-			desc = "A replacement [name]."
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
-			desc = "A burnt-out [name]."
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
+
+/obj/item/light/update_desc()
+	. = ..()
+	switch(status)
+		if(LIGHT_OK)
+			desc = "A replacement [name]."
+		if(LIGHT_BURNED)
+			desc = "A burnt-out [name]."
+		if(LIGHT_BROKEN)
 			desc = "A broken [name]."
 
 /obj/item/light/Initialize(mapload)
 	. = ..()
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE | SEALED_CONTAINER | TRANSPARENT)
 	AddComponent(/datum/component/caltrop, min_damage = force)
-	update()
+	update_icon_state()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -87,7 +113,7 @@
 		return
 	var/mob/living/moving_mob = moving_atom
 	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
-		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+		playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)
 
@@ -104,8 +130,9 @@
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
 		force = 5
+		sharpness = SHARP_POINTY
 		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)
-		update()
+		update_appearance(UPDATE_DESC | UPDATE_ICON)

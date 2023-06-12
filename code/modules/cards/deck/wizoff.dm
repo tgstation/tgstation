@@ -10,9 +10,9 @@
 /obj/item/toy/cards/deck/wizoff/Initialize(mapload)
 	. = ..()
 	var/card_list = strings("wizoff.json", "wizard")
-	cards += new /obj/item/toy/singlecard/wizoff_ruleset(src) // ruleset should be the top card
+	initial_cards += new /datum/deck_card/of_type(/obj/item/toy/singlecard/wizoff_ruleset) // ruleset should be the top card
 	for(var/card in card_list)
-		cards += new /obj/item/toy/singlecard(src, card, src)
+		initial_cards += card
 
 /obj/item/toy/singlecard/wizoff_ruleset
 	desc = "A ruleset for the playing card game Wiz-Off."

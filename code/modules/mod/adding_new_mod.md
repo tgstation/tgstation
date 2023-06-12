@@ -40,7 +40,7 @@ Currently crew MODsuits should be lightly armored in combat relevant stats.
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 ```
@@ -79,7 +79,7 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	skins = list(
@@ -134,7 +134,7 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	skins = list(
@@ -268,7 +268,7 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 		for operating at lower power levels, keeping people sane. As consequence, the capacity \
 		of the suit has decreased, not being able to fit many modules at all."
 	default_skin = "psychological"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 10, ACID = 75, WOUND = 5)
+	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	inbuilt_modules = list(/obj/item/mod/module/neuron_healer/advanced)

@@ -59,6 +59,12 @@
 	name = "solar beam"
 	icon_state = "solar"
 
+/obj/effect/projectile/tracer/solar/thin
+	icon_state = "solar_thin"
+
+/obj/effect/projectile/tracer/solar/thinnest
+	icon_state = "solar_thinnest"
+
 //BEAM RIFLE
 /obj/effect/projectile/tracer/tracer/beam_rifle
 	icon_state = "tracer_beam"

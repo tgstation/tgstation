@@ -158,13 +158,12 @@
 	projectile.preparePixelProjectile(target, mod.wearer)
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-	INVOKE_ASYNC(projectile, /obj/projectile.proc/fire)
+	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
 	/// A reference to the organ we "are".
@@ -202,7 +201,7 @@
 			succeed = TRUE
 			break
 	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.getorganslot(organ.slot)
+		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
 		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
 			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
 				continue
@@ -241,13 +240,15 @@
 	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 25
 	device = /obj/item/shockpaddles/mod
+	overlay_state_inactive = "module_defibrillator"
+	overlay_state_active = "module_defibrillator_active"
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
 	var/defib_cooldown = 5 SECONDS
 
 /obj/item/mod/module/defibrillator/Initialize(mapload)
 	. = ..()
-	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, .proc/on_defib_success)
+	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 
 /obj/item/mod/module/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
 	drain_power(use_power_cost)
@@ -255,8 +256,36 @@
 	return COMPONENT_DEFIB_STOP
 
 /obj/item/shockpaddles/mod
-	name = "MOD defibrillator paddles"
+	name = "MOD defibrillator gauntlets"
 	req_defib = FALSE
+	icon_state = "defibgauntlets0"
+	inhand_icon_state = "defibgauntlets0"
+	base_icon_state = "defibgauntlets"
+
+/obj/item/mod/module/defibrillator/combat
+	name = "MOD combat defibrillator module"
+	desc = "A module built into the gauntlets of the suit; commonly known as the 'Healing Hands' by medical professionals. \
+		The user places their palms above the patient. Onboard computers in the suit calculate the necessary voltage, \
+		and a modded targeting computer determines the best position for the user to push. \
+		Twenty five pounds of force are applied to the patient's skin. Shocks travel from the suit's gloves \
+		and counter-shock the heart, and the wearer returns to Medical a hero. \
+		Interdyne Pharmaceutics marketed the domestic version of the Healing Hands as foolproof and unusable as a weapon. \
+		But when it came time to provide their operatives with usable medical equipment, they didn't hesitate to remove \
+		those in-built safeties. Operatives in the field can benefit from what they dub as 'Stun Gloves', able to apply shocks \
+		straight to a victims heart to disable them, or maybe even outright stop their heart with enough power."
+	complexity = 1
+	module_type = MODULE_ACTIVE
+	overlay_state_inactive = "module_defibrillator_combat"
+	overlay_state_active = "module_defibrillator_combat_active"
+	device = /obj/item/shockpaddles/syndicate/mod
+	defib_cooldown = 2.5 SECONDS
+
+/obj/item/shockpaddles/syndicate/mod
+	name = "MOD combat defibrillator gauntlets"
+	req_defib = FALSE
+	icon_state = "syndiegauntlets0"
+	inhand_icon_state = "syndiegauntlets0"
+	base_icon_state = "syndiegauntlets"
 
 ///Thread Ripper - Temporarily rips apart clothing to make it not cover the body.
 /obj/item/mod/module/thread_ripper
@@ -304,7 +333,7 @@
 			ripped_clothing[clothing] = shared_flags
 			clothing.body_parts_covered &= ~shared_flags
 
-/obj/item/mod/module/thread_ripper/on_process(delta_time)
+/obj/item/mod/module/thread_ripper/on_process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -352,3 +381,23 @@
 
 /obj/item/surgical_processor/mod
 	name = "MOD surgical processor"
+
+/obj/item/mod/module/surgical_processor/preloaded
+	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
+		perform advanced surgeries on the go. This one came pre-loaded with some advanced surgeries."
+	device = /obj/item/surgical_processor/mod/preloaded
+
+/obj/item/surgical_processor/mod/preloaded
+	loaded_surgeries = list(
+		/datum/surgery/advanced/pacify,
+		/datum/surgery/healing/combo/upgraded/femto,
+		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_folding,
+	)

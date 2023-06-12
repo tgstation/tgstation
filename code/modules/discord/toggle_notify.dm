@@ -22,13 +22,13 @@
 		to_chat(src, span_warning("This requires you to link your Discord account with the \"Link Discord Account\" verb."))
 		return
 
-	else // Linked
-		for(var/member in SSdiscord.notify_members) // If they are in the list, take them out
-			if(member == "[stored_id]")
-				SSdiscord.notify_members -= "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer
-				to_chat(src, span_notice("You will no longer be notified when the server restarts"))
-				return // This is necassary so it doesnt get added again, as it relies on the for loop being unsuccessful to tell us if they are in the list or not
+	var/stored_mention = "<@[stored_id]>"
+	for(var/member in SSdiscord.notify_members) // If they are in the list, take them out
+		if(member == stored_mention)
+			SSdiscord.notify_members -= stored_mention 
+			to_chat(src, span_notice("You will no longer be notified when the server restarts"))
+			return // This is necassary so it doesnt get added again, as it relies on the for loop being unsuccessful to tell us if they are in the list or not
 
-		// If we got here, they arent in the list. Chuck 'em in!
-		to_chat(src, span_notice("You will now be notified when the server restarts"))
-		SSdiscord.notify_members += "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer
+	// If we got here, they arent in the list. Chuck 'em in!
+	to_chat(src, span_notice("You will now be notified when the server restarts"))
+	SSdiscord.notify_members += "[stored_mention]" 

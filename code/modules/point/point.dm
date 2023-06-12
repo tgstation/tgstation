@@ -58,7 +58,7 @@
 
 	add_overlay(thought_bubble)
 	LAZYADD(update_overlays_on_z, thought_bubble)
-	addtimer(CALLBACK(src, .proc/clear_point_bubble, thought_bubble), POINT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), thought_bubble), POINT_TIME)
 
 /atom/movable/proc/clear_point_bubble(mutable_appearance/thought_bubble)
 	LAZYREMOVE(update_overlays_on_z, thought_bubble)
@@ -101,7 +101,7 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/_pointed, A))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_pointed), A))
 
 /// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro

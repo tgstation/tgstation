@@ -120,9 +120,7 @@ Industrial extracts:
 	..()
 
 /obj/item/slimecross/industrial/silver/do_after_spawn(obj/item/spawned)
-	if(istype(spawned, /obj/item/food))
-		var/obj/item/food/food_object = spawned
-		food_object.mark_silver_slime_reaction()
+	ADD_TRAIT(spawned, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 
 /obj/item/slimecross/industrial/bluespace
 	colour = "bluespace"
@@ -172,7 +170,7 @@ Industrial extracts:
 	plasmarequired = 10
 
 /obj/item/slimecross/industrial/gold/process()
-	itempath = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
+	itempath = get_random_coin()
 	..()
 
 /obj/item/slimecross/industrial/oil

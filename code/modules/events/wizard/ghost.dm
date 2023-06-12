@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Ghosts become visible."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/ghost/start()
 	var/msg = span_warning("You suddenly feel extremely obvious...")

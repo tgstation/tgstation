@@ -66,7 +66,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
@@ -91,12 +91,6 @@
 		. = attack_threshold_check(damage)
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-
-/mob/living/simple_animal/attack_basic_mob(mob/living/basic/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		return attack_threshold_check(damage, user.melee_damage_type)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
@@ -137,12 +131,10 @@
 		return TRUE
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+	. = ..()
+	if(!. || QDELETED(src))
 		return FALSE
 
-	. = ..()
-	if(QDELETED(src))
-		return
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			ex_act_devastate()
@@ -151,12 +143,15 @@
 		if (EXPLODE_LIGHT)
 			ex_act_light()
 
+	return TRUE
+
 /// Called when a devastating explosive acts on this mob
 /mob/living/simple_animal/proc/ex_act_devastate()
 	var/bomb_armor = getarmor(null, BOMB)
 	if(prob(bomb_armor))
 		adjustBruteLoss(500)
 	else
+		investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 		gib()
 
 /// Called when a heavy explosive acts on this mob
@@ -196,7 +191,7 @@
 			if (EMP_LIGHT)
 				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
 				apply_damage(maxHealth * 0.6)
-				Shake(5, 5, 1 SECONDS)
+				Shake(duration = 1 SECONDS)
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)

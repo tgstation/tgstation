@@ -1,0 +1,280 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/beret_or_rabbitears,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/bowler_or_that,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/turf/closed/wall,
+/area/station/maintenance/department/crew_quarters/dorms)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"p" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/backpack,
+/obj/effect/spawner/random/clothing/backpack,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clothing/glasses/monocle,
+/obj/item/clothing/glasses/eyepatch,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clothing/under/suit/tuxedo{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/salesman{
+	pixel_y = 1;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/lizardboots,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/north{
+	name = "Privacy Shutter Toggle";
+	id = "dabonthehatersdabonthefakers"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/closet/cardboard{
+	name = "surplus clothing"
+	},
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/clothing/head/wig,
+/obj/item/clothing/head/wig{
+	pixel_x = -3;
+	pixel_y = -7
+	},
+/obj/item/clothing/head/wig{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"U" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mannequin/plastic,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"W" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "dabonthehatersdabonthefakers";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/lipstick/random,
+/obj/item/lipstick/random{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+e
+f
+f
+f
+f
+p
+p
+"}
+(2,1,1) = {"
+e
+O
+O
+O
+f
+a
+a
+"}
+(3,1,1) = {"
+W
+V
+O
+V
+f
+a
+a
+"}
+(4,1,1) = {"
+W
+d
+O
+J
+f
+a
+a
+"}
+(5,1,1) = {"
+W
+Z
+O
+z
+f
+a
+a
+"}
+(6,1,1) = {"
+W
+P
+O
+u
+f
+a
+a
+"}
+(7,1,1) = {"
+W
+c
+O
+B
+f
+a
+a
+"}
+(8,1,1) = {"
+W
+V
+O
+V
+f
+a
+p
+"}
+(9,1,1) = {"
+e
+I
+Q
+O
+f
+p
+p
+"}
+(10,1,1) = {"
+e
+f
+f
+h
+f
+f
+p
+"}
+(11,1,1) = {"
+U
+O
+O
+O
+O
+f
+p
+"}
+(12,1,1) = {"
+e
+O
+O
+O
+O
+f
+p
+"}
+(13,1,1) = {"
+e
+e
+e
+K
+q
+f
+p
+"}
+(14,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+"}

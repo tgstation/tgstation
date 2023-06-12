@@ -34,7 +34,7 @@
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT,.proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, PROC_REF(start_singing))
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
@@ -59,16 +59,16 @@
 	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 	///and hook into the instrument this time, preventing other weird exploity stuff.
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, .proc/tempo_change)
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, PROC_REF(tempo_change))
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, PROC_REF(stop_singing))
 	if(!allow_repeats)
-		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
+		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, PROC_REF(stop_singing))
 
 	linked_song = starting_song
 
 	//barticles
 	if(particles_path && ismovable(linked_song.parent))
-		particle_holder = new(linked_song.parent, particles_path)
+		particle_holder = new(linked_song.parent, particles_path, PARTICLE_ATTACH_MOB)
 	//filters
 	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
@@ -103,7 +103,7 @@
 	linked_song = null
 	qdel(src)
 
-/datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
+/datum/component/smooth_tunes/process(seconds_per_tick = SSOBJ_DT)
 	if(linked_songtuner_rite && linked_song)
 		for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
 			if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))

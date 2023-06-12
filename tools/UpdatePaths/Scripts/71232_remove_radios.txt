@@ -1,0 +1,1 @@
+/obj/machinery/embedded_controller/radio/airlock_controller/@SUBTYPES : /obj/machinery/airlock_controller/@SUBTYPES{@OLD}

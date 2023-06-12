@@ -159,12 +159,6 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
-	if(A in occupants) //todo does not work and in wrong file
-		LAZYREMOVE(occupants, A)
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
-
 /obj/vehicle/sealed/mecha/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
@@ -174,9 +168,16 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
+	//Mess with the focus of the inbuilt camera if present
+	if(chassis_camera && !chassis_camera.is_emp_scrambled)
+		chassis_camera.setViewRange(chassis_camera.short_range)
+		chassis_camera.is_emp_scrambled = TRUE
+		diag_hud_set_camera()
+		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
+
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
-	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
 
@@ -203,7 +204,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
@@ -242,7 +245,7 @@
 	if(istype(W, /obj/item/stock_parts/scanning_module))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!scanmod)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the scanning module."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
@@ -256,7 +259,7 @@
 	if(istype(W, /obj/item/stock_parts/capacitor))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!capacitor)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the capacitor."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
@@ -292,27 +295,51 @@
 	log_combat(user, src, "attacked", attacking_item)
 	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
-/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/sealed/mecha/attack_generic(mob/user, damage_amount, damage_type, damage_flag, effects, armor_penetration)
+	. = ..()
+	if(.)
+		try_damage_component(., user.zone_selected)
+
+/obj/vehicle/sealed/mecha/examine(mob/user)
+	.=..()
+	if(construction_state > MECHA_LOCKED)
+		switch(construction_state)
+			if(MECHA_SECURE_BOLTS)
+				. += span_notice("Use a <b>wrench</b> to adjust bolts securing the cover.")
+			if(MECHA_LOOSE_BOLTS)
+				. += span_notice("Use a <b>crowbar</b> to unlock the hatch to the power unit.")
+			if(MECHA_OPEN_HATCH)
+				. += span_notice("Use <b>interface</b> to eject stock parts from the mech.")
+
+/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
 	if(construction_state == MECHA_SECURE_BOLTS)
 		construction_state = MECHA_LOOSE_BOLTS
 		to_chat(user, span_notice("You undo the securing bolts."))
+		tool.play_tool_sound(src)
 		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_SECURE_BOLTS
 		to_chat(user, span_notice("You tighten the securing bolts."))
+		tool.play_tool_sound(src)
 
-/obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
+/obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
+	if(istype(tool, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = tool
+		remover.empty_mech(src, user)
+		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))
+		tool.play_tool_sound(src)
 		return
 	if(construction_state == MECHA_OPEN_HATCH)
 		construction_state = MECHA_LOOSE_BOLTS
 		to_chat(user, span_notice("You close the hatch to the power unit."))
+		tool.play_tool_sound(src)
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)
@@ -403,7 +430,7 @@
 				var/list/new_material_content = list()
 				for(var/datum/material/current_material in A.custom_materials)
 					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
-						new_material_content[current_material] = (A.custom_materials[current_material] - 2000) * (A.rounds / initial(A.rounds)) + 2000
+						new_material_content[current_material] = (A.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (A.rounds / initial(A.rounds)) + SHEET_MATERIAL_AMOUNT
 					else
 						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
 				A.set_custom_materials(new_material_content)
@@ -420,7 +447,7 @@
 			qdel(A)
 			return TRUE
 		A.rounds = 0
-		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
 		A.update_appearance()
 		return TRUE
 	if(!fail_chat_override)

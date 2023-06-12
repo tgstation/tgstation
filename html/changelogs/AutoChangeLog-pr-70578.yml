@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Flashlights and similar directional light items no longer make you glow forever under certain circumstances."

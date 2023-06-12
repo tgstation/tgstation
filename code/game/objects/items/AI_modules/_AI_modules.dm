@@ -15,7 +15,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
@@ -31,7 +31,8 @@
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	var/examine_laws = display_laws()
-	. += "\n" + examine_laws
+	if(examine_laws)
+		. += "\n" + examine_laws
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
@@ -167,17 +168,16 @@
 	color = "#00FF00"
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
-	..()
+	. = ..()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
 	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
 			continue
 		potential_lawboard = new potential_lawboard(loc)
-		return INITIALIZE_HINT_QDEL
+		return
 	//spawn the fallback instead
 	new /obj/item/ai_module/core/round_default_fallback(loc)
-	return INITIALIZE_HINT_QDEL
 
 ///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
 ///This is so /datum/lawsets can be picked even if they have no module for themselves.

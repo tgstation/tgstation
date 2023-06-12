@@ -100,10 +100,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock"
 	},
-/obj/docking_port/mobile/supply{
-	dwidth = 3;
-	width = 10
-	},
+/obj/docking_port/mobile/supply,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -120,9 +117,7 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)

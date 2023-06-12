@@ -49,7 +49,7 @@
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
 
-	if(icon_state == "water" && SSevents.holidays?[APRIL_FOOLS])
+	if(icon_state == "water" && check_holidays(APRIL_FOOLS))
 		icon_state = "water_fools"
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -79,7 +79,7 @@
 		return FALSE //so we can refill them via their afterattack.
 	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
-			user.balloon_alert("another device is in the way!")
+			balloon_alert(user, "another device is in the way!")
 			return ..()
 		var/obj/item/assembly_holder/holder = W
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
@@ -96,7 +96,7 @@
 		assembliesoverlay.pixel_x += 6
 		assembliesoverlay.pixel_y += 1
 		add_overlay(assembliesoverlay)
-		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
+		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
 		user.balloon_alert_to_viewers("attached rig")
@@ -170,7 +170,7 @@
 		visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
-		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
+		// big fuel tank =SHEET_MATERIAL_AMOUNT * 2.5 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
 		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
 		// I encourage others to better scale these numbers in the future.
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
@@ -246,7 +246,7 @@
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
 
-	if(SSevents.holidays?[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		icon_state = "fuel_fools"
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -254,6 +254,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
+	return TRUE
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
@@ -265,10 +266,12 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
-		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-			log_bomber(P.firer, "detonated a", src, "via projectile")
-			boom()
+	if(QDELETED(src)) //wasn't deleted by the projectile's effects.
+		return
+
+	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
+		log_bomber(P.firer, "detonated a", src, "via projectile")
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
@@ -296,7 +299,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume = 5000
+	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall

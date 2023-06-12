@@ -17,7 +17,7 @@
 
 	// Show them in alphabetical order by key
 	var/list/key_bindings_by_key = user.client.prefs.key_bindings_by_key.Copy()
-	sortTim(key_bindings_by_key, cmp = /proc/cmp_text_asc)
+	sortTim(key_bindings_by_key, cmp = GLOBAL_PROC_REF(cmp_text_asc))
 
 	for(var/key in key_bindings_by_key)
 		// Get the full names

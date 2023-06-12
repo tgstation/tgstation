@@ -20,7 +20,7 @@
 	. = ..()
 	if(state)
 		current_state = state
-		LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+		LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -32,7 +32,7 @@
 /datum/lua_editor/Destroy(force, ...)
 	. = ..()
 	if(current_state)
-		LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
@@ -40,10 +40,15 @@
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
 	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
+	data["auxtools_enabled"] = CONFIG_GET(flag/auxtools_enabled)
+	data["ss_lua_init"] = SSlua.initialized
 	return data
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
+	if(!CONFIG_GET(flag/auxtools_enabled) || !SSlua.initialized)
+		return data
+
 	data["noStateYet"] = !current_state
 	data["showGlobalTable"] = show_global_table
 	if(current_state)
@@ -107,16 +112,16 @@
 				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
 			SSlua.states += new_state
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = new_state
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("switchState")
 			var/state_index = params["index"]
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = SSlua.states[state_index]
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("runCode")
@@ -196,14 +201,14 @@
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
+			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
+			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("clearArgs")
 			arguments.Cut()
@@ -226,9 +231,6 @@
 	set name = "Open Lua Editor"
 	set category = "Debug"
 	if(!check_rights_for(src, R_DEBUG))
-		return
-	if(SSlua.initialized != TRUE)
-		to_chat(usr, span_warning("SSlua is not initialized!"))
 		return
 	var/datum/lua_editor/editor = new()
 	editor.ui_interact(usr)

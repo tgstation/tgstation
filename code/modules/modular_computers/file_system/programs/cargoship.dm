@@ -17,42 +17,28 @@
 	var/cut_min = 0.01
 
 /datum/computer_file/program/shipping/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-	data["has_id_slot"] = !!card_slot
+	data["has_id_slot"] = !!computer.computer_id_slot
 	data["paperamt"] = "[computer.stored_paper] / [computer.max_paper]"
-	data["card_owner"] = card_slot?.stored_card ? id_card.registered_name : "No Card Inserted."
+	data["card_owner"] = computer.computer_id_slot || "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = cut_multiplier * 100
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
-	if(!computer)
-		return
-
-	// Get components
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-	if(!card_slot) //We need both to successfully use this app.
-		return
+	if(!computer.computer_id_slot) //We need an ID to successfully run
+		return FALSE
 
 	switch(action)
 		if("ejectid")
-			if(id_card)
-				card_slot.try_eject(usr, TRUE)
+			computer.RemoveID(usr)
 		if("selectid")
-			if(!id_card)
-				return
-			if(!id_card.registered_account)
-				playsound(get_turf(ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
-				return
-			payments_acc = id_card.registered_account
-			playsound(get_turf(ui_host()), 'sound/machines/ping.ogg', 50, TRUE, -1)
+			if(!computer.computer_id_slot.registered_account)
+				playsound(get_turf(computer.ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
+				return TRUE
+			payments_acc = computer.computer_id_slot.registered_account
+			playsound(get_turf(computer.ui_host()), 'sound/machines/ping.ogg', 50, TRUE, -1)
 		if("resetid")
 			payments_acc = null
 		if("setsplit")
@@ -60,12 +46,12 @@
 			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
-				return
+				to_chat(usr, span_notice("Printer is out of paper."))
+				return TRUE
 			if(!payments_acc)
 				to_chat(usr, span_notice("Software error: Please set a current user first."))
-				return
-			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(ui_host()))
+				return TRUE
+			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(computer.ui_host()))
 			barcode.payments_acc = payments_acc
 			barcode.cut_multiplier = cut_multiplier
 			computer.stored_paper--

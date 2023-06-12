@@ -21,6 +21,10 @@ SUBSYSTEM_DEF(lua)
 	var/gc_guard
 
 /datum/controller/subsystem/lua/Initialize()
+	if(!CONFIG_GET(flag/auxtools_enabled))
+		warning("SSlua requires auxtools to be enabled to run.")
+		return SS_INIT_NO_NEED
+
 	try
 		// Initialize the auxtools library
 		AUXTOOLS_CHECK(AUXLUA)
@@ -132,4 +136,4 @@ SUBSYSTEM_DEF(lua)
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)
-		INVOKE_ASYNC(state, /datum/lua_state.proc/update_editors)
+		INVOKE_ASYNC(state, TYPE_PROC_REF(/datum/lua_state, update_editors))

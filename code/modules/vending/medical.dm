@@ -18,6 +18,7 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/bone_gel/four = 4,
 		/obj/item/cane/white = 2,
+		/obj/item/clothing/glasses/eyepatch/medical = 2,
 	)
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
@@ -45,6 +46,7 @@
 /obj/machinery/vending/medical/syndicate_access
 	name = "\improper SyndiMed Plus"
 	req_access = list(ACCESS_SYNDICATE)
+	initial_language_holder = /datum/language_holder/syndicate
 
 //Created out of a necessity to get these dumb chems out of the medical tools vendor.
 /obj/machinery/vending/drugs
@@ -80,6 +82,7 @@
 	premium = list(
 		/obj/item/reagent_containers/medigel/synthflesh = 2,
 		/obj/item/storage/pill_bottle/psicodine = 2,
+		/obj/item/storage/pill_bottle/sansufentanyl = 1,
 		)
 	default_price = 50
 	extra_price = 100

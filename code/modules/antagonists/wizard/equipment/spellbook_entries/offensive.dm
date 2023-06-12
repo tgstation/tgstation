@@ -45,7 +45,7 @@
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
-	spell_type = /datum/action/cooldown/spell/tesla
+	spell_type = /datum/action/cooldown/spell/charged/beam/tesla
 	category = "Offensive"
 
 /datum/spellbook_entry/lightningbolt
@@ -75,6 +75,27 @@
 	name = "Barnyard Curse"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
+	category = "Offensive"
+
+/datum/spellbook_entry/splattercasting
+	name = "Splattercasting"
+	desc = "Dramatically lowers the cooldown on all spells, but each one will cost blood, as well as it naturally \
+		draining from you over time. You can replenish it from your victims, specifically their necks."
+	spell_type =  /datum/action/cooldown/spell/splattercasting
+	category = "Offensive"
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
+
+/datum/spellbook_entry/sanguine_strike
+	name = "Exsanguinating Strike"
+	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
+	spell_type =  /datum/action/cooldown/spell/sanguine_strike
+	category = "Offensive"
+
+/datum/spellbook_entry/scream_for_me
+	name = "Scream For Me"
+	desc = "Sadistic sanguine spell that inflicts numerous severe blood wounds all over the victim's body."
+	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
+	cost = 1
 	category = "Offensive"
 
 /datum/spellbook_entry/item/staffchaos

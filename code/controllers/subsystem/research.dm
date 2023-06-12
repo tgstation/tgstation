@@ -7,9 +7,14 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
+
+	///List of all techwebs.
 	var/list/datum/techweb/techwebs = list()
+	///The default Science Techweb.
 	var/datum/techweb/science/science_tech
+	///The default Admin Techweb.
 	var/datum/techweb/admin/admin_tech
+
 	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
 
@@ -20,8 +25,6 @@ SUBSYSTEM_DEF(research)
 	var/list/invalid_node_ids = list()
 	///associative id = error message
 	var/list/invalid_node_boost = list()
-
-	var/list/obj/machinery/rnd/server/servers = list()
 
 	///associative id = TRUE
 	var/list/techweb_nodes_starting = list()
@@ -41,13 +44,7 @@ SUBSYSTEM_DEF(research)
 	var/list/point_types = list() //typecache style type = TRUE list
 	//----------------------------------------------
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
-	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
-
-	/// A list of all master servers. If none of these have a source code HDD, research point generation is lowered.
-	var/list/obj/machinery/rnd/server/master/master_servers = list()
-	/// A multiplier applied to all research gain.
-	var/income_modifier = 1
 
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
@@ -64,12 +61,13 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
 		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
 		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
+		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
 	)
 
 	/// Lookup list for ordnance briefers.
-	var/list/ordnance_experiments
+	var/list/ordnance_experiments = list()
 	/// Lookup list for scipaper partners.
-	var/list/scientific_partners
+	var/list/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -84,28 +82,23 @@ SUBSYSTEM_DEF(research)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
-	var/list/bitcoins = list()
-	for(var/obj/machinery/rnd/server/miner as anything in servers)
-		if(miner.working)
-			bitcoins = single_server_income.Copy()
-			break //Just need one to work.
+	for(var/datum/techweb/techweb_list as anything in techwebs)
+		if(!techweb_list.should_generate_points)
+			continue
+		var/list/bitcoins = list()
+		for(var/obj/machinery/rnd/server/miner as anything in techweb_list.techweb_servers)
+			if(miner.working)
+				bitcoins = single_server_income.Copy()
+				break //Just need one to work.
 
-	if (!isnull(last_income))
-		var/income_time_difference = world.time - last_income
-		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
-		for(var/i in bitcoins)
-			bitcoins[i] *= (income_time_difference / 10) * income_modifier
-		science_tech.add_point_list(bitcoins)
+		if(!isnull(techweb_list.last_income))
+			var/income_time_difference = world.time - techweb_list.last_income
+			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
+			for(var/i in bitcoins)
+				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier
+			techweb_list.add_point_list(bitcoins)
 
-	last_income = world.time
-
-/datum/controller/subsystem/research/proc/calculate_server_coefficient() //Diminishing returns.
-	var/amt = servers.len
-	if(!amt)
-		return 0
-	var/coeff = 100
-	coeff = sqrt(coeff / amt)
-	return coeff
+		techweb_list.last_income = world.time
 
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)
@@ -305,12 +298,10 @@ SUBSYSTEM_DEF(research)
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/populate_ordnance_experiments()
-	ordnance_experiments = list()
-	scientific_partners = list()
-
 	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
 		if (initial(experiment_path.experiment_proper))
 			ordnance_experiments += new experiment_path()
+
 	for(var/partner_path in subtypesof(/datum/scientific_partner))
 		var/datum/scientific_partner/partner = new partner_path
 		if(!partner.accepted_experiments.len)

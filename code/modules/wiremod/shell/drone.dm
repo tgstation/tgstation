@@ -68,7 +68,7 @@
 /obj/item/circuit_component/bot_circuit/register_shell(atom/movable/shell)
 	. = ..()
 	if(ismob(shell))
-		RegisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+		RegisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 
 /obj/item/circuit_component/bot_circuit/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)

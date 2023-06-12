@@ -134,13 +134,27 @@
 						/obj/item/radio/headset/headset_cargo)
 		ears = new headset(src)
 
+/mob/living/simple_animal/parrot/Destroy()
+	QDEL_NULL(ears)
+	return ..()
+
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
-	if(stat)
-		if(HAS_TRAIT(user, TRAIT_NAIVE))
-			. += pick("It seems tired and shagged out after a long squawk.", "It seems to be pining for the fjords.", "It's resting. It's a beautiful bird. Lovely plumage.")
-		else
-			. += pick("This parrot is no more.","This is a late parrot.","This is an ex-parrot.")
+	if(stat != DEAD)
+		return
+
+	if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+		. += pick(
+			"It seems tired and shagged out after a long squawk.",
+			"It seems to be pining for the fjords.",
+			"It's resting. It's a beautiful bird. Lovely plumage.",
+		)
+	else
+		. += pick(
+			"This parrot is no more.",
+			"This is a late parrot.",
+			"This is an ex-parrot.",
+		)
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -159,11 +173,9 @@
 
 /mob/living/simple_animal/parrot/get_status_tab_items()
 	. = ..()
-	. += ""
 	. += "Held Item: [held_item]"
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(speaker != src && prob(50)) //Dont imitate ourselves
 		if(!radio_freq || prob(10))
@@ -377,7 +389,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/parrot/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 
 	//Sprite update for when a parrot gets pulled
@@ -424,7 +436,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 				icon_state = icon_living
 				return
 
-		if(--parrot_sleep_dur) //Zzz
+		parrot_sleep_dur--
+		if(parrot_sleep_dur) //Zzz
 			return
 
 		else
@@ -654,7 +667,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 					item = I
 					break
 		if(item)
-			if(!get_path_to(src, item))
+			if(!length(get_path_to(src, item))) // WHY DO WE DISREGARD THE PATH AHHHHHH
 				item = null
 				continue
 			return item
@@ -895,13 +908,18 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN MODSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
+	voice_filter = "rubberband=pitch=1.5"
+
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
+
 /mob/living/simple_animal/parrot/poly/Initialize(mapload)
 	ears = new /obj/item/radio/headset/headset_eng(src)
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
@@ -921,7 +939,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	. = ..()
 
-/mob/living/simple_animal/parrot/poly/Life(delta_time = SSMOBS_DT, times_fired)
+	// Ensure 1 Poly exists
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
+/mob/living/simple_animal/parrot/poly/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -1020,3 +1041,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	H.ForceContractDisease(P, FALSE)
 	parrot_interest = null
 	H.visible_message(span_danger("[src] dive bombs into [H]'s chest and vanishes!"), span_userdanger("[src] dive bombs into your chest, vanishing! This can't be good!"))
+
+#undef PARROT_PERCH
+#undef PARROT_SWOOP
+#undef PARROT_WANDER
+#undef PARROT_STEAL
+#undef PARROT_ATTACK
+#undef PARROT_RETURN
+#undef PARROT_FLEE

@@ -27,7 +27,7 @@
 		builtInCamera.toggle_cam(src,0)
 	toggle_headlamp(TRUE) //So borg lights are disabled when killed.
 
-	uneq_all() // particularly to ensure sight modes are cleared
+	drop_all_held_items() // particularly to ensure sight modes are cleared
 
 	update_icons()
 

@@ -22,6 +22,10 @@
 		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
 		return
 
+	return change_mob_type_unchecked(new_type, location, new_name, delete_old_mob)
+
+/// Version of [change_mob_type] that does no usr prompting (may send an error message though). Satisfies procs with the SHOULD_NOT_SLEEP restriction
+/mob/proc/change_mob_type_unchecked(new_type = null, turf/location = null, new_name = null as text, delete_old_mob = FALSE)
 	var/mob/desired_mob
 	if(isturf(location))
 		desired_mob = new new_type(location)
@@ -50,14 +54,14 @@
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()
 		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-	
+
 	//Ghosts have copys of their minds, but if an admin put somebody else in their og body, the mind will have a new mind.key
 	//	and transfer_to will transfer the wrong person since it uses mind.key
 	if(mind && isliving(desired_mob) && (!isobserver(src) || mind.current == src || QDELETED(mind.current)))
-		if (ckey(mind.key) != ckey) 
+		if (ckey(mind.key) != ckey)
 			//we could actually prevent the bug from happening here, but then nobody would know to look for the stack trace we are about to print.
 			stack_trace("DEBUG: The bug where mob transfers or transforms sometimes kick unrelated people out of mobs has happened again. mob [src]([type])\ref[src] owned by [ckey] is being changed into a [new_type] but has a mind owned by [ckey(mind.key)].")
-		
+
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
 		desired_mob.key = key

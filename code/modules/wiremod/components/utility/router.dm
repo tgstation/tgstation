@@ -53,7 +53,7 @@
 
 
 // If I is in range, L[I]. If I is out of range, wrap around.
-#define WRAPACCESS(L, I) L[(((I||1)-1)%length(L)+length(L))%length(L)+1]
+#define WRAPACCESS(L, I) L[(((I || 1)-1)%length(L)+length(L))%length(L)+1]
 /obj/item/circuit_component/router/pre_input_received(datum/port/input/port)
 	var/current_option = router_options.value
 	if(current_type != current_option)
@@ -72,3 +72,5 @@
 	display_name = "Multiplexer"
 	desc = "Copies the input chosen by \"Input Selector\" to the output."
 	output_port_amount = 1
+
+#undef WRAPACCESS

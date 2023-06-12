@@ -56,21 +56,3 @@ This is how the base program is setup. the rest is mostly tgui stuff. I'll use t
 	/// for an example.
 	var/ui_header = "downloader_finished.gif"
 ```
-
-## Preinstalls
-
-Now. for pre-installing stuff.
-
-Primarily done for consoles, there's an install_programs() proc in the console presets file in the machines folder.
-
-for example, the command console one.
-
-```DM
-/obj/machinery/modular_computer/console/preset/command/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/card_mod())
-```
-Basically, you want to do  cpu.hard_drive.store_file(new/*program path here*()) and put it in the subtype's install_programs().
-Probably pretty self explanatory, but just in case.
-
-Will probably be expanded when new features come around or I get asked to mention something.

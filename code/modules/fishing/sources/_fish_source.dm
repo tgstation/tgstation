@@ -30,8 +30,8 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/background = "fishing_background_default"
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
-/datum/fish_source/proc/can_fish(obj/item/fishing_rod/rod, mob/fisherman)
-	return
+/datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+	return rod.reason_we_cant_fish(src)
 
 
 /// DIFFICULTY = (SPOT_BASE_VALUE + FISH_MODIFIER + ROD_MODIFIER + FAV/DISLIKED_BAIT_MODIFIER + TRAITS_ADDITIVE) * TRAITS_MULTIPLICATIVE , For non-fish it's just SPOT_BASE_VALUE
@@ -148,7 +148,9 @@ GLOBAL_LIST(fishing_property_cache)
 		if((result in fish_counts) && fish_counts[result] <= 0) //ran out of these, ignore
 			final_table -= result
 			continue
-		final_table[result] += rod.fish_bonus(result) //Decide on order here so it can be multiplicative
+
+		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
+		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
 		if(result == FISHING_DUD)
 			//Modify dud result
 			//Bait quality reduces dud chance heavily.
@@ -192,10 +194,6 @@ GLOBAL_LIST(fishing_property_cache)
 			final_table[result] += additive_mod
 			final_table[result] *= multiplicative_mod
 
-		else
-			//Modify other paths chance
-			if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_MAGNETIC)
-				final_table[result] *= 5
 		if(final_table[result] <= 0)
 			final_table -= result
 	return final_table

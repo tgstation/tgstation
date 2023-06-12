@@ -1,4 +1,0 @@
-author: "Ebb-Real"
-delete-after: True
-changes: 
-  - bugfix: "Chairs get placed in the same direction as you face when you place a chair."
