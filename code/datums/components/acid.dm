@@ -214,13 +214,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_attack_hand(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(user))
-		return NONE
-	if((source == user) || (source.loc == user))
-		return NONE // So people can take their own clothes off.
-	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
-		return NONE
-	if(user.gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
+	if(!iscarbon(user) || user.can_touch_acid(source, acid_power, acid_volume))
 		return NONE
 
 	var/obj/item/bodypart/affecting = user.get_bodypart(!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)

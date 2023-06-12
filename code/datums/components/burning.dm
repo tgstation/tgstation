@@ -76,19 +76,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/burning/proc/on_attack_hand(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	var/can_handle_hot = FALSE
-	if(!iscarbon(user))
-		can_handle_hot = TRUE
-	else if(user.gloves && (user.gloves.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE))
-		can_handle_hot = TRUE
-	else if(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
-		can_handle_hot = TRUE
-	else if((source == user) || (source.loc == user)) // So people can take their own clothes off.
-		can_handle_hot = TRUE
-
-	if(can_handle_hot)
-		source.extinguish()
+	if(!iscarbon(user) || user.can_touch_burning(source))
 		to_chat(user, span_notice("You put out the fire on [source]."))
+		source.extinguish()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/bodypart/affecting = user.get_bodypart(!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)

@@ -1353,6 +1353,32 @@
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /**
+ * This proc is used to determine whether or not the mob can handle touching an acid affected object.
+ */
+/mob/living/carbon/proc/can_touch_acid(atom/source, acid_power, acid_volume)
+	// So people can take their own clothes off
+	if((source == user) || (source.loc == user))
+		return TRUE
+	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
+		return TRUE
+	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
+		return TRUE
+	return FALSE
+
+/**
+ * This proc is used to determine whether or not the mob can handle touching a burning object.
+ */
+/mob/living/carbon/proc/can_touch_burning(atom/source, acid_power, acid_volume)
+	// So people can take their own clothes off
+	if((source == user) || (source.loc == user))
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
+		return TRUE
+	if(gloves && (gloves.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE))
+		return TRUE
+	return FALSE
+
+/**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
  *
  * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
