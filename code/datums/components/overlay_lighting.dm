@@ -190,9 +190,11 @@
 	clean_old_turfs()
 	if(!isturf(current_holder?.loc))
 		return
+
 	if(directional)
 		cast_directional_light()
-	get_new_turfs()
+	else
+		get_new_turfs()
 
 
 ///Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
@@ -447,11 +449,13 @@
 	overlay_lighting_flags |= LIGHTING_ON
 	if(current_holder)
 		add_dynamic_lumi()
-		if(directional)
-			cast_directional_light()
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
-	get_new_turfs()
+
+	if(directional)
+		cast_directional_light()
+	else
+		get_new_turfs()
 
 
 ///Toggles the light off.
@@ -478,10 +482,12 @@
 
 ///Here we append the behavior associated to changing lum_power.
 /datum/component/overlay_lighting/proc/cast_directional_light()
+	if(!current_holder)
+		return
+	. = list()
+
 	var/final_distance = cast_range
-	//Lower the distance by 1 if we're not looking at a cardinal direction, and we're not a short cast
-	if(final_distance > SHORT_CAST && !(ALL_CARDINALS & current_direction))
-		final_distance -= 1
+	var/list/line = list(get_turf(current_holder))
 	var/turf/scanning = get_turf(current_holder)
 	for(var/i in 1 to final_distance)
 		var/turf/next_turf = get_step(scanning, current_direction)
@@ -496,15 +502,40 @@
 	var/translate_y = translate_x
 	var/scale_x = 1
 	var/scale_y = 1
+	var/turn = 0
 	switch(current_direction)
+		if(NORTHWEST)
+			translate_x += -32 * final_distance
+			translate_y += 32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				turn = -45
 		if(NORTH)
 			translate_y += 32 * final_distance
 			if(beam && range > 1)
 				scale_x = 1 / (range - (range/5))
+		if(NORTHEAST)
+			translate_x += 32 * final_distance
+			translate_y += 32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				turn = 45
+		if(SOUTHWEST)
+			translate_x += -32 * final_distance
+			translate_y += -32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				turn = 45
 		if(SOUTH)
 			translate_y += -32 * final_distance
 			if(beam && range > 1)
 				scale_x = 1 / (range - (range/5))
+		if(SOUTHEAST)
+			translate_x += 32 * final_distance
+			translate_y += -32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				turn = -45
 		if(EAST)
 			translate_x += 32 * final_distance
 			if(beam && range > 1)
@@ -518,12 +549,24 @@
 		directional_offset_x = translate_x
 		directional_offset_y = translate_y
 		var/matrix/transform = matrix()
-		if(beam && range > 1)
-			transform.Scale(scale_x, scale_y)
+		transform.Scale(scale_x, scale_y)
+		transform.Turn(turn)
 		transform.Translate(translate_x, translate_y)
 		visible_mask.transform = transform
 	if(overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
+
+	if(beam)
+		var/final_turf = get_step(scanning, current_direction) || scanning
+		for(var/turf/lit_turf in get_line(get_turf(current_holder), final_turf))
+			lit_turf.dynamic_lumcount += lum_power
+			. += lit_turf
+	else
+		for(var/turf/lit_turf in view(lumcount_range, scanning))
+			lit_turf.dynamic_lumcount += lum_power
+			. += lit_turf
+	if(length(.))
+		affected_turfs = .
 
 ///Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_dir_change(atom/movable/source, olddir, newdir)
