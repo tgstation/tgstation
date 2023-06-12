@@ -96,3 +96,5 @@
 	parent.AddComponent(/datum/component/infective, list(random_disease), weak = TRUE)
 
 #undef FIVE_SECOND_RULE
+#undef MAX_DISEASE_SYMPTOMS
+#undef MAX_DISEASE_STRENTH
