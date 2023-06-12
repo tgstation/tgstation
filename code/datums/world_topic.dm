@@ -203,6 +203,7 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
+	.["servername"] = CONFIG_GET(string/servername)
 
 
 	var/list/adm = get_admin_counts()
