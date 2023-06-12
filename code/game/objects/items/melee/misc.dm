@@ -467,8 +467,8 @@
 	worn_icon_state = "default_worn"
 
 	greyscale_config = /datum/greyscale_config/cleric_mace
-	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace/lefthand
-	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace/righthand
+	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace/inhand_right
 	greyscale_config_worn = /datum/greyscale_config/cleric_mace
 	greyscale_colors = "#FFFFFF"
 

@@ -2,7 +2,7 @@
 	"default": [
 		{
 			"type": "reference",
-			"reference_type": "/datum/greyscale_config/cleric_mace/righthand",
+			"reference_type": "/datum/greyscale_config/cleric_mace/inhand_right",
 			"icon_state": "default",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]

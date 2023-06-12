@@ -45,11 +45,7 @@
 	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'
 
-/datum/greyscale_config/cleric_mace/worn
-	name = "Base Worn Cleric Mace"
-	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
-
-/datum/greyscale_config/cleric_mace/inhand_right
+/datum/greyscale_config/cleric_mace/inhand_left
 	name = "Base Held Cleric Mace, Left"
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand.json'
 
