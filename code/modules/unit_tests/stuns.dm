@@ -30,7 +30,7 @@
 	gets_knockdown.Knockdown(1 SECONDS)
 	TEST_ASSERT(!gets_knockdown.IsKnockdown(), "Knockdown() knocked over despite not having CANKNOCKDOWN flag")
 
-/// Tests paralyze and the canparalyze flag
+/// Tests paralyze and stuns that have two flags checked (in this case, canstun and canknockdown)
 /datum/unit_test/paralyze
 
 /datum/unit_test/paralyze/Run()
