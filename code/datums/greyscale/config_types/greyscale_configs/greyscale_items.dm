@@ -181,29 +181,27 @@
 // PLUSHIES
 //
 
-/datum/greyscale_config/plush_carp
-	name = "Plushie Carp"
+/datum/greyscale_config/plush
 	icon_file = 'icons/obj/toys/plushes.dmi'
+
+/datum/greyscale_config/plush/carp
+	name = "Plushie Carp"
 	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
 
-/datum/greyscale_config/plush_lizard
-	name = "Plushie Lizard"
-	icon_file = 'icons/obj/toys/plushes.dmi'
-	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
-
-/datum/greyscale_config/plush_slime
+/datum/greyscale_config/plush/slime
 	name = "Plushie Slime"
-	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
 
-/datum/greyscale_config/plush_snake
+/datum/greyscale_config/plush/snake
 	name = "Plushie Snake"
-	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
 
-/datum/greyscale_config/plush_spacelizard
+/datum/greyscale_config/plush/lizard
+	name = "Plushie Lizard"
+	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush/lizard/space
 	name = "Plushie Space Lizard"
-	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 //
