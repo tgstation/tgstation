@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "copying nodes from a techweb to another no longer reveals hidden nodes"
