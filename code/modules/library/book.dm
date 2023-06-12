@@ -140,24 +140,26 @@
 			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
 			return
 
-		if(scanner.scan_mode)
-			var/datum/book_info/our_copy = book_data.return_copy()
-			computer.inventory[ref(our_copy)] = our_copy
-			computer.inventory_update()
-			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
-		else
-			var/list/checkouts = computer.checkouts
-			for(var/checkout_ref in checkouts)
-				var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
-				if(!book_data.compare(maybe_ours.book_data))
-					continue
-				checkouts -= checkout_ref
-				computer.checkout_update()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
-				return
+		switch(scanner.scan_mode)
+			if(BARCODE_SCANNER_CHECKIN)
+				var/list/checkouts = computer.checkouts
+				for(var/checkout_ref in checkouts)
+					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+					if(!book_data.compare(maybe_ours.book_data))
+						continue
+					checkouts -= checkout_ref
+					computer.checkout_update()
+					user.balloon_alert(user, "book checked in")
+					return
 
-			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
-			return
+				user.balloon_alert(user, "book not checked out!")
+				return
+			if(BARCODE_SCANNER_INVENTORY)
+				var/datum/book_info/our_copy = book_data.return_copy()
+				computer.inventory[ref(our_copy)] = our_copy
+				computer.inventory_update()
+				user.balloon_alert(user, "book added to inventory")
+
 	else if(try_carve(attacking_item, user, params))
 		return
 	return ..()
