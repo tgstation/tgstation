@@ -395,11 +395,13 @@
 		mod.wearer.particles = new /particles/pollen()
 		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob), spawn_time=5 SECONDS, max_spawned=3)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(flowas))
 
 	else
 		STOP_PROCESSING(SSprocessing, src)
 		mod.wearer.particles = null
 		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
 		for(var/datum/mob in mob_spawner.spawned_things)
 			qdel(mob)
 		qdel(mob_spawner)
@@ -411,3 +413,13 @@
 /obj/item/mod/core/plasma/lavaland/uninstall(obj/item/mod/control/mod_unit)
 	. = ..()
 	UnregisterSignal(mod_unit, COMSIG_MOD_TOGGLED)
+
+/obj/item/mod/core/plasma/lavaland/proc/flowas(mob/living/wearer)
+	SIGNAL_HANDLER
+	var/static/list/possible_flower_types = list(/obj/structure/flora/bush/lavendergrass/style_random, /obj/structure/flora/bush/flowers_yw/style_random,       /obj/structure/flora/bush/flowers_br/style_random, /obj/structure/flora/bush/flowers_pp/style_random)
+	var/chosen_type
+	if(!chosen_type || prob(5))
+		chosen_type = pick(possible_flower_types)
+	var/flower_boots = new chosen_type(get_turf(wearer))
+	animate(flower_boots, alpha = 0, 1 SECONDS)
+	QDEL_IN(flower_boots, 1 SECONDS)
