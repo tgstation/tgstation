@@ -106,6 +106,7 @@
 
 	dump_in_space(enterer)
 
+///Only dump if we don't have the hyperspace cordon movement exemption trait
 /datum/turf_reservation/transit/proc/space_dump_soft(atom/source, atom/movable/enterer)
 	SIGNAL_HANDLER
 

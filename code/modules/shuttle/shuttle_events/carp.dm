@@ -12,7 +12,7 @@
 
 /datum/shuttle_event/simple_spawner/carp/post_spawn(mob/living/basic/carp/carpee)
 	. = ..()
-
+	//Give the carp the goal to migrate in a straight line so they dont just idle in hyperspace
 	carpee.migrate_to(list(WEAKREF(get_edge_target_turf(carpee.loc, angle2dir(dir2angle(port.preferred_direction) - 180)))))
 
 ///CARPTIDE! CARPTIDE! CARPTIDE! Magical carp will attack the shuttle!

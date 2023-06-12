@@ -10,15 +10,15 @@
 	///How we're announced to ghosts and stuff
 	var/name = "The concept of a shuttle event"
 	///probability of this event to run from 0 to 100
-	var/event_probability
+	var/event_probability = 0
 	///Track if we're allowed to run, gets turned to TRUE when the activation timer hits
-	var/active = FALSE
+	VAR_PRIVATE/active = FALSE
 	///fraction of the escape timer at which we activate, 0 means we start running immediately
 	///(so if activation timer is 0.2 and shuttle takes 3 minutes to get going, it will activate in 36 seconds)
 	///We only care about the timer from the moment of launch, any speed changed afterwards are not worth dealing with
 	var/activation_fraction = 0
 	///when do we activate?
-	var/activate_at
+	VAR_PRIVATE/activate_at
 	///Our reference to the docking port and thus the shuttle
 	var/obj/docking_port/mobile/port
 
@@ -34,13 +34,13 @@
 /datum/shuttle_event/proc/activate()
 	return
 
-///Process with the SShutle subsystem
+///Process with the SShutle subsystem. Return SHUTTLE_EVENT_CLEAR to self-destruct
 /datum/shuttle_event/proc/event_process()
 	. = TRUE
 
 	if(!active)
 		if(world.time < activate_at)
-			return
+			return FALSE
 		active = TRUE
 		. = activate()
 
@@ -72,12 +72,12 @@
 /datum/shuttle_event/simple_spawner/proc/generate_spawning_turfs(list/bounding_coords, spawning_behaviour, direction)
 	spawning_turfs_hit = list() //turfs that will drift its contents to miss the shuttle
 	spawning_turfs_miss = list() //turfs that will drift its contents to hit the shuttle
-	var/list/step_dir
-	var/list/target_corner
-	var/list/spawn_offset
+	var/list/step_dir //vector, either -1, 0 or 1. once we get a corner (lets say top right), in which direction do we 'walk' to get the full side? (this case to the right, so (1, 0)
+	var/list/target_corner //Top left or bottom right corner
+	var/list/spawn_offset //bounding_coords is ONLY the shuttle, not the space around it, so offset spawn_tiles or stuff spawns on the walls of the shuttle
 
 	switch(direction)
-		if(NORTH)
+		if(NORTH) //we're travelling north (so people get pushed south)
 			step_dir = list(1, 0)
 			target_corner = list(bounding_coords[1], bounding_coords[2])
 			spawn_offset = list(0, SHUTTLE_TRANSIT_BORDER)
@@ -102,10 +102,12 @@
 			spawning_turfs_hit.Add(locate(target_coords[1], target_coords[2], port.z))
 	if(spawning_behaviour & SHUTTLE_EVENT_MISS_SHUTTLE)
 		for(var/i in 1 to SHUTTLE_TRANSIT_BORDER)
+			//Get the corner tile, and move away from the shuttle and towards the cordon
 			spawning_turfs_miss.Add(locate(target_corner[1] - step_dir[1] * i + spawn_offset[1], target_corner[2] - step_dir[2] * i + spawn_offset[2], port.z))
-		for(var/i in 1 to SHUTTLE_TRANSIT_BORDER)
 			var/corner_delta = list(bounding_coords[3] - bounding_coords[1], bounding_coords[2] - bounding_coords[4])
+			//Get the corner tile, but jump over the shuttle and then continue unto the cordon
 			spawning_turfs_miss.Add(locate(target_corner[1] + corner_delta[1] * step_dir[1] + step_dir[1] * i + spawn_offset[1], target_corner[2] + corner_delta[2] * step_dir[2] + step_dir[2] * i + spawn_offset[2], port.z))
+
 
 /datum/shuttle_event/simple_spawner/event_process()
 	. = ..()
@@ -120,25 +122,24 @@
 		for(var/i in 1 to spawns_per_spawn)
 			spawn_movable(get_type_to_spawn())
 
+///Pick a random turf from the valid turfs we got. Overwrite if you need some custom picking
 /datum/shuttle_event/simple_spawner/proc/get_spawn_turf()
 	RETURN_TYPE(/turf)
 	return pick(spawning_turfs_hit + spawning_turfs_miss)
 
-///Spawn stuff! Draws from spawning_list. It's fine if your event doesnt use this, most just do
+///Spawn stuff! if you're not using this, don't use the simple_spawner subtype
 /datum/shuttle_event/simple_spawner/proc/spawn_movable(spawn_type)
 	post_spawn(new spawn_type (get_spawn_turf()))
 
 ///Not tecccccccccccchnically a getter since we can also pop the type out of the spawning list, but thats optional anyway
 /datum/shuttle_event/simple_spawner/proc/get_type_to_spawn()
 	. = pick_weight(spawning_list)
-	if(remove_from_list_when_spawned)
+	if(remove_from_list_when_spawned) //if we have this enabled, we decrease the pickweight by 1 till it runs out
 		spawning_list[.] -= 1
 		if(spawning_list[.] < 1)
 			spawning_list.Remove(.)
 
 ///Do any post-spawn edits you need to do
 /datum/shuttle_event/simple_spawner/proc/post_spawn(atom/movable/spawnee)
-	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT, src)
-	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, src)
-	var/turf/target = spawnee.loc
-	target.Entered(spawnee) //tell the transit turf we have arrived! otherwise our hyperspace drift doesnt register
+	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT, src) //Lets us spawn and move further away from the shuttle without being teleported into space
+	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, src) //if we hit the cordon, we get deleted. If the shuttle can make you, it can qdel you

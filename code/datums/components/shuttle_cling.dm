@@ -80,7 +80,7 @@
 
 ///Check if we're "holding on" to the shuttle
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
-	if(movee.pulledby || !isturf(movee.loc))
+	if(movee.pulledby || !isturf(movee.loc) || HAS_TRAIT(movee, TRAIT_FREE_HYPERSPACE_MOVEMENT))
 		return ALL_GOOD
 
 	if(!isliving(movee))

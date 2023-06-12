@@ -33,4 +33,7 @@
 	spawns_per_spawn = 2
 
 /datum/shuttle_event/simple_spawner/maintenance/get_type_to_spawn()
-	return pick_weight(GLOB.maintenance_loot)
+	var/list/spawn_list = GLOB.maintenance_loot
+	while(islist(spawn_list))
+		spawn_list = pick_weight(spawn_list)
+	return spawn_list

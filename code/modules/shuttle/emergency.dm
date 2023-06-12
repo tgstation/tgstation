@@ -517,8 +517,10 @@
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
+				//Tell the events we're starting, so they can time their spawns or do some other stuff
 				for(var/datum/shuttle_event/event as anything in event_list)
 					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
+
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
