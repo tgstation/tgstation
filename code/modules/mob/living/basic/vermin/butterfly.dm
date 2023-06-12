@@ -78,8 +78,7 @@
 			deltimer(despawn_timer)
 
 /mob/living/basic/butterfly/lavaland/temporary/proc/should_despawn()
-	var/dist = get_dist(source, src)
-	if(dist > max_distance)
+	if(get_dist(source, src) > max_distance)
 		return TRUE
 	return FALSE
 
