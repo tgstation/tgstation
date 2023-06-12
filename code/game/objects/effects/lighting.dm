@@ -1,7 +1,7 @@
 /**
  * Basically, a fake object that emits light.
  *
- * Why is this used instead of giving atoms light values directly?
+ * Why is this used sometimes instead of giving atoms light values directly?
  * Because using these, you can have multiple light sources in a single object.
  */
 /obj/effect/dummy/lighting_obj
