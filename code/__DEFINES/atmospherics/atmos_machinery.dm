@@ -41,6 +41,15 @@
 /// Air alarm has all components but isn't completed
 #define AIR_ALARM_BUILD_COMPLETE 2
 
+// Fire alarm buildstage [/obj/machinery/firealarm/buildstage]
+/// Fire alarm missing circuit
+#define FIRE_ALARM_BUILD_NO_CIRCUIT 0
+/// Fire alarm has circuit but is missing wires
+#define FIRE_ALARM_BUILD_NO_WIRES 1
+/// Fire alarm has all components but isn't completed
+#define FIRE_ALARM_BUILD_SECURED 2
+
+
 // threshold_type values for [/datum/tlv/proc/set_value]  and [/datum/tlv/proc/reset_value]
 /// [/datum/tlv/var/warning_min]
 #define TLV_VAR_WARNING_MIN (1 << 0)
@@ -55,3 +64,16 @@
 
 /// TLV datums will ignore variables set to this.
 #define TLV_VALUE_IGNORE -1
+
+#define CIRCULATOR_HOT 0
+#define CIRCULATOR_COLD 1
+
+///Default pressure, used in the UI to reset the settings
+#define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
+///Maximum settable pressure
+#define PUMP_MAX_PRESSURE (PUMP_DEFAULT_PRESSURE * 25)
+///Minimum settable pressure
+#define PUMP_MIN_PRESSURE (PUMP_DEFAULT_PRESSURE / 10)
+///What direction is the machine pumping (into pump/port or out to the tank/area)?
+#define PUMP_IN TRUE
+#define PUMP_OUT FALSE

@@ -191,13 +191,13 @@
 		////////////////////////////UTILITIES//////////////////
 		if("gamePanel")
 			holder.holder.Game()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 			. = TRUE
 		if("buildMode")
 			var/mob/holder_mob = holder.mob
 			if (holder_mob && (holder.holder?.rank_flags() & R_BUILD))
 				togglebuildmode(holder_mob)
-				SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+				SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 			. = TRUE
 		if("loadDataFromPreset")
 			var/list/savedData = params["payload"]
@@ -892,3 +892,9 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	alpha = 0
+
+#undef LAUNCH_ALL
+#undef LAUNCH_ORDERED
+#undef LAUNCH_RANDOM
+#undef TAB_BAY
+#undef TAB_POD

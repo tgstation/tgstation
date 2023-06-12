@@ -34,7 +34,7 @@
 	var/mob/living/carbon/human/human_pawn = source_controller.pawn
 	//make current organs noticable
 	for(var/organ_slot_key in noticable_organ_examines)
-		var/obj/item/organ/found = human_pawn.getorganslot(organ_slot_key)
+		var/obj/item/organ/found = human_pawn.get_organ_slot(organ_slot_key)
 		if(!found)
 			continue
 		make_organ_noticable(organ_slot_key, found, human_pawn)

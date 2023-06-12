@@ -19,6 +19,10 @@
 	var/newscaster_username
 	///How much paper is contained within the newscaster?
 	var/paper_remaining = 0
+	///The access required to access D-notices.
+	var/admin_access = ACCESS_LIBRARY
+	///The access required to submit & remove wanted issues.
+	var/security_access = ACCESS_SECURITY
 
 	///What newscaster channel is currently being viewed by the player?
 	var/datum/feed_channel/current_channel
@@ -85,7 +89,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(machine_stat & (NOPOWER|BROKEN))
 		set_light(0)
 		return
-	set_light(1.4,0.7,"#34D352") // green light
+	set_light(1.5, 0.7, "#34D352") // green light
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
@@ -158,7 +162,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["user"]["job"] = "N/A"
 		data["user"]["department"] = "N/A"
 
-	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
+	data["admin_mode"] = (admin_access in card?.GetAccess())
+	data["security_mode"] = (security_access in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
 	data["creating_comment"] = creating_comment
@@ -329,7 +334,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
@@ -343,7 +348,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
@@ -357,7 +362,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/prototype_channel = (params["channel"])
@@ -573,7 +578,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			targetcam = R.aicamera
 		else if(ispAI(user))
 			var/mob/living/silicon/pai/R = user
-			targetcam = R.aicamera
+			targetcam = R.camera
 		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.connected_ai)
@@ -735,7 +740,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(isliving(usr))
 		var/mob/living/living_user = usr
 		id_card = living_user.get_idcard(hand_first = TRUE)
-	if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+	if(!(security_access in id_card?.GetAccess()))
 		say("Clearance not found.")
 		return TRUE
 	GLOB.news_network.wanted_issue.active = FALSE
@@ -806,7 +811,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
-	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/newscaster
 	pixel_shift = 30
 

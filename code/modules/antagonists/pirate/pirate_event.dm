@@ -7,7 +7,7 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
-	admin_setup = /datum/event_admin_setup/pirates
+	admin_setup = list(/datum/event_admin_setup/listed_options/pirates)
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event_control/pirates/preRunEvent()
@@ -17,14 +17,17 @@
 
 /datum/round_event/pirates
 	///admin chosen pirate team
-	var/datum/pirate_gang/chosen_gang
+	var/list/datum/pirate_gang/gang_list
 
 /datum/round_event/pirates/start()
-	send_pirate_threat(chosen_gang)
+	send_pirate_threat(gang_list)
 
-/proc/send_pirate_threat(datum/pirate_gang/chosen_gang)
+/proc/send_pirate_threat(list/pirate_selection)
+	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
+	///If there was nothing to pull from our requested list, stop here.
 	if(!chosen_gang)
-		chosen_gang = pick_n_take(GLOB.pirate_gangs)
+		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
+		return
 	//set payoff
 	var/payoff = 0
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -34,24 +37,26 @@
 	//send message
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
 	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang, FALSE), RESPONSE_MAX_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
 	SScommunications.send_message(threat, unique = TRUE)
 
 /proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late ,sender_override = chosen_gang.ship_name)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name)
 		return
-	if(threat?.answered)
-		var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(plundered_account)
-			if(plundered_account.adjust_money(-payoff))
-				priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
-			else
-				priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
-				spawn_pirates(threat, chosen_gang, TRUE)
+	if(!threat?.answered)
+		return
 
-/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang, skip_answer_check)
-	if(!skip_answer_check && threat?.answered == 1)
+	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(plundered_account)
+		if(plundered_account.adjust_money(-payoff))
+			chosen_gang.paid_off = TRUE
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
+		else
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
+
+/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
+	if(chosen_gang.paid_off)
 		return
 
 	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
@@ -73,30 +78,23 @@
 		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create(our_candidate)
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
 				notify_ghosts("The pirate ship has an object of interest: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Pirates!")
 			else
 				notify_ghosts("The pirate ship has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
-/datum/event_admin_setup/pirates
-	///admin chosen pirate team
-	var/datum/pirate_gang/chosen_gang
+/datum/event_admin_setup/listed_options/pirates
+	input_text = "Select Pirate Gang"
+	normal_run_option = "Random Pirate Gang"
 
-/datum/event_admin_setup/pirates/prompt_admins()
-	var/list/gang_choices = list("Random")
+/datum/event_admin_setup/listed_options/pirates/get_list()
+	return subtypesof(/datum/pirate_gang)
 
-	for(var/datum/pirate_gang/possible_gang as anything in GLOB.pirate_gangs)
-		gang_choices[possible_gang.name] = possible_gang
-
-	var/chosen = tgui_input_list(usr, "Select pirate gang", "TICKETS TO THE SPONGEBOB MOVIE!!", gang_choices)
-	if(!chosen)
-		return ADMIN_CANCEL_EVENT
-	if(chosen == "Random")
-		return //still do the event, but chosen_gang is still null, so it will pick from the choices
-	chosen_gang = gang_choices[chosen]
-
-/datum/event_admin_setup/pirates/apply_to_event(datum/round_event/pirates/event)
-	event.chosen_gang = chosen_gang
+/datum/event_admin_setup/listed_options/pirates/apply_to_event(datum/round_event/pirates/event)
+	if(isnull(chosen))
+		event.gang_list = GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs
+	else
+		event.gang_list = list(new chosen)

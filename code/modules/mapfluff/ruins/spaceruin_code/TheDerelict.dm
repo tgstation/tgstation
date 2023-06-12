@@ -45,7 +45,7 @@
 	desc = "It seems to be powering and controlling the vault locks."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
-	light_color = LIGHT_COLOR_YELLOW
+	light_color = LIGHT_COLOR_DIM_YELLOW
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 

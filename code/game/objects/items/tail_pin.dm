@@ -1,4 +1,5 @@
 /obj/item/tail_pin
+	icon = 'icons/obj/poster.dmi'
 	icon_state = "tailpin"
 	name = "tail pin"
 	desc = "Offically branded 'pin the tail on the corgi' style party implement. Not intended to be used on people."
@@ -7,7 +8,7 @@
 	throwforce = 0
 	throw_speed = 1
 	embedding = EMBED_HARMLESS
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pokes", "jabs", "pins the tail on")
 	attack_verb_simple = list("poke", "jab")
@@ -26,6 +27,8 @@
 	icon_state = "pinningposter"
 	poster_item_name = "party game poster"
 	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
 
 /obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
 	. = ..()

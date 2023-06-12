@@ -6,7 +6,7 @@ import { formatSiUnit } from '../format';
 
 export const OreRedemptionMachine = (props, context) => {
   const { act, data } = useBackend(context);
-  const { unclaimedPoints, materials, user } = data;
+  const { disconnected, unclaimedPoints, materials, user } = data;
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
   const [compact, setCompact] = useSharedState(context, 'compact', false);
@@ -32,20 +32,17 @@ export const OreRedemptionMachine = (props, context) => {
                     />
                   </Stack.Item>
                   <Stack.Item>
-                    {(!user && 'No user Detected') || (
-                      <LabeledList>
-                        <LabeledList.Item label="Name">
-                          {user.name || 'No name detected'}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Balance">
-                          {user.cash + ' cr' || 'No balance detected'}
-                        </LabeledList.Item>
-                      </LabeledList>
-                    )}
+                    <LabeledList>
+                      <LabeledList.Item label="Name">
+                        {user?.name || 'No Name Detected'}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Balance">
+                        {user?.cash || 'No Balance Detected'}
+                      </LabeledList.Item>
+                    </LabeledList>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
-                      mt={0.5}
                       textAlign="center"
                       color={compact ? 'red' : 'green'}
                       content="Compact"
@@ -67,7 +64,8 @@ export const OreRedemptionMachine = (props, context) => {
                 <Button
                   ml={2}
                   content="Claim"
-                  disabled={unclaimedPoints === 0}
+                  disabled={unclaimedPoints === 0 || disconnected}
+                  tooltip={disconnected}
                   onClick={() => act('Claim')}
                 />
               </Box>
@@ -168,6 +166,7 @@ const MaterialRow = (props, context) => {
     (mat_icon) => mat_icon.id === material.id
   );
 
+  const sheet_amounts = Math.floor(material.amount);
   const print_amount = 5;
   const max_sheets = 50;
 
@@ -191,7 +190,7 @@ const MaterialRow = (props, context) => {
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Box color="label">
-          {formatSiUnit(material.amount, 0)}{' '}
+          {formatSiUnit(sheet_amounts, 0)}{' '}
           {material.amount === 1 ? 'sheet' : 'sheets'}
         </Box>
       </Table.Cell>
@@ -213,7 +212,7 @@ const MaterialRow = (props, context) => {
         <Button.Input
           content={
             '[Max: ' +
-            (material.amount < max_sheets ? material.amount : max_sheets) +
+            (sheet_amounts < max_sheets ? sheet_amounts : max_sheets) +
             ']'
           }
           color={'transparent'}

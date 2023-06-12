@@ -124,7 +124,7 @@
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = active ? rainbow_order[rave_number] : null
 
-/obj/item/mod/module/visor/rave/on_active_process(delta_time)
+/obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
@@ -287,7 +287,6 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
@@ -303,7 +302,6 @@
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
@@ -312,7 +310,7 @@
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
 	SIGNAL_HANDLER
 
-	if(you_fucked_up || mod.wearer.has_gravity() != NEGATIVE_GRAVITY)
+	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)

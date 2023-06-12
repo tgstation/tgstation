@@ -70,7 +70,12 @@
 #else
 #define TEST_OUTPUT_GREEN(text) (text)
 #endif
-
+/// Change color to yellow on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
+#define TEST_OUTPUT_YELLOW(text) "\x1B\x5B1;33m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_YELLOW(text) (text)
+#endif
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
@@ -78,9 +83,11 @@
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
+#include "antag_conversion.dm"
 #include "antag_moodlets.dm"
 #include "area_contents.dm"
 #include "armor_verification.dm"
+#include "atmospherics_sanity.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "baseturfs.dm"
@@ -112,7 +119,9 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "emoting.dm"
+#include "explosion_action.dm"
 #include "focus_only_tests.dm"
+#include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
 #include "full_heal.dm"
 #include "gas_transfer.dm"
@@ -135,8 +144,10 @@
 #include "knockoff_component.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "lungs.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
@@ -152,12 +163,13 @@
 #include "monkey_business.dm"
 #include "mouse_bite_cable.dm"
 #include "mutant_hands_consistency.dm"
+#include "mutant_organs.dm"
 #include "novaflower_burn.dm"
-#include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
-#include "orderable_items.dm"
 #include "operating_table.dm"
+#include "orderable_items.dm"
+#include "organs.dm"
 #include "organ_set_bonus.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
@@ -177,6 +189,7 @@
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "required_map_items.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
@@ -190,6 +203,7 @@
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
+#include "slime_mood.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
@@ -214,7 +228,10 @@
 #include "teleporters.dm"
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
+#include "trait_addition_and_removal.dm"
 #include "traitor.dm"
+#include "traitor_mail_content_check.dm"
+#include "turf_icons.dm"
 #include "tutorial_sanity.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"

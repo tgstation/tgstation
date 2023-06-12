@@ -11,16 +11,20 @@
 	instability = 40
 	var/scream_delay = 50
 	var/last_scream = 0
+	/// List of traits to add/remove when someone gets this mutation.
+	var/static/list/mutation_traits = list(
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+	)
 
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_HULK, GENETIC_MUTATION)
+	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
@@ -61,13 +65,13 @@
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
 	switch(arm.brute_dam)
 		if(45 to 50)
-			arm.force_wound_upwards(/datum/wound/blunt/critical)
+			arm.force_wound_upwards(/datum/wound/blunt/critical, wound_source = "hulk smashing")
 		if(41 to 45)
-			arm.force_wound_upwards(/datum/wound/blunt/severe)
+			arm.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "hulk smashing")
 		if(35 to 41)
-			arm.force_wound_upwards(/datum/wound/blunt/moderate)
+			arm.force_wound_upwards(/datum/wound/blunt/moderate, wound_source = "hulk smashing")
 
-/datum/mutation/human/hulk/on_life(delta_time, times_fired)
+/datum/mutation/human/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
 		to_chat(owner, span_danger("You suddenly feel very weak."))
@@ -75,11 +79,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_HULK, GENETIC_MUTATION)
+	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = null
 	owner.update_body_parts()
@@ -116,7 +116,7 @@
 		return
 
 	var/mob/living/carbon/possible_throwable = user.pulling
-	if(!possible_throwable.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL))
+	if(!possible_throwable.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
 		return
 
 	if(ishuman(possible_throwable))

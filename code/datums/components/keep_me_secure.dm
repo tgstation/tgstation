@@ -24,7 +24,8 @@
 
 /datum/component/keep_me_secure/RegisterWithParent()
 	last_move = world.time
-	START_PROCESSING(SSobj, src)
+	if (secured_callback || unsecured_callback)
+		START_PROCESSING(SSobj, src)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
 
@@ -45,7 +46,7 @@
 
 	return TRUE
 
-/datum/component/keep_me_secure/process(delta_time)
+/datum/component/keep_me_secure/process(seconds_per_tick)
 	if(is_secured())
 		last_secured_location = get_turf(parent)
 		last_move = world.time

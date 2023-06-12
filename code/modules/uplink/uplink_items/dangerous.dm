@@ -1,5 +1,3 @@
-// File organised based on progression
-
 //All bundles and telecrystals
 /datum/uplink_category/dangerous
 	name = "Conspicuous Weapons"
@@ -7,8 +5,6 @@
 
 /datum/uplink_item/dangerous
 	category = /datum/uplink_category/dangerous
-
-// No progression cost
 
 /datum/uplink_item/dangerous/foampistol
 	name = "Toy Pistol with Riot Darts"
@@ -18,8 +14,6 @@
 	cost = 2
 	surplus = 10
 	purchasable_from = ~UPLINK_NUKE_OPS
-
-// Low progression cost
 
 /datum/uplink_item/dangerous/pistol
 	name = "Makarov Pistol"
@@ -66,9 +60,6 @@
 	item = /obj/item/clothing/gloves/rapid
 	cost = 8
 
-
-// Medium progression cost
-
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
@@ -79,8 +70,14 @@
 	cost = 16
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/doublesword/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
+/datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
+	switch(discount_type)
+		if(TRAITOR_DISCOUNT_BIG)
+			return 0.5
+		if(TRAITOR_DISCOUNT_AVERAGE)
+			return 0.35
+		else
+			return 0.2
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"

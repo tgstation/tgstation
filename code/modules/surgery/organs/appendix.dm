@@ -27,7 +27,7 @@
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/internal/appendix/on_life(delta_time, times_fired)
+/obj/item/organ/internal/appendix/on_life(seconds_per_tick, times_fired)
 	..()
 	var/mob/living/carbon/organ_owner = owner
 	if(!organ_owner)
@@ -35,10 +35,10 @@
 
 	if(organ_flags & ORGAN_FAILING)
 		// forced to ensure people don't use it to gain tox as slime person
-		organ_owner.adjustToxLoss(2 * delta_time, updating_health = TRUE, forced = TRUE)
+		organ_owner.adjustToxLoss(2 * seconds_per_tick, updating_health = TRUE, forced = TRUE)
 	else if(inflamation_stage)
-		inflamation(delta_time)
-	else if(DT_PROB(APPENDICITIS_PROB, delta_time))
+		inflamation(seconds_per_tick)
+	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick))
 		become_inflamed()
 
 /obj/item/organ/internal/appendix/proc/become_inflamed()
@@ -47,24 +47,25 @@
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
+		notify_ghosts("[owner] has developed spontaneous appendicitis!", source = owner, action = NOTIFY_ORBIT, header = "Whoa, Sick!")
 
-/obj/item/organ/internal/appendix/proc/inflamation(delta_time)
+/obj/item/organ/internal/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
-	if(inflamation_stage < 3 && DT_PROB(INFLAMATION_ADVANCEMENT_PROB, delta_time))
+	if(inflamation_stage < 3 && SPT_PROB(INFLAMATION_ADVANCEMENT_PROB, seconds_per_tick))
 		inflamation_stage += 1
 
 	switch(inflamation_stage)
 		if(1)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				organ_owner.emote("cough")
 		if(2)
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(organ_owner, span_warning("You feel a stabbing pain in your abdomen!"))
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
 				organ_owner.Stun(rand(40, 60))
 				organ_owner.adjustToxLoss(1, updating_health = TRUE, forced = TRUE)
 		if(3)
-			if(DT_PROB(0.5, delta_time))
+			if(SPT_PROB(0.5, seconds_per_tick))
 				organ_owner.vomit(95)
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
@@ -72,17 +73,16 @@
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix
 
-/obj/item/organ/internal/appendix/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/internal/appendix/on_remove(mob/living/carbon/organ_owner)
+	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
-	..()
 
-/obj/item/organ/internal/appendix/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/appendix/on_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	if(.)
-		if(inflamation_stage)
-			ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
-			organ_owner.med_hud_set_status()
+	if(inflamation_stage)
+		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+		organ_owner.med_hud_set_status()
 
 /obj/item/organ/internal/appendix/get_status_text()
 	if((!(organ_flags & ORGAN_FAILING)) && inflamation_stage)

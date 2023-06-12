@@ -73,14 +73,16 @@
 
 	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
 
-	AddComponent(/datum/component/mind_linker, \
+	AddComponent( \
+		/datum/component/mind_linker/active_linking, \
 		network_name = "Mansus Link", \
 		chat_color = "#568b00", \
+		post_unlink_callback = CALLBACK(src, PROC_REF(after_unlink)), \
+		speech_action_background_icon_state = "bg_heretic", \
+		speech_action_overlay_state = "bg_heretic_border", \
 		linker_action_path = /datum/action/cooldown/spell/pointed/manse_link, \
 		link_message = on_link_message, \
 		unlink_message = on_unlink_message, \
-		post_unlink_callback = CALLBACK(src, PROC_REF(after_unlink)), \
-		speech_action_background_icon_state = "bg_heretic", \
 	)
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -322,11 +324,12 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-			return
+			return ..()
+
 		var/list/parts_to_remove = list()
 		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
 			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
-				if(bodypart.dismemberable)
+				if(!(bodypart.bodypart_flags & BODYPART_UNREMOVABLE))
 					parts_to_remove += bodypart
 
 		if(parts_to_remove.len && prob(10))
@@ -378,14 +381,14 @@
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * delta_time, FALSE)
-		adjustFireLoss(-1.5 * delta_time, FALSE)
+		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
+		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
 
 	return ..()
 

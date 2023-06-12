@@ -235,9 +235,19 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02)
 
 /turf/closed/indestructible/fakedoor
-	name = "CentCom Access"
+	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
+
+/turf/closed/indestructible/fakedoor/maintenance
+	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+
+/turf/closed/indestructible/fakedoor/glass_airlock
+	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	opacity = FALSE
+
+/turf/closed/indestructible/fakedoor/engineering
+	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 
 /turf/closed/indestructible/rock
 	name = "dense rock"
@@ -267,7 +277,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	pixel_x = -4
 	pixel_y = -4
-
 
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
@@ -327,3 +336,35 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_CORNERS
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
+
+/turf/closed/indestructible/resin
+	name = "resin wall"
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
+
+/turf/closed/indestructible/resin/membrane
+	name = "resin membrane"
+	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon_state = "resin_membrane-0"
+	base_icon_state = "resin_membrane"
+	opacity = FALSE
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
+
+/turf/closed/indestructible/resin/membrane/Initialize(mapload)
+	. = ..()
+	underlays += mutable_appearance('icons/turf/floors.dmi', "engine") // add the reinforced floor underneath
+
+/turf/closed/indestructible/grille
+	name = "grille"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "grille"
+	base_icon_state = "grille"
+
+/turf/closed/indestructible/grille/Initialize(mapload)
+	. = ..()
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")

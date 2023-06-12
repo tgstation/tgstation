@@ -35,7 +35,7 @@
 
 		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.internal_organs)
+			for(var/organ in mob_to_check.organs)
 				found_organ = organ
 				found_organ.organ_flags ^= ORGAN_FROZEN
 
@@ -238,6 +238,9 @@
 
 ///Calls the show_candidate_poll_window() to all eligible ghosts
 /proc/poll_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+	if (group.len == 0)
+		return list()
+
 	var/time_passed = world.time
 	if (!question)
 		question = "Would you like to be a special role?"

@@ -99,12 +99,6 @@
 	severity = 0
 	. = ..()
 
-/atom/movable/screen/fullscreen/emergency_meeting
-	icon_state = "emergency_meeting"
-	show_when_dead = TRUE
-	layer = CURSE_LAYER
-	plane = SPLASHSCREEN_PLANE
-
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
 	layer = UI_DAMAGE_LAYER
@@ -123,6 +117,9 @@
 /atom/movable/screen/fullscreen/crit/vision
 	icon_state = "oxydamageoverlay"
 	layer = BLIND_LAYER
+
+/atom/movable/screen/fullscreen/crit/projectile_parry
+	layer = PARRY_LAYER
 
 /atom/movable/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"

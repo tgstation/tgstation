@@ -16,7 +16,7 @@
 	user_status = /datum/status_effect/lobster_rush
 	actions_types = list(/datum/action/cooldown/monster_core_action/adrenal_boost)
 
-/obj/item/organ/internal/monster_core/rush_gland/on_life(delta_time, times_fired)
+/obj/item/organ/internal/monster_core/rush_gland/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		trigger_organ_action()

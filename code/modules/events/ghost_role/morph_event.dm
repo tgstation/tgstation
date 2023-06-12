@@ -21,9 +21,12 @@
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
-	if(!GLOB.xeno_spawn)
+
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(isnull(spawn_loc))
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
+
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(spawn_loc)
 	player_mind.transfer_to(S)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
 	player_mind.special_role = ROLE_MORPH

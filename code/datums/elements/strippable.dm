@@ -64,8 +64,8 @@
 	/// The STRIPPABLE_ITEM_* key
 	var/key
 
-	/// Should we warn about dangerous clothing?
-	var/warn_dangerous_clothing = TRUE
+	/// Should we give feedback messages?
+	var/show_visible_message = TRUE
 
 /// Gets the item from the given source.
 /datum/strippable_item/proc/get_item(atom/source)
@@ -82,13 +82,16 @@
 		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
 		return FALSE
 
+	if (equipping.item_flags & ABSTRACT)
+		return FALSE //I don't know a sane-sounding feedback message for trying to put a slap into someone's hand
+
 	return TRUE
 
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 
-	equipping.item_start_equip(source, equipping, user, warn_dangerous_clothing)
+	equipping.item_start_equip(source, equipping, user, show_visible_message)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.

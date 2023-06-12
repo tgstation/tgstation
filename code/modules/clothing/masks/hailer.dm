@@ -64,6 +64,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	var/broken_hailer = FALSE
 	var/safety = TRUE
 
+/obj/item/clothing/mask/gas/sechailer/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
@@ -75,14 +78,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	has_fov = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
 	inhand_icon_state = "spacepol_mask"
-	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
@@ -198,10 +199,29 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
 
 /datum/action/item_action/halt
 	name = "HALT!"
+
+/obj/item/clothing/mask/party_horn
+	name = "party horn"
+	desc = "A paper tube used at parties that makes a noise when blown into."
+	icon_state = "party_horn"
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	actions_types = list(/datum/action/item_action/toot)
+	COOLDOWN_DECLARE(horn_cooldown)
+
+/obj/item/clothing/mask/party_horn/ui_action_click(mob/user, action)
+	if(!COOLDOWN_FINISHED(src, horn_cooldown))
+		return
+	COOLDOWN_START(src, horn_cooldown, 10 SECONDS)
+	playsound(src, 'sound/items/party_horn.ogg', 75, FALSE)
+	flick("party_horn_animated", src)
+
+/datum/action/item_action/toot
+	name = "TOOT!"
 
 #undef PHRASE_COOLDOWN
 #undef OVERUSE_COOLDOWN

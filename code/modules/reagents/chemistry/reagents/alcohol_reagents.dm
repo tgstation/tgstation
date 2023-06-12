@@ -1,5 +1,4 @@
 #define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
-#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 #define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
 
 /datum/reagent/consumable/ethanol
@@ -50,7 +49,7 @@
 	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
 	return ..()
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.get_drunk_amount() < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
@@ -58,11 +57,11 @@
 		if(HAS_TRAIT(drinker, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
-		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * delta_time)
+		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
-			var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+			var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 			if (istype(liver))
-				liver.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * delta_time, 0))/150))
+				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * seconds_per_tick, 0))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
@@ -114,12 +113,9 @@
 	icon_state = "beerglass"
 
 	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
-/datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.05))
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.7))
+/datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 0.05))
+	mytray.adjust_waterlevel(round(volume * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -161,7 +157,7 @@
 	desc = "A freezing pint of green beer. Festive."
 	icon_state = "greenbeerglass"
 
-/datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.color != color)
 		drinker.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
@@ -187,10 +183,10 @@
 	desc = "DAMN, THIS THING LOOKS ROBUST!"
 	icon_state ="kahluaglass"
 
-/datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_dizzy_if_lower(10 SECONDS * REM * delta_time)
-	drinker.adjust_drowsiness(-6 SECONDS * REM * delta_time)
-	drinker.AdjustSleeping(-40 * REM * delta_time)
+/datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
+	drinker.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 	..()
@@ -246,9 +242,9 @@
 	name = "glass of candy corn liquor"
 	desc = "Good for your Imagination."
 
-/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(5, delta_time))
-		drinker.adjust_hallucinations(4 SECONDS * REM * delta_time)
+/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(5, seconds_per_tick))
+		drinker.adjust_hallucinations(4 SECONDS * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -268,10 +264,10 @@
 	desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 	icon_state = "thirteen_loko_glass"
 
-/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_drowsiness(-14 SECONDS * REM * delta_time)
-	drinker.AdjustSleeping(-40 * REM * delta_time)
-	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
+/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 	..()
@@ -282,19 +278,19 @@
 	drinker.set_jitter_if_lower(40 SECONDS)
 	drinker.Stun(1.5 SECONDS)
 
-/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/drinker, delta_time, times_fired)
-	if(DT_PROB(3.5, delta_time) && iscarbon(drinker))
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(3.5, seconds_per_tick) && iscarbon(drinker))
 		var/obj/item/held_item = drinker.get_active_held_item()
 		if(held_item)
 			drinker.dropItemToGround(held_item)
 			to_chat(drinker, span_notice("Your hands jitter and you drop what you were holding!"))
 			drinker.set_jitter_if_lower(20 SECONDS)
 
-	if(DT_PROB(3.5, delta_time))
+	if(SPT_PROB(3.5, seconds_per_tick))
 		to_chat(drinker, span_notice("[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(DT_PROB(2.5, delta_time) && iscarbon(drinker))
-		var/obj/item/organ/internal/eyes/eyes = drinker.getorganslot(ORGAN_SLOT_EYES)
+	if(SPT_PROB(2.5, seconds_per_tick) && iscarbon(drinker))
+		var/obj/item/organ/internal/eyes/eyes = drinker.get_organ_slot(ORGAN_SLOT_EYES)
 		if(drinker.is_blind())
 			if(istype(eyes))
 				eyes.Remove(drinker)
@@ -304,15 +300,15 @@
 				drinker.adjustBruteLoss(15, required_bodytype = affected_bodytype)
 		else
 			to_chat(drinker, span_userdanger("You scream in terror as you go blind!"))
-			eyes.applyOrganDamage(eyes.maxHealth)
+			eyes.apply_organ_damage(eyes.maxHealth)
 			drinker.emote("scream")
 
-	if(DT_PROB(1.5, delta_time) && iscarbon(drinker))
+	if(SPT_PROB(1.5, seconds_per_tick) && iscarbon(drinker))
 		drinker.visible_message(span_danger("[drinker] starts having a seizure!"), span_userdanger("You have a seizure!"))
 		drinker.Unconscious(10 SECONDS)
 		drinker.set_jitter_if_lower(700 SECONDS)
 
-	if(DT_PROB(0.5, delta_time) && iscarbon(drinker))
+	if(SPT_PROB(0.5, seconds_per_tick) && iscarbon(drinker))
 		var/datum/disease/heart_attack = new /datum/disease/heart_failure
 		drinker.ForceContractDisease(heart_attack)
 		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
@@ -353,8 +349,8 @@
 	desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 	icon_state = "glass_brown"
 
-/datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(drinker.getBruteLoss() && DT_PROB(5, delta_time))
+/datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(drinker.getBruteLoss() && SPT_PROB(5, seconds_per_tick))
 		drinker.heal_bodypart_damage(brute = 1)
 		. = TRUE
 	return ..() || .
@@ -376,8 +372,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "threemileislandglass"
 
-/datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(100 SECONDS * REM * delta_time)
+/datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/ethanol/gin
@@ -572,8 +568,8 @@
 	desc = "It's as strong as it smells."
 	icon_state = "absinthe"
 
-/datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(5, delta_time) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+/datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(5, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.adjust_hallucinations(8 SECONDS)
 	..()
 
@@ -724,12 +720,12 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "cubalibreglass"
 
-/datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/cubano, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/cubano, seconds_per_tick, times_fired)
 	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		cubano.adjustBruteLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		cubano.adjustFireLoss(-1 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		cubano.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		cubano.adjustOxyLoss(-5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		cubano.adjustBruteLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		cubano.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		cubano.adjustToxLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		cubano.adjustOxyLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	return ..() || .
 
@@ -844,12 +840,12 @@
 			COMSIG_REAGENTS_REACTED,
 		))
 
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
 		ADD_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 		if (HAS_TRAIT(drinker, TRAIT_IRRADIATED))
-			drinker.adjustToxLoss(-2 * REM * delta_time, required_biotype = affected_biotype)
+			drinker.adjustToxLoss(-2 * REM * seconds_per_tick, required_biotype = affected_biotype)
 
 	return ..()
 
@@ -878,7 +874,7 @@
 	color = "#bf707c" // rgb: 191,112,124
 	boozepwr = 55
 	quality = DRINK_GOOD
-	taste_description = "tomatoes with a hint of lime"
+	taste_description = "tomatoes with a hint of lime and liquid murder"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/bloody_mary
@@ -888,9 +884,9 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "bloodymaryglass"
 
-/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
-		drinker.blood_volume = min(drinker.blood_volume + (3 * REM * delta_time), BLOOD_VOLUME_NORMAL) //Bloody Mary quickly restores blood loss.
+		drinker.blood_volume = min(drinker.blood_volume + (3 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL) //Bloody Mary quickly restores blood loss.
 	..()
 
 /datum/reagent/consumable/ethanol/brave_bull
@@ -947,7 +943,7 @@
 	light_holder = new(drinker)
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
-/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(QDELETED(light_holder))
 		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != drinker)
@@ -979,8 +975,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "toxinsspecialglass"
 
-/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/drinker, delta_time, times_fired)
-	drinker.adjust_bodytemperature(15 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_bodytemperature(15 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -1007,22 +1003,22 @@
 	if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		metabolization_rate = 0.8
 	// if you don't have a liver, or your liver isn't an officer's liver
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		beepsky_hallucination = new()
 		drinker.gain_trauma(beepsky_hallucination, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
-/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.set_jitter_if_lower(4 SECONDS)
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		. = TRUE
-		drinker.adjustStaminaLoss(-10 * REM * delta_time, required_biotype = affected_biotype)
-		if(DT_PROB(10, delta_time))
+		drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, required_biotype = affected_biotype)
+		if(SPT_PROB(10, seconds_per_tick))
 			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
-		if(DT_PROB(5, delta_time))
+		if(SPT_PROB(5, seconds_per_tick))
 			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
 
 	..()
@@ -1033,7 +1029,7 @@
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/drinker)
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	// if you don't have a liver, or your liver isn't an officer's liver
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		drinker.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
@@ -1078,10 +1074,10 @@
 			boozepwr = 50 // will still smash but not as much.
 			dorf_mode = TRUE
 
-/datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/dwarf, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/dwarf, seconds_per_tick, times_fired)
 	if(dorf_mode)
-		dwarf.adjustBruteLoss(-2 * REM * delta_time, required_bodytype = affected_bodytype)
-		dwarf.adjustFireLoss(-2 * REM * delta_time, required_bodytype = affected_bodytype)
+		dwarf.adjustBruteLoss(-2 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
+		dwarf.adjustFireLoss(-2 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 	return ..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
@@ -1221,8 +1217,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "proj_manhattanglass"
 
-/datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(1 MINUTES * REM * delta_time)
+/datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_drugginess(1 MINUTES * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/ethanol/whiskeysoda
@@ -1256,8 +1252,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "antifreeze"
 
-/datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -1276,11 +1272,11 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "b&p"
 
-/datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(ishuman(drinker)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/unshoed = drinker
 		if(!unshoed.shoes)
-			unshoed.adjustBruteLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
+			unshoed.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 			. = TRUE
 	return ..() || .
 
@@ -1459,8 +1455,8 @@
 	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
 	drinker.remove_filter("singulo_rays")
 
-/datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time))
+/datum/reagent/consumable/ethanol/singulo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5, seconds_per_tick))
 		// 20u = 1x1, 45u = 2x2, 80u = 3x3
 		var/volume_to_radius = FLOOR(sqrt(volume/5), 1) - 1
 		var/suck_range = clamp(volume_to_radius, 0, 3)
@@ -1493,8 +1489,8 @@
 	taste_description = "hot and spice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/glass_style/drinking_glass/sbiten
@@ -1551,8 +1547,8 @@
 	desc = "A beer so frosty, the air around it freezes."
 	icon_state = "iced_beerglass"
 
-/datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, T0C) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/grog
@@ -1666,9 +1662,9 @@
 	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "changelingsting"
 
-/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	var/datum/antagonist/changeling/changeling = target.mind?.has_antag_datum(/datum/antagonist/changeling)
-	changeling?.adjust_chemicals(metabolization_rate * REM * delta_time)
+	changeling?.adjust_chemicals(metabolization_rate * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -1702,8 +1698,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "syndicatebomb"
 
-/datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time))
+/datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(2.5, seconds_per_tick))
 		playsound(get_turf(drinker), 'sound/effects/explosionfar.ogg', 100, TRUE)
 	return ..()
 
@@ -1773,10 +1769,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "bananahonkglass"
 
-/datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+/datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(drinker))
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
 	return ..() || .
 
@@ -1797,10 +1793,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "silencerglass"
 
-/datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
 	return ..() || .
 
@@ -1871,7 +1867,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "fetching_fizz"
 
-/datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	for(var/obj/item/stack/ore/O in orange(3, drinker))
 		step_towards(O, get_turf(drinker))
 	return ..()
@@ -1894,13 +1890,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "hearty_punch"
 
-/datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.health <= 0)
-		drinker.adjustBruteLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		drinker.adjustFireLoss(-3 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		drinker.adjustCloneLoss(-5 * REM * delta_time, 0)
-		drinker.adjustOxyLoss(-4 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustToxLoss(-3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjustCloneLoss(-5 * REM * seconds_per_tick, 0)
+		drinker.adjustOxyLoss(-4 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	return ..() || .
 
@@ -1935,19 +1931,19 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "atomicbombglass"
 
-/datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(100 SECONDS * REM * delta_time)
+/datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.adjust_confusion(2 SECONDS * REM * delta_time)
-	drinker.set_dizzy_if_lower(20 SECONDS * REM * delta_time)
-	drinker.adjust_slurring(6 SECONDS * REM * delta_time)
+		drinker.adjust_confusion(2 SECONDS * REM * seconds_per_tick)
+	drinker.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
+	drinker.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
 	switch(current_cycle)
 		if(51 to 200)
-			drinker.Sleeping(100 * REM * delta_time)
+			drinker.Sleeping(100 * REM * seconds_per_tick)
 			. = TRUE
 		if(201 to INFINITY)
-			drinker.AdjustSleeping(40 * REM * delta_time)
-			drinker.adjustToxLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+			drinker.AdjustSleeping(40 * REM * seconds_per_tick)
+			drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 			. = TRUE
 	..()
 
@@ -1967,19 +1963,19 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "gargleblasterglass"
 
-/datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_dizzy(3 SECONDS * REM * delta_time)
+/datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_dizzy(3 SECONDS * REM * seconds_per_tick)
 	switch(current_cycle)
 		if(15 to 45)
-			drinker.adjust_slurring(3 SECONDS * REM * delta_time)
+			drinker.adjust_slurring(3 SECONDS * REM * seconds_per_tick)
 
 		if(45 to 55)
-			if(DT_PROB(30, delta_time))
-				drinker.adjust_confusion(3 SECONDS * REM * delta_time)
+			if(SPT_PROB(30, seconds_per_tick))
+				drinker.adjust_confusion(3 SECONDS * REM * seconds_per_tick)
 		if(55 to 200)
-			drinker.set_drugginess(110 SECONDS * REM * delta_time)
+			drinker.set_drugginess(110 SECONDS * REM * seconds_per_tick)
 		if(200 to INFINITY)
-			drinker.adjustToxLoss(2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+			drinker.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 			. = TRUE
 	..()
 
@@ -2003,22 +1999,22 @@
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pick_paralyzed_limb()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
-/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(100 SECONDS * REM * delta_time)
-	drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
-	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150, required_organtype = affected_organtype)
-	if(DT_PROB(10, delta_time))
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
+	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
+	if(SPT_PROB(10, seconds_per_tick))
 		drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		drinker.drop_all_held_items()
 		to_chat(drinker, span_notice("You cant feel your hands!"))
 	if(current_cycle > 5)
-		if(DT_PROB(10, delta_time))
+		if(SPT_PROB(10, seconds_per_tick))
 			var/paralyzed_limb = pick_paralyzed_limb()
 			ADD_TRAIT(drinker, paralyzed_limb, type)
 			drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		if(current_cycle > 30)
-			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, required_organtype = affected_organtype)
-			if(current_cycle > 50 && DT_PROB(7.5, delta_time))
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
 					if(drinker.stat == CONSCIOUS)
@@ -2052,34 +2048,34 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "hippiesdelightglass"
 
-/datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_slurring_if_lower(1 SECONDS * REM * delta_time)
+/datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(1 to 5)
-			drinker.set_dizzy_if_lower(20 SECONDS * REM * delta_time)
-			drinker.set_drugginess(1 MINUTES * REM * delta_time)
-			if(DT_PROB(5, delta_time))
+			drinker.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
+			drinker.set_drugginess(1 MINUTES * REM * seconds_per_tick)
+			if(SPT_PROB(5, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			drinker.set_jitter_if_lower(40 SECONDS * REM * delta_time)
-			drinker.set_dizzy_if_lower(40 SECONDS * REM * delta_time)
-			drinker.set_drugginess(1.5 MINUTES * REM * delta_time)
-			if(DT_PROB(10, delta_time))
+			drinker.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)
+			drinker.set_dizzy_if_lower(40 SECONDS * REM * seconds_per_tick)
+			drinker.set_drugginess(1.5 MINUTES * REM * seconds_per_tick)
+			if(SPT_PROB(10, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if (10 to 200)
-			drinker.set_jitter_if_lower(80 SECONDS * REM * delta_time)
-			drinker.set_dizzy_if_lower(80 SECONDS * REM * delta_time)
-			drinker.set_drugginess(2 MINUTES * REM * delta_time)
-			if(DT_PROB(16, delta_time))
+			drinker.set_jitter_if_lower(80 SECONDS * REM * seconds_per_tick)
+			drinker.set_dizzy_if_lower(80 SECONDS * REM * seconds_per_tick)
+			drinker.set_drugginess(2 MINUTES * REM * seconds_per_tick)
+			if(SPT_PROB(16, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			drinker.set_jitter_if_lower(120 SECONDS * REM * delta_time)
-			drinker.set_dizzy_if_lower(120 SECONDS * REM * delta_time)
-			drinker.set_drugginess(2.5 MINUTES * REM * delta_time)
-			if(DT_PROB(23, delta_time))
+			drinker.set_jitter_if_lower(120 SECONDS * REM * seconds_per_tick)
+			drinker.set_dizzy_if_lower(120 SECONDS * REM * seconds_per_tick)
+			drinker.set_drugginess(2.5 MINUTES * REM * seconds_per_tick)
+			if(SPT_PROB(23, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
-			if(DT_PROB(16, delta_time))
+			if(SPT_PROB(16, seconds_per_tick))
 				drinker.adjustToxLoss(2, FALSE, required_biotype = affected_biotype)
 				. = TRUE
 	..()
@@ -2094,13 +2090,14 @@
 	taste_description = "custard and alcohol"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/eggnog
+/datum/glass_style/has_foodtype/drinking_glass/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "eggnog"
 	desc = "For enjoying the most wonderful time of the year."
 	icon_state = "glass_yellow"
+	drink_type = FRUIT
 
-/datum/glass_style/juicebox/eggnog
+/datum/glass_style/has_foodtype/juicebox/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "carton of eggnog"
 	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
@@ -2123,9 +2120,9 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "narsour"
 
-/datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 6 SECONDS)
-	drinker.adjust_stutter_up_to(6 SECONDS * REM * delta_time, 6 SECONDS)
+/datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_timed_status_effect(6 SECONDS * REM * seconds_per_tick, /datum/status_effect/speech/slurring/cult, max_duration = 6 SECONDS)
+	drinker.adjust_stutter_up_to(6 SECONDS * REM * seconds_per_tick, 6 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/triple_sec
@@ -2200,11 +2197,11 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "quadruple_sec"
 
-/datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
 	return ..()
 
@@ -2224,12 +2221,12 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "quintuple_sec"
 
-/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
-	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time)
-		drinker.adjustStaminaLoss(-2 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.heal_bodypart_damage(2 * REM * seconds_per_tick, 2 * REM *  seconds_per_tick)
+		drinker.adjustStaminaLoss(-2 * REM * seconds_per_tick, required_biotype = affected_biotype)
 		. = TRUE
 	return ..()
 
@@ -2302,13 +2299,13 @@
 	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
 		drinker.visible_message(span_danger("[drinker] lurches to [drinker.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
 
-/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
 	if(drinker.health > 0)
-		drinker.adjustBruteLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
-		drinker.adjustFireLoss(-1 * REM * delta_time, required_bodytype = affected_bodytype)
-		drinker.adjustToxLoss(-0.5 * REM * delta_time, required_biotype = affected_biotype)
-		drinker.adjustOxyLoss(-3 * REM * delta_time, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustStaminaLoss(-5 * REM * delta_time, required_biotype = affected_biotype)
+		drinker.adjustBruteLoss(-1 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
+		drinker.adjustFireLoss(-1 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
+		drinker.adjustToxLoss(-0.5 * REM * seconds_per_tick, required_biotype = affected_biotype)
+		drinker.adjustOxyLoss(-3 * REM * seconds_per_tick, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustStaminaLoss(-5 * REM * seconds_per_tick, required_biotype = affected_biotype)
 		. = TRUE
 	..()
 
@@ -2332,8 +2329,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "squirt_cider"
 
-/datum/reagent/consumable/ethanol/squirt_cider/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.satiety += 5 * REM * delta_time //for context, vitamins give 15 satiety per second
+/datum/reagent/consumable/ethanol/squirt_cider/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.satiety += 5 * REM * seconds_per_tick //for context, vitamins give 15 satiety per second
 	..()
 	. = TRUE
 
@@ -2370,8 +2367,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "sugar_rush"
 
-/datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.satiety -= 10 * REM * delta_time //junky as hell! a whole glass will keep you from being able to eat junk food
+/datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.satiety -= 10 * REM * seconds_per_tick //junky as hell! a whole glass will keep you from being able to eat junk food
 	..()
 	. = TRUE
 
@@ -2425,9 +2422,9 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "peppermint_patty"
 
-/datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
-	drinker.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal())
+	drinker.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, drinker.get_body_temp_normal())
 	..()
 
 
@@ -2457,7 +2454,7 @@
 			to_chat(the_human, span_notice("[the_shield] appears polished, although you don't recall polishing it."))
 			return TRUE
 
-/datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
 	..()
 	if(mighty_shield && !(mighty_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
 		holder.remove_reagent(type)
@@ -2518,7 +2515,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "between_the_sheets"
 
-/datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
 	..()
 	var/is_between_the_sheets = FALSE
 	for(var/obj/item/bedsheet/bedsheet in range(drinker.loc, 0))
@@ -2532,13 +2529,13 @@
 
 	if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 		if(prob(50))
-			drinker.adjustBruteLoss(-0.25 * REM * delta_time, required_bodytype = affected_bodytype)
+			drinker.adjustBruteLoss(-0.25 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 		else
-			drinker.adjustFireLoss(-0.25 * REM * delta_time, required_bodytype = affected_bodytype)
+			drinker.adjustFireLoss(-0.25 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 	else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
-		drinker.adjustBruteLoss(-0.2 * REM * delta_time, required_bodytype = affected_bodytype)
+		drinker.adjustBruteLoss(-0.2 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 	else if(drinker.getFireLoss())
-		drinker.adjustFireLoss(-0.2 * REM * delta_time, required_bodytype = affected_bodytype)
+		drinker.adjustFireLoss(-0.2 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
@@ -2602,10 +2599,10 @@
 	name = "glass of fernet"
 	desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
 
-/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
-		drinker.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	drinker.adjust_nutrition(-5 * REM * delta_time)
+		drinker.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 	return ..()
 
@@ -2625,10 +2622,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "godlyblend"
 
-/datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
-		drinker.adjustToxLoss(0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	drinker.adjust_nutrition(-3 * REM * delta_time)
+		drinker.adjustToxLoss(0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 	return ..()
 
@@ -2648,8 +2645,8 @@
 	desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
 	icon_state = "fanciulli"
 
-/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_nutrition(-5 * REM * delta_time)
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 	return ..()
 
@@ -2675,8 +2672,8 @@
 	desc = "A glass of Branca Menta, perfect for those lazy and hot Sunday summer afternoons." //Get lazy literally by drinking this
 	icon_state = "minted_fernet"
 
-/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C)
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, T0C)
 	return ..()
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/drinker)
@@ -2702,10 +2699,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "blank_paper"
 
-/datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
 	return ..()
 
@@ -2853,13 +2850,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "wizz_fizz"
 
-/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		drinker.adjustOxyLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.adjustToxLoss(-1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-		drinker.adjustStaminaLoss(-1  * REM * delta_time, required_biotype = affected_biotype)
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
+		drinker.adjustOxyLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		drinker.adjustToxLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+		drinker.adjustStaminaLoss(-1  * REM * seconds_per_tick, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2878,10 +2875,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "bug_spray"
 
-/datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	//Bugs should not drink Bug spray.
 	if(ismoth(drinker) || isflyperson(drinker))
-		drinker.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		drinker.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/drinker)
@@ -2940,10 +2937,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "turbo"
 
-/datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(2, delta_time))
+/datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(2, seconds_per_tick))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	drinker.adjustStaminaLoss(-0.25 * drinker.get_drunk_amount() * REM * delta_time, required_biotype = affected_biotype)
+	drinker.adjustStaminaLoss(-0.25 * drinker.get_drunk_amount() * REM * seconds_per_tick, required_biotype = affected_biotype)
 	return ..()
 
 /datum/reagent/consumable/ethanol/old_timer
@@ -2962,8 +2959,8 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "old_timer"
 
-/datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/human/metabolizer, delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && istype(metabolizer))
+/datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/human/metabolizer, seconds_per_tick, times_fired)
+	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
 			metabolizer.facial_hair_color = "#cccccc"
@@ -3037,11 +3034,11 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "trappistglass"
 
-/datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.mind?.holy_role)
-		drinker.adjustFireLoss(-2.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
-		drinker.adjust_jitter(-2 SECONDS * REM * delta_time)
-		drinker.adjust_stutter(-2 SECONDS * REM * delta_time)
+		drinker.adjustFireLoss(-2.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+		drinker.adjust_jitter(-2 SECONDS * REM * seconds_per_tick)
+		drinker.adjust_stutter(-2 SECONDS * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam
@@ -3059,13 +3056,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "blazaamglass"
 
-/datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.get_drunk_amount() > 40)
 		if(stored_teleports)
 			do_teleport(drinker, get_turf(drinker), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
 			stored_teleports--
 
-		if(DT_PROB(5, delta_time))
+		if(SPT_PROB(5, seconds_per_tick))
 			stored_teleports += rand(2, 6)
 			if(prob(70))
 				drinker.vomit(vomit_type = VOMIT_PURPLE)
@@ -3101,10 +3098,10 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "mauna_loa"
 
-/datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
-	drinker.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
-	if (DT_PROB(2.5, delta_time))
+	drinker.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
+	if (SPT_PROB(2.5, seconds_per_tick))
 		drinker.adjust_fire_stacks(1)
 		drinker.ignite_mob()
 	..()
@@ -3140,6 +3137,34 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pina_colada"
 
+/datum/reagent/consumable/ethanol/pina_olivada
+	name = "Piña Olivada"
+	description = "An oddly designed concoction of olive oil and pineapple juice."
+	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
+	color = "#493c00"
+	quality = DRINK_NICE
+	taste_description = "a horrible emulsion of pineapple and olive oil"
+
+/datum/reagent/consumable/ethanol/pina_olivada/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(8, seconds_per_tick))
+		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
+	if(SPT_PROB(3, seconds_per_tick))
+		var/static/list/messages = list(
+			"A horrible aftertaste coats your mouth.",
+			"You feel like you're going to choke on the oil in your throat.",
+			"You start to feel some heartburn coming on.",
+			"You want to throw up, but you know that nothing can come out due to the clog in your esophagus.",
+			"Your throat feels horrible.",
+		)
+		to_chat(drinker, span_notice(pick(messages)))
+	return ..()
+
+/datum/glass_style/drinking_glass/pina_olivada
+	required_drink_type = /datum/reagent/consumable/ethanol/pina_olivada
+	name = "Piña Olivada"
+	desc = "A balance of fruity pineapple with thick, rich olive oil. Stir well before drinking."
+	icon_state = "pina_olivada"
+
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
 	name = "Pruno"
 	color = "#E78108"
@@ -3154,8 +3179,8 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	icon_state = "glass_orange"
 
-/datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_disgust(5 * REM * delta_time)
+/datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_disgust(5 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/ethanol/ginger_amaretto
@@ -3222,8 +3247,8 @@
 	desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
 	icon_state = "kortara_glass"
 
-/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(drinker.getBruteLoss() && DT_PROB(10, delta_time))
+/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(drinker.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		drinker.heal_bodypart_damage(1,0)
 		. = TRUE
 
@@ -3243,7 +3268,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "sea_breeze"
 
-/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
 	..()
 
@@ -3279,7 +3304,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "drunken_espatier"
 
-/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
@@ -3308,12 +3333,12 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "protein_blend"
 
-/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.adjust_nutrition(2 * REM * delta_time)
+/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_nutrition(2 * REM * seconds_per_tick)
 	if(!islizard(drinker))
-		drinker.adjust_disgust(5 * REM * delta_time)
+		drinker.adjust_disgust(5 * REM * seconds_per_tick)
 	else
-		drinker.adjust_disgust(2 * REM * delta_time)
+		drinker.adjust_disgust(2 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/ethanol/mushi_kombucha
@@ -3346,7 +3371,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "triumphal_arch"
 
-/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(islizard(drinker))
 		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 	..()
@@ -3592,9 +3617,9 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "helianthus"
 
-/datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(5, delta_time))
-		drinker.adjust_hallucinations_up_to(4 SECONDS * REM * delta_time, 48 SECONDS)
+/datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	if(SPT_PROB(5, seconds_per_tick))
+		drinker.adjust_hallucinations_up_to(4 SECONDS * REM * seconds_per_tick, 48 SECONDS)
 
 	..()
 
@@ -3646,6 +3671,101 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "gin_garden"
 
-/datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
-	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
+/datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
+	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	..()
+
+/datum/reagent/consumable/ethanol/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	description = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	boozepwr = 30
+	color = "#FFAA00"
+	taste_description = "static with a hint of sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/wine_voltaic
+	required_drink_type = /datum/reagent/consumable/ethanol/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	desc = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "wine_voltaic"
+
+/datum/reagent/consumable/ethanol/wine_voltaic/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 3)
+
+/datum/reagent/consumable/ethanol/telepole
+	name = "Telepole"
+	description = "A grounding rod in the form of a drink.  Recharges etherials, and gives temporary shock resistance."
+	boozepwr = 50
+	color = "#b300ff"
+	quality = DRINK_NICE
+	taste_description = "the howling storm"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/telepole
+	required_drink_type = /datum/reagent/consumable/ethanol/telepole
+	name = "Telepole"
+	desc = "A liquid grounding rod. Recharges etherials and grants temporary shock resistance."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "telepole"
+
+/datum/reagent/consumable/ethanol/telepole/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	ADD_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+
+/datum/reagent/consumable/ethanol/telepole/on_mob_end_metabolize(mob/living/affected_mob)
+	REMOVE_TRAIT(affected_mob, TRAIT_SHOCKIMMUNE, type)
+	return ..()
+
+/datum/reagent/consumable/ethanol/telepole/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 2)
+
+/datum/reagent/consumable/ethanol/pod_tesla
+	name = "Pod Tesla"
+	description = "Ride the lightning!  Recharges etherials, suppresses phobias, and gives strong temporary shock resistance."
+	boozepwr = 80
+	color = "#00fbff"
+	quality = DRINK_FANTASTIC
+	taste_description = "victory, with a hint of insanity"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/pod_tesla
+	required_drink_type = /datum/reagent/consumable/ethanol/pod_tesla
+	name = "Pod Tesla"
+	desc = "Ride the lightning! Recharges etherials, suppresses phobias, and grants strong temporary shock resistance."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "pod_tesla"
+
+/datum/reagent/consumable/ethanol/pod_tesla/on_mob_metabolize(mob/living/affected_mob)
+	..()
+	affected_mob.add_traits(list(TRAIT_SHOCKIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_FEARLESS), type)
+
+
+/datum/reagent/consumable/ethanol/pod_tesla/on_mob_end_metabolize(mob/living/affected_mob)
+	affected_mob.remove_traits(list(TRAIT_SHOCKIMMUNE,TRAIT_TESLA_SHOCKIMMUNE,TRAIT_FEARLESS), type)
+
+/datum/reagent/consumable/ethanol/pod_tesla/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 5)
+#undef ALCOHOL_EXPONENT
+#undef ALCOHOL_THRESHOLD_MODIFIER

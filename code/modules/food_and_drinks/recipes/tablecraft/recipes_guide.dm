@@ -37,13 +37,25 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
-	..()
+	. = ..()
 	if(!reaction)
 		return
-	var/datum/chemical_reaction/chemical_reaction = new reaction // This could use GLOB.chemical_reactions_list if it was initialized by now
-	reqs = chemical_reaction.required_reagents
-	chem_catalysts = chemical_reaction.required_catalysts
-	if (chemical_reaction.results.len)
+
+	if(length(GLOB.chemical_reactions_list))
+		setup_chemical_reaction_details(GLOB.chemical_reactions_list[reaction])
+	else
+		// May be called before chemical reactions list is instantiated
+		var/datum/chemical_reaction/chemical_reaction = new reaction()
+		setup_chemical_reaction_details(chemical_reaction)
+		qdel(chemical_reaction)
+
+/**
+ * Sets up information for our recipe based on the chemical reaction we have set.
+ */
+/datum/crafting_recipe/food/reaction/proc/setup_chemical_reaction_details(datum/chemical_reaction/chemical_reaction)
+	reqs = chemical_reaction.required_reagents?.Copy()
+	chem_catalysts = chemical_reaction.required_catalysts?.Copy()
+	if(isnull(result) && length(chemical_reaction.results))
 		result = chemical_reaction.results[1]
 		result_amount = chemical_reaction.results[result]
 
@@ -406,8 +418,8 @@
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
-	reqs = list(/obj/item/food/cheese_sandwich = 1)
-	result = /obj/item/food/grilled_cheese_sandwich
+	reqs = list(/obj/item/food/sandwich/cheese = 1)
+	result = /obj/item/food/sandwich/cheese/grilled
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/moonfish

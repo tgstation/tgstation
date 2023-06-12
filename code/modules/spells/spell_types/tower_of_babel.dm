@@ -12,10 +12,12 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	deadchat_broadcast("The [span_name("Tower of Babel")] has stricken the station, people will struggle to communicate.", message_type=DEADCHAT_ANNOUNCEMENT)
 
 	for(var/mob/living/carbon/target in GLOB.player_list)
+		if(!target.mind)
+			continue
 		if(IS_WIZARD(target) && !badmin)
 			// wizards are not only immune but can speak all languages to taunt their victims over the radio
 			target.grant_all_languages(source=LANGUAGE_BABEL)
-			ADD_TRAIT(target, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+			ADD_TRAIT(target.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 			to_chat(target, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
 
@@ -44,8 +46,10 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	// silicon mobs are immune
 	if(!iscarbon(to_curse))
 		return
+	if(!to_curse.mind)
+		return
 
-	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_TRAIT(to_curse, TRAIT_TOWER_OF_BABEL))
+	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_TRAIT(to_curse.mind, TRAIT_TOWER_OF_BABEL))
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
 
@@ -56,9 +60,11 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 /proc/cure_curse_of_babel(mob/living/carbon/to_cure)
 	if(!iscarbon(to_cure))
 		return
+	if(!to_cure.mind)
+		return
 
 	// anyone who has this trait from another source is immune to being cursed by tower of babel
-	if(!HAS_TRAIT_FROM(to_cure, TRAIT_TOWER_OF_BABEL, TRAUMA_TRAIT))
+	if(!HAS_TRAIT_FROM(to_cure.mind, TRAIT_TOWER_OF_BABEL, TRAUMA_TRAIT))
 		return
 
 	to_cure.remove_status_effect(/datum/status_effect/tower_of_babel/magical)

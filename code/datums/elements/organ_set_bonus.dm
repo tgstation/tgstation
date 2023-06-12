@@ -55,8 +55,8 @@
 	var/bonus_deactivate_text = span_notice("Your DNA is no longer majority ???. You did make an issue report, right?")
 	/// Required mob bio-type. Also checks DNA validity it's set to MOB_ORGANIC.
 	var/required_biotype = MOB_ORGANIC
-	/// A Trait or list of Traits added to the mob upon bonus activation.
-	var/bonus_traits
+	/// A list of traits added to the mob upon bonus activation, can be of any length.
+	var/list/bonus_traits = list()
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
@@ -76,12 +76,8 @@
 		if((required_biotype == MOB_ORGANIC) && !owner.can_mutate())
 			return FALSE
 	bonus_active = TRUE
-	if(bonus_traits)
-		if(islist(bonus_traits))
-			for(var/trait in bonus_traits)
-				ADD_TRAIT(owner, trait, REF(src))
-		else
-			ADD_TRAIT(owner, bonus_traits, REF(src))
+	if(length(bonus_traits))
+		owner.add_traits(bonus_traits, REF(src))
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
 	return TRUE
@@ -89,11 +85,7 @@
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = FALSE
-	if(bonus_traits)
-		if(islist(bonus_traits))
-			for(var/trait in bonus_traits)
-				REMOVE_TRAIT(owner, trait, REF(src))
-		else
-			REMOVE_TRAIT(owner, bonus_traits, REF(src))
+	if(length(bonus_traits))
+		owner.remove_traits(bonus_traits, REF(src))
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)

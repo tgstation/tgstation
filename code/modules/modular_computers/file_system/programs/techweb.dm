@@ -89,9 +89,6 @@
 	return data
 
 /datum/computer_file/program/science/ui_act(action, list/params)
-	. = ..()
-	if (.)
-		return
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")

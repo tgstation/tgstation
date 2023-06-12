@@ -307,9 +307,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/internal/brain/brain_target
 	if(human_check)
-		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
+		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
+	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -552,7 +552,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
 			return FALSE
-		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+		if(M.current && HAS_TRAIT(M.current, TRAIT_SUICIDED)) //killing yourself ISN'T glorious.
 			return FALSE
 	return TRUE
 
@@ -589,16 +589,14 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
 	var/approved_targets = list()
-	check_items:
-		for(var/datum/objective_item/possible_item in GLOB.possible_items)
-			if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
-				continue
-			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
-				continue
-			for(var/datum/mind/M in owners)
-				if(M.current.mind.assigned_role.title in possible_item.excludefromjob)
-					continue check_items
-			approved_targets += possible_item
+	for(var/datum/objective_item/possible_item in GLOB.possible_items)
+		if(!possible_item.valid_objective_for(owners, require_owner = FALSE))
+			continue
+		if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
+			continue
+		if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
+			continue
+		approved_targets += possible_item
 	if (length(approved_targets))
 		return set_target(pick(approved_targets))
 	return set_target(null)
@@ -649,26 +647,13 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(istype(I, steal_target))
 				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 					return TRUE
-				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+				else if(targetinfo.check_special_completion(I))//Returns true by default. Items with special checks will return true if the conditions are fulfilled.
 					return TRUE
 
 			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
-
-GLOBAL_LIST_EMPTY(possible_items_special)
-/datum/objective/steal/special //ninjas are so special they get their own subtype good for them
-	name = "steal special"
-
-/datum/objective/steal/special/New()
-	..()
-	if(!GLOB.possible_items_special.len)
-		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
-			new I
-
-/datum/objective/steal/special/find_target(dupe_search_range, list/blacklist)
-	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/capture
 	name = "capture"
@@ -724,6 +709,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/protect_object/proc/set_target(obj/O)
 	protect_target = O
+	RegisterSignal(protect_target, COMSIG_PARENT_QDELETING, PROC_REF(on_objective_qdel))
 	update_explanation_text()
 
 /datum/objective/protect_object/update_explanation_text()
@@ -734,7 +720,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Free objective."
 
 /datum/objective/protect_object/check_completion()
-	return !QDELETED(protect_target)
+	return !isnull(protect_target)
+
+/datum/objective/protect_object/proc/on_objective_qdel()
+	SIGNAL_HANDLER
+	protect_target = null
 
 //Changeling Objectives
 

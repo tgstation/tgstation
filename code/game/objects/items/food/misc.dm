@@ -204,6 +204,7 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
+	block_sound = 'sound/weapons/parry.ogg'
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
@@ -413,7 +414,7 @@
 	tastes = list()
 
 /obj/item/food/pacoca
-	name = "pacoca"
+	name = "paçoca"
 	desc = "A traditional Brazilian treat made of ground peanuts, sugar, and salt compressed into a cylinder."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "pacoca"

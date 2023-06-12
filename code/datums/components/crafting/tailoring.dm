@@ -268,7 +268,7 @@
 	time = 1 SECONDS
 	tool_paths = list(
 		/obj/item/clothing/suit/hooded/chaplain_hoodie,
-		/obj/item/storage/book/bible,
+		/obj/item/book/bible,
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
@@ -302,5 +302,27 @@
 	reqs = list(
 		/obj/item/stack/sticky_tape = 5,
 		/obj/item/pillow = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/sturdy_shako
+	name = "Sturdy Shako"
+	result = /obj/item/clothing/head/hats/hos/shako
+	tool_behaviors = list(TOOL_WELDER, TOOL_KNIFE)
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/clothing/head/hats/hos/cap = 1,
+		/obj/item/stack/sheet/plasteel = 2, //Stout shako for two refined
+		/obj/item/stack/sheet/mineral/gold = 2,
+	)
+
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/paper_hat
+	name = "Paper Hat"
+	result = /obj/item/clothing/head/costume/paper_hat
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/paper = 1,
 	)
 	category = CAT_CLOTHING

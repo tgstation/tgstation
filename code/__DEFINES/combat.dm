@@ -328,3 +328,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BATON_ATTACK_DONE 2
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
+
+// Defines for combo attack component
+/// LMB Attack
+#define LEFT_ATTACK "Left Attack"
+/// RMB Attack
+#define RIGHT_ATTACK "Right Attack"
+/// Steps for the combo
+#define COMBO_STEPS "steps"
+/// The proc the combo calls
+#define COMBO_PROC "proc"

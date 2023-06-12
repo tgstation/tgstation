@@ -91,7 +91,7 @@
 "T" = (
 /obj/structure/table,
 /obj/item/papercutter,
-/obj/item/paperslip,
+/obj/item/paper/paperslip,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)

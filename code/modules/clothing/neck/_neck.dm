@@ -189,8 +189,8 @@
 	var/heart_strength = span_danger("no")
 	var/lung_strength = span_danger("no")
 
-	var/obj/item/organ/internal/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/internal/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
 		if(istype(heart))
@@ -373,7 +373,7 @@
 	icon_state = "beads"
 	color = "#ffffff"
 	custom_price = PAYCHECK_CREW * 0.2
-	custom_materials = (list(/datum/material/plastic = 500))
+	custom_materials = (list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*5))
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()

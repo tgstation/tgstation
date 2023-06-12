@@ -137,3 +137,58 @@
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
+
+/datum/status_effect/star_mark
+	id = "star_mark"
+	alert_type = /atom/movable/screen/alert/status_effect/star_mark
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	///overlay used to indicate that someone is marked
+	var/mutable_appearance/cosmic_overlay
+	/// icon file for the overlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the overlay
+	var/effect_icon_state = "cosmic_ring"
+	/// Storage for the spell caster
+	var/datum/weakref/spell_caster
+
+/atom/movable/screen/alert/status_effect/star_mark
+	name = "Star Mark"
+	desc = "A ring above your head prevents you from entering cosmic fields or teleporting through cosmic runes..."
+	icon_state = "star_mark"
+
+/datum/status_effect/star_mark/on_creation(mob/living/new_owner, mob/living/new_spell_caster)
+	cosmic_overlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
+	if(new_spell_caster)
+		spell_caster = WEAKREF(new_spell_caster)
+	return ..()
+
+/datum/status_effect/star_mark/Destroy()
+	QDEL_NULL(cosmic_overlay)
+	return ..()
+
+/datum/status_effect/star_mark/on_apply()
+	if(istype(owner, /mob/living/basic/star_gazer))
+		return FALSE
+	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
+	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(spell_caster_resolved && monster)
+		if(monster.master?.current == spell_caster_resolved)
+			return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
+	return TRUE
+
+/// Updates the overlay of the owner
+/datum/status_effect/star_mark/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays += cosmic_overlay
+
+/datum/status_effect/star_mark/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
+	return ..()
+
+/datum/status_effect/star_mark/extended
+	duration = 3 MINUTES

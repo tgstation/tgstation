@@ -14,7 +14,6 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-
 	dog_fashion = /datum/dog_fashion/head/helmet
 
 /datum/armor/head_helmet
@@ -29,7 +28,7 @@
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/sec
 
@@ -480,7 +479,7 @@
 /obj/item/clothing/head/helmet/rus_helmet/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/helmet)
+	create_storage(storage_type = /datum/storage/pockets/helmet)
 
 /obj/item/clothing/head/helmet/rus_ushanka
 	name = "battle ushanka"

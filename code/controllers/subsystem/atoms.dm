@@ -1,8 +1,3 @@
-#define BAD_INIT_QDEL_BEFORE 1
-#define BAD_INIT_DIDNT_INIT 2
-#define BAD_INIT_SLEPT 4
-#define BAD_INIT_NO_HINT 8
-
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = INIT_ORDER_ATOMS
@@ -39,14 +34,6 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_REGULAR
 
 	return SS_INIT_SUCCESS
-
-#ifdef PROFILE_MAPLOAD_INIT_ATOM
-#define PROFILE_INIT_ATOM_BEGIN(...) var/__profile_stat_time = TICK_USAGE
-#define PROFILE_INIT_ATOM_END(atom) mapload_init_times[##atom.type] += TICK_USAGE_TO_MS(__profile_stat_time)
-#else
-#define PROFILE_INIT_ATOM_BEGIN(...)
-#define PROFILE_INIT_ATOM_END(...)
-#endif
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return)
 	if(initialized == INITIALIZATION_INSSATOMS)
@@ -190,6 +177,10 @@ SUBSYSTEM_DEF(atoms)
 	initialized_changed -= 1
 	if(!initialized_changed)
 		initialized = old_initialized
+
+/// Returns TRUE if anything is currently being initialized
+/datum/controller/subsystem/atoms/proc/initializing_something()
+	return initialized_changed > 0
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized

@@ -64,8 +64,6 @@
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += span_warning("It's on fire!")
 	. += generate_integrity_message()
 
 /// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.

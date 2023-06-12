@@ -255,3 +255,5 @@
 
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null
+
+#undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT

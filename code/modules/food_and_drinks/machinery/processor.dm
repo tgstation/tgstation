@@ -7,7 +7,9 @@
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
+	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items
@@ -45,8 +47,8 @@
 	. = ..()
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		rating_amount = matter_bin.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		rating_speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rating_speed = servo.tier
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()
@@ -87,7 +89,7 @@
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item) || default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/storage/bag/tray))
@@ -151,16 +153,16 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
-	sleep(total_time / rating_speed)
+
+	var/duration = (total_time / rating_speed)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 2, 2, duration, max(duration*0.02, 0.01)) //initial values work out to duration 4 seconds, interval 0.8
+	sleep(duration)
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
 		if (!recipe)
 			log_admin("DEBUG: [content_item] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(recipe, content_item)
-	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
@@ -207,12 +209,11 @@
 		return
 	var/mob/living/simple_animal/slime/picked_slime
 	for(var/mob/living/simple_animal/slime/slime in range(1,src))
-		if(slime.loc == src)
+		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
-		if(isslime(slime))
-			if(slime.stat)
-				picked_slime = slime
-				break
+		if(slime.stat)
+			picked_slime = slime
+			break
 	if(!picked_slime)
 		return
 	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(picked_slime)

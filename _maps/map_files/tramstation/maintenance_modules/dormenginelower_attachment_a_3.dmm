@@ -35,7 +35,7 @@
 /area/station/asteroid)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/gloves,
 /obj/effect/spawner/random/clothing/gloves,
@@ -87,7 +87,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/structure/closet/cardboard{
 	name = "surplus clothing"
 	},

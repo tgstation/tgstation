@@ -36,6 +36,10 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
 ///Should we not update our movables dir on move?
 #define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<3)
+///Should we consider the loop to be dragging movables rather than making them walk? e.g. footsteps won't play if enabled
+#define MOVEMENT_LOOP_DRAGGING (1<<4)
+///Added to the move packet `processing_move_loop_flags` so we know when a loop is behind movement even in absence of other flags
+#define MOVED_BY_MOVEMENT_LOOP (1<<5)
 
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1
@@ -109,6 +113,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_MAGIC "magic"
 /// Cult teleportation, does whatever it wants (unless there's holiness)
 #define TELEPORT_CHANNEL_CULT "cult"
+/// Eigenstate teleportation, can do most things (that aren't in a teleport-prevented zone)
+#define TELEPORT_CHANNEL_EIGENSTATE "eigenstate"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
 

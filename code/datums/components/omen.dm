@@ -2,7 +2,7 @@
  * omen.dm: For when you want someone to have a really bad day
  *
  * When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
- * or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.
+ * or hitting your head really hard when you slip and fall, or you get shocked by the tram rails at an unfortunate moment.
  *
  * Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.
  */
@@ -17,11 +17,19 @@
 	/// Base damage from negative events. Cursed take 25% less damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(vessel)
+/datum/component/omen/Initialize(obj/vessel, permanent, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.vessel = vessel
+	if(istype(vessel))
+		src.vessel = vessel
+		RegisterSignal(vessel, COMSIG_PARENT_QDELETING, PROC_REF(vessel_qdeleting))
+	if(!isnull(permanent))
+		src.permanent = permanent
+	if(!isnull(luck_mod))
+		src.luck_mod = luck_mod
+	if(!isnull(damage_mod))
+		src.damage_mod = damage_mod
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
@@ -29,6 +37,8 @@
 
 	if(vessel)
 		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
+		UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+		vessel.burn()
 		vessel = null
 
 	return ..()
@@ -53,23 +63,31 @@
 
 	if(!isliving(our_guy))
 		return
-	var/mob/living/living_guy = our_guy
 
+	var/mob/living/living_guy = our_guy
 	if(!prob(15 * luck_mod))
 		return
 
 	var/our_guy_pos = get_turf(living_guy)
-	for(var/turf_content in our_guy_pos)
-		if(istype(turf_content, /obj/machinery/door/airlock))
-			to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
-			var/obj/machinery/door/airlock/darth_airlock = turf_content
-			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
-			INVOKE_ASYNC(darth_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE)
-			if(!permanent && !prob(66.6))
+	for(var/obj/machinery/door/airlock/darth_airlock in our_guy_pos)
+		if(darth_airlock.locked || !darth_airlock.hasPower())
+			continue
+
+		to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
+		living_guy.Paralyze(1 SECONDS, ignore_canstun = TRUE)
+		INVOKE_ASYNC(src, PROC_REF(slam_airlock), darth_airlock)
+		return
+
+	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
+		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
+		if(future_tram_victim.toast(living_guy))
+			if(!permanent)
 				qdel(src)
 			return
 
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
+		if(istype(the_turf, /turf/open/floor/glass/reinforced/tram)) // don't fall off the tram bridge, we want to hit you instead
+			return
 		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
@@ -78,12 +96,18 @@
 			return
 
 		for(var/obj/machinery/vending/darth_vendor in the_turf)
-			if(darth_vendor.tiltable)
-				to_chat(living_guy, span_warning("A malevolent force tugs at the [darth_vendor]..."))
-				INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), living_guy)
-				if(!permanent)
-					qdel(src)
-				return
+			if(!darth_vendor.tiltable || darth_vendor.tilted)
+				continue
+			to_chat(living_guy, span_warning("A malevolent force tugs at the [darth_vendor]..."))
+			INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), living_guy)
+			if(!permanent)
+				qdel(src)
+			return
+
+/datum/component/omen/proc/slam_airlock(obj/machinery/door/airlock/darth_airlock)
+	. = darth_airlock.close(force_crush = TRUE)
+	if(. && !permanent && !prob(66.6))
+		qdel(src)
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
@@ -99,7 +123,7 @@
 			return
 		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		the_head.receive_damage(75 * damage_mod)
+		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
 		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
 		if(!permanent)
 			qdel(src)
@@ -110,7 +134,10 @@
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
 	SIGNAL_HANDLER
 
-	if (!("blessing" in our_guy.mob_mood.mood_events))
+	if(permanent)
+		return
+
+	if(!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
@@ -118,6 +145,9 @@
 /// Severe deaths. Normally lifts the curse.
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
+
+	if(permanent)
+		return
 
 	qdel(src)
 
@@ -128,20 +158,17 @@
 	for(var/mob/witness in view(2, our_guy))
 		shake_camera(witness, 1 SECONDS, 2)
 
+/// Vessel got deleted, set it to null
+/datum/component/omen/proc/vessel_qdeleting(atom/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(vessel, COMSIG_PARENT_QDELETING)
+	vessel = null
+
 /**
  * The smite omen. Permanent.
  */
 /datum/component/omen/smite
-
-/datum/component/omen/smite/Initialize(vessel, permanent)
-	. = ..()
-	src.permanent = permanent
-
-/datum/component/omen/smite/check_bless(mob/living/our_guy, category)
-	if(!permanent)
-		return ..()
-
-	return
 
 /datum/component/omen/smite/check_death(mob/living/our_guy)
 	if(!permanent)
@@ -184,3 +211,22 @@
 	player.spawn_gibs()
 
 	return
+
+/**
+ * The bible omen.
+ * While it lasts, parent gets a cursed aura filter.
+ */
+/datum/component/omen/bible
+
+/datum/component/omen/bible/RegisterWithParent()
+	. = ..()
+	var/mob/living/living_parent = parent
+	living_parent.add_filter("omen", 2, list("type" = "drop_shadow", "color" = COLOR_DARK_RED, "alpha" = 0, "size" = 2))
+	var/filter = living_parent.get_filter("omen")
+	animate(filter, alpha = 255, time = 2 SECONDS, loop = -1)
+	animate(alpha = 0, time = 2 SECONDS)
+
+/datum/component/omen/bible/UnregisterFromParent()
+	. = ..()
+	var/mob/living/living_parent = parent
+	living_parent.remove_filter("omen")

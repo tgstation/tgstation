@@ -65,6 +65,8 @@
 	var/invocation
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
 	var/invocation_self_message
+	/// if true, doesn't garble the invocation sometimes with backticks
+	var/garbled_invocation_prob = 50
 	/// What type of invocation the spell is.
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
@@ -190,7 +192,7 @@
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
+			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
@@ -321,28 +323,35 @@
 	if(!owner)
 		return
 
-	if(invocation_type != INVOCATION_NONE)
-		invocation()
+	///even INVOCATION_NONE should go through this because the signal might change that
+	invocation()
 	if(sound)
 		playsound(get_turf(owner), sound, 50, TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()
-	switch(invocation_type)
+	//lists can be sent by reference, a string would be sent by value
+	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation_prob)
+	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
+	var/used_invocation_message = invocation_list[INVOCATION_MESSAGE]
+	var/used_invocation_type = invocation_list[INVOCATION_TYPE]
+	var/used_invocation_garble_prob = invocation_list[INVOCATION_GARBLE_PROB]
+
+	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
-			if(prob(50))
-				owner.say(invocation, forced = "spell ([src])")
+			if(prob(used_invocation_garble_prob))
+				owner.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.say(replacetext(invocation," ","`"), forced = "spell ([src])")
+				owner.say(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
-			if(prob(50))
-				owner.whisper(invocation, forced = "spell ([src])")
+			if(prob(used_invocation_garble_prob))
+				owner.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.whisper(replacetext(invocation," ","`"), forced = "spell ([src])")
+				owner.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			owner.visible_message(invocation, invocation_self_message)
+			owner.visible_message(used_invocation_message, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)
@@ -359,6 +368,12 @@
 		return FALSE
 
 	var/mob/living/living_owner = owner
+	var/invoke_sig_return = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
+	if(invoke_sig_return & SPELL_INVOCATION_ALWAYS_SUCCEED)
+		return TRUE // skips all of the following checks
+	if(invoke_sig_return & SPELL_INVOCATION_FAIL)
+		return FALSE
+
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
 			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))

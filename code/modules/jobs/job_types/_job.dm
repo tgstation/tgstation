@@ -130,31 +130,23 @@
 
 /datum/job/New()
 	. = ..()
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!job_changes[title])
-		return TRUE
-
-	var/list/job_positions_edits = job_changes[title]
-	if(!job_positions_edits)
-		return TRUE
-
-	if(isnum(job_positions_edits["spawn_positions"]))
-		spawn_positions = job_positions_edits["spawn_positions"]
-	if(isnum(job_positions_edits["total_positions"]))
-		total_positions = job_positions_edits["total_positions"]
-
+	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
+	if(isnum(new_spawn_positions))
+		spawn_positions = new_spawn_positions
+	var/new_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
+	if(isnum(new_total_positions))
+		total_positions = new_total_positions
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
-	for(var/trait in mind_traits)
-		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
+	if(length(mind_traits))
+		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
-	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		for(var/trait in liver_traits)
-			ADD_TRAIT(liver, trait, JOB_TRAIT)
+	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && length(liver_traits))
+		liver.add_traits(liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
 		return
@@ -248,19 +240,14 @@
  * If they have 0 spawn and total positions in the config, the job is entirely removed from occupations prefs for the round.
  */
 /datum/job/proc/map_check()
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!job_changes[title]) //no edits made
-		return TRUE
-
-	var/list/job_positions_edits = job_changes[title]
-	if(!job_positions_edits)
-		return TRUE
-
 	var/available_roundstart = TRUE
 	var/available_latejoin = TRUE
-	if(!isnull(job_positions_edits["spawn_positions"]) && (job_positions_edits["spawn_positions"] == 0))
+
+	var/edited_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
+	if(!isnull(edited_spawn_positions) && (edited_spawn_positions == 0))
 		available_roundstart = FALSE
-	if(!isnull(job_positions_edits["total_positions"]) && (job_positions_edits["total_positions"] == 0))
+	var/edited_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
+	if(!isnull(edited_total_positions) && (edited_total_positions == 0))
 		available_latejoin = FALSE
 
 	if(!available_roundstart && !available_latejoin) //map config disabled the job
@@ -434,8 +421,7 @@
 		spawn_point.used = TRUE
 		break
 	if(!.)
-		log_world("Couldn't find a round start spawn point for [title]")
-
+		log_mapping("Job [title] ([type]) couldn't find a round start spawn point.")
 
 /// Finds a valid latejoin spawn point, checking for events and special conditions.
 /datum/job/proc/get_latejoin_spawn_point()

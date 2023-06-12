@@ -21,8 +21,8 @@
 	nightshift_allowed = FALSE
 
 /obj/machinery/light/cold
-	bulb_colour = "#deefff"
-	nightshift_light_color = "#deefff"
+	bulb_colour = LIGHT_COLOR_FAINT_BLUE
+	nightshift_light_color = LIGHT_COLOR_FAINT_BLUE
 
 /obj/machinery/light/cold/no_nightlight
 	nightshift_allowed = FALSE

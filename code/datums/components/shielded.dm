@@ -84,7 +84,7 @@
 		lost_wearer(src, wearer)
 
 // Handle recharging, if we want to
-/datum/component/shielded/process(delta_time)
+/datum/component/shielded/process(seconds_per_tick)
 	if(current_charges >= max_charges)
 		STOP_PROCESSING(SSdcs, src)
 		return
@@ -144,7 +144,7 @@
  * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.
  * It then runs the callback in [/datum/component/shielded/var/on_hit_effects] which handles the messages/sparks (so the visuals)
  */
-/datum/component/shielded/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
+/datum/component/shielded/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	SIGNAL_HANDLER
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)

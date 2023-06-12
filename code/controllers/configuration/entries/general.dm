@@ -76,6 +76,9 @@
 /// log prayers
 /datum/config_entry/flag/log_prayer
 
+///Log Music Requests
+/datum/config_entry/flag/log_internet_request
+
 /// log silicons
 /datum/config_entry/flag/log_silicon
 
@@ -154,6 +157,10 @@
 
 /// logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
 /datum/config_entry/flag/log_timers_on_bucket_reset
+
+/// Log human readable versions of json log entries
+/datum/config_entry/flag/log_as_human_readable
+	default = TRUE
 
 /// allows admins with relevant permissions to have their own ooc colour
 /datum/config_entry/flag/allow_admin_ooccolor
@@ -354,6 +361,11 @@
 /datum/config_entry/string/invoke_youtubedl
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
+/datum/config_entry/flag/request_internet_sound
+
+/datum/config_entry/string/request_internet_allowed
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/show_irc_name
 
 /datum/config_entry/flag/no_default_techweb_link
@@ -464,6 +476,15 @@
 
 /datum/config_entry/flag/preference_map_voting
 
+/// Allows players to export their own preferences as a JSON file. Left as a config toggle in case it needs to be turned off due to server-specific needs.
+/datum/config_entry/flag/forbid_preferences_export
+	default = FALSE
+
+/// The number of seconds a player must wait between preference export attempts.
+/datum/config_entry/number/seconds_cooldown_for_preferences_export
+	default = 10
+	min_val = 1
+
 /datum/config_entry/number/client_warn_version
 	default = null
 	min_val = 500
@@ -540,6 +561,10 @@
 
 /datum/config_entry/string/chat_new_game_notifications
 	default = null
+
+/// validate ownership of admin flags for chat commands
+/datum/config_entry/flag/secure_chat_commands
+	default = FALSE
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -640,6 +665,9 @@
 
 /datum/config_entry/flag/cache_assets
 	default = TRUE
+
+/datum/config_entry/flag/save_spritesheets
+	default = FALSE
 
 /datum/config_entry/flag/station_name_in_hub_entry
 	default = FALSE

@@ -90,17 +90,17 @@
 #define HAS_NO_TOXIN 1
 #define HAS_PAINFUL_TOXIN 2
 
-/obj/item/organ/internal/liver/on_life(delta_time, times_fired)
+/obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
 	var/mob/living/carbon/liver_owner = owner
 	. = ..() //perform general on_life()
 
 	if(!istype(liver_owner))
 		return
 	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
-		liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE, liverless=TRUE)
+		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE, liverless=TRUE)
 		return
 
-	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
@@ -108,7 +108,7 @@
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
-				continue 
+				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
@@ -119,21 +119,21 @@
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
+	liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE)
 
 	if(liver_damage)
-		applyOrganDamage(min(liver_damage * delta_time , MAX_TOXIN_LIVER_DAMAGE * delta_time))
+		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
 
-	if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
+	if(provide_pain_message && damage > 10 && SPT_PROB(damage/6, seconds_per_tick)) //the higher the damage the higher the probability
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
 
 
-/obj/item/organ/internal/liver/handle_failing_organs(delta_time)
+/obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
 	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
 	return ..()
 
-/obj/item/organ/internal/liver/organ_failure(delta_time)
+/obj/item/organ/internal/liver/organ_failure(seconds_per_tick)
 	switch(failure_time/LIVER_FAILURE_STAGE_SECONDS)
 		if(1)
 			to_chat(owner, span_userdanger("You feel stabbing pain in your abdomen!"))
@@ -157,30 +157,30 @@
 	switch(failure_time)
 		//After 60 seconds we begin to feel the effects
 		if(1 * LIVER_FAILURE_STAGE_SECONDS to 2 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.2 * delta_time,forced = TRUE)
-			owner.adjust_disgust(0.1 * delta_time)
+			owner.adjustToxLoss(0.2 * seconds_per_tick,forced = TRUE)
+			owner.adjust_disgust(0.1 * seconds_per_tick)
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.adjust_drowsiness(0.5 SECONDS * delta_time)
-			owner.adjust_disgust(0.3 * delta_time)
+			owner.adjustToxLoss(0.4 * seconds_per_tick,forced = TRUE)
+			owner.adjust_drowsiness(0.5 SECONDS * seconds_per_tick)
+			owner.adjust_disgust(0.3 * seconds_per_tick)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
-			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.adjust_drowsiness(1 SECONDS * delta_time)
-			owner.adjust_disgust(0.6 * delta_time)
+			owner.adjustToxLoss(0.6 * seconds_per_tick,forced = TRUE)
+			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * seconds_per_tick)
+			owner.adjust_drowsiness(1 SECONDS * seconds_per_tick)
+			owner.adjust_disgust(0.6 * seconds_per_tick)
 
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				owner.emote("drool")
 
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
-			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.adjust_drowsiness(1.6 SECONDS * delta_time)
-			owner.adjust_disgust(1.2 * delta_time)
+			owner.adjustToxLoss(0.8 * seconds_per_tick,forced = TRUE)
+			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * seconds_per_tick)
+			owner.adjust_drowsiness(1.6 SECONDS * seconds_per_tick)
+			owner.adjust_disgust(1.2 * seconds_per_tick)
 
-			if(DT_PROB(3, delta_time))
+			if(SPT_PROB(3, seconds_per_tick))
 				owner.emote("drool")
 
 /obj/item/organ/internal/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
@@ -188,7 +188,7 @@
 		return
 
 	var/mob/living/carbon/human/humie_owner = owner
-	if(!humie_owner.getorganslot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
+	if(!humie_owner.get_organ_slot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)

@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
-"Yellow" = LIGHT_COLOR_YELLOW,
+"Yellow" = LIGHT_COLOR_DIM_YELLOW,
 "Lime" = LIGHT_COLOR_SLIME_LAMP,
 "Olive" = LIGHT_COLOR_GREEN,
 "Jade" = LIGHT_COLOR_BLUEGREEN,

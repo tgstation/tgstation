@@ -173,7 +173,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cY" = (
@@ -466,10 +466,8 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_y = 23
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 30
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
 	},
@@ -486,10 +484,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -28
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/engine)
 "NX" = (

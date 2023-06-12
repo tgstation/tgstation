@@ -86,8 +86,8 @@
 	var/scar_keyword = "generic"
 	/// If we've already tried scarring while removing (remove_wound can be called twice in a del chain, let's be nice to our code yeah?) TODO: make this cleaner
 	var/already_scarred = FALSE
-	/// If we forced this wound through badmin smite, we won't count it towards the round totals
-	var/from_smite
+	/// The source of how we got the wound, typically a weapon.
+	var/wound_source
 
 	/// What flags apply to this wound
 	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
@@ -110,9 +110,10 @@
  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  * * attack_direction: For bloodsplatters, if relevant
+ * * wound_source: The source of the wound, such as a weapon.
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
 		qdel(src)
 		return
 
@@ -128,6 +129,12 @@
 		if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
 			qdel(src)
 			return
+
+	if(isitem(wound_source))
+		var/obj/item/wound_item = wound_source
+		src.wound_source = wound_item.name
+	else
+		src.wound_source = wound_source
 
 	set_victim(L.owner)
 	set_limb(L)
@@ -221,7 +228,7 @@
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction)
+	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
 	. = new_wound
 	qdel(src)
 
@@ -241,12 +248,10 @@
 	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
-		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, REF(src))
-		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb)
 		if(disabling)
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -257,11 +262,9 @@
 	disabling = new_value
 	if(disabling)
 		if(!. && limb) //Gained disabling.
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	else if(. && limb) //Lost disabling.
-		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+		limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
@@ -348,7 +351,7 @@
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process(delta_time, times_fired)
+/datum/wound/proc/handle_process(seconds_per_tick, times_fired)
 	return
 
 /// For use in do_after callback checks
@@ -370,7 +373,7 @@
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
-/datum/wound/proc/on_stasis(delta_time, times_fired)
+/datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
 	return
 
 /// Sets our blood flow
@@ -398,7 +401,7 @@
 /**
  * get_bleed_rate_of_change() is used in [/mob/living/carbon/proc/bleed_warn] to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time
  *
- * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin)
+ * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin/nitrous oxide)
  */
 /datum/wound/proc/get_bleed_rate_of_change()
 	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))

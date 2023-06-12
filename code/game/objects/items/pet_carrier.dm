@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()

@@ -2,7 +2,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	desc_controls = "Left click to stun, right click to harm."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -27,6 +27,8 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
+	/// Chance of causing force_say() when stunning a human mob
+	var/force_say_chance = 33
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// The path of the default sound to play when we stun something.
@@ -62,7 +64,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
+		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -125,7 +127,7 @@
 
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON) && (user.mind && !HAS_TRAIT(user.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
@@ -197,6 +199,10 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			if(prob(force_say_chance))
+				human_target.force_say()
 		target.apply_damage(stamina_damage, STAMINA)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
@@ -264,13 +270,17 @@
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
+		//straight up always force say for clumsy humans
+		if(ishuman(user))
+			var/mob/living/carbon/human/human_user = user
+			human_user.force_say()
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	if(stun_animation)
@@ -287,6 +297,7 @@
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -324,7 +335,7 @@
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/internal/brain/our_brain = human_user.get_organ_by_type(/obj/item/organ/internal/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
@@ -337,7 +348,7 @@
 	if (QDELETED(human_user))
 		return
 	if(!QDELETED(our_brain))
-		human_user.internal_organs -= our_brain
+		human_user.organs -= our_brain
 		qdel(our_brain)
 	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 	return BRUTELOSS
@@ -360,7 +371,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -370,6 +381,7 @@
 	item_flags = NONE
 	force = 5
 	cooldown = 2.5 SECONDS
+	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
@@ -384,24 +396,23 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
-	target.adjust_stutter(40 SECONDS)
+	target.set_stutter_if_lower(40 SECONDS)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
-
 	force = 10
 	wound_bonus = 0
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
-
 	armor_type = /datum/armor/baton_security
-
 	throwforce = 7
+	force_say_chance = 50
 	stamina_damage = 60
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
@@ -409,7 +420,6 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
-
 	context_living_rmb_active = "Harmful Stun"
 
 	var/throw_stun_chance = 35
@@ -644,6 +654,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -657,24 +668,44 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
+	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
+	var/can_upgrade = TRUE
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(!istype(item, /obj/item/stack/ore/bluespace_crystal))
+/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+	if(!istype(item, /obj/item/stack))
 		return ..()
-	if(!cell)
-		var/obj/item/stack/ore/bluespace_crystal/crystal = item
-		var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
-		remove_item_from_storage(user)
-		qdel(src)
-		crystal.use(1)
-		user.put_in_hands(prod)
-		to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
-	else
+
+	if(!can_upgrade)
+		user.visible_message(span_warning("This prod is already improved!"))
+		return ..()
+
+	if(cell)
 		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
+		return ..()
+
+	var/our_prod
+	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/our_crystal = item
+		our_crystal.use(1)
+		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
+
+	else if(istype(item, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = item
+		our_crystal.use(1)
+		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
+	else
+		to_chat(user, span_notice("You don't think the [item.name] will do anything to improve the [src]."))
+		return ..()
+
+	to_chat(user, span_notice("You place the [item.name] firmly into the igniter."))
+	remove_item_from_storage(user)
+	qdel(src)
+	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
+	user.put_in_hands(brand_new_prod)
 
 /obj/item/melee/baton/security/cattleprod/baton_effect()
 	if(!sparkler.activate())
@@ -690,6 +721,7 @@
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5
@@ -698,7 +730,7 @@
 	cell_hit_cost = 2000
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
@@ -722,6 +754,7 @@
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
+	can_upgrade = FALSE
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -734,3 +767,31 @@
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
 	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod
+	name = "snatcherprod"
+	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "telecrystalprod"
+	inhand_icon_state = "telecrystalprod"
+	slot_flags = null
+	throw_stun_chance = 50 //I think it'd be funny
+	can_upgrade = FALSE
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/stuff_in_hand = target.get_active_held_item()
+	if(stuff_in_hand && target.temporarilyRemoveItemFromInventory(stuff_in_hand))
+		if(user.put_in_inactive_hand(stuff_in_hand))
+			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+		else
+			stuff_in_hand.forceMove(user.drop_location())
+			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))

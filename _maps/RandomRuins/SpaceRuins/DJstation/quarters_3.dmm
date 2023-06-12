@@ -60,7 +60,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/djstation)
 "v" = (
-/obj/structure/window/plasma,
+/obj/structure/window/plasma/spawner/directional/south,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_y = 4
@@ -117,7 +117,7 @@
 /turf/open/floor/carpet/purple,
 /area/ruin/space/djstation)
 "N" = (
-/obj/structure/window/plasma,
+/obj/structure/window/plasma/spawner/directional/south,
 /obj/structure/table/wood,
 /obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/carpet/purple,

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart"
 	base_icon_state = "foamdart"
-	custom_materials = list(/datum/material/iron = 11.25)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1125)
 	harmful = FALSE
 	var/modified = FALSE
 
@@ -39,7 +39,6 @@
 					return
 				FD.pen = A
 				FD.damage = 5
-				FD.nodamage = FALSE
 				to_chat(user, span_notice("You insert [A] into [src]."))
 			else
 				to_chat(user, span_warning("There's already something in [src]."))
@@ -52,7 +51,6 @@
 	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
-		FD.nodamage = initial(FD.nodamage)
 		user.put_in_hands(FD.pen)
 		to_chat(user, span_notice("You remove [FD.pen] from [src]."))
 		FD.pen = null
@@ -63,4 +61,4 @@
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
-	custom_materials = list(/datum/material/iron = 1125)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)

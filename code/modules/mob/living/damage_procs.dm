@@ -14,7 +14,7 @@
  *
  * Returns TRUE if damage applied
  */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -33,6 +33,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
 	return TRUE
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
@@ -185,12 +186,12 @@
 	if(!forced)
 		if(status_flags & GODMODE)
 			return
-			
-		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
 				return
-		else 
+		else
 			if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
 				return
 	. = oxyloss
@@ -203,12 +204,12 @@
 	if(!forced)
 		if(status_flags & GODMODE)
 			return
-		
-		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))
 				return
-		else 
+		else
 			if(!(affected_lungs.respiration_type & required_respiration_type))
 				return
 	. = oxyloss
@@ -284,7 +285,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organtype)
 	return
 
-/mob/living/proc/getOrganLoss(slot)
+/mob/living/proc/get_organ_loss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()
@@ -297,7 +298,7 @@
 		return
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
@@ -305,7 +306,7 @@
 		return FALSE
 	staminaloss = amount
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

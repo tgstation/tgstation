@@ -18,10 +18,13 @@
 	if(isturf(target))
 		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, PROC_REF(turf_gravity_check))
 
+	ADD_TRAIT(target, TRAIT_FORCED_GRAVITY, REF(src))
+
 /datum/element/forced_gravity/Detach(datum/source)
 	. = ..()
 	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY)
 	UnregisterSignal(source, signals_b_gone)
+	REMOVE_TRAIT(source, TRAIT_FORCED_GRAVITY, REF(src))
 
 /datum/element/forced_gravity/proc/gravity_check(datum/source, turf/location, list/gravs)
 	SIGNAL_HANDLER

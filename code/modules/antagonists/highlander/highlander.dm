@@ -6,25 +6,25 @@
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
 	count_against_dynamic_roll_chance = FALSE
+	/// Traits we apply/remove to our target on-demand.
+	var/static/list/applicable_traits = list(
+		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_NOGUNS,
+		TRAIT_SHOCKIMMUNE,
+	)
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
-	ADD_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
+	var/mob/living/subject = owner.current || mob_override
+	subject.add_traits(applicable_traits, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	REMOVE_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
-	REMOVE_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
-	if(L.has_quirk(/datum/quirk/nonviolent))
-		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
+	var/mob/living/subject = owner.current || mob_override
+	subject.remove_traits(applicable_traits, HIGHLANDER_TRAIT)
+	if(subject.has_quirk(/datum/quirk/nonviolent))
+		ADD_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/forge_objectives()
 	var/datum/objective/steal/steal_objective = new

@@ -75,8 +75,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 				seen[T]++
 		for(var/turf/T in seen)
 			T.maptext = MAPTEXT(seen[T])
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 #ifdef TESTING
 GLOBAL_LIST_EMPTY(dirty_vars)
@@ -133,7 +132,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Report") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/intercom_view()
 	set category = "Mapping"
@@ -150,7 +149,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
 				for(var/turf/turf in view(7,intercom.loc))
 					new /obj/effect/abstract/marker/intercom(turf)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/show_map_reports()
 	set category = "Mapping"
@@ -179,7 +178,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	usr << browse(dat, "window=at_list")
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/cmd_show_at_markers()
 	set category = "Mapping"
@@ -208,14 +207,14 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		return
 	remove_verb(src, /client/proc/enable_mapping_verbs)
 	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/disable_mapping_verbs()
 	set category = "Debug"
 	set name = "Mapping verbs - Disable"
 	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
 	add_verb(src, /client/proc/enable_mapping_verbs)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
@@ -254,7 +253,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					atom_list += A
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
 	set category = "Mapping"
@@ -274,7 +273,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			count++
 
 	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 
 //This proc is intended to detect lag problems relating to communication procs
@@ -430,7 +429,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 	var/list/results = list()
 

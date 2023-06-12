@@ -69,18 +69,18 @@
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	if (!.)
+	if(!.)
 		return
 	if (inert)
-		to_chat(owner, span_notice("[src] breaks down as you try to insert it."))
+		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
 		qdel(src)
 		return FALSE
 	if (!decay_timer)
 		return TRUE
 	preserve(TRUE)
-	owner.visible_message(span_notice("[src] stabilizes as it's inserted."))
+	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
 /obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special = 0)

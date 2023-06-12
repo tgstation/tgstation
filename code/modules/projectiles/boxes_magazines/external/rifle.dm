@@ -8,7 +8,7 @@
 
 /obj/item/ammo_box/magazine/m10mm/rifle/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]-[ammo_count() ? "8" : "0"]"
+	icon_state = "[base_icon_state]-[LAZYLEN(stored_ammo) ? "full" : "empty"]"
 
 /obj/item/ammo_box/magazine/m556
 	name = "toploader magazine (5.56mm)"

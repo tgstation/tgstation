@@ -241,6 +241,9 @@
 		/obj/item/mod/module/jetpack/advanced,
 	)
 
+/obj/item/mod/control/pre_equipped/nuclear/unrestricted
+	req_access = null
+
 /obj/item/mod/control/pre_equipped/elite
 	theme = /datum/mod_theme/elite
 	applied_cell = /obj/item/stock_parts/cell/bluespace
@@ -418,6 +421,16 @@
 		/obj/item/mod/module/jetpack,
 	)
 	default_pins = list(
+		/obj/item/mod/module/jetpack,
+	)
+
+/obj/item/mod/control/pre_equipped/apocryphal/officer
+	applied_modules = list(
+		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 	)
 

@@ -1,11 +1,3 @@
-
-#define PUNISHMENT_MURDER "murder"
-#define PUNISHMENT_GIB "gib"
-#define PUNISHMENT_TELEPORT "teleport"
-
-//very similar to stationloving, but more made for mobs and not objects. used on derelict drones currently
-
-
 /*
 This component is similar to stationloving in that it is meant to keep something on the z-level
 The difference is that stationloving is for objects and stationstuck is for mobs.

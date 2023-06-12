@@ -103,3 +103,11 @@
 	unit_name = "ebony die"
 	export_types = list(/obj/item/dice/d6/ebony)
 
+/datum/export/gear/rare_lighter
+	cost = CARGO_CRATE_VALUE * 4
+	unit_name = "novelty lighter"
+	export_types = list(
+		/obj/item/lighter/skull,
+		/obj/item/lighter/mime,
+		/obj/item/lighter/bright,
+	)

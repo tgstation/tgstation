@@ -6,6 +6,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
@@ -127,6 +128,9 @@
 			var/obj/vehicle/sealed/mecha/mecha = AM
 			for(var/O in mecha.occupants)
 				var/mob/living/occupant = O
+				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+					open()
+					return
 				if(allowed(occupant))
 					open_and_close()
 					return
@@ -142,14 +146,20 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if(operating || !density)
 		return
+
 	add_fingerprint(user)
 	if(!requiresID())
 		user = null
 
-	if(allowed(user))
+	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+		open()
+
+	else if(allowed(user))
 		open_and_close()
+
 	else
 		do_animate("deny")
+
 	return
 
 /obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
@@ -162,10 +172,10 @@
 
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/moved_window = mover
-		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+		return valid_build_direction(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
 
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
-		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
+		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
 
 	return TRUE
 
@@ -194,17 +204,19 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced=FALSE)
-	if (operating) //doors can still open when emag-disabled
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
+	if(!density)
+		return TRUE
+
+	if(operating) //doors can still open when emag-disabled
+		return FALSE
+
+	if(!try_to_force_door_open(forced))
+		return FALSE
+
 	if(!operating) //in case of emag
 		operating = TRUE
+
 	do_animate("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
@@ -215,17 +227,38 @@
 
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
 
-/obj/machinery/door/window/close(forced=FALSE)
-	if (operating)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(obj_flags & EMAGGED)
-			return 0
+	return TRUE
+
+/// Additional checks depending on what we want to happen to this windoor
+/obj/machinery/door/window/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
+	switch(force_type)
+		if(DEFAULT_DOOR_CHECKS)
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
+
+		if(FORCING_DOOR_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(BYPASS_DOOR_CHECKS) // Get it open!
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument '[force_type]' passed to open() on this airlock.")
+
+	// Shit's fucked, let's just check parent real fast.
+	return ..()
+
+/obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density)
+		return TRUE
+
+	if(operating || !try_to_force_door_shut(forced))
+		return FALSE
+
 	operating = TRUE
 	do_animate("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
@@ -237,7 +270,28 @@
 	sleep(1 SECONDS)
 
 	operating = FALSE
-	return 1
+	return TRUE
+
+/obj/machinery/door/window/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
+	switch(force_type)
+		if(DEFAULT_DOOR_CHECKS)
+			if(!hasPower() || (obj_flags & EMAGGED))
+				return FALSE
+			return TRUE
+
+		if(FORCING_DOOR_CHECKS)
+			if(obj_flags & EMAGGED)
+				return FALSE
+			return TRUE
+
+		if(BYPASS_DOOR_CHECKS) // Get it shut!
+			return TRUE
+
+		else
+			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
+
+	// If we got here, shit's fucked, but let's presume parent can bail us out somehow.
+	return ..()
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -279,7 +333,7 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(0.6 SECONDS)
 		operating = FALSE
-		open(2)
+		open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
@@ -364,9 +418,9 @@
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
 	if(!hasPower() || forced)
 		if(density)
-			open(2)
+			open(BYPASS_DOOR_CHECKS)
 		else
-			close(2)
+			close(BYPASS_DOOR_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 
@@ -392,7 +446,6 @@
 			qdel(src)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

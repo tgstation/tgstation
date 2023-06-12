@@ -224,12 +224,13 @@
 		take_damage(2)
 
 /obj/structure/displaycase_chassis
-	anchored = TRUE
-	density = FALSE
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
+	resistance_flags = FLAMMABLE
+	anchored = TRUE
+	density = FALSE
 	var/obj/item/electronics/airlock/electronics
 
 

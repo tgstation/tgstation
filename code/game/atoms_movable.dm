@@ -73,8 +73,8 @@
 	///is the mob currently ascending or descending through z levels?
 	var/currently_z_moving
 
-	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
-	var/blocks_emissive = FALSE
+	/// Either [EMISSIVE_BLOCK_NONE], [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = EMISSIVE_BLOCK_NONE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/render_step/emissive_blocker/em_block
 
@@ -93,6 +93,12 @@
 	var/contents_thermal_insulation = 0
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
+
+	/// The voice that this movable makes when speaking
+	var/voice
+
+	/// The filter to apply to the voice when processing the TTS audio message.
+	var/voice_filter = ""
 
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
@@ -114,30 +120,21 @@
 		stack_trace("[type] blocks explosives, but does not have the managing element applied")
 #endif
 
-	switch(blocks_emissive)
-		if(EMISSIVE_BLOCK_GENERIC)
-			var/static/mutable_appearance/emissive_blocker/blocker = new()
-			blocker.icon = icon
-			blocker.icon_state = icon_state
-			blocker.dir = dir
-			blocker.appearance_flags |= appearance_flags
-			blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
-			// Ok so this is really cursed, but I want to set with this blocker cheaply while
-			// Still allowing it to be removed from the overlays list later
-			// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
-			// I'm sorry
-			var/mutable_appearance/flat = blocker.appearance
-			overlays += flat
-			if(managed_overlays)
-				if(islist(managed_overlays))
-					managed_overlays += flat
-				else
-					managed_overlays = list(managed_overlays, flat)
-			else
-				managed_overlays = flat
-		if(EMISSIVE_BLOCK_UNIQUE)
+#if EMISSIVE_BLOCK_GENERIC != 0
+	#error EMISSIVE_BLOCK_GENERIC is expected to be 0 to faciliate a weird optimization hack where we rely on it being the most common.
+	#error Read the comment in code/game/atoms_movable.dm for details.
+#endif
+
+	// This one is incredible.
+	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
+	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
+	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
+	// This saves several hundred milliseconds of init time.
+	if (blocks_emissive)
+		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(src, render_target)
+			em_block = new(null, src)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -146,6 +143,27 @@
 					managed_overlays = list(managed_overlays, em_block)
 			else
 				managed_overlays = em_block
+	else
+		var/static/mutable_appearance/emissive_blocker/blocker = new()
+		blocker.icon = icon
+		blocker.icon_state = icon_state
+		blocker.dir = dir
+		blocker.appearance_flags |= appearance_flags
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
+		// Ok so this is really cursed, but I want to set with this blocker cheaply while
+		// Still allowing it to be removed from the overlays list later
+		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
+		// I'm sorry
+		var/mutable_appearance/flat = blocker.appearance
+		overlays += flat
+		if(managed_overlays)
+			if(islist(managed_overlays))
+				managed_overlays += flat
+			else
+				managed_overlays = list(managed_overlays, flat)
+		else
+			managed_overlays = flat
+
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
@@ -153,6 +171,8 @@
 			AddComponent(/datum/component/overlay_lighting)
 		if(MOVABLE_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
+		if(MOVABLE_LIGHT_BEAM)
+			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
@@ -187,9 +207,9 @@
 		move_packet = null
 
 	if(spatial_grid_key)
-		SSspatial_grid.force_remove_from_cell(src)
+		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -201,7 +221,7 @@
 	//This absolutely must be after moveToNullspace()
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
-	LAZYCLEARLIST(important_recursive_contents)
+	LAZYNULL(important_recursive_contents)
 
 
 	vis_locs = null //clears this atom out of all viscontents
@@ -211,15 +231,24 @@
 		vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
-	if(!blocks_emissive)
-		return
-	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+	// This one is incredible.
+	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
+	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
+	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
+	// This saves several hundred milliseconds of init time.
+	if (blocks_emissive)
+		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+			if(em_block)
+				SET_PLANE(em_block, EMISSIVE_PLANE, src)
+			else if(!QDELETED(src))
+				render_target = ref(src)
+				em_block = new(null, src)
+			return em_block
+		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
+	// EMISSIVE_BLOCK_GENERIC == 0
+	else
 		return fast_emissive_blocker(src)
-	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-		if(!em_block && !QDELETED(src))
-			render_target = ref(src)
-			em_block = new(src, render_target)
-		return em_block
 
 /// Generates a space underlay for a turf
 /// This provides proper lighting support alongside just looking nice
@@ -230,7 +259,7 @@
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
 	if(!generate_for.render_target)
 		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)
@@ -269,10 +298,12 @@
 	underlay_appearance.overlays += turf_mask
 
 /atom/movable/update_overlays()
-	. = ..()
+	var/list/overlays = ..()
 	var/emissive_block = update_emissive_block()
 	if(emissive_block)
-		. += emissive_block
+		// Emissive block should always go at the beginning of the list
+		overlays.Insert(1, emissive_block)
+	return overlays
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -728,7 +759,6 @@
 					pulling.move_from_pull(src, target_turf, glide_size)
 			check_pulling()
 
-
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
 	if(glide_size_override)
@@ -871,7 +901,9 @@
 	var/list/nested_locs = get_nested_locs(src) + src
 	for(var/channel in gone.important_recursive_contents)
 		for(var/atom/movable/location as anything in nested_locs)
+			LAZYINITLIST(location.important_recursive_contents)
 			var/list/recursive_contents = location.important_recursive_contents // blue hedgehog velocity
+			LAZYINITLIST(recursive_contents[channel])
 			recursive_contents[channel] -= gone.important_recursive_contents[channel]
 			switch(channel)
 				if(RECURSIVE_CONTENTS_CLIENT_MOBS, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
@@ -898,6 +930,15 @@
 					if(!length(recursive_contents[channel]))
 						SSspatial_grid.add_grid_awareness(location, channel)
 			recursive_contents[channel] |= arrived.important_recursive_contents[channel]
+
+/**
+ * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
+ * Has no use outside of procs called within the movement proc chain.
+ */
+/atom/movable/proc/check_move_loop_flags(flags)
+	if(!move_packet)
+		return NONE
+	return flags & move_packet.processing_move_loop_flags
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
@@ -979,7 +1020,9 @@
 	SSspatial_grid.remove_grid_membership(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
+		LAZYINITLIST(movable_loc.important_recursive_contents)
 		var/list/recursive_contents = movable_loc.important_recursive_contents // blue hedgehog velocity
+		LAZYINITLIST(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] -= src
 		if(!length(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
@@ -1538,16 +1581,14 @@
 	grab_state = newstate
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
-			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 		if(GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK) // Grab got downgraded.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 			else // Grab got upgraded from a passive one.
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+				pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 		if(GRAB_NECK, GRAB_KILL)
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)

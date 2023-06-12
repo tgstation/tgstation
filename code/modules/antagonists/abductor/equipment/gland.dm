@@ -82,24 +82,27 @@
 	active_mind_control = FALSE
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/gland_owner, special = FALSE)
+	. = ..()
 	active = FALSE
 	if(initial(uses) == 1)
 		uses = initial(uses)
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.remove_atom_from_hud(owner)
+	hud.remove_atom_from_hud(gland_owner)
 	clear_mind_control()
-	..()
 
-/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/gland_owner, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!.)
+		return
+
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.add_atom_to_hud(owner)
+	hud.add_atom_to_hud(gland_owner)
 	update_gland_hud()
 
-/obj/item/organ/internal/heart/gland/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/gland/on_life(seconds_per_tick, times_fired)
 	if(!beating)
 		// alien glands are immune to stopping.
 		beating = TRUE

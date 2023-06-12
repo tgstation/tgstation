@@ -31,4 +31,4 @@
 
 /obj/item/ammo_box/magazine/mm712x82/update_icon_state()
 	. = ..()
-	icon_state = "a762-[round(ammo_count(), 10)]"
+	icon_state = "a762-[min(round(ammo_count(), 10), 50)]" //Min is used to prevent high capacity magazines from attempting to get sprites with larger capacities

@@ -179,25 +179,25 @@
 	return TRUE
 
 /*
-* Deals with lag - allows a reaction to speed up to 3x from delta_time
+* Deals with lag - allows a reaction to speed up to 3x from seconds_per_tick
 * "Charged" time (time_deficit) discharges by incrementing reactions by doubling them
-* If delta_time is greater than 1.5, then we save the extra time for the next ticks
+* If seconds_per_tick is greater than 1.5, then we save the extra time for the next ticks
 *
 * Arguments:
-* * delta_time - the time between the last proc in world.time
+* * seconds_per_tick - the time between the last proc in world.time
 */
-/datum/equilibrium/proc/deal_with_time(delta_time)
-	if(delta_time > 1)
-		time_deficit += delta_time - 1
-		delta_time = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
+/datum/equilibrium/proc/deal_with_time(seconds_per_tick)
+	if(seconds_per_tick > 1)
+		time_deficit += seconds_per_tick - 1
+		seconds_per_tick = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
 	else if (time_deficit)
 		if(time_deficit < 0.25)
-			delta_time += time_deficit
+			seconds_per_tick += time_deficit
 			time_deficit = 0
 		else
-			delta_time += 0.25
+			seconds_per_tick += 0.25
 			time_deficit -= 0.25
-	return delta_time
+	return seconds_per_tick
 
 /*
 * Main method of checking for explosive - or failed states
@@ -239,10 +239,10 @@
 * Then adds/removes reagents
 * Then alters the holder pH and temperature, and calls reaction_step
 * Arguments:
-* * delta_time - the time displacement between the last call and the current, 1 is a standard step
+* * seconds_per_tick - the time displacement between the last call and the current, 1 is a standard step
 * * purity_modifier - how much to modify the step's purity by (0 - 1)
 */
-/datum/equilibrium/proc/react_timestep(delta_time, purity_modifier = 1)
+/datum/equilibrium/proc/react_timestep(seconds_per_tick, purity_modifier = 1)
 	if(to_delete)
 		//This occurs when it explodes
 		return FALSE
@@ -252,7 +252,7 @@
 	if(!calculate_yield())//So that this can detect if we're missing reagents
 		to_delete = TRUE
 		return
-	delta_time = deal_with_time(delta_time)
+	seconds_per_tick = deal_with_time(seconds_per_tick)
 
 	delta_t = 0 //how far off optimal temp we care
 	delta_ph = 0 //How far off the pH we are
@@ -319,7 +319,7 @@
 	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*delta_time//add/remove factor
+	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*seconds_per_tick//add/remove factor
 	var/total_step_added = 0
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
@@ -362,7 +362,7 @@
 	if(GLOB.Debug2) //I want my spans for my sanity
 		message_admins("<span class='green'>Reaction step active for:[reaction.type]</span>")
 		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]</span>")
-		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]</span>")
+		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [seconds_per_tick]</span>")
 	#endif
 
 	//Apply thermal output of reaction to beaker

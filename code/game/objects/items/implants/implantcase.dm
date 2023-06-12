@@ -12,12 +12,24 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	///the implant within the case
 	var/obj/item/implant/imp = null
 	///Type of implant this will spawn as imp upon being spawned
 	var/imp_type
 
+
+/obj/item/implantcase/Initialize(mapload)
+	. = ..()
+	if(imp_type)
+		imp = new imp_type(src)
+	update_appearance()
+	if(imp)
+		reagents = imp.reagents
+
+/obj/item/implantcase/Destroy(force)
+	QDEL_NULL(imp)
+	return ..()
 
 /obj/item/implantcase/update_icon_state()
 	icon_state = "implantcase-[imp ? imp.implant_color : 0]"
@@ -54,14 +66,6 @@
 			used_implanter.update_appearance()
 	else
 		return ..()
-
-/obj/item/implantcase/Initialize(mapload)
-	. = ..()
-	if(imp_type)
-		imp = new imp_type(src)
-	update_appearance()
-	if(imp)
-		reagents = imp.reagents
 
 
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.

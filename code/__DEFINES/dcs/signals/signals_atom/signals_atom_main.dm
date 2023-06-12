@@ -11,7 +11,12 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
-#define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"                    ///from base of atom/examine_more(): (/mob)
+///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
+#define COMSIG_PARENT_REAGENT_EXAMINE "atom_reagent_examine"
+	/// Stop the generic reagent examine text
+	#define STOP_GENERIC_REAGENT_EXAMINE (1<<0)
+///from base of atom/examine_more(): (/mob)
+#define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"
 	//Positions for overrides list
 	#define EXAMINE_POSITION_ARTICLE (1<<0)
 	#define EXAMINE_POSITION_BEFORE (1<<1)
@@ -35,6 +40,8 @@
 	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE UPDATE_ICON_STATE
 	/// If returned from [COMSIG_ATOM_UPDATE_ICON] it prevents the atom from updating its overlays.
 	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS UPDATE_OVERLAYS
+///from base of [atom/update_inhand_icon]: (/mob)
+#define COMSIG_ATOM_UPDATE_INHAND_ICON "atom_update_inhand_icon"
 ///from base of [atom/update_icon_state]: ()
 #define COMSIG_ATOM_UPDATE_ICON_STATE "atom_update_icon_state"
 ///from base of [/atom/update_overlays]: (list/new_overlays)
@@ -69,8 +76,10 @@
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
 #define COMSIG_ATOM_PROCESSED "atom_processed"
-///called when teleporting into a protected turf: (channel, turf/origin)
-#define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
+///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
+#define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
+///called after teleporting into a protected turf: (channel, turf/origin)
+#define COMSIG_ATOM_INTERCEPT_TELEPORTED "intercept_teleported"
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
@@ -95,3 +104,7 @@
 #define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"
 /// from cosmetic items to restyle certain mobs, objects or organs: (atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 #define COMSIG_ATOM_RESTYLE "atom_restyle"
+/// when a timestop ability is used on the atom: (datum/proximity_monitor/advanced/timestop)
+#define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
+/// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
+#define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"

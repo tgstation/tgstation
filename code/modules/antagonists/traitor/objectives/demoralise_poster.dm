@@ -7,6 +7,10 @@
 		do-gooders who try to take it down a hard time!"
 
 	progression_minimum = 0 MINUTES
+	progression_maximum = 30 MINUTES
+	progression_reward = list(4 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(0, 1)
+
 	duplicate_type = /datum/traitor_objective/demoralise/poster
 	/// Have we handed out a box of stuff yet?
 	var/granted_posters = FALSE
@@ -84,7 +88,7 @@
 
 /obj/structure/sign/poster/traitor
 	poster_item_name = "seditious poster"
-	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise NanoTrasen employees."
+	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise Nanotrasen employees."
 	poster_item_icon_state = "rolled_traitor"
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
@@ -118,8 +122,8 @@
 	random_basetype = /obj/structure/sign/poster/traitor
 
 /obj/structure/sign/poster/traitor/small_brain
-	name = "NanoTrasen Neural Statistics"
-	desc = "Statistics on this poster indicate that the brains of NanoTrasen employees are on average 20% smaller than the galactic standard."
+	name = "Nanotrasen Neural Statistics"
+	desc = "Statistics on this poster indicate that the brains of Nanotrasen employees are on average 20% smaller than the galactic standard."
 	icon_state = "traitor_small_brain"
 
 /obj/structure/sign/poster/traitor/lick_supermatter
@@ -144,7 +148,7 @@
 
 /obj/structure/sign/poster/traitor/low_pay
 	name = "All these hours, for what?"
-	desc = "This poster displays a comparison of NanoTrasen standard wages to common luxury items. If this is accurate, it takes upwards of 20,000 hours of work just to buy a simple bicycle."
+	desc = "This poster displays a comparison of Nanotrasen standard wages to common luxury items. If this is accurate, it takes upwards of 20,000 hours of work just to buy a simple bicycle."
 	icon_state = "traitor_cash"
 
 /obj/structure/sign/poster/traitor/look_up

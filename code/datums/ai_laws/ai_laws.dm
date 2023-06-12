@@ -1,5 +1,9 @@
 #define AI_LAWS_ASIMOV "asimov"
 
+/// See [/proc/get_round_default_lawset], do not get directily.
+/// This is the default lawset for silicons.
+GLOBAL_VAR(round_default_lawset)
+
 /**
  * A getter that sets up the round default if it has not been yet.
  *
@@ -9,10 +13,9 @@
  * This requires config, so it is generated at the first request to use this var.
  */
 /proc/get_round_default_lawset()
-	var/static/round_default_lawset
-	if(!round_default_lawset)
-		round_default_lawset = setup_round_default_laws()
-	return  round_default_lawset
+	if(!GLOB.round_default_lawset)
+		GLOB.round_default_lawset = setup_round_default_laws()
+	return GLOB.round_default_lawset
 
 //different settings for configured defaults
 
@@ -467,4 +470,5 @@
 #undef CONFIG_ASIMOV
 #undef CONFIG_CUSTOM
 #undef CONFIG_RANDOM
+#undef CONFIG_SPECIFIED
 #undef CONFIG_WEIGHTED

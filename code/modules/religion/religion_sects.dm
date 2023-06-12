@@ -156,7 +156,7 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
@@ -207,6 +207,14 @@
 	desired_items = list(/obj/item/flashlight/flare/candle = "already lit")
 	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
 	altar_icon_state = "convertaltar-red"
+
+/datum/religion_sect/pyre/on_select()
+	. = ..()
+	AddComponent(/datum/component/sect_nullrod_bonus, list(
+		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+			/datum/religion_rites/blazing_star,
+		),
+	))
 
 //candle sect bibles don't heal or do anything special apart from the standard holy water blessings
 /datum/religion_sect/pyre/sect_bless(mob/living/target, mob/living/chap)

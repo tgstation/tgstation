@@ -391,15 +391,15 @@
 			if(player.stat != DEAD)
 				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player) && filter_by_human) //animals don't count
+				if(isanimal_or_basicmob(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
-					var/location = get_turf(player.mind.current)
+					var/location = get_area(player.mind.current)
 					//Non-antag present. Can't hijack.
-					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /area/shuttle/escape/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
 					var/prevent = FALSE
@@ -567,6 +567,15 @@
 	setTimer(SSshuttle.emergency_escape_time)
 	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
+/obj/docking_port/mobile/monastery
+	name = "monastery pod"
+	shuttle_id = "mining_common" //set so mining can call it down
+	launch_status = UNLAUNCHED //required for it to launch as a pod.
+
+/obj/docking_port/mobile/monastery/on_emergency_dock()
+	if(launch_status == ENDGAME_LAUNCHED)
+		initiate_docking(SSshuttle.getDock("pod_away")) //docks our shuttle as any pod would
+		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
@@ -592,13 +601,14 @@
 	locked = TRUE
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "dorm_available"
+	icon_state = "pod_off"
 	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
+	icon_keyboard = null
+	icon_screen = "pod_on"
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_lock))
 
@@ -608,6 +618,8 @@
 	obj_flags |= EMAGGED
 	locked = FALSE
 	to_chat(user, span_warning("You fry the pod's alert level checking system."))
+	icon_screen = "emagged_general"
+	update_appearance()
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()

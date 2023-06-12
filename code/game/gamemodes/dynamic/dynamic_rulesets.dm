@@ -1,6 +1,3 @@
-#define REVOLUTION_VICTORY 1
-#define STATION_VICTORY 2
-
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	// If you want to change this variable name, the force latejoin/midround rulesets
@@ -99,11 +96,11 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
-	ruletype = "Roundstart"
+	ruletype = ROUNDSTART_RULESET
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
-	ruletype = "Latejoin"
+	ruletype = LATEJOIN_RULESET
 
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead

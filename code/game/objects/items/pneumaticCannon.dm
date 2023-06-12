@@ -2,6 +2,11 @@
 #define PCANNON_FIREALL 1
 #define PCANNON_FILO 2
 #define PCANNON_FIFO 3
+///Defines for the pressure strength of the cannon
+#define LOW_PRESSURE 1
+#define MID_PRESSURE 2
+#define HIGH_PRESSURE 3
+
 /obj/item/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
@@ -20,12 +25,13 @@
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
 	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
-	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
+	var/pressure_setting = LOW_PRESSURE //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
 	var/throw_amount = 1 //How many items to throw per fire
 	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
+	var/needs_air = TRUE
 	var/clumsyCheck = TRUE
 	var/list/allowed_typecache //Leave as null to allow all.
 	var/charge_amount = 1
@@ -62,6 +68,17 @@
 /obj/item/pneumatic_cannon/CanItemAutoclick()
 	return automatic
 
+/obj/item/pneumatic_cannon/proc/pressure_setting_to_text(pressure_setting)
+	switch(pressure_setting)
+		if(LOW_PRESSURE)
+			return "low"
+		if(MID_PRESSURE)
+			return "medium"
+		if(HIGH_PRESSURE)
+			return "high"
+		else
+			CRASH("Invalid pressure setting: [pressure_setting]!")
+
 /obj/item/pneumatic_cannon/examine(mob/user)
 	. = ..()
 	var/list/out = list()
@@ -72,7 +89,9 @@
 		out += span_info("[icon2html(I, user)] It has \a [I] loaded.")
 		CHECK_TICK
 	if(tank)
-		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
+		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
+	if(needs_air == TRUE)
+		. += span_notice("Use a <b>wrench</b> to change the pressure level. Current output level is <b>[pressure_setting_to_text(pressure_setting)]</b>.")
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
@@ -82,21 +101,19 @@
 	return TRUE
 
 /obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
+	if(needs_air == FALSE)
+		return
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
-	switch(pressureSetting)
-		if(1)
-			pressureSetting = 2
-		if(2)
-			pressureSetting = 3
-		if(3)
-			pressureSetting = 1
-	to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
+	pressure_setting = pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : pressure_setting + 1
+	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))
+		if(needs_air == FALSE)
+			return
 		if(!tank)
 			var/obj/item/tank/internals/IT = W
 			if(IT.volume <= 3)
@@ -105,16 +122,6 @@
 			updateTank(W, 0, user)
 	else if(W.type == type)
 		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
-	else if(W.tool_behaviour == TOOL_WRENCH)
-		playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
-		switch(pressureSetting)
-			if(1)
-				pressureSetting = 2
-			if(2)
-				pressureSetting = 3
-			if(3)
-				pressureSetting = 1
-		to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
 	else if(isitem(W))
@@ -178,7 +185,7 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...") )
 		return
-	if(tank && !tank.remove_air(gasPerThrow * pressureSetting))
+	if(tank && !tank.remove_air(gasPerThrow * pressure_setting))
 		to_chat(user, span_warning("\The [src] lets out a weak hiss and doesn't react!"))
 		return
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
@@ -198,7 +205,7 @@
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src, fire_sound, 50, TRUE)
 	fire_items(T, user)
-	if(pressureSetting >= 3 && iscarbon(user))
+	if(pressure_setting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message(span_warning("[C] is thrown down by the force of the cannon!"), span_userdanger("[src] slams into your shoulder, knocking you down!"))
 		C.Paralyze(60)
@@ -230,7 +237,7 @@
 	else
 		loadedWeightClass--
 	AM.forceMove(get_turf(src))
-	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+	AM.throw_at(target, pressure_setting * 10 * range_multiplier, pressure_setting * 2, user, spin_item)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
@@ -309,6 +316,7 @@
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
 	maxWeightClass = 150 //50 pies. :^)
+	needs_air = FALSE
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
@@ -328,3 +336,10 @@
 	charge_type = /obj/item/food/pie/cream/nostun
 	maxWeightClass = 6 //2 pies
 	charge_ticks = 2 //4 second/pie
+
+#undef PCANNON_FIREALL
+#undef PCANNON_FILO
+#undef PCANNON_FIFO
+#undef LOW_PRESSURE
+#undef MID_PRESSURE
+#undef HIGH_PRESSURE

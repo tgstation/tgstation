@@ -23,6 +23,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -37,12 +38,12 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot/android,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/android,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot/android,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
 	examine_limb_id = SPECIES_HUMAN
 

@@ -79,7 +79,12 @@ fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
@@ -155,6 +160,13 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "update_icon_updates_onmob element usage"
+if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS' $code_files; then
+	echo
+	echo -e "${RED}ERROR: update_icon_updates_onmob element automatically updates ITEM_SLOT_HANDS, this is redundant and should be removed.${NC}"
+	st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
@@ -164,6 +176,11 @@ fi;
 if $grep -ni 'nanotransen' $code_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 part "map json naming"
@@ -188,10 +205,18 @@ do
 done
 
 part "updatepaths validity"
-lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
-if [ $lines -gt 0 ]; then
+missing_txt_lines=$(find tools/UpdatePaths/Scripts -type f ! -name "*.txt" | wc -l)
+if [ $missing_txt_lines -gt 0 ]; then
     echo
     echo -e "${RED}ERROR: Found an UpdatePaths File that doesn't end in .txt! Please add the proper file extension!${NC}"
+    st=1
+fi;
+
+number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | wc -l)
+valid_number_prefix_lines=$(find tools/UpdatePaths/Scripts -type f | $grep -P "\d+_(.+)" | wc -l)
+if [ $valid_number_prefix_lines -ne $number_prefix_lines ]; then
+    echo
+    echo -e "${RED}ERROR: Detected an UpdatePaths File that doesn't start with the PR number! Please add the proper number prefix!${NC}"
     st=1
 fi;
 
@@ -205,6 +230,12 @@ fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
 	section "regexes requiring PCRE2"
+	part "empty variable values"
+	if $grep -PU '{\n\t},' $map_files; then
+		echo
+		echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
+		st=1
+	fi;
 	part "to_chat sanity"
 	if $grep -P 'to_chat\((?!.*,).*\)' $code_files; then
 		echo

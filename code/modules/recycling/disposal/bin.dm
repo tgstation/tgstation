@@ -9,7 +9,7 @@
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
-	obj_flags = CAN_BE_HIT | USES_TGUI
+	obj_flags = CAN_BE_HIT
 
 	/// The internal air reservoir of the disposal
 	var/datum/gas_mixture/air_contents
@@ -62,6 +62,7 @@
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
+		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -119,7 +120,7 @@
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
-			if(I.use_tool(src, user, 20, volume=100) && panel_open)
+			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
 				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 				deconstruct()
 			return
@@ -320,11 +321,9 @@
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/T = I
+		var/obj/item/storage/bag/trash/bag = I
 		to_chat(user, span_warning("You empty the bag."))
-		for(var/obj/item/O in T.contents)
-			T.atom_storage.attempt_remove(O,src)
-		T.update_appearance()
+		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
 		return ..()
@@ -440,7 +439,7 @@
 
 //timed process
 //charge the gas reservoir and perform flush if ready
-/obj/machinery/disposal/bin/process(delta_time)
+/obj/machinery/disposal/bin/process(seconds_per_tick)
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -472,7 +471,7 @@
 		return
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	var/transfer_moles = 0.05 * delta_time * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles = 0.05 * seconds_per_tick * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 	//Actually transfer the gas
 	var/datum/gas_mixture/removed = env.remove(transfer_moles)
@@ -563,3 +562,19 @@
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
+	SIGNAL_HANDLER
+	if(!items_to_sweep)
+		return
+	for (var/obj/item/garbage in items_to_sweep)
+		garbage.forceMove(src)
+
+	items_to_sweep.Cut()
+
+	update_appearance()
+	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+
+#undef SEND_PRESSURE

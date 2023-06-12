@@ -116,11 +116,8 @@
 /area/ruin/space/has_grav)
 "aD" = (
 /obj/item/stack/sheet/iron,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "aE" = (
@@ -131,20 +128,14 @@
 /area/ruin/space/has_grav)
 "aF" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aH" = (
@@ -170,26 +161,17 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/has_grav)
 "aM" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aN" = (
 /obj/item/plate,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aO" = (
 /obj/item/chair,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aP" = (
@@ -210,10 +192,7 @@
 /area/ruin/space/has_grav)
 "aT" = (
 /obj/item/kitchen/fork,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aU" = (
@@ -234,10 +213,7 @@
 /area/ruin/space/has_grav)
 "aX" = (
 /obj/item/chair/stool/bar,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "aY" = (
@@ -265,10 +241,7 @@
 /area/ruin/space/has_grav)
 "bd" = (
 /obj/structure/chair/stool/bar/directional/west,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav)
 "bg" = (

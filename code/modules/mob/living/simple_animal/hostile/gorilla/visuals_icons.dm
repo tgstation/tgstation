@@ -1,3 +1,5 @@
+#define GORILLA_HANDS_LAYER 1
+
 /mob/living/simple_animal/hostile/gorilla/proc/apply_overlay(cache_index)
 	. = gorilla_overlays[cache_index]
 	if(.)
@@ -51,3 +53,4 @@
 /mob/living/simple_animal/hostile/gorilla/regenerate_icons()
 	update_held_items()
 
+#undef GORILLA_HANDS_LAYER

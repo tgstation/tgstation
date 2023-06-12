@@ -46,11 +46,11 @@
 
 /datum/chemical_reaction/medicine/oculine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(equilibrium.reacted_vol/10, 10)
+	explode_flash(holder, equilibrium, round(equilibrium.reacted_vol / 10), 10)
 
 /datum/chemical_reaction/medicine/oculine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(3, 30)
+	explode_flash(holder, equilibrium, 3, 30)
 
 
 /datum/chemical_reaction/medicine/inacusiate
@@ -125,6 +125,11 @@
 	results = list(/datum/reagent/medicine/calomel = 2)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/chlorine = 1)
 	required_temp = 374
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/medicine/ammoniated_mercury
+	results = list(/datum/reagent/medicine/ammoniated_mercury = 3)
+	required_reagents = list(/datum/reagent/medicine/calomel = 1, /datum/reagent/ammonia = 2)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/potass_iodide

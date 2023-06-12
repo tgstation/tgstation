@@ -25,7 +25,7 @@
 	fix_brain.success(user, patient)
 
 	TEST_ASSERT(!patient.has_trauma_type(), "Patient kept their brain trauma after brain surgery")
-	TEST_ASSERT(patient.getOrganLoss(ORGAN_SLOT_BRAIN) < 20, "Patient did not heal their brain damage after brain surgery")
+	TEST_ASSERT(patient.get_organ_loss(ORGAN_SLOT_BRAIN) < 20, "Patient did not heal their brain damage after brain surgery")
 
 /datum/unit_test/head_transplant/Run()
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)

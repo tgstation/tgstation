@@ -59,12 +59,12 @@
 	check_audio_state()
 
 	owner.visible_message(span_bolddanger("[owner] tries to speak, but can't! They're choking!"), \
-		span_userdanger("You try to breath, but there's a block! You're choking!"), \
-		)
+		span_userdanger("You try to breathe, but there's a block! You're choking!"), \
+	)
 
 	//barticles
 	if(flaming)
-		ash = new(owner, /particles/smoke/ash)
+		ash = new(owner, /particles/smoke/ash, PARTICLE_ATTACH_MOB)
 		var/clear_in = rand(15 SECONDS, 25 SECONDS)
 		if(duration != -1)
 			clear_in = min(duration, clear_in)
@@ -216,7 +216,7 @@
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		if(chest)
-			chest.force_wound_upwards(/datum/wound/blunt/severe)
+			chest.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "human force to the chest")
 	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
@@ -267,23 +267,23 @@
 		victim.adjustBruteLoss(0.2)
 	return TRUE
 
-/datum/status_effect/choke/tick(delta_time)
+/datum/status_effect/choke/tick(seconds_per_tick)
 	if(!should_do_effects())
 		return
 
-	deal_damage(delta_time)
+	deal_damage(seconds_per_tick)
 
 	var/client/client_owner = owner.client
 	if(client_owner)
 		do_vfx(client_owner)
 
-/datum/status_effect/choke/proc/deal_damage(delta_time)
-	owner.losebreath += 1 * delta_time // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
+/datum/status_effect/choke/proc/deal_damage(seconds_per_tick)
+	owner.losebreath += 1 * seconds_per_tick // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * delta_time)
-		owner.adjustStaminaLoss(2 * delta_time)
+			head.receive_damage(0, 2 * seconds_per_tick, damage_source = "choking")
+		owner.adjustStaminaLoss(2 * seconds_per_tick)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

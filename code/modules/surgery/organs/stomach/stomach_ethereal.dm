@@ -8,25 +8,23 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
-/obj/item/organ/internal/stomach/ethereal/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
-	handle_charge(owner, delta_time, times_fired)
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR * seconds_per_tick)
+	handle_charge(owner, seconds_per_tick, times_fired)
 
-/obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
 	. = ..()
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
+	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
-/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
-	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-
-	owner.clear_mood_event("charge")
-	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
-	carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
-
-	return ..()
+/obj/item/organ/internal/stomach/ethereal/on_remove(mob/living/carbon/stomach_owner)
+	. = ..()
+	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	stomach_owner.clear_mood_event("charge")
+	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
+	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
 /obj/item/organ/internal/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
 	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - crystal_charge / 100)))
@@ -45,7 +43,7 @@
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
 
-/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
 	switch(crystal_charge)
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
@@ -56,7 +54,7 @@
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
 			if(carbon.health > 10.5)
-				carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
+				carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			carbon.add_mood_event("charge", /datum/mood_event/lowpower)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
@@ -69,8 +67,8 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
-			carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
-			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
+			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
+			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
 			owner.clear_mood_event("charge")
@@ -96,8 +94,7 @@
 		carbon.cut_overlay(overcharge)
 		tesla_zap(carbon, 2, crystal_charge*2.5, ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
-		to_chat(carbon, span_warning("You violently discharge energy!"))
-		carbon.visible_message(span_danger("[carbon] violently discharges energy!"))
+		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
 			var/datum/disease/D = new /datum/disease/heart_failure

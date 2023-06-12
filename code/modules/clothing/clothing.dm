@@ -23,6 +23,9 @@
 
 	var/can_be_bloody = TRUE
 
+	///Prevents the article of clothing from gaining the mood boost from washing. Used for the tacticool turtleneck.
+	var/stubborn_stains = FALSE
+
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
@@ -251,6 +254,40 @@
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
+/**
+ * Inserts a trait (or multiple traits) into the clothing traits list
+ *
+ * If worn, then we will also give the wearer the trait as if equipped
+ *
+ * This is so you can add clothing traits without worrying about needing to equip or unequip them to gain effects
+ */
+/obj/item/clothing/proc/attach_clothing_traits(trait_or_traits)
+	if(!islist(trait_or_traits))
+		trait_or_traits = list(trait_or_traits)
+
+	LAZYOR(clothing_traits, trait_or_traits)
+	var/mob/wearer = loc
+	if(istype(wearer) && (wearer.get_slot_by_item(src) & slot_flags))
+		for(var/new_trait in trait_or_traits)
+			ADD_CLOTHING_TRAIT(wearer, new_trait)
+
+/**
+ * Removes a trait (or multiple traits) from the clothing traits list
+ *
+ * If worn, then we will also remove the trait from the wearer as if unequipped
+ *
+ * This is so you can add clothing traits without worrying about needing to equip or unequip them to gain effects
+ */
+/obj/item/clothing/proc/detach_clothing_traits(trait_or_traits)
+	if(!islist(trait_or_traits))
+		trait_or_traits = list(trait_or_traits)
+
+	LAZYREMOVE(clothing_traits, trait_or_traits)
+	var/mob/wearer = loc
+	if(istype(wearer))
+		for(var/new_trait in trait_or_traits)
+			REMOVE_CLOTHING_TRAIT(wearer, new_trait)
+
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
@@ -363,6 +400,9 @@
 // you just dont get the same feeling with handwashed clothes
 /obj/item/clothing/machine_wash()
 	. = ..()
+	if(stubborn_stains) //Just can't make it feel right
+		return
+
 	var/fresh_mood = AddComponent( \
 		/datum/component/onwear_mood, \
 		saved_event_type = /datum/mood_event/fresh_laundry, \

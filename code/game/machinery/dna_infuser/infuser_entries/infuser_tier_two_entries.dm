@@ -19,7 +19,7 @@
 		"stop caring about temperature... or pressure, or atmos... or much of anything...",
 	)
 	input_obj_or_mob = list(
-		/mob/living/simple_animal/pet/gondola,
+		/obj/item/food/meat/slab/gondola,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/heart/gondola,

@@ -85,6 +85,8 @@
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(!.)
+		return
 	ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	if (modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -185,7 +187,7 @@
 	if(statue.name == initial(statue.name)) //statue has not been set up
 		statue.name = "statue of [becoming_statue.real_name]"
 		statue.desc = "statue depicting [becoming_statue.real_name]"
-		statue.set_custom_materials(list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5))
+		statue.set_custom_materials(list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5))
 
 	if(is_statue)
 		statue.visible_message(span_danger("[statue] becomes animated!"))
@@ -232,7 +234,7 @@
 	if(!istype(tongue_holder))
 		return
 
-	var/obj/item/organ/internal/tongue/abductor/tongue = tongue_holder.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/abductor/tongue = tongue_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!istype(tongue))
 		return
 
@@ -260,7 +262,7 @@
 	var/rendered = span_abductor("<b>[user.real_name]:</b> [message]")
 	user.log_talk(message, LOG_SAY, tag=SPECIES_ABDUCTOR)
 	for(var/mob/living/carbon/human/living_mob in GLOB.alive_mob_list)
-		var/obj/item/organ/internal/tongue/abductor/tongue = living_mob.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/abductor/tongue = living_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
@@ -450,16 +452,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "A fleshy muscle mostly used for meowing."
 	say_mod = "meows"
 
-/obj/item/organ/internal/tongue/bananium
-	name = "bananium tongue"
-	desc = "A bananium geode mostly used for honking."
-	say_mod = "honks"
-
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
-	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	icon_state = "gold_horn"
-
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
@@ -487,3 +479,11 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
+
+/obj/item/organ/internal/tongue/golem
+	name = "golem tongue"
+	color = COLOR_WEBSAFE_DARK_GRAY
+	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
+	say_mod = "rumbles"
+	sense_of_taste = FALSE
+	status = ORGAN_MINERAL

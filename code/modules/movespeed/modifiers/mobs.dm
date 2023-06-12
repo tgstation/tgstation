@@ -13,6 +13,9 @@
 /datum/movespeed_modifier/hunger
 	variable = TRUE
 
+/datum/movespeed_modifier/golem_hunger
+	variable = TRUE
+
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
@@ -94,7 +97,13 @@
 	variable = TRUE
 	flags = IGNORE_NOSLOW
 
-/datum/movespeed_modifier/tarantula_web
+/datum/movespeed_modifier/fast_web
+	multiplicative_slowdown = 0.2
+
+/datum/movespeed_modifier/average_web
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/gravity
@@ -136,4 +145,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/health_scaling_speed_buff
+	variable = TRUE
+
+/datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE

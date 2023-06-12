@@ -145,7 +145,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
+
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
@@ -176,6 +176,7 @@
 	var/slur = 0 SECONDS
 
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/catastropic_dismemberment = FALSE //If TRUE, this projectile deals its damage to the chest if it dismembers a limb.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 	/// We ignore mobs with these factions.
@@ -198,6 +199,8 @@
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
+	/// If this projectile has been parried before
+	var/parried = FALSE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -205,6 +208,7 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -241,14 +245,14 @@
  * pierce_hit - are we piercing through or regular hitting
  */
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
-	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/obj/item/bodypart/hit_limb
 	if(isliving(target))
 		var/mob/living/L = target
 		hit_limb = L.check_limb_hit(def_zone)
+	if(fired_from)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
@@ -264,7 +268,7 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
+	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -374,6 +378,42 @@
 	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
+
+/// Signal proc for when a projectile enters a turf.
+/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
+
+	if(isturf(loc))
+		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
+
+/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
+/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(parried)
+		return FALSE
+
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
+		on_parry(user, modifiers)
+		return TRUE
+
+	return FALSE
+
+
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
+/obj/projectile/proc/on_parry(mob/user, list/modifiers)
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
+		return
+
+	parried = TRUE
+	set_angle(dir2angle(user.dir) + rand(-3, 3))
+	firer = user
+	speed *= 0.8 // Go 20% faster when parried
+	damage *= 1.15 // And do 15% more damage
+	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+
 
 /**
  * Called when the projectile hits something
@@ -499,15 +539,14 @@
 	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
 		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
-			considering += iter_possible_target
-	if(considering.len)
-		var/mob/living/hit_living = pick(considering)
-		return hit_living.lowest_buckled_mob()
+			considering |= iter_possible_target
+	if(length(considering))
+		return pick(considering)
 	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
 			considering += i
-	if(considering.len)
+	if(length(considering))
 		return pick(considering)
 	// 5. turf
 	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
@@ -543,17 +582,18 @@
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
 	else
-		var/mob/living/L = target
+		var/mob/living/living_target = target
 		if(direct_target)
 			return TRUE
-		if(L.stat == DEAD)
+		if(living_target.stat == DEAD)
 			return FALSE
-		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
 		if(!hit_prone_targets)
-			if(!L.density)
+			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
+			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
 				return FALSE
-			if(L.body_position != LYING_DOWN)
+			if(living_target.body_position != LYING_DOWN)
 				return TRUE
 	return TRUE
 
@@ -739,6 +779,7 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -1074,3 +1115,23 @@
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		projectile_payload = shrapnel_type)
 	return TRUE
+
+/**
+ * Is this projectile considered "hostile"?
+ *
+ * By default all projectiles which deal damage or impart crowd control effects (including stamina) are hostile
+ *
+ * This is NOT used for pacifist checks, that's handled by [/obj/item/ammo_casing/var/harmful]
+ * This is used in places such as AI responses to determine if they're being threatened or not (among other places)
+ */
+/obj/projectile/proc/is_hostile_projectile()
+	if(damage > 0 || stamina > 0)
+		return TRUE
+
+	if(paralyze + stun + immobilize + knockdown > 0 SECONDS)
+		return TRUE
+
+	return FALSE
+
+#undef MOVES_HITSCAN
+#undef MUZZLE_EFFECT_PIXEL_INCREMENT

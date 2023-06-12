@@ -154,7 +154,7 @@
 		if(stored_mob)
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
-		else if(fromtendril)
+		else if(from_spawner)
 			new /obj/effect/mob_spawn/corpse/human/charredskeleton(T)
 		else if(dwarf_mob)
 			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(T)
@@ -163,7 +163,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE
 
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -196,7 +196,7 @@
 	clickbox_max_scale = 2
 	var/can_infest_dead = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == DEAD || !isturf(loc))
 		return
@@ -284,9 +284,9 @@
 	.=..()
 	AddComponent(\
 		/datum/component/spawner,\
-		mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
+		spawn_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
 		spawn_time = 20 SECONDS,\
-		max_mobs = 3,\
+		max_spawned = 3,\
 		spawn_text = "peels itself off from",\
 		faction = faction,\
 	)
@@ -307,6 +307,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
 	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/portal
+	from_spawner = TRUE
 
 // Snow Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow

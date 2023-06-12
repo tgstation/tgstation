@@ -21,7 +21,7 @@
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!target_eyes)
 		to_chat(user, span_warning("It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any."))
 		return FALSE
@@ -38,7 +38,7 @@
 	display_pain(target, "You feel a stabbing pain in your eyes!")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/obj/item/organ/internal/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	user.visible_message(span_notice("[user] successfully fixes [target]'s eyes!"), span_notice("You succeed in fixing [target]'s eyes."))
 	display_results(
 		user,
@@ -50,11 +50,11 @@
 	display_pain(target, "Your vision blurs, but it seems like you can see a little better now!")
 	target.remove_status_effect(/datum/status_effect/temporary_blindness)
 	target.set_eye_blur_if_lower(70 SECONDS) //this will fix itself slowly.
-	target_eyes.setOrganDamage(0) // heals nearsightedness and blindness from eye damage
+	target_eyes.set_organ_damage(0) // heals nearsightedness and blindness from eye damage
 	return ..()
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	if(target.get_organ_by_type(/obj/item/organ/internal/brain))
 		display_results(
 			user,
 			target,
