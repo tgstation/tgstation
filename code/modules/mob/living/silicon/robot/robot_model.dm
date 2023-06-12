@@ -276,8 +276,8 @@
 	flick("[cyborg_base_icon]_transform", cyborg)
 	cyborg.notransform = TRUE
 	if(locked_transform)
-		cyborg.SetLockdown(TRUE)
 		cyborg.ai_lockdown = TRUE
+		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
 	sleep(0.1 SECONDS)
