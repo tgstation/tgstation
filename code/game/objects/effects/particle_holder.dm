@@ -3,6 +3,7 @@
 /obj/effect/abstract/particle_holder
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = KEEP_APART|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	layer = ABOVE_ALL_MOB_LAYER
 	vis_flags = VIS_INHERIT_PLANE
 	/// Holds info about how this particle emitter works
