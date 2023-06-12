@@ -799,6 +799,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 /// A trait given by a specific status effect (not sure why we need both but whatever!)
 #define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+/// Trait from light debugging
+#define LIGHT_DEBUG_TRAIT "light-debug"
 
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"

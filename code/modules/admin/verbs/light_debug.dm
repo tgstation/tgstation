@@ -25,7 +25,7 @@
 /datum/light_source/proc/debug()
 	if(QDELETED(src) || isturf(source_atom) || HAS_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED))
 		return
-	ADD_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, REF(src))
+	ADD_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
 	source_atom.add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
 	var/static/uid = 0
 	if(!source_atom.render_target)
@@ -46,7 +46,7 @@
 /datum/light_source/proc/undebug()
 	if(QDELETED(src) || isturf(source_atom) || !HAS_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED))
 		return
-	REMOVE_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, REF(src))
+	REMOVE_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
 	source_atom.remove_filter("debug_light")
 	// Removes the glow overlay via stupid, sorry
 	var/atom/movable/render_step/color/above_light = new(null, source_atom, "#ffffff23")
@@ -61,7 +61,8 @@
 
 /atom/movable/screen/light_button
 	icon = 'icons/testing/lighting_debug.dmi'
-	plane = HUD_PLANE
+	plane = BALLOON_CHAT_PLANE // We hijack runechat because we can get multiz niceness without making a new PM
+	layer = ABOVE_ALL_MOB_LAYER
 	alpha = 100
 	var/datum/weakref/last_hovored_ref
 
