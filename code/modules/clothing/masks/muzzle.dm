@@ -40,8 +40,8 @@
 	clothing_flags = INEDIBLE_CLOTHING|BLOCKS_SPEECH
 	equip_delay_other = 40
 	strip_delay = 40
-	greyscale_config = /datum/greyscale_config/tape/piece
-	greyscale_config_worn = /datum/greyscale_config/tape/piece/worn
+	greyscale_config = /datum/greyscale_config/tape_piece
+	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
 	///Dertermines whether the tape piece does damage when ripped off of someone.
 	var/harmful_strip = FALSE
@@ -99,6 +99,8 @@
 	desc = "A piece of tape that can be put over someone's mouth. Looks like it will hurt if this is ripped off."
 	icon_state = "tape_piece_spikes"
 	worn_icon_state = "tape_piece_spikes_worn"
+	greyscale_config = /datum/greyscale_config/tape_piece/spikes
+	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn/spikes
 	greyscale_colors = "#E64539#AD2F45"
 	harmful_strip = TRUE
 	stripping_damage = 10

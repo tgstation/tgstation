@@ -99,6 +99,7 @@
 	prefix = "pointy"
 	conferred_embed = EMBED_POINTY
 	merge_type = /obj/item/stack/sticky_tape/pointy
+	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
 
