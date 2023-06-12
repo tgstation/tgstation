@@ -1367,9 +1367,9 @@
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
  */
-/mob/living/carbon/proc/can_touch_acid(atom/source, acid_power, acid_volume)
+/mob/living/carbon/proc/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
 	// So people can take their own clothes off
-	if((source == user) || (source.loc == user))
+	if((acided_atom == user) || (acided_atom.loc == user))
 		return TRUE
 	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
 		return TRUE
@@ -1380,9 +1380,9 @@
 /**
  * This proc is used to determine whether or not the mob can handle touching a burning object.
  */
-/mob/living/carbon/proc/can_touch_burning(atom/source, acid_power, acid_volume)
+/mob/living/carbon/proc/can_touch_burning(atom/burning_atom, acid_power, acid_volume)
 	// So people can take their own clothes off
-	if((source == user) || (source.loc == user))
+	if((burning_atom == src) || (burning_atom.loc == src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
 		return TRUE
