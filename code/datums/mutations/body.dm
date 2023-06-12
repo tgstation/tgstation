@@ -258,7 +258,7 @@
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
 
-/datum/mutation/human/glow/anti/glow_color()
+/datum/mutation/human/glow/anti/get_glow_color()
 	return COLOR_BLACK
 
 /datum/mutation/human/strong
