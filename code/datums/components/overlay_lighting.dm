@@ -487,7 +487,6 @@
 	. = list()
 
 	var/final_distance = cast_range
-	var/list/line = list(get_turf(current_holder))
 	var/turf/scanning = get_turf(current_holder)
 	for(var/i in 1 to final_distance)
 		var/turf/next_turf = get_step(scanning, current_direction)
