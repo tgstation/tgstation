@@ -62,7 +62,6 @@
 		w_class_on = active_w_class, \
 		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
-		inhand_icon_change = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
@@ -94,8 +93,8 @@
 	if(!sword_color_icon)
 		return
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		icon_state = "[base_icon_state]_[sword_color_icon]"
-		inhand_icon_state = "[base_icon_state]_on_[sword_color_icon]"
+		icon_state = "[base_icon_state]_on_[sword_color_icon]" // "esword_on_red"
+		inhand_icon_state = icon_state
 	else
 		icon_state = base_icon_state
 		inhand_icon_state = base_icon_state
@@ -103,10 +102,7 @@
 /**
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
- * Updates our icon to have the correct color,
- * updates the amount of heat our item gives out,
- * enables / disables embedding, and
- * starts / stops processing.
+ * Updates some of the stuff the transforming comp doesn't, such as heat and embedding.
  *
  * Also gives feedback to the user and activates or deactives the glow.
  */
@@ -178,6 +174,7 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "e_sword"
+	base_icon_state = "e_sword"
 	inhand_icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -303,6 +300,7 @@
 	desc = "Arrrr matey."
 	icon_state = "e_cutlass"
 	inhand_icon_state = "e_cutlass"
+	base_icon_state = "e_cutlass"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED
@@ -312,6 +310,7 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
+	base_icon_state = "blade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -348,3 +347,4 @@
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
 	inhand_icon_state = "lightblade"
+	base_icon_state = "lightblade"

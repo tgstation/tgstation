@@ -20,9 +20,7 @@
 	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/BDM = owner
 	var/obj/item/melee/cleaving_saw/miner/miner_saw = BDM.miner_saw
 	miner_saw.attack_self(owner)
-	if(!miner_saw.is_open)
-		BDM.rapid_melee = 5 // 4 deci cooldown before changes, npcpool subsystem wait is 20, 20/4 = 5
-	else
-		BDM.rapid_melee = 3 // same thing but halved (slightly rounded up)
-	BDM.icon_state = "miner[miner_saw.is_open ? "_transformed":""]"
-	BDM.icon_living = "miner[miner_saw.is_open ? "_transformed":""]"
+	var/saw_open = HAS_TRAIT(miner_saw, TRAIT_TRANSFORM_ACTIVE)
+	BDM.rapid_melee = saw_open ? 3 : 5
+	BDM.icon_state = "miner[saw_open ? "_transformed":""]"
+	BDM.icon_living = "miner[saw_open ? "_transformed":""]"

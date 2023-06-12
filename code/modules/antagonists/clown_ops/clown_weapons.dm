@@ -142,7 +142,7 @@
 	return ..()
 
 /obj/item/melee/energy/sword/bananium/suicide_act(mob/living/user)
-	if(!blade_active)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
@@ -174,7 +174,7 @@
  * Adds or removes a slippery and boomerang component, depending on whether the shield is active or not.
  */
 /obj/item/shield/energy/bananium/proc/adjust_comedy()
-	if(enabled)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 		AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 	else
@@ -182,7 +182,7 @@
 		qdel(GetComponent(/datum/component/boomerang))
 
 /obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(enabled)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
