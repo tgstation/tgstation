@@ -30,7 +30,7 @@
 	return ..()
 
 /datum/status_effect/his_grace/on_remove()
-	owner.remove_stun_absorption("His Grace")
+	owner.remove_stun_absorption(id)
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0

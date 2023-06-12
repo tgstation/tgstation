@@ -156,7 +156,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		source = HIGHLANDER_TRAIT,
 		message = span_warning("%EFFECT_OWNER is protected by the power of Scotland!"),
 		self_message = span_boldwarning("The power of Scotland absorbs the stun!"),
-		examine_message = span_warning("[user.p_theyre(TRUE)] protected by the power of Scotland!"),
+		examine_message = span_warning("%EFFECT_OWNER_THEYRE protected by the power of Scotland!"),
 	)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
