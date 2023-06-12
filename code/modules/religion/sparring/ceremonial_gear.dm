@@ -8,8 +8,8 @@
 
 	//does the exact thing we want so heck why not
 	greyscale_config = /datum/greyscale_config/ceremonial_blade
-	greyscale_config_inhand_left = /datum/greyscale_config/ceremonial_blade_lefthand
-	greyscale_config_inhand_right = /datum/greyscale_config/ceremonial_blade_righthand
+	greyscale_config_inhand_left = /datum/greyscale_config/ceremonial_blade/lefthand
+	greyscale_config_inhand_right = /datum/greyscale_config/ceremonial_blade/righthand
 	greyscale_colors = "#FFFFFF"
 
 	hitsound = 'sound/weapons/bladeslice.ogg'

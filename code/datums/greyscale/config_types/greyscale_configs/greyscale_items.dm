@@ -85,14 +85,12 @@
 	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade.json'
 
-/datum/greyscale_config/ceremonial_blade_lefthand
+/datum/greyscale_config/ceremonial_blade/lefthand
 	name = "Base Held Ceremonial Blade, Left"
-	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_lefthand.json'
 
-/datum/greyscale_config/ceremonial_blade_righthand
+/datum/greyscale_config/ceremonial_blade/righthand
 	name = "Base Held Ceremonial Blade, Right"
-	icon_file = 'icons/obj/weapons/ritual_weapon.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_righthand.json'
 
 //
