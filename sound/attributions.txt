@@ -60,7 +60,14 @@ https://freesound.org/people/ScottFerguson1/sounds/132846/
 parry.ogg is taken from loudernoises "Sword Clash" which is licensed under CC Attributions 0, which is mixed with a genhit.ogg
 https://freesound.org/people/loudernoises/sounds/334169/
 
+earth_rumble.ogg is adapted from uagadugu's "Cracking Earthquake (cracking soil, cracking stone)" (CC 0)
+https://freesound.org/people/uagadugu/sounds/222521/
 
+earth_rumble_distant1, earth_rumble_distant2, earth_rumble_distant3, and earth_rumble_distant4 are adapted from metrostock99's "EARTHQUAKE OR DISTANT SPACE SHUTTLE RUMBLE.WAV" (CC 0)
+https://freesound.org/people/metrostock99/sounds/203281/
+
+metal_creak.ogg is adapted from BloodPixelHero's "Metal door creak" under CC Attribution 4.0 
+https://freesound.org/people/BloodPixelHero/sounds/585323/
 
 revolutionary_tide.ogg is adapted from several audio samples:
 

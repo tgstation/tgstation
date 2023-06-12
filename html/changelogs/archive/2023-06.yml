@@ -361,3 +361,42 @@
   - bugfix: Admins can now varedit plants to be alive / dead!
   Singul0:
   - spellcheck: the H.E.C.K helmet is now typo-free
+2023-06-12:
+  Dorsisdwarf:
+  - bugfix: Nanotrasen Cookery Command has ended the plague of staff complaining that
+      their tomato dishes are just complicated forms of soup by redefining "tomato
+      soup" to include a dash of cream.
+  FernandoJ8:
+  - bugfix: copying nodes from a techweb to another no longer reveals hidden nodes
+  MTandi:
+  - qol: Chemmaster UI tweaked
+  - bugfix: Fixed chem master showing wrong data during reagent analysis
+  - bugfix: Fixed chem master not working with fermented drinks
+  - image: Chemmaster resprited, now has an indicator for buffer reagents
+  - refactor: Refactored chemmaster code, it now uses reagent containers instead of
+      styles
+  - balance: Chemmaster now uses servos and has printing animation of 0.75 second
+      duration. Outputs 1 container or up to 2 pills/patches per cycle by default.
+      Can be upgraded to output up to 4 and 8 with t4 servos.
+  Pickle-Coding:
+  - balance: Field generators can parry explosions.
+  SyncIt21:
+  - bugfix: light replacer accepts glass sheets & light tubes when you attack them
+      with a light replacer
+  - bugfix: only glass shards can fill the light replacer not other shard types
+  - qol: glass sheet's & shards inside storage items like backpacks are also consumed
+      when you attack the light replacer with it
+  - qol: feedback messages when inserting lights, glass sheet's, shards into the light
+      replacer are more descriptive and displayed for all insert event's
+  - qol: blue beam for bluespace light replacer last's just 0.5 seconds so it doesn't
+      look awkward
+  - refactor: renamed `add_shards()` to just `add_shard()` for adding 1 shard at a
+      time
+  - refactor: removed redundant` Initialize()` proc from `obj/item/light`
+  - refactor: VV editing var's works properly
+  carlarctg:
+  - rscadd: Assistants get a new liver trait, maintenance metabolism. This trait only
+      lets them process maintenance drugs, grey bull, and pump-up for 20% more time
+      and gives them a probably-positive 2 minute moodlet when ingesting these.
+  - rscadd: The officer's sabre has gained a small amount of bloodthrist for assistants!
+  - bugfix: Fixed liver masters being unable to inspect the liver of scientists.

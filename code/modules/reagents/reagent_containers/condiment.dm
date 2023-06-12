@@ -340,6 +340,19 @@
 	icon_state = "condi_chocolate"
 	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
 
+
+/obj/item/reagent_containers/condiment/hotsauce
+	name = "hotsauce bottle"
+	desc= "You can almost TASTE the stomach ulcers!"
+	icon_state = "hotsauce"
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 50)
+
+/obj/item/reagent_containers/condiment/coldsauce
+	name = "coldsauce bottle"
+	desc= "Leaves the tongue numb from its passage."
+	icon_state = "coldsauce"
+	list_reagents = list(/datum/reagent/consumable/frostoil = 50)
+
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
 /obj/item/reagent_containers/condiment/pack
