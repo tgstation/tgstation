@@ -47,17 +47,6 @@
 
 	var/list/container = list()
 
-/obj/effect/overlay/thermite
-	name = "thermite"
-	desc = "Looks hot."
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
-	anchored = TRUE
-	opacity = TRUE
-	density = TRUE
-	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
-
 //Makes a tile fully lit no matter what
 /obj/effect/fullbright
 	icon = 'icons/effects/alphacolors.dmi'

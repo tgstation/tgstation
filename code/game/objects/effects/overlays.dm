@@ -48,6 +48,16 @@
 	icon_state = "shieldsparkles"
 	anchored = TRUE
 
+/obj/effect/overlay/thermite
+	name = "thermite"
+	desc = "Looks hot."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2" //what?
+	anchored = TRUE
+	plane = ABOVE_GAME_PLANE
+	layer = FLY_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
