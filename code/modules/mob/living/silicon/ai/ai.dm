@@ -962,6 +962,11 @@
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
+/mob/living/silicon/ai/death(gibbed)
+	if(!isnull(deployed_shell))
+		disconnect_shell() // farewell my sweet prince; for a shell is nothing without an AI to control it
+	return ..()
+
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
