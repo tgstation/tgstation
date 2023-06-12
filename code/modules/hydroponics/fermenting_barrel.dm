@@ -84,7 +84,7 @@
 
 /obj/structure/fermenting_barrel/update_overlays()
 	. = ..()
-	if(src.renamedByPlayer || !isnull(GetComponent(/datum/component/label)))
+	if(src.renamedByPlayer || HAS_TRAIT(src, TRAIT_HAS_LABEL))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_label")
 
 /// Adds the fruit to the barrel to queue the fermentation
