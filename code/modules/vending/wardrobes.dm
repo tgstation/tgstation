@@ -16,7 +16,6 @@
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(
-		/obj/item/clothing/glasses/hud/security = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
@@ -52,7 +51,6 @@
 	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(
-		/obj/item/clothing/glasses/hud/health = 4,
 		/obj/item/clothing/accessory/pocketprotector = 4,
 		/obj/item/clothing/head/costume/nursehat = 4,
 		/obj/item/clothing/head/beret/medical = 4,
@@ -214,7 +212,6 @@
 	product_ads = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(
-		/obj/item/clothing/glasses/science = 3,
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/clothing/head/beret/science = 3,
 		/obj/item/clothing/mask/gas = 3,
@@ -339,7 +336,6 @@
 	product_ads = "Guaranteed to prevent stains from spilled drinks!"
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(
-		
 		/obj/item/clothing/glasses/sunglasses/reagent = 1,
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/hats/tophat = 2,
@@ -526,7 +522,6 @@
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(
-		/obj/item/clothing/glasses/science = 2,
 		/obj/item/clothing/head/beret/medical = 2,
 		/obj/item/clothing/under/rank/medical/chemist = 2,
 		/obj/item/clothing/under/rank/medical/chemist/skirt = 2,
@@ -581,8 +576,6 @@
 	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(
-		/obj/item/clothing/glasses/hud/health = 2,
-		/obj/item/clothing/glasses/science = 2,
 		/obj/item/clothing/mask/surgical = 2,
 		/obj/item/clothing/under/rank/medical/virologist = 2,
 		/obj/item/clothing/under/rank/medical/virologist/skirt = 2,
