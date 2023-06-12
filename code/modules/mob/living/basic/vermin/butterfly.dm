@@ -52,7 +52,9 @@
 	var/atom/source = null
 	/// Max distance in tiles before the butterfly despawns
 	var/max_distance = 5
+	/// Whether the butterfly will be destroyed at the end of its despawn timer
 	var/will_be_destroyed = FALSE
+	/// Despawn timer of the butterfly
 	var/despawn_timer = 0
 
 /mob/living/basic/butterfly/lavaland/temporary/Initialize(mapload)
