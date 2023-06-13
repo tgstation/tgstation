@@ -148,6 +148,7 @@
 	particle_effect = new(parent, stink_particles, isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
 
 /datum/component/decomposition/proc/decompose()
+	decomp_timerid = null
 	var/obj/decomp = parent //Lets us spawn things at decomp
 	if(produce_ants)
 		new /obj/effect/decal/cleanable/ants(decomp.loc)

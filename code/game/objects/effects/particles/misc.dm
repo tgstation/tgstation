@@ -34,12 +34,12 @@
 /particles/stink
 	icon = 'icons/effects/particles/stink.dmi'
 	icon_state = list("stink_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
-	color = "#90EE90"
+	color = "#0BDA51"
 	width = 100
 	height = 100
 	count = 100
-	spawning = 3
-	lifespan = 1.5 SECONDS
+	spawning = 0.2
+	lifespan = 1 SECONDS
 	fade = 1 SECONDS
 	position = generator(GEN_CIRCLE, 0, 16, UNIFORM_RAND)
 	gravity = list(0, 0.95)
