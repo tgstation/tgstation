@@ -928,6 +928,15 @@
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_armor_worn.json'
 
+/datum/greyscale_config/hawaiian_shirt
+	name = "Hawaiian Overshirt"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/hawaiian_shirt.json'
+
+/datum/greyscale_config/hawaiian_shirt/worn
+	name = "Hawaiian Overshirt"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
 /datum/greyscale_config/waistcoat
 	name = "Waistcoat"
 	icon_file = 'icons/obj/clothing/accessories.dmi'

@@ -45,7 +45,7 @@
 			RegisterSignal(ehms, COMSIG_AFTER_INJECT, PROC_REF(on_injected))
 			AddComponent(/datum/component/traitor_objective_register, ehms, \
 				succeed_signals = null, \
-				fail_signals = list(COMSIG_PARENT_QDELETING), \
+				fail_signals = list(COMSIG_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/target_player/infect/proc/on_injected(datum/source, mob/living/user, mob/living/injected)

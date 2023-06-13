@@ -16,10 +16,10 @@
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
-	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY)
 	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells

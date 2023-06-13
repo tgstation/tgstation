@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	update_atom_languages()
 	RegisterSignal(to_who, COMSIG_MOVABLE_MOVED, PROC_REF(check_distance))
-	RegisterSignal(to_who, COMSIG_PARENT_QDELETING, PROC_REF(on_summoner_deletion))
+	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
 	RegisterSignal(to_who, COMSIG_LIVING_DEATH, PROC_REF(on_summoner_death))
 	RegisterSignal(to_who, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_summoner_health_update))
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_summoner_wabbajacked))
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(is_deployed())
 		recall_effects()
 	forceMove(get_turf(src))
-	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
 		faction -= summoner.faction

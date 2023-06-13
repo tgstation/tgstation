@@ -551,6 +551,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state ="shifter"
+	///How many uses does the item have before becoming inert
 	var/uses = 4
 
 /obj/item/cult_shift/examine(mob/user)
@@ -560,11 +561,12 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		. += span_cult("It seems drained.")
 
-/obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
-	var/mob/living/carbon/C = user
-	if(C.pulling)
-		var/atom/movable/pulled = C.pulling
-		do_teleport(pulled, T, channel = TELEPORT_CHANNEL_CULT)
+///Handles teleporting the atom we're pulling along with us when using the shifter
+/obj/item/cult_shift/proc/handle_teleport_grab(turf/target_turf, mob/user)
+	var/mob/living/carbon/pulling_user = user
+	if(pulling_user.pulling)
+		var/atom/movable/pulled = pulling_user.pulling
+		do_teleport(pulled, target_turf, channel = TELEPORT_CHANNEL_CULT)
 		. = pulled
 
 /obj/item/cult_shift/attack_self(mob/user)
@@ -577,25 +579,29 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_warning("\The [src] flickers out of your hands, your connection to this dimension is too strong!"))
 		return
 
-	var/mob/living/carbon/C = user
-	var/turf/mobloc = get_turf(C)
-	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
+	//The user of the shifter
+	var/mob/living/carbon/user_cultist = user
+	//Initial teleport location
+	var/turf/mobloc = get_turf(user_cultist)
+	//Teleport target turf, with some error to spice it up
+	var/turf/destination = get_teleport_loc(location = mobloc, target = user_cultist, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
+	//The atom the user was pulling when using the shifter; we handle it here before teleporting the user as to not lose their 'pulling' var
+	var/atom/movable/pulled = handle_teleport_grab(destination, user_cultist)
 
-	if(!destination || !do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
+	if(!destination || !do_teleport(user_cultist, destination, channel = TELEPORT_CHANNEL_CULT))
 		playsound(src, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
 		balloon_alert(user, "teleport failed!")
 		return
 
 	uses--
 	if(uses <= 0)
-		icon_state ="shifter_drained"
+		icon_state = "shifter_drained"
 
-	var/atom/movable/pulled = handle_teleport_grab(destination, C)
 	if(pulled)
-		C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
+		user_cultist.start_pulling(pulled) //forcemove (teleporting) resets pulls, so we need to re-pull
 
-	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
-	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
+	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
+	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
 	playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

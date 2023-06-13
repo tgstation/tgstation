@@ -63,7 +63,7 @@
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, PROC_REF(charge_end))
+	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(charge_end))
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
