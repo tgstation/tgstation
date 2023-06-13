@@ -150,15 +150,15 @@
 	qdel(src)
 
 /// Locks a mob, preventing them from moving, being hurt, or acting
-/datum/cinematic/proc/lock_mob(mob/living/to_lock)
+/datum/cinematic/proc/lock_mob(mob/to_lock)
 	locked += WEAKREF(to_lock)
 	to_lock.notransform = TRUE
 
 /// Unlocks a previously locked weakref
 /datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
 	var/mob/locked_mob = mob_ref.resolve()
-	if(QDELETED(locked_mob))
-		continue
+	if(isnull(locked_mob))
+		return
 	locked_mob.notransform = FALSE
 	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
