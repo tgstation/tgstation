@@ -309,13 +309,7 @@
 		say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
 		return FALSE
 
-	if(iscyborg(usr))
-		var/mob/living/silicon/robot/borg = usr
 
-		if(!borg.cell)
-			return FALSE
-
-		borg.cell.use(SILICON_LATHE_TAX)
 
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
