@@ -881,21 +881,21 @@
 /datum/glass_style/drinking_glass/wine_voltaic
 	required_drink_type = /datum/reagent/consumable/ethanol/wine_voltaic
 	name = "Voltaic Yellow Wine"
-	desc = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	desc = "Electrically charged wine. Recharges ethereals, but also nontoxic."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "wine_voltaic"
 
 /datum/glass_style/drinking_glass/telepole
 	required_drink_type = /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	desc = "A liquid grounding rod. Recharges etherials and grants temporary shock resistance."
+	desc = "A liquid grounding rod. Recharges ethereals and grants temporary shock resistance."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "telepole"
 
 /datum/glass_style/drinking_glass/pod_tesla
 	required_drink_type = /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
-	desc = "Ride the lightning! Recharges etherials, suppresses phobias, and grants strong temporary shock resistance."
+	desc = "Ride the lightning! Recharges ethereals, suppresses phobias, and grants strong temporary shock resistance."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pod_tesla"
 
