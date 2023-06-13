@@ -8,7 +8,7 @@
 /datum/preference/choiced/ai_hologram_display/init_possible_values()
 	var/list/values = list()
 
-	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
+	values["Random"] = icon('icons/mob/silicon/ai.dmi', "questionmark")
 
 	for(var/hologram in GLOB.ai_hologram_icons - "Random")
 		values[hologram] = icon(GLOB.ai_hologram_icons[hologram], GLOB.ai_hologram_icon_state[hologram])

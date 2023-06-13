@@ -8,7 +8,7 @@
 /datum/preference/choiced/ai_emote_display/init_possible_values()
 	var/list/values = list()
 
-	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
+	values["Random"] = icon('icons/mob/silicon/ai.dmi', "questionmark")
 
 	for(var/emote in GLOB.ai_status_display_emotes)
 		var/emote_icon = GLOB.ai_status_display_emotes[emote]
