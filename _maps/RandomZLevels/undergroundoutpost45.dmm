@@ -171,7 +171,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "aF" = (
@@ -694,7 +694,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bY" = (
@@ -781,7 +781,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "cj" = (
@@ -1227,7 +1227,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "dv" = (
@@ -1680,7 +1680,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "es" = (
@@ -1730,7 +1730,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ey" = (
@@ -2861,7 +2861,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "hH" = (
@@ -3190,7 +3190,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ix" = (
@@ -3763,7 +3763,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/research)
 "jR" = (
@@ -4325,7 +4325,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "la" = (
@@ -5378,7 +5378,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "nl" = (
@@ -5549,7 +5549,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "nB" = (
@@ -8394,7 +8394,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "tz" = (
@@ -8721,7 +8721,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ui" = (
@@ -9637,7 +9637,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "wn" = (
@@ -9715,7 +9715,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "wB" = (
@@ -9734,7 +9734,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "wD" = (
@@ -9933,7 +9933,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "xg" = (
@@ -10294,7 +10294,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ya" = (
@@ -10412,7 +10412,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yC" = (
@@ -10421,7 +10421,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yE" = (
@@ -10430,7 +10430,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yF" = (
@@ -10441,7 +10441,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yH" = (
@@ -10455,7 +10455,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yN" = (
@@ -10475,7 +10475,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yR" = (
@@ -10498,7 +10498,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yX" = (
@@ -10522,7 +10522,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zd" = (
@@ -10633,7 +10633,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zO" = (
@@ -10642,7 +10642,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zT" = (
@@ -10651,7 +10651,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zX" = (
@@ -10710,7 +10710,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ak" = (
@@ -10719,7 +10719,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ap" = (
@@ -10756,7 +10756,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ax" = (
@@ -10850,7 +10850,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "AZ" = (
@@ -10887,7 +10887,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Bg" = (
@@ -10909,7 +10909,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Bo" = (
@@ -10957,7 +10957,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BI" = (
@@ -10985,7 +10985,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BN" = (
@@ -11005,7 +11005,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BS" = (
@@ -11014,7 +11014,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "BU" = (
@@ -11023,7 +11023,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ca" = (
@@ -11044,7 +11044,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ce" = (
@@ -11254,7 +11254,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Dq" = (
@@ -11263,7 +11263,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "Ds" = (
@@ -11325,7 +11325,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "DF" = (
@@ -11354,7 +11354,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "DQ" = (
@@ -11448,13 +11448,22 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45)
+"Es" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 351.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Eu" = (
 /obj/machinery/door/poddoor/preopen,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ex" = (
@@ -11479,7 +11488,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "EI" = (
@@ -11525,7 +11534,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "EP" = (
@@ -11612,7 +11621,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Fu" = (
@@ -11636,7 +11645,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Fy" = (
@@ -11647,7 +11656,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "FA" = (
@@ -11696,7 +11705,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "FS" = (
@@ -11754,7 +11763,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Gl" = (
@@ -11776,7 +11785,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Go" = (
@@ -11786,7 +11795,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Gp" = (
@@ -11815,7 +11824,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "GH" = (
@@ -11896,7 +11905,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Hh" = (
@@ -11905,7 +11914,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Hm" = (
@@ -11920,7 +11929,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "HE" = (
@@ -12017,7 +12026,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ia" = (
@@ -12049,12 +12058,12 @@
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/undergroundoutpost45)
 "Il" = (
+/obj/structure/barricade/sandbags,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9;
-	integrity_failure = null
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Iv" = (
@@ -12073,7 +12082,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "IG" = (
@@ -12083,7 +12092,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "IK" = (
@@ -12111,7 +12120,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "IX" = (
@@ -12184,7 +12193,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Jz" = (
@@ -12312,7 +12321,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "KP" = (
@@ -12330,7 +12339,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "KU" = (
@@ -12382,7 +12391,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Lk" = (
@@ -12392,7 +12401,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Lo" = (
@@ -12411,7 +12420,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Lu" = (
@@ -12454,7 +12463,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "LJ" = (
@@ -12465,7 +12474,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "LK" = (
@@ -12478,7 +12487,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "LS" = (
@@ -12512,7 +12521,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "LW" = (
@@ -12527,7 +12536,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Mf" = (
@@ -12538,7 +12547,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Mk" = (
@@ -12577,7 +12586,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Mu" = (
@@ -12597,7 +12606,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "MA" = (
@@ -12606,7 +12615,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "MC" = (
@@ -12637,7 +12646,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "MI" = (
@@ -12676,7 +12685,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "MV" = (
@@ -12692,7 +12701,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/central)
 "MX" = (
@@ -12702,7 +12711,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "MY" = (
@@ -12717,6 +12726,9 @@
 	heat_capacity = 1e+006;
 	temperature = 363.9
 	},
+/area/awaymission/undergroundoutpost45/caves)
+"Na" = (
+/turf/open/space/basic,
 /area/awaymission/undergroundoutpost45/caves)
 "Nb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12814,7 +12826,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "NQ" = (
@@ -12853,7 +12865,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/central)
 "NU" = (
@@ -12873,7 +12885,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "NX" = (
@@ -12915,7 +12927,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "Oj" = (
@@ -12925,7 +12937,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ok" = (
@@ -13000,7 +13012,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ON" = (
@@ -13069,7 +13081,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Pw" = (
@@ -13079,7 +13091,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Px" = (
@@ -13089,7 +13101,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "PE" = (
@@ -13098,7 +13110,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "PG" = (
@@ -13125,7 +13137,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "PT" = (
@@ -13135,7 +13147,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "PX" = (
@@ -13186,7 +13198,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Qj" = (
@@ -13238,7 +13250,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Qo" = (
@@ -13262,7 +13274,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Qs" = (
@@ -13296,7 +13308,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "QC" = (
@@ -13340,7 +13352,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "QK" = (
@@ -13437,7 +13449,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "RA" = (
@@ -13446,7 +13458,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "RC" = (
@@ -13564,7 +13576,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/research)
 "Sh" = (
@@ -13576,7 +13588,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "Sn" = (
@@ -13585,7 +13597,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Sq" = (
@@ -13600,7 +13612,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Su" = (
@@ -13689,6 +13701,17 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"SW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 351.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "SZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -13726,7 +13749,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Tr" = (
@@ -13735,7 +13758,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ts" = (
@@ -13822,7 +13845,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "TT" = (
@@ -13837,7 +13860,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Uf" = (
@@ -13847,7 +13870,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ul" = (
@@ -13896,7 +13919,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Uu" = (
@@ -13921,7 +13944,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "UG" = (
@@ -13940,7 +13963,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "UJ" = (
@@ -14021,7 +14044,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Vb" = (
@@ -14055,7 +14078,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Vz" = (
@@ -14069,7 +14092,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "VE" = (
@@ -14151,7 +14174,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Wd" = (
@@ -14161,7 +14184,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "We" = (
@@ -14170,7 +14193,18 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
+"Wf" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Wo" = (
@@ -14192,7 +14226,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Wt" = (
@@ -14212,7 +14246,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "WE" = (
@@ -14230,7 +14264,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "WK" = (
@@ -14287,7 +14321,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Xd" = (
@@ -14330,7 +14364,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Xy" = (
@@ -14376,7 +14410,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "XJ" = (
@@ -14408,7 +14442,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "XQ" = (
@@ -14455,7 +14489,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Yk" = (
@@ -14495,7 +14529,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "YG" = (
@@ -14509,7 +14543,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "YK" = (
@@ -14538,7 +14572,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "YO" = (
@@ -14581,7 +14615,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "YZ" = (
@@ -14592,7 +14626,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Zd" = (
@@ -14602,7 +14636,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Zr" = (
@@ -14612,7 +14646,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Zs" = (
@@ -14633,7 +14667,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ZB" = (
@@ -14643,7 +14677,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ZD" = (
@@ -14653,7 +14687,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ZH" = (
@@ -14693,7 +14727,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 363.9
+	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ZV" = (
@@ -32881,8 +32915,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -33138,9 +33172,9 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -33389,27 +33423,27 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
-zq
-zq
-ad
-ad
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
-zq
+ad
+ad
+Lz
 Ry
 HW
 Gn
@@ -33418,7 +33452,7 @@ Gn
 zK
 KN
 Px
-ad
+Lz
 ad
 ad
 ad
@@ -33646,25 +33680,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
-zq
+Lz
 BU
 iw
 Dp
@@ -33674,7 +33708,7 @@ HW
 Gn
 HW
 Gn
-zq
+Lz
 Tr
 ad
 ad
@@ -33901,29 +33935,29 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Qq
-zq
+Lz
 EE
-zq
+Lz
 ad
 ad
 Au
-Ay
+Il
 Au
-XQ
-Ay
+WE
+Il
 FG
 Px
 Gn
@@ -33931,7 +33965,7 @@ ad
 ad
 ad
 XH
-zq
+Lz
 ci
 ad
 ad
@@ -34152,34 +34186,34 @@ Gn
 BF
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 DD
 Ms
-Ay
+Il
 BS
-zq
+Lz
 Ay
 ad
 ad
@@ -34188,7 +34222,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 WZ
 zO
 ad
@@ -34410,17 +34444,17 @@ Gn
 Xr
 ad
 er
-zq
+Lz
 BU
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Uf
 zT
 zT
@@ -34447,7 +34481,7 @@ ad
 ad
 ad
 Lk
-zq
+Lz
 KN
 ZD
 BL
@@ -34668,26 +34702,26 @@ Xr
 Xr
 Ph
 Gn
-zq
-zq
-zq
+Lz
+Lz
+Lz
 BU
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Bk
-zq
+Lz
 PS
 BU
-zq
-zq
-zq
+Lz
+Lz
+Lz
 YH
 Pw
 nk
@@ -34704,9 +34738,9 @@ Wd
 ad
 ad
 ad
-zq
+Lz
 Gn
-zq
+Lz
 Tr
 ad
 ad
@@ -34929,23 +34963,23 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 BU
-zq
-zq
+Lz
+Lz
 Bk
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Qq
 EE
-zq
-zq
+Lz
+Lz
 DD
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -34961,8 +34995,8 @@ zb
 ad
 ad
 ad
-XQ
-zq
+WE
+Lz
 ZB
 ad
 ad
@@ -35186,20 +35220,20 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Bk
 Go
 nA
-zq
+Lz
 BS
-zq
-zq
+Lz
+Lz
 bW
 We
 ad
@@ -35212,14 +35246,14 @@ ad
 ad
 ad
 Cd
-zq
+Lz
 BQ
 ZD
 ad
 ad
 Tr
-zq
-zq
+Lz
+Lz
 Tr
 ad
 ad
@@ -35420,7 +35454,7 @@ lt
 mb
 mG
 gw
-zq
+Lz
 ad
 ad
 ad
@@ -35442,23 +35476,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 WI
 DC
 AR
 EL
 XX
 DC
-zq
+Lz
 BS
-zq
-zq
+Lz
+Lz
 Sn
-zq
+Lz
 ad
 ad
 ad
@@ -35469,14 +35503,14 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Gn
 ad
 Lb
 DM
-zq
+Lz
 ad
 ad
 ad
@@ -35677,8 +35711,8 @@ ji
 mc
 mH
 gw
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -35699,10 +35733,10 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+WE
 Bk
 Au
 Ko
@@ -35710,10 +35744,10 @@ yx
 pv
 lp
 Ko
-zq
-zq
+Lz
+Lz
 ex
-zq
+Lz
 aE
 ad
 ad
@@ -35733,7 +35767,7 @@ Px
 Gn
 Gn
 WZ
-zq
+Lz
 ad
 ad
 ad
@@ -35934,8 +35968,8 @@ kl
 gK
 gw
 gv
-zq
-XQ
+Lz
+WE
 ad
 ad
 ad
@@ -35956,18 +35990,18 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ko
 GO
 SG
 AS
 Ko
-zq
+Lz
 YY
 YY
 EE
@@ -35987,14 +36021,14 @@ ad
 ad
 ad
 Gn
-zq
-zq
+Lz
+Lz
 WZ
-zq
+Lz
 Lk
 Tr
 zO
-XQ
+WE
 BQ
 WZ
 zb
@@ -36190,10 +36224,10 @@ SZ
 lv
 md
 gU
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 Gn
@@ -36213,9 +36247,9 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Au
 Ko
 Ko
@@ -36228,7 +36262,7 @@ Ko
 Ko
 EE
 WI
-zq
+Lz
 ad
 ad
 ad
@@ -36244,15 +36278,15 @@ ad
 ad
 ad
 Tr
-zq
-XQ
-zq
+Lz
+WE
+Lz
 Gn
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Lq
-zq
+Lz
 zb
 Wd
 ad
@@ -36447,10 +36481,10 @@ kE
 lw
 me
 gU
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 Gn
@@ -36470,10 +36504,10 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Pf
 Ul
 HN
@@ -36483,9 +36517,9 @@ BB
 On
 TI
 Pf
-Ay
-Ay
-Ay
+Il
+Il
+Il
 ad
 ad
 ad
@@ -36502,11 +36536,11 @@ ad
 ad
 IT
 BQ
-zq
+Lz
 Gn
 Px
 ZD
-zq
+Lz
 Gn
 Gn
 ad
@@ -36705,9 +36739,9 @@ lx
 gw
 gv
 Oh
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -36727,10 +36761,10 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 EE
-zq
+Lz
 sz
 QI
 Lo
@@ -36742,7 +36776,7 @@ TI
 LK
 Ma
 ty
-zq
+Lz
 ad
 ad
 ad
@@ -36960,11 +36994,11 @@ gv
 kG
 ly
 gw
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -36983,11 +37017,11 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 PS
-zq
+Lz
 sz
 QI
 wQ
@@ -37016,7 +37050,7 @@ ad
 ad
 ad
 Gn
-zq
+Lz
 ad
 ad
 ad
@@ -37217,11 +37251,11 @@ gU
 kH
 ly
 gU
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -37240,30 +37274,30 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Au
 Ko
 QI
-zq
+Lz
 TI
 Ko
 QI
 XC
 vB
 Ko
-zq
-zq
+Lz
+Lz
 Mf
 ad
 ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -37474,12 +37508,12 @@ gU
 kI
 lz
 gU
-zq
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -37497,22 +37531,22 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 BS
 BS
-zq
+Lz
 wm
-zq
-zq
+Lz
+Lz
 Au
-zq
+Lz
 Fb
 Ut
 ci
-zq
+Lz
 Ud
 ad
 ad
@@ -37520,8 +37554,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -37530,7 +37564,7 @@ ad
 ad
 ad
 ad
-XQ
+WE
 ad
 ad
 ad
@@ -37731,13 +37765,13 @@ gU
 kH
 ly
 gU
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -37754,23 +37788,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 NW
 Qq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 wC
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -37778,16 +37812,16 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -37989,12 +38023,12 @@ yR
 lA
 gw
 Oh
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38010,24 +38044,24 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Qq
 UD
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Ma
 MX
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38036,14 +38070,14 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -38245,13 +38279,13 @@ gU
 kH
 ly
 gU
-zq
-zq
-XQ
-zq
-zq
-XQ
-zq
+Lz
+Lz
+WE
+Lz
+Lz
+WE
+Lz
 ad
 ad
 ad
@@ -38267,24 +38301,24 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Vx
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Qn
-zq
+Lz
 On
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38293,14 +38327,14 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -38502,13 +38536,13 @@ gU
 kK
 lB
 gU
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38524,24 +38558,24 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 We
 Au
-zq
+Lz
 Au
-zq
+Lz
 EE
-zq
-zq
+Lz
+Lz
 Qq
-zq
-zq
+Lz
+Lz
 Au
 Ud
-zq
+Lz
 ad
 ad
 ad
@@ -38551,13 +38585,13 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -38759,12 +38793,12 @@ gU
 kG
 ly
 gU
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38781,25 +38815,25 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Au
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Ko
 XC
 Da
-zq
-zq
+Lz
+Lz
 RJ
 NX
 PE
-zq
+Lz
 Qq
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -38809,11 +38843,11 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -39016,11 +39050,11 @@ gw
 kH
 lC
 gv
-zq
-XQ
-zq
-zq
-XQ
+Lz
+WE
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -39038,12 +39072,12 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Qq
-zq
+Lz
 Pf
 EI
 XC
@@ -39053,10 +39087,10 @@ EI
 XC
 Wb
 Pf
-zq
-zq
+Lz
+Lz
 Gj
-zq
+Lz
 ad
 ad
 ad
@@ -39067,9 +39101,9 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
-XQ
+WE
 ad
 ad
 ad
@@ -39274,7 +39308,7 @@ kL
 lD
 gv
 hc
-zq
+Lz
 ad
 gz
 hc
@@ -39295,25 +39329,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Au
-zq
+Lz
 Qq
-zq
+Lz
 XC
 UL
 Ko
 MK
 XC
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -39324,9 +39358,9 @@ ad
 ad
 ad
 ad
-XQ
-zq
-zq
+WE
+Lz
+Lz
 ad
 ad
 ad
@@ -39551,25 +39585,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ud
-zq
-zq
-zq
+Lz
+Lz
+Lz
 XC
 Au
 Ud
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 dq
-zq
+Lz
 ad
 ad
 ad
@@ -39581,8 +39615,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -39808,25 +39842,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 PE
-zq
-zq
+Lz
+Lz
 Ma
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -39838,7 +39872,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 YN
 ad
 ad
@@ -40065,25 +40099,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Qq
-zq
+Lz
 Au
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 yE
-zq
+Lz
 ad
 ad
 ad
@@ -40095,7 +40129,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -40322,24 +40356,24 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 BS
-zq
+Lz
 PS
-zq
+Lz
 xZ
 EE
 Au
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -40352,7 +40386,7 @@ ad
 ad
 ad
 ad
-XQ
+WE
 ad
 ad
 ad
@@ -40580,23 +40614,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-Il
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 yE
 Gj
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 PE
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -40608,8 +40642,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -40809,8 +40843,8 @@ hF
 kN
 iC
 hc
-zq
-zq
+Lz
+Lz
 gz
 kR
 lJ
@@ -40837,23 +40871,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 SC
 BS
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -40864,8 +40898,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -41066,8 +41100,8 @@ WT
 ik
 iD
 hc
-zq
-zq
+Lz
+Lz
 hH
 kS
 lK
@@ -41094,23 +41128,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Dw
 XC
 Ud
 Au
-zq
+Lz
 WU
 UJ
 On
-zq
+Lz
 Hh
 EE
-zq
+Lz
 ad
 ad
 ad
@@ -41121,8 +41155,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -41131,8 +41165,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -41323,8 +41357,8 @@ hH
 hH
 hc
 gz
-zq
-zq
+Lz
+Lz
 hH
 kR
 lL
@@ -41351,10 +41385,10 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Ud
-zq
+Lz
 MQ
 Eu
 Ef
@@ -41365,9 +41399,9 @@ QI
 UJ
 wQ
 Ws
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -41378,18 +41412,18 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
-zq
-XQ
-zq
-zq
-zq
+Lz
+WE
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -41574,14 +41608,14 @@ ad
 ad
 ad
 ad
-zq
+Lz
 jQ
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 hH
 kR
 lM
@@ -41608,11 +41642,11 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Ma
-zq
-zq
+Lz
+Lz
 Ko
 Aa
 EA
@@ -41622,9 +41656,9 @@ QI
 On
 TI
 Ko
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -41635,18 +41669,18 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
-ad
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -41830,14 +41864,14 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Sf
 gz
 IX
@@ -41865,11 +41899,11 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Ko
 QI
 NX
@@ -41879,9 +41913,9 @@ Ri
 Ca
 CV
 Ko
-zq
+Lz
 yE
-zq
+Lz
 ad
 ad
 ad
@@ -41892,18 +41926,18 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -42087,15 +42121,15 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-XQ
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+WE
+Lz
+Lz
+Lz
+Lz
+Lz
 hH
 kR
 lM
@@ -42122,11 +42156,11 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Va
 EE
-zq
+Lz
 Pf
 TF
 NX
@@ -42136,8 +42170,8 @@ HK
 SA
 TI
 Pf
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -42150,17 +42184,17 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
 ad
-XQ
-zq
-zq
-zq
-zq
-zq
+WE
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -42344,15 +42378,15 @@ ad
 ad
 ad
 ad
-XQ
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+WE
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 hH
 kU
 lM
@@ -42379,11 +42413,11 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Ko
 Ko
 Gl
@@ -42394,7 +42428,7 @@ UO
 Ko
 Ko
 Qq
-zq
+Lz
 ad
 ad
 ad
@@ -42408,16 +42442,16 @@ ad
 ad
 ad
 Qv
-zq
+Lz
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -42600,16 +42634,16 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-XQ
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
+Lz
 hH
 kV
 lM
@@ -42636,10 +42670,10 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Au
 CQ
 Ko
@@ -42651,7 +42685,7 @@ TI
 Ko
 CQ
 Gj
-zq
+Lz
 ad
 ad
 ad
@@ -42665,15 +42699,15 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -42857,15 +42891,15 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-XQ
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
+Lz
+Lz
 gz
 gz
 kW
@@ -42893,10 +42927,10 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 HE
 HE
 Ko
@@ -42908,7 +42942,7 @@ TI
 Ko
 HE
 HE
-zq
+Lz
 ad
 ad
 ad
@@ -42922,15 +42956,15 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
-XQ
-zq
-zq
-XQ
+WE
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -43115,14 +43149,14 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gz
 gn
 kV
@@ -43151,9 +43185,9 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 JP
 qp
 Ko
@@ -43165,7 +43199,7 @@ wU
 Ko
 JP
 qp
-zq
+Lz
 ad
 ad
 ad
@@ -43180,14 +43214,14 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -43372,14 +43406,14 @@ aC
 aC
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gz
 iL
 kX
@@ -43408,9 +43442,9 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 JP
 JP
 Ko
@@ -43422,7 +43456,7 @@ Ko
 Ko
 JP
 JP
-zq
+Lz
 ad
 ad
 ad
@@ -43434,18 +43468,18 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -43629,13 +43663,13 @@ fQ
 aC
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 gz
 gz
@@ -43665,21 +43699,21 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 Au
 Au
-zq
+Lz
 Ko
 XC
 XC
 XC
 Ko
-zq
+Lz
 Au
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -43690,19 +43724,19 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
-zq
-zq
-XQ
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -43886,13 +43920,13 @@ ZM
 aC
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 gz
@@ -43923,8 +43957,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Au
 LR
 Ko
@@ -43934,7 +43968,7 @@ XC
 XC
 Ko
 Ko
-zq
+Lz
 Au
 Au
 ad
@@ -43945,22 +43979,22 @@ ad
 ad
 ad
 ad
-ad
-zq
-zq
-zq
-XQ
-ad
-ad
-ad
-ad
-zq
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 ad
 ad
-zq
-zq
-zq
+ad
+Lz
+ad
+ad
+ad
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -44142,15 +44176,15 @@ fC
 fS
 aC
 ad
-XQ
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+WE
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 gy
 NR
@@ -44180,20 +44214,20 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 yE
 Hh
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Hr
-zq
+Lz
 Au
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -44201,23 +44235,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -44399,15 +44433,15 @@ fD
 aC
 aC
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 gx
 la
@@ -44437,19 +44471,19 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Gj
-zq
+Lz
 yC
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Ud
 ad
 ad
@@ -44457,10 +44491,10 @@ ad
 ad
 ad
 ad
-XQ
-zq
-zq
-XQ
+WE
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -44469,12 +44503,12 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -44657,14 +44691,14 @@ fT
 aC
 ad
 ad
-zq
-zq
+Lz
+Lz
 Mx
-zq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+Lz
+WE
 ad
 gy
 lb
@@ -44696,18 +44730,18 @@ ad
 ad
 ad
 Ud
-zq
-zq
+Lz
+Lz
 PS
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ak
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -44726,12 +44760,12 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -44952,19 +44986,19 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -44983,17 +45017,17 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
-zq
-zq
-zq
-ad
-ad
+Lz
+Lz
+Lz
 ad
 ad
-zq
+ad
+ad
+Lz
 ad
 ad
 ad
@@ -45209,18 +45243,18 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -45241,16 +45275,16 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
-zq
+Lz
 ad
-zq
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -45466,17 +45500,17 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ud
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -45498,15 +45532,15 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
-zq
+Lz
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -45723,17 +45757,17 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -45759,10 +45793,10 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -45940,15 +45974,15 @@ fq
 fE
 fV
 ae
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Dq
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+WE
 gg
 gg
 VM
@@ -45981,15 +46015,15 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -46016,10 +46050,10 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -46197,16 +46231,16 @@ fq
 fE
 aF
 aP
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 fK
 gs
 lf
@@ -46238,14 +46272,14 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Gj
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -46273,9 +46307,9 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -46454,16 +46488,16 @@ fr
 fG
 fW
 aP
-zq
-zq
-zq
-XQ
-zq
-zq
-XQ
-zq
-zq
-zq
+Lz
+Lz
+Lz
+WE
+Lz
+Lz
+WE
+Lz
+Lz
+Lz
 gr
 gA
 gs
@@ -46496,13 +46530,13 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -46525,14 +46559,14 @@ ad
 ad
 ad
 ad
-zq
+Lz
+Lz
 ad
 ad
-ad
-ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -46711,16 +46745,16 @@ en
 fH
 fX
 aP
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 gs
 gs
@@ -46781,14 +46815,14 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -46968,16 +47002,16 @@ HR
 fI
 fY
 an
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gg
 gs
 lg
@@ -47044,8 +47078,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -47225,10 +47259,10 @@ ae
 ae
 an
 an
-zq
-zq
-zq
-XQ
+Lz
+Lz
+Lz
+WE
 gg
 gr
 gr
@@ -47301,8 +47335,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -47481,10 +47515,10 @@ hZ
 ae
 ad
 ad
-XQ
-zq
-zq
-zq
+WE
+Lz
+Lz
+Lz
 gg
 gg
 hI
@@ -47553,12 +47587,12 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -47736,11 +47770,11 @@ aS
 eR
 fe
 ae
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 RA
 gg
 hi
@@ -47812,10 +47846,10 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -47993,12 +48027,12 @@ aS
 aS
 ff
 aP
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 hj
 hK
@@ -48072,7 +48106,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -48250,12 +48284,12 @@ eb
 eb
 ff
 aP
-zq
-zq
-XQ
-zq
-zq
-zq
+Lz
+Lz
+WE
+Lz
+Lz
+Lz
 gr
 hk
 YK
@@ -48328,8 +48362,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -48507,12 +48541,12 @@ aS
 eS
 ff
 aP
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 hl
 hM
@@ -48585,7 +48619,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -48594,7 +48628,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -48764,12 +48798,12 @@ eb
 eb
 fe
 aP
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 hm
 hN
@@ -48841,8 +48875,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -48851,7 +48885,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -49022,11 +49056,11 @@ aS
 fg
 an
 NT
-zq
-zq
-zq
-XQ
-zq
+Lz
+Lz
+Lz
+WE
+Lz
 gg
 hn
 hO
@@ -49097,8 +49131,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -49107,9 +49141,9 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -49279,9 +49313,9 @@ eb
 fh
 an
 an
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 fK
@@ -49353,8 +49387,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -49365,7 +49399,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -49610,7 +49644,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -49621,8 +49655,8 @@ ad
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 ad
 ad
 ad
@@ -49864,22 +49898,22 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -50121,23 +50155,23 @@ ad
 zq
 zq
 zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Na
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
-zq
-zq
-XQ
+Lz
+Lz
+WE
 ad
 ad
 ad
@@ -50381,21 +50415,21 @@ zq
 zq
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-XQ
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+WE
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -50579,15 +50613,15 @@ jB
 jZ
 kv
 ae
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Dq
-zq
-zq
-zq
+Lz
+Lz
+Lz
 gr
 rQ
 sF
@@ -50645,14 +50679,14 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -50836,15 +50870,15 @@ jC
 ka
 kw
 an
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 rR
 sG
@@ -50903,14 +50937,14 @@ ad
 ad
 ad
 ad
-XQ
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+WE
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -51093,15 +51127,15 @@ jC
 kb
 kx
 an
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 rS
 sF
@@ -51161,12 +51195,12 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -51350,14 +51384,14 @@ jD
 kc
 an
 an
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 RA
 gg
 BI
@@ -51420,9 +51454,9 @@ ad
 ad
 ad
 ad
-zq
-XQ
-zq
+Lz
+WE
+Lz
 ad
 ad
 ad
@@ -51590,8 +51624,8 @@ et
 eH
 eV
 an
-zq
-zq
+Lz
+Lz
 gd
 fm
 fm
@@ -51606,16 +51640,16 @@ fm
 jE
 an
 ae
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 gr
 rQ
 sF
@@ -51677,7 +51711,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -51847,32 +51881,32 @@ aP
 eI
 aP
 an
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 MW
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-Ga
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Wf
 gr
 rU
 sI
@@ -51934,7 +51968,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -52100,35 +52134,35 @@ ad
 ad
 ad
 ad
-ah
-ah
-ah
+Es
+Es
+Es
 MW
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Fx
 rg
 rV
@@ -52191,7 +52225,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -52358,35 +52392,35 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Fy
 MA
-Cv
+SW
 fK
 rW
 sK
@@ -52448,7 +52482,7 @@ ad
 ad
 ad
 ad
-zq
+Lz
 ad
 ad
 ad
@@ -52619,28 +52653,28 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Ai
 ni
 ni
@@ -52879,25 +52913,25 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 Ai
 ni
 qC
@@ -53138,23 +53172,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 Ai
 qb
 qD
@@ -53396,22 +53430,22 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ai
 qb
 qD
@@ -53653,22 +53687,22 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
+Lz
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Sh
 ni
 ln
@@ -53910,24 +53944,24 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 Ai
-zq
+Lz
 ni
 ni
 Qm
@@ -54168,23 +54202,23 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
-zq
-zq
+Lz
+Lz
 Ai
-zq
+Lz
 ni
 rl
 sd
@@ -54428,11 +54462,11 @@ ad
 ad
 ad
 ad
-zq
-zq
-zq
-zq
-zq
+Lz
+Lz
+Lz
+Lz
+Lz
 ad
 ad
 ad
@@ -54441,7 +54475,7 @@ ad
 ad
 ad
 Ai
-zq
+Lz
 ni
 rm
 se
