@@ -23774,10 +23774,6 @@
 	dir = 10
 	},
 /area/station/hallway/floor4/fore)
-"gfi" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/medical/storage)
 "gfn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -55427,10 +55423,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/port/fore)
-"okX" = (
-/obj/effect/decal/cleanable/glass,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/floor2/port/aft)
 "ola" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -190820,7 +190812,7 @@ ceF
 ceF
 ceF
 nfv
-gfi
+nfv
 mHh
 obX
 lcv
@@ -204683,9 +204675,9 @@ qVp
 wmw
 bXz
 sZo
-okX
+tPm
 tnm
-okX
+tPm
 xui
 nlN
 bvC
@@ -205191,10 +205183,10 @@ uZF
 svu
 uZF
 tPm
-okX
 tPm
-okX
-okX
+tPm
+tPm
+tPm
 tPm
 tPm
 tPm
