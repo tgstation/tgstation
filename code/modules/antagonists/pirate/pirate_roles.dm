@@ -124,7 +124,7 @@
 	icon_state = "sleeper"
 	prompt_name = "An assistant gone loose"
 	outfit = /datum/outfit/pirate/grey
-	rank = "Tidemaster"
+	rank = "Tider"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey/shitter
-	rank = "Shitter"
+	rank = "Tidemaster"
