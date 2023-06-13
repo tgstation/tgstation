@@ -7673,15 +7673,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"dji" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/hallway/secondary/entry)
 "djC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Smoke Room"
@@ -14116,15 +14107,6 @@
 	dir = 1
 	},
 /area/station/engineering/atmos)
-"fGH" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/commons/fitness/recreation)
 "fHb" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -18787,15 +18769,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
-"hlL" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "hmb" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -27360,15 +27333,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/tools)
-"keX" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/service/abandoned_gambling_den/gaming)
 "keY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/broken_flooring/plating/directional/south,
@@ -36887,15 +36851,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"nxx" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/department/engine)
 "nxD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37218,15 +37173,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/commons)
-"nCE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/command/heads_quarters/rd)
 "nCH" = (
 /turf/closed/wall/r_wall,
 /area/station/security)
@@ -47534,15 +47480,6 @@
 /obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"rcc" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/central)
 "rce" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology - Cell 3";
@@ -48493,15 +48430,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
-"rtE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/department/science/xenobiology)
 "rtQ" = (
 /turf/closed/wall/r_wall,
 /area/station/security/tram)
@@ -49261,15 +49189,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"rGe" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
 "rGm" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/computer/security,
@@ -69950,15 +69869,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
-"xSl" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/starboard/central)
 "xSp" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -84616,7 +84526,7 @@ vxt
 vxt
 wyt
 qai
-nxx
+vxt
 afh
 afh
 fch
@@ -85940,7 +85850,7 @@ blb
 dDB
 slY
 ohb
-hlL
+slY
 ueX
 pBV
 mDC
@@ -88230,7 +88140,7 @@ gJN
 oyx
 gwf
 los
-rGe
+ybO
 cwf
 cwf
 dZd
@@ -98366,7 +98276,7 @@ stX
 wiT
 wgL
 usG
-rcc
+sSQ
 wYi
 frB
 sSQ
@@ -98623,7 +98533,7 @@ vEe
 xXG
 wgL
 hHq
-rcc
+sSQ
 ioP
 uOw
 eBQ
@@ -99651,7 +99561,7 @@ mdm
 cAd
 wgL
 usG
-rcc
+sSQ
 xVO
 ljp
 sSQ
@@ -107334,7 +107244,7 @@ dDB
 blb
 dDB
 ldq
-rtE
+ldq
 ldq
 ldq
 kUF
@@ -107593,7 +107503,7 @@ blb
 ldq
 ouq
 tHd
-rtE
+ldq
 hPK
 dAr
 sNN
@@ -107850,7 +107760,7 @@ dDB
 ldq
 tUa
 vXn
-rtE
+ldq
 ldq
 ldq
 jTY
@@ -110189,7 +110099,7 @@ jGA
 vtC
 cWZ
 vtC
-dji
+tuT
 vtC
 vtC
 vtC
@@ -112695,7 +112605,7 @@ bbK
 oPM
 sDj
 uqw
-fGH
+uqw
 uqw
 uqw
 vMC
@@ -114231,7 +114141,7 @@ xQJ
 xQJ
 xQJ
 qNn
-keX
+qNn
 vpM
 owD
 xda
@@ -118112,7 +118022,7 @@ upe
 xok
 mmT
 pUA
-nCE
+eQt
 eQt
 oPG
 eQt
@@ -118358,7 +118268,7 @@ xok
 vSB
 sHV
 wcs
-xSl
+xaN
 foo
 xok
 fni

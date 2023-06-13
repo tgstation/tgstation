@@ -107,17 +107,6 @@
 	},
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
-"cN" = (
-/obj/structure/sign/poster/contraband/soviet_propaganda,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/soviet_propaganda,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/space)
 "cR" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/structure/chair_flipped,
@@ -355,16 +344,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
-"od" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/space)
 "ou" = (
 /obj/structure/closet/syndicate,
 /obj/item/clothing/under/syndicate,
@@ -469,15 +448,6 @@
 "rj" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/ruin/space)
-"rq" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "rT" = (
 /turf/open/space/basic,
@@ -701,15 +671,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/airless,
-/area/ruin/space)
-"AI" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/asteroid,
 /area/ruin/space)
 "Bi" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -1033,13 +994,6 @@
 /area/ruin/space)
 "Qx" = (
 /obj/structure/sign/poster/official/moth_meth,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/moth_meth,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "QA" = (
@@ -1060,13 +1014,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
 "RE" = (
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/interdyne_gene_clinics,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space)
@@ -1634,7 +1581,7 @@ Er
 Er
 Er
 Er
-rq
+ED
 ED
 Er
 Er
@@ -1672,7 +1619,7 @@ pO
 Km
 HH
 eR
-rq
+ED
 ED
 Er
 rT
@@ -1710,7 +1657,7 @@ ce
 yl
 Rc
 Lf
-cN
+xT
 Er
 rT
 bz
@@ -1783,8 +1730,8 @@ UM
 gq
 ED
 Qx
-rq
-rq
+ED
+ED
 Er
 rT
 bz
@@ -1804,7 +1751,7 @@ Er
 Er
 ED
 ED
-rq
+ED
 vF
 aO
 hm
@@ -1839,7 +1786,7 @@ Er
 Er
 Er
 Er
-od
+ED
 aZ
 xm
 ZC
@@ -1874,7 +1821,7 @@ bz
 rT
 Er
 Er
-AI
+Er
 Hd
 nd
 nR
@@ -1911,7 +1858,7 @@ bz
 rT
 rT
 Er
-AI
+Er
 GT
 sF
 ZX
@@ -1952,7 +1899,7 @@ ED
 Co
 QA
 UR
-rq
+ED
 Jh
 wY
 zi
@@ -1989,7 +1936,7 @@ ED
 RE
 HI
 CS
-rq
+ED
 rj
 ZC
 ZO
@@ -2062,7 +2009,7 @@ rT
 Er
 ED
 ED
-rq
+ED
 ED
 qL
 CT

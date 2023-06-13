@@ -420,15 +420,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
-"QE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/template_noop,
-/area/template_noop)
 "TP" = (
 /obj/item/feather,
 /obj/effect/decal/cleanable/dirt,
@@ -464,7 +455,7 @@ ad
 ad
 ad
 ad
-QE
+aa
 aa
 "}
 (2,1,1) = {"
