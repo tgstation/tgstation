@@ -101,8 +101,14 @@
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	new /obj/effect/pod_landingzone/(landing_zone, pod, crate)
-	announce_to_ghosts(landing_zone)
+	var/obj/effect/pod_landingzone/landing_zone = new(landing_zone, pod, crate)
+
+	notify_ghosts(
+		"A stray cargo pod is landing in [get_area_name(src)]!",
+		source = landing_zone,
+		header = "Heads up!",
+		action = NOTIFY_JUMP,
+	)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
