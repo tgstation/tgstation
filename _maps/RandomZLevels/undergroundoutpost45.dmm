@@ -17,6 +17,17 @@
 "ag" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/undergroundoutpost45/central)
+<<<<<<< HEAD
+=======
+"ah" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -892,7 +903,15 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "cB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
@@ -4474,7 +4493,15 @@
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "lq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -5015,7 +5042,16 @@
 "mv" = (
 /mob/living/basic/giant_spider,
 /obj/structure/spider/stickyweb,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "mw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
@@ -6545,7 +6581,15 @@
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "px" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
@@ -7932,7 +7976,15 @@
 /area/awaymission/undergroundoutpost45/research)
 "sz" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "sA" = (
 /obj/machinery/shower/directional/east,
@@ -9358,7 +9410,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "vC" = (
 /obj/machinery/light/small/directional/east,
@@ -9806,7 +9866,15 @@
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "wK" = (
 /obj/machinery/door/airlock{
@@ -9869,7 +9937,15 @@
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "wS" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -9892,7 +9968,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "wX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -10402,7 +10486,15 @@
 /obj/effect/decal/cleanable/ash/large,
 /obj/item/clothing/shoes/combat,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "yx" = (
 /obj/machinery/computer/crew{
@@ -10411,7 +10503,15 @@
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "yy" = (
 /obj/structure/table/wood,
@@ -10642,7 +10742,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "zx" = (
 /mob/living/basic/giant_spider,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "zA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -10727,7 +10836,15 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Ac" = (
 /obj/machinery/light/small/directional/west,
@@ -10863,7 +10980,15 @@
 /obj/machinery/door/poddoor/shutters/preopen,
 /obj/item/shard/plastitanium,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "AS" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
@@ -10871,7 +10996,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/south,
 /obj/item/paperwork/security,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "AT" = (
 /obj/machinery/light/small/directional/south,
@@ -11003,8 +11136,16 @@
 "BB" = (
 /obj/effect/decal/cleanable/xenoblood,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/spawner/random/medical/medkit_rare,
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "BF" = (
 /obj/structure/alien/weeds/node,
@@ -11106,7 +11247,15 @@
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Cd" = (
 /obj/structure/alien/weeds,
@@ -11125,7 +11274,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Ce" = (
 /obj/machinery/light/small/directional/north,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/research)
 "Cg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -11164,6 +11322,17 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"Cv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Cw" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -11211,7 +11380,16 @@
 /area/awaymission/undergroundoutpost45)
 "CO" = (
 /obj/structure/spider/solid,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "CQ" = (
 /obj/item/pipe{
@@ -11235,7 +11413,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "CX" = (
 /mob/living/simple_animal/bot/cleanbot,
@@ -11255,7 +11441,15 @@
 "Da" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "De" = (
 /obj/machinery/computer/monitor{
@@ -11323,7 +11517,16 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "Ds" = (
 /obj/structure/spider/stickyweb,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -11386,7 +11589,15 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
+<<<<<<< HEAD
 /turf/open/space/basic,
+=======
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "DM" = (
 /mob/living/carbon/alien/adult/drone,
@@ -11462,7 +11673,15 @@
 "Ef" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Em" = (
 /obj/effect/spawner/random/trash/bin,
@@ -11517,7 +11736,15 @@
 /obj/effect/decal/cleanable/ash,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "EE" = (
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -11536,7 +11763,15 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "EJ" = (
 /obj/machinery/light/small/directional/north,
@@ -11551,7 +11786,15 @@
 /obj/machinery/door/poddoor/shutters/preopen,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "EM" = (
 /obj/structure/table,
@@ -11623,7 +11866,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Fd" = (
 /obj/structure/disposalpipe/segment,
@@ -11641,8 +11892,16 @@
 "Fq" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/spawner/random/medical/medkit_rare,
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Fr" = (
 /obj/structure/glowshroom/single,
@@ -11724,7 +11983,15 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "FC" = (
 /obj/item/bedsheet/captain/double{
@@ -11764,6 +12031,20 @@
 /obj/machinery/syndicatebomb/training,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/undergroundoutpost45)
+<<<<<<< HEAD
+=======
+"Ga" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 "Gc" = (
 /obj/machinery/light/blacklight/directional/west,
 /obj/machinery/airalarm/directional/west,
@@ -11808,7 +12089,15 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Gn" = (
 /obj/structure/alien/weeds,
@@ -11878,7 +12167,15 @@
 /obj/machinery/suit_storage_unit,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "GN" = (
 /obj/structure/chair/comfy/shuttle,
@@ -11889,7 +12186,15 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "GO" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
@@ -11898,7 +12203,15 @@
 /obj/item/paperwork/security,
 /obj/item/paperwork/security,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Hb" = (
 /obj/machinery/door/airlock/security/glass,
@@ -11994,7 +12307,15 @@
 /obj/item/storage/box/lethalshot,
 /obj/item/storage/box/lethalshot,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "HL" = (
 /obj/item/kirbyplants/random,
@@ -12016,7 +12337,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/light/bulb/broken,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "HR" = (
 /obj/machinery/light/blacklight/directional/east,
@@ -12392,7 +12721,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "KU" = (
 /obj/structure/closet/crate,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "KV" = (
 /obj/structure/showcase/machinery/tv/broken,
@@ -12458,7 +12796,15 @@
 "Lo" = (
 /obj/effect/gibspawner/human,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Lq" = (
 /obj/structure/alien/weeds/node,
@@ -12617,7 +12963,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Mk" = (
 /obj/machinery/light/small/directional/south,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/gateway)
 "Mm" = (
 /obj/structure/sign/poster/official/moth_hardhat,
@@ -12687,7 +13042,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "MC" = (
 /obj/machinery/light/small/directional/west,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/mining)
 "MF" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -12729,13 +13093,29 @@
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "MN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/book/manual/wiki/security_space_law,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "MQ" = (
 /obj/item/organ/internal/heart,
@@ -12791,11 +13171,23 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 <<<<<<< HEAD
 "Na" = (
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/space/basic,
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 =======
 >>>>>>> parent of 8114180314b (Update undergroundoutpost45.dmm)
@@ -12944,7 +13336,15 @@
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/decal/cleanable/ash/large,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "NW" = (
 /obj/effect/decal/cleanable/plasma,
@@ -12963,7 +13363,15 @@
 "NX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Oa" = (
 /obj/machinery/door/poddoor/shutters/preopen,
@@ -12973,7 +13381,15 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Ob" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -13018,7 +13434,15 @@
 "On" = (
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Oq" = (
 /obj/machinery/light/small/directional/south,
@@ -13058,7 +13482,15 @@
 "OF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
+<<<<<<< HEAD
 /turf/open/space/basic,
+=======
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "OG" = (
 /obj/item/toy/plush/moth,
@@ -13095,7 +13527,16 @@
 /obj/effect/spawner/random/entertainment/money_large,
 /obj/effect/spawner/random/entertainment/money_large,
 /obj/effect/spawner/random/entertainment/money_large,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "OO" = (
 /obj/machinery/disposal/bin,
@@ -13115,7 +13556,15 @@
 "OW" = (
 /obj/machinery/door/poddoor/ert,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Pd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -13237,7 +13686,16 @@
 /area/awaymission/undergroundoutpost45)
 "PZ" = (
 /obj/structure/barricade/wooden,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Qa" = (
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer,
@@ -13380,7 +13838,16 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Qv" = (
 /obj/item/binoculars,
@@ -13423,7 +13890,15 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "QJ" = (
 /obj/structure/alien/egg/burst,
@@ -13488,17 +13963,43 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
 /area/awaymission/undergroundoutpost45/caves)
 "Rp" = (
 /obj/item/storage/bag/money,
 /turf/open/misc/asteroid,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
+"Rp" = (
+/obj/item/storage/bag/money,
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Ru" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /obj/structure/spider/stickyweb,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Rx" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -13571,7 +14072,15 @@
 "RJ" = (
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "RN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -13711,12 +14220,28 @@
 /obj/effect/gibspawner/human,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "SC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "SE" = (
 /mob/living/simple_animal/hostile/nanotrasen,
@@ -13730,7 +14255,15 @@
 /obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /obj/item/reagent_containers/cup/glass/bottle/whiskey,
 /obj/item/reagent_containers/cup/glass/bottle/whiskey,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "SJ" = (
 /obj/machinery/suit_storage_unit/security,
@@ -13768,7 +14301,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 <<<<<<< HEAD
 "SW" = (
@@ -13803,6 +14344,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 	id = 182;
+<<<<<<< HEAD
 	name = "Elevator Ladder";
 	spatial_grid_key = 182
 =======
@@ -13811,6 +14353,9 @@
 =======
 	id = 182
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
+=======
+	name = "Elevator Ladder"
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -13850,7 +14395,15 @@
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Tu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13883,7 +14436,15 @@
 /obj/effect/mob_spawn/corpse/human/waystation/nanotrasenofficer,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "TI" = (
 /obj/structure/chair/comfy/shuttle,
@@ -13891,7 +14452,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "TP" = (
 /obj/machinery/light/small/directional/north,
@@ -13965,7 +14534,15 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Up" = (
 /obj/structure/closet/cabinet,
@@ -14037,7 +14614,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "UG" = (
 /obj/machinery/light/small/directional/north,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "UH" = (
 /obj/structure/alien/weeds,
@@ -14057,7 +14643,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "UK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -14071,14 +14665,30 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "UM" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
+<<<<<<< HEAD
 /turf/open/space/basic,
+=======
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "UO" = (
 /obj/structure/chair/comfy/shuttle,
@@ -14087,7 +14697,15 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "UR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -14239,7 +14857,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "Wc" = (
 /obj/effect/mob_spawn/corpse/human/engineer/mod,
@@ -14367,6 +14993,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 	id = 182;
+<<<<<<< HEAD
 	name = "Elevator Ladder";
 	spatial_grid_key = 182
 =======
@@ -14375,6 +15002,9 @@
 =======
 	id = 182
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
+=======
+	name = "Elevator Ladder"
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -14411,7 +15041,15 @@
 "WU" = (
 /obj/effect/decal/cleanable/ash/large,
 /obj/effect/turf_decal/stripes/line,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "WZ" = (
 /obj/structure/alien/weeds/node,
@@ -14479,7 +15117,15 @@
 /area/awaymission/undergroundoutpost45)
 "XC" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "XD" = (
 /obj/structure/table/glass,
@@ -14498,7 +15144,16 @@
 /area/awaymission/undergroundoutpost45)
 "XF" = (
 /obj/structure/ore_box,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "XH" = (
 /obj/structure/alien/weeds,
@@ -14557,13 +15212,29 @@
 "XT" = (
 /obj/item/light/bulb/broken,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "XX" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/machinery/door/poddoor/shutters/preopen,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /turf/open/floor/vault,
+=======
+/turf/open/floor/vault{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "XZ" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -14693,7 +15364,16 @@
 "YT" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/caves)
 "YV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -14765,7 +15445,16 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Zs" = (
 /obj/machinery/light/small/directional/north,
+<<<<<<< HEAD
 /turf/open/misc/asteroid,
+=======
+/turf/open/misc/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 /area/awaymission/undergroundoutpost45/mining)
 "ZA" = (
 /obj/effect/decal/remains/xeno,
@@ -36927,7 +37616,7 @@ XC
 wQ
 ys
 TI
-sz
+LK
 Ma
 ty
 zq
@@ -37142,8 +37831,13 @@ gv
 gv
 gv
 XQ
+<<<<<<< HEAD
 Lz
 Lz
+=======
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 gv
 kG
 ly
@@ -37191,7 +37885,7 @@ Ko
 MY
 Ca
 SS
-sz
+LK
 Ma
 yV
 MQ
@@ -37403,11 +38097,11 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 gU
 kH
 ly
@@ -37659,12 +38353,12 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
 gU
 kI
 lz
@@ -37925,11 +38619,19 @@ ad
 ad
 ad
 XQ
+<<<<<<< HEAD
 Lz
 XQ
 Lz
 Lz
 Lz
+=======
+zq
+XQ
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 gU
 kH
 ly
@@ -38182,10 +38884,10 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 Mk
 gw
 yR
@@ -38439,11 +39141,11 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 gU
 kH
 ly
@@ -38705,12 +39407,21 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 XQ
 Lz
 Lz
 Lz
 Lz
+=======
+zq
+XQ
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 gU
 kK
 lB
@@ -38962,12 +39673,12 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
 gU
 kG
 ly
@@ -39220,10 +39931,17 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 XQ
 gw
 kH
@@ -39485,9 +40203,15 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 XQ
 Lz
+=======
+zq
+XQ
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 gz
 gw
 kL
@@ -41591,7 +42315,7 @@ MQ
 Eu
 Ef
 SC
-Na
+JP
 Ko
 QI
 UJ
@@ -42919,7 +43643,7 @@ sw
 to
 tR
 gz
-Lz
+zq
 ad
 ad
 ad
@@ -43188,9 +43912,9 @@ sx
 tn
 tP
 hc
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -43212,6 +43936,7 @@ TI
 Ko
 HE
 HE
+<<<<<<< HEAD
 zq
 ad
 ad
@@ -43233,6 +43958,8 @@ ad
 ad
 XQ
 <<<<<<< HEAD
+=======
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 Lz
 Lz
 XQ
@@ -43457,7 +44184,7 @@ hc
 hc
 hc
 Ce
-Lz
+zq
 ad
 ad
 ad
@@ -43483,9 +44210,15 @@ NX
 NX
 wU
 Ko
+<<<<<<< HEAD
 Na
 qp
 zq
+=======
+JP
+qp
+Lz
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -43720,8 +44453,8 @@ tT
 gy
 uN
 hH
-Es
-Lz
+ah
+zq
 ad
 ad
 ad
@@ -43740,8 +44473,8 @@ OW
 OW
 Ko
 Ko
-Na
-Na
+JP
+JP
 Lz
 ad
 ad
@@ -44037,9 +44770,9 @@ tU
 uw
 uO
 vk
-Es
-Lz
-Lz
+ah
+zq
+zq
 ad
 ad
 ad
@@ -44310,10 +45043,10 @@ tV
 ux
 uP
 hH
-Es
-Lz
-Lz
-Lz
+ah
+zq
+zq
+zq
 ad
 ad
 ad
@@ -44585,10 +45318,10 @@ tW
 hc
 hc
 hc
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -44830,23 +45563,32 @@ Xq
 gy
 nu
 nX
+<<<<<<< HEAD
 Lz
 Lz
 XQ
 Lz
 Lz
 Lz
+=======
+zq
+zq
+XQ
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -45099,6 +45841,7 @@ mn
 gy
 nu
 nY
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -45116,6 +45859,25 @@ Lz
 Lz
 XQ
 Lz
+=======
+zq
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -45359,19 +46121,19 @@ nY
 gr
 gr
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -45617,6 +46379,7 @@ oF
 pl
 gr
 gr
+<<<<<<< HEAD
 Lz
 XQ
 Lz
@@ -45628,6 +46391,19 @@ Lz
 Lz
 Lz
 Lz
+=======
+zq
+XQ
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 XQ
 ad
 ad
@@ -45874,18 +46650,18 @@ ld
 pm
 pN
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
-Lz
+zq
 ad
 ad
 ad
@@ -46131,18 +46907,18 @@ ld
 gs
 pO
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
-Lz
+zq
 ad
 ad
 ad
@@ -46394,6 +47170,7 @@ oG
 pn
 pP
 gr
+<<<<<<< HEAD
 Lz
 Lz
 XQ
@@ -46406,6 +47183,20 @@ Lz
 Lz
 Lz
 Lz
+=======
+zq
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -46653,6 +47444,7 @@ fN
 fK
 gg
 gg
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -46663,6 +47455,18 @@ Lz
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -46923,11 +47727,11 @@ pQ
 qs
 qY
 gg
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 Lz
@@ -47180,17 +47984,17 @@ pR
 Ie
 mt
 gg
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -47438,16 +48242,16 @@ fO
 fO
 gg
 ad
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -47701,6 +48505,7 @@ qu
 mu
 fO
 ad
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -47752,6 +48557,23 @@ ad
 ad
 ad
 ad
+=======
+zq
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 zq
 zq
 ad
@@ -47966,6 +48788,7 @@ fN
 ad
 ad
 XQ
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -47983,6 +48806,25 @@ XQ
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -48223,24 +49065,24 @@ fO
 fO
 fK
 gg
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -48481,8 +49323,8 @@ sA
 ts
 gg
 gg
-Lz
-Lz
+zq
+zq
 vI
 vI
 vI
@@ -48490,15 +49332,15 @@ vI
 vJ
 vI
 vI
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -48747,7 +49589,7 @@ sB
 pX
 tX
 gg
-Lz
+zq
 Qu
 vJ
 wb
@@ -48758,15 +49600,15 @@ wb
 vI
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -49017,16 +49859,16 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -49277,13 +50119,13 @@ vI
 vI
 vJ
 vI
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -49542,13 +50384,13 @@ xE
 xl
 xl
 vJ
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 XF
 ad
 ad
@@ -49803,9 +50645,9 @@ vI
 vI
 vI
 Zs
-Lz
-Lz
-Lz
+zq
+zq
+zq
 KU
 ad
 ad
@@ -50060,15 +50902,15 @@ Ni
 yc
 ww
 UM
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -50317,19 +51159,19 @@ ya
 yd
 yf
 OF
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -50574,29 +51416,36 @@ yb
 ye
 ww
 DJ
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
+<<<<<<< HEAD
 <<<<<<< HEAD
 Lz
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+Na
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 Lz
 Lz
 Lz
@@ -50853,28 +51702,28 @@ vI
 vI
 vI
 Zs
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
 ad
-Lz
+zq
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 zq
@@ -51101,16 +51950,16 @@ gr
 rQ
 sF
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 MC
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
 ad
 vJ
 xu
@@ -51118,16 +51967,16 @@ xB
 xJ
 xQ
 vI
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51136,12 +51985,12 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51358,16 +52207,16 @@ gr
 rR
 sG
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 vI
 xu
@@ -51375,16 +52224,16 @@ xC
 xK
 xR
 vJ
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51393,9 +52242,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51625,32 +52474,32 @@ gr
 rS
 sF
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 vI
 xv
 xD
 xL
 xS
 vI
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51661,9 +52510,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51883,29 +52732,29 @@ BI
 sH
 gg
 UG
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 vI
 vI
 vJ
 vI
 vJ
 vI
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -51919,9 +52768,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52145,29 +52994,29 @@ gr
 rQ
 sF
 gr
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52183,8 +53032,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -52402,29 +53251,29 @@ gr
 rU
 sI
 gr
-Wf
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+Ga
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52441,8 +53290,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -52659,27 +53508,27 @@ rg
 rV
 sJ
 rg
-SW
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+Cv
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52698,9 +53547,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52916,21 +53765,21 @@ fK
 rW
 sK
 fK
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -52956,8 +53805,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -52967,7 +53816,7 @@ ad
 ad
 ad
 ad
-Lz
+zq
 ad
 ad
 ad
@@ -53179,11 +54028,11 @@ qb
 qb
 ni
 ni
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -53214,8 +54063,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -53223,8 +54072,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -53471,16 +54320,16 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -53729,14 +54578,14 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -53986,8 +54835,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -54243,9 +55092,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -54501,8 +55350,8 @@ ad
 ad
 ad
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -54758,9 +55607,9 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -55012,13 +55861,13 @@ ad
 ad
 CO
 CO
-Lz
+zq
 Ds
 mv
 YT
 ad
-Lz
-Lz
+zq
+zq
 ad
 ad
 ad
@@ -55270,14 +56119,14 @@ ad
 ad
 ad
 CO
-Lz
+zq
 Ds
 Ds
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 ad
 ad
 ad
@@ -55534,12 +56383,12 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -56043,7 +56892,7 @@ ad
 ad
 ad
 ad
-Lz
+zq
 ad
 ad
 ad
@@ -56294,11 +57143,11 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
 YT
 Ds
 ad
@@ -57574,7 +58423,7 @@ ad
 ad
 ad
 ad
-Lz
+zq
 ON
 ad
 ad
@@ -57828,12 +58677,13 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
+zq
+zq
+zq
 Rp
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -57845,6 +58695,11 @@ ZS
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
 zq
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
+=======
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -58095,13 +58950,19 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 XQ
 Lz
+=======
+zq
+XQ
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
-Lz
+zq
 ad
 ad
 ad
@@ -58351,6 +59212,7 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -58360,6 +59222,17 @@ XQ
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -58608,6 +59481,7 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -58621,6 +59495,21 @@ Lz
 Lz
 XQ
 Lz
+=======
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+XQ
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 PZ
 YT
@@ -58865,22 +59754,22 @@ ad
 ad
 ad
 ad
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
-Lz
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
 ad
 ad
 ad
@@ -59124,6 +60013,7 @@ ad
 ad
 ad
 XQ
+<<<<<<< HEAD
 Lz
 Lz
 Lz
@@ -59137,6 +60027,21 @@ Lz
 Lz
 Lz
 Lz
+=======
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -59380,6 +60285,7 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 XQ
 Lz
@@ -59393,6 +60299,21 @@ Lz
 Lz
 Lz
 Lz
+=======
+zq
+XQ
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
@@ -59644,11 +60565,19 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 Lz
 XQ
 Lz
 Lz
 Lz
+=======
+zq
+XQ
+zq
+zq
+zq
+>>>>>>> parent of 64282d5cfd7 (Update undergroundoutpost45.dmm)
 ad
 ad
 ad
