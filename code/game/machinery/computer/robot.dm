@@ -175,6 +175,6 @@
 
 /obj/machinery/computer/robotics/Destroy()
 	if(!isnull(locked_down_borg))
-		locked_down_borg.lock_unlock_borg(locked_down_borg)
+		src.lock_unlock_borg(locked_down_borg)
 		locked_down_borg = null
-	return .()
+	return ..()
