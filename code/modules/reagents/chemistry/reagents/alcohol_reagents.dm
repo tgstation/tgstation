@@ -3677,7 +3677,7 @@
 
 /datum/reagent/consumable/ethanol/wine_voltaic
 	name = "Voltaic Yellow Wine"
-	description = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	description = "Electrically charged wine. Recharges ethereals, but also nontoxic."
 	boozepwr = 30
 	color = "#FFAA00"
 	taste_description = "static with a hint of sweetness"
@@ -3686,7 +3686,7 @@
 /datum/glass_style/drinking_glass/wine_voltaic
 	required_drink_type = /datum/reagent/consumable/ethanol/wine_voltaic
 	name = "Voltaic Yellow Wine"
-	desc = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	desc = "Electrically charged wine. Recharges ethereals, but also nontoxic."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "wine_voltaic"
 
@@ -3702,7 +3702,7 @@
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	description = "A grounding rod in the form of a drink.  Recharges etherials, and gives temporary shock resistance."
+	description = "A grounding rod in the form of a drink.  Recharges ethereals, and gives temporary shock resistance."
 	boozepwr = 50
 	color = "#b300ff"
 	quality = DRINK_NICE
@@ -3712,7 +3712,7 @@
 /datum/glass_style/drinking_glass/telepole
 	required_drink_type = /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	desc = "A liquid grounding rod. Recharges etherials and grants temporary shock resistance."
+	desc = "A liquid grounding rod. Recharges ethereals and grants temporary shock resistance."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "telepole"
 
@@ -3736,7 +3736,7 @@
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
-	description = "Ride the lightning!  Recharges etherials, suppresses phobias, and gives strong temporary shock resistance."
+	description = "Ride the lightning!  Recharges ethereals, suppresses phobias, and gives strong temporary shock resistance."
 	boozepwr = 80
 	color = "#00fbff"
 	quality = DRINK_FANTASTIC
@@ -3746,7 +3746,7 @@
 /datum/glass_style/drinking_glass/pod_tesla
 	required_drink_type = /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
-	desc = "Ride the lightning! Recharges etherials, suppresses phobias, and grants strong temporary shock resistance."
+	desc = "Ride the lightning! Recharges ethereals, suppresses phobias, and grants strong temporary shock resistance."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pod_tesla"
 

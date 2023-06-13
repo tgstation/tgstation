@@ -1,4 +1,0 @@
-author: "NotDhu"
-delete-after: True
-changes:
-  - bugfix: "Maintenance doors/delivery chutes leading into Tramstation's brig have had their access requirements fixed and now actually require security access to open."
