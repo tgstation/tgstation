@@ -38,8 +38,6 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 	/// Adds to claim, pulse, and expand range
 	var/core_range_bonus = 0
-	/// The core can sustain this many extra spores with this strain
-	var/core_spore_bonus = 0
 	/// Extra range up to which the core reinforces blobs
 	var/core_strong_reinforcement_range_bonus = 0
 	/// Extra range up to which the core reinforces blobs into reflectors
@@ -78,7 +76,6 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	overmind.color = complementary_color
 
 	if(overmind.blob_core)
-		overmind.blob_core.max_spores += core_spore_bonus
 		overmind.blob_core.claim_range += core_range_bonus
 		overmind.blob_core.pulse_range += core_range_bonus
 		overmind.blob_core.expand_range += core_range_bonus
@@ -86,7 +83,6 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.reflector_reinforce_range += core_reflector_reinforcement_range_bonus
 
 	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
-		N.max_spores += node_spore_bonus
 		N.claim_range += node_range_bonus
 		N.pulse_range += node_range_bonus
 		N.expand_range += node_range_bonus
@@ -109,17 +105,13 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/on_lose()
 	if(overmind.blob_core)
-		overmind.blob_core.max_spores -= core_spore_bonus
 		overmind.blob_core.claim_range -= core_range_bonus
-		overmind.blob_core.pulse_range -= core_range_bonus
 		overmind.blob_core.expand_range -= core_range_bonus
 		overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
 
 	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
-		N.max_spores -= node_spore_bonus
 		N.claim_range -= node_range_bonus
-		N.pulse_range -= node_range_bonus
 		N.expand_range -= node_range_bonus
 		N.strong_reinforce_range -= node_strong_reinforcement_range_bonus
 		N.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus

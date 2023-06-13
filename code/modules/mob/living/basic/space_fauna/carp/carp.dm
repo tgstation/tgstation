@@ -256,4 +256,8 @@
 		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
 	new_overlays += disk_overlay
 
+/mob/living/basic/carp/advanced
+	health = 40
+	obj_damage = 15
+
 #undef RARE_CAYENNE_CHANCE

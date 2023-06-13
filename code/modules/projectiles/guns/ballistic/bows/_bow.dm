@@ -3,6 +3,8 @@
 	icon = 'icons/obj/weapons/guns/bows/bows.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
+	name = "bow"
+	desc = "Seems out-of-place in this day and age, but at least it's reliable."
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	base_icon_state = "bow"
@@ -10,6 +12,7 @@
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
+	pinless = TRUE
 	attack_verb_continuous = list("whipped", "cracked")
 	attack_verb_simple = list("whip", "crack")
 	weapon_weight = WEAPON_HEAVY

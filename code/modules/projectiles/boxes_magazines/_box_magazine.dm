@@ -31,10 +31,6 @@
 	var/multiload = TRUE
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
-	///cost of all the bullets in the magazine/box
-	var/list/bullet_cost
-	///cost of the materials in the magazine/box itself
-	var/list/base_cost
 
 	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
 	var/ammo_band_color
@@ -45,12 +41,14 @@
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
-	if(!bullet_cost)
-		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
-		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon_state()
+
+/obj/item/ammo_box/Destroy(force)
+	QDEL_LIST(stored_ammo)
+	return ..()
 
 /obj/item/ammo_box/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
@@ -87,7 +85,7 @@
 
 	for(var/i in max(1, stored_ammo.len) to max_ammo)
 		stored_ammo += new round_check(src)
-	update_ammo_count()
+	update_appearance()
 
 ///gets a round from the magazine, if keep is TRUE the round will stay in the gun
 /obj/item/ammo_box/proc/get_round(keep = FALSE)
@@ -141,7 +139,7 @@
 			if(!did_load || !multiload)
 				break
 		if(num_loaded)
-			AM.update_ammo_count()
+			AM.update_appearance()
 	if(isammocasing(A))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
@@ -153,7 +151,7 @@
 		if(!silent)
 			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-		update_ammo_count()
+		update_appearance()
 
 	return num_loaded
 
@@ -167,11 +165,6 @@
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 	to_chat(user, span_notice("You remove a round from [src]!"))
-	update_ammo_count()
-
-/// Updates the materials and appearance of this ammo box
-/obj/item/ammo_box/proc/update_ammo_count()
-	update_custom_materials()
 	update_appearance()
 
 /obj/item/ammo_box/update_desc(updates)
@@ -202,13 +195,6 @@
 	ammo_band_image.appearance_flags = RESET_COLOR|KEEP_APART
 	overlays += ammo_band_image
 
-/// Updates the amount of material in this ammo box according to how many bullets are left in it.
-/obj/item/ammo_box/proc/update_custom_materials()
-	var/temp_materials = custom_materials.Copy()
-	for(var/material in bullet_cost)
-		temp_materials[material] = (bullet_cost[material] * stored_ammo.len) + base_cost[material]
-	set_custom_materials(temp_materials)
-
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
 	var/boolets = 0
@@ -233,4 +219,4 @@
 
 /obj/item/ammo_box/magazine/handle_atom_del(atom/A)
 	stored_ammo -= A
-	update_ammo_count()
+	update_appearance()

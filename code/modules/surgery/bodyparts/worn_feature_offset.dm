@@ -54,7 +54,7 @@
 		UnregisterSignal(old_owner, COMSIG_ATOM_POST_DIR_CHANGE)
 	if (!isnull(new_owner))
 		RegisterSignal(new_owner, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
-		RegisterSignal(new_owner, COMSIG_PARENT_QDELETING, PROC_REF(on_owner_deleted))
+		RegisterSignal(new_owner, COMSIG_QDELETING, PROC_REF(on_owner_deleted))
 
 /// If the owner is deleted, stop updating
 /datum/worn_feature_offset/proc/on_owner_deleted(mob/living/host)

@@ -56,7 +56,13 @@
 	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)
+	var/hunter_backstory = pick(
+		HUNTER_PACK_COPS,
+		HUNTER_PACK_RUSSIAN,
+		HUNTER_PACK_BOUNTY,
+		HUNTER_PACK_PSYKER,
+	)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -98,9 +104,11 @@
 	new /obj/item/autosurgeon(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees
-/datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick(HUNTER_PACK_COPS, HUNTER_PACK_RUSSIAN, HUNTER_PACK_BOUNTY, HUNTER_PACK_PSYKER)
-	var/datum/map_template/shuttle/ship
+/datum/round_event/ghost_role/fugitives/proc/spawn_hunters(backstory)
+	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", ROLE_FUGITIVE_HUNTER)
+	shuffle_inplace(candidates)
+
+	var/datum/map_template/shuttle/hunter/ship
 	switch(backstory)
 		if(HUNTER_PACK_COPS)
 			ship = new /datum/map_template/shuttle/hunter/space_cop
@@ -114,11 +122,22 @@
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
-	var/turf/T = locate(x,y,z)
-	if(!T)
+	var/turf/placement_turf = locate(x,y,z)
+	if(!placement_turf)
 		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
-	if(!ship.load(T))
+	if(!ship.load(placement_turf))
 		CRASH("Loading [backstory] ship failed!")
+
+	for(var/turf/shuttle_turf in ship.get_affected_turfs(placement_turf))
+		for(var/obj/effect/mob_spawn/ghost_role/human/fugitive/spawner in shuttle_turf)
+			if(length(candidates))
+				var/mob/our_candidate = candidates[1]
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+				candidates -= our_candidate
+				notify_ghosts("[spawner.prompt_name] has awoken: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Come look!")
+			else
+				notify_ghosts("[spawner.prompt_name] spawner has been created!", source = spawner, action = NOTIFY_ORBIT, header="Spawn Here!")
+
 	priority_announce("Unidentified ship detected near the station.")
 
 #undef TEAM_BACKSTORY_SIZE

@@ -23,8 +23,8 @@
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	liked_food = STONE
+	armor = 10
 	payday_modifier = 0.75
-	armor = 55
 	siemens_coeff = 0
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
