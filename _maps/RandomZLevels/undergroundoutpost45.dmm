@@ -2346,6 +2346,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gh" = (
 /obj/machinery/light/small/directional/west,
+/obj/item/sharpener,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
@@ -2797,13 +2798,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/item/storage/box/lights/mixed,
+/obj/item/flashlight/lantern/heirloom_moth,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "hA" = (
 /obj/structure/closet/firecloset,
-/obj/item/flashlight/lantern,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4802,7 +4803,6 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/crowbar/large/heavy,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4813,6 +4813,7 @@
 	c_tag = "Engineering Secure Storage";
 	network = list("uo45")
 	},
+/obj/item/crowbar/large/heavy,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
