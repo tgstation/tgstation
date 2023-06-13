@@ -16,11 +16,11 @@ When examining new issues you should immediately notify a maintainer if you see 
 
 #### Link Code Snippets
 
-To help triangulate bugs search the GitHub repo to locate relevant code and attach it to an issue.  Do this by creating a [link to the code](https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/creating-a-permanent-link-to-a-code-snippet).  This saves the contributors time from having to identify the problem and will be appreciated.
+To help triangulate bugs, search the GitHub repo to locate relevant code and attach it to an issue.  Do this by creating a [link to the code](https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/creating-a-permanent-link-to-a-code-snippet).  This saves the contributors time from having to identify the problem and will be appreciated.
 
 #### Use Gitblame
 
-GitHub also has a tool called `gitblame` that is useful in [tracking code](https://docs.github.com/en/repositories/working-with-files/using-files/tracking-changes-in-a-file) to determine who and when someone made a change.  This is ideally used to help solve old issues when there is uncertainty over which PR might have fixed it.  It is also a good tool to use to link PRs that caused the issue.
+GitHub also has a tool called `gitblame` that is useful in [tracking code](https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file#viewing-the-line-by-line-revision-history-for-a-file) to determine who and when someone made a change.  This is ideally used to help solve old issues when there is uncertainty over which PR might have fixed it.  It is also a good tool to use to link PRs that caused the issue.
 
 #### Search For Keywords
 
