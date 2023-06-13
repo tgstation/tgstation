@@ -273,8 +273,7 @@
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
 	var/list/turfs = list()
-	var/list/hit_list_parameter = list()
-	hit_list_parameter += src
+	var/list/hit_list_parameter = list(src)
 	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
 	for(var/turf/T in turfs)
