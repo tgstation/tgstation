@@ -400,3 +400,25 @@
       and gives them a probably-positive 2 minute moodlet when ingesting these.
   - rscadd: The officer's sabre has gained a small amount of bloodthrist for assistants!
   - bugfix: Fixed liver masters being unable to inspect the liver of scientists.
+2023-06-13:
+  ArcaneMusic:
+  - balance: In general, mineral recipe costs for items in larger amounts has been
+      decreased by 2x.
+  - balance: One sheet now contains a total of 100 units of material, down from 2000.
+      Proportionally the costs of items should remain the same, except for the smaller
+      costs of certain recipes.
+  - code_imp: Added a python script to the tools folder, letting you see a mineral
+      breakdown of one/several rounds using silo logs.
+  EricZilla:
+  - image: Someone broke their ankle using the jumpboots in the vendor so we had to
+      buy new ones
+  NotDhu:
+  - bugfix: Maintenance doors/delivery chutes leading into Tramstation's brig have
+      had their access requirements fixed and now actually require security access
+      to open.
+  ZephyrTFA:
+  - bugfix: AIs can no longer enter a limbo state without a core but not dead.
+  - rscadd: Nuclear Detonation now drops security level if it missed the station.
+  - rscadd: Nuclear Detonation now nukes the syndie base if its on the syndie base.
+  - bugfix: Nuclear Detonation now handles not playing a cinematic correctly.
+  - refactor: Changed z level iteration for Nuclear Detonation
