@@ -38,7 +38,7 @@
 	width = 100
 	height = 100
 	count = 100
-	spawning = 0.2
+	spawning = 0.25
 	lifespan = 1 SECONDS
 	fade = 1 SECONDS
 	position = generator(GEN_CIRCLE, 0, 16, UNIFORM_RAND)
