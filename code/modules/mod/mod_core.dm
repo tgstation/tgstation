@@ -279,6 +279,9 @@
 		return
 	mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 
+#define PLASMA_CORE_ORE_CHARGE 1500
+#define PLASMA_CORE_SHEET_CHARGE 2000
+
 /obj/item/mod/core/plasma
 	name = "MOD plasma core"
 	icon_state = "mod-core-plasma"
@@ -289,7 +292,7 @@
 	/// How much charge we are currently storing.
 	var/charge = 10000
 	/// Associated list of charge sources and how much they charge, only stacks allowed.
-	var/list/charger_list = list(/obj/item/stack/ore/plasma = 1500, /obj/item/stack/sheet/mineral/plasma = 2000)
+	var/list/charger_list = list(/obj/item/stack/ore/plasma = PLASMA_CORE_ORE_CHARGE, /obj/item/stack/sheet/mineral/plasma = PLASMA_CORE_SHEET_CHARGE)
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
@@ -355,3 +358,6 @@
 	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE
+
+#undef PLASMA_CORE_ORE_CHARGE
+#undef PLASMA_CORE_SHEET_CHARGE
