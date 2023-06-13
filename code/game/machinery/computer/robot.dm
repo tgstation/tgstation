@@ -102,7 +102,7 @@
 							R.ai_lockdown = TRUE
 					else
 						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
-							src.lock_unlock_borg(R, src.loc)
+							src.lock_unlock_borg(R, src.loc.loc.name)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
 						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
@@ -178,3 +178,5 @@
 		src.lock_unlock_borg(locked_down_borg)
 		locked_down_borg = null
 	return ..()
+
+
