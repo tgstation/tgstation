@@ -370,9 +370,9 @@
 		current_holder.underlays += visible_mask
 	if(directional)
 		if(beam)
-			cast_range = max(round(new_range * 0.5), 1)
+			cast_range = max(new_range * 0.5, 1)
 		else
-			cast_range = clamp(round(new_range * 0.5), 1, 3)
+			cast_range = clamp(new_range * 0.5, 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
 
@@ -486,7 +486,7 @@
 		return
 	. = list()
 
-	var/final_distance = cast_range
+	var/final_distance = round(cast_range)
 	var/turf/scanning = get_turf(current_holder)
 	for(var/i in 1 to final_distance)
 		var/turf/next_turf = get_step(scanning, current_direction)
@@ -504,43 +504,43 @@
 	var/turn = 0
 	switch(current_direction)
 		if(NORTHWEST)
-			translate_x += -32 * final_distance
-			translate_y += 32 * final_distance
+			translate_x += -32 * cast_range
+			translate_y += 32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = -45
 		if(NORTH)
-			translate_y += 32 * final_distance
+			translate_y += 32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 		if(NORTHEAST)
-			translate_x += 32 * final_distance
-			translate_y += 32 * final_distance
+			translate_x += 32 * cast_range
+			translate_y += 32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = 45
 		if(SOUTHWEST)
-			translate_x += -32 * final_distance
-			translate_y += -32 * final_distance
+			translate_x += -32 * cast_range
+			translate_y += -32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = 45
 		if(SOUTH)
-			translate_y += -32 * final_distance
+			translate_y += -32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 		if(SOUTHEAST)
-			translate_x += 32 * final_distance
-			translate_y += -32 * final_distance
+			translate_x += 32 * cast_range
+			translate_y += -32 * cast_range
 			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = -45
 		if(EAST)
-			translate_x += 32 * final_distance
+			translate_x += 32 * cast_range
 			if(beam && range >= 1)
 				scale_y = 1 / (range - (range/5))
 		if(WEST)
-			translate_x += -32 * final_distance
+			translate_x += -32 * cast_range
 			if(beam && range >= 1)
 				scale_y = 1 / (range - (range/5))
 
