@@ -28,6 +28,8 @@
 		blood_type = "H2O"
 	else if(holder.has_reagent(/datum/reagent/toxin/slimejelly))
 		blood_type = "TOX"
+	else if(holder.has_reagent(/datum/reagent/toxin/slimeooze))
+		blood_type = "OOZE"
 	else
 		blood_type = null
 	return ..()
@@ -74,7 +76,7 @@
 /obj/item/reagent_containers/blood/snail
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
-	
+
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
@@ -95,6 +97,14 @@
 /obj/item/reagent_containers/blood/toxin/examine()
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
+
+/obj/item/reagent_containers/blood/slime
+	blood_type = "OOZE"
+	unique_blood = /datum/reagent/toxin/slimeooze
+
+/obj/item/reagent_containers/blood/slime/examine()
+	.= ..()
+	. += span_notice("This appears to be oozeling blood.")
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
