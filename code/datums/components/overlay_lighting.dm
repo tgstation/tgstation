@@ -70,7 +70,7 @@
 	var/directional_offset_x
 	///Tracks current directional y offset so we dont update unecessarily
 	var/directional_offset_y
-	///Cast range for the directional cast (how far away the atom is moved)
+	///Cast range for the directional cast (how far away in tiles the overlay is moved)
 	var/cast_range = 2
 
 /datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam)
@@ -506,42 +506,42 @@
 		if(NORTHWEST)
 			translate_x += -32 * final_distance
 			translate_y += 32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = -45
 		if(NORTH)
 			translate_y += 32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 		if(NORTHEAST)
 			translate_x += 32 * final_distance
 			translate_y += 32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = 45
 		if(SOUTHWEST)
 			translate_x += -32 * final_distance
 			translate_y += -32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = 45
 		if(SOUTH)
 			translate_y += -32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 		if(SOUTHEAST)
 			translate_x += 32 * final_distance
 			translate_y += -32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_x = 1 / (range - (range/5))
 				turn = -45
 		if(EAST)
 			translate_x += 32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_y = 1 / (range - (range/5))
 		if(WEST)
 			translate_x += -32 * final_distance
-			if(beam && range > 1)
+			if(beam && range >= 1)
 				scale_y = 1 / (range - (range/5))
 
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
@@ -555,7 +555,7 @@
 	if(overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 
-	if(beam)
+	if(beam && range >= 1)
 		var/final_turf = get_step(scanning, current_direction) || scanning
 		for(var/turf/lit_turf in get_line(get_turf(current_holder), final_turf))
 			lit_turf.dynamic_lumcount += lum_power
