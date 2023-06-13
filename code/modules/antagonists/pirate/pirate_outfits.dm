@@ -68,3 +68,36 @@
 	head = /obj/item/clothing/head/costume/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
+
+/datum/outfit/pirate/interdyne
+	name = "Ex-Interdyne Pharmacist"
+
+	id = /obj/item/card/id/advanced/black
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	back = /obj/item/storage/backpack/satchel/med
+	glasses = /obj/item/clothing/glasses/hud/health/night
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/utility/surgerycap/black
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	l_pocket = /obj/item/card/emag/doorjack
+
+/datum/outfit/pirate/interdyne/captain
+	name = "Ex-Interdyne Senior Resident"
+
+	id_trim = /datum/id_trim/syndicom/Interdyne/pharmacist_director
+
+/datum/outfit/pirate/grey
+	name = "The Grey Tide"
+
+	id = /obj/item/card/id/advanced/chameleon
+	uniform = /obj/item/clothing/under/color/grey/ancient
+	suit = null
+	back = /obj/item/storage/backpack/satchel
+	mask = /obj/item/clothing/mask/chameleon
+	glasses = null
+	head = null
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	l_pocket = /obj/item/reagent_containers/cup/glass/coffee
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
