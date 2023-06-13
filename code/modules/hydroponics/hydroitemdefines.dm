@@ -524,7 +524,7 @@
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
-	var/swiping = FALSE
+	attack_style = /datum/attack_style/melee_weapon/swing/wider_arc/scythe
 
 /obj/item/scythe/Initialize(mapload)
 	. = ..()
@@ -536,33 +536,32 @@
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
-		if(BP)
-			BP.drop_limb()
-			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
-	return BRUTELOSS
+	var/obj/item/bodypart/lose_your_head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(lose_your_head?.dismember())
+		return BRUTELOSS
+	return SHAME
 
-/obj/item/scythe/pre_attack(atom/target, mob/living/user, params)
-	if(!istype(target, /obj/structure/alien/resin/flower_bud) && !istype(target, /obj/structure/spacevine))
-		return ..()
-	if(swiping || get_turf(target) == get_turf(user))
-		return ..()
-	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, get_turf(target))
-	swiping = TRUE
-	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
-	for(var/i in scythe_slash_angles)
-		var/turf/adjacent_turf = get_step(user_turf, turn(dir_to_target, i))
-		for(var/obj/structure/spacevine/vine in adjacent_turf)
-			if(user.Adjacent(vine))
-				melee_attack_chain(user, vine)
-		for(var/obj/structure/alien/resin/flower_bud/flower in adjacent_turf)
-			if(user.Adjacent(flower))
-				melee_attack_chain(user, flower)
-	swiping = FALSE
-	return TRUE
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe
+	/// Typecache of all structures we can attack in our swing in addition to people.
+	/// Not static cause this is a singleton, no point.
+	var/list/scythe_attackables = typecacheof(list(
+		/obj/structure/spacevine,
+		/obj/structure/alien/resin/flower_bud,
+	))
+
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe/swing_enters_turf(
+	mob/living/attacker,
+	obj/item/weapon,
+	turf/hitting,
+	list/mob/living/already_hit,
+	atom/priority_target,
+	right_clicking,
+)
+	. = ..()
+	for(var/atom/to_hit as anything in typecache_filter_list(hitting.contents, scythe_attackables))
+		if(attacker.CanReach(to_hit, weapon))
+			to_hit.attacked_by(weapon, attacker)
+			. |= ATTACK_STYLE_HIT
 
 /obj/item/secateurs
 	name = "secateurs"

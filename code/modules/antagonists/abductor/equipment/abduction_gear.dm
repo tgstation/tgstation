@@ -106,9 +106,6 @@
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	DeactivateStealth()
 
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
-	DeactivateStealth()
-
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
 	switch(mode)
 		if(VEST_COMBAT)

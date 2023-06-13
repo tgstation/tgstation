@@ -283,7 +283,6 @@
 	heat_protection = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/hit_reflect_chance = 50
 
 /datum/armor/armor_laserproof
 	melee = 10
@@ -293,11 +292,8 @@
 	fire = 100
 	acid = 100
 
-/obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
-	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))) //If not shot where ablative is covering you, you don't get the reflection bonus!
-		return FALSE
-	if (prob(hit_reflect_chance))
-		return TRUE
+/obj/item/clothing/suit/armor/laserproof/IsReflect()
+	return prob(50)
 
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "detective's flak vest"

@@ -23,7 +23,7 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
-	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : maybe a unique style for spin2win
+	attack_style = /datum/attack_style/melee_weapon/swing/wider_arc // maybe a unique style for spin2win?
 	weapon_sprite_angle = 45
 	blocking_ability = 1.2
 	block_effect = /obj/effect/temp_visual/cult/sparks
@@ -85,10 +85,8 @@
 			return
 	force = initial(force)
 
-/obj/item/cult_bastard/IsReflect(def_zone)
-	if(!spinning)
-		return FALSE
-	return TRUE
+/obj/item/cult_bastard/IsReflect()
+	return spinning
 
 /obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!prob(final_block_chance))

@@ -228,7 +228,7 @@
 	var/weapon_sprite_angle = 0
 
 	/**
-	 * How well can we block with this thing? (See: [/obj/item/proc/get_blocking_ability])
+	 * How well can we block with this thing? (See / Use: [/obj/item/proc/get_blocking_ability])
 	 * This is a multiplier to stamina damage recieved from active blocking with this item
 	 * Lower numbers means we take less stamina damage when blocking attacks (and are better).
 	 *
@@ -614,7 +614,6 @@
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
-// Melbert todo: Test that this still works
 /obj/item/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -661,7 +660,13 @@
 	attack_type = MELEE_ATTACK,
 	damage_type = BRUTE,
 )
-	return blocking_ability
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			return -1
+		if(WEIGHT_CLASS_SMALL)
+			return blocking_ability * 2
+		else
+			return blocking_ability
 
 /**
  * Called when an item is used for a successful block
@@ -843,8 +848,8 @@
 
 	attack_self(user)
 
-///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(def_zone)
+///This proc determines if and at what an object will reflect energy projectiles
+/obj/item/proc/IsReflect()
 	return FALSE
 
 /obj/item/singularity_pull(S, current_size)

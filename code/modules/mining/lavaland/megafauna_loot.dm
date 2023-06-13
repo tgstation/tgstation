@@ -835,6 +835,10 @@
 
 //Blood-Drunk Miner: Cleaving Saw
 
+/datum/attack_style/melee_weapon/cleaving_saw_closed
+	cd = CLICK_CD_MELEE * 0.5
+
+/datum/attack_style/melee_weapon/swing/cleaving_saw_open
 
 /obj/item/melee/cleaving_saw
 	name = "cleaving saw"
@@ -855,16 +859,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	// Melbert todo: This should be two styles
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style = /datum/attack_style/melee_weapon/cleaving_saw_closed
 	/// Whether the saw is open or not
 	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
 	var/faction_bonus_force = 30
-	/// Whether the cleaver is actively AoE swiping something.
-	var/swiping = FALSE
 	/// Amount of bleed stacks gained per hit
 	var/bleed_stacks_per_hit = 3
 	/// Force when the saw is opened.
@@ -887,7 +888,9 @@
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
+	. += span_notice("It is [is_open \
+		? "open, and will cleave enemies in a wide arc while dealing additional damage to fauna" \
+		:"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
 	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
 	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
 
@@ -896,38 +899,20 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	. = ..()
-	if(!is_open)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
-		if(!is_open)
-			faction_bonus_force = 0
-		var/is_nemesis_faction = FALSE
-		for(var/found_faction in target.faction)
-			if(found_faction in nemesis_factions)
-				is_nemesis_faction = TRUE
-				force += faction_bonus_force
-				nemesis_effects(user, target)
-				break
-		. = ..()
-		if(is_nemesis_faction)
-			force -= faction_bonus_force
-		if(!is_open)
-			faction_bonus_force = initial(faction_bonus_force)
-	else
-		var/turf/user_turf = get_turf(user)
-		var/dir_to_target = get_dir(user_turf, get_turf(target))
-		swiping = TRUE
-		var/static/list/cleaving_saw_cleave_angles = list(0, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
-		for(var/i in cleaving_saw_cleave_angles)
-			var/turf/turf = get_step(user_turf, turn(dir_to_target, i))
-			for(var/mob/living/living_target in turf)
-				if(user.Adjacent(living_target) && living_target.body_position != LYING_DOWN)
-					melee_attack_chain(user, living_target)
-		swiping = FALSE
+	// If this is not a nemesis we don't need to do anything special
+	if(!length(target.faction & nemesis_factions))
+		return ..()
+
+	// If open + is nemesis, add bonus force.
+	// If closed + is nemesis, add bleed effect on success.
+	if(is_open)
+		force += faction_bonus_force
+	. = ..()
+	if(is_open)
+		force -= faction_bonus_force
+	else if(!.)
+		nemesis_effects(user, target)
 
 /*
  * If we're attacking [target]s in our nemesis list, apply unique effects.
@@ -954,6 +939,11 @@
 
 	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
+
+	if(is_open)
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
+	else
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]
 
 	balloon_alert(user, "[active ? "opened":"closed"] [src]")
 	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))

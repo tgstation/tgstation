@@ -83,10 +83,18 @@
 			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
 		else
 			readout += "[source.p_they(capitalized = TRUE)] does not deal noticeable throwing damage."
-		/*
-		if(source.armour_penetration > 0 /*|| source.block_chance > 0*/) // melbert todo
-			readout += "[source.p_they(capitalized = TRUE)] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability and [span_warning("[weapon_tag_convert(source.block_chance)]")] blocking capability."
-		*/
+
+		if(source.armour_penetration > 0)
+			readout += "[source.p_they(capitalized = TRUE)] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability."
+
+		// This doesn't accurately report final block ability (taking into account hit modifiers). Should be changed in the future
+		if(source.blocking_ability == 0)
+			readout += "[source.p_they(capitalized = TRUE)] can block all incoming attack."
+		else if(source.blocking_ability < 0)
+			readout += "[source.p_they(capitalized = TRUE)] cannot be used to block attacks."
+		else
+			readout += "[source.p_they(capitalized = TRUE)] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] attack\s before having guard broken."
+
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes

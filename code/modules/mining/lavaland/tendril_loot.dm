@@ -749,8 +749,7 @@
 		balloon_alert(owner, "berserk charged")
 
 /obj/item/clothing/head/hooded/berserker/IsReflect()
-	if(berserk_active)
-		return TRUE
+	return berserk_active
 
 /// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)

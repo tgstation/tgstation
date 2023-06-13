@@ -67,10 +67,6 @@
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message(span_danger("The [P.name] gets reflected by [src]!"), \
 								span_userdanger("The [P.name] gets reflected by [src]!"))
-				// Finds and plays the block_sound of item which reflected
-				for(var/obj/item/I in held_items)
-					if(I.IsReflect(def_zone))
-						playsound(src, I.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 				// Find a turf near or on the original location to bounce to
 				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
@@ -101,20 +97,33 @@
 	return ..()
 
 /**
- * Checks if this mob is wearing anything refective on the given body part
+ * Checks if this mob is wearing anything refective.
  *
- * Used in bullet code to determine if we should refect bullets
+ * * def_zone - optional, if supplied only checks this body zone. Otherwise checks all zones. can also pass a bodypart.
+ *
+ * Returns TRUE if this mob is wearing anything reflective.
  */
 /mob/living/carbon/human/proc/check_reflect(def_zone)
-	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone))
+	if(isbodypart(def_zone))
+		var/obj/item/bodypart/passed_part = def_zone
+		def_zone = passed_part.body_zone
+
+	var/cover_flags_to_check = body_zone2cover_flags(check_zone(def_zone))
+	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
+		if(worn_thing in held_items)
+			// Things that are supposed to be worn being held in hand - don't count
+			if(worn_thing.slot_flags & CLOTHING_ITEM_SLOTS)
+				continue
+
+		else if(cover_flags_to_check)
+			// Doesn't cover the body part we're checking
+			if(!(worn_thing.flags_cover & cover_flags_to_check))
+				continue
+
+		if(worn_thing.IsReflect())
+			playsound(src, worn_thing.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 			return TRUE
-	if(head)
-		if(head.IsReflect(def_zone))
-			return TRUE
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
-			return TRUE
+
 	return FALSE
 
 /mob/living/carbon/human/check_block(atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
@@ -123,8 +132,8 @@
 		return TRUE
 
 	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
+		// Things that are supposed to be worn being held in hand - don't count
 		if((worn_thing.slot_flags & CLOTHING_ITEM_SLOTS) && (worn_thing in held_items))
-			// Covers clothes that block things which are being held and not worn
 			continue
 
 		if(worn_thing.hit_reaction(src, hitby, attack_text, damage, attack_type, damage_type))

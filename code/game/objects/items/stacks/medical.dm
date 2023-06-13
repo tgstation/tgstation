@@ -33,7 +33,6 @@
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
 
-// melbert todo broken
 /obj/item/stack/medical/attack(mob/living/patient, mob/user)
 	. = ..()
 	try_heal(patient, user)

@@ -53,3 +53,36 @@
 		attacker.balloon_alert(attacker, "wield your weapon!")
 		return ATTACK_SWING_CANCEL
 	return ..()
+
+/datum/attack_style/melee_weapon/swing/wider_arc
+
+/datum/attack_style/melee_weapon/swing/wider_arc/get_swing_description()
+	return "It swings in an arc of six tiles in the direction you are attacking."
+
+/datum/attack_style/melee_weapon/swing/wider_arc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+	var/list/swing_turfs = ..()
+	// Also grab turfs to the left and right of the attacker
+	var/angle_to = dir2angle(attack_direction)
+	var/turf/adjacent_left = get_step(attacker, angle2dir(angle_to - 90))
+	var/turf/adjacent_right = get_step(attacker, angle2dir(angle_to + 90))
+	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
+		// If the list was reversed, right goes to the start and left goes to the end
+		swing_turfs.Insert(1, adjacent_right)
+		swing_turfs.Add(adjacent_left)
+	else
+		// Otherwise, left goes to the start and right goes to the end
+		swing_turfs.Insert(1, adjacent_left)
+		swing_turfs.Add(adjacent_right)
+	return swing_turfs
+
+/datum/attack_style/melee_weapon/swing/only_left
+
+/datum/attack_style/melee_weapon/swing/only_left/get_swing_description()
+	return "It swings in an arc of two tiles in the direction you are attacking, away from your active hand."
+
+/datum/attack_style/melee_weapon/swing/only_left/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+	// Does not hit the last turf (right most turf).
+	var/list/swing_turfs = ..()
+	if(length(swing_turfs))
+		swing_turfs.len -= 1
+	return swing_turfs

@@ -24,7 +24,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
 	blocking_ability = 2
-	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo : this shouldn't hit the right, just forward and left
+	attack_style = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 90
 
 	var/on = FALSE

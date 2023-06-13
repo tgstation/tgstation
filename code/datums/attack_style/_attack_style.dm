@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// How long does it take for the attack to travel between turfs?
 	/// Essentually, this is "swing speed". Does nothing for attacks which only hit a single turf.
 	var/time_per_turf = 0 SECONDS
+	/// If TRUE, calls swing_enters_turf() when the swing enters a new turf, allowing you to add effects when the swing enters a new turf.
+	var/affects_turf = FALSE
 
 /**
  * Process attack -> execute attack -> finalize attack
@@ -95,29 +97,29 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.changeNext_move(cd)
 	return TRUE
 
-/datum/attack_style/proc/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+/datum/attack_style/proc/execute_attack(
+	mob/living/attacker,
+	obj/item/weapon,
+	list/turf/affecting,
+	atom/priority_target,
+	right_clicking,
+)
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
 	attack_effect_animation(attacker, weapon, affecting)
 
-	// This is storing the flag to return when the attack is finished executing
-	var/attack_flag = NONE
-	// The total number of mobs hit across all turfs (where "total_hit" is the total hit on a single turf)
-	var/total_total_hit = 0
 	// The index of the turf we're currently hitting
 	var/affecting_index = 1
 	// This tracks if this attack was initiated with a weapon,
 	// so we can check if it's still being held for swings that have travel time
+	// This will break for unarmed attacks that are multi-tile. Future problem
 	var/started_holding = !isnull(weapon) && attacker.is_holding(weapon)
 	// This tracks the loc the swing started at,
 	// so we can re-generate the affecting turfs list for swings that have travel time if the attacker moves
 	var/turf/starting_loc = attacker.loc
 	// A list of mobs that have already been hit by this attack to prevent double dipping
 	var/list/mob/living/already_hit = list()
-	// Tracks whether a hitsound has been played,
-	// primarily for attacks with travel time so a hit is played on first strike
-	var/hitsound_played = FALSE
 	// The dir the attacker was facing when the attack started,
 	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir
@@ -125,89 +127,23 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Main attack loop starts here.
 	while(length(affecting))
 		var/turf/hitting = popleft(affecting)
-
-#ifdef TESTING
-		apply_testing_color(hitting, affecting_index)
-#endif
-
 		affecting_index += 1
-
-		// Gathers up all mobs in the turf being struck. Each mob will have a priority assigned.
-		// Intuitively an attacker will not want to attack certain mobs, such as their friends, or unconscious people over conscious people.
-		// While this doesn't completley mitigate the chance of friendly fire, it does make it less likely.
-		var/list/mob/living/foes = list()
-		for(var/mob/living/foe_in_turf in hitting)
-			if(foe_in_turf in already_hit)
-				continue
-
-			var/foe_prio = rand(4, 8) // assign a random priority so it's non-deterministic
-			if(foe_in_turf == priority_target)
-				foe_prio = 10
-			else if(foe_in_turf == attacker)
-				foe_prio = -10
-			else if(foe_in_turf.stat != CONSCIOUS)
-				foe_prio = 2 // very de-prio folk who can't fight back
-
-			if(length(foe_in_turf.faction & attacker.faction))
-				foe_prio -= 2 // de-prio same factions
-
-			foes[foe_in_turf] = foe_prio
-
-		// Sorts by priority
-		sortTim(foes, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
-
-		var/total_hit = 0
-		// Here is where we go into finalize attack, to actually cause damage.
-		// This is where attack swings enter attack chain.
-		for(var/mob/living/smack_who as anything in foes)
-			already_hit += smack_who
-			attack_flag |= finalize_attack(attacker, smack_who, weapon, right_clicking)
-			if(attack_flag & ATTACK_SWING_CANCEL)
-				return attack_flag
-			if(attack_flag & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
-				continue
-			if(attack_flag & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
-				total_hit++
-				if(!hitsound_played)
-					hitsound_played = TRUE
-					playsound(attacker, get_hit_sound(weapon), hit_volume, TRUE)
-			if(total_hit >= hits_per_turf_allowed)
-				break
-
-		total_total_hit += total_hit
-
-		// Right after dealing damage we handle getting blocked by dense stuff
-		// If there's something dense in the turf the rest of the swing is cancelled
-		// This means wide arc swinging weapons can't hit in tight corridors
-		var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
-		if(blocking_us)
-			attacker.visible_message(
-				span_warning("[attacker]'s attack collides with [blocking_us]!"),
-				span_warning("[blocking_us] blocks your attack partway!"),
-			)
-			if(weapon)
-				// melbert todo: double animation
-				// melbert todo: attacking stuff with your arm literally not punching
-				blocking_us.attackby(weapon, attacker)
-			else
-				attacker.resolve_unarmed_attack(blocking_us)
-
-			attack_flag |= ATTACK_SWING_BLOCKED
-			total_total_hit++ // It counts
-
-		if(attack_flag & ATTACK_SWING_BLOCKED)
+		. |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
+		if(. & ATTACK_SWING_CANCEL)
+			// Cancel attacks stop outright
+			return .
+		if(. & ATTACK_SWING_BLOCKED)
+			// Blocked attacks do not continue to the next turf
 			break
 
-		// Finally, we handle travel time.
+		// Travel time.
 		if(time_per_turf > 0 && affecting_index != 1 && length(affecting))
 			sleep(time_per_turf) // probably shouldn't use stoplag? May result in undesired behavior during high load
 
-			// Sanity checking. We don't need to care about the other flags set if these fail
-			if(QDELETED(attacker))
+			// Sanity checking. We don't need to care about the other flags set if these fail.
+			if(QDELETED(attacker) || attacker.incapacitated())
 				return ATTACK_SWING_CANCEL
 			if(started_holding && (QDELETED(weapon) || !attacker.is_holding(weapon)))
-				return ATTACK_SWING_CANCEL
-			if(attacker.incapacitated())
 				return ATTACK_SWING_CANCEL
 			if(attacker.loc != starting_loc)
 				if(!isturf(attacker.loc))
@@ -219,16 +155,84 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
 				affecting.Cut(1, affecting_index)
 
-	// All relevant turfs have been hit so we're wrapping up the attack at this point
-	if(total_total_hit <= 0)
-		// counts as a miss if we don't hit anyone, duh
-		attack_flag |= ATTACK_SWING_MISSED
+	if(!(. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT)))
+		// counts as a miss by default if we don't hit anyone
+		. |= ATTACK_SWING_MISSED
 
-	if(attack_flag & ATTACK_SWING_MISSED)
-		if(miss_sound)
-			playsound(attacker, miss_sound, miss_volume, TRUE)
+	if(. & ATTACK_SWING_MISSED)
+		playsound(attacker, miss_sound, hit_volume, TRUE)
 
-	return attack_flag
+	return .
+
+/// Called when the swing enters a turf.
+/datum/attack_style/proc/swing_enters_turf(
+	mob/living/attacker,
+	obj/item/weapon,
+	turf/hitting,
+	list/mob/living/already_hit,
+	atom/priority_target,
+	right_clicking,
+)
+	SHOULD_CALL_PARENT(TRUE)
+
+#ifdef TESTING
+		apply_testing_color(hitting, affecting_index)
+#endif
+
+	// Gathers up all mobs in the turf being struck. Each mob will have a priority assigned.
+	// Intuitively an attacker will not want to attack certain mobs, such as their friends, or unconscious people over conscious people.
+	// While this doesn't completley mitigate the chance of friendly fire, it does make it less likely.
+	var/list/mob/living/foes = list()
+	for(var/mob/living/foe_in_turf in hitting)
+		if(foe_in_turf in already_hit)
+			continue
+
+		var/foe_prio = rand(4, 8) // assign a random priority so it's non-deterministic
+		if(foe_in_turf == priority_target)
+			foe_prio = 10
+		else if(foe_in_turf == attacker)
+			foe_prio = -10
+		else if(foe_in_turf.stat != CONSCIOUS)
+			foe_prio = 2 // very de-prio folk who can't fight back
+
+		if(length(foe_in_turf.faction & attacker.faction))
+			foe_prio -= 2 // de-prio same factions
+
+		foes[foe_in_turf] = foe_prio
+
+	// Sorts by priority
+	sortTim(foes, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
+
+	var/total_hit = 0
+	// Here is where we go into finalize attack, to actually cause damage.
+	// This is where attack swings enter attack chain.
+	for(var/mob/living/smack_who as anything in foes)
+		already_hit += smack_who
+		. |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+		if(. & ATTACK_SWING_CANCEL)
+			return .
+		if(. & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
+			continue
+		if(. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
+			total_hit++
+		if(total_hit >= hits_per_turf_allowed)
+			break
+
+	// Right after dealing damage we handle getting blocked by dense stuff
+	// If there's something dense in the turf the rest of the swing is cancelled
+	// This means wide arc swinging weapons can't hit in tight corridors
+	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
+	if(blocking_us)
+		attacker.visible_message(
+			span_warning("[attacker]'s attack collides with [blocking_us]!"),
+			span_warning("[blocking_us] blocks your attack partway!"),
+		)
+		. |= collide_with_solid_atom(blocking_us, weapon, attacker)
+
+	if(. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
+		playsound(attacker, get_hit_sound(weapon), hit_volume, TRUE)
+
+	return .
 
 /**
  * Gets the soound to play when the attack successfully hits another mob
@@ -277,14 +281,21 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// in the list of affecting turfs to play the attack animation over
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
 	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
+	var/atom/movable/current_pick
 	for(var/atom/movable/thing in midpoint)
 		if(isProbablyWallMounted(thing))
 			continue
 		if(thing.invisibility > 0 || thing.alpha < 10)
 			continue
-		return thing
+		if(isnull(current_pick) || thing.layer > current_pick.layer)
+			current_pick = thing
 
-	return midpoint
+	return current_pick
+
+/// Determines behavior when we collide with a solid / dense atom mid swing.
+/datum/attack_style/proc/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
+	blocking_us.attacked_by(weapon, attacker)
+	return ATTACK_SWING_BLOCKED
 
 /**
  * Finalize an attack on a single mob in one of the affected turfs
@@ -434,3 +445,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/selected_effect = override_effect || attack_effect
 	if(selected_effect)
 		attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), selected_effect)
+
+/datum/attack_style/unarmed/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
+	attacker.resolve_unarmed_attack(blocking_us)
+	return ATTACK_SWING_BLOCKED

@@ -969,60 +969,69 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
 	block_sound = 'sound/weapons/effects/ric5.ogg'
+	block_effect = /obj/effect/temp_visual/cult/sparks
 	var/illusions = 2
+	var/charge_period = 45 SECONDS
 
-// melbert todo
+/obj/item/shield/mirror/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+	. = ..()
+	if(QDELETED(src))
+		return
+	if(!IS_CULTIST(blocker))
+		return
+	if(illusions > 0)
+		illusions--
+		addtimer(CALLBACK(src, PROC_REF(readd)), charge_period)
+		if(prob(60))
+			var/mob/living/simple_animal/hostile/illusion/M = new(blocker.loc)
+			M.faction = list(FACTION_CULT)
+			M.Copy_Parent(blocker, 70, 10, 5)
+			M.move_to_delay = blocker.cached_multiplicative_slowdown
+		else
+			var/mob/living/simple_animal/hostile/illusion/escape/E = new(blocker.loc)
+			E.Copy_Parent(blocker, 70, 10)
+			E.GiveTarget(blocker)
+			E.Goto(blocker, blocker.cached_multiplicative_slowdown, E.minimum_distance)
+	return TRUE
+
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner))
-		if(attack_type == PROJECTILE_ATTACK)
-			if(damage_type == BRUTE || damage_type == BURN)
-				if(damage >= 30)
-					var/turf/T = get_turf(owner)
-					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
-					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glassbr3.ogg', 100)
-					owner.Paralyze(25)
-					qdel(src)
-					return FALSE
-			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable & REFLECT_NORMAL)
-				return FALSE //To avoid reflection chance double-dipping with block chance
-		. = ..()
-		if(.)
-			if(illusions > 0)
-				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
-				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
-					M.faction = list(FACTION_CULT)
-					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.cached_multiplicative_slowdown
-				else
-					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-					E.Copy_Parent(owner, 70, 10)
-					E.GiveTarget(owner)
-					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
-			return TRUE
-	else
+	if(!IS_CULTIST(owner))
 		if(prob(50))
 			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
 			H.Copy_Parent(owner, 100, 20, 5)
 			H.faction = list(FACTION_CULT)
 			H.GiveTarget(owner)
 			H.move_to_delay = owner.cached_multiplicative_slowdown
-			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
+			to_chat(owner, span_bolddanger("[src] betrays you!"))
+		return FALSE
+
+	. = ..()
+	if(.)
+		return
+
+	if((damage_type == BRUTE || damage_type == BURN) && damage >= 30)
+		owner.visible_message(
+			span_warning("The sheer force from [attack_text] shatters [src]!"),
+			span_warning("The sheer force from [attack_text] shatters your [name]!"),
+		)
+		new block_effect(owner.loc)
+		playsound(owner, 'sound/effects/glassbr3.ogg', 100)
+		owner.Paralyze(2.5 SECONDS)
+		qdel(src)
 		return FALSE
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
-		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
+		to_chat(holder, span_cultitalic("The shield's illusions are back at full strength!"))
 
 /obj/item/shield/mirror/IsReflect()
-	if(prob(50)) // melbert todo
-		return TRUE
-	return FALSE
+	var/mob/living/holder = loc
+	if(istype(holder))
+		return IS_BLOCKING(holder)
+
+	return prob(50)
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
