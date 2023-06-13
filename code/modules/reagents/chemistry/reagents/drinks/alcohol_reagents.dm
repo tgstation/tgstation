@@ -1684,7 +1684,7 @@
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
 	..()
 	if(mighty_shield && !(mighty_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
-		holder.remove_reagent(type)
+		holder.remove_reagent(type, volume)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
 	if(mighty_shield)
@@ -2532,7 +2532,7 @@
 
 /datum/reagent/consumable/ethanol/wine_voltaic
 	name = "Voltaic Yellow Wine"
-	description = "Electrically charged wine. Recharges etherials, but also nontoxic."
+	description = "Electrically charged wine. Recharges ethereals, but also nontoxic."
 	boozepwr = 30
 	color = "#FFAA00"
 	taste_description = "static with a hint of sweetness"
@@ -2550,7 +2550,7 @@
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
-	description = "A grounding rod in the form of a drink.  Recharges etherials, and gives temporary shock resistance."
+	description = "A grounding rod in the form of a drink.  Recharges ethereals, and gives temporary shock resistance."
 	boozepwr = 50
 	color = "#b300ff"
 	quality = DRINK_NICE
@@ -2577,7 +2577,7 @@
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
-	description = "Ride the lightning!  Recharges etherials, suppresses phobias, and gives strong temporary shock resistance."
+	description = "Ride the lightning!  Recharges ethereals, suppresses phobias, and gives strong temporary shock resistance."
 	boozepwr = 80
 	color = "#00fbff"
 	quality = DRINK_FANTASTIC

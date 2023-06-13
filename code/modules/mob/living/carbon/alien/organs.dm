@@ -205,7 +205,7 @@
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(content_deleted))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
 		var/mob/living/lad = thing
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
@@ -228,7 +228,7 @@
 	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	stomach_contents -= source
-	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
 /obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))

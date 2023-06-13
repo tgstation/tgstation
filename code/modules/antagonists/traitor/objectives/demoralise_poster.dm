@@ -43,7 +43,7 @@
 				posters += poster_when_placed
 				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, PROC_REF(on_mood_event))
 				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, PROC_REF(on_triggered_trap))
-				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, PROC_REF(on_poster_destroy))
+				RegisterSignal(poster_when_placed, COMSIG_QDELETING, PROC_REF(on_poster_destroy))
 
 			user.put_in_hands(posterbox)
 			posterbox.balloon_alert(user, "the box materializes in your hand")
@@ -53,7 +53,7 @@
 /datum/traitor_objective/demoralise/poster/ungenerate_objective()
 	for (var/poster in posters)
 		UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
-		UnregisterSignal(poster, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(poster, COMSIG_QDELETING)
 	posters.Cut()
 	return ..()
 
