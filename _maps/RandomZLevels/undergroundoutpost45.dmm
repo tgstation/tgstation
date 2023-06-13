@@ -13801,9 +13801,13 @@
 /obj/structure/ladder/unbreakable{
 	id_tag = 182;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	id = 182;
 	name = "Elevator Ladder";
 	spatial_grid_key = 182
+=======
+	id = 182
+>>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
 =======
 	id = 182
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
@@ -14361,9 +14365,13 @@
 /obj/structure/ladder/unbreakable{
 	id_tag = 182;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	id = 182;
 	name = "Elevator Ladder";
 	spatial_grid_key = 182
+=======
+	id = 182
+>>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
 =======
 	id = 182
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
@@ -57825,12 +57833,16 @@ Lz
 Lz
 Rp
 <<<<<<< HEAD
+<<<<<<< HEAD
 Lz
 Lz
 Lz
 =======
 ZS
 zq
+=======
+ZS
+>>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
 zq
 >>>>>>> parent of b12bde4a61d (Update undergroundoutpost45.dmm)
 ad
