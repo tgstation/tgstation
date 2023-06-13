@@ -79,6 +79,8 @@ Issue Managers help out the project by labelling bug reports and PRs and closing
 <details>
 <summary>What You Can and Can't Do as an Issue Manager</summary>
 
+[Issue Manager Guide](.github/guides/ISSUE_MANAGER.md)
+
 This should help you understand what you can and can't do with your newfound github permissions.
 
 Things you **CAN** do:
