@@ -105,7 +105,7 @@ Things you **CAN'T** do:
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/making_your_ai.md)
+- [AI Datums](../code/datums/ai/learn_ai.md)
 - [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
 - [Hard Deletes](./guides/HARDDELETES.md)
 - [MC Tab Guide](./guides/MC_tab.md)
