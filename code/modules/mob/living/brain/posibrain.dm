@@ -115,7 +115,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(user.ckey in ckeys_entered)
 		to_chat(user, span_warning("You cannot re-enter [src] a second time!"))
 		return
-	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(user))
+	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(src) || QDELETED(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_SUICIDED)) //if they suicided, they're out forever.
 		to_chat(user, span_warning("[src] fizzles slightly. Sadly it doesn't take those who suicided!"))
