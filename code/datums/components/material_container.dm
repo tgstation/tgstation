@@ -532,6 +532,7 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
+			"SHEET_MATERIAL_AMOUNT" = SHEET_MATERIAL_AMOUNT,
 			"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
 			"removable" = amount >= SHEET_MATERIAL_AMOUNT,
 			"color" = material.greyscale_colors
