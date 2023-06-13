@@ -154,3 +154,8 @@ export type FabricatorData = {
     timeLeft: number;
   }[];
 };
+
+// __DEFINES/construction.dm - Sheet Material Amount
+export const SHEET_MATERIAL_AMOUNT = 100;
+export const HALF_SHEET_MATERIAL_AMOUNT = SHEET_MATERIAL_AMOUNT / 2;
+export const SMALL_MATERIAL_AMOUNT = HALF_SHEET_MATERIAL_AMOUNT / 10;

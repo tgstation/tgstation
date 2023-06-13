@@ -4,7 +4,7 @@ import { useLocalState } from '../../backend';
 import { Flex, Button, Stack, AnimatedNumber } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
-import { Material } from './Types';
+import { Material, SHEET_MATERIAL_AMOUNT } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
@@ -79,7 +79,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
     false
   );
 
-  const canEject = material.amount > 100;
+  const canEject = material.amount > SHEET_MATERIAL_AMOUNT;
 
   return (
     <div
@@ -157,7 +157,8 @@ const EjectButton = (props: EjectButtonProps, context) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * 100 > available && 'Fabricator__PrintAmount--disabled',
+        amount * SHEET_MATERIAL_AMOUNT > available &&
+          'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}>
       &times;{amount}
