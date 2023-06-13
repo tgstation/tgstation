@@ -9,8 +9,11 @@
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
 	if(turf_loc_check && NeverShouldHaveComeHere(loc))
+#ifdef UNIT_TESTS
 		stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. Please remove it or set turf_loc_check to FALSE on the decal if intended.")
+#else
 		return INITIALIZE_HINT_QDEL
+#endif
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_CHANGE = PROC_REF(on_decal_move),
 	)

@@ -406,6 +406,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	if(istype(bumped_atom, /obj/structure/window))
 		var/obj/structure/window/bumped_window = bumped_atom
 		if(!bumped_window.fulltile)
+			hit_endpoint = TRUE
 			qdel(src)
 			return
 
