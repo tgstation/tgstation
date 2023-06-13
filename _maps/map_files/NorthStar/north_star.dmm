@@ -29640,10 +29640,6 @@
 "hJy" = (
 /turf/closed/wall,
 /area/station/maintenance/floor1/port/fore)
-"hJB" = (
-/obj/machinery/light/small/directional/south,
-/turf/closed/wall,
-/area/station/medical/paramedic)
 "hJC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -59828,9 +59824,6 @@
 "pxz" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 5
 	},
@@ -71752,9 +71745,6 @@
 "sIf" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 6
 	},
@@ -196491,7 +196481,7 @@ kMN
 tEe
 fYt
 rYI
-hJB
+sRR
 qPu
 sEl
 vOo
