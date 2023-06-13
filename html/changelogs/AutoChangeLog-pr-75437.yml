@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - balance: "In general, mineral recipe costs for items in larger amounts has been decreased by 2x."
-  - balance: "One sheet now contains a total of 100 units of material, down from 2000. Proportionally the costs of items should remain the same, except for the smaller costs of certain recipes."
-  - code_imp: "Added a python script to the tools folder, letting you see a mineral breakdown of one/several rounds using silo logs."
