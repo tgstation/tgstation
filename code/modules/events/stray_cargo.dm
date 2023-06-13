@@ -101,7 +101,7 @@
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
+	new /obj/effect/pod_landingzone/(landing_zone, pod, crate)
 	announce_to_ghosts(landing_zone)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
