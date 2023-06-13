@@ -4,6 +4,7 @@
 #define DECOMPOSITION_TIME_RAW (5 MINUTES)
 #define DECOMPOSITION_TIME_GROSS (7 MINUTES)
 
+///Makes things decompose when exposed to germs. Requires /datum/component/germ_sensitive to detect exposure.
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Makes sure maploaded food only starts decomposing if a player's EVER picked it up before
@@ -24,7 +25,7 @@
 	var/produce_ants = FALSE
 
 /datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = FALSE, custom_time = 0)
-	if(!isobj(parent))
+	if(!isobj(parent) || !parent.GetComponent(/datum/component/germ_sensitive))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
@@ -33,15 +34,8 @@
 		handled = FALSE
 	src.produce_ants = ant_attracting
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
-	RegisterSignals(parent, list(
-		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
-		PROC_REF(picked_up))
-	RegisterSignals(parent, list(
-		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
-		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
-		PROC_REF(dropped))
+	RegisterSignal(parent, COMSIG_ATOM_GERM_EXPOSED, PROC_REF(start_timer))
+	RegisterSignal(parent, COMSIG_ATOM_GERM_UNEXPOSED, PROC_REF(remove_timer))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 	if(custom_time) // We have a custom decomposition time, set it to that
@@ -53,34 +47,18 @@
 
 	time_remaining = original_time
 
-	handle_movement()
-
-
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP,
-		COMSIG_ATOM_ENTERED,
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_DROPPED,
-		COMSIG_ATOM_EXITED,
-		COMSIG_ATOM_EXAMINE))
+		COMSIG_ATOM_GERM_EXPOSED,
+		COMSIG_ATOM_GERM_UNEXPOSED,
+		COMSIG_ATOM_EXAMINE
+	))
 
-/datum/component/decomposition/proc/handle_movement()
+/datum/component/decomposition/proc/start_timer()
 	SIGNAL_HANDLER
 	if(!handled) // If maploaded, has someone touched this previously?
+		handled = TRUE // First germ exposure is ignored
 		return
-	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
-
-	var/turf/open/open_turf = food.loc
-
-	if(!istype(open_turf) || islava(open_turf) || isasteroidturf(open_turf)) //Are we actually in a valid open turf?
-		remove_timer()
-		return
-
-	for(var/atom/movable/content as anything in open_turf.contents)
-		if(GLOB.typecache_elevated_structures[content.type])
-			remove_timer()
-			return
 
 	// If all other checks fail, then begin decomposition.
 	timerid = addtimer(CALLBACK(src, PROC_REF(decompose)), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
@@ -101,18 +79,6 @@
 	time_remaining = timeleft(timerid)
 	deltimer(timerid)
 	timerid = null
-
-/datum/component/decomposition/proc/dropped()
-	SIGNAL_HANDLER
-	protected = FALSE
-	handle_movement()
-
-/datum/component/decomposition/proc/picked_up()
-	SIGNAL_HANDLER
-	remove_timer()
-	protected = TRUE
-	if(!handled)
-		handled = TRUE
 
 /datum/component/decomposition/proc/decompose()
 	var/obj/decomp = parent //Lets us spawn things at decomp

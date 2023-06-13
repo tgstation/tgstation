@@ -61,10 +61,10 @@
 	make_processable()
 	make_leave_trash()
 	make_grillable()
+	make_germ_sensitive(mapload)
 	make_decompose(mapload)
 	make_bakeable()
 	make_microwaveable()
-	make_infective()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
@@ -111,12 +111,13 @@
 
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
+///Requires /datum/component/germ_sensitive to detect exposure
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
 
 ///This proc makes things infective when they stay on the floor for too long.
-/obj/item/food/proc/make_infective(mapload)
+/obj/item/food/proc/make_germ_sensitive(mapload)
 	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
 		return // You don't eat the package
-	AddComponent(/datum/component/germ_carrier, mapload)
+	AddComponent(/datum/component/germ_sensitive, mapload)
